@@ -1,0 +1,10 @@
+client/node_modules
+server/storage
+/.settings
+/.idea
+/.project
+server/vendor
+server/.env
+*.uini
+server/Vagrantfile
+server/.vagrant

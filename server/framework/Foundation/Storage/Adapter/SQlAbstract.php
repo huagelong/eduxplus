@@ -1,0 +1,733 @@
+<?php
+
+/**
+ * Trensy Framework
+ *
+ * PHP Version 7
+ *
+ * @author          kaihui.wang <hpuwang@gmail.com>
+ * @copyright      trensy, Inc.
+ * @package         trensy/framework
+ * @version         3.0.0
+ */
+
+namespace Trensy\Foundation\Storage\Adapter;
+
+use Trensy\Shortcut;
+use Trensy\Log;
+
+abstract class SQlAbstract
+{
+    use Shortcut;
+
+    protected $hasTran = 0;//是否有事务
+    protected $_total = 0;
+    protected static $_sql = array();
+    protected static $sqlinstance = array();
+    protected $tableName = null;
+    protected static $prefix = "";
+    protected $field = null;
+    protected $usePrefix=1 ; //是否使用数据库表前缀
+
+    const CONN_MASTER = "master";
+    const CONN_SLAVE = "slave";
+
+    public abstract function fetch($sql, $connType);
+
+    public abstract function fetchAll($sql, $connType);
+
+    public abstract function exec($sql, $connType);
+
+    public function __construct()
+    {
+
+    }
+
+
+    public function getTableName()
+    {
+        $className = get_called_class();
+        $obj = new $className;
+        $table = $obj->tableName;
+        $table = $this->getPrefix().$table;
+        return $this->tableName = $table;
+    }
+
+    public function getPrefix()
+    {
+        if($this->usePrefix)   return self::$prefix;
+        return "";
+    }
+
+    /**
+     * 启动事务
+     * @access public
+     * @return void
+     */
+    public function startTrans()
+    {
+        if (!$this->hasTran) {
+            $this->exec("BEGIN", self::CONN_MASTER);
+        }
+        $this->hasTran++;
+        return true;
+    }
+
+    /**
+     * 提交事务
+     * @access public
+     * @return boolean
+     */
+    public function commit()
+    {
+        if ($this->hasTran) {
+            $this->hasTran--;
+        }
+        if (!$this->hasTran) {
+            return $this->exec("COMMIT", self::CONN_MASTER);
+        }
+    }
+
+    /**
+     * 事务回滚
+     * @access public
+     * @return boolean
+     */
+    public function rollback()
+    {
+        $this->hasTran = 0;
+        return $this->exec("ROLLBACK", self::CONN_MASTER);
+    }
+
+    /**
+     * invokes the read/write connection
+     */
+    public function insert(array $data, $tableName = null)
+    {
+        $tableName = $tableName ? $this->getPrefix() . $tableName : $this->getTableName();
+
+        $keys = array_keys($data);
+        $sql = "INSERT INTO " . $tableName . "(" . implode(',', $keys) . ")
+                VALUES(:" . implode(':, :', $keys) . ":) ";
+        foreach ($data as $k => $v) {
+            $v = $v === null ? "null" : $this->quote($v);
+            $sql = str_replace(":" . $k . ":", $v, $sql);
+        }
+
+        return $this->exec($sql, self::CONN_MASTER, true);
+    }
+
+
+    /**
+     * 根据条件，有则更新，无则插入
+     */
+    public function insertIf(array $data, array $where, $tableName = null)
+    {
+        if (!$data || !$where) {
+            return false;
+        }
+
+        $tableName = $tableName ? $this->getPrefix() . $tableName : $this->getTableName();
+
+        $whereSql = $this->parseWhere($where);
+
+        $keys = array_keys($data);
+        $sql = "INSERT INTO " . $tableName . "(" . implode(',', $keys) . ")
+                VALUES(:" . implode(':, :', $keys) . ":)
+                ON DUPLICATE KEY UPDATE " . $whereSql;
+
+        foreach ($data as $k => $v) {
+            $v = $v === null ? "null" : $this->quote($v);
+            $sql = str_replace(":" . $k . ":", $v, $sql);
+        }
+
+        return $this->exec($sql, self::CONN_MASTER, true);
+    }
+
+    /**
+     * invokes the read/write connection
+     */
+    public function delete($where = array(), $tableName = null)
+    {
+        $tableName = $tableName ? $this->getPrefix() . $tableName : $this->getTableName();
+
+        $whereStr = $this->parseWhere($where);
+        $whereStr = $whereStr ? " WHERE " . $whereStr : "";
+
+        $sql = "DELETE FROM `" . $tableName . "`" . $whereStr;
+
+        $return = $this->exec($sql, self::CONN_MASTER);
+
+        return $return;
+    }
+
+
+    /**
+     * Invokes the read/write connection
+     */
+    public function update(array $data, $where = array(), $tableName = null)
+    {
+        $tableName = $tableName ? $this->getPrefix() . $tableName : $this->getTableName();
+
+        $whereStr = $this->parseWhere($where);
+        $whereStr = $whereStr ? " WHERE " . $whereStr : "";
+
+        $sql = "UPDATE `" . $tableName . "` SET ";
+        foreach ($data as $k => $v) {
+            $v = $v === null ? "null" : $this->quote($v);
+            $sql .= $k . "=" . $v . ",";
+        }
+        $sql = rtrim($sql, ',');
+        $sql .= $whereStr;
+ 
+
+        return $this->exec($sql, self::CONN_MASTER);
+    }
+
+    /**
+     *
+     * 自增
+     * @param string $field
+     * @param array $where
+     */
+    public function inCrease($field, $where = array(), $number = 1, $tableName = null)
+    {
+        $tableName = $tableName ? $this->getPrefix() . $tableName : $this->getTableName();
+
+        $whereSql = $this->parseWhere($where);
+        $whereSql = $whereSql ? " WHERE " . $whereSql : "";
+
+        $sql = "UPDATE `{$tableName}` SET {$field} = {$field} +{$number} " . $whereSql;
+
+        $this->exec($sql, self::CONN_MASTER);
+
+        return true;
+    }
+
+
+    /**
+     *
+     * 自减
+     * @param string $field
+     * @param array $where
+     */
+    public function deCrement($field, $where = array(), $number = 1, $tableName = null)
+    {
+        $tableName = $tableName ? $this->getPrefix() . $tableName : $this->getTableName();
+
+        $whereSql = $this->parseWhere($where);
+        $whereSql = $whereSql ? " WHERE " . $whereSql : "";
+
+        $sql = "UPDATE `{$tableName}` SET {$field} = {$field} - {$number} " . $whereSql;
+    
+        $this->exec($sql, self::CONN_MASTER);
+        return true;
+    }
+
+    /**
+     * sql语句获取数据库数据
+     * @param string $sql
+     * @param array $data
+     */
+    public function selectRow($sql, $data = array())
+    {
+        if (empty($sql)) {
+            return false;
+        }
+        if (!(strtolower(substr($sql, 0, 6)) == 'select' || strtolower(substr($sql, 0, 4)) == 'show')) {
+            throw new \Exception("coan not run on insert ,update ,delete");
+        }
+        if ($data) {
+            foreach ($data as $k => $v) {
+                $v = $v === null ? "null" : $this->quote($v);
+                $sql = str_replace(":" . $k, $v, $sql);
+            }
+        }
+        return $this->fetch($sql, self::CONN_SLAVE);
+    }
+
+    /**
+     *
+     * 用sql语句获取所有
+     * @param string $sql
+     * @param array $data
+     * @param $returnCount //SQL_CALC_FOUND_ROWS
+     */
+    public function selectAll($sql, $data = array(), $returnCount = false)
+    {
+        if (empty($sql)) {
+            return false;
+        }
+
+        if (!(strtolower(substr($sql, 0, 6)) == 'select' || strtolower(substr($sql, 0, 4)) == 'show')) {
+            throw new \Exception("coan not run on insert ,update ,delete");
+        }
+        if ($data) {
+            foreach ($data as $k => $v) {
+                $v = $v === null ? "null" : $this->quote($v);
+                $sql = str_replace(":" . $k, $v, $sql);
+            }
+        }
+//
+        $rs = $this->fetchAll($sql, self::CONN_SLAVE);
+        if ($returnCount) {
+            if(!stristr($sql, "SQL_CALC_FOUND_ROWS")){
+                throw new \Exception("return total count must contain SQL_CALC_FOUND_ROWS");
+            }
+            $sqlCount = 'SELECT FOUND_ROWS() as cnt';
+            $rsCount = $this->fetch($sqlCount, self::CONN_SLAVE);
+            $this->_total = $rsCount['cnt'];
+        }
+        return $rs;
+    }
+
+    public function getTotal()
+    {
+        return $this->_total;
+    }
+
+    //获取单个字段的数据
+    public function selectAllByField($sql, $field = "id", $data = array(), $returnCount = false)
+    {
+        $list = $this->selectAll($sql, $data, $returnCount);
+        $rs = array();
+        if ($list) {
+            foreach ($list as $v) {
+                $rs[] = $v[$field];
+            }
+        }
+        return $rs;
+    }
+
+    /**
+     * 解析where数据
+     * @param array $where
+     * @return string
+     */
+    public function parseWhere($where = array()){
+        $whereSql = $this->_parseWhere($where);
+        $whereSql = trim($whereSql);
+        $whereSql = trim($whereSql, "OR");
+        $whereSql = trim($whereSql, "AND");
+        return $whereSql;
+    }
+
+    /**
+     *
+     * 解析where数据
+     * @param array $where
+     * @param string $andOR
+     */
+    private function _parseWhere($where = array(), $andOR='AND')
+    {
+        if (count($where) < 1) {
+            return "";
+        }
+        $whereSql = "";
+
+        foreach ($where as $k => $v) {
+            $param = $k . " = ? ";
+            $more = 0;
+            if (is_array($v)) {
+                if (isset($v[0][0]) && $v[0][0] && (is_array($v[0]))) {
+                    if ($v) {
+                        foreach ($v as $kk => $vv) {
+                            $tmpWhere = [];
+                            $tmpWhere[$k] = $vv;
+                            $whereSql .= $this->_parseWhere($tmpWhere, $andOR);
+                        }
+                    }
+                    $more = 1;
+                } else {
+
+                    list($sign) = $v;
+
+                    if (isset($v[2]) && $v[2]) {
+                        $andOR = $v[2];
+                    }
+
+                    if (isset($v[1]) && $v[1] !== null) {
+                        $param = $k . " " . $sign . " ? ";
+                        $sign = strtolower($sign);
+                        if ($sign == 'in') {
+                            $param = $k . " " . $sign . " (?) ";
+                        }
+                        $v = $v[1];
+                    } else {
+                        $param = $k . " " . $sign . " ";
+                    }
+                    $andOR = strtoupper($andOR);
+                }
+
+            }
+            if (!$more) {
+                $whereSql .= " $andOR (" . $this->quoteInto($param, $v) . ")";
+            }
+        }
+        return $whereSql;
+    }
+
+
+    public function quoteInto($param, $v)
+    {
+        if (is_array($v)) {
+            $str = "";
+            foreach ($v as $v1) {
+                if (!is_array($v1)) {
+                    $str .= $v1 === null ? "null" : $this->quote($v1) . ",";
+                }
+            }
+            $str = trim($str, ",");
+            return str_replace('?', $str, $param);
+        } else {
+            return str_replace('?', $v === null ? "null" : $this->quote($v), $param);
+        }
+    }
+
+    /**
+     * 根据条件获取多个
+     * @param array $where
+     */
+    public function gets($where = array(), $orderBy = "", $limit = "", $offset = "", $groupBy = "", $returnCount = false, $tableName = null)
+    {
+        $whereSql = $this->parseWhere($where);
+
+        $whereSql = $whereSql ? " WHERE " . $whereSql : "";
+        $tableName = $tableName ? $this->getPrefix() . $tableName : $this->getTableName();
+        $orderBySql = "";
+        $groupBySql = "";
+        $limitSql = "";
+        if ($groupBy) {
+            $groupBySql = " GROUP BY " . $groupBy;
+        }
+        if ($orderBy) {
+            $orderBySql = " ORDER BY " . $orderBy;
+        }
+
+        if ($limit) {
+            $limit = intval($limit);
+            $offset = intval($offset);
+            $limitSql = " LIMIT {$offset} , {$limit} ";
+        }
+
+        $field = $this->field?$this->field:"*";
+
+        $sql = "SELECT {$field}  FROM `{$tableName}` " . $whereSql . $groupBySql . $orderBySql . $limitSql;
+
+        $this->field = null;
+        $rs = $this->fetchAll($sql, self::CONN_SLAVE);
+        if ($returnCount) {
+            $sqlCount = "SELECT count(*) as cnt FROM  `{$tableName}` " . $whereSql;
+            $rsCount = $this->fetch($sqlCount, self::CONN_SLAVE);
+            $this->_total = $rsCount['cnt'];
+        }
+        
+        return $rs;
+    }
+
+    /**
+     * 得到单个字段
+     * @param  [type]  $field   [description]
+     * @param  [type]  $where   [description]
+     * @param  boolean $isMore [description]
+     * @param  string $orderBy [description]
+     * @param  string $limit [description]
+     * @param  string $offset [description]
+     * @param  string $groupBy [description]
+     * @return [type]           [description]
+     */
+    public function getField($field, $where, $isMore = false, $resultKey = "", $orderBy = "", $limit = "", $offset = "", $groupBy = "", $tableName = null)
+    {
+        $whereSql = $this->parseWhere($where);
+        $whereSql = $whereSql ? " WHERE " . $whereSql : "";
+        $tableName = $tableName ? $this->getPrefix() . $tableName : $this->getTableName();
+        $orderBySql = "";
+        $groupBySql = "";
+        $limitSql = "";
+        if ($groupBy) {
+            $groupBySql = " GROUP BY " . $groupBy;
+        }
+        if ($orderBy) {
+            $orderBySql = " ORDER BY " . $orderBy;
+        }
+
+        if ($limit) {
+            $limit = intval($limit);
+            $offset = intval($offset);
+            $limitSql = " LIMIT {$offset} , {$limit} ";
+        }
+        $resultKeyStr = $resultKey ? $resultKey . "," : "";
+        $sql = "SELECT " . $resultKeyStr . " " . $field . "  FROM `{$tableName}` " . $whereSql . $groupBySql . $orderBySql . $limitSql;
+
+        if ($isMore) {
+            $rs = $this->fetchAll($sql, self::CONN_SLAVE);
+            if (!$rs) {
+                return array();
+            }
+            $result = array();
+            
+            foreach ($rs as $key => $value) {
+                if(isset($value[$resultKey])){
+                    $result[$value[$resultKey]] = $value[$field];
+                }else{
+                    $result[] = $value[$field];
+                }
+            }
+            return $result;
+        } else {
+            $rs = $this->fetch($sql, self::CONN_SLAVE);
+            $result = $rs ? $rs[$field] : "";
+            return $result;
+        }
+    }
+
+    /**
+     *  对获取到的数组，将其中一个字段作为key
+     * @param $key
+     * @param $where
+     * @param string $orderBy
+     * @param string $limit
+     * @param string $offset
+     * @param string $groupBy
+     * @param bool $returnCount
+     * @param null $tableName
+     * @return array
+     */
+    public function getReturnUseFieldKey($fieldKey, $where, $orderBy = "", $limit = "", $offset = "", $groupBy = "", $returnCount = false, $tableName=null)
+    {
+        $list = $this->gets($where, $orderBy,$limit, $offset, $groupBy, $returnCount, $tableName);
+        if(!$list) return $list;
+        $rs = [];
+        if($list){
+            foreach ($list as $v){
+                $rs[$v[$fieldKey]] = $v;
+            }
+        }
+        return $rs;
+    }
+
+
+    /**
+     * 根据条件获取一行
+     * @param array $where
+     */
+    public function get($where, $orderBy = "", $groupBy="", $tableName = null)
+    {
+
+        $whereSql = $this->parseWhere($where);
+        $whereSql = $whereSql ? " WHERE " . $whereSql : "";
+
+        $tableName = $tableName ? $this->getPrefix() . $tableName : $this->getTableName();
+
+        $field = $this->field?$this->field:"*";
+
+        $sql = "SELECT {$field} FROM `{$tableName}` " . $whereSql;
+        if ($orderBy) {
+            $sql .= " ORDER BY " . $orderBy;
+        }
+        if ($groupBy) {
+            $sql .= " GROUP BY " . $orderBy;
+        }
+        $this->field = null;
+        
+        return $this->fetch($sql, self::CONN_SLAVE);
+    }
+
+
+    /**
+     * 获取分页数据
+     * @param array $where
+     * @param int $page
+     * @param int $pageSize
+     * @param string $orderBy
+     * @param string $groupBy
+     * @return array
+     */
+    function pager($where = array(), $page=1,$pageSize=20, $orderBy = "", $groupBy = ""){
+        $page = $page?$page:1;
+        $limit = ($page-1)*$pageSize;
+        $list = $this->gets($where,$orderBy,$pageSize,$limit,$groupBy,true);
+        $count = $this->getTotal();
+        $totalPage = $count==0?0:ceil($count/$pageSize);
+        return array($list,$count, $totalPage);
+    }
+
+    /**
+     * 获取分页数据
+     * @param $sql
+     * @param int $page
+     * @param int $pageSize
+     * @return array
+     * @throws \Exception
+     */
+    function pagerSql($sql,$page=1,$pageSize=20){
+        $page = $page?$page:1;
+        $limit = ($page-1)*$pageSize;
+        $sql .= " LIMIT ".$limit.", ".$pageSize;
+        $list = $this->selectAll($sql,array(),true);
+        $count = $this->getTotal();
+        $totalPage = $count==0?0:ceil($count/$pageSize);
+        return array($list,$count, $totalPage);
+    }
+
+
+    /**
+     *
+     * 获取数据行数
+     * @param array $where
+     */
+    public function getCount($where = array(), $groupBy = "", $tableName = null)
+    {
+        $whereSql = $this->parseWhere($where);
+        $whereSql = $whereSql ? " WHERE " . $whereSql : "";
+        $tableName = $tableName ? $this->getPrefix() . $tableName : $this->getTableName();
+        $groupBySql = "";
+        if ($groupBy) {
+            $groupBySql = " GROUP BY " . $groupBy;
+        }
+        $sql = "SELECT count(*) as cnt FROM `{$tableName}` " . $whereSql . $groupBySql;
+        $return = $this->fetch($sql, self::CONN_SLAVE);
+        return $return['cnt'];
+    }
+
+
+    public function getSum($field, $where = array(), $groupBy = "", $tableName = null)
+    {
+        $whereSql = $this->parseWhere($where);
+        $whereSql = $whereSql ? " WHERE " . $whereSql : "";
+        $tableName = $tableName ? $this->getPrefix() . $tableName : $this->getTableName();
+        $groupBySql = "";
+        if ($groupBy) {
+            $groupBySql = " GROUP BY " . $groupBy;
+        }
+        $sql = "SELECT SUM(".$field.") as cnt FROM `{$tableName}` " . $whereSql . $groupBySql;
+        $return = $this->fetch($sql, self::CONN_SLAVE);
+        return $return['cnt'];
+    }
+
+
+    public function field($fieldStr){
+        $this->field = $fieldStr;
+        return $this;
+    }
+    
+
+    protected function quote($value)
+    {
+        if(!is_string($value)) return $value;
+        $data = addslashes($value);
+        return "'".$data."'";
+    }
+
+    /**
+     *
+     * 获取sql
+     */
+    public static function getSql()
+    {
+        return self::$_sql;
+    }
+
+    /**
+     *
+     * 获取sql
+     */
+    public static function clearStaticData()
+    {
+        self::$_sql = [];
+    }
+
+    /**
+     *  导入
+     *  
+     * @param $sqlPath
+     * @param string $old_prefix
+     * @param string $new_prefix
+     * @param string $exceptTable 排除的table
+     * @return bool
+     */
+    function import($sqlPath,$old_prefix="",$new_prefix="", $exceptTable=[]){
+        if(is_file($sqlPath)){
+            $txt = file_get_contents($sqlPath);
+            if(!$txt) return true;
+            $sqlArr = $this->clearSql($txt,$old_prefix,$new_prefix);
+//            dump($sqlArr);
+            if($sqlArr){
+                foreach ($sqlArr as $sv){
+                    $isExcept = 0;
+                    if($exceptTable){
+                        foreach ($exceptTable as $ev){
+                            if(preg_match_all("/`{$ev}`/i", $sv, $match)){
+                                $this->dump($match);
+                                $isExcept = 1;
+                                continue;
+                            }
+                        }
+                    }
+                    if(!$isExcept){
+                        Log::show($sv);
+                        $this->exec($sv);
+                    }
+
+                }
+            }
+        }
+        return true;
+    }
+
+    /*
+		参数：
+		$old_prefix:原表前缀；
+		$new_prefix:新表前缀；
+		$separator:分隔符 参数可为";\n"或";\r\n"或";\r"
+	*/
+    function clearSql($content,$old_prefix="",$new_prefix="",$separator=";\n")
+    {
+        $commenter = array('#','-','\/\*', '\+', '\@');
+        if($new_prefix) $content = str_replace(array($old_prefix, "\r"), array($new_prefix, "\n"), $content);//替换前缀
+        //通过sql语法的语句分割符进行分割
+        $segment = explode($separator,trim($content));
+        //去掉注释和多余的空行
+        $data=array();
+        foreach($segment as  $statement)
+        {
+            $sentence = explode("\n",$statement);
+            $newStatement = array();
+            foreach($sentence as $subSentence)
+            {
+                if('' != trim($subSentence))
+                {
+                    //判断是会否是注释
+                    $isComment = false;
+                    foreach($commenter as $comer)
+                    {
+                        if(preg_match("/^(".$comer.")/is",trim($subSentence)))
+                        {
+                            $isComment = true;
+                            break;
+                        }
+                    }
+                    //如果不是注释，则认为是sql语句
+                    if(!$isComment)
+                        $newStatement[] = $subSentence;
+                }
+            }
+            $data[] = $newStatement;
+        }
+        //组合sql语句
+        foreach($data as  $statement)
+        {
+            $newStmt = '';
+            foreach($statement as $sentence)
+            {
+                $newStmt = $newStmt.trim($sentence)."\n";
+            }
+            if(!empty($newStmt))
+            {
+                $result[] = $newStmt;
+            }
+        }
+        return $result;
+    }
+
+}
