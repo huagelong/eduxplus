@@ -1,6 +1,0 @@
-<?php
-define("ROOT_PATH", __DIR__."/..");
-define("STORAGE_PATH", __DIR__."/../storage");
-define("APPLICATION_PATH",__DIR__."/../application");
-define("RESOURCE_PATH",__DIR__."/../resources");
-require_once __DIR__ . "/../vendor/autoload.php";

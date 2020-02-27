@@ -1,10 +1,16 @@
-client/node_modules
-server/storage
-/.settings
-/.idea
-/.project
-server/vendor
-server/.env
-*.uini
-server/Vagrantfile
-server/.vagrant
+
+###> symfony/framework-bundle ###
+/.env.local
+/.env.local.php
+/.env.*.local
+/config/secrets/prod/prod.decrypt.private.php
+/public/bundles/
+/var/
+/vendor/
+###< symfony/framework-bundle ###
+
+###> symfony/phpunit-bridge ###
+.phpunit
+.phpunit.result.cache
+/phpunit.xml
+###< symfony/phpunit-bridge ###
