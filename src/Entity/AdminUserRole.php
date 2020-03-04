@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * AdminUserRole
  *
  * @ORM\Table(name="admin_user_role")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\AdminUserRoleRepository")
  */
 class AdminUserRole
 {

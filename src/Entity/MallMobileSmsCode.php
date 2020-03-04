@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * MallMobileSmsCode
  *
  * @ORM\Table(name="mall_mobile_sms_code")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\MallMobileSmsCodeRepository")
  */
 class MallMobileSmsCode
 {

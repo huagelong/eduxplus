@@ -7,8 +7,8 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * MallOrder
  *
- * @ORM\Table(name="mall_order", uniqueConstraints={@ORM\UniqueConstraint(name="order_no", columns={"order_no"})}, indexes={@ORM\Index(name="order_status", columns={"order_status"}), @ORM\Index(name="order_time", columns={"order_time"}), @ORM\Index(name="user_id", columns={"uid"})})
- * @ORM\Entity
+ * @ORM\Table(name="mall_order")
+ * @ORM\Entity(repositoryClass="App\Repository\MallOrderRepository")
  */
 class MallOrder
 {

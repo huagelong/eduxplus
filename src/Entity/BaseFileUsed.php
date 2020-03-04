@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * BaseFileUsed
  *
  * @ORM\Table(name="base_file_used")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\BaseFileUsedRepository")
  */
 class BaseFileUsed
 {

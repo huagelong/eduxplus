@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * BaseAccess
  *
  * @ORM\Table(name="base_access")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\BaseAccessRepository")
  */
 class BaseAccess
 {

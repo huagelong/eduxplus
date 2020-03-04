@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * TeachCategory
  *
  * @ORM\Table(name="teach_category", indexes={@ORM\Index(name="parent_id", columns={"parent_id"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\TeachCategoryRepository")
  */
 class TeachCategory
 {

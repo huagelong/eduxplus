@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * BaseFileGroup
  *
  * @ORM\Table(name="base_file_group")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\BaseFileGroupRepository")
  */
 class BaseFileGroup
 {

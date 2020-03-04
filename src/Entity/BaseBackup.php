@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * BaseBackup
  *
  * @ORM\Table(name="base_backup")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\BaseBackupRepository")
  */
 class BaseBackup
 {

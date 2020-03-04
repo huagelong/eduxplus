@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * BaseOptionGroup
  *
  * @ORM\Table(name="base_option_group")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\BaseOptionGroupRepository")
  */
 class BaseOptionGroup
 {

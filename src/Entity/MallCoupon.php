@@ -7,8 +7,8 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * MallCoupon
  *
- * @ORM\Table(name="mall_coupon", indexes={@ORM\Index(name="coupon_manage_id", columns={"coupon_group_id"}), @ORM\Index(name="coupon_status", columns={"coupon_status"})})
- * @ORM\Entity
+ * @ORM\Table(name="mall_coupon")
+ * @ORM\Entity(repositoryClass="App\Repository\MallCouponRepository")
  */
 class MallCoupon
 {
