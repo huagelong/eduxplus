@@ -3,14 +3,13 @@
  * @Author: kaihui.wang
  * @Contact  hpuwang@gmail.com
  * @Version: 1.0.0
- * @Date: 2020/2/29 11:23
+ * @Date: 2020/3/3 20:20
  */
 
-namespace App\Bundle\CenterBundle;
+namespace App\AdminBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
-
-class CenterBundle extends Bundle
+class AdminBundle extends Bundle
 {
 
 }

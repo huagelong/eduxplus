@@ -1,0 +1,163 @@
+<?php
+
+namespace App\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * TeachCourseVideos
+ *
+ * @ORM\Table(name="teach_course_videos")
+ * @ORM\Entity
+ */
+class TeachCourseVideos
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer", nullable=false, options={"unsigned"=true})
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var int|null
+     *
+     * @ORM\Column(name="course_id", type="integer", nullable=true)
+     */
+    private $courseId;
+
+    /**
+     * @var int|null
+     *
+     * @ORM\Column(name="chapter_id", type="integer", nullable=true, options={"comment"="章节id"})
+     */
+    private $chapterId;
+
+    /**
+     * @var bool|null
+     *
+     * @ORM\Column(name="type", type="boolean", nullable=true, options={"comment"="1-直播,2-录播"})
+     */
+    private $type;
+
+    /**
+     * @var bool|null
+     *
+     * @ORM\Column(name="video_channel", type="boolean", nullable=true, options={"comment"="1-cc视频，2-百度云"})
+     */
+    private $videoChannel;
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="channel_data", type="text", length=65535, nullable=true, options={"comment"="渠道数据"})
+     */
+    private $channelData;
+
+    /**
+     * @var int|null
+     *
+     * @ORM\Column(name="created_at", type="integer", nullable=true)
+     */
+    private $createdAt;
+
+    /**
+     * @var int|null
+     *
+     * @ORM\Column(name="updated_at", type="integer", nullable=true)
+     */
+    private $updatedAt;
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getCourseId(): ?int
+    {
+        return $this->courseId;
+    }
+
+    public function setCourseId(?int $courseId): self
+    {
+        $this->courseId = $courseId;
+
+        return $this;
+    }
+
+    public function getChapterId(): ?int
+    {
+        return $this->chapterId;
+    }
+
+    public function setChapterId(?int $chapterId): self
+    {
+        $this->chapterId = $chapterId;
+
+        return $this;
+    }
+
+    public function getType(): ?bool
+    {
+        return $this->type;
+    }
+
+    public function setType(?bool $type): self
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    public function getVideoChannel(): ?bool
+    {
+        return $this->videoChannel;
+    }
+
+    public function setVideoChannel(?bool $videoChannel): self
+    {
+        $this->videoChannel = $videoChannel;
+
+        return $this;
+    }
+
+    public function getChannelData(): ?string
+    {
+        return $this->channelData;
+    }
+
+    public function setChannelData(?string $channelData): self
+    {
+        $this->channelData = $channelData;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?int
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(?int $createdAt): self
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?int
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(?int $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+
+}
