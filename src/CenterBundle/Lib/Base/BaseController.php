@@ -6,7 +6,7 @@
  * @Date: 2020/3/4 11:47
  */
 
-namespace App\CenterBundle\Base;
+namespace App\CenterBundle\Lib\Base;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Psr\Log\LoggerInterface;
