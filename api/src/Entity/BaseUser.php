@@ -2,11 +2,12 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * BaseUser
- *
+ * @ApiResource()
  * @ORM\Table(name="base_user")
  * @ORM\Entity(repositoryClass="App\Repository\BaseUserRepository")
  */

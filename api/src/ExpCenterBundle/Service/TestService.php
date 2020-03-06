@@ -6,17 +6,16 @@
  * @Date: 2020/3/5 11:03
  */
 
-namespace App\CenterBundle\Service;
+namespace App\ExpCenterBundle\Service;
 
 
-use App\CenterBundle\Lib\Base\BaseService;
+use App\ExpCenterBundle\Lib\Base\BaseService;
 
 class TestService extends BaseService
 {
 
     public function test(){
-        return $this->getParameter("name.kaihui")->getName();
-//        return $this->getParameter("app.name");
+        return $this->getParameter("app.name");
     }
 
 }

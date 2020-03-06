@@ -12,7 +12,7 @@ return [
     Symfony\Bundle\MonologBundle\MonologBundle::class => ['all' => true],
     Symfony\Bundle\DebugBundle\DebugBundle::class => ['dev' => true, 'test' => true],
     Symfony\Bundle\MakerBundle\MakerBundle::class => ['dev' => true],
-    App\CenterBundle\CenterBundle::class => ['all' => true],
-    App\AdminBundle\AdminBundle::class => ['all' => true],
-    App\ApiBundle\ApiBundle::class => ['all' => true],
+    App\ExpCenterBundle\ExpCenterBundle::class => ['all' => true],
+    App\ExpAdminBundle\ExpAdminBundle::class => ['all' => true],
+    App\ExpApiBundle\ExpApiBundle::class => ['all' => true],
 ];

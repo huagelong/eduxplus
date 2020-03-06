@@ -6,7 +6,7 @@
  * @Date: 2020/3/5 11:38
  */
 
-namespace App\CenterBundle\Lib;
+namespace App\ExpCenterBundle\Lib;
 
 
 class Name

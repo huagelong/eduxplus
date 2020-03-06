@@ -1,5 +1,5 @@
 centerBundle_controllers:
-    resource: ../../src/CenterBundle/Controller/
+    resource: ../../src/ExpCenterBundle/Controller/
     type: annotation
 
 kernel:

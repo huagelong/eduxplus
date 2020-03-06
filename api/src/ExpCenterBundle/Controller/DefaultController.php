@@ -1,11 +1,9 @@
 <?php
 
-namespace App\CenterBundle\Controller;
+namespace App\ExpCenterBundle\Controller;
 
-use App\CenterBundle\Lib\Base\BaseController;
-use App\CenterBundle\Service\TestService;
-use Negotiation\Tests\TestCase;
-use Psr\Log\LoggerInterface;
+use App\ExpCenterBundle\Lib\Base\BaseController;
+use App\ExpCenterBundle\Service\TestService;
 use Symfony\Component\Routing\Annotation\Route;
 
 class DefaultController extends BaseController
@@ -15,7 +13,8 @@ class DefaultController extends BaseController
      */
     public function index($projectDir, TestService $testService)
     {
-        $appName = $testService->test();
+//        $appName = $testService->test();
+        $appName = $this->getParameter("exp_center.app.name");
         $this->logger->info($projectDir);
         return $this->render('default/index.html.twig', [
             'controller_name' => $appName,
