@@ -6,10 +6,10 @@
  * @Date: 2020/3/3 20:20
  */
 
-namespace App\ExpAdminBundle;
+namespace App\Bundle\AdminBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
-class ExpAdminBundle extends Bundle
+class AdminBundle extends Bundle
 {
 
 }

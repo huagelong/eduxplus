@@ -6,10 +6,10 @@
  * @Date: 2020/3/5 11:03
  */
 
-namespace App\ExpCenterBundle\Service;
+namespace App\Bundle\CenterBundle\Service;
 
 
-use App\ExpCenterBundle\Lib\Base\BaseService;
+use App\Bundle\CenterBundle\Lib\Base\BaseService;
 
 class TestService extends BaseService
 {

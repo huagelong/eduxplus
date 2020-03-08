@@ -7,27 +7,16 @@ services:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
         public: false
-        bind:
-            $projectDir: '%kernel.project_dir%' #项目路径
-#            $nameKaihui: '@name.kaihui'
-#    #bundle service 加载
-    App\ExpCenterBundle\:
-        resource: '../src/ExpCenterBundle/*'
-        exclude: '../src/ExpCenterBundle/{DependencyInjection,Resources,Entity,Tests}'
+    App\:
+       resource: '../src/*'
+       exclude: '../src/**/{DependencyInjection,Migrations,Resources,Entity,Tests,Kernel.php}'
 
     # controllers are imported separately to make sure services can be injected
     # as action arguments even if you don't extend any base controller class
-    App\ExpCenterBundle\Controller\:
-        resource: '../src/ExpCenterBundle/Controller'
+    App\Bundle\:
+        resource: '../src/Bundle/**/Controller'
         tags: ['controller.service_arguments']
 
-    App\Repository\BaseUserRepository:
-        tags: ['doctrine.repository_service']
-
-    name.wang:
-        class: App\ExpCenterBundle\Lib\Name
-        autowire: false
-        public: true
-        arguments:
-            $name: 'wang'
-
+    App\Bundle\CenterBundle\EventListener\DatabaseActivitySubscriber:
+            tags:
+              - { name: 'doctrine.event_subscriber'}

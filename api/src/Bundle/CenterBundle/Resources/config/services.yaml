@@ -1,0 +1,12 @@
+parameters:
+  centerBundle.app.name: "hello center1"
+
+services:
+    _defaults:
+        autowire: true      # Automatically injects dependencies in your services.
+        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+        public: false
+
+    App\Bundle\CenterBundle\EventListener\DatabaseActivitySubscriber:
+            tags:
+              - { name: 'doctrine.event_subscriber'}

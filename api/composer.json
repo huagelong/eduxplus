@@ -5,7 +5,15 @@
         "php": "^7.1.3",
         "ext-ctype": "*",
         "ext-iconv": "*",
+        "friendsofsymfony/rest-bundle": "^2.7",
+        "imper86/jobby-cron-bundle": "^1.0",
+        "jms/serializer-bundle": "^3.5",
+        "lexik/jwt-authentication-bundle": "^2.6",
+        "nelmio/api-doc-bundle": "^3.5",
+        "nelmio/cors-bundle": "^2.0",
+        "predis/predis": "^1.1",
         "sensio/framework-extra-bundle": "^5.5",
+        "snc/redis-bundle": "^3.2",
         "symfony/asset": "4.4.*",
         "symfony/console": "4.4.*",
         "symfony/dotenv": "4.4.*",
@@ -29,6 +37,7 @@
         "symfony/yaml": "4.4.*"
     },
     "require-dev": {
+        "easycorp/easy-deploy-bundle": "^1.0",
         "symfony/debug-pack": "*",
         "symfony/maker-bundle": "^1.0",
         "symfony/profiler-pack": "*",

@@ -1,5 +1,13 @@
-centerBundle_controllers:
-    resource: ../../src/ExpCenterBundle/Controller/
+centerBundle.Controllers:
+    resource: ../../src/Bundle/CenterBundle/Controller/
+    type: annotation
+
+adminBundle.Controllers:
+    resource: ../../src/Bundle/AdminBundle/Controller/
+    type: annotation
+
+appBundle.Controllers:
+    resource: ../../src/Bundle/AppBundle/Controller/
     type: annotation
 
 kernel:

@@ -6,14 +6,14 @@
  * @Date: 2020/3/3 20:20
  */
 
-namespace App\ExpCenterBundle;
+namespace App\Bundle\CenterBundle;
 
-use App\ExpCenterBundle\DependencyInjection\ExpCenterExtension;
+use App\Bundle\CenterBundle\DependencyInjection\CenterExtension;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
-class ExpCenterBundle extends Bundle
+class CenterBundle extends Bundle
 {
     public function getContainerExtension()
     {
-        return new ExpCenterExtension();
+        return new CenterExtension();
     }
 }

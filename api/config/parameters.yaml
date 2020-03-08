@@ -1,2 +1,3 @@
 parameters:
    app.name: 'eduxplus教育系统'
+   app.path: '%kernel.project_dir%' #项目路径
