@@ -158,4 +158,112 @@ class BaseUser implements UserInterface
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
     }
+
+    public function getMobile(): ?string
+    {
+        return $this->mobile;
+    }
+
+    public function setMobile(string $mobile): self
+    {
+        $this->mobile = $mobile;
+
+        return $this;
+    }
+
+    public function getFullName(): ?string
+    {
+        return $this->fullName;
+    }
+
+    public function setFullName(?string $fullName): self
+    {
+        $this->fullName = $fullName;
+
+        return $this;
+    }
+
+    public function getDisplayName(): ?string
+    {
+        return $this->displayName;
+    }
+
+    public function setDisplayName(?string $displayName): self
+    {
+        $this->displayName = $displayName;
+
+        return $this;
+    }
+
+    public function getFaceImg(): ?string
+    {
+        return $this->faceImg;
+    }
+
+    public function setFaceImg(?string $faceImg): self
+    {
+        $this->faceImg = $faceImg;
+
+        return $this;
+    }
+
+    public function getBirthday(): ?\DateTimeInterface
+    {
+        return $this->birthday;
+    }
+
+    public function setBirthday(?\DateTimeInterface $birthday): self
+    {
+        $this->birthday = $birthday;
+
+        return $this;
+    }
+
+    public function getSex(): ?bool
+    {
+        return $this->sex;
+    }
+
+    public function setSex(?bool $sex): self
+    {
+        $this->sex = $sex;
+
+        return $this;
+    }
+
+    public function getReportUid(): ?int
+    {
+        return $this->reportUid;
+    }
+
+    public function setReportUid(?int $reportUid): self
+    {
+        $this->reportUid = $reportUid;
+
+        return $this;
+    }
+
+    public function getIsLock(): ?bool
+    {
+        return $this->isLock;
+    }
+
+    public function setIsLock(?bool $isLock): self
+    {
+        $this->isLock = $isLock;
+
+        return $this;
+    }
+
+    public function getRegSource(): ?string
+    {
+        return $this->regSource;
+    }
+
+    public function setRegSource(?string $regSource): self
+    {
+        $this->regSource = $regSource;
+
+        return $this;
+    }
 }
