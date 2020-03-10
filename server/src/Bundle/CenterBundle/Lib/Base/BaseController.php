@@ -10,8 +10,11 @@ namespace App\Bundle\CenterBundle\Lib\Base;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Psr\Log\LoggerInterface;
+use FOS\RestBundle\Controller\AbstractFOSRestController;
+use FOS\RestBundle\Controller\Annotations as Rest;
+use Symfony\Component\HttpFoundation\Request;
 
-class BaseController extends AbstractController
+class BaseController extends AbstractFOSRestController
 {
     /**
      * @var LoggerInterface
