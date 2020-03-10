@@ -14,10 +14,16 @@ fos_rest:
             Doctrine\ORM\EntityNotFoundException: 404
             \LogicException: 400
             \DomainException: 400
+            \InvalidArgumentException: 400
         messages:
             Doctrine\ORM\EntityNotFoundException: true
             \LogicException: true
             \DomainException: true
+            \InvalidArgumentException: true
     format_listener:
+        enabled: true
         rules:
              - { path: '^/api',prefer_extension: true,fallback_format: 'json',priorities: ['json'] }
+    versioning:
+        enabled: true
+        guessing_order: [query, custom_header]  # X-Accept-Version header
