@@ -1,6 +1,8 @@
 nelmio_api_doc:
     models: { use_jms: true }
     documentation:
+        host: www.eduxplus.com
+        schemes: [http, https]
         info:
             title: EduXPlus Project
             description: EduXPlus 网课系统
