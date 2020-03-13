@@ -6,7 +6,7 @@
  * @Date: 2020/3/8 17:50
  */
 
-namespace App\Bundle\CenterBundle\EventListener;
+namespace App\EventListener;
 
 use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Doctrine\Persistence\Event\LifecycleEventArgs;

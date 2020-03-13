@@ -1,17 +1,12 @@
-centerBundle.Controllers:
-    resource: ../../src/Bundle/CenterBundle/Controller/
-    type: annotation
-    prefix: /api/center
-
 adminBundle.Controllers:
     resource: ../../src/Bundle/AdminBundle/Controller/
     type: annotation
-    prefix: /api/adm
+    prefix: /adm
 
 appBundle.Controllers:
     resource: ../../src/Bundle/AppBundle/Controller/
     type: annotation
-    prefix: /api/app
+    prefix: /api
 
 kernel:
     resource: ../../src/Kernel.php

@@ -1,8 +1,0 @@
-parameters:
-  centerBundle.app.name: "hello center1"
-
-services:
-
-#    App\Bundle\CenterBundle\EventListener\DatabaseActivitySubscriber:
-#            tags:
-#              - { name: 'doctrine.event_subscriber'}

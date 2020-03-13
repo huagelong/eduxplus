@@ -2,7 +2,7 @@
 
 namespace App\Bundle\AppBundle\Controller;
 
-use App\Bundle\CenterBundle\Lib\Base\BaseController;
+use App\Lib\Base\BaseController;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\Annotations\View as ViewAnnotations;
 use Swagger\Annotations as SWG;
@@ -16,9 +16,10 @@ use Symfony\Component\HttpFoundation\Request;
 class UserController extends BaseController
 {
     /**
-     * @Rest\Post("/login")
+     * @Rest\Get("/login")
      * @ViewAnnotations()
      *
+     * @SWG\Tag(name="用户")
      * @SWG\Response(
      *     response=200,
      *     description="Returned when the register is successful",
@@ -48,7 +49,6 @@ class UserController extends BaseController
      *          }
      *     ),
      * )
-     * @SWG\Tag(name="Login")
      */
     public function login(Request $request)
     {
@@ -57,4 +57,15 @@ class UserController extends BaseController
         $data=["name"=>$name."-".$version];
         return $data;
     }
+
+    /**
+     * 退出
+     * @Rest\Get("/logout")
+     * @ViewAnnotations()
+     */
+    public function logout(){
+
+    }
+
+
 }

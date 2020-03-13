@@ -6,7 +6,7 @@
  * @Date: 2020/3/4 20:41
  */
 
-namespace App\Bundle\CenterBundle\Lib\Base;
+namespace App\Lib\Base;
 
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -24,6 +24,13 @@ class BaseService extends AbstractController
         $this->logger = $logger;
     }
 
+    /**
+     * 更新或者保存
+     *
+     * @param $model
+     * @param null $name
+     * @return mixed
+     */
     public function save($model, $name=null){
         $entityManage = $this->getDoctrine()->getManager($name);
         $entityManage->persist($model);

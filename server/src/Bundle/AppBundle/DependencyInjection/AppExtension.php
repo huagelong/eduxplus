@@ -6,14 +6,14 @@
  * @Date: 2020/3/5 20:41
  */
 
-namespace App\Bundle\CenterBundle\DependencyInjection;
+namespace App\Bundle\AppBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
-class CenterExtension extends Extension
+class AppExtension extends Extension
 {
 
     /**
