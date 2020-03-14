@@ -3,7 +3,9 @@
 namespace App\Bundle\AppBundle\Controller;
 
 use App\Entity\AdminActionLog;
+use App\Entity\BaseUser;
 use App\Lib\Base\BaseController;
+use App\Lib\Service\TestService;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\Annotations\View as ViewAnnotations;
 use Swagger\Annotations as SWG;
@@ -11,15 +13,15 @@ use Nelmio\ApiDocBundle\Annotation\Model;
 use Nelmio\ApiDocBundle\Annotation\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
- * @Route("/auth")
  * @package App\Bundle\AppBundle\Controller
  */
 class AuthController extends BaseController
 {
     /**
-     * @Rest\Get("/login")
+     * @Rest\Post("/login")
      * @ViewAnnotations()
      *
      * @SWG\Tag(name="用户")
@@ -55,30 +57,41 @@ class AuthController extends BaseController
      */
     public function login(Request $request)
     {
-        $model = new AdminActionLog();
-        $model->setIp(time());
-        $model->setUid(11);
-        $model->setInputData(time());
-        $model->setRoute("/");
-        $entityManage = $this->getDoctrine()->getManager();
-        $entityManage->persist($model);
-        $entityManage->flush();
-
-        $name = $request->get("testName");
-        $version = $request->headers->get("X-Accept-Version");
-        $data=["name"=>$name."-".$version];
-        return $data;
+        //todo
+        return true;
     }
 
 
     /**
-     * 登录检查
-     * @Rest\Post("/loginCheck")
+     * @Rest\Get("/test")
      * @ViewAnnotations()
+     * @param Request $request
+     * @param TestService $testService
+     * @return array
      */
-    public function loginCheck(){
+    public function test(Request $request, TestService $testService,  UserPasswordEncoderInterface $passwordEncoder)
+    {
+        $model = new BaseUser();
+        $pwd = $passwordEncoder->encodePassword($model, "111111");
+        $model->setSex(1);
+        $model->setBirthday(date('Y-m-d'));
+        $model->setRegSource("web");
+        $model->setMobile("17621487074");
+        $model->setReportUid(0);
+        $model->setDisplayName("超级管梨园");
+        $model->setFullName("汪鑫远");
+        $model->setRoles(["ROLE_ADMIN"]);
+        $model->setUuid(uniqid());
+        $model->setPassword($pwd);
+        $this->save($model);
 
+        $name = $request->get("testName");
+//        $version = $request->headers->get("X-Accept-Version");
+        $version = $testService->show();
+        $data=["name"=>$name."-".$version];
+        return $data;
     }
+
 
     /**
      * 退出

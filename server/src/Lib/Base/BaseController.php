@@ -11,15 +11,7 @@ namespace App\Lib\Base;
 use Psr\Log\LoggerInterface;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
 
-class BaseController extends AbstractFOSRestController
+class BaseController extends BaseService
 {
-    /**
-     * @var LoggerInterface
-     */
-    protected $logger;
 
-   public function __construct(LoggerInterface $logger)
-   {
-       $this->logger = $logger;
-   }
 }

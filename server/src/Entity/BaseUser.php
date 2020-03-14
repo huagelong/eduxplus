@@ -5,7 +5,6 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Lexik\Bundle\JWTAuthenticationBundle\Security\User\JWTUserInterface;
 
 /**
  * @ORM\Table(name="base_user")
@@ -16,16 +15,17 @@ class BaseUser implements UserInterface
 {
     /**
      * @ORM\Id()
-     * @ORM\GeneratedValue()
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      * @ORM\Column(type="integer")
      */
     private $id;
 
     /**
-     * @ORM\Column(name="uuid", type="guid", unique=true)
+     * @ORM\Column(name="uuid", type="guid", unique=true, options={"comment"="唯一码"})
      * @ORM\GeneratedValue(strategy="UUID")
      */
     private $uuid;
+
 
     /**
      * @ORM\Column(name="mobile",type="string", length=12, unique=true)
@@ -54,9 +54,8 @@ class BaseUser implements UserInterface
     private $faceImg;
 
     /**
-     * @var \DateTime|null
      *
-     * @ORM\Column(name="birthday", type="date", nullable=true, options={"comment"="生日"})
+     * @ORM\Column(name="birthday", type="string", length=10, nullable=true, options={"comment"="生日"})
      */
     private $birthday;
 
@@ -97,9 +96,14 @@ class BaseUser implements UserInterface
 
     /**
      * @var string The hashed password
-     * @ORM\Column(type="string")
+     * @ORM\Column(name="password",type="string")
      */
     private $password;
+
+    /**
+     * @ORM\Column(name="password_change_date", type="integer", nullable=true)
+     */
+    private $passwordChangeDate;
 
     /**
      * @var int|null
@@ -186,18 +190,6 @@ class BaseUser implements UserInterface
         // $this->plainPassword = null;
     }
 
-    public function getMobile(): ?string
-    {
-        return $this->mobile;
-    }
-
-    public function setMobile(string $mobile): self
-    {
-        $this->mobile = $mobile;
-
-        return $this;
-    }
-
     public function getFullName(): ?string
     {
         return $this->fullName;
@@ -230,18 +222,6 @@ class BaseUser implements UserInterface
     public function setFaceImg(?string $faceImg): self
     {
         $this->faceImg = $faceImg;
-
-        return $this;
-    }
-
-    public function getBirthday(): ?\DateTimeInterface
-    {
-        return $this->birthday;
-    }
-
-    public function setBirthday(?\DateTimeInterface $birthday): self
-    {
-        $this->birthday = $birthday;
 
         return $this;
     }
@@ -341,4 +321,48 @@ class BaseUser implements UserInterface
 
         return $this;
     }
+
+    public function getPasswordChangeDate(): ?int
+    {
+        return $this->passwordChangeDate;
+    }
+
+    public function setPasswordChangeDate(?int $passwordChangeDate): self
+    {
+        $this->passwordChangeDate = $passwordChangeDate;
+
+        return $this;
+    }
+
+    public function setUsername(string $username): self
+    {
+        $this->uuid = $username;
+
+        return $this;
+    }
+
+    public function getMobile(): ?string
+    {
+        return $this->mobile;
+    }
+
+    public function setMobile(string $mobile): self
+    {
+        $this->mobile = $mobile;
+
+        return $this;
+    }
+
+    public function getBirthday(): ?string
+    {
+        return $this->birthday;
+    }
+
+    public function setBirthday(?string $birthday): self
+    {
+        $this->birthday = $birthday;
+
+        return $this;
+    }
+
 }

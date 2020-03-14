@@ -1,49 +1,31 @@
 security:
     encoders:
-        legacy:
-            algorithm: sha256
-            encode_as_base64: false
-            iterations: 1
-#        App\Entity\BaseUser:
-#            algorithm: sodium
-#            migrate_from:
-#                  - bcrypt # uses the "bcrypt" encoder with the default options
-#                  - legacy # uses the "legacy" encoder configured above
-
-    # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
+        App\Entity\BaseUser: bcrypt
     providers:
-        # used to reload user from session & other features (e.g. switch_user)
-        app_user_provider:
+        database:
             entity:
                 class: App\Entity\BaseUser
                 property: mobile
-#        jwt: # optional, any user provider can be used
-#            lexik_jwt:
-#                class: App\Entity\BaseUser
+#       lexik_jwt:
+#       class: App\Entity\BaseUser
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
-#        main:
-#            anonymous: lazy
-#            provider: app_user_provider
-#            logout:
-#              path:   app_user_logout
-        api_login:
-          pattern:  ^/api/auth/login
+        api:
+          pattern:  ^/api
           stateless: true
           anonymous: true
           json_login:
-              check_path: /api/auth/loginCheck
+              check_path: /api/login
               success_handler: lexik_jwt_authentication.handler.authentication_success
               failure_handler: lexik_jwt_authentication.handler.authentication_failure
-              username_path: app_user_provider
-#        api:
-#            pattern:   ^/api
-#            stateless: true
-#            guard:
-#                authenticators:
-#                    - lexik_jwt_authentication.jwt_token_authenticator
+              username_path: mobile
+              password_path: password
+          guard:
+              authenticators:
+                  - App\Security\TokenAuthenticator
+          user_checker: App\Security\UserEnabledChecker
 
         api_doc:
               pattern:  ^/api/doc
@@ -55,7 +37,7 @@ security:
 
     access_control:
          - { path: '^/admin', roles: [ROLE_ADMIN] }
-         - { path: ^/api/auth/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+         - { path: ^/api/test, roles: IS_AUTHENTICATED_ANONYMOUSLY }
          - { path: ^/api/doc, roles: IS_AUTHENTICATED_ANONYMOUSLY }
          - { path: ^/api,       roles: IS_AUTHENTICATED_FULLY }
 
