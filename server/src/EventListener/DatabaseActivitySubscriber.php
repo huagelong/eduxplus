@@ -26,18 +26,18 @@ class DatabaseActivitySubscriber implements EventSubscriber
     public function prePersist(LifecycleEventArgs $args)
     {
         //created_at,updated_at 自动添加
-        $entity = $args->getObject();
-        $now = time();
-        $entity->setCreatedAt($now);
-        $entity->setUpdatedAt($now);
+//        $entity = $args->getObject();
+//        $now = time();
+//        $entity->setCreatedAt($now);
+//        $entity->setUpdatedAt($now);
     }
 
     public function preUpdate(PreUpdateEventArgs $args)
     {
         //updated_at 自动添加
-        $entity = $args->getObject();
-        $now = time();
-        $entity->setUpdatedAt($now);
+//        $entity = $args->getObject();
+//        $now = time();
+//        $entity->setUpdatedAt($now);
     }
 
 }

@@ -17,5 +17,11 @@ services:
         tags: ['controller.service_arguments']
 
     App\EventListener\DatabaseActivitySubscriber:
-            tags:
-              - { name: 'doctrine.event_subscriber'}
+        tags:
+          - { name: 'doctrine.event_subscriber'}
+
+    api.event.jwt_created_listener:
+        class: App\EventListener\JWTCreatedListener
+        arguments: [ '@request_stack' ]
+        tags:
+            - { name: kernel.event_listener, event: lexik_jwt_authentication.on_jwt_created, method: onJWTCreated }

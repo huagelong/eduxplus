@@ -2,6 +2,7 @@
 
 namespace App\Bundle\AppBundle\Controller;
 
+use App\Entity\AdminActionLog;
 use App\Lib\Base\BaseController;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\Annotations\View as ViewAnnotations;
@@ -9,11 +10,13 @@ use Swagger\Annotations as SWG;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use Nelmio\ApiDocBundle\Annotation\Security;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
+ * @Route("/auth")
  * @package App\Bundle\AppBundle\Controller
  */
-class UserController extends BaseController
+class AuthController extends BaseController
 {
     /**
      * @Rest\Get("/login")
@@ -52,10 +55,29 @@ class UserController extends BaseController
      */
     public function login(Request $request)
     {
+        $model = new AdminActionLog();
+        $model->setIp(time());
+        $model->setUid(11);
+        $model->setInputData(time());
+        $model->setRoute("/");
+        $entityManage = $this->getDoctrine()->getManager();
+        $entityManage->persist($model);
+        $entityManage->flush();
+
         $name = $request->get("testName");
         $version = $request->headers->get("X-Accept-Version");
         $data=["name"=>$name."-".$version];
         return $data;
+    }
+
+
+    /**
+     * 登录检查
+     * @Rest\Post("/loginCheck")
+     * @ViewAnnotations()
+     */
+    public function loginCheck(){
+
     }
 
     /**
@@ -66,6 +88,8 @@ class UserController extends BaseController
     public function logout(){
 
     }
+
+
 
 
 }

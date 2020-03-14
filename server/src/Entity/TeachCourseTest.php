@@ -3,11 +3,13 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * TeachCourseTest
  *
  * @ORM\Table(name="teach_course_test")
+ * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false, hardDelete=true)
  * @ORM\Entity(repositoryClass="App\Repository\TeachCourseTestRepository")
  */
 class TeachCourseTest
@@ -44,8 +46,8 @@ class TeachCourseTest
 
     /**
      * @var int|null
-     *
-     * @ORM\Column(name="created_at", type="integer", nullable=true)
+     * @Gedmo\Timestampable(on="create")
+     * @ORM\Column(name="created_at", type="datetime", nullable=true)
      */
     private $createdAt;
 
@@ -55,6 +57,11 @@ class TeachCourseTest
      * @ORM\Column(name="update_at", type="integer", nullable=true)
      */
     private $updateAt;
+
+    /**
+     * @ORM\Column(name="deleted_at", type="datetime", nullable=true)
+     */
+    private $deletedAt;
 
     public function getId(): ?int
     {
@@ -117,6 +124,18 @@ class TeachCourseTest
     public function setUpdateAt(?int $updateAt): self
     {
         $this->updateAt = $updateAt;
+
+        return $this;
+    }
+
+    public function getDeletedAt(): ?\DateTimeInterface
+    {
+        return $this->deletedAt;
+    }
+
+    public function setDeletedAt(?\DateTimeInterface $deletedAt): self
+    {
+        $this->deletedAt = $deletedAt;
 
         return $this;
     }

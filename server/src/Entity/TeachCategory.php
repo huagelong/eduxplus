@@ -3,11 +3,13 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * TeachCategory
  *
  * @ORM\Table(name="teach_category", indexes={@ORM\Index(name="parent_id", columns={"parent_id"})})
+ * @Gedmo\SoftDeleteable(fieldName="deletedAt",timeAware=false, hardDelete=true)
  * @ORM\Entity(repositoryClass="App\Repository\TeachCategoryRepository")
  */
 class TeachCategory
@@ -65,17 +67,22 @@ class TeachCategory
 
     /**
      * @var int|null
-     *
-     * @ORM\Column(name="created_at", type="integer", nullable=true)
+     * @Gedmo\Timestampable(on="create")
+     * @ORM\Column(name="created_at", type="datetime", nullable=true)
      */
     private $createdAt;
 
     /**
      * @var int|null
-     *
-     * @ORM\Column(name="updated_at", type="integer", nullable=true)
+     * @Gedmo\Timestampable(on="update")
+     * @ORM\Column(name="updated_at", type="datetime", nullable=true)
      */
     private $updatedAt;
+
+    /**
+     * @ORM\Column(name="deleted_at", type="datetime", nullable=true)
+     */
+    private $deletedAt;
 
     public function getId(): ?int
     {
@@ -177,6 +184,19 @@ class TeachCategory
 
         return $this;
     }
+
+    public function getDeletedAt(): ?\DateTimeInterface
+    {
+        return $this->deletedAt;
+    }
+
+    public function setDeletedAt(?\DateTimeInterface $deletedAt): self
+    {
+        $this->deletedAt = $deletedAt;
+
+        return $this;
+    }
+
 
 
 }

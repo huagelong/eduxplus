@@ -3,11 +3,13 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * MallGoodsIntroduce
  *
  * @ORM\Table(name="mall_goods_introduce")
+ * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false, hardDelete=true)
  * @ORM\Entity(repositoryClass="App\Repository\MallGoodsIntroduceRepository")
  */
 class MallGoodsIntroduce
@@ -44,17 +46,22 @@ class MallGoodsIntroduce
 
     /**
      * @var int|null
-     *
-     * @ORM\Column(name="created_at", type="integer", nullable=true)
+     * @Gedmo\Timestampable(on="create")
+     * @ORM\Column(name="created_at", type="datetime", nullable=true)
      */
     private $createdAt;
 
     /**
      * @var int|null
-     *
-     * @ORM\Column(name="updated_at", type="integer", nullable=true)
+     * @Gedmo\Timestampable(on="update")
+     * @ORM\Column(name="updated_at", type="datetime", nullable=true)
      */
     private $updatedAt;
+
+    /**
+     * @ORM\Column(name="deleted_at", type="datetime", nullable=true)
+     */
+    private $deletedAt;
 
     /**
      * @var string|null
@@ -136,6 +143,18 @@ class MallGoodsIntroduce
     public function setHref(?string $href): self
     {
         $this->href = $href;
+
+        return $this;
+    }
+
+    public function getDeletedAt(): ?\DateTimeInterface
+    {
+        return $this->deletedAt;
+    }
+
+    public function setDeletedAt(?\DateTimeInterface $deletedAt): self
+    {
+        $this->deletedAt = $deletedAt;
 
         return $this;
     }

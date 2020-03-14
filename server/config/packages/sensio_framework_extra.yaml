@@ -1,5 +1,9 @@
 sensio_framework_extra:
     router:
-        annotations: false
+        annotations: true
     view:
         annotations: true
+    request: { converters: true, auto_convert: true }
+    cache:       { annotations: true }
+    security:    { annotations: true }
+    psr_message: { enabled: false }

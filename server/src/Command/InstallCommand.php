@@ -4,6 +4,7 @@ namespace App\Command;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputDefinition;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -31,6 +32,7 @@ class InstallCommand extends Command
             '--regenerate'=> true,
         ];
         $greetInput = new ArrayInput($arguments);
+//        $greetInput->setInteractive(false);
         $command->run($greetInput, $output);
 
         $command = $this->getApplication()->find('make:migration');
@@ -45,6 +47,7 @@ class InstallCommand extends Command
             'command' => 'doctrine:migrations:migrate',
         ];
         $greetInput = new ArrayInput($arguments);
+        $greetInput->setInteractive(false);
         $command->run($greetInput, $output);
 
 
