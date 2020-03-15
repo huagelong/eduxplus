@@ -14,6 +14,11 @@ use Lexik\Bundle\JWTAuthenticationBundle\Security\Authentication\Token\PreAuthen
 use Lexik\Bundle\JWTAuthenticationBundle\Security\Guard\JWTTokenAuthenticator;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 
+/**
+ * 权限检查
+ * Class TokenAuthenticator
+ * @package App\Security
+ */
 class TokenAuthenticator extends JWTTokenAuthenticator
 {
     /**

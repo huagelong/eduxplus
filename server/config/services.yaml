@@ -16,7 +16,7 @@ services:
         resource: '../src/Bundle/**/Controller'
         tags: ['controller.service_arguments']
 
-    App\EventListener\DatabaseActivitySubscriber:
+    App\EventSubscriber\DatabaseActivitySubscriber:
         tags:
           - { name: 'doctrine.event_subscriber'}
 

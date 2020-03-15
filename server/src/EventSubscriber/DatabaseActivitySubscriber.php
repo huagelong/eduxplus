@@ -6,7 +6,7 @@
  * @Date: 2020/3/8 17:50
  */
 
-namespace App\EventListener;
+namespace App\EventSubscriber;
 
 use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Doctrine\Persistence\Event\LifecycleEventArgs;
@@ -27,17 +27,21 @@ class DatabaseActivitySubscriber implements EventSubscriber
     {
         //created_at,updated_at 自动添加
 //        $entity = $args->getObject();
-//        $now = time();
-//        $entity->setCreatedAt($now);
-//        $entity->setUpdatedAt($now);
+//        if(!$entity->getCreatedAt()){
+//            $now = date('Y-m-d');
+//            $entity->setCreatedAt($now);
+//            $entity->setUpdatedAt($now);
+//        }
     }
 
     public function preUpdate(PreUpdateEventArgs $args)
     {
         //updated_at 自动添加
 //        $entity = $args->getObject();
-//        $now = time();
-//        $entity->setUpdatedAt($now);
+//        if(!$entity->getUpdatedAt()){
+//            $now = date('Y-m-d');
+//            $entity->setUpdatedAt($now);
+//        }
     }
 
 }
