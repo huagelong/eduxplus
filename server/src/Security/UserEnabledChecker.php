@@ -9,6 +9,7 @@
 namespace App\Security;
 
 use App\Entity\BaseUser;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Core\Exception\AccountStatusException;
 use Symfony\Component\Security\Core\Exception\DisabledException;
 use Symfony\Component\Security\Core\User\UserCheckerInterface;
@@ -38,5 +39,6 @@ class UserEnabledChecker implements UserCheckerInterface
     public function checkPostAuth(UserInterface $user)
     {
         //检查权限等
+//        throw new AccessDeniedException();
     }
 }

@@ -8,6 +8,7 @@ use App\Lib\Base\BaseController;
 use App\Lib\Service\TestService;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\Annotations\View as ViewAnnotations;
+use Lexik\Bundle\JWTAuthenticationBundle\Exception\ExpiredTokenException;
 use Swagger\Annotations as SWG;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use Nelmio\ApiDocBundle\Annotation\Security;
@@ -61,6 +62,15 @@ class AuthController extends BaseController
         return true;
     }
 
+
+    /**
+     * @Rest\Post("/register")
+     * @ViewAnnotations()
+     * @return bool
+     */
+    public function register(){
+        return true;
+    }
 
     /**
      * @Rest\Get("/test")

@@ -6,12 +6,15 @@ fos_rest:
             forms: true
         decoders:
             json: fos_rest.decoder.jsontoform
+
     view:
         view_response_listener:  true
         empty_content: 200
+
     exception:
         exception_controller: 'fos_rest.exception.controller:showAction'
         codes:
+#            Lexik\Bundle\JWTAuthenticationBundle\Exception\ExpiredTokenException: 400
             Doctrine\ORM\EntityNotFoundException: 404
             \LogicException: 400
             \DomainException: 400
@@ -25,13 +28,17 @@ fos_rest:
             \InvalidArgumentException: true
             Symfony\Component\Security\Core\Exception\AuthenticationException: true
             Symfony\Component\Security\Core\Exception\AccessDeniedException: true
+
     format_listener:
         enabled: true
         rules:
              - { path: '^/api',prefer_extension: true,fallback_format: 'json',priorities: ['json'] }
+
     versioning:
         enabled: true
         guessing_order: [query, custom_header]  # X-Accept-Version header
+
     unauthorized_challenge: "Basic realm=\"Restricted Area\""
+
     access_denied_listener:
         json: true

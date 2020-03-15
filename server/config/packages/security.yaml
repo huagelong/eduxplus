@@ -2,7 +2,7 @@ security:
     encoders:
         App\Entity\BaseUser: bcrypt
     providers:
-        database:
+        entity_provider:
             entity:
                 class: App\Entity\BaseUser
                 property: mobile
@@ -12,23 +12,30 @@ security:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
-        api:
-          pattern:  ^/api
+
+        login:
+          pattern: /api/login
           stateless: true
           anonymous: true
           json_login:
-              check_path: /api/login
+              check_path: /api/loginCheck
               success_handler: lexik_jwt_authentication.handler.authentication_success
               failure_handler: lexik_jwt_authentication.handler.authentication_failure
               username_path: mobile
               password_path: password
+
+        api:
+          pattern:  /api
+          stateless: true
+          anonymous: true
+          provider: entity_provider
           guard:
               authenticators:
                   - App\Security\TokenAuthenticator
           user_checker: App\Security\UserEnabledChecker
 
         api_doc:
-              pattern:  ^/api/doc
+              pattern:  /api/doc
               stateless: true
               anonymous: true
 
@@ -36,8 +43,10 @@ security:
          ROLE_ADMIN: ROLE_USER
 
     access_control:
-         - { path: '^/admin', roles: [ROLE_ADMIN] }
+         - { path: '^/adm', roles: [ROLE_ADMIN] }
          - { path: '^/api/test', roles: IS_AUTHENTICATED_ANONYMOUSLY }
+         - { path: '^/api/login', roles: IS_AUTHENTICATED_ANONYMOUSLY }
+         - { path: '^/api/register', roles: IS_AUTHENTICATED_ANONYMOUSLY }
          - { path: '^/api/doc', roles: IS_AUTHENTICATED_ANONYMOUSLY }
          - { path: '^/api', roles: IS_AUTHENTICATED_FULLY }
 
