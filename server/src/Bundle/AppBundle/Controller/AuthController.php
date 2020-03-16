@@ -8,7 +8,7 @@ use App\Lib\Base\BaseController;
 use App\Lib\Service\TestService;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\Annotations\View as ViewAnnotations;
-use Lexik\Bundle\JWTAuthenticationBundle\Exception\ExpiredTokenException;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Swagger\Annotations as SWG;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use Nelmio\ApiDocBundle\Annotation\Security;
@@ -81,19 +81,21 @@ class AuthController extends BaseController
      */
     public function test(Request $request, TestService $testService,  UserPasswordEncoderInterface $passwordEncoder)
     {
-        $model = new BaseUser();
-        $pwd = $passwordEncoder->encodePassword($model, "111111");
-        $model->setSex(1);
-        $model->setBirthday(date('Y-m-d'));
-        $model->setRegSource("web");
-        $model->setMobile("17621487074");
-        $model->setReportUid(0);
-        $model->setDisplayName("超级管梨园");
-        $model->setFullName("汪鑫远");
-        $model->setRoles(["ROLE_ADMIN"]);
-        $model->setUuid(uniqid());
-        $model->setPassword($pwd);
-        $this->save($model);
+//        $model = new BaseUser();
+//        $pwd = $passwordEncoder->encodePassword($model, "111111");
+//        $model->setSex(1);
+//        $model->setBirthday(date('Y-m-d'));
+//        $model->setRegSource("web");
+//        $model->setMobile("17621487074");
+//        $model->setReportUid(0);
+//        $model->setDisplayName("超级管梨园");
+//        $model->setFullName("汪鑫远");
+//        $model->setRoles(["ROLE_ADMIN"]);
+//        $model->setUuid(uniqid());
+//        $model->setPassword($pwd);
+//        $this->insert($model);
+//        $rs = $this->fetchOneByDql("SELECT p FROM App:BaseUser p WHERE p.id >= :id",["id"=>1]);
+//        var_dump($rs);
 
         $name = $request->get("testName");
 //        $version = $request->headers->get("X-Accept-Version");

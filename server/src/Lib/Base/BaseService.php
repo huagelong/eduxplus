@@ -20,19 +20,16 @@ class BaseService extends AbstractFOSRestController
      */
     protected $logger;
 
-    /**
-     * @var Connection
-     */
-    protected $conn;
-
-    protected $db;
+//    /**
+//     * @var \Doctrine\DBAL\Query\QueryBuilder
+//     */
+//    protected $dbQuery;
 
 
     public function __construct(LoggerInterface $logger, Connection $conn)
     {
         $this->logger = $logger;
-        $this->conn = $conn;
-        $this->db = $conn->createQueryBuilder();
+//        $this->dbQuery = $conn->createQueryBuilder();
     }
 
     /**
@@ -40,8 +37,23 @@ class BaseService extends AbstractFOSRestController
      * @return string
      */
     public function getSQL(){
-        return $this->db->getSQL();
+        return $this->dbQuery->getSQL();
     }
+
+    /**
+     * 添加
+     *
+     * @param $model
+     * @param null $name
+     * @return mixed
+     */
+    public function insert($model, $name=null){
+        $entityManage = $this->getDoctrine()->getManager($name);
+        $entityManage->persist($model);
+        $entityManage->flush();
+        return $model->getId();
+    }
+
 
     /**
      * 更新或者保存
@@ -50,9 +62,8 @@ class BaseService extends AbstractFOSRestController
      * @param null $name
      * @return mixed
      */
-    public function save($model, $name=null){
+    public function update($model, $name=null){
         $entityManage = $this->getDoctrine()->getManager($name);
-        $entityManage->persist($model);
         $entityManage->flush();
         return $model->getId();
     }
@@ -69,6 +80,23 @@ class BaseService extends AbstractFOSRestController
         $entityManage->remove($model);
         $entityManage->flush();
         return true;
+    }
+
+    public function fetchAllByDql($dql, $params=[]){
+        $em = $this->getDoctrine()->getManager();
+        $query = $em->createQuery($dql);
+        if($params) $query= $query->setParameters($params);
+        $rs = $query->getResult();
+        return $rs;
+    }
+
+
+    public function fetchOneByDql($dql, $params=[]){
+        $em = $this->getDoctrine()->getManager();
+        $query = $em->createQuery($dql);
+        if($params) $query= $query->setParameters($params);
+        $rs = $query->setMaxResults(1)->getOneOrNullResult();
+        return $rs;
     }
 
 }

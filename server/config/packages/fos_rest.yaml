@@ -14,7 +14,7 @@ fos_rest:
     exception:
         exception_controller: 'fos_rest.exception.controller:showAction'
         codes:
-#            Lexik\Bundle\JWTAuthenticationBundle\Exception\ExpiredTokenException: 400
+            Lexik\Bundle\JWTAuthenticationBundle\Exception\ExpiredTokenException: 400
             Doctrine\ORM\EntityNotFoundException: 404
             \LogicException: 400
             \DomainException: 400
@@ -22,6 +22,7 @@ fos_rest:
             Symfony\Component\Security\Core\Exception\AuthenticationException: 403
             Symfony\Component\Security\Core\Exception\AccessDeniedException: 403
         messages:
+            Lexik\Bundle\JWTAuthenticationBundle\Exception\ExpiredTokenException: true
             Doctrine\ORM\EntityNotFoundException: true
             \LogicException: true
             \DomainException: true
