@@ -83,10 +83,17 @@
     "conflict": {
         "symfony/symfony": "*"
     },
+    "minimum-stability":"dev",
     "extra": {
         "symfony": {
             "allow-contrib": false,
             "require": "4.4.*"
+        }
+    },
+    "repositories": {
+        "packagist": {
+            "type": "composer",
+            "url": "https://mirrors.aliyun.com/composer/"
         }
     }
 }

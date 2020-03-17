@@ -15,11 +15,6 @@ class TestService extends BaseService
 {
 
     public function show(){
-//        $rs = $this->db->select("*")
-//            ->from("admin_action_log")
-//            ->where("id=1")->execute();
-//        var_dump($this->getSQL());
-//        var_dump($rs['ip']);
         return "hello";
     }
 

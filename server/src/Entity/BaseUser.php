@@ -14,15 +14,16 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class BaseUser implements UserInterface
 {
     /**
-     * @ORM\Id()
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer", nullable=false, options={"comment"="用户id"})
+     * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
-     * @ORM\Column(type="integer")
      */
     private $id;
 
     /**
-     * @ORM\Column(name="uuid", type="guid", unique=true, options={"comment"="唯一码"})
-     * @ORM\GeneratedValue(strategy="UUID")
+     * @ORM\Column(name="uuid", type="guid", unique=true, nullable=true, options={"comment"="唯一码"})
      */
     private $uuid;
 

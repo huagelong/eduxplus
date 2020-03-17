@@ -17,7 +17,7 @@ class BaseFile
     /**
      * @var int
      *
-     * @ORM\Column(name="id", type="integer", nullable=false, options={"unsigned"=true,"comment"="上传文件ID"})
+     * @ORM\Column(name="id", type="integer", nullable=false, options={"comment"="上传文件ID"})
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */

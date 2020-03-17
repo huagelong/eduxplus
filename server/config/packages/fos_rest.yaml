@@ -8,7 +8,7 @@ fos_rest:
             json: fos_rest.decoder.jsontoform
 
     view:
-        view_response_listener:  true
+        view_response_listener:  'force'
         empty_content: 200
 
     exception:
@@ -33,7 +33,9 @@ fos_rest:
     format_listener:
         enabled: true
         rules:
-             - { path: '^/api',prefer_extension: true,fallback_format: 'json',priorities: ['json'] }
+             - { path: '^/appApi',prefer_extension: true,fallback_format: 'json',priorities: ['json'] }
+             - { path: '^/admApi',prefer_extension: true,fallback_format: 'json',priorities: ['json'] }
+#             - { path: '\.html$',prefer_extension: true,fallback_format: 'html',priorities: ['html'] }
 
     versioning:
         enabled: true

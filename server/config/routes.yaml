@@ -1,6 +1,6 @@
 #index:
 #    path: /
 #    controller: App\Controller\DefaultController::index
-api_login_check:
-    path: /api/loginCheck
+appApi_loginCheck:
+    path: /appApi/loginCheck
     methods:  [POST]

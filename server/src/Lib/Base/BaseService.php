@@ -9,8 +9,6 @@
 namespace App\Lib\Base;
 
 use Psr\Log\LoggerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Doctrine\DBAL\Connection;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
 
 class BaseService extends AbstractFOSRestController
@@ -20,24 +18,10 @@ class BaseService extends AbstractFOSRestController
      */
     protected $logger;
 
-//    /**
-//     * @var \Doctrine\DBAL\Query\QueryBuilder
-//     */
-//    protected $dbQuery;
 
-
-    public function __construct(LoggerInterface $logger, Connection $conn)
+    public function __construct(LoggerInterface $logger)
     {
         $this->logger = $logger;
-//        $this->dbQuery = $conn->createQueryBuilder();
-    }
-
-    /**
-     * 获取执行的sql
-     * @return string
-     */
-    public function getSQL(){
-        return $this->dbQuery->getSQL();
     }
 
     /**

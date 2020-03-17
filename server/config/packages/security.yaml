@@ -6,26 +6,24 @@ security:
             entity:
                 class: App\Entity\BaseUser
                 property: mobile
-#       lexik_jwt:
-#       class: App\Entity\BaseUser
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
-        login:
-          pattern: /api/login
+        appLogin:
+          pattern: ^/appApi/login
           stateless: true
           anonymous: true
           json_login:
-              check_path: /api/loginCheck
+              check_path: /appApi/loginCheck
               success_handler: lexik_jwt_authentication.handler.authentication_success
               failure_handler: lexik_jwt_authentication.handler.authentication_failure
               username_path: mobile
               password_path: password
 
-        api:
-          pattern:  /api
+        appApi:
+          pattern:  ^/appApi
           stateless: true
           anonymous: true
           provider: entity_provider
@@ -35,7 +33,7 @@ security:
           user_checker: App\Security\UserEnabledChecker
 
         api_doc:
-              pattern:  /api/doc
+              pattern:  ^/api/doc$
               stateless: true
               anonymous: true
 
@@ -43,10 +41,10 @@ security:
          ROLE_ADMIN: ROLE_USER
 
     access_control:
-         - { path: '^/adm', roles: [ROLE_ADMIN] }
-         - { path: '^/api/test', roles: IS_AUTHENTICATED_ANONYMOUSLY }
-         - { path: '^/api/login', roles: IS_AUTHENTICATED_ANONYMOUSLY }
-         - { path: '^/api/register', roles: IS_AUTHENTICATED_ANONYMOUSLY }
+         - { path: '^/admApi', roles: [ROLE_ADMIN] }
+         - { path: '^/appApi/test', roles: IS_AUTHENTICATED_ANONYMOUSLY }
+         - { path: '^/appApi/login', roles: IS_AUTHENTICATED_ANONYMOUSLY }
+         - { path: '^/appApi/register', roles: IS_AUTHENTICATED_ANONYMOUSLY }
          - { path: '^/api/doc', roles: IS_AUTHENTICATED_ANONYMOUSLY }
-         - { path: '^/api', roles: IS_AUTHENTICATED_FULLY }
+         - { path: '^/appApi', roles: IS_AUTHENTICATED_FULLY }
 
