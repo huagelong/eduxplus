@@ -1,8 +1,10 @@
 security:
     encoders:
-        App\Entity\BaseUser: bcrypt
+        App\Entity\BaseUser:
+         algorithm: bcrypt
+
     providers:
-        entity_provider:
+        app_token:
             entity:
                 class: App\Entity\BaseUser
                 property: mobile
@@ -11,40 +13,29 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
-        appLogin:
-          pattern: ^/appApi/login
-          stateless: true
-          anonymous: true
-          json_login:
-              check_path: /appApi/loginCheck
-              success_handler: lexik_jwt_authentication.handler.authentication_success
-              failure_handler: lexik_jwt_authentication.handler.authentication_failure
-              username_path: mobile
-              password_path: password
-
         appApi:
           pattern:  ^/appApi
           stateless: true
           anonymous: true
-          provider: entity_provider
+          provider: app_token
           guard:
               authenticators:
-                  - App\Security\TokenAuthenticator
-          user_checker: App\Security\UserEnabledChecker
+                  - app.token_authenticator
+#          user_checker: App\Security\UserEnabledChecker
 
         api_doc:
-              pattern:  ^/api/doc$
-              stateless: true
-              anonymous: true
+          pattern:  ^/api/doc$
+          stateless: true
+          anonymous: true
 
     role_hierarchy:
          ROLE_ADMIN: ROLE_USER
 
     access_control:
-         - { path: '^/admApi', roles: [ROLE_ADMIN] }
+         - { path: '^/api/doc', roles: IS_AUTHENTICATED_ANONYMOUSLY }
          - { path: '^/appApi/test', roles: IS_AUTHENTICATED_ANONYMOUSLY }
          - { path: '^/appApi/login', roles: IS_AUTHENTICATED_ANONYMOUSLY }
          - { path: '^/appApi/register', roles: IS_AUTHENTICATED_ANONYMOUSLY }
-         - { path: '^/api/doc', roles: IS_AUTHENTICATED_ANONYMOUSLY }
          - { path: '^/appApi', roles: IS_AUTHENTICATED_FULLY }
+         - { path: '^/admApi', roles: [ROLE_ADMIN] }
 

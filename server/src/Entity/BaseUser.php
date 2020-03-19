@@ -5,13 +5,14 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 
 /**
  * @ORM\Table(name="base_user")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false, hardDelete=true)
  * @ORM\Entity(repositoryClass="App\Repository\BaseUserRepository")
  */
-class BaseUser implements UserInterface
+class BaseUser implements AdvancedUserInterface
 {
     /**
      * @var int
@@ -82,7 +83,6 @@ class BaseUser implements UserInterface
      */
     private $isLock = '0';
 
-
     /**
      * @var string|null
      *
@@ -91,20 +91,35 @@ class BaseUser implements UserInterface
     private $regSource;
 
     /**
-     * @ORM\Column(type="json")
+     * @ORM\Column(type="json", options={"comment"="角色"})
      */
     private $roles = [];
 
     /**
      * @var string The hashed password
-     * @ORM\Column(name="password",type="string")
+     * @ORM\Column(name="password",type="string", options={"comment"="密码"})
      */
     private $password;
 
     /**
-     * @ORM\Column(name="password_change_date", type="integer", nullable=true)
+     * @ORM\Column(name="password_change_date", type="integer", nullable=true, options={"comment"="密码修改时间"})
      */
     private $passwordChangeDate;
+
+    /**
+     * @ORM\Column(name="app_token",type="string",length=50,nullable=true,unique=true, options={"comment"="ios,android token"})
+     */
+    private $appToken;
+
+    /**
+     * @ORM\Column(name="html_token",type="string",length=50,nullable=true,unique=true, options={"comment"="m站，pc站 token"})
+     */
+    private $htmlToken;
+
+    /**
+     * @ORM\Column(name="admin_token",type="string",length=50,nullable=true,unique=true, options={"comment"="后台 token"})
+     */
+    private $adminToken;
 
     /**
      * @var int|null
@@ -335,12 +350,6 @@ class BaseUser implements UserInterface
         return $this;
     }
 
-    public function setUsername(string $username): self
-    {
-        $this->uuid = $username;
-
-        return $this;
-    }
 
     public function getMobile(): ?string
     {
@@ -362,6 +371,132 @@ class BaseUser implements UserInterface
     public function setBirthday(?string $birthday): self
     {
         $this->birthday = $birthday;
+
+        return $this;
+    }
+
+
+    /**
+     * Checks whether the user's account has expired.
+     *
+     * Internally, if this method returns false, the authentication system
+     * will throw an AccountExpiredException and prevent login.
+     *
+     * @return bool true if the user's account is non expired, false otherwise
+     *
+     * @see AccountExpiredException
+     */
+    public function isAccountNonExpired()
+    {
+        // TODO: Implement isAccountNonExpired() method.
+        return true;
+    }
+
+    /**
+     * Checks whether the user is locked.
+     *
+     * Internally, if this method returns false, the authentication system
+     * will throw a LockedException and prevent login.
+     *
+     * @return bool true if the user is not locked, false otherwise
+     *
+     * @see LockedException
+     */
+    public function isAccountNonLocked()
+    {
+        return !$this->isLock;
+    }
+
+    /**
+     * Checks whether the user's credentials (password) has expired.
+     *
+     * Internally, if this method returns false, the authentication system
+     * will throw a CredentialsExpiredException and prevent login.
+     *
+     * @return bool true if the user's credentials are non expired, false otherwise
+     *
+     * @see CredentialsExpiredException
+     */
+    public function isCredentialsNonExpired()
+    {
+        return !$this->passwordChangeDate;
+    }
+
+    /**
+     * Checks whether the user is enabled.
+     *
+     * Internally, if this method returns false, the authentication system
+     * will throw a DisabledException and prevent login.
+     *
+     * @return bool true if the user is enabled, false otherwise
+     *
+     * @see DisabledException
+     */
+    public function isEnabled()
+    {
+        return $this->deletedAt?0:1;
+    }
+
+
+    public function serialize()
+    {
+        return serialize(array(
+            $this->deletedAt,
+            $this->isLock
+        ));
+    }
+    public function unserialize($serialized)
+    {
+        list (
+            $this->deletedAt,
+            $this->isLock
+            ) = unserialize($serialized);
+    }
+
+    public function getApiToken(): ?string
+    {
+        return $this->apiToken;
+    }
+
+    public function setApiToken(?string $apiToken): self
+    {
+        $this->apiToken = $apiToken;
+
+        return $this;
+    }
+
+    public function getAppToken(): ?string
+    {
+        return $this->appToken;
+    }
+
+    public function setAppToken(?string $appToken): self
+    {
+        $this->appToken = $appToken;
+
+        return $this;
+    }
+
+    public function getHtmlToken(): ?string
+    {
+        return $this->htmlToken;
+    }
+
+    public function setHtmlToken(?string $htmlToken): self
+    {
+        $this->htmlToken = $htmlToken;
+
+        return $this;
+    }
+
+    public function getAdminToken(): ?string
+    {
+        return $this->adminToken;
+    }
+
+    public function setAdminToken(?string $adminToken): self
+    {
+        $this->adminToken = $adminToken;
 
         return $this;
     }

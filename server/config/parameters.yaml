@@ -1,3 +1,8 @@
 parameters:
    app.name: 'eduxplus教育系统'
    app.path: '%kernel.project_dir%' #项目路径
+   app.clientId:
+      ios: '%env(APP_CLIENTID_IOS)%'
+      android: '%env(APP_CLIENTID_ANDROID)%'
+      html: '%env(APP_CLIENTID_HTML)%'
+      admin: '%env(APP_CLIENTID_ADMIN)%'

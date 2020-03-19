@@ -5,13 +5,13 @@
         "php": "^7.1.3",
         "ext-ctype": "*",
         "ext-iconv": "*",
+        "doctrine/doctrine-migrations-bundle": "^2.1",
         "friendsofsymfony/rest-bundle": "^2.7",
         "imper86/jobby-cron-bundle": "^1.0",
         "jms/serializer-bundle": "^3.5",
-        "lexik/jwt-authentication-bundle": "^2.6",
-        "nelmio/api-doc-bundle": "^3.5",
         "nelmio/cors-bundle": "^2.0",
         "predis/predis": "^1.1",
+        "ramsey/uuid": "^4.0@dev",
         "sensio/framework-extra-bundle": "^5.5",
         "snc/redis-bundle": "^3.2",
         "stof/doctrine-extensions-bundle": "^1.3",
@@ -31,6 +31,7 @@
         "symfony/proxy-manager-bridge": "4.4.*",
         "symfony/security-bundle": "4.4.*",
         "symfony/serializer-pack": "*",
+        "symfony/stopwatch": "4.4.*",
         "symfony/translation": "4.4.*",
         "symfony/twig-pack": "^1.0",
         "symfony/validator": "4.4.*",
@@ -83,7 +84,6 @@
     "conflict": {
         "symfony/symfony": "*"
     },
-    "minimum-stability":"dev",
     "extra": {
         "symfony": {
             "allow-contrib": false,
