@@ -20,5 +20,5 @@ services:
         tags:
           - { name: 'doctrine.event_subscriber'}
 
-    app.token_authenticator:
+    api.token_authenticator:
         class: App\Security\TokenAuthenticator

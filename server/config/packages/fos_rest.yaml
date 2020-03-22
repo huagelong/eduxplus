@@ -31,8 +31,8 @@ fos_rest:
     format_listener:
         enabled: true
         rules:
-             - { path: '^/appApi',prefer_extension: true,fallback_format: 'json',priorities: ['json'] }
-             - { path: '^/admApi',prefer_extension: true,fallback_format: 'json',priorities: ['json'] }
+             - { path: '^/app/api',prefer_extension: true,fallback_format: 'json',priorities: ['json'] }
+             - { path: '^/adm/api',prefer_extension: true,fallback_format: 'json',priorities: ['json'] }
              - { path: '\.html$',prefer_extension: true,fallback_format: 'html',priorities: ['html'] }
 
     versioning:

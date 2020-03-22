@@ -14,6 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
+ * @Rest\Route("/api")
  * @package App\Bundle\AppBundle\Controller
  */
 class AuthController extends BaseApiController

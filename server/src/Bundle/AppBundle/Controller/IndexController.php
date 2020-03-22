@@ -7,6 +7,7 @@ use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\Annotations\View as ViewAnnotations;
 
 /**
+ * @Rest\Route("/api")
  * @package App\Bundle\AppBundle\Controller
  */
 class IndexController extends BaseApiController

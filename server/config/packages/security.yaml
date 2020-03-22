@@ -4,7 +4,7 @@ security:
          algorithm: bcrypt
 
     providers:
-        app_token:
+        api_token:
             entity:
                 class: App\Entity\BaseUser
                 property: mobile
@@ -14,28 +14,31 @@ security:
             security: false
 
         appApi:
-          pattern:  ^/appApi
+          pattern:  ^/app/api
           stateless: true
           anonymous: true
-          provider: app_token
+          provider: api_token
           guard:
               authenticators:
-                  - app.token_authenticator
-#          user_checker: App\Security\UserEnabledChecker
+                  - api.token_authenticator
 
-        api_doc:
-          pattern:  ^/api/doc$
+        adminApi:
+          pattern:  ^/adm/api
           stateless: true
           anonymous: true
+          provider: api_token
+          guard:
+              authenticators:
+                  - api.token_authenticator
+          user_checker: App\Security\UserEnabledChecker
 
     role_hierarchy:
          ROLE_ADMIN: ROLE_USER
 
     access_control:
-         - { path: '^/api/doc', roles: IS_AUTHENTICATED_ANONYMOUSLY }
-         - { path: '^/appApi/test', roles: IS_AUTHENTICATED_ANONYMOUSLY }
-         - { path: '^/appApi/login', roles: IS_AUTHENTICATED_ANONYMOUSLY }
-         - { path: '^/appApi/register', roles: IS_AUTHENTICATED_ANONYMOUSLY }
-         - { path: '^/appApi', roles: IS_AUTHENTICATED_FULLY }
-         - { path: '^/admApi', roles: [ROLE_ADMIN] }
+         - { path: '^/app/api/test', roles: IS_AUTHENTICATED_ANONYMOUSLY }
+         - { path: '^/app/api/login', roles: IS_AUTHENTICATED_ANONYMOUSLY }
+         - { path: '^/app/api/register', roles: IS_AUTHENTICATED_ANONYMOUSLY }
+         - { path: '^/app/api', roles: IS_AUTHENTICATED_FULLY }
+         - { path: '^/adm', roles: [ROLE_ADMIN] }
 

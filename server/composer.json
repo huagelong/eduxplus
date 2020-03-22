@@ -6,6 +6,7 @@
         "ext-ctype": "*",
         "ext-iconv": "*",
         "doctrine/doctrine-migrations-bundle": "^2.1",
+        "easycorp/easyadmin-bundle": "^2.3",
         "friendsofsymfony/rest-bundle": "^2.7",
         "imper86/jobby-cron-bundle": "^1.0",
         "jms/serializer-bundle": "^3.5",
