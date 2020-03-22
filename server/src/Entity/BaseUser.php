@@ -51,9 +51,9 @@ class BaseUser implements AdvancedUserInterface
     /**
      * @var string|null
      *
-     * @ORM\Column(name="face_img", type="string", length=250, nullable=true, options={"comment"="人物头像"})
+     * @ORM\Column(name="gravatar", type="string", length=250, nullable=true, options={"comment"="人物头像"})
      */
-    private $faceImg;
+    private $gravatar;
 
     /**
      *
@@ -230,17 +230,6 @@ class BaseUser implements AdvancedUserInterface
         return $this;
     }
 
-    public function getFaceImg(): ?string
-    {
-        return $this->faceImg;
-    }
-
-    public function setFaceImg(?string $faceImg): self
-    {
-        $this->faceImg = $faceImg;
-
-        return $this;
-    }
 
     public function getSex(): ?bool
     {
@@ -497,6 +486,18 @@ class BaseUser implements AdvancedUserInterface
     public function setAdminToken(?string $adminToken): self
     {
         $this->adminToken = $adminToken;
+
+        return $this;
+    }
+
+    public function getGravatar(): ?string
+    {
+        return $this->gravatar;
+    }
+
+    public function setGravatar(?string $gravatar): self
+    {
+        $this->gravatar = $gravatar;
 
         return $this;
     }

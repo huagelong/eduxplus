@@ -23,7 +23,7 @@ security:
                   - api.token_authenticator
 
         adminApi:
-          pattern:  ^/adm/api
+          pattern:  ^/admin/api
           stateless: true
           anonymous: true
           provider: api_token
@@ -40,5 +40,6 @@ security:
          - { path: '^/app/api/login', roles: IS_AUTHENTICATED_ANONYMOUSLY }
          - { path: '^/app/api/register', roles: IS_AUTHENTICATED_ANONYMOUSLY }
          - { path: '^/app/api', roles: IS_AUTHENTICATED_FULLY }
-         - { path: '^/adm', roles: [ROLE_ADMIN] }
+         - { path: '^/admin/login', roles: IS_AUTHENTICATED_ANONYMOUSLY }
+         - { path: '^/admin', roles: [ROLE_ADMIN] }
 
