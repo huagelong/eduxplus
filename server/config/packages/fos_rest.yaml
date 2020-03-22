@@ -12,7 +12,7 @@ fos_rest:
         empty_content: 200
 
     exception:
-        exception_controller: 'fos_rest.exception.controller:showAction'
+#        exception_controller: 'fos_rest.exception.controller:showAction'
         codes:
             Doctrine\ORM\EntityNotFoundException: 404
             \LogicException: 400

@@ -1,0 +1,11 @@
+easy_admin:
+    site_name: '学多多'
+    translation_domain: admin
+    formats:
+        date:     'Y-m-d'
+        time:     'H:i'
+        datetime: 'Y-m-d H:i:s'
+    user:
+        name_property_path: 'displayName'
+        avatar_property_path: 'gravatar'
+    design:

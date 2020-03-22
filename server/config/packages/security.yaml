@@ -32,6 +32,17 @@ security:
                   - api.token_authenticator
           user_checker: App\Security\UserEnabledChecker
 
+        admin:
+          pattern:  ^/admin
+          anonymous: lazy
+          provider: api_token
+          guard:
+            authenticators:
+                - App\Security\AdminLoginAuthenticator
+          logout:
+            path: admin_logout
+            target: /admin/login
+
     role_hierarchy:
          ROLE_ADMIN: ROLE_USER
 

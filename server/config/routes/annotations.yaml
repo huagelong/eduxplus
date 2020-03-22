@@ -1,7 +1,6 @@
 adminBundle.Controllers:
     resource: ../../src/Bundle/AdminBundle/Controller/
     type: annotation
-    prefix: /admin
 
 appBundle.Controllers:
     resource: ../../src/Bundle/AppBundle/Controller/

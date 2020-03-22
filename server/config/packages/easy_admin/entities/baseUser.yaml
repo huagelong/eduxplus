@@ -1,0 +1,5 @@
+easy_admin:
+    entities:
+      BaseUser:
+        class: App\Entity\BaseUser
+
