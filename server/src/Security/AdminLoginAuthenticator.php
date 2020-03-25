@@ -51,6 +51,7 @@ class AdminLoginAuthenticator extends AbstractFormLoginAuthenticator implements 
 
     public function getCredentials(Request $request)
     {
+
         $credentials = [
             'mobile' => $request->request->get('mobile'),
             'password' => $request->request->get('password'),
@@ -75,7 +76,7 @@ class AdminLoginAuthenticator extends AbstractFormLoginAuthenticator implements 
 
         if (!$user) {
             // fail authentication with a custom error
-            throw new CustomUserMessageAuthenticationException('mobile could not be found.');
+            throw new CustomUserMessageAuthenticationException('手机号码或者密码错误！');
         }
 
         return $user;

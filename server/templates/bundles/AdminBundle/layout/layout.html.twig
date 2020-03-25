@@ -1,0 +1,19 @@
+{% extends '@AdminBundle/layout/base.html.twig' %}
+{% block head_stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('assets/plugins/fontawesome-free/css/all.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/admlte/css/adminlte.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/admlte/googlefonts/fonts.css') }}">
+{% endblock %}
+
+{% block head_favicon %}
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('assets/fav.png') }}">
+{% endblock %}
+
+{% block body_javascript %}
+    <script src="{{ asset('assets/plugins/jquery/jquery.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('assets/admlte/js/adminlte.min.js') }}"></script>
+{% endblock %}
+
+{% block body_class %} hold-transition sidebar-mini {% endblock %}

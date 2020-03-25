@@ -1,0 +1,52 @@
+/**
+ * Created by wangkaihui on 2018/2/6.
+ *
+ * /static/lib/jquery.js
+ * /static/lib/plugins/underscore/underscore-min.js
+ * /static/lib/ui-load.js
+ * /static/lib/ui-include.js
+ * /static/lib/ui-jp.js
+ * /static/lib/plugins/jqueryForm/jquery.form.js
+ * /static/lib/plugins/jquerycookie/jquerycookie.js
+ * /static/lib/plugins/layer/layer.js
+ * /static/lib/modules/ajaxform.js
+ * /static/lib/modules/ajaxload.js
+ * /static/lib/modules/widgets.js
+ *
+
+ $('.ajaxform').ajaxform();
+ $('.ajaxload').ajaxload();
+ $('.tip').tips();
+ $('.ajaxpage').ajaxpage();
+ $('body').uiInclude();
+
+
+
+ <div ui-include="@uri('qrcode/userinclude/add')"></div>
+
+ var MODULE_CONFIG = {
+      dataTable:      [
+     '../libs/jquery/datatables/media/js/jquery.dataTables.min.js',
+     '../libs/jquery/plugins/integration/bootstrap/3/dataTables.bootstrap.js',
+     '../libs/jquery/plugins/integration/bootstrap/3/dataTables.bootstrap.css'],
+     footable:       [
+     '../libs/jquery/footable/dist/footable.all.min.js',
+     '../libs/jquery/footable/css/footable.core.css'
+     ],
+ }
+
+
+ ui-jp="dataTable" ui-options="{
+          sAjaxSource: 'api/datatable.json',
+          aoColumns: [
+            { mData: 'engine' },
+            { mData: 'browser' },
+            { mData: 'platform' },
+            { mData: 'version' },
+            { mData: 'grade' }
+          ]
+        }"
+
+
+ *
+ */
