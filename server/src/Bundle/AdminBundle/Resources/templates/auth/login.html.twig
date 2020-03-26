@@ -15,7 +15,7 @@
 {% block head_custom_stylesheets %}
 <style>
     html,body{
-        background-image: url('/assets/images/loginbg.jpg') !important;
+        background-image: url("/assets/images/loginbg.jpg") !important;
         background-size: cover !important;
         background-repeat: no-repeat !important;
         height: 100% !important;
@@ -89,7 +89,7 @@
                         </div>
                     </div>
                     <div class="col-4">
-                        <img src="{{ path('center_glob_recaptcha', {'type':'adminLogin'} ) }}" style="height: 48px;">
+                        <img src="{{ path('app_glob_recaptcha', {'type':'adminLogin'} ) }}" style="height: 48px;">
                     </div>
                 </div>
                     <div class="input-group mb-3">
