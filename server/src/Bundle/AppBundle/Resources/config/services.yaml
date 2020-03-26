@@ -1,12 +1,12 @@
 parameters:
-   center.name: '%env(APP_NAME)%'
-   center.path: '%kernel.project_dir%' #项目路径
-   center.clientId:
+   app.name: '%env(APP_NAME)%'
+   app.path: '%kernel.project_dir%' #项目路径
+   app.clientId:
       ios: '%env(APP_CLIENTID_IOS)%'
       android: '%env(APP_CLIENTID_ANDROID)%'
       html: '%env(APP_CLIENTID_HTML)%'
       admin: '%env(APP_CLIENTID_ADMIN)%'
-   center.aliyun:
+   app.aliyun:
       accesskeyId: '%env(ALI_ACCESSKEY_ID)%'
       accesskeySecret: '%env(ALI_ACCESSKEY_SECRET)%'
       smsSign: '%env(ALI_SMS_SIGN)%'

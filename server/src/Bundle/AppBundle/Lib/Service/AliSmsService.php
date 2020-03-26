@@ -6,10 +6,10 @@
  * @Date: 2020/3/26 09:59
  */
 
-namespace App\Bundle\CenterBundle\Lib\Service;
+namespace App\Bundle\AppBundle\Lib\Service;
 
 
-use App\Bundle\CenterBundle\Lib\Base\BaseService;
+use App\Bundle\AppBundle\Lib\Base\BaseService;
 use Psr\Log\LoggerInterface;
 use AlibabaCloud\Client\AlibabaCloud;
 use AlibabaCloud\Client\Exception\ClientException;
@@ -28,7 +28,7 @@ class AliSmsService extends BaseService
 
 
     protected function initialization(){
-        $this->config = $this->getParameter("center.aliyun");
+        $this->config = $this->getParameter("app.aliyun");
 
         AlibabaCloud::accessKeyClient($this->config['accesskeyId'], $this->config['accesskeySecret'])
             ->regionId('cn-hangzhou')

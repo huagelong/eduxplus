@@ -6,7 +6,7 @@
  * @Date: 2020/3/17 11:24
  */
 
-namespace App\Bundle\CenterBundle\Lib\Service;
+namespace App\Bundle\AppBundle\Lib\Service;
 
 
 class ImgCaptchaService

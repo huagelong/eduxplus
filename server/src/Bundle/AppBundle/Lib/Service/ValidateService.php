@@ -6,10 +6,10 @@
  * @Date: 2020/3/17 11:24
  */
 
-namespace App\Bundle\CenterBundle\Lib\Service;
+namespace App\Bundle\AppBundle\Lib\Service;
 
 
-use App\Bundle\CenterBundle\Lib\Base\BaseService;
+use App\Bundle\AppBundle\Lib\Base\BaseService;
 
 class ValidateService extends BaseService
 {

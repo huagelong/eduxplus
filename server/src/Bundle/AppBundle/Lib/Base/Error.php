@@ -6,7 +6,7 @@
  * Time: 11:10
  */
 
-namespace App\Bundle\CenterBundle\Lib\Base;
+namespace App\Bundle\AppBundle\Lib\Base;
 
 
 class Error

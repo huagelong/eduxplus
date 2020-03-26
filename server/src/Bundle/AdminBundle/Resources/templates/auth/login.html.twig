@@ -12,6 +12,20 @@
     <link rel="stylesheet" href="{{ asset('assets/admlte/googlefonts/fonts.css') }}">
 {% endblock %}
 
+{% block head_custom_stylesheets %}
+<style>
+    html,body{
+        background-image: url('/assets/images/loginbg.jpg') !important;
+        background-size: cover !important;
+        background-repeat: no-repeat !important;
+        height: 100% !important;
+    }
+    .login-logo a, .register-logo a{
+        color: #fff!important;
+    }
+</style>
+{% endblock %}
+
 {% block head_favicon %}
     <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('assets/fav.png') }}">
 {% endblock %}
@@ -43,7 +57,7 @@
 
 {% block body_class %} hold-transition login-page {% endblock %}
 
-{% block bodyMain %}
+{% block body_main %}
     <div class="login-box">
         <div class="login-logo">
             <a href="./"><b>学多多</b></a>
@@ -112,16 +126,15 @@
                         <i class="fab fa-google-plus mr-2"></i> Sign in using Google+
                     </a>
                 </div>
-                <!-- /.social-auth-links -->
-
-                <p class="mb-1">
-                    <a href="forgot-password.html">I forgot my password</a>
-                </p>
-                <p class="mb-0">
-                    <a href="register.html" class="text-center">Register a new membership</a>
-                </p>
             </div>
             <!-- /.login-card-body -->
         </div>
     </div>
+{% endblock %}
+{% block body_custom_javascript %}
+<script>
+    $(function(){
+
+    });
+</script>
 {% endblock %}

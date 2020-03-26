@@ -6,10 +6,10 @@
  * @Date: 2020/3/26 14:07
  */
 
-namespace App\Bundle\CenterBundle\Controller;
+namespace App\Bundle\AppBundle\Controller;
 
-use App\Bundle\CenterBundle\Lib\Base\BaseHtmlController;
-use App\Bundle\CenterBundle\Lib\Service\CaptchaService;
+use App\Bundle\AppBundle\Lib\Base\BaseHtmlController;
+use App\Bundle\AppBundle\Lib\Service\CaptchaService;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

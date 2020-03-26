@@ -6,13 +6,15 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>{% block page_title %}{% endblock %}-学多多</title>
     {% block head_stylesheets %}{% endblock %}
+    {% block head_custom_stylesheets %}{% endblock %}
     {% block head_favicon %} {% endblock %}
     {% block head_javascript %} {% endblock %}
 </head>
 {% block body %}
 <body id="{% block body_id %}{% endblock %}" class="{% block body_class %}{% endblock %}">
-{% block bodyMain %}{% endblock %}
-{% block body_javascript %}{% endblock body_javascript %}
+{% block body_main %}{% endblock %}
+{% block body_javascript %}{% endblock %}
+{% block body_custom_javascript %}{% endblock %}
 </body>
 {% endblock %}
 </html>

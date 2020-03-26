@@ -3,8 +3,8 @@
 namespace App\Bundle\ApiBundle\Controller;
 
 use App\Entity\BaseUser;
-use App\Bundle\CenterBundle\Lib\Base\BaseApiController;
-use App\Bundle\CenterBundle\Lib\Service\HelperService;
+use App\Bundle\AppBundle\Lib\Base\BaseApiController;
+use App\Bundle\AppBundle\Lib\Service\HelperService;
 use App\Repository\BaseUserRepository;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\Annotations\View as ViewAnnotations;
@@ -13,7 +13,6 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
- * @Rest\Route("/api")
  * @package App\Bundle\ApiBundle\Controller
  */
 class AuthController extends BaseApiController
@@ -44,7 +43,6 @@ class AuthController extends BaseApiController
      * @Rest\Get("/test")
      * @ViewAnnotations()
      * @param Request $request
-     * @param TestService $testService
      * @return array
      */
     public function test(Request $request,

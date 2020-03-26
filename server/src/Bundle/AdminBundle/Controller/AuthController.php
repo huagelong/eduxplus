@@ -9,7 +9,7 @@
 namespace App\Bundle\AdminBundle\Controller;
 
 
-use App\Bundle\CenterBundle\Lib\Base\BaseAdminController;
+use App\Bundle\AppBundle\Lib\Base\BaseAdminController;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;

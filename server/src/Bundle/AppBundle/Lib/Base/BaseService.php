@@ -6,7 +6,7 @@
  * @Date: 2020/3/4 20:41
  */
 
-namespace App\Bundle\CenterBundle\Lib\Base;
+namespace App\Bundle\AppBundle\Lib\Base;
 
 use Psr\Log\LoggerInterface;
 use FOS\RestBundle\Controller\AbstractFOSRestController;

@@ -6,11 +6,11 @@
  * @Date: 2020/3/3 20:20
  */
 
-namespace App\Bundle\CenterBundle;
+namespace App\Bundle\AppBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class CenterBundle extends Bundle
+class AppBundle extends Bundle
 {
 
 }
