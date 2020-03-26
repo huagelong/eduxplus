@@ -52,6 +52,7 @@ class AdminLoginAuthenticator extends AbstractFormLoginAuthenticator implements 
     public function getCredentials(Request $request)
     {
 
+
         $credentials = [
             'mobile' => $request->request->get('mobile'),
             'password' => $request->request->get('password'),

@@ -25,7 +25,7 @@ class AuthController extends BaseAdminController
     /**
      * @Rest\Route("/login", name="admin_login")
      */
-    public function login(Request $request,AuthenticationUtils $authenticationUtils){
+    public function login(AuthenticationUtils $authenticationUtils){
 
          if ($this->getUser()) {
              return $this->redirect("/admin/");
