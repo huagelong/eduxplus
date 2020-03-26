@@ -26,7 +26,7 @@
         $(this).focusout(function(){
             var vl = $(this).val();
             $.post(settings.checkurl, {vl:vl},function(data){
-                if(data.statusCode != "200"){
+                if(data.code != 200){
                     $(settings.errorId).addClass(settings.errorClass);
                 }else{
                     $(settings.errorId).removeClass(settings.errorClass);

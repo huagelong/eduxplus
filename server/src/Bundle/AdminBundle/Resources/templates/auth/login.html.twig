@@ -7,8 +7,8 @@
     <link rel="stylesheet" href="{{ asset('assets/plugins/fontawesome-free/css/all.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/plugins/ionicons/css/ionicons.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/admlte/css/adminlte.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/base/plugins/layer/layer.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/admlte/googlefonts/fonts.css') }}">
 {% endblock %}
 
@@ -34,22 +34,22 @@
     {{ parent() }}
     <script src="{{ asset('assets/plugins/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-    <script src="{{ asset('assets/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
     <script src="{{ asset('assets/admlte/js/adminlte.min.js') }}"></script>
+    <script src="{{ asset('assets/base/plugins/layer/layer.js') }}"></script>
+    <script src="{{ asset('assets/base/modules/captcha.js') }}"></script>
+    <script type="text/javascript">
+        $(function(){
+            $(".recaptcha").captcha();
+        });
+    </script>
     {% if error %}
         <script type="text/javascript">
             $(function() {
-                const Toast = Swal.mixin({
-                    toast: true,
-                    position: 'center',
-                    showConfirmButton: false,
-                    timer: 3000
+                layer.msg('{{ error.messageKey|trans(error.messageData, 'security') }}', {
+                    time: 2500, //2s后自动关闭
+                    icon: 7,
+                    offset: '100px', //右下角弹出
                 });
-
-                Toast.fire({
-                    type: 'error',
-                    title: '{{ error.messageKey|trans(error.messageData, 'security') }}'
-                })
             });
         </script>
     {% endif %}
@@ -89,7 +89,7 @@
                         </div>
                     </div>
                     <div class="col-4">
-                        <img src="{{ path('app_glob_recaptcha', {'type':'adminLogin'} ) }}" style="height: 48px;">
+                        <img src="{{ path('app_glob_recaptcha', {'type':'adminLogin'} ) }}" class="recaptcha" style="height: 48px;">
                     </div>
                 </div>
                     <div class="input-group mb-3">

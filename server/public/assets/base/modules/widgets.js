@@ -26,20 +26,20 @@
                 var title = $(this).data('title');
                 $.get(chref,{},function(responseText){
                     if(typeof  responseText == 'string') var responseText = $.parseJSON(responseText);
-                    if(!$.isEmptyObject(responseText.result)){
-                        if(responseText.message.msg){
-                            show(responseText.message.msgType, responseText.message.msg);
+                    if(!$.isEmptyObject(responseText.data)){
+                        if(responseText.message){
+                            show(responseText.code, responseText.message);
                         }else{
                             layer.open({
                                 title: title,
                                 type: 1,
                                 area: [settings.width, settings.height], //宽高
-                                content: responseText.result
+                                content: responseText.data
                             });
                         }
                     }else{
-                        if(responseText.message.msg){
-                            show(responseText.message.msgType, responseText.message.msg);
+                        if(responseText.message){
+                            show(responseText.code, responseText.message);
                         }
                     }
                 },'json');
@@ -47,13 +47,14 @@
             });
         });
 
-        function show(msgType, msg){
+        function show(code, msg){
             var icontype = 4;
+            code = code+'';
+            var msgType = code.substr(0,1);
             switch(msgType){
-                case "tinfo":icontype=4;break;
-                case "tsuccess":icontype=1;break;
-                case "terror":icontype=2;break;
-                case "twarning":icontype=7;break;
+                case 2:icontype=1;break;
+                case 5:icontype=2;break;
+                case 4:icontype=7;break;
                 default :icontype = 4;
             }
             layer.msg(msg, {

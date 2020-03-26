@@ -55,16 +55,6 @@
 
             });
 
-            if(check){
-                var csrf_token = $('meta[name="csrf-token"]').attr('content');
-                var csrf_uri_token = $('meta[name="csrf-uri-token"]').attr('content');
-                if(csrf_token){
-                    $.ajaxPrefilter(function(options, originalOptions, jqXHR){
-                        jqXHR.setRequestHeader('X-CSRF-TOKEN', csrf_token);
-                        jqXHR.setRequestHeader('X-CSRF-URI-TOKEN', csrf_uri_token);
-                    });
-                }
-            }
 
             return check;
         }
@@ -72,21 +62,21 @@
         function showResponse(responseText, statusText, xhr, jqForm)  {
             if(typeof  responseText == 'string') var responseText = $.parseJSON(responseText);
             $("button[type='submit']", jqForm).attr("disabled", false);
-            if(responseText.statusCode == '200'){
+            if(responseText.code == '200'){
                 var form_name = $.Cookie('form_name');
                 form_name = form_name?form_name:"form";
                 $.Cookie(form_name, 1);
             }
-            if((!$.isEmptyObject(responseText.result)) && (!$.isPlainObject(responseText.result))){
-                if(responseText.message.msg){
-                    show(responseText.message.msgType, responseText.message.msg);
+            if((!$.isEmptyObject(responseText.data)) && (!$.isPlainObject(responseText.data))){
+                if(responseText.message){
+                    show(responseText.code, responseText.message.msg);
                 }
                 setTimeout(function(){
-                    location.assign(responseText.result);
+                    location.assign(responseText.data);
                 }, 1000);
             }else{
-                if(responseText.message.msg){
-                    show(responseText.message.msgType, responseText.message.msg);
+                if(responseText.message){
+                    show(responseText.code, responseText.message);
                 }
             }
 
@@ -96,13 +86,14 @@
             return false;
         }
 
-        function show(msgType, msg){
+        function show(code, msg){
             var icontype = 4;
+            code = code+'';
+            var msgType = code.substr(0,1);
             switch(msgType){
-                case "tinfo":icontype=4;break;
-                case "tsuccess":icontype=1;break;
-                case "terror":icontype=2;break;
-                case "twarning":icontype=7;break;
+                case 2:icontype=1;break;
+                case 5:icontype=2;break;
+                case 4:icontype=7;break;
                 default :icontype = 4;
             }
             layer.msg(msg, {
