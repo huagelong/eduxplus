@@ -13,6 +13,7 @@ return [
     Symfony\Bundle\DebugBundle\DebugBundle::class => ['dev' => true, 'test' => true],
     Symfony\Bundle\MakerBundle\MakerBundle::class => ['dev' => true],
     App\Bundle\AdminBundle\AdminBundle::class => ['all' => true],
+    App\Bundle\CenterBundle\CenterBundle::class => ['all' => true],
     App\Bundle\AppBundle\AppBundle::class => ['all' => true],
     FOS\RestBundle\FOSRestBundle::class => ['all' => true],
     Nelmio\CorsBundle\NelmioCorsBundle::class => ['all' => true],

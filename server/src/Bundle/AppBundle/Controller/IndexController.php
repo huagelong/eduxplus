@@ -2,7 +2,7 @@
 
 namespace App\Bundle\AppBundle\Controller;
 
-use App\Lib\Base\BaseApiController;
+use App\Bundle\CenterBundle\Lib\Base\BaseApiController;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\Annotations\View as ViewAnnotations;
 

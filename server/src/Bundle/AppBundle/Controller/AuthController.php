@@ -3,9 +3,8 @@
 namespace App\Bundle\AppBundle\Controller;
 
 use App\Entity\BaseUser;
-use App\Lib\Base\BaseApiController;
-use App\Lib\Service\HelperService;
-use App\Lib\Service\TestService;
+use App\Bundle\CenterBundle\Lib\Base\BaseApiController;
+use App\Bundle\CenterBundle\Lib\Service\HelperService;
 use App\Repository\BaseUserRepository;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\Annotations\View as ViewAnnotations;

@@ -1,3 +1,8 @@
+centerBundle.Controllers:
+    resource: ../../src/Bundle/CenterBundle/Controller/
+    type: annotation
+    prefix: /center
+
 adminBundle.Controllers:
     resource: ../../src/Bundle/AdminBundle/Controller/
     type: annotation

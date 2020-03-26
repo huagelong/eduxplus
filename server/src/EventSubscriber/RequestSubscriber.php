@@ -9,7 +9,7 @@
 namespace App\EventSubscriber;
 
 
-use App\Lib\Base\BaseApiController;
+use App\Bundle\CenterBundle\Lib\Base\BaseApiController;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;

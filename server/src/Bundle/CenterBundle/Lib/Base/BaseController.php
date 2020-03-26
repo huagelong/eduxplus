@@ -6,10 +6,8 @@
  * @Date: 2020/3/4 11:47
  */
 
-namespace App\Lib\Base;
+namespace App\Bundle\CenterBundle\Lib\Base;
 
-use Psr\Log\LoggerInterface;
-use FOS\RestBundle\Controller\AbstractFOSRestController;
 
 class BaseController extends BaseService
 {

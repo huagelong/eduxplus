@@ -1,9 +1,21 @@
 {
+    "adbario/php-dot-notation": {
+        "version": "2.2.0"
+    },
+    "alibabacloud/client": {
+        "version": "1.5.21"
+    },
     "behat/transliterator": {
         "version": "v1.3.0"
     },
     "brick/math": {
         "version": "0.8.14"
+    },
+    "clagiordano/weblibs-configmanager": {
+        "version": "v1.0.7"
+    },
+    "danielstjules/stringy": {
+        "version": "3.1.0"
     },
     "doctrine/annotations": {
         "version": "1.0",
@@ -114,6 +126,15 @@
     "gedmo/doctrine-extensions": {
         "version": "v2.4.39"
     },
+    "guzzlehttp/guzzle": {
+        "version": "6.5.2"
+    },
+    "guzzlehttp/promises": {
+        "version": "v1.3.1"
+    },
+    "guzzlehttp/psr7": {
+        "version": "1.6.1"
+    },
     "hellogerard/jobby": {
         "version": "v3.4.7"
     },
@@ -200,6 +221,9 @@
     "mtdowling/cron-expression": {
         "version": "v1.2.3"
     },
+    "mtdowling/jmespath.php": {
+        "version": "2.5.0"
+    },
     "nelmio/cors-bundle": {
         "version": "1.5",
         "recipe": {
@@ -242,11 +266,17 @@
     "psr/container": {
         "version": "1.0.0"
     },
+    "psr/http-message": {
+        "version": "1.0.1"
+    },
     "psr/link": {
         "version": "1.0.0"
     },
     "psr/log": {
         "version": "1.1.2"
+    },
+    "ralouphie/getallheaders": {
+        "version": "3.0.3"
     },
     "ramsey/collection": {
         "version": "1.0.1"

@@ -6,9 +6,9 @@
  * @Date: 2020/3/4 11:47
  */
 
-namespace App\Lib\Base;
+namespace App\Bundle\CenterBundle\Lib\Base;
 
-class BaseHtmlController extends BaseController
+class BaseApiController extends BaseController
 {
 
 }

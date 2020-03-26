@@ -6,7 +6,7 @@
  * @Date: 2020/3/4 20:41
  */
 
-namespace App\Lib\Base;
+namespace App\Bundle\CenterBundle\Lib\Base;
 
 use Psr\Log\LoggerInterface;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
@@ -18,10 +18,15 @@ class BaseService extends AbstractFOSRestController
      */
     protected $logger;
 
+    /**
+     * @var Error
+     */
+    protected $error;
 
-    public function __construct(LoggerInterface $logger)
+    public function __construct(LoggerInterface $logger, Error $error)
     {
         $this->logger = $logger;
+        $this->error = $error;
     }
 
     public function getParameter(string $name)
