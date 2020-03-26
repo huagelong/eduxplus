@@ -6,10 +6,11 @@
  * @Date: 2020/3/3 20:20
  */
 
-namespace App\Bundle\AdminBundle;
+namespace App\Bundle\ApiBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
-class AdminBundle extends Bundle
+
+class ApiBundle extends Bundle
 {
 
 

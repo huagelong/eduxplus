@@ -1,5 +1,9 @@
 imports:
-    - { resource: 'parameters.yaml' }
+    - { resource: '../src/Bundle/CenterBundle/Resources/config/services.yaml' }
+    - { resource: '../src/Bundle/ApiBundle/Resources/config/services.yaml' }
+    - { resource: '../src/Bundle/AdminBundle/Resources/config/services.yaml' }
+parameters:
+
 services:
 
     # default configuration for services in *this* file
@@ -9,8 +13,8 @@ services:
         public: false
 
     App\:
-       resource: '../src/*'
-       exclude: '../src/**/{DependencyInjection,Migrations,Resources,Entity,Tests,Kernel.php}'
+       resource: '%kernel.project_dir%/src/*'
+       exclude: '%kernel.project_dir%/src/**/{DependencyInjection,Migrations,Resources,Entity,Tests,Kernel.php}'
 
     App\Bundle\:
         resource: '../src/Bundle/**/Controller'
@@ -21,4 +25,4 @@ services:
           - { name: 'doctrine.event_subscriber'}
 
     api.token_authenticator:
-        class: App\Security\TokenAuthenticator
+        class: App\Bundle\ApiBundle\Security\TokenAuthenticator

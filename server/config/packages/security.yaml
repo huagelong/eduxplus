@@ -13,8 +13,8 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
-        appApi:
-          pattern:  ^/app/api
+        api:
+          pattern:  ^/api
           stateless: true
           anonymous: true
           provider: api_token
@@ -27,10 +27,7 @@ security:
           stateless: true
           anonymous: true
           provider: api_token
-          guard:
-              authenticators:
-                  - api.token_authenticator
-          user_checker: App\Security\UserEnabledChecker
+          user_checker: App\Bundle\ApiBundle\Security\UserEnabledChecker
 
         admin:
           pattern:  ^/admin
@@ -38,7 +35,7 @@ security:
           provider: api_token
           guard:
             authenticators:
-                - App\Security\AdminLoginAuthenticator
+                - App\Bundle\AdminBundle\Security\AdminLoginAuthenticator
           logout:
             path: admin_logout
             target: /admin/login
@@ -51,10 +48,10 @@ security:
          ROLE_ADMIN: ROLE_USER
 
     access_control:
-         - { path: '^/app/api/test', roles: IS_AUTHENTICATED_ANONYMOUSLY }
-         - { path: '^/app/api/login', roles: IS_AUTHENTICATED_ANONYMOUSLY }
-         - { path: '^/app/api/register', roles: IS_AUTHENTICATED_ANONYMOUSLY }
-         - { path: '^/app/api', roles: IS_AUTHENTICATED_FULLY }
+         - { path: '^/api/test', roles: IS_AUTHENTICATED_ANONYMOUSLY }
+         - { path: '^/api/login', roles: IS_AUTHENTICATED_ANONYMOUSLY }
+         - { path: '^/api/register', roles: IS_AUTHENTICATED_ANONYMOUSLY }
+         - { path: '^/api', roles: IS_AUTHENTICATED_FULLY }
          - { path: '^/admin/login', roles: IS_AUTHENTICATED_ANONYMOUSLY }
          - { path: '^/admin', roles: [ROLE_ADMIN] }
 

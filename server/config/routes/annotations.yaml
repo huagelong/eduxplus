@@ -8,10 +8,10 @@ adminBundle.Controllers:
     type: annotation
     prefix: /admin
 
-appBundle.Controllers:
-    resource: ../../src/Bundle/AppBundle/Controller/
+ApiBundle.Controllers:
+    resource: ../../src/Bundle/ApiBundle/Controller/
     type: annotation
-    prefix: /app
+    prefix: /api
 
 kernel:
     resource: ../../src/Kernel.php

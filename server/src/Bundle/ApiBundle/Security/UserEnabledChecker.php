@@ -6,7 +6,7 @@
  * @Date: 2020/3/14 22:22
  */
 
-namespace App\Security;
+namespace App\Bundle\ApiBundle\Security;
 
 use App\Entity\BaseUser;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;

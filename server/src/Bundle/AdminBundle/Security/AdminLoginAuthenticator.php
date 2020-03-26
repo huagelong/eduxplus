@@ -6,7 +6,7 @@
  * @Date: 2020/3/22 20:37
  */
 
-namespace App\Security;
+namespace App\Bundle\AdminBundle\Security;
 
 use App\Entity\BaseUser;
 use Doctrine\ORM\EntityManagerInterface;

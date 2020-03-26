@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Bundle\AppBundle\Controller;
+namespace App\Bundle\ApiBundle\Controller;
 
 use App\Entity\BaseUser;
 use App\Bundle\CenterBundle\Lib\Base\BaseApiController;
@@ -14,7 +14,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * @Rest\Route("/api")
- * @package App\Bundle\AppBundle\Controller
+ * @package App\Bundle\ApiBundle\Controller
  */
 class AuthController extends BaseApiController
 {

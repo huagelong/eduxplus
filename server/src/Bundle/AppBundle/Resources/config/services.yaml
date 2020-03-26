@@ -1,4 +1,0 @@
-parameters:
-  appBundle.app.name: "hello center1"
-
-services:

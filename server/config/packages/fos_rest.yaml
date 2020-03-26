@@ -31,7 +31,7 @@ fos_rest:
     format_listener:
         enabled: true
         rules:
-             - { path: '^/app/api',prefer_extension: true,fallback_format: 'json',priorities: ['json'] }
+             - { path: '^/api',prefer_extension: true,fallback_format: 'json',priorities: ['json'] }
              - { path: '^/admin/api',prefer_extension: true,fallback_format: 'json',priorities: ['json'] }
              - { path: '^/admin',prefer_extension: true,fallback_format: 'html',priorities: ['html'] }
              - { path: '^/center',prefer_extension: true,fallback_format: 'html',priorities: ['html'] }

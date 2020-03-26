@@ -6,7 +6,7 @@
  * @Date: 2020/3/18 10:40
  */
 
-namespace App\Security;
+namespace App\Bundle\ApiBundle\Security;
 
 use App\Repository\BaseUserRepository;
 use Symfony\Component\HttpFoundation\Request;
