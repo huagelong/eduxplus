@@ -8,7 +8,7 @@
 
 namespace App\Bundle\CenterBundle;
 
-use App\Bundle\CenterBundle\DependencyInjection\AppExtension;
+use App\Bundle\CenterBundle\DependencyInjection\CenterExtension;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class CenterBundle extends Bundle
@@ -16,7 +16,7 @@ class CenterBundle extends Bundle
 
     public function getContainerExtension()
     {
-        return new AppExtension();
+        return new CenterExtension();
     }
 
 }

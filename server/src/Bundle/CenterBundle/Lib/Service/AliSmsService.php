@@ -28,7 +28,7 @@ class AliSmsService extends BaseService
 
 
     protected function initialization(){
-        $this->config = $this->getParameter("aliyun");
+        $this->config = $this->getParameter("center.aliyun");
 
         AlibabaCloud::accessKeyClient($this->config['accesskeyId'], $this->config['accesskeySecret'])
             ->regionId('cn-hangzhou')

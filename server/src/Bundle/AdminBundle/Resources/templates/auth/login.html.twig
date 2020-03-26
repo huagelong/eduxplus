@@ -65,6 +65,19 @@
                             </div>
                         </div>
                     </div>
+                <div class="row">
+                    <div class="col-6 input-group mb-3">
+                        <input type="text" name="recaptcha" class="form-control" placeholder="验证码">
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-envelope"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <img src="{{ path('center_glob_recaptcha', {'type':'adminLogin'} ) }}" style="height: 48px;">
+                    </div>
+                </div>
                     <div class="input-group mb-3">
                         <input type="password" name="password" class="form-control" placeholder="密码">
                         <div class="input-group-append">

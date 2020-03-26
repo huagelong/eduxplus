@@ -4,4 +4,4 @@ twig:
     strict_variables: '%kernel.debug%'
     exception_controller: null
     paths:
-      "%kernel.project_dir%/templates/bundles/AdminBundle": "AdminBundle"
+      "%kernel.project_dir%/src/Bundle/AdminBundle/Resources/templates": "AdminBundle"

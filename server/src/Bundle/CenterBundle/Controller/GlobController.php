@@ -18,7 +18,7 @@ class GlobController extends BaseHtmlController
 {
 
     /**
-     * @Rest\Route("/recaptcha/{type}")
+     * @Rest\Get("/recaptcha/{type}", name="center_glob_recaptcha")
      */
     public function recaptcha($type, CaptchaService $captchaService, Request $request){
         $session = $request->getSession();

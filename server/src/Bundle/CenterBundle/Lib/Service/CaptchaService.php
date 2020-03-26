@@ -21,7 +21,6 @@ class CaptchaService extends BaseService
     public function get($session, $type='')
     {
         $obj = new ImgCaptchaService(100, 50, 4);
-        $path = $this->getParameter("app.path");
         $font = dirname(__FILE__)."/fonts/SourceCodePro-Light.ttf";
         $obj->setFont($font);
         list($num, $source, $header) = $obj->create();

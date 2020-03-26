@@ -8,8 +8,15 @@
 
 namespace App\Bundle\AdminBundle;
 
+use App\Bundle\AdminBundle\DependencyInjection\AdminExtension;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 class AdminBundle extends Bundle
 {
+
+
+    public function getContainerExtension()
+    {
+        return new AdminExtension();
+    }
 
 }
