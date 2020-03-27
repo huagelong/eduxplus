@@ -16,6 +16,7 @@ class TwigMenuService extends BaseService
 
 
     public function getMyMenu(){
+        $user = $this->getUser();
 
     }
 }

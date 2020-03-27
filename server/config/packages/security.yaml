@@ -45,7 +45,11 @@ security:
             path:     /
 
     role_hierarchy:
-         ROLE_ADMIN: ROLE_USER
+         ROLE_ADMIN: [ROLE_ADMIN, ROLE_USER]
+         ROLE_SUPER_ADMIN:
+            - ROLE_ADMIN
+            - ROLE_SUPER_ADMIN
+            - ROLE_ALLOWED_TO_SWITCH
 
     access_control:
          - { path: '^/api/test', roles: IS_AUTHENTICATED_ANONYMOUSLY }

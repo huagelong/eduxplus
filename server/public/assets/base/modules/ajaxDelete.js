@@ -1,5 +1,5 @@
 (function ($) {
-    $.fn.ajaxload = function() {
+    $.fn.ajaxDelete = function() {
         $(this).each(function(){
             var chref = $(this).attr("href");
             $(this).click(function(){
@@ -23,7 +23,7 @@
 
         function todo(chref)
         {
-            $.get(chref,{},function(responseText){
+            $.deleteJSON(chref,{},function(responseText){
                 if(typeof  responseText == 'string') var responseText = $.parseJSON(responseText);
                 if(!$.isEmptyObject(responseText.data)){
                     if(responseText.message){
