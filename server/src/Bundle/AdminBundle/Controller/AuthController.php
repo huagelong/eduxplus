@@ -13,6 +13,7 @@ use App\Bundle\AppBundle\Lib\Base\BaseAdminController;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
  * Class AuthController
@@ -25,10 +26,10 @@ class AuthController extends BaseAdminController
     /**
      * @Rest\Route("/login", name="admin_login")
      */
-    public function login(AuthenticationUtils $authenticationUtils){
+    public function login(AuthenticationUtils $authenticationUtils, UrlGeneratorInterface $urlGenerator){
 
          if ($this->getUser()) {
-             return $this->redirect("/admin/");
+             return $this->redirect($urlGenerator->generate('admin_dashboard'));
          }
 
         $error = $authenticationUtils->getLastAuthenticationError();

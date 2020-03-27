@@ -1,0 +1,11 @@
+.breadcrumb {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    padding: .35rem 1rem !important;
+    margin-bottom: 0rem !important;
+    list-style: none;
+    background-color: transparent!important;
+    border-radius: .25rem;
+}

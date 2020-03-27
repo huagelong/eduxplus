@@ -8,6 +8,7 @@
 
 namespace App\Bundle\AdminBundle\Security;
 
+use App\Bundle\AppBundle\Lib\Service\CaptchaService;
 use App\Entity\BaseUser;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -34,13 +35,20 @@ class AdminLoginAuthenticator extends AbstractFormLoginAuthenticator implements 
     private $urlGenerator;
     private $csrfTokenManager;
     private $passwordEncoder;
+    private $captchaService;
 
-    public function __construct(EntityManagerInterface $entityManager, UrlGeneratorInterface $urlGenerator, CsrfTokenManagerInterface $csrfTokenManager, UserPasswordEncoderInterface $passwordEncoder)
+    public function __construct(EntityManagerInterface $entityManager,
+                                UrlGeneratorInterface $urlGenerator,
+                                CsrfTokenManagerInterface $csrfTokenManager,
+                                UserPasswordEncoderInterface $passwordEncoder,
+                                CaptchaService $captchaService
+    )
     {
         $this->entityManager = $entityManager;
         $this->urlGenerator = $urlGenerator;
         $this->csrfTokenManager = $csrfTokenManager;
         $this->passwordEncoder = $passwordEncoder;
+        $this->captchaService = $captchaService;
     }
 
     public function supports(Request $request)
@@ -51,13 +59,15 @@ class AdminLoginAuthenticator extends AbstractFormLoginAuthenticator implements 
 
     public function getCredentials(Request $request)
     {
-
-
         $credentials = [
             'mobile' => $request->request->get('mobile'),
             'password' => $request->request->get('password'),
             'csrf_token' => $request->request->get('CsrfToken'),
+            'recaptcha'=> $request->request->get('recaptcha'),
         ];
+
+        $this->passwdCheck($credentials, $request);
+
         $request->getSession()->set(
             Security::LAST_USERNAME,
             $credentials['mobile']
@@ -66,12 +76,25 @@ class AdminLoginAuthenticator extends AbstractFormLoginAuthenticator implements 
         return $credentials;
     }
 
-    public function getUser($credentials, UserProviderInterface $userProvider)
-    {
+    protected function passwdCheck($credentials, Request $request){
+
         $token = new CsrfToken('authenticate', $credentials['csrf_token']);
         if (!$this->csrfTokenManager->isTokenValid($token)) {
             throw new InvalidCsrfTokenException();
         }
+
+        $recaptcha = $credentials['recaptcha'];
+        if(!$recaptcha){
+            throw new CustomUserMessageAuthenticationException('验证码不能为空！');
+        }
+        $session = $request->getSession();
+        if(!$this->captchaService->check($session, $recaptcha, "adminLogin")){
+            throw new CustomUserMessageAuthenticationException('验证码错误！');
+        }
+    }
+
+    public function getUser($credentials, UserProviderInterface $userProvider)
+    {
 
         $user = $this->entityManager->getRepository(BaseUser::class)->findOneBy(['mobile' => $credentials['mobile']]);
 
@@ -98,13 +121,11 @@ class AdminLoginAuthenticator extends AbstractFormLoginAuthenticator implements 
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
-
         if ($targetPath = $request->request->get('TargetPath')) {
             return new RedirectResponse($targetPath);
         }
 
-        // For example : return new RedirectResponse($this->urlGenerator->generate('some_route'));
-        throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
+        return new RedirectResponse($this->urlGenerator->generate('admin_dashboard'));
     }
 
     protected function getLoginUrl()
