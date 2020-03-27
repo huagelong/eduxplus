@@ -26,9 +26,16 @@ class BaseRole
     /**
      * @var string|null
      *
-     * @ORM\Column(name="name", type="string", length=50, nullable=true, options={"comment"="权限名称"})
+     * @ORM\Column(name="name", type="string", length=50, nullable=true, options={"comment"="角色名称"})
      */
     private $name;
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="aliases", type="string", length=50, nullable=true, options={"comment"="别名"})
+     */
+    private $aliases;
 
     /**
      * @var string|null
@@ -36,6 +43,14 @@ class BaseRole
      * @ORM\Column(name="descr", type="text", length=65535, nullable=true, options={"comment"="描述"})
      */
     private $descr;
+
+
+    /**
+     * @var bool|null
+     *
+     * @ORM\Column(name="is_lock", type="boolean", nullable=true, options={"comment"="是否被锁定,1-是，0-否"})
+     */
+    private $isLock = '0';
 
     /**
      * @var int|null
@@ -73,6 +88,18 @@ class BaseRole
         return $this;
     }
 
+    public function getAliases(): ?string
+    {
+        return $this->aliases;
+    }
+
+    public function setAliases(?string $aliases): self
+    {
+        $this->aliases = $aliases;
+
+        return $this;
+    }
+
     public function getDescr(): ?string
     {
         return $this->descr;
@@ -85,24 +112,36 @@ class BaseRole
         return $this;
     }
 
-    public function getCreatedAt(): ?int
+    public function getIsLock(): ?bool
+    {
+        return $this->isLock;
+    }
+
+    public function setIsLock(?bool $isLock): self
+    {
+        $this->isLock = $isLock;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(?int $createdAt): self
+    public function setCreatedAt(?\DateTimeInterface $createdAt): self
     {
         $this->createdAt = $createdAt;
 
         return $this;
     }
 
-    public function getUpdatedAt(): ?int
+    public function getUpdatedAt(): ?\DateTimeInterface
     {
         return $this->updatedAt;
     }
 
-    public function setUpdatedAt(?int $updatedAt): self
+    public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
 
@@ -120,6 +159,5 @@ class BaseRole
 
         return $this;
     }
-
 
 }

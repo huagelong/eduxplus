@@ -24,18 +24,19 @@ class BaseAccess
     private $id;
 
     /**
-     * @var int|null
-     *
-     * @ORM\Column(name="role_id", type="integer", nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true, options={"comment"="网址"})
      */
-    private $roleId;
+    private $url = '';
 
     /**
-     * @var string|null
-     *
-     * @ORM\Column(name="access", type="string", length=100, nullable=true)
+     * @ORM\Column(type="integer", options={"default"="0","comment"="权限0-查看，1-增加，2-删除，3-修改"})
      */
-    private $access;
+    private $access ='0';
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $descr;
 
     /**
      * @var int|null
@@ -61,48 +62,60 @@ class BaseAccess
         return $this->id;
     }
 
-    public function getRoleId(): ?int
+    public function getUrl(): ?string
     {
-        return $this->roleId;
+        return $this->url;
     }
 
-    public function setRoleId(?int $roleId): self
+    public function setUrl(?string $url): self
     {
-        $this->roleId = $roleId;
+        $this->url = $url;
 
         return $this;
     }
 
-    public function getAccess(): ?string
+    public function getAccess(): ?int
     {
         return $this->access;
     }
 
-    public function setAccess(?string $access): self
+    public function setAccess(int $access): self
     {
         $this->access = $access;
 
         return $this;
     }
 
-    public function getCreatedAt(): ?int
+    public function getDescr(): ?string
+    {
+        return $this->descr;
+    }
+
+    public function setDescr(?string $descr): self
+    {
+        $this->descr = $descr;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(?int $createdAt): self
+    public function setCreatedAt(?\DateTimeInterface $createdAt): self
     {
         $this->createdAt = $createdAt;
 
         return $this;
     }
 
-    public function getUpdatedAt(): ?int
+    public function getUpdatedAt(): ?\DateTimeInterface
     {
         return $this->updatedAt;
     }
 
-    public function setUpdatedAt(?int $updatedAt): self
+    public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
 
@@ -120,6 +133,4 @@ class BaseAccess
 
         return $this;
     }
-
-
 }
