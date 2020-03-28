@@ -7,9 +7,9 @@ use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false, hardDelete=true)
- * @ORM\Entity(repositoryClass="App\Repository\BaseRoleMenuRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\BaseRoleUserRepository")
  */
-class BaseRoleMenu
+class BaseRoleUser
 {
     /**
      * @ORM\Id()
@@ -19,9 +19,9 @@ class BaseRoleMenu
     private $id;
 
     /**
-     * @ORM\Column(type="integer", options={"comment"="导航id"})
+     * @ORM\Column(type="integer", options={"comment"="用户id"})
      */
-    private $menuId;
+    private $uid;
 
     /**
      * @ORM\Column(type="integer", options={"comment"="角色id"})
@@ -50,14 +50,14 @@ class BaseRoleMenu
         return $this->id;
     }
 
-    public function getMenuId(): ?int
+    public function getUid(): ?int
     {
-        return $this->menuId;
+        return $this->uid;
     }
 
-    public function setMenuId(int $menuId): self
+    public function setUid(int $uid): self
     {
-        $this->menuId = $menuId;
+        $this->uid = $uid;
 
         return $this;
     }

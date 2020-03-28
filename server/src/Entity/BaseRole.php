@@ -30,12 +30,6 @@ class BaseRole
      */
     private $name;
 
-    /**
-     * @var string|null
-     *
-     * @ORM\Column(name="aliases", type="string", length=50, nullable=true, options={"comment"="别名"})
-     */
-    private $aliases;
 
     /**
      * @var string|null
@@ -84,18 +78,6 @@ class BaseRole
     public function setName(?string $name): self
     {
         $this->name = $name;
-
-        return $this;
-    }
-
-    public function getAliases(): ?string
-    {
-        return $this->aliases;
-    }
-
-    public function setAliases(?string $aliases): self
-    {
-        $this->aliases = $aliases;
 
         return $this;
     }
@@ -159,5 +141,6 @@ class BaseRole
 
         return $this;
     }
+
 
 }

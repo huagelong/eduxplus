@@ -9,10 +9,12 @@
 namespace App\EventSubscriber;
 
 
+use App\Bundle\AppBundle\Lib\Base\BaseAdminController;
 use App\Bundle\AppBundle\Lib\Base\BaseApiController;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
+use Symfony\Component\HttpKernel\Event\ViewEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\HttpKernel\Event\ControllerEvent;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
@@ -20,6 +22,8 @@ use Symfony\Component\Stopwatch\Stopwatch;
 
 class RequestSubscriber implements EventSubscriberInterface
 {
+
+
     protected $stopwatch;
 
     public function __construct(Stopwatch $stopwatch)
@@ -33,8 +37,14 @@ class RequestSubscriber implements EventSubscriberInterface
             KernelEvents::REQUEST=>['onKernelRequest', 9999],
             KernelEvents::CONTROLLER => ['onKernelController', 9999],
             KernelEvents::RESPONSE=>['onKernelResponse', -9999],
+            KernelEvents::VIEW=>['onKernelView', 99999]
         ];
     }
+
+    public function onKernelView(ViewEvent $event){
+
+    }
+
 
     public function onKernelRequest(RequestEvent $event){
         $this->stopwatch->start('event:elapsedTime');
@@ -69,7 +79,6 @@ class RequestSubscriber implements EventSubscriberInterface
         if (!$event->isMasterRequest()) {
             return true;
         }
-
         $request = $event->getRequest();
         $sign = $request->headers->get("X-AUTH-SIGN");
         $debug = $request->headers->get("X-AUTH-DEBUG");
@@ -79,8 +88,15 @@ class RequestSubscriber implements EventSubscriberInterface
             return true;
         }
         $controller = $event->getController();
+
         if (is_array($controller)) {
             $controller = $controller[0];
+        }
+
+        if ($controller instanceof BaseAdminController) {
+            $route = $request->get("_route");
+            $session = $request->getSession();
+            $session->set("_route", $route);
         }
 
         if ($controller instanceof BaseApiController) {

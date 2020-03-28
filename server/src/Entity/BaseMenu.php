@@ -39,7 +39,7 @@ class BaseMenu
     private $sort ='0';
 
     /**
-     * @ORM\Column(type="string", length=88, options={"comment"="导航样式"})
+     * @ORM\Column(type="string", length=88,  nullable=true, options={"comment"="导航样式"})
      */
     private $style = '';
 

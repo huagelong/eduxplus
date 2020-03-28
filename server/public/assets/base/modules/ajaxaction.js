@@ -3,8 +3,6 @@
         $(this).each(function(){
             var chref = $(this).attr("href");
             $(this).click(function(){
-                var isconfirm = $(this).data("confirm");
-                if(isconfirm){
                     layer.msg(isconfirm, {
                         time: 0 //不自动关闭
                         ,btn: ['是', '否']
@@ -13,10 +11,6 @@
                             todoDelete(chref);
                         }
                     });
-
-                }else{
-                    todoDelete(chref);
-                }
                 return false;
             });
         });

@@ -77,6 +77,18 @@ class BaseService extends AbstractFOSRestController
         return true;
     }
 
+    public function fetchFieldByDql($field,$dql, $params=[]){
+        $result = $this->fetchOneByDql($dql, $params);
+        $rs = isset($result[$field])?$result[$field]:"";
+        return $rs;
+    }
+
+    public function fetchFieldsByDql($field,$dql, $params=[]){
+        $result = $this->fetchAllByDql($dql, $params);
+        $rs = $result?array_column($result, $field):[];
+        return $rs;
+    }
+
     public function fetchAllByDql($dql, $params=[]){
         $em = $this->getDoctrine()->getManager();
         $query = $em->createQuery($dql);

@@ -1,0 +1,49 @@
+<nav class="mt-2">
+    <ul class="nav nav-pills nav-sidebar flex-column nav-child-indent" data-widget="treeview" role="menu" data-accordion="false">
+        <li class="nav-item">
+            <a href="{{ path("admin_dashboard") }}" class="nav-link {% if route=="admin_dashboard" %} active {% endif %}">
+                <i class="nav-icon fas fa-home"></i>
+                <p>
+                    首页
+                </p>
+            </a>
+        </li>
+        {% if menus %}
+            {% set menuroot = menus[0] %}
+            {% for menu in menuroot %}
+                {% if menu.isShow %}
+            <li class="nav-item has-treeview {% if pmenuId==menu.id %} menu-open {% endif %}">
+                <a href="{% if menu.url %}{{ path(menu.url) }}{% endif %}" class="nav-link {% if pmenuId==menu.id %} active {% endif %}" {% if menu.isBlank %} target="_blank" {% endif %} >
+                    <i class="nav-icon {{ menu.style|default('fas fa-th') }}"></i>
+                    <p>
+                        {{ menu.name }}
+                        <i class="right fas fa-angle-left"></i>
+                    </p>
+                </a>
+                {% if menus[menu.id] is defined %}
+                <ul class="nav nav-treeview">
+                    {% for menu2 in menus[menu.id] %}
+                        {% if menu2.isShow %}
+                    <li class="nav-item">
+                        <a href="{% if menu2.url %}{{ path(menu2.url) }}{% endif %}" class="nav-link {% if route==menu2.url or pmenuId==menu2.id %} active {% endif %}" {% if menu2.isBlank %} target="_blank" {% endif %}>
+                            <i class="nav-icon {{ menu2.style|default('far fa-circle') }}"></i>
+                            <p>{{ menu2.name }}</p>
+                        </a>
+                    </li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+                {% endif %}
+            </li>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+        <li class="nav-header">其他</li>
+        <li class="nav-item">
+            <a href="{{ path("admin_logout") }}" class="nav-link">
+                <i class="nav-icon fas fa-power-off"></i>
+                退出
+            </a>
+        </li>
+    </ul>
+</nav>

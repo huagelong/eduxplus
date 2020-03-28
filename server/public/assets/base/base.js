@@ -1,7 +1,8 @@
 $(function(){
     // $(".recaptcha").captcha();
     $('.ajaxform').ajaxform();
-    $('.ajaxload').ajaxload();
+    $('.ajaxDelete').ajaxDelete();
+    $('.ajaxPut').ajaxPut();
     $('.tip').tips();
     $('.ajaxpage').ajaxpage();
     // $('[ui-jp]').uiJp();
