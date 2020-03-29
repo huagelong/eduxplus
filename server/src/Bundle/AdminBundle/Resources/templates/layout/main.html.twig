@@ -20,6 +20,9 @@
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{ path("admin_dashboard") }}"><i class="fas fa-home"></i></a></li>
                         {% block breadcrumb %}{% endblock %}
+                        {% if app.session.get("_route") != "admin_dashboard" %}
+                        <li class="breadcrumb-item active">{{ block('page_title') }}</li>
+                        {% endif %}
                     </ol>
                 </li>
             </ul>
