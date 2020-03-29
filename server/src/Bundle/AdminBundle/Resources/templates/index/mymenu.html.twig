@@ -9,7 +9,7 @@
                     <i class="nav-icon {{ menu.style|default('fas fa-th') }}"></i>
                     <p>
                         {{ menu.name }}
-                    {% if pmenuId==menu.id and menus[menu.id] is defined %}
+                    {% if menus[menu.id] is defined %}
                         <i class="right fas fa-angle-left"></i>
                     {% endif %}
                     </p>

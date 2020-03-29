@@ -95,10 +95,13 @@ class RequestSubscriber implements EventSubscriberInterface
             $session->set("_route", $route);
             $uid = $this->menuService->getUid();
             //权限验证
-            $allMenu = $this->menuService->getMyMenuUrl($uid);
-            if(!in_array($route, $allMenu)){
-                throw new AccessDeniedException("Access Denied!");
+            if($uid){
+                $allMenu = $this->menuService->getMyMenuUrl($uid);
+                if(!in_array($route, $allMenu)){
+                    throw new AccessDeniedException("Access Denied!");
+                }
             }
+
         }
 
         //api

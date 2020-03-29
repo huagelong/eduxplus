@@ -36,7 +36,8 @@ class BaseService extends AbstractFOSRestController
 
     public function getUid(){
         $user = $this->getUser();
-        return $user->getId();
+        if($user) return $user->getId();
+        return 0;
     }
 
     /**

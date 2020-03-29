@@ -27,7 +27,6 @@ class AuthController extends BaseAdminController
      * @Rest\Route("/login", name="admin_login")
      */
     public function loginAction(AuthenticationUtils $authenticationUtils, UrlGeneratorInterface $urlGenerator){
-
          if ($this->getUser()) {
              return $this->redirect($urlGenerator->generate('admin_dashboard'));
          }
