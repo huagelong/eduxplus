@@ -40,8 +40,7 @@ class IndexController extends BaseAdminController
      */
     public function mymenuAction(Request $request,MenuService $menuService){
         $route = $request->getSession()->get("_route");
-        $user = $this->getUser();
-        $uid = $user->getId();
+        $uid = $this->getUid();
 
         $menu = $menuService->getMyMenu($uid);
         $pmenuId = $menuService->getParentMenuId($route);
@@ -49,7 +48,6 @@ class IndexController extends BaseAdminController
         $data['menus'] = $menu;
         $data['route'] = $route;
         $data['pmenuId'] = $pmenuId;
-        dump($data);
         return $this->render('@AdminBundle/index/mymenu.html.twig', $data);
     }
 

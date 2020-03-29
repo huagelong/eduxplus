@@ -9,6 +9,7 @@
 namespace App\EventSubscriber;
 
 
+use App\Bundle\AdminBundle\Service\MenuService;
 use App\Bundle\AppBundle\Lib\Base\BaseAdminController;
 use App\Bundle\AppBundle\Lib\Base\BaseApiController;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -25,10 +26,12 @@ class RequestSubscriber implements EventSubscriberInterface
 
 
     protected $stopwatch;
+    protected $menuService;
 
-    public function __construct(Stopwatch $stopwatch)
+    public function __construct(Stopwatch $stopwatch, MenuService $menuService)
     {
         $this->stopwatch = $stopwatch;
+        $this->menuService = $menuService;
     }
 
     public static function getSubscribedEvents(): array
@@ -80,13 +83,6 @@ class RequestSubscriber implements EventSubscriberInterface
             return true;
         }
         $request = $event->getRequest();
-        $sign = $request->headers->get("X-AUTH-SIGN");
-        $debug = $request->headers->get("X-AUTH-DEBUG");
-
-        $env = $_SERVER['APP_ENV'];
-        if(($env === 'dev') && $debug){
-            return true;
-        }
         $controller = $event->getController();
 
         if (is_array($controller)) {
@@ -97,9 +93,25 @@ class RequestSubscriber implements EventSubscriberInterface
             $route = $request->get("_route");
             $session = $request->getSession();
             $session->set("_route", $route);
+            $uid = $this->menuService->getUid();
+            //权限验证
+            $allMenu = $this->menuService->getMyMenuUrl($uid);
+            if(!in_array($route, $allMenu)){
+                throw new AccessDeniedException("Access Denied!");
+            }
         }
 
+        //api
         if ($controller instanceof BaseApiController) {
+
+            $sign = $request->headers->get("X-AUTH-SIGN");
+            $debug = $request->headers->get("X-AUTH-DEBUG");
+
+            $env = $_SERVER['APP_ENV'];
+            if(($env === 'dev') && $debug){
+                return true;
+            }
+
             if($sign){
                 try {
                     $realSign = base64_decode($sign);
