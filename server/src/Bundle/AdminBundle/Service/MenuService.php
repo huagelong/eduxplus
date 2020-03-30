@@ -15,6 +15,22 @@ use Symfony\Component\HttpFoundation\Request;
 class MenuService extends BaseService
 {
 
+
+    public function getAllMenu(){
+        $menuListDql = "SELECT a FROM App:BaseMenu a ORDER BY a.sort ASC";
+        $menulist = $this->fetchAllByDql($menuListDql);
+        if(!$menulist) return [];
+
+        $rs = [];
+        foreach ($menulist as $v){
+            $pid = $v->getPid();
+            $rs[$pid][] = $v;
+        }
+        return $rs;
+
+        return $menulist;
+    }
+
     public function getMyMenuDefault($uid){
         $dqlRole = "SELECT a.roleId FROM App:BaseRoleUser a WHERE a.uid=:uid";
         $roleIds = $this->fetchFieldsByDql("roleId", $dqlRole, ["uid"=>$uid]);

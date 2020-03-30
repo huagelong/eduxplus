@@ -2,6 +2,14 @@
 
 {% block page_title %}菜单管理{% endblock %}
 
+{% block head_custom_stylesheets %}
+    <link rel="stylesheet" href="{{ asset('assets/plugins/jquery-nestable/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/plugins/jquery-nestable/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/plugins/select2/css/select2.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/plugins/fontawesome-iconpicker/css/fontawesome-iconpicker.min.css') }}">
+{% endblock %}
+
 {% block page %}
 <section class="content">
     <div class="row">
@@ -9,10 +17,10 @@
             <div class="card card-default">
                 <div class="card-header">
                     <div class="btn-group">
-                        <button class="btn btn-primary btn-sm" data-action="expand" title="展开">
+                        <button class="btn btn-primary btn-sm menu-tree-tools" data-action="expand" title="展开">
                             <i class="fas fa-plus-square-o"></i>&nbsp;展开
                         </button>
-                        <button class="btn btn-primary btn-sm" data-action="collapse"
+                        <button class="btn btn-primary btn-sm menu-tree-tools" data-action="collapse"
                            title="收起">
                             <i class="fas fa-minus-square-o"></i>&nbsp;收起
                         </button>
@@ -23,90 +31,61 @@
                             <i class="fas fa-save"></i><span class="hidden-xs">&nbsp;保存</span>
                         </button>
                     </div>
-
-                    <div class="btn-group">
-                        <button class="btn btn-warning btn-sm" title="刷新">
-                            <i class="fas fa-refresh"></i><span class="hidden-xs">&nbsp;刷新</span>
-                        </button>
-                    </div>
                 </div>
                 <!-- /.box-header -->
                 <div class="card-body table-responsive no-padding">
-                    <div class="dd" id="tree-5e809aeb80792">
+                    <div class="dd" id="menu-tree">
                         <ol class="dd-list">
-                            <li class="dd-item" data-id="1">
+                            {% for menu in allMenu[0] %}
+                            <li class="dd-item" data-id="{{ menu.id }}">
                                 <div class="dd-handle">
-                                    <i class="fas fa-bar-chart"></i>&nbsp;<strong>Dashboard</strong>&nbsp;&nbsp;&nbsp;<a
-                                        href="/" class="dd-nodrag">/</a>
-                                    <span class="pull-right dd-nodrag">
-            <a href="/auth/menu/1/edit"><i class="fas fa-edit"></i></a>
-            <a href="javascript:void(0);" data-id="1" class="tree_branch_delete"><i class="fas fa-trash"></i></a>
+<i class="{{ menu.style|default('fas fa-caret-right') }}"></i>&nbsp;<strong>{{ menu.name }}</strong>&nbsp;&nbsp;&nbsp;
+                                    {% if menu.url!="" %}<a href="{{ path(menu.url) }}" class="dd-nodrag">/</a>{% endif %}
+                                    <span class="text-muted"> {{ menu.descr }}</span>
+        <span class="pull-right dd-nodrag">
+            <a href="/auth/menu/{{ menu.id }}/edit"><i class="fas fa-edit"></i></a>
+            <a href="javascript:;" data-id="{{ menu.id }}" class="tree_branch_delete"><i class="fas fa-trash"></i></a>
         </span>
                                 </div>
-                            </li>
-                            <li class="dd-item" data-id="2">
-                                <button data-action="collapse" type="button">Collapse</button>
-                                <button data-action="expand" type="button" style="display: none;">Expand</button>
-                                <div class="dd-handle">
-                                    <i class="fas fa-tasks"></i>&nbsp;<strong>Admin</strong>
-                                    <span class="pull-right dd-nodrag">
-            <a href="/auth/menu/2/edit"><i class="fas fa-edit"></i></a>
-            <a href="javascript:void(0);" data-id="2" class="tree_branch_delete"><i class="fas fa-trash"></i></a>
-        </span>
-                                </div>
+                                {% if allMenu[menu.id] is defined %}
                                 <ol class="dd-list">
-                                    <li class="dd-item" data-id="3">
+                                    {% for menu2 in allMenu[menu.id] %}
+                                    <li class="dd-item" data-id="{{ menu2.id }}">
                                         <div class="dd-handle">
-                                            <i class="fas fa-users"></i>&nbsp;<strong>Users</strong>&nbsp;&nbsp;&nbsp;<a
-                                                href="/auth/users" class="dd-nodrag">/auth/users</a>
+        <i class="{{ menu2.style|default('fas fa-caret-right') }}"></i>&nbsp;<strong>{{ menu2.name }}</strong>&nbsp;&nbsp;&nbsp;
+                                            {% if menu2.url!="" %}<a href="{{ path(menu2.url) }}" class="dd-nodrag">/</a>{% endif %}
+                                            <span class="text-muted"> {{ menu2.descr }}</span>
                                             <span class="pull-right dd-nodrag">
-            <a href="/auth/menu/3/edit"><i class="fas fa-edit"></i></a>
-            <a href="javascript:void(0);" data-id="3" class="tree_branch_delete"><i class="fas fa-trash"></i></a>
+            <a href="/auth/menu/{{ menu2.id }}/edit"><i class="fas fa-edit"></i></a>
+            <a href="javascript:;" data-id="{{ menu2.id }}" class="tree_branch_delete"><i class="fas fa-trash"></i></a>
         </span>
                                         </div>
-                                    </li>
-                                    <li class="dd-item" data-id="4">
-                                        <div class="dd-handle">
-                                            <i class="fas fa-user"></i>&nbsp;<strong>Roles</strong>&nbsp;&nbsp;&nbsp;<a
-                                                href="/auth/roles" class="dd-nodrag">/auth/roles</a>
-                                            <span class="pull-right dd-nodrag">
-            <a href="/auth/menu/4/edit"><i class="fas fa-edit"></i></a>
-            <a href="javascript:void(0);" data-id="4" class="tree_branch_delete"><i class="fas fa-trash"></i></a>
+                                        {#第三级#}
+                                        {% if allMenu[menu2.id] is defined %}
+                                            <ol class="dd-list">
+                                                {% for menu3 in allMenu[menu2.id] %}
+                                                    <li class="dd-item" data-id="{{ menu3.id }}">
+                                                        <div class="dd-handle">
+                                                            <i class="{{ menu3.style|default('fas fa-caret-right') }}"></i>&nbsp;<strong>{{ menu3.name }}</strong>&nbsp;&nbsp;&nbsp;
+                                                            {% if menu3.url!="" %}<a href="{{ path(menu3.url) }}" class="dd-nodrag">/</a>{% endif %}
+                                                            <span class="text-muted"> {{ menu3.descr }}</span>
+                                                            <span class="pull-right dd-nodrag">
+            <a href="/auth/menu/{{ menu3.id }}/edit"><i class="fas fa-edit"></i></a>
+            <a href="javascript:;" data-id="{{ menu3.id }}" class="tree_branch_delete"><i class="fas fa-trash"></i></a>
         </span>
-                                        </div>
+                                                        </div>
+                                                    </li>
+                                                {% endfor %}
+                                            </ol>
+                                        {% endif %}
+
                                     </li>
-                                    <li class="dd-item" data-id="5">
-                                        <div class="dd-handle">
-                                            <i class="fas fa-ban"></i>&nbsp;<strong>Permission</strong>&nbsp;&nbsp;&nbsp;<a
-                                                href="/auth/permissions" class="dd-nodrag">/auth/permissions</a>
-                                            <span class="pull-right dd-nodrag">
-            <a href="/auth/menu/5/edit"><i class="fas fa-edit"></i></a>
-            <a href="javascript:void(0);" data-id="5" class="tree_branch_delete"><i class="fas fa-trash"></i></a>
-        </span>
-                                        </div>
-                                    </li>
-                                    <li class="dd-item" data-id="6">
-                                        <div class="dd-handle">
-                                            <i class="fas fa-bars"></i>&nbsp;<strong>Menu</strong>&nbsp;&nbsp;&nbsp;<a
-                                                href="/auth/menu" class="dd-nodrag">/auth/menu</a>
-                                            <span class="pull-right dd-nodrag">
-            <a href="/auth/menu/6/edit"><i class="fas fa-edit"></i></a>
-            <a href="javascript:void(0);" data-id="6" class="tree_branch_delete"><i class="fas fa-trash"></i></a>
-        </span>
-                                        </div>
-                                    </li>
-                                    <li class="dd-item" data-id="7">
-                                        <div class="dd-handle">
-                                            <i class="fas fa-history"></i>&nbsp;<strong>Operation log</strong>&nbsp;&nbsp;&nbsp;<a
-                                                href="/auth/logs" class="dd-nodrag">/auth/logs</a>
-                                            <span class="pull-right dd-nodrag">
-            <a href="/auth/menu/7/edit"><i class="fas fa-edit"></i></a>
-            <a href="javascript:void(0);" data-id="7" class="tree_branch_delete"><i class="fas fa-trash"></i></a>
-        </span>
-                                        </div>
-                                    </li>
+                                    {% endfor %}
                                 </ol>
+                                {% endif %}
                             </li>
+                            {% endfor %}
+
                         </ol>
                     </div>
                 </div>
@@ -118,301 +97,118 @@
         <div class="col-md-6">
             <div class="card card-default">
                 <div class="card-header with-border">
-                    <h3 class="box-title">新增</h3>
-                    <div class="box-tools pull-right">
-                    </div>
-                    <!-- /.box-tools -->
+                    <h4 class="card-title">新增</h4>
                 </div>
                 <!-- /.box-header -->
                 <div class="card-body" style="display: block;">
-                    <form method="POST" action="/auth/menu" class="form-horizontal" accept-charset="UTF-8"
-                          pjax-container="1">
-                        <div class="box-body fields-group">
-
-                            <div class="form-group  ">
-
-                                <label for="parent_id" class="col-sm-2  control-label">父级菜单</label>
-
+                    <form method="POST" action="/auth/menu" class="form-horizontal" accept-charset="UTF-8" >
+                            <div class="form-group row">
+                                <label class="col-sm-2 require col-form-label">父级菜单</label>
                                 <div class="col-sm-8">
-
-
-                                    <input type="hidden" name="parent_id"><select
-                                        class="form-control parent_id select2-hidden-accessible" style="width: 100%;"
-                                        name="parent_id" data-value="" tabindex="-1" aria-hidden="true">
-                                    <option value=""></option>
-                                    <option value="0" selected="">ROOT</option>
-                                    <option value="1">┝&nbsp;&nbsp;Dashboard</option>
-                                    <option value="2">┝&nbsp;&nbsp;Admin</option>
-                                    <option value="3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;┝&nbsp;Users</option>
-                                    <option value="4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;┝&nbsp;Roles</option>
-                                    <option value="5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;┝&nbsp;Permission
-                                    </option>
-                                    <option value="6">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;┝&nbsp;Menu</option>
-                                    <option value="7">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;┝&nbsp;Operation log
-                                    </option>
-                                    <option value="13">┝&nbsp;&nbsp;Demos</option>
-                                    <option value="14">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;┝&nbsp;Users</option>
-                                    <option value="15">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;┝&nbsp;Posts</option>
-                                    <option value="16">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;┝&nbsp;Images</option>
-                                    <option value="17">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;┝&nbsp;Videos</option>
-                                    <option value="18">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;┝&nbsp;Articles
-                                    </option>
-                                    <option value="19">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;┝&nbsp;Categories
-                                    </option>
-                                    <option value="20">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;┝&nbsp;Multiple image
-                                    </option>
-                                    <option value="22">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;┝&nbsp;Tags</option>
-                                    <option value="21">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;┝&nbsp;Painters
-                                    </option>
-                                    <option value="45">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;┝&nbsp;Country</option>
-                                    <option value="46">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;┝&nbsp;City</option>
-                                    <option value="44">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;┝&nbsp;World</option>
-                                    <option value="47">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;┝&nbsp;Language</option>
-                                    <option value="59">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;┝&nbsp;China subway
-                                    </option>
-                                    <option value="60">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;┝&nbsp;Cities</option>
-                                    <option value="61">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;┝&nbsp;Lines</option>
-                                    <option value="62">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;┝&nbsp;Stops</option>
-                                    <option value="23">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;┝&nbsp;China area
-                                    </option>
-                                    <option value="40">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;┝&nbsp;Provinces</option>
-                                    <option value="41">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;┝&nbsp;City</option>
-                                    <option value="42">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;┝&nbsp;District</option>
-                                    <option value="43">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;┝&nbsp;Cascading
-                                        select
-                                    </option>
-                                    <option value="83">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;┝&nbsp;Files</option>
-                                    <option value="28">┝&nbsp;&nbsp;Data from api</option>
-                                    <option value="29">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;┝&nbsp;In theaters
-                                    </option>
-                                    <option value="30">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;┝&nbsp;Coming soon
-                                    </option>
-                                    <option value="31">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;┝&nbsp;top 250</option>
-                                    <option value="78">┝&nbsp;&nbsp;Chart.js</option>
-                                    <option value="69">┝&nbsp;&nbsp;Code mirror</option>
-                                    <option value="70">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;┝&nbsp;Clike editor
-                                    </option>
-                                    <option value="71">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;┝&nbsp;PHP editor
-                                    </option>
-                                    <option value="72">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;┝&nbsp;Javascript
-                                        editor
-                                    </option>
-                                    <option value="73">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;┝&nbsp;Python editor
-                                    </option>
-                                    <option value="74">┝&nbsp;&nbsp;Lightbox</option>
-                                    <option value="75">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;┝&nbsp;Lightbox
-                                    </option>
-                                    <option value="76">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;┝&nbsp;Gallery</option>
-                                    <option value="64">┝&nbsp;&nbsp;Editors</option>
-                                    <option value="65">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;┝&nbsp;Markdown
-                                        editor
-                                    </option>
-                                    <option value="66">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;┝&nbsp;wang editor
-                                    </option>
-                                    <option value="67">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;┝&nbsp;Summernote
-                                    </option>
-                                    <option value="77">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;┝&nbsp;Json editor
-                                    </option>
-                                    <option value="79">┝&nbsp;&nbsp;Forms</option>
-                                    <option value="50">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;┝&nbsp;Form 1</option>
-                                    <option value="51">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;┝&nbsp;Form 2</option>
-                                    <option value="52">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;┝&nbsp;Form 3</option>
-                                    <option value="80">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;┝&nbsp;Tabbed Form
-                                    </option>
-                                    <option value="81">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;┝&nbsp;Multiple step
-                                    </option>
-                                    <option value="82">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;┝&nbsp;Form 4</option>
-                                    <option value="49">┝&nbsp;&nbsp;Widgets</option>
-                                    <option value="53">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;┝&nbsp;Table</option>
-                                    <option value="54">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;┝&nbsp;Box</option>
-                                    <option value="55">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;┝&nbsp;Info box
-                                    </option>
-                                    <option value="56">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;┝&nbsp;Tab</option>
-                                    <option value="57">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;┝&nbsp;Notice</option>
-                                    <option value="32">┝&nbsp;&nbsp;Helpers</option>
-                                    <option value="33">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;┝&nbsp;Scaffold
-                                    </option>
-                                    <option value="34">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;┝&nbsp;Database
-                                        terminal
-                                    </option>
-                                    <option value="35">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;┝&nbsp;Laravel
-                                        artisan
-                                    </option>
-                                    <option value="36">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;┝&nbsp;Routes</option>
-                                    <option value="8">┝&nbsp;&nbsp;Config</option>
-                                    <option value="9">┝&nbsp;&nbsp;Scheduling</option>
-                                    <option value="10">┝&nbsp;&nbsp;Log viwer</option>
-                                    <option value="11">┝&nbsp;&nbsp;Api tester</option>
-                                    <option value="12">┝&nbsp;&nbsp;Media manager</option>
-                                    <option value="48">┝&nbsp;&nbsp;Exception Reporter</option>
-                                    <option value="37">┝&nbsp;&nbsp;External link</option>
-                                </select><span class="select2 select2-container select2-container--default" dir="ltr"
-                                               style="width: 100%;"><span class="selection"><span
-                                        class="select2-selection select2-selection--single" role="combobox"
-                                        aria-haspopup="true" aria-expanded="false" tabindex="0"
-                                        aria-labelledby="select2-parent_id-wp-container"><span
-                                        class="select2-selection__rendered" id="select2-parent_id-wp-container"
-                                        title="ROOT"><span class="select2-selection__clear">×</span>ROOT</span><span
-                                        class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span
-                                        class="dropdown-wrapper" aria-hidden="true"></span></span>
+                                    <input type="hidden" name="parent_id"/>
+                                    <select class="form-control select2" style="width: 100%;" name="parent_id" data-value="" >
+                                        <option>Alabama</option>
+                                        <option>Alaska</option>
+                                        <option>California</option>
+                                        <option>Delaware</option>
+                                        <option>Tennessee</option>
+                                        <option>Texas</option>
+                                        <option>Washington</option>
+                                    </select>
                                 </div>
                             </div>
 
-                            <div class="form-group  ">
-
-                                <label for="title" class="col-sm-2 asterisk control-label">标题</label>
-
+                            <div class="form-group  row">
+                                <label for="title" class="col-sm-2  require col-form-label">标题</label>
                                 <div class="col-sm-8">
-
-
                                     <div class="input-group">
-
-                                        <span class="input-group-addon"><i class="fas fa-pencil fa-fw"></i></span>
-
-                                        <input type="text" id="title" name="title" value="" class="form-control title"
-                                               placeholder="输入 标题" required="1">
-                                    </div>
-
-
-                                </div>
-                            </div>
-                            <div class="form-group">
-
-                                <label for="icon" class="col-sm-2 asterisk control-label">图标</label>
-
-                                <div class="col-sm-8">
-
-
-                                    <div class="input-group iconpicker-container">
-
-                                        <span class="input-group-addon"><i class="fas fa-bars"></i></span>
-
-                                        <input style="width: 140px" type="text" id="icon" name="icon" value="fa-bars"
-                                               class="form-control icon iconpicker-element iconpicker-input"
-                                               placeholder="输入 图标" required="1">
-                                    </div>
-
-                                    <span class="help-block">
-    <i class="fas fa-info-circle"></i>&nbsp;For more icons please see <a href="http://fontawesome.io/icons/"
-                                                                        target="_blank">http://fontawesome.io/icons/</a>
-</span>
-
-                                    <div class="iconpicker-popover popover fade">
-                                        <div class="arrow"></div>
-                                        <div class="popover-title"><input type="search"
-                                                                          class="form-control iconpicker-search"
-                                                                          placeholder="Type to filter"></div>
-                                        <div class="popover-content">
-                                            <div class="iconpicker">
-                                                <div class="iconpicker-items"><a role="button" href="#"
-                                                                                 class="iconpicker-item"
-                                                                                 title=".fa-500px"><i
-                                                        class="fas fa-500px"></i></a><a role="button" href="#"
-                                                                                       class="iconpicker-item"
-                                                                                       title=".fa-adjust"><i
-                                                        class="fas fa-adjust"></i></a>
-                                                </div>
-                                            </div>
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-edit fa-fw"></i></span>
                                         </div>
+                                        <input type="text" id="title" name="title" value="" class="form-control title" placeholder="输入标题" required="1">
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group  ">
-
-                                <label for="uri" class="col-sm-2  control-label">路径</label>
-
+                            <div class="form-group  row">
+                                <label for="sort" class="col-sm-2  require col-form-label">排序</label>
                                 <div class="col-sm-8">
-
-
                                     <div class="input-group">
-
-                                        <span class="input-group-addon"><i class="fas fa-pencil fa-fw"></i></span>
-
-                                        <input type="text" id="uri" name="uri" value="" class="form-control uri"
-                                               placeholder="输入 路径">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-sort-amount-up fa-fw"></i></span>
+                                        </div>
+                                        <input type="text" id="sort" name="sort" value="0" class="form-control" >
                                     </div>
-
-
                                 </div>
                             </div>
-                            <div class="form-group  ">
-
-                                <label for="roles" class="col-sm-2  control-label">角色</label>
-
+                            <div class="form-group row">
+                                <label for="icon" class="col-sm-2 control-label">图标</label>
                                 <div class="col-sm-8">
-
-
-                                    <select class="form-control roles select2-hidden-accessible" style="width: 100%;"
-                                            name="roles[]" multiple="" data-placeholder="输入 角色" data-value=""
-                                            tabindex="-1" aria-hidden="true">
-                                        <option value="1">Administrator</option>
-                                    </select><span class="select2 select2-container select2-container--default"
-                                                   dir="ltr" style="width: 100%;"><span class="selection"><span
-                                        class="select2-selection select2-selection--multiple" role="combobox"
-                                        aria-haspopup="true" aria-expanded="false" tabindex="-1"><ul
-                                        class="select2-selection__rendered"><li
-                                        class="select2-search select2-search--inline"><input
-                                        class="select2-search__field" type="search" tabindex="0" autocomplete="off"
-                                        autocorrect="off" autocapitalize="off" spellcheck="false" role="textbox"
-                                        aria-autocomplete="list" placeholder="角色"
-                                        style="width: 320px;"></li></ul></span></span><span class="dropdown-wrapper"
-                                                                                            aria-hidden="true"></span></span><input
-                                        type="hidden" name="roles[]">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                             <span class="input-group-text"><i class="fas fa-adjust fa-fw"></i></span>
+                                        </div>
+                                        <input style="width: 140px" type="text" id="icon" name="icon" value=""
+                                               class="form-control icon"
+                                               placeholder="输入图标" required="1"
+                                        >
+                                    </div>
+                                    <span class="help-block">
+                                        <i class="fas fa-info-circle"></i>
+                                        &nbsp;For more icons please see <a href="http://fontawesome.io/icons/" target="_blank">http://fontawesome.io/icons/</a>
+                                    </span>
                                 </div>
                             </div>
 
-                            <div class="form-group  ">
-
-                                <label for="permission" class="col-sm-2  control-label">权限</label>
-
+                            <div class="form-group row">
+                                <label class="col-sm-2 require col-form-label">路径</label>
                                 <div class="col-sm-8">
-
-
-                                    <input type="hidden" name="permission"><select
-                                        class="form-control permission select2-hidden-accessible" style="width: 100%;"
-                                        name="permission" data-value="" tabindex="-1" aria-hidden="true">
-                                    <option value=""></option>
-                                    <option value="*">All permission</option>
-                                    <option value="dashboard">Dashboard</option>
-                                    <option value="auth.login">Login</option>
-                                    <option value="auth.setting">User setting</option>
-                                    <option value="auth.management">Auth management</option>
-                                    <option value="ext.config">Admin Config</option>
-                                    <option value="ext.scheduling">Scheduling</option>
-                                    <option value="ext.log-viewer">Logs</option>
-                                    <option value="ext.api-tester">Api tester</option>
-                                    <option value="ext.media-manager">Media manager</option>
-                                    <option value="ext.helpers">Admin helpers</option>
-                                    <option value="ext.reporter">Exceptions reporter</option>
-                                    <option value="sssssssssssss">ssssssssssssssssssssss</option>
-                                </select><span class="select2 select2-container select2-container--default" dir="ltr"
-                                               style="width: 100%;"><span class="selection"><span
-                                        class="select2-selection select2-selection--single" role="combobox"
-                                        aria-haspopup="true" aria-expanded="false" tabindex="0"
-                                        aria-labelledby="select2-permission-j8-container"><span
-                                        class="select2-selection__rendered" id="select2-permission-j8-container"><span
-                                        class="select2-selection__placeholder">权限</span></span><span
-                                        class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span
-                                        class="dropdown-wrapper" aria-hidden="true"></span></span>
+                                    <input type="hidden" name="uri"/>
+                                    <select class="form-control select2" style="width: 100%;" name="uri" data-value="" >
+                                        <option>Alabama</option>
+                                        <option>Alaska</option>
+                                        <option>California</option>
+                                        <option>Delaware</option>
+                                        <option>Tennessee</option>
+                                        <option>Texas</option>
+                                        <option>Washington</option>
+                                    </select>
                                 </div>
                             </div>
 
-                            <input type="hidden" name="_token" value="NMiVeuP5KqJuQc6SfQmSIQCP1l1NBYmLMOdIm0Er"
-                                   class="_token">
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">是否显示</label>
+                            <div class="col-sm-8">
+                                <input type="checkbox" name="isShow" checked data-bootstrap-switch data-off-color="danger" data-on-color="success">
+                            </div>
                         </div>
 
-                        <input type="hidden" name="_token" value="NMiVeuP5KqJuQc6SfQmSIQCP1l1NBYmLMOdIm0Er">
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">是否锁定</label>
+                            <div class="col-sm-8">
+                                <input type="checkbox" name="isLock" data-bootstrap-switch data-off-color="danger" data-on-color="success">
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">仅权限</label>
+                            <div class="col-sm-8">
+                                <input type="checkbox" name="isAccess" data-bootstrap-switch data-off-color="danger" data-on-color="success">
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">描述</label>
+                            <div class="col-sm-8">
+                                <textarea class="form-control" name="descr" rows="3" placeholder="输入 ..."></textarea>
+                            </div>
+                        </div>
+
                         <!-- /.box-body -->
-                        <div class="box-footer">
+                        <div class="card-footer">
                             <div class="col-md-2"></div>
-
                             <div class="col-md-8">
-                                <div class="btn-group pull-left">
-                                    <button type="reset" class="btn btn-warning pull-right">重置</button>
-                                </div>
-
-                                <div class="btn-group pull-right">
-                                    <button type="submit" class="btn btn-info pull-right">提交</button>
+                                <div class="btn-group">
+                                    <button type="submit" class="btn btn-info">提交</button>
                                 </div>
                             </div>
                         </div>
@@ -428,4 +224,38 @@
 
 </section>
 
+{% endblock %}
+{% block body_javascript %}
+    {{ parent() }}
+    <script src="{{ asset('assets/plugins/jquery-nestable/jquery.nestable.js') }}"></script>
+    <script src="{{ asset('assets/plugins/select2/js/select2.full.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/fontawesome-iconpicker/js/fontawesome-iconpicker.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/bootstrap-switch/js/bootstrap-switch.min.js') }}"></script>
+{% endblock %}
+{% block body_custom_javascript %}
+<script>
+    $(function(){
+
+        $('.select2').select2({ theme: 'bootstrap4', "allowClear":true,"placeholder":{"id":"","text":"\u7236\u7ea7\u83dc\u5355"}});
+
+        $('.icon').iconpicker({placement:'bottomLeft'});
+
+        $('#menu-tree').nestable([]);
+
+        $("input[data-bootstrap-switch]").each(function(){
+            $(this).bootstrapSwitch('state', $(this).prop('checked'));
+        });
+
+        $('.menu-tree-tools').on('click', function(e){
+            var action = $(this).data('action');
+            if (action === 'expand') {
+                $('.dd').nestable('expandAll');
+            }
+            if (action === 'collapse') {
+                $('.dd').nestable('collapseAll');
+            }
+        });
+    });
+
+</script>
 {% endblock %}

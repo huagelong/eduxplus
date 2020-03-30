@@ -13,3 +13,12 @@
 .content{
     padding: 10px;
 }
+
+.fade:not(.show){
+    opacity: 1 !important;
+}
+
+.form-group>label.require:before{
+    content: " *";
+    color: red;
+}

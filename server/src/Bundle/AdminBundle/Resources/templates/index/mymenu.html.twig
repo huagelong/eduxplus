@@ -5,7 +5,7 @@
             {% for menu in menuroot %}
                 {% if menu.isShow %}
             <li class="nav-item has-treeview {% if pmenuId==menu.id and menus[menu.id] is defined %} menu-open {% endif %}">
-                <a href="{% if menu.url %}{{ path(menu.url) }}{% endif %}" class="nav-link {% if pmenuId==menu.id or route==menu.url %} active {% endif %}" {% if menu.isBlank %} target="_blank" {% endif %} >
+                <a href="{% if menu.url %}{{ path(menu.url) }}{% endif %}" class="nav-link {% if pmenuId==menu.id or route==menu.url %} active {% endif %}"  >
                     <i class="nav-icon {{ menu.style|default('fas fa-th') }}"></i>
                     <p>
                         {{ menu.name }}
@@ -19,7 +19,7 @@
                     {% for menu2 in menus[menu.id] %}
                         {% if menu2.isShow %}
                     <li class="nav-item">
-                        <a href="{% if menu2.url %}{{ path(menu2.url) }}{% endif %}" class="nav-link {% if route==menu2.url or pmenuId==menu2.id %} active {% endif %}" {% if menu2.isBlank %} target="_blank" {% endif %}>
+                        <a href="{% if menu2.url %}{{ path(menu2.url) }}{% endif %}" class="nav-link {% if route==menu2.url or pmenuId==menu2.id %} active {% endif %}">
                             <i class="nav-icon {{ menu2.style|default('far fa-circle') }}"></i>
                             <p>{{ menu2.name }}</p>
                         </a>

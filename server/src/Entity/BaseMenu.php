@@ -49,14 +49,14 @@ class BaseMenu
     private $isShow ='0';
 
     /**
-     * @ORM\Column(type="boolean", options={"default"="0","comment"="是否外部导航"})
-     */
-    private $isBlank ='0';
-
-    /**
      * @ORM\Column(type="boolean", options={"default"="0","comment"="是否锁定，锁定后不能修改"})
      */
     private $isLock ='0';
+
+    /**
+     * @ORM\Column(type="boolean", options={"default"="0","comment"="是否是权限"})
+     */
+    private $isAccess ='0';
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -138,7 +138,7 @@ class BaseMenu
         return $this->style;
     }
 
-    public function setStyle(string $style): self
+    public function setStyle(?string $style): self
     {
         $this->style = $style;
 
@@ -157,18 +157,6 @@ class BaseMenu
         return $this;
     }
 
-    public function getIsBlank(): ?bool
-    {
-        return $this->isBlank;
-    }
-
-    public function setIsBlank(bool $isBlank): self
-    {
-        $this->isBlank = $isBlank;
-
-        return $this;
-    }
-
     public function getIsLock(): ?bool
     {
         return $this->isLock;
@@ -177,6 +165,18 @@ class BaseMenu
     public function setIsLock(bool $isLock): self
     {
         $this->isLock = $isLock;
+
+        return $this;
+    }
+
+    public function getIsAccess(): ?bool
+    {
+        return $this->isAccess;
+    }
+
+    public function setIsAccess(bool $isAccess): self
+    {
+        $this->isAccess = $isAccess;
 
         return $this;
     }
@@ -228,5 +228,6 @@ class BaseMenu
 
         return $this;
     }
+
 
 }
