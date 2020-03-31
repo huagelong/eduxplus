@@ -24,8 +24,22 @@ class MenuController extends BaseAdminController
 
         $data = [];
         $data['allMenu'] = $menuService->getAllMenu();
-
-
+        $data['menuSelect'] = $menuService->menuSelect();
+        $data['adminRoute'] = $menuService->getAdminRoute();
         return $this->render("@AdminBundle/menu/index.html.twig", $data);
+    }
+
+    /**
+     *  @Rest\Get("/menu/edit/{id}", name="admin_menu_edit")
+     */
+    public function editAction($id){
+
+    }
+
+    /**
+     *  @Rest\Put("/api/menu/delete/{id}", name="admin_api_menu_delete")
+     */
+    public function deleteAction($id){
+
     }
 }

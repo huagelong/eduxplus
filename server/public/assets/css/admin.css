@@ -22,3 +22,7 @@
     content: " *";
     color: red;
 }
+
+.pull-right {
+    float: right!important;
+}

@@ -39,26 +39,50 @@
                             {% for menu in allMenu[0] %}
                             <li class="dd-item" data-id="{{ menu.id }}">
                                 <div class="dd-handle">
-<i class="{{ menu.style|default('fas fa-caret-right') }}"></i>&nbsp;<strong>{{ menu.name }}</strong>&nbsp;&nbsp;&nbsp;
-                                    {% if menu.url!="" %}<a href="{{ path(menu.url) }}" class="dd-nodrag">/</a>{% endif %}
+<i class="{{ menu.style|default('far fa-circle') }}"></i>&nbsp;<strong>{{ menu.name }}</strong>&nbsp;&nbsp;&nbsp;
+                                    {% if menu.url!="" %}<a href="{{ path(menu.url) }}" class="dd-nodrag">{{ path(menu.url) }}</a>{% endif %}
                                     <span class="text-muted"> {{ menu.descr }}</span>
-        <span class="pull-right dd-nodrag">
-            <a href="/auth/menu/{{ menu.id }}/edit"><i class="fas fa-edit"></i></a>
-            <a href="javascript:;" data-id="{{ menu.id }}" class="tree_branch_delete"><i class="fas fa-trash"></i></a>
-        </span>
+             {% if menu.isLock %}
+                 <span class="right badge badge-secondary dd-nodrag tip" title="已锁定，不能修改">
+                  <i class="fas fa-lock"></i>
+                </span>
+             {% endif %}
+             {% if menu.isAccess %}
+            <span class="right badge badge-success dd-nodrag tip" title="对象为权限,导航上不会显示">
+                <i class="fas fa-key"></i>
+            </span>
+             {% endif %}
+{% if menu.isLock == 0 %}
+<span class="pull-right dd-nodrag">
+<a href="{{ path("admin_menu_edit", {"id":menu.id}) }}"><i class="fas fa-edit"></i></a>
+<a href="javascript:;" data-id="{{ path("admin_api_menu_delete", {"id":menu.id}) }}" class="tree_branch_delete"><i class="fas fa-trash"></i></a>
+</span>
+{% endif %}
                                 </div>
                                 {% if allMenu[menu.id] is defined %}
                                 <ol class="dd-list">
                                     {% for menu2 in allMenu[menu.id] %}
                                     <li class="dd-item" data-id="{{ menu2.id }}">
                                         <div class="dd-handle">
-        <i class="{{ menu2.style|default('fas fa-caret-right') }}"></i>&nbsp;<strong>{{ menu2.name }}</strong>&nbsp;&nbsp;&nbsp;
-                                            {% if menu2.url!="" %}<a href="{{ path(menu2.url) }}" class="dd-nodrag">/</a>{% endif %}
+        <i class="{{ menu2.style|default('far fa-circle') }}"></i>&nbsp;<strong>{{ menu2.name }}</strong>&nbsp;&nbsp;&nbsp;
+                                            {% if menu2.url!="" %}<a href="{{ path(menu2.url) }}" class="dd-nodrag">{{ path(menu2.url) }}</a>{% endif %}
                                             <span class="text-muted"> {{ menu2.descr }}</span>
-                                            <span class="pull-right dd-nodrag">
-            <a href="/auth/menu/{{ menu2.id }}/edit"><i class="fas fa-edit"></i></a>
-            <a href="javascript:;" data-id="{{ menu2.id }}" class="tree_branch_delete"><i class="fas fa-trash"></i></a>
-        </span>
+{% if menu2.isLock %}
+    <span class="right badge badge-secondary dd-nodrag tip" title="已锁定，不能修改">
+<i class="fas fa-lock"></i>
+</span>
+{% endif %}
+{% if menu2.isAccess %}
+    <span class="right badge badge-success dd-nodrag tip" title="对象为权限,导航上不会显示">
+<i class="fas fa-key"></i>
+</span>
+{% endif %}
+{% if menu2.isLock == 0 %}
+    <span class="pull-right dd-nodrag">
+<a href="{{ path("admin_menu_edit", {"id":menu2.id}) }}"><i class="fas fa-edit"></i></a>
+<a href="javascript:;" data-id="{{ path("admin_api_menu_delete", {"id":menu2.id}) }}" class="tree_branch_delete"><i class="fas fa-trash"></i></a>
+</span>
+{% endif %}
                                         </div>
                                         {#第三级#}
                                         {% if allMenu[menu2.id] is defined %}
@@ -66,13 +90,25 @@
                                                 {% for menu3 in allMenu[menu2.id] %}
                                                     <li class="dd-item" data-id="{{ menu3.id }}">
                                                         <div class="dd-handle">
-                                                            <i class="{{ menu3.style|default('fas fa-caret-right') }}"></i>&nbsp;<strong>{{ menu3.name }}</strong>&nbsp;&nbsp;&nbsp;
-                                                            {% if menu3.url!="" %}<a href="{{ path(menu3.url) }}" class="dd-nodrag">/</a>{% endif %}
+                                                            <i class="{{ menu3.style|default('far fa-circle') }}"></i>&nbsp;<strong>{{ menu3.name }}</strong>&nbsp;&nbsp;&nbsp;
+                                                            {% if menu3.url!="" %}<a href="{{ path(menu3.url) }}" class="dd-nodrag">{{ path(menu3.url) }}</a>{% endif %}
                                                             <span class="text-muted"> {{ menu3.descr }}</span>
-                                                            <span class="pull-right dd-nodrag">
-            <a href="/auth/menu/{{ menu3.id }}/edit"><i class="fas fa-edit"></i></a>
-            <a href="javascript:;" data-id="{{ menu3.id }}" class="tree_branch_delete"><i class="fas fa-trash"></i></a>
-        </span>
+{% if menu3.isLock %}
+    <span class="right badge badge-secondary dd-nodrag tip" title="已锁定，不能修改">
+<i class="fas fa-lock"></i>
+</span>
+{% endif %}
+{% if menu3.isAccess %}
+    <span class="right badge badge-success dd-nodrag tip" title="对象为权限,导航上不会显示">
+<i class="fas fa-key"></i>
+</span>
+{% endif %}
+{% if menu3.isLock == 0 %}
+    <span class="pull-right dd-nodrag">
+<a href="{{ path("admin_menu_edit", {"id":menu3.id}) }}"><i class="fas fa-edit"></i></a>
+<a href="javascript:;" data-id="{{ path("admin_api_menu_delete", {"id":menu3.id}) }}" class="tree_branch_delete"><i class="fas fa-trash"></i></a>
+</span>
+{% endif %}
                                                         </div>
                                                     </li>
                                                 {% endfor %}
@@ -107,13 +143,12 @@
                                 <div class="col-sm-8">
                                     <input type="hidden" name="parent_id"/>
                                     <select class="form-control select2" style="width: 100%;" name="parent_id" data-value="" >
-                                        <option>Alabama</option>
-                                        <option>Alaska</option>
-                                        <option>California</option>
-                                        <option>Delaware</option>
-                                        <option>Tennessee</option>
-                                        <option>Texas</option>
-                                        <option>Washington</option>
+                                        <option value="0">ROOT</option>
+                                        {% if menuSelect %}
+                                            {% for menus in menuSelect %}
+                                        <option value="{{ menus.id }}">{{ menus.name|raw }}</option>
+                                            {% endfor %}
+                                        {% endif %}
                                     </select>
                                 </div>
                             </div>
@@ -164,13 +199,11 @@
                                 <div class="col-sm-8">
                                     <input type="hidden" name="uri"/>
                                     <select class="form-control select2" style="width: 100%;" name="uri" data-value="" >
-                                        <option>Alabama</option>
-                                        <option>Alaska</option>
-                                        <option>California</option>
-                                        <option>Delaware</option>
-                                        <option>Tennessee</option>
-                                        <option>Texas</option>
-                                        <option>Washington</option>
+                                        {% if adminRoute %}
+                                            {% for r in adminRoute %}
+                                        <option value="{{ r }}">{{ r }}</option>
+                                            {% endfor %}
+                                        {% endif %}
                                     </select>
                                 </div>
                             </div>

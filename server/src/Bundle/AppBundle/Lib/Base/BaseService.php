@@ -82,32 +82,33 @@ class BaseService extends AbstractFOSRestController
         return true;
     }
 
-    public function fetchFieldByDql($field,$dql, $params=[]){
-        $result = $this->fetchOneByDql($dql, $params);
+    public function fetchField($field,$dql, $params=[]){
+        $result = $this->fetchOne($dql, $params);
         $rs = isset($result[$field])?$result[$field]:"";
         return $rs;
     }
 
-    public function fetchFieldsByDql($field,$dql, $params=[]){
-        $result = $this->fetchAllByDql($dql, $params);
+    public function fetchFields($field,$dql, $params=[]){
+        $result = $this->fetchAll($dql, $params);
         $rs = $result?array_column($result, $field):[];
         return $rs;
     }
 
-    public function fetchAllByDql($dql, $params=[]){
+    public function fetchAll($dql, $params=[]){
         $em = $this->getDoctrine()->getManager();
         $query = $em->createQuery($dql);
         if($params) $query= $query->setParameters($params);
-        $rs = $query->getResult();
+        $rs = $query->getArrayResult();
+//        dump($query->getSql());
         return $rs;
     }
 
 
-    public function fetchOneByDql($dql, $params=[]){
+    public function fetchOne($dql, $params=[]){
         $em = $this->getDoctrine()->getManager();
         $query = $em->createQuery($dql);
         if($params) $query= $query->setParameters($params);
-        $rs = $query->setMaxResults(1)->getOneOrNullResult();
+        $rs = $query->setMaxResults(1)->getOneOrNullResult(2);
         return $rs;
     }
 

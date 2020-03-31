@@ -18,32 +18,63 @@ class MenuService extends BaseService
 
     public function getAllMenu(){
         $menuListDql = "SELECT a FROM App:BaseMenu a ORDER BY a.sort ASC";
-        $menulist = $this->fetchAllByDql($menuListDql);
+        $menulist = $this->fetchAll($menuListDql);
         if(!$menulist) return [];
 
         $rs = [];
         foreach ($menulist as $v){
-            $pid = $v->getPid();
+            $pid = $v['pid'];
             $rs[$pid][] = $v;
         }
         return $rs;
+    }
 
-        return $menulist;
+    public function menuSelect(){
+        $allMenu = $this->getAllMenu();
+        $rs = [];
+        if($allMenu[0]){
+            foreach ($allMenu[0] as $vv){
+                $id= $vv['id'];
+                $name = "┝&nbsp;".$vv['name'];
+                $vv['name'] = $name;
+                $rs[] = $vv;
+                if(isset($allMenu[$id])){
+                    $pre = "&nbsp;&nbsp;&nbsp;&nbsp;";
+                    $this->_menuSelect($allMenu[$id], $pre, $rs);
+                }
+            }
+        }
+        return $rs;
+    }
+
+    protected function _menuSelect($menuArr, $pre="", &$rs){
+        if($menuArr){
+            foreach ($menuArr as $v){
+                $id= $v['id'];
+                $name = $pre."┝&nbsp;".$v['name'];
+                $v['name'] = $name;
+                $rs[] = $v;
+                if(isset($menuArr[$id])){
+                    $pre = $pre."&nbsp;&nbsp;&nbsp;&nbsp;";
+                    $this->_menuSelect($menuArr[$id], $pre, $rs);
+                }
+            }
+        }
     }
 
     public function getMyMenuDefault($uid){
         $dqlRole = "SELECT a.roleId FROM App:BaseRoleUser a WHERE a.uid=:uid";
-        $roleIds = $this->fetchFieldsByDql("roleId", $dqlRole, ["uid"=>$uid]);
+        $roleIds = $this->fetchFields("roleId", $dqlRole, ["uid"=>$uid]);
         if(!$roleIds) return [];
 //        dump($roleIds);
         $roleIds = array_unique($roleIds);
         $dqlMenu = "SELECT a.menuId FROM App:BaseRoleMenu a WHERE a.roleId in(:roleId)";
-        $menuIds = $this->fetchFieldsByDql("menuId", $dqlMenu, ["roleId"=>$roleIds]);
+        $menuIds = $this->fetchFields("menuId", $dqlMenu, ["roleId"=>$roleIds]);
         if(!$menuIds) return [];
 //        dump($menuIds);
         $menuIds = array_unique($menuIds);
         $menuListDql = "SELECT a FROM App:BaseMenu a WHERE a.id in(:id) ORDER BY a.sort ASC";
-        $menulist = $this->fetchAllByDql($menuListDql, ["id"=>$menuIds]);
+        $menulist = $this->fetchAll($menuListDql, ["id"=>$menuIds]);
         if(!$menulist) return [];
         return $menulist;
     }
@@ -56,7 +87,7 @@ class MenuService extends BaseService
         if(!$menulist) return [];
         $rs = [];
         foreach ($menulist as $v){
-            $pid = $v->getPid();
+            $pid = $v['pid'];
             $rs[$pid][] = $v;
         }
         return $rs;
@@ -69,7 +100,7 @@ class MenuService extends BaseService
         if(!$menulist) return [];
         $result = [];
         foreach ($menulist as $v){
-            $url = $v->getUrl();
+            $url = $v['url'];
             if($url) $result[] = $url;
         }
         return $result;
@@ -80,13 +111,29 @@ class MenuService extends BaseService
      */
     public function getParentMenuId($route){
         $menuDql = "SELECT a.pid FROM App:BaseMenu a WHERE a.url =:url";
-        return $this->fetchFieldByDql("pid", $menuDql, ["url"=>$route]);
+        return $this->fetchField("pid", $menuDql, ["url"=>$route]);
     }
 
     public function getAllRoute(){
         $router = $this->get("router");
         $allRoute = $router->getRouteCollection();
         return $allRoute->all();
+    }
+
+    public function getAdminRoute(){
+        $allRout = $this->getAllRoute();
+        if(!$allRout) return [];
+        $rstmp = [];
+        foreach ($allRout as $k=>$v){
+            if(substr($k, 0, 6) == 'admin_'){
+                if(!in_array($k, ['admin_login'])) $rstmp[]=$k;
+            }
+        }
+
+        $sql = "SELECT a.url FROM App:BaseMenu a WHERE a.url in(:url) ORDER BY a.id DESC";
+        $rsExist = $this->fetchFields("url", $sql, ["url"=>$rstmp]);
+        $rs  = array_diff($rstmp, $rsExist);
+        return $rs;
     }
 
 }
