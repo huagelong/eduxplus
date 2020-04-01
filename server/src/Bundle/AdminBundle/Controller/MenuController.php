@@ -38,7 +38,16 @@ class MenuController extends BaseAdminController
     }
 
     /**
-     *  @Rest\Delete("/api/menu/delete/{id}", name="admin_api_menu_delete")
+     * @Rest\Get("/menu/editdo/{id}", name="admin_api_menu_edit")
+     * @ViewAnnotations()
+     */
+    public function editDoAction($id){
+
+    }
+
+    /**
+     * @Rest\Delete("/api/menu/delete/{id}", name="admin_api_menu_delete")
+     * @ViewAnnotations()
      */
     public function deleteAction($id){
 

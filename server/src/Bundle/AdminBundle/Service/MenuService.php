@@ -127,7 +127,7 @@ class MenuService extends BaseService
         $rstmp = [];
         foreach ($allRout as $k=>$v){
             if(substr($k, 0, 6) == 'admin_'){
-                if(!in_array($k, ['admin_login'])) $rstmp[]=$k;
+                if(!in_array($k, ['admin_login', 'admin_logout'])) $rstmp[]=$k;
             }
         }
 

@@ -72,7 +72,10 @@ class InstallFixtures extends Fixture
         $this->addMenu("首页","后台首页", 0,"admin_dashboard", "fas fa-home",0, $roleId, 1, 0, 1);
         $accMenuId = $this->addMenu("安全","安全方面的管理", 0,"", "fas fa-key",0, $roleId, 1, 0, 1);
         $menuMgId = $this->addMenu("菜单管理","管理菜单以及对应页面的权限", $accMenuId,"admin_menu_index", "",0, $roleId, 1, 0, 1);
-        $this->addMenu("添加菜单","新增菜单", $menuMgId,"admin_api_menu_add", "",0, $roleId, 1, 1, 0);
+        $this->addMenu("添加菜单","菜单新增处理", $menuMgId,"admin_api_menu_add", "",0, $roleId, 1, 1, 0);
+        $this->addMenu("编辑菜单页面","菜单编辑展示页面", $menuMgId,"admin_menu_edit", "",0, $roleId, 1, 1, 0);
+        $this->addMenu("编辑菜单","菜单编辑处理", $menuMgId,"admin_api_menu_edit", "",0, $roleId, 1, 1, 0);
+        $this->addMenu("删除菜单","删除菜单", $menuMgId,"admin_api_menu_delete", "",0, $roleId, 1, 1, 0);
 
     }
 
