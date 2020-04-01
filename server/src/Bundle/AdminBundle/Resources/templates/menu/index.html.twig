@@ -41,7 +41,7 @@
                                 <div class="dd-handle">
 <i class="{{ menu.style|default('far fa-circle') }}"></i>&nbsp;<strong>{{ menu.name }}</strong>&nbsp;&nbsp;&nbsp;
                                     {% if menu.url!="" %}<a href="{{ path(menu.url) }}" class="dd-nodrag">{{ path(menu.url) }}</a>{% endif %}
-                                    <span class="text-muted"> {{ menu.descr }}</span>
+                                    <span class="font-weight-lighter"> {{ menu.descr }}</span>
              {% if menu.isLock %}
                  <span class="right badge badge-secondary dd-nodrag tip" title="已锁定，不能修改">
                   <i class="fas fa-lock"></i>
@@ -66,7 +66,7 @@
                                         <div class="dd-handle">
         <i class="{{ menu2.style|default('far fa-circle') }}"></i>&nbsp;<strong>{{ menu2.name }}</strong>&nbsp;&nbsp;&nbsp;
                                             {% if menu2.url!="" %}<a href="{{ path(menu2.url) }}" class="dd-nodrag">{{ path(menu2.url) }}</a>{% endif %}
-                                            <span class="text-muted"> {{ menu2.descr }}</span>
+                                            <span class="font-weight-lighter"> {{ menu2.descr }}</span>
 {% if menu2.isLock %}
     <span class="right badge badge-secondary dd-nodrag tip" title="已锁定，不能修改">
 <i class="fas fa-lock"></i>
@@ -92,7 +92,7 @@
                                                         <div class="dd-handle">
                                                             <i class="{{ menu3.style|default('far fa-circle') }}"></i>&nbsp;<strong>{{ menu3.name }}</strong>&nbsp;&nbsp;&nbsp;
                                                             {% if menu3.url!="" %}<a href="{{ path(menu3.url) }}" class="dd-nodrag">{{ path(menu3.url) }}</a>{% endif %}
-                                                            <span class="text-muted"> {{ menu3.descr }}</span>
+                                                            <span class="font-weight-lighter"> {{ menu3.descr }}</span>
 {% if menu3.isLock %}
     <span class="right badge badge-secondary dd-nodrag tip" title="已锁定，不能修改">
 <i class="fas fa-lock"></i>
@@ -128,7 +128,6 @@
                 <!-- /.box-body -->
             </div>
         </div>
-
 
         <div class="col-md-6">
             <div class="card card-default">

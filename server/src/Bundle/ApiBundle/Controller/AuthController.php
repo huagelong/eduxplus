@@ -40,48 +40,6 @@ class AuthController extends BaseApiController
     }
 
     /**
-     * @Rest\Get("/test")
-     * @ViewAnnotations()
-     * @param Request $request
-     * @return array
-     */
-    public function test(Request $request,
-                         UserPasswordEncoderInterface $passwordEncoder,
-                        HelperService $helperService
-    )
-    {
-        $model = new BaseUser();
-        $uuid = $helperService->getUuid();
-        $originaRefreshToken = $helperService->getUuid();
-        $refreshToken = $passwordEncoder->encodePassword($model, $originaRefreshToken);
-        $pwd = $passwordEncoder->encodePassword($model, "111111");
-
-        $model->setSex(1);
-        $model->setBirthday(date('Y-m-d'));
-        $model->setRegSource("web");
-        $model->setMobile("17621487072");
-        $model->setRefreshToken($refreshToken);
-        $model->setOriginalRefreshToken($originaRefreshToken);
-        $model->setReportUid(0);
-        $model->setUuid($uuid);
-        $model->setDisplayName("超级管梨园");
-        $model->setFullName("汪鑫远");
-        $model->setRoles(["ROLE_ADMIN"]);
-        $model->setPassword($pwd);
-        $this->insert($model);
-        $rs = $this->fetchOneByDql("SELECT p FROM App:BaseUser p WHERE p.id >= :id",["id"=>1]);
-        var_dump($rs);
-
-        $name = $request->get("testName");
-//        $version = $request->headers->get("X-Accept-Version");
-        $version = $helperService->getUuid();
-        $data=["name"=>$name."-".$version];
-//        return $this->render("bundle/app_bundle/controller/user/test.html.twig", $data);
-        return $data;
-    }
-
-
-    /**
      * 退出
      * @Rest\Get("/logout")
      * @ViewAnnotations()
