@@ -64,8 +64,10 @@ class RequestSubscriber implements EventSubscriberInterface
             $event = $this->stopwatch->stop('event:elapsedTime');
             $stopwatch = (string) $event;
             if(!isset($content['code'])){
+                $message = isset($content['_message'])?$content['_message']:"";
+                if(isset($content['_message'])) unset($content['_message']);
                 $responseData['code'] = $statusCode;
-                $responseData['message']="";
+                $responseData['message']=$message;
                 $responseData['data'] = $content;
                 $responseData['stopwatch'] = $stopwatch;
             }else{

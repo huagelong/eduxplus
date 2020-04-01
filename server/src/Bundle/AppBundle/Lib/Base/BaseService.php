@@ -55,6 +55,12 @@ class BaseService extends AbstractFOSRestController
     }
 
 
+    public function save($model, $name=null){
+        $id = $model->getId();
+        if($id) return $this->update($model, $name);
+        return $this->insert($model, $name);
+    }
+
     /**
      * 更新或者保存
      *

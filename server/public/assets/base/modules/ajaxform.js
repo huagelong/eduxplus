@@ -32,8 +32,6 @@
             }
             var responseText = xhr.responseText;
 
-            console.log(xhr);
-
             if(typeof  responseText == 'string') var responseText = $.parseJSON(responseText);
             if(responseText.code != '200'){
                 if(responseText.message){
@@ -89,12 +87,12 @@
                 form_name = form_name?form_name:"form";
                 $.Cookie(form_name, 1);
             }
-            if((!$.isEmptyObject(responseText.data)) && (!$.isPlainObject(responseText.data))){
+            if((!$.isEmptyObject(responseText.data._url)) && (!$.isPlainObject(responseText.data._url))){
                 if(responseText.message){
-                    show(responseText.code, responseText.message.msg);
+                    show(responseText.code, responseText.message);
                 }
                 setTimeout(function(){
-                    location.assign(responseText.data);
+                    location.assign(responseText.data._url);
                 }, 1000);
             }else{
                 if(responseText.message){

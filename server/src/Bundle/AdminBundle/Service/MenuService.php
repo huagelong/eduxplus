@@ -10,6 +10,7 @@ namespace App\Bundle\AdminBundle\Service;
 
 
 use App\Bundle\AppBundle\Lib\Base\BaseService;
+use App\Entity\BaseMenu;
 use Symfony\Component\HttpFoundation\Request;
 
 class MenuService extends BaseService
@@ -136,5 +137,32 @@ class MenuService extends BaseService
         return $rs;
     }
 
+
+    public function checkMenuName($name,  $id=0){
+        $sql = "SELECT a FROM App:BaseMenu a WHERE a.name =:name ";
+        $params = [];
+        $params['name'] = $name;
+        if($id){
+            $sql = $sql." AND a.id !=:id ";
+            $params['id'] = $id;
+        }
+        return $this->fetchOne($sql, $params);
+    }
+
+
+    public function addMenu($name, $descr, $pid, $uri, $style,$sort, $isLock, $isAccess, $isShow){
+        $menuModel = new BaseMenu();
+        $menuModel->setName($name);
+        if($descr) $menuModel->setDescr($descr);
+        if($uri) $menuModel->setUrl($uri);
+        $menuModel->setIsLock($isLock);
+        $menuModel->setIsAccess($isAccess);
+        $menuModel->setIsShow($isShow);
+        $menuModel->setPid($pid);
+        $menuModel->setSort($sort);
+        if($style) $menuModel->setStyle($style);
+        $menuId = $this->save($menuModel);
+        return $menuId;
+    }
 }
 
