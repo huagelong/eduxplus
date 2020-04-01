@@ -89,6 +89,7 @@ class RequestSubscriber implements EventSubscriberInterface
             $controller = $controller[0];
         }
 
+        //admin
         if ($controller instanceof BaseAdminController) {
             $route = $request->get("_route");
             $session = $request->getSession();
@@ -98,7 +99,7 @@ class RequestSubscriber implements EventSubscriberInterface
             if($uid){
                 $allMenu = $this->menuService->getMyMenuUrl($uid);
                 if(!in_array($route, $allMenu)){
-                    throw new AccessDeniedException("Access Denied!");
+                    throw new AccessDeniedException("没有权限!");
                 }
             }
 

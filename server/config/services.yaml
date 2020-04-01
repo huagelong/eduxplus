@@ -23,6 +23,3 @@ services:
     App\EventSubscriber\DatabaseActivitySubscriber:
         tags:
           - { name: 'doctrine.event_subscriber'}
-
-    api.token_authenticator:
-        class: App\Bundle\ApiBundle\Security\TokenAuthenticator

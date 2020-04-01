@@ -20,14 +20,7 @@ security:
           provider: api_token
           guard:
               authenticators:
-                  - api.token_authenticator
-
-        adminApi:
-          pattern:  ^/admin/api
-          stateless: true
-          anonymous: true
-          provider: api_token
-          user_checker: App\Bundle\ApiBundle\Security\UserEnabledChecker
+                  - App\Bundle\ApiBundle\Security\TokenAuthenticator
 
         admin:
           pattern:  ^/admin
@@ -53,5 +46,5 @@ security:
          - { path: '^/api/register', roles: IS_AUTHENTICATED_ANONYMOUSLY }
          - { path: '^/api', roles: IS_AUTHENTICATED_FULLY }
          - { path: '^/admin/login', roles: IS_AUTHENTICATED_ANONYMOUSLY }
-         - { path: '^/admin', roles: [ROLE_ADMIN] }
+         - { path: '^/admin', roles: ROLE_ADMIN }
 

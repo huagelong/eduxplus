@@ -1,15 +1,16 @@
-$(function(){
 
     function show(code, msg){
         var icontype = 4;
         code = code+'';
         var msgType = code.substr(0,1);
+        msgType = parseInt(msgType);
         switch(msgType){
             case 2:icontype=1;break;
             case 5:icontype=2;break;
             case 4:icontype=7;break;
             default :icontype = 4;
         }
+
         layer.msg(msg, {
             time: 2500, //20s后自动关闭
             icon: icontype
@@ -95,4 +96,3 @@ $(function(){
         });
     };
 
-});

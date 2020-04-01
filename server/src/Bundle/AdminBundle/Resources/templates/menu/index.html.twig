@@ -137,7 +137,7 @@
                 </div>
                 <!-- /.box-header -->
                 <div class="card-body" style="display: block;">
-                    <form method="POST" action="/auth/menu" class="form-horizontal" accept-charset="UTF-8" >
+                    <form method="POST" action="{{ path('admin_api_menu_add') }}" class="form-horizontal ajaxform" accept-charset="UTF-8" >
                             <div class="form-group row">
                                 <label class="col-sm-2 require col-form-label">父级菜单</label>
                                 <div class="col-sm-8">
@@ -160,7 +160,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-edit fa-fw"></i></span>
                                         </div>
-                                        <input type="text" id="title" name="title" value="" class="form-control title" placeholder="输入标题" required="1">
+                                        <input type="text" id="title" name="title" data-required="1" value="" class="form-control title" placeholder="输入标题" >
                                     </div>
                                 </div>
                             </div>
@@ -171,7 +171,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-sort-amount-up fa-fw"></i></span>
                                         </div>
-                                        <input type="text" id="sort" name="sort" value="0" class="form-control" >
+                                        <input type="text" id="sort" name="sort" data-required="1" value="0" class="form-control" >
                                     </div>
                                 </div>
                             </div>
@@ -184,12 +184,12 @@
                                         </div>
                                         <input style="width: 140px" type="text" id="icon" name="icon" value=""
                                                class="form-control icon"
-                                               placeholder="输入图标" required="1"
+                                               placeholder="输入图标"
                                         >
                                     </div>
                                     <span class="help-block">
                                         <i class="fas fa-info-circle"></i>
-                                        &nbsp;For more icons please see <a href="http://fontawesome.io/icons/" target="_blank">http://fontawesome.io/icons/</a>
+                                        &nbsp;更多图标请查看 <a href="http://fontawesome.io/icons/" target="_blank">http://fontawesome.io/icons/</a>
                                     </span>
                                 </div>
                             </div>

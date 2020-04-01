@@ -13,6 +13,7 @@ use App\Bundle\AdminBundle\Service\MenuService;
 use App\Bundle\AppBundle\Lib\Base\BaseAdminController;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use Symfony\Component\HttpFoundation\Request;
+use FOS\RestBundle\Controller\Annotations\View as ViewAnnotations;
 
 class MenuController extends BaseAdminController
 {
@@ -37,9 +38,17 @@ class MenuController extends BaseAdminController
     }
 
     /**
-     *  @Rest\Put("/api/menu/delete/{id}", name="admin_api_menu_delete")
+     *  @Rest\Delete("/api/menu/delete/{id}", name="admin_api_menu_delete")
      */
     public function deleteAction($id){
+
+    }
+
+    /**
+     * @Rest\Post("/api/menu/add", name="admin_api_menu_add")
+     * @ViewAnnotations()
+     */
+    public function addAction(){
 
     }
 }

@@ -16,12 +16,32 @@
             target:        settings.target,   // target element(s) to be updated with server response
             beforeSubmit:  showRequest,  // pre-submit callback
             success:       showResponse,  // post-submit callback
+            error:         showError,
             dataType:  settings.dataType,        // 'xml', 'script', or 'json' (expected server response type)
             clearForm: settings.clearForm,        // clear all form fields after successful submit
             resetForm: settings.resetForm,       // reset the form after successful submit
             timeout:   settings.timeout,
             // iframe:true,
         };
+
+        function showError(xhr, status, error, jqForm){
+            if(xhr.status == 500){
+                show(500, xhr.statusText);
+                $("button[type='submit']", jqForm).attr("disabled", false);
+                return ;
+            }
+            var responseText = xhr.responseText;
+
+            console.log(xhr);
+
+            if(typeof  responseText == 'string') var responseText = $.parseJSON(responseText);
+            if(responseText.code != '200'){
+                if(responseText.message){
+                    show(responseText.code, responseText.message);
+                }
+            }
+            $("button[type='submit']", jqForm).attr("disabled", false);
+        }
 
         function showRequest(formData, jqForm, options) {
             $("button[type='submit']", jqForm).attr("disabled", true);
@@ -36,7 +56,8 @@
                         if (vl === null || vl === undefined || vl === '') {
                             field.addClass("has-error");
                             check = false;
-                            $("button[type='submit']", jqForm).attr("disabled", false);
+                            $("button[type='submit']", jqForm).attr("disabled", true);
+                            $(this).focus();
                         }else{
                             field.removeClass("has-error");
                         }
@@ -49,6 +70,7 @@
                         var vl = $(this).val();
                         if(required && vl){
                             field.removeClass("has-error");
+                            $("button[type='submit']", jqForm).attr("disabled", false);
                         }
                     });
                 });
@@ -82,7 +104,6 @@
 
             //请求成功的操作
           if(settings.success) (settings.success)(responseText);
-
             return false;
         }
 
