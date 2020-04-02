@@ -1,6 +1,45 @@
 snc_redis:
   clients:
       default:
-          type: phpredis
+          type: predis
           alias: default
-          dsn: "%env(REDIS_URL)%"
+          dsn: "redis://%redis_host%/1"
+          logging: '%kernel.debug%'
+          options:
+            prefix: exp_
+
+      cache:
+          type: predis
+          alias: cache
+          dsn: "redis://%redis_host%/2"
+          logging: '%kernel.debug%'
+          options:
+              prefix: exp_cache_
+              connection_timeout: 10
+              read_write_timeout: 30
+
+      session:
+          type: predis
+          alias: session
+          dsn: "redis://%redis_host%/3"
+          logging: '%kernel.debug%'
+          options:
+            prefix: exp_session_
+
+  session:
+      client: session
+
+  doctrine:
+      metadata_cache:
+          client: cache
+          entity_manager: default
+          document_manager: default
+      result_cache:
+          client: cache
+          entity_manager: [default, read]
+      query_cache:
+          client: cache
+          entity_manager: default
+      second_level_cache:
+          client: cache
+          entity_manager: default

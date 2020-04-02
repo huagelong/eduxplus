@@ -3,7 +3,7 @@ imports:
     - { resource: '../src/Bundle/ApiBundle/Resources/config/services.yaml' }
     - { resource: '../src/Bundle/AdminBundle/Resources/config/services.yaml' }
 parameters:
-
+    redis_host: '%env(REDIS_HOST)%'
 services:
 
     # default configuration for services in *this* file
@@ -24,15 +24,3 @@ services:
         tags:
           - { name: 'doctrine.event_subscriber'}
 
-    Redis:
-      class: Predis\Client
-      arguments:
-        $parameters: '%env(REDIS_URL)%'
-#        $options:
-#            parameters:
-#                password: '%env(REDIS_PWD)%'
-
-    Symfony\Component\HttpFoundation\Session\Storage\Handler\RedisSessionHandler:
-      arguments:
-          - '@Redis'
-          - { prefix: '%env(REDIS_PREFIX)%' }

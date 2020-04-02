@@ -4,7 +4,6 @@
 
 {% block head_custom_stylesheets %}
     <link rel="stylesheet" href="{{ asset('assets/plugins/jquery-nestable/style.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/plugins/jquery-nestable/style.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/plugins/select2/css/select2.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/plugins/fontawesome-iconpicker/css/fontawesome-iconpicker.min.css') }}">
@@ -54,7 +53,7 @@
              {% endif %}
 {% if menu.isLock == 0 %}
 <span class="pull-right dd-nodrag">
-<a href="{{ path("admin_menu_edit", {"id":menu.id}) }}"><i class="fas fa-edit"></i></a>
+<a href="{{ path("admin_menu_edit", {"id":menu.id}) }}" title="编辑"  class="ajaxpop"><i class="fas fa-edit"></i></a>
 <a href="javascript:;" data-id="{{ path("admin_api_menu_delete", {"id":menu.id}) }}" class="tree_branch_delete"><i class="fas fa-trash"></i></a>
 </span>
 {% endif %}
@@ -79,7 +78,7 @@
 {% endif %}
 {% if menu2.isLock == 0 %}
     <span class="pull-right dd-nodrag">
-<a href="{{ path("admin_menu_edit", {"id":menu2.id}) }}"><i class="fas fa-edit"></i></a>
+<a href="{{ path("admin_menu_edit", {"id":menu2.id}) }}" title="编辑" class="ajaxpop"><i class="fas fa-edit"></i></a>
 <a href="javascript:;" data-id="{{ path("admin_api_menu_delete", {"id":menu2.id}) }}" class="tree_branch_delete"><i class="fas fa-trash"></i></a>
 </span>
 {% endif %}
@@ -105,7 +104,7 @@
 {% endif %}
 {% if menu3.isLock == 0 %}
     <span class="pull-right dd-nodrag">
-<a href="{{ path("admin_menu_edit", {"id":menu3.id}) }}"><i class="fas fa-edit"></i></a>
+<a href="{{ path("admin_menu_edit", {"id":menu3.id}) }}" title="编辑"  class="ajaxpop"><i class="fas fa-edit"></i></a>
 <a href="javascript:;" data-id="{{ path("admin_api_menu_delete", {"id":menu3.id}) }}" class="tree_branch_delete"><i class="fas fa-trash"></i></a>
 </span>
 {% endif %}
@@ -249,8 +248,6 @@
                 </div>
                 <!-- /.box-body -->
             </div>
-
-
         </div>
     </div>
 
@@ -267,6 +264,11 @@
 {% block body_custom_javascript %}
 <script>
     $(function(){
+
+        $(".ajaxpop").ajaxpage({
+            width:"600px",
+            height:"500px"
+        })
 
         $('.select2').select2({ theme: 'bootstrap4', "allowClear":true,"placeholder":{"id":"","text":"\u7236\u7ea7\u83dc\u5355"}});
 
