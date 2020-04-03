@@ -34,26 +34,60 @@ class MenuController extends BaseAdminController
      * @Rest\Get("/menu/edit/{id}", name="admin_menu_edit")
      */
     public function editAction($id, MenuService $menuService){
+        $detail = $menuService->getMenuById($id);
         $data = [];
         $data['menuSelect'] = $menuService->menuSelect();
-        $data['adminRoute'] = $menuService->getAdminRoute();
+        $data['adminRoute'] = $menuService->getAdminRoute(1);
+        $data['detail'] = $detail;
         return $this->render("@AdminBundle/menu/edit.html.twig", $data);
     }
 
     /**
-     * @Rest\Get("/api/menu/editDo/{id}", name="admin_api_menu_edit")
+     * @Rest\Post("/api/menu/editDo/{id}", name="admin_api_menu_edit")
      * @ViewAnnotations()
      */
-    public function editDoAction($id){
+    public function editDoAction($id, Request $request, MenuService $menuService){
+        $pid = (int) $request->get("parentId");
+        $name = $request->get("title");
+        $sort = (int) $request->get("sort");
+        $style = $request->get("icon");
+        $uri = $request->get("uri");
+        $isLock = $request->get("isLock");
+        $isAccess = $request->get("isAccess");
+        $isShow = $request->get("isShow");
+        $descr = $request->get("descr");
 
+        $isLock = $isLock=="on"?1:0;
+        $isAccess = $isAccess=="on"?1:0;
+        $isShow = $isShow=="on"?1:0;
+
+        if(!$name) return $this->responseError("标题不能为空!");
+        if(mb_strlen($name, 'utf-8')>20) return $this->responseError("标题不能大于20字!");
+
+        if($menuService->checkMenuName($name, $id)){
+            return $this->responseError("标题已存在!");
+        }
+
+        if($descr){
+            if(mb_strlen($descr, 'utf-8')>20) return $this->responseError("描述不能大于20字!");
+        }
+
+        $menuService->editMenu($id, $name, $descr, $pid, $uri, $style,$sort, $isLock, $isAccess, $isShow);
+
+        if($this->error->has()){
+            return $this->responseError($this->error->getLast());
+        }
+
+        return $this->responseSuccess("操作成功!");
     }
 
     /**
-     * @Rest\Delete("/api/menu/deleteDo/{id}", name="admin_api_menu_delete")
+     * @Rest\Post("/api/menu/deleteDo/{id}", name="admin_api_menu_delete")
      * @ViewAnnotations()
      */
-    public function deleteAction($id){
-
+    public function deleteAction($id, MenuService $menuService){
+        $menuService->deleteMenuById($id);
+        return $this->responseSuccess("删除成功!", $this->generateUrl("admin_menu_index"));
     }
 
     /**

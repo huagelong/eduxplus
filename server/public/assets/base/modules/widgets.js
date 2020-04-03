@@ -13,7 +13,7 @@
         });
     };
 
-    $.fn.ajaxpage = function(options){
+    $.fn.popPage = function(options){
         var settings = $.extend({
             width:"420px",
             height:  '240px'

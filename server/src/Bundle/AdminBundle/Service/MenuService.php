@@ -11,6 +11,7 @@ namespace App\Bundle\AdminBundle\Service;
 
 use App\Bundle\AppBundle\Lib\Base\BaseService;
 use App\Entity\BaseMenu;
+use App\Repository\BaseMenuRepository;
 use Symfony\Component\HttpFoundation\Request;
 
 class MenuService extends BaseService
@@ -121,7 +122,7 @@ class MenuService extends BaseService
         return $allRoute->all();
     }
 
-    public function getAdminRoute(){
+    public function getAdminRoute($noAccess=0){
         $allRout = $this->getAllRoute();
         if(!$allRout) return [];
         $rstmp = [];
@@ -131,9 +132,13 @@ class MenuService extends BaseService
             }
         }
 
-        $sql = "SELECT a.url FROM App:BaseMenu a WHERE a.url in(:url) ORDER BY a.id DESC";
-        $rsExist = $this->fetchFields("url", $sql, ["url"=>$rstmp]);
-        $rs  = array_diff($rstmp, $rsExist);
+        if(!$noAccess){
+            $sql = "SELECT a.url FROM App:BaseMenu a WHERE a.url in(:url) ORDER BY a.id DESC";
+            $rsExist = $this->fetchFields("url", $sql, ["url"=>$rstmp]);
+            $rs  = array_diff($rstmp, $rsExist);
+        }else{
+            $rs = $rstmp;
+        }
         return $rs;
     }
 
@@ -150,6 +155,23 @@ class MenuService extends BaseService
     }
 
 
+    public function editMenu($id, $name, $descr, $pid, $uri, $style,$sort, $isLock, $isAccess, $isShow){
+        $sql = "SELECT a FROM App:BaseMenu a WHERE a.id=:id";
+        $menuModel = $this->fetchOne($sql, ['id'=>$id], 1);
+        if(!$menuModel) return $this->error->add("菜单不存在!");
+        $menuModel->setName($name);
+        if($descr) $menuModel->setDescr($descr);
+        if($uri) $menuModel->setUrl($uri);
+        $menuModel->setIsLock($isLock);
+        $menuModel->setIsAccess($isAccess);
+        $menuModel->setIsShow($isShow);
+        $menuModel->setPid($pid);
+        $menuModel->setSort($sort);
+        if($style) $menuModel->setStyle($style);
+        $menuId = $this->save($menuModel);
+        return $menuId;
+    }
+
     public function addMenu($name, $descr, $pid, $uri, $style,$sort, $isLock, $isAccess, $isShow){
         $menuModel = new BaseMenu();
         $menuModel->setName($name);
@@ -163,6 +185,17 @@ class MenuService extends BaseService
         if($style) $menuModel->setStyle($style);
         $menuId = $this->save($menuModel);
         return $menuId;
+    }
+
+    public function getMenuById($id){
+        $sql = "SELECT a FROM App:BaseMenu a WHERE a.id=:id";
+        return $this->fetchOne($sql, ['id'=>$id]);
+    }
+
+    public function deleteMenuById($id){
+        $sql = "SELECT a FROM App:BaseMenu a WHERE a.id=:id";
+        $model= $this->fetchOne($sql, ['id'=>$id], 1);
+        return $this->delete($model);
     }
 }
 

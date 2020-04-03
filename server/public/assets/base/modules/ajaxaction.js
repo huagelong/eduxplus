@@ -3,6 +3,7 @@
         $(this).each(function(){
             var chref = $(this).attr("href");
             $(this).click(function(){
+                var isconfirm = $(this).data("confirm");
                     layer.msg(isconfirm, {
                         time: 0 //不自动关闭
                         ,btn: ['是', '否']
@@ -17,14 +18,14 @@
 
         function todoDelete(chref)
         {
-            $.deleteJSON(chref,{},function(responseText){
+            $.postJSON(chref,{},function(responseText){
                 if(typeof  responseText == 'string') var responseText = $.parseJSON(responseText);
                 if(!$.isEmptyObject(responseText.data)){
                     if(responseText.message){
                         show(responseText.code, responseText.message);
                     }
                     setTimeout(function(){
-                        location.assign(responseText.data);
+                        location.assign(responseText.data._url);
                     }, 1000);
                 }else{
                     if(responseText.message){
@@ -60,14 +61,14 @@
 
         function todoPut(chref)
         {
-            $.putJSON(chref,{},function(responseText){
+            $.postJSON(chref,{},function(responseText){
                 if(typeof  responseText == 'string') var responseText = $.parseJSON(responseText);
                 if(!$.isEmptyObject(responseText.data)){
                     if(responseText.message){
                         show(responseText.code, responseText.message);
                     }
                     setTimeout(function(){
-                        location.assign(responseText.data);
+                        location.assign(responseText.data._url);
                     }, 1000);
                 }else{
                     if(responseText.message){

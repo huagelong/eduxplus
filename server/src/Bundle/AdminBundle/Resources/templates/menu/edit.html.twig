@@ -1,4 +1,4 @@
-{% extends "@AdminBundle/layout/ajaxPage.html.twig" %}
+{% extends "@AdminBundle/layout/poppage.html.twig" %}
 
 {% block head_custom_stylesheets %}
     <link rel="stylesheet" href="{{ asset('assets/plugins/select2/css/select2.min.css') }}">
@@ -23,6 +23,12 @@
                 $(this).bootstrapSwitch('state', $(this).prop('checked'));
             });
 
+            var selectPId = $("input[name='parentIdSelect']").val();
+            $("select[name='parent_id']").val(selectPId).trigger("change");
+
+            var selectUri = $("input[name='uriSelect']").val();
+            $("select[name='uri']").val(selectUri).trigger("change");
+
         });
 
     </script>
@@ -36,11 +42,11 @@
                 <div class="card card-default">
                     <!-- /.box-header -->
                     <div class="card-body" style="display: block;">
-                        <form method="POST" action="{{ path('admin_api_menu_add') }}" class="form-horizontal ajaxform" accept-charset="UTF-8" >
+                        <form method="POST" action="{{ path('admin_api_menu_edit', {"id":detail.id}) }}" class="form-horizontal ajaxform" accept-charset="UTF-8" >
                             <div class="form-group row">
                                 <label class="col-sm-2 require col-form-label">父级菜单</label>
                                 <div class="col-sm-8">
-                                    <input type="hidden" name="parent_id"/>
+                                    <input type="hidden" name="parentIdSelect" value="{{ detail.pid }}"/>
                                     <select class="form-control select2" style="width: 100%;" name="parent_id" data-value="" >
                                         <option value="0">ROOT</option>
                                         {% if menuSelect %}
@@ -59,7 +65,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-edit fa-fw"></i></span>
                                         </div>
-                                        <input type="text" id="title" name="title" data-required="1" value="" class="form-control title" placeholder="输入标题" >
+                                        <input type="text" id="title" name="title" data-required="1" value="{{ detail.name }}" class="form-control title" placeholder="输入标题" >
                                     </div>
                                 </div>
                             </div>
@@ -70,7 +76,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-sort-amount-up fa-fw"></i></span>
                                         </div>
-                                        <input type="text" id="sort" name="sort" data-required="1" value="0" class="form-control" >
+                                        <input type="text" id="sort" name="sort" data-required="1" value="{{ detail.sort }}" class="form-control" >
                                     </div>
                                 </div>
                             </div>
@@ -81,7 +87,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-adjust fa-fw"></i></span>
                                         </div>
-                                        <input style="width: 140px" type="text" id="icon" name="icon" value=""
+                                        <input style="width: 140px" type="text" id="icon" name="icon" value="{{ detail.style }}"
                                                class="form-control icon"
                                                placeholder="输入图标"
                                         >
@@ -96,7 +102,7 @@
                             <div class="form-group row">
                                 <label class="col-sm-2 require col-form-label">路径</label>
                                 <div class="col-sm-8">
-                                    <input type="hidden" name="uri"/>
+                                    <input type="hidden" name="uriSelect" value="{{ detail.url }}"/>
                                     <select class="form-control select2" style="width: 100%;" name="uri" data-value="" >
                                         {% if adminRoute %}
                                             {% for r in adminRoute %}
@@ -110,28 +116,28 @@
                             <div class="form-group row">
                                 <label class="col-sm-2 col-form-label">是否显示</label>
                                 <div class="col-sm-8">
-                                    <input type="checkbox" name="isShow" checked data-bootstrap-switch data-off-color="danger" data-on-color="success">
+                                    <input type="checkbox" name="isShow" {% if detail.isShow %}checked {% endif %} data-bootstrap-switch data-off-color="danger" data-on-color="success">
                                 </div>
                             </div>
 
                             <div class="form-group row">
                                 <label class="col-sm-2 col-form-label">是否锁定</label>
                                 <div class="col-sm-8">
-                                    <input type="checkbox" name="isLock" data-bootstrap-switch data-off-color="danger" data-on-color="success">
+                                    <input type="checkbox" name="isLock" {% if detail.isLock %}checked {% endif %} data-bootstrap-switch data-off-color="danger" data-on-color="success">
                                 </div>
                             </div>
 
                             <div class="form-group row">
                                 <label class="col-sm-2 col-form-label">仅权限</label>
                                 <div class="col-sm-8">
-                                    <input type="checkbox" name="isAccess" data-bootstrap-switch data-off-color="danger" data-on-color="success">
+                                    <input type="checkbox" name="isAccess" {% if detail.isAccess %}checked {% endif %}  data-bootstrap-switch data-off-color="danger" data-on-color="success">
                                 </div>
                             </div>
 
                             <div class="form-group row">
                                 <label class="col-sm-2 col-form-label">描述</label>
                                 <div class="col-sm-8">
-                                    <textarea class="form-control" name="descr" rows="3" placeholder="输入 ..."></textarea>
+                                    <textarea class="form-control" name="descr" rows="3" placeholder="输入 ...">{{ detail.descr }}</textarea>
                                 </div>
                             </div>
 

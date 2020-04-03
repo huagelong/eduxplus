@@ -438,7 +438,7 @@ html #layuicss-layer {
     margin: 5px 5px 0;
     padding: 0 15px;
     border: 1px solid #dedede;
-    background-color: #fff;
+    /*background-color: #fff;*/
     color: #333;
     border-radius: 2px;
     font-weight: 400;

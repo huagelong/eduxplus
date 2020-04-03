@@ -100,21 +100,27 @@ class BaseService extends AbstractFOSRestController
         return $rs;
     }
 
-    public function fetchAll($dql, $params=[]){
+    public function fetchAll($dql, $params=[], $getObject=0){
         $em = $this->getDoctrine()->getManager();
         $query = $em->createQuery($dql);
         if($params) $query= $query->setParameters($params);
-        $rs = $query->getArrayResult();
+        if(!$getObject){
+            $rs = $query->getArrayResult();
+        }else{
+            $rs = $query->getResult();
+        }
+
 //        dump($query->getSql());
         return $rs;
     }
 
 
-    public function fetchOne($dql, $params=[]){
+    public function fetchOne($dql, $params=[], $getObject=0){
         $em = $this->getDoctrine()->getManager();
         $query = $em->createQuery($dql);
         if($params) $query= $query->setParameters($params);
-        $rs = $query->setMaxResults(1)->getOneOrNullResult(2);
+        $resultType = !$getObject?2:null;
+        $rs = $query->setMaxResults(1)->getOneOrNullResult($resultType);
         return $rs;
     }
 

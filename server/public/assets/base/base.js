@@ -3,5 +3,5 @@ $(function(){
     $('.ajaxDelete').ajaxDelete();
     $('.ajaxPut').ajaxPut();
     $('.tip').tips();
-    $('.ajaxpage').ajaxpage();
+    $('.poppage').popPage();
 })

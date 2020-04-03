@@ -19,7 +19,7 @@ class BaseMenu
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=88, unique=true,options={"comment"="导航名称"})
+     * @ORM\Column(type="string", length=88,options={"comment"="导航名称"})
      */
     private $name;
 
