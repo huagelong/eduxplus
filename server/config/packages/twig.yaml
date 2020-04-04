@@ -5,3 +5,4 @@ twig:
     exception_controller: null
     paths:
       "%kernel.project_dir%/src/Bundle/AdminBundle/Resources/templates": "AdminBundle"
+      "%kernel.project_dir%/src/Bundle/AdminBundle/Lib/Grid/templates": "Grid"

@@ -13,20 +13,16 @@ use FOS\RestBundle\Controller\AbstractFOSRestController;
 
 class BaseService extends AbstractFOSRestController
 {
-    /**
-     * @var LoggerInterface
-     */
-    protected $logger;
+
+    public function error(){
+        return new Error();
+    }
 
     /**
-     * @var Error
+     * @return LoggerInterface
      */
-    protected $error;
-
-    public function __construct(LoggerInterface $logger, Error $error)
-    {
-        $this->logger = $logger;
-        $this->error = $error;
+    public function logger(){
+        return $this->get("logger");
     }
 
     public function getParameter(string $name)
@@ -100,8 +96,8 @@ class BaseService extends AbstractFOSRestController
         return $rs;
     }
 
-    public function fetchAll($dql, $params=[], $getObject=0){
-        $em = $this->getDoctrine()->getManager();
+    public function fetchAll($dql, $params=[], $getObject=0, $name=null){
+        $em = $this->getDoctrine()->getManager($name);
         $query = $em->createQuery($dql);
         if($params) $query= $query->setParameters($params);
         if(!$getObject){
@@ -115,8 +111,8 @@ class BaseService extends AbstractFOSRestController
     }
 
 
-    public function fetchOne($dql, $params=[], $getObject=0){
-        $em = $this->getDoctrine()->getManager();
+    public function fetchOne($dql, $params=[], $getObject=0, $name=null){
+        $em = $this->getDoctrine()->getManager($name);
         $query = $em->createQuery($dql);
         if($params) $query= $query->setParameters($params);
         $resultType = !$getObject?2:null;

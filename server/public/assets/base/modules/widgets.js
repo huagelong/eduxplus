@@ -15,8 +15,8 @@
 
     $.fn.popPage = function(options){
         var settings = $.extend({
-            width:"420px",
-            height:  '240px'
+            width:"600px",
+            height:  '400px'
         }, options);
 
         var that = this;

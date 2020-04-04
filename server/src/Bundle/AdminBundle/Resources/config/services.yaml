@@ -1,2 +1,6 @@
 parameters:
 services:
+    admin.getProp.twig.extension:
+        class: App\Bundle\AdminBundle\Twig\GetPropExtension
+        tags:
+            - { name: twig.extension }

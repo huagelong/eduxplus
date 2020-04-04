@@ -14,7 +14,7 @@ services:
 
     App\:
        resource: '%kernel.project_dir%/src/*'
-       exclude: '%kernel.project_dir%/src/**/{DependencyInjection,Migrations,Resources,Entity,Tests,Kernel.php}'
+       exclude: '%kernel.project_dir%/src/**/{DependencyInjection,Migrations,Resources,Twig,Entity,Tests,Kernel.php}'
 
     App\Bundle\:
         resource: '../src/Bundle/**/Controller'
@@ -23,4 +23,3 @@ services:
     App\EventSubscriber\DatabaseActivitySubscriber:
         tags:
           - { name: 'doctrine.event_subscriber'}
-

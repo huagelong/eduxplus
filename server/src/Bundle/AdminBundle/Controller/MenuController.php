@@ -74,8 +74,8 @@ class MenuController extends BaseAdminController
 
         $menuService->editMenu($id, $name, $descr, $pid, $uri, $style,$sort, $isLock, $isAccess, $isShow);
 
-        if($this->error->has()){
-            return $this->responseError($this->error->getLast());
+        if($this->error()->has()){
+            return $this->responseError($this->error()->getLast());
         }
 
         return $this->responseSuccess("操作成功!");

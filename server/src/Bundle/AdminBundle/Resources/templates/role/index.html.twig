@@ -3,5 +3,13 @@
 {% block page_title %}角色管理{% endblock %}
 
 {% block page %}
-
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card card-default">
+                {{ list|raw }}
+            </div>
+        </div>
+    </div>
+</section>
 {% endblock %}

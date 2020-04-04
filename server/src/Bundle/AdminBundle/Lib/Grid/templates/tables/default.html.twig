@@ -1,0 +1,49 @@
+<table class="table table-hover text-nowrap ">
+    <thead>
+    <tr>
+        {% for k, v in column %}
+            <th>
+                {% if v[2] %}
+                 {{  knp_pagination_sortable(pagination, k, v[2]) }}
+                {% else %}
+                    {{  k }}
+                {% endif %}</th>
+        {% endfor %}
+        {% if tableActionCallback %} <th>操作</th> {% endif %}
+    </tr>
+    </thead>
+    <tbody>
+    {% for v in pagination %}
+    <tr {% if loop.index is odd %}class="color"{% endif %}>
+        {% for cv in column %}
+            <td>
+                {% if cv[0] == 'string' or cv[0] == 'datetime' or cv[0] == 'text' %}
+                {{ get_prop(v, cv[1], cv[0])|raw }}
+                {% endif %}
+                {% if cv[0] == 'image'  %}
+                    <img src="{{  cv[0] }}" width="50px" />
+                {% endif %}
+                {% if cv[0] == 'boole' %}
+                    {% if get_prop(v, cv[1], cv[0]) %}
+                        <span class="badge bg-success">√</span>
+                    {% else %}
+                        <span class="badge bg-danger">×</span>
+                    {% endif %}
+                {% endif %}
+            </td>
+        {% endfor %}
+        {% if tableActionCallback %}
+        <td>
+            {% for tb in  tableActionCallback %}
+                {{ get_prop(tb, v)|raw }}
+            {% endfor %}
+        </td>
+        {% endif %}
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<div class="navigation">
+    {{ knp_pagination_render(pagination) }}
+</div>

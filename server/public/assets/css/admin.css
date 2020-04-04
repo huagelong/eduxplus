@@ -62,3 +62,43 @@
 .has-error .form-control-feedback {
     color: #e74c3c;
 }
+.sortable:after{
+    font-weight: 900;
+    -webkit-font-smoothing: antialiased;
+    display: inline-block;
+    font-style: normal;
+    font-variant: normal;
+    text-rendering: auto;
+    line-height: 1;
+    font-family: "Font Awesome 5 Free";
+    text-align: center;
+    width: 1.25em;
+    content: "\f0dc";
+}
+.asc:after{
+    font-weight: 900;
+    -webkit-font-smoothing: antialiased;
+    display: inline-block;
+    font-style: normal;
+    font-variant: normal;
+    text-rendering: auto;
+    line-height: 1;
+    font-family: "Font Awesome 5 Free";
+    text-align: center;
+    width: 1.25em;
+    content: "\f161";
+}
+
+.desc:after{
+    font-weight: 900;
+    -webkit-font-smoothing: antialiased;
+    display: inline-block;
+    font-style: normal;
+    font-variant: normal;
+    text-rendering: auto;
+    line-height: 1;
+    font-family: "Font Awesome 5 Free";
+    text-align: center;
+    width: 1.25em;
+    content: "\f160";
+}

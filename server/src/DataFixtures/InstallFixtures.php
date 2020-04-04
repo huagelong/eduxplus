@@ -76,7 +76,7 @@ class InstallFixtures extends Fixture
         $this->addMenu("编辑菜单页面","菜单编辑展示页面", $menuMgId,"admin_menu_edit", "",0, $roleId, 1, 1, 0);
         $this->addMenu("编辑菜单","菜单编辑处理", $menuMgId,"admin_api_menu_edit", "",0, $roleId, 1, 1, 0);
         $this->addMenu("删除菜单","删除菜单", $menuMgId,"admin_api_menu_delete", "",0, $roleId, 1, 1, 0);
-
+        $menuMgId = $this->addMenu("角色管理","管理角色", $accMenuId,"admin_role_index", "",0, $roleId, 1, 0, 1);
     }
 
     protected function addMenu($name, $descr, $pid, $uri, $style,$sort,$roleId, $isLock, $isAccess, $isShow){

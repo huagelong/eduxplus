@@ -158,7 +158,7 @@ class MenuService extends BaseService
     public function editMenu($id, $name, $descr, $pid, $uri, $style,$sort, $isLock, $isAccess, $isShow){
         $sql = "SELECT a FROM App:BaseMenu a WHERE a.id=:id";
         $menuModel = $this->fetchOne($sql, ['id'=>$id], 1);
-        if(!$menuModel) return $this->error->add("菜单不存在!");
+        if(!$menuModel) return $this->error()->add("菜单不存在!");
         $menuModel->setName($name);
         if($descr) $menuModel->setDescr($descr);
         if($uri) $menuModel->setUrl($uri);
