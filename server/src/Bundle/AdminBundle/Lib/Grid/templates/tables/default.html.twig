@@ -3,7 +3,7 @@
         <div class="card-title">
             {% if searchField %}
             <div class="input-group input-group-sm">
-                <button type="button" class="btn btn-sm btn-primary filter"><i class="fas fa-filter"></i> 筛选</button>
+                <button type="button" class="btn btn-sm btn-primary search-btn-filter"><i class="fas fa-filter"></i> 筛选</button>
             </div>
             {% endif %}
         </div>
@@ -42,7 +42,8 @@
             <div class="row">
                 <div class="col-sm-6">
                     <div class="form-group row">
-                        <button class="btn btn-info submit btn-sm"><i class="fa fa-search"></i>&nbsp;&nbsp;搜索</button>
+                        <button type="submit" class="btn btn-info submit btn-sm" style="margin-right: 10px;"><i class="fa fa-search"></i>&nbsp;&nbsp;搜索</button>
+                        <button type="reset" class="btn btn-default btn-sm"><i class="fa fa-undo"></i>&nbsp;&nbsp;重置</button>
                     </div>
                 </div>
             </div>
