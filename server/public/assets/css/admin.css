@@ -102,3 +102,11 @@
     width: 1.25em;
     content: "\f160";
 }
+.grid-search{
+    margin-bottom: 10px;
+    border-bottom: 1px #ddd solid;
+}
+
+.display-hide{
+    display: none;
+}

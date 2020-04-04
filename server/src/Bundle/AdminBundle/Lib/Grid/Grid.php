@@ -15,8 +15,6 @@ class Grid
     protected $gridColumn = [];
     protected $gridService=null;
     protected $route=null;
-    protected $tableTpl=null;
-    protected $searchTpl=null;
     protected $tableActionCallback=[];
     protected $searchField=[];
     protected $gridBar=[];
@@ -35,20 +33,6 @@ class Grid
         return $this;
     }
 
-    protected function createTable($pageSize, $tpl='default')
-    {
-        $page = $this->request->query->getInt("page", 1);
-
-        $pagination =  call_user_func_array([$this->gridService, $this->action], [$page, $pageSize]);
-        $params = [];
-        $params['pagination'] = $pagination;
-        $params['column'] = $this->gridColumn;
-        $params['tableActionCallback'] = $this->tableActionCallback;
-        $params['gridBar'] = $this->gridBar;
-        $result = $this->twig->render("@Grid/tables/".$tpl.".html.twig", $params);
-        $this->tableTpl = $result;
-        return $this;
-    }
 
     public function setTableAction($callback)
     {
@@ -59,9 +43,25 @@ class Grid
     public function create($request, $pageSize=20, $tableTpl='default', $searchTpl='default')
     {
         $this->request = $request;
-        $this->createTable($pageSize, $tableTpl);
-//        $this->createSearch($searchTpl);
-        return $this->searchTpl."\r\n".$this->tableTpl;
+
+        $request = $this->request->query->all();
+        if(isset($request['page'])){
+            unset($request['page']);
+        }
+        $page = $this->request->query->getInt("page", 1);
+        $pagination =  call_user_func_array([$this->gridService, $this->action], [$page, $pageSize]);
+        $params = [];
+        $params['request'] = $request;
+        $params['searchField'] =$this->searchField;
+        $params['pathinfo'] = $this->request->getPathInfo();
+        $params['pagination'] = $pagination;
+        $params['column'] = $this->gridColumn;
+        $params['tableActionCallback'] = $this->tableActionCallback;
+        $params['gridBar'] = $this->gridBar;
+
+        $result = $this->twig->render("@Grid/tables/".$tableTpl.".html.twig", $params);
+
+        return $result;
     }
 
 
@@ -74,13 +74,18 @@ class Grid
         $params = [];
         $params['request'] = $request;
         $params['searchField'] =$this->searchField;
-        $result = $this->twig->render("@Grid/searchs/".$searchTpl.".html.php", $params);
-        $this->searchTpl = $result;
-        return $this;
+        $params['pathinfo'] = $this->request->getPathInfo();
+        $result = $this->twig->render("@Grid/searchs/".$searchTpl.".html.twig", $params);
+        return $result;
     }
 
     public function setSearchField($title, $type, $datakey, $initData=null){
         $this->searchField[$title] = [$type, $datakey, $initData];
+        return $this;
+    }
+
+    public function setShortcutSearch($title, $datakey){
+        $this->searchField[$title] = $datakey;
         return $this;
     }
 
@@ -90,9 +95,9 @@ class Grid
         return $this;
     }
 
-    public function setGridBar($title, $url, $class='info')
+    public function setGridBar($title, $url, $iconCLass, $class='btn-info')
     {
-        $this->gridBar[$title] = [$url, $class];
+        $this->gridBar[$title] = [$url, $iconCLass, $class];
         return $this;
     }
 

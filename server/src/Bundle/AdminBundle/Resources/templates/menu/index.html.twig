@@ -139,7 +139,7 @@
                             <div class="form-group row">
                                 <label class="col-sm-2 require col-form-label">父级菜单</label>
                                 <div class="col-sm-8">
-                                    <select class="form-control select2" style="width: 100%;" name="parent_id" data-value="" >
+                                    <select class="form-control form-control-sm select2" style="width: 100%;" name="parent_id" data-value="" >
                                         <option value="0">ROOT</option>
                                         {% if menuSelect %}
                                             {% for menus in menuSelect %}
@@ -157,7 +157,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-edit fa-fw"></i></span>
                                         </div>
-                                        <input type="text" id="title" name="title" data-required="1" value="" class="form-control title" placeholder="输入标题" >
+                                        <input type="text" id="title" name="title" data-required="1" value="" class="form-control form-control-sm title" placeholder="输入标题" >
                                     </div>
                                 </div>
                             </div>
@@ -168,7 +168,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-sort-amount-up fa-fw"></i></span>
                                         </div>
-                                        <input type="text" id="sort" name="sort" data-required="1" value="0" class="form-control" >
+                                        <input type="text" id="sort" name="sort" data-required="1" value="0" class="form-control form-control-sm" >
                                     </div>
                                 </div>
                             </div>
@@ -180,7 +180,7 @@
                                              <span class="input-group-text"><i class="fas fa-adjust fa-fw"></i></span>
                                         </div>
                                         <input style="width: 140px" type="text" id="icon" name="icon" value=""
-                                               class="form-control icon"
+                                               class="form-control form-control-sm icon"
                                                placeholder="输入图标"
                                         >
                                     </div>
@@ -194,7 +194,7 @@
                             <div class="form-group row">
                                 <label class="col-sm-2 require col-form-label">路径</label>
                                 <div class="col-sm-8">
-                                    <select class="form-control select2" style="width: 100%;" name="uri" data-value="" >
+                                    <select class="form-control form-control-sm select2" style="width: 100%;" name="uri" data-value="" >
                                         {% if adminRoute %}
                                             {% for r in adminRoute %}
                                         <option value="{{ r }}">{{ r }}</option>
@@ -228,7 +228,7 @@
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">描述</label>
                             <div class="col-sm-8">
-                                <textarea class="form-control" name="descr" rows="3" placeholder="输入 ..."></textarea>
+                                <textarea class="form-control form-control-sm" name="descr" rows="3" placeholder="输入 ..."></textarea>
                             </div>
                         </div>
 
@@ -237,7 +237,7 @@
                             <div class="col-md-2"></div>
                             <div class="col-md-8">
                                 <div class="btn-group">
-                                    <button type="submit" class="btn btn-info">提交</button>
+                                    <button type="submit" class="btn btn-sm btn-info">提交</button>
                                 </div>
                             </div>
                         </div>

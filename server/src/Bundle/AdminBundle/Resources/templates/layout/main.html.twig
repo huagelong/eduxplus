@@ -5,7 +5,21 @@
 {% endblock %}
 
 {% block body_class %} sidebar-mini control-sidebar-slide-open text-sm {% endblock %}
+{% block body_javascript %}
+    {{ parent() }}
+<script>
+    $(function(){
+        $(".filter").click(function(){
+            if($(".grid-search").hasClass('display-hide')){
+                $(".grid-search").removeClass('display-hide')
+            }else{
+                $(".grid-search").addClass('display-hide')
+            }
+        });
+    })
+</script>
 
+{% endblock %}
 {% block body_main %}
     {{ parent() }}
     <div class="wrapper">

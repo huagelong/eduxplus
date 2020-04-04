@@ -1,49 +1,99 @@
-<table class="table table-hover text-nowrap ">
-    <thead>
-    <tr>
-        {% for k, v in column %}
-            <th>
-                {% if v[2] %}
-                 {{  knp_pagination_sortable(pagination, k, v[2]) }}
-                {% else %}
-                    {{  k }}
-                {% endif %}</th>
-        {% endfor %}
-        {% if tableActionCallback %} <th>操作</th> {% endif %}
-    </tr>
-    </thead>
-    <tbody>
-    {% for v in pagination %}
-    <tr {% if loop.index is odd %}class="color"{% endif %}>
-        {% for cv in column %}
-            <td>
-                {% if cv[0] == 'string' or cv[0] == 'datetime' or cv[0] == 'text' %}
-                {{ get_prop(v, cv[1], cv[0])|raw }}
-                {% endif %}
-                {% if cv[0] == 'image'  %}
-                    <img src="{{  cv[0] }}" width="50px" />
-                {% endif %}
-                {% if cv[0] == 'boole' %}
-                    {% if get_prop(v, cv[1], cv[0]) %}
-                        <span class="badge bg-success">√</span>
-                    {% else %}
-                        <span class="badge bg-danger">×</span>
-                    {% endif %}
-                {% endif %}
-            </td>
-        {% endfor %}
-        {% if tableActionCallback %}
-        <td>
-            {% for tb in  tableActionCallback %}
-                {{ get_prop(tb, v)|raw }}
+<div class="card card-default">
+    <div class="card-header">
+        <div class="card-title">
+            {% if searchField %}
+            <div class="input-group input-group-sm">
+                <button type="button" class="btn btn-sm btn-primary filter"><i class="fas fa-filter"></i> 筛选</button>
+            </div>
+            {% endif %}
+        </div>
+        <div class="card-tools">
+            {% if gridBar %}
+                {% for gk, gv in gridBar %}
+            <div class="input-group input-group-sm">
+                <a href="{{ gv[0] }}" class="btn btn-sm {{ gv[2] }}" title="{{ gk }}">
+                    <i class="{{ gv[1] }}"></i><span class="hidden-xs">&nbsp;&nbsp;{{ gk }}</span>
+                </a>
+            </div>
             {% endfor %}
-        </td>
-        {% endif %}
-    </tr>
-    {% endfor %}
-    </tbody>
-</table>
-
-<div class="navigation">
-    {{ knp_pagination_render(pagination) }}
+            {% endif %}
+        </div>
+    </div>
+    <div class="card-body table-responsive">
+        <form role="form" class="grid-search display-hide">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Text</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control form-control-sm" placeholder="Enter ...">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group form-group-sm row">
+                        <label class="col-sm-2 col-form-label">Text</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control form-control-sm" placeholder="Enter ...">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group row">
+                        <button class="btn btn-info submit btn-sm"><i class="fa fa-search"></i>&nbsp;&nbsp;搜索</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <table class="table table-hover text-nowrap ">
+            <thead>
+            <tr>
+                {% for k, v in column %}
+                    <th>
+                        {% if v[2] %}
+                         {{  knp_pagination_sortable(pagination, k, v[2]) }}
+                        {% else %}
+                            {{  k }}
+                        {% endif %}</th>
+                {% endfor %}
+                {% if tableActionCallback %} <th>操作</th> {% endif %}
+            </tr>
+            </thead>
+            <tbody>
+            {% for v in pagination %}
+            <tr>
+                {% for cv in column %}
+                    <td>
+                        {% if cv[0] == 'string' or cv[0] == 'datetime' or cv[0] == 'text' %}
+                        {{ get_prop(v, cv[1], cv[0])|raw }}
+                        {% endif %}
+                        {% if cv[0] == 'image'  %}
+                            <img src="{{  cv[0] }}" width="50px" />
+                        {% endif %}
+                        {% if cv[0] == 'boole' %}
+                            {% if get_prop(v, cv[1], cv[0]) %}
+                                <span class="badge bg-success">√</span>
+                            {% else %}
+                                <span class="badge bg-danger">×</span>
+                            {% endif %}
+                        {% endif %}
+                    </td>
+                {% endfor %}
+                {% if tableActionCallback %}
+                <td>
+                    {% for tb in  tableActionCallback %}
+                        {{ get_prop(tb, v)|raw }}
+                    {% endfor %}
+                </td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <div class="navigation">
+            {{ knp_pagination_render(pagination) }}
+        </div>
+    </div>
 </div>

@@ -1,0 +1,16 @@
+{% if searchField %}
+<div class="input-group input-group-sm">
+    <div class="input-group-prepend">
+        <button type="button" class="btn btn-primary "><i class="fas fa-filter"></i> 筛选</button>
+        <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <span class="sr-only">Toggle Dropdown</span>
+        </button>
+        <div class="dropdown-menu">
+            {% for k,v in searchField %}
+            <a class="dropdown-item" href="{{ pathinfo }}?f={{ v[1] }}">{{ k }}</a>
+             {% endfor %}
+        </div>
+    </div>
+
+</div>
+{% endif %}
