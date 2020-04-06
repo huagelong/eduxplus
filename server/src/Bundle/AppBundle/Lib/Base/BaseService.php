@@ -38,31 +38,29 @@ class BaseService extends AbstractFOSRestController
 
     public function getFormatRequestSql($request){
         $fields = $request->query->all();
+        if(!isset($fields['operates'])||!isset($fields['types'])||!isset($fields['values'])) return "";
+        $operates = $fields['operates'];
+        $types = $fields['types'];
+        $values = $fields['values'];
+        dump($fields);
         $sql = "";
-        if($fields){
+        if($values){
             $sql .= " WHERE ";
-            foreach ($fields as $k=>$v){
-                if(substr($k, 0, 1) == "-"){
-                    continue;
-                }
-                list($type, $sqlFieldTmp) = explode("-",$k);
-                $sqlField = str_replace("_", ".", $sqlFieldTmp);
-                $operate  = $fields["-".$sqlFieldTmp];
-
+            foreach ($values as $k=>$v){
                 if($v===""){
                     continue;
                 }
 
-                if($type == "text"){
-                    if($operate == "like"){
-                        $sql .= $sqlField . " like '%".$v."%'";
+                if($types[$k] === "text"){
+                    if($operates[$k] == "like"){
+                        $sql .= $k . " like '%".$v."%'";
                     }else{
-                        $sql .= $sqlField . " = '".$v."' ";
+                        $sql .= $k . " = '".$v."' ";
                     }
-                }elseif($type == "number"){
-                    $sql .= $sqlField . " {$operate} '".$v."' ";
+                }elseif($types[$k] === "number"){
+                    $sql .= $k . " {$operates[$k]} '".$v."' ";
                 }else{
-                    $sql .= $sqlField . " = '".$v."' ";
+                    $sql .= $k . " = '".$v."' ";
                 }
 
                 $sql .= " AND ";

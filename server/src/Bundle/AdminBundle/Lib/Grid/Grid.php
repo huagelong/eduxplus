@@ -41,7 +41,6 @@ class Grid
 
     public function create($request, $pageSize=20, $tableTpl='default', $searchTpl='default')
     {
-
         $page = $request->query->getInt("page", 1);
         $pagination =  call_user_func_array([$this->gridService, $this->action], [$request, $page, $pageSize]);
         $params = [];
@@ -66,10 +65,10 @@ class Grid
      * @return $this
      */
     public function setSearchField($title, $type, $datakey,$initData=null){
-        $datakey = str_replace(".", "_", $datakey);
-        $operate = "-".$datakey;
-        $datakey = $type."-".$datakey;
-        $this->searchField[$title] = [$type, $datakey, $initData, $operate];
+        $operateArr = "operates[{$datakey}]";
+        $typeArr = "types[{$datakey}]";
+        $valueArr = "values[{$datakey}]";
+        $this->searchField[$title] = ["type"=>$type, "field"=>$datakey, "values"=>$valueArr, "operates"=>$operateArr, "types"=>$typeArr, "initData"=>$initData];
         return $this;
     }
 

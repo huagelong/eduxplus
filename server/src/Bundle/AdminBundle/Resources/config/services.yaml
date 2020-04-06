@@ -4,3 +4,7 @@ services:
         class: App\Bundle\AdminBundle\Twig\GetPropExtension
         tags:
             - { name: twig.extension }
+    admin.arrayGet.twig.extension:
+        class: App\Bundle\AdminBundle\Twig\ArrayGetExtension
+        tags:
+            - { name: twig.extension }

@@ -16,6 +16,15 @@
                 $(".grid-search").addClass('display-hide')
             }
         });
+
+        $(".reset").each(function(){
+            var that = this;
+            $(this).click(function(){
+                var form = $(that).parents("form");
+                $(form)[0].reset();
+                $("input[type='hidden']", $(form)).val("");
+            });
+        });
     })
 </script>
 
