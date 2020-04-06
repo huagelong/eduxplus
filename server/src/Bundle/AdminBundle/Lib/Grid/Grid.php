@@ -59,7 +59,7 @@ class Grid
 
     /**
      * @param $title
-     * @param $type text,number
+     * @param $type text,number,daterange,datetimerange
      * @param $datakey
      * @param null $initData
      * @return $this

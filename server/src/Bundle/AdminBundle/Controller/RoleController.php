@@ -32,6 +32,7 @@ class RoleController extends BaseAdminController
         $grid->setTableColumn("描述", "textarea", "descr");
         $grid->setSearchField("ID", "number", "a.id");
         $grid->setSearchField("名称", "text", "a.name");
+        $grid->setSearchField("创建时间", "datetimerange", "a.createdAt");
         $grid->setGridBar("添加", $this->generateUrl("admin_role_add"), "fas fa-plus", "btn-success");
         $grid->setTableAction(function($obj){
             if($obj->getIsLock()) return ;

@@ -25,6 +25,24 @@
                 $("input[type='hidden']", $(form)).val("");
             });
         });
+
+        $(".daterange").each(function(){
+            $(this).daterangepicker({
+                locale: {
+                    format: 'YYYY-MM-DD'
+                }
+            });
+        })
+
+        $(".datetimerange").each(function(){
+            $(this).daterangepicker({
+                timePicker: true,
+                timePickerIncrement: 30,
+                locale: {
+                    format: 'YYYY-MM-DD hh:mm'
+                }
+            });
+        })
     })
 </script>
 

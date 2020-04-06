@@ -59,6 +59,10 @@ class BaseService extends AbstractFOSRestController
                     }
                 }elseif($types[$k] === "number"){
                     $sql .= $k . " {$operates[$k]} '".$v."' ";
+                }elseif($types[$k] === "daterange" || $types[$k] === "datetimerange"){
+                    list($startDate, $endDate) = explode(" - ", $v);
+                    $sql .= $k . " {$operates[$k]} '{$startDate}' AND '{$endDate}' ";
+
                 }else{
                     $sql .= $k . " = '".$v."' ";
                 }

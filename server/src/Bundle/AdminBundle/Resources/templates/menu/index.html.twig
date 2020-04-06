@@ -4,8 +4,6 @@
 
 {% block head_custom_stylesheets %}
     <link rel="stylesheet" href="{{ asset('assets/plugins/jquery-nestable/style.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/plugins/select2/css/select2.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/plugins/fontawesome-iconpicker/css/fontawesome-iconpicker.min.css') }}">
 {% endblock %}
 
@@ -255,7 +253,6 @@
 {% block body_javascript %}
     {{ parent() }}
     <script src="{{ asset('assets/plugins/jquery-nestable/jquery.nestable.js') }}"></script>
-    <script src="{{ asset('assets/plugins/select2/js/select2.full.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/fontawesome-iconpicker/js/fontawesome-iconpicker.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/bootstrap-switch/js/bootstrap-switch.min.js') }}"></script>
 {% endblock %}

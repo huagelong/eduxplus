@@ -6,21 +6,19 @@
     <link rel="stylesheet" href="{{ asset('assets/admlte/css/adminlte.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/base/plugins/layer/layer.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/admlte/googlefonts/fonts.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/plugins/daterangepicker/daterangepicker.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/plugins/select2/css/select2.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
+{% endblock %}
+
+{% block head_stylesheets_end %}
+    {{ parent() }}
     <link rel="stylesheet" href="{{ asset('assets/css/admin.css') }}">
 {% endblock %}
 
 {% block head_javascript %}
     {{ parent() }}
     <script src="{{ asset('assets/plugins/jquery/jquery.min.js') }}"></script>
-{% endblock %}
-
-{% block head_favicon %}
-    {{ parent() }}
-    <link rel="icon" type="image/png" href="{{ asset('assets/images/logo.png') }}">
-{% endblock %}
-
-{% block body_javascript %}
-    {{ parent() }}
     <script src="{{ asset('assets/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('assets/admlte/js/adminlte.min.js') }}"></script>
     <script src="{{ asset('assets/base/utils.js') }}"></script>
@@ -31,4 +29,17 @@
     <script src="{{ asset('assets/base/modules/ajaxaction.js') }}"></script>
     <script src="{{ asset('assets/base/modules/widgets.js') }}"></script>
     <script src="{{ asset('assets/base/base.js') }}"></script>
+    <script src="{{ asset('assets/plugins/moment/moment.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/daterangepicker/daterangepicker.js') }}"></script>
+    <script src="{{ asset('assets/plugins/select2/js/select2.full.min.js') }}"></script>
+
+{% endblock %}
+
+{% block head_favicon %}
+    {{ parent() }}
+    <link rel="icon" type="image/png" href="{{ asset('assets/images/logo.png') }}">
+{% endblock %}
+
+{% block body_javascript %}
+    {{ parent() }}
 {% endblock %}
