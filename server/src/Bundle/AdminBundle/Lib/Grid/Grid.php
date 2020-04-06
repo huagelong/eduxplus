@@ -58,7 +58,13 @@ class Grid
         return $result;
     }
 
-
+    /**
+     * @param $title
+     * @param $type text,number
+     * @param $datakey
+     * @param null $initData
+     * @return $this
+     */
     public function setSearchField($title, $type, $datakey,$initData=null){
         $datakey = str_replace(".", "_", $datakey);
         $operate = "-".$datakey;
@@ -67,6 +73,13 @@ class Grid
         return $this;
     }
 
+    /**
+     * @param $title
+     * @param $type text,datetime,textarea,image,boole
+     * @param $datakey
+     * @param null $sort
+     * @return $this
+     */
     public function setTableColumn($title, $type, $datakey, $sort=null)
     {
         $this->gridColumn[$title] = [$type, $datakey, $sort];
