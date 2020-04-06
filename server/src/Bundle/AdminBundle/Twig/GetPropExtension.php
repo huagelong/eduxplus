@@ -29,7 +29,7 @@ class GetPropExtension extends AbstractExtension
             $classObj = call_user_func([$obj, $method]);
             $datetime = date('Y-m-d H:i:s',$classObj->getTimestamp());
             return $datetime;
-        }elseif($type == 'text'){
+        }elseif($type == 'textarea'){
             return "<span class='overflow-auto font-weight-lighter'>".call_user_func([$obj, $method])."</span>";
         }else{
             return call_user_func([$obj, $method]);

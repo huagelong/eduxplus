@@ -36,6 +36,42 @@ class BaseService extends AbstractFOSRestController
         return 0;
     }
 
+    public function getFormatRequestSql($request){
+        $fields = $request->query->all();
+        $sql = "";
+        if($fields){
+            $sql .= " WHERE ";
+            foreach ($fields as $k=>$v){
+                if(substr($k, 0, 1) == "-"){
+                    continue;
+                }
+                list($type, $sqlFieldTmp) = explode("-",$k);
+                $sqlField = str_replace("_", ".", $sqlFieldTmp);
+                $operate  = $fields["-".$sqlFieldTmp];
+
+                if($v===""){
+                    continue;
+                }
+
+                if($type == "text"){
+                    if($operate == "like"){
+                        $sql .= $sqlField . " like '%".$v."%'";
+                    }else{
+                        $sql .= $sqlField . " = '".$v."' ";
+                    }
+                }elseif($type == "number"){
+                    $sql .= $sqlField . " {$operate} '".$v."' ";
+                }else{
+                    $sql .= $sqlField . " = '".$v."' ";
+                }
+
+                $sql .= " AND ";
+            }
+        }
+        $sql = rtrim($sql, " AND ");
+        return $sql;
+    }
+
     /**
      * 添加
      *

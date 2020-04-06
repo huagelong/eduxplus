@@ -9,13 +9,18 @@
     <link rel="stylesheet" href="{{ asset('assets/css/admin.css') }}">
 {% endblock %}
 
+{% block head_javascript %}
+    {{ parent() }}
+    <script src="{{ asset('assets/plugins/jquery/jquery.min.js') }}"></script>
+{% endblock %}
+
 {% block head_favicon %}
+    {{ parent() }}
     <link rel="icon" type="image/png" href="{{ asset('assets/images/logo.png') }}">
 {% endblock %}
 
 {% block body_javascript %}
     {{ parent() }}
-    <script src="{{ asset('assets/plugins/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('assets/admlte/js/adminlte.min.js') }}"></script>
     <script src="{{ asset('assets/base/utils.js') }}"></script>

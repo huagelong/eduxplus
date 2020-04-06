@@ -20,34 +20,53 @@
         </div>
     </div>
     <div class="card-body table-responsive">
-        <form role="form" class="grid-search display-hide">
+        {% if searchField %}
+        <form role="form" name="listSearchForm" id="listSearchForm" class="grid-search {% if app.request.query.all() is empty %} display-hide {% endif %}" action="{{ pathinfo }}" method="get">
             <div class="row">
+                {% for k,v in searchField %}
                 <div class="col-sm-6">
-                    <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">Text</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control form-control-sm" placeholder="Enter ...">
-                        </div>
+                    <div class="form-group row ">
+                        <label class="col-sm-2 col-form-label">{{ k }}</label>
+                        {% if v[0] == "text" %}
+                            <div class="col-sm-2">
+                                <select name="{{ v[3] }}" class="form-control form-control-sm">
+                                    <option value="=" {% if app.request.query.get(v[3]) == '=' %} selected {% endif %}>=</option>
+                                    <option value="like" {% if app.request.query.get(v[3]) == 'like' %} selected {% endif %}>包含</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-8">
+                                <input type="text" name="{{ v[1] }}" value="{{ app.request.query.get(v[1]) }}" class="form-control form-control-sm " placeholder="Enter ...">
+                            </div>
+                        {% endif %}
+
+                        {% if v[0] == "number" %}
+                            <div class="col-sm-2">
+                                <select name="{{ v[3] }}" class="form-control form-control-sm">
+                                    <option value="=" {% if app.request.query.get(v[3]) == '=' %} selected {% endif %}>=</option>
+                                    <option value=">" {% if app.request.query.get(v[3]) == '>' %} selected {% endif %}> > </option>
+                                    <option value="<" {% if app.request.query.get(v[3]) == '<' %} selected {% endif %}> < </option>
+                                    <option value=">=" {% if app.request.query.get(v[3]) == '>=' %} selected {% endif %}> >= </option>
+                                    <option value="<=" {% if app.request.query.get(v[3]) == '<=' %} selected {% endif %}> <= </option>
+                                </select>
+                            </div>
+                            <div class="col-sm-8">
+                                <input type="text" name="{{ v[1] }}" value="{{ app.request.query.get(v[1]) }}" class="form-control form-control-sm " placeholder="Enter ...">
+                            </div>
+                        {% endif %}
+
                     </div>
                 </div>
-                <div class="col-sm-6">
-                    <div class="form-group form-group-sm row">
-                        <label class="col-sm-2 col-form-label">Text</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control form-control-sm" placeholder="Enter ...">
-                        </div>
-                    </div>
-                </div>
+                {% endfor %}
             </div>
             <div class="row">
                 <div class="col-sm-6">
                     <div class="form-group row">
                         <button type="submit" class="btn btn-info submit btn-sm" style="margin-right: 10px;"><i class="fa fa-search"></i>&nbsp;&nbsp;搜索</button>
-                        <button type="reset" class="btn btn-default btn-sm"><i class="fa fa-undo"></i>&nbsp;&nbsp;重置</button>
                     </div>
                 </div>
             </div>
         </form>
+        {% endif %}
         <table class="table table-hover text-nowrap ">
             <thead>
             <tr>
@@ -67,7 +86,7 @@
             <tr>
                 {% for cv in column %}
                     <td>
-                        {% if cv[0] == 'string' or cv[0] == 'datetime' or cv[0] == 'text' %}
+                        {% if cv[0] == 'text' or cv[0] == 'datetime' or cv[0] == 'textarea' %}
                         {{ get_prop(v, cv[1], cv[0])|raw }}
                         {% endif %}
                         {% if cv[0] == 'image'  %}

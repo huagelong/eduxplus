@@ -23,7 +23,7 @@
         $(that).each(function(){
             $(this).click(function(){
                 var chref = $(this).attr('href');
-                var title = $(this).attr('title');
+                var title = $(this).data('title');
 
                 layer.open({
                     type: 2,

@@ -22,8 +22,11 @@ class RoleService extends BaseService
         $this->paginator = $paginator;
     }
 
-    public function roleMenu($page, $pageSize){
-        $dql = "SELECT a FROM App:BaseRole a ";
+    public function roleMenu($request, $page, $pageSize){
+        $sql = $this->getFormatRequestSql($request);
+
+        $dql = "SELECT a FROM App:BaseRole a " . $sql;
+        dump($dql);
         $em = $this->getDoctrine()->getManager();
         $query = $em->createQuery($dql);
         $pagination = $this->paginator->paginate(

@@ -53,7 +53,7 @@
              {% endif %}
 {% if menu.isLock == 0 %}
 <span class="pull-right dd-nodrag">
-<a href="{{ path("admin_menu_edit", {"id":menu.id}) }}" title="编辑"  class="mypoppage"><i class="fas fa-edit"></i></a>
+<a href="{{ path("admin_menu_edit", {"id":menu.id}) }}" data-title="编辑"  class="mypoppage"><i class="fas fa-edit"></i></a>
 <a href="{{ path("admin_api_menu_delete", {"id":menu.id}) }}"  data-confirm="确认要删除吗?" class="tree_branch_delete ajaxDelete"><i class="fas fa-trash"></i></>
 </span>
 {% endif %}
@@ -78,7 +78,7 @@
 {% endif %}
 {% if menu2.isLock == 0 %}
     <span class="pull-right dd-nodrag">
-<a href="{{ path("admin_menu_edit", {"id":menu2.id}) }}" title="编辑" class="mypoppage"><i class="fas fa-edit"></i></a>
+<a href="{{ path("admin_menu_edit", {"id":menu2.id}) }}" data-title="编辑" class="mypoppage"><i class="fas fa-edit"></i></a>
 <a href="{{ path("admin_api_menu_delete", {"id":menu2.id}) }}" data-confirm="确认要删除吗?" class="tree_branch_delete ajaxDelete"><i class="fas fa-trash"></i></a>
 </span>
 {% endif %}
@@ -104,7 +104,7 @@
 {% endif %}
 {% if menu3.isLock == 0 %}
     <span class="pull-right dd-nodrag">
-<a href="{{ path("admin_menu_edit", {"id":menu3.id}) }}" title="编辑"  class="mypoppage"><i class="fas fa-edit"></i></a>
+<a href="{{ path("admin_menu_edit", {"id":menu3.id}) }}" data-title="编辑"  class="mypoppage"><i class="fas fa-edit"></i></a>
 <a href="{{ path("admin_api_menu_delete", {"id":menu3.id}) }}"  data-confirm="确认要删除吗?" class="tree_branch_delete ajaxDelete"><i class="fas fa-trash"></i></a>
 </span>
 {% endif %}

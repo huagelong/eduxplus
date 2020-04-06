@@ -52,22 +52,22 @@
                     var vl = $(this).val();
                     if(required){
                         if (vl === null || vl === undefined || vl === '') {
-                            field.addClass("has-error");
+                            $(this).addClass("is-invalid");
                             check = false;
                             $("button[type='submit']", jqForm).attr("disabled", true);
                             $(this).focus();
                         }else{
-                            field.removeClass("has-error");
+                            $(this).removeClass("is-invalid");
                         }
                     }else{
-                        field.removeClass("has-error");
+                        $(this).removeClass("is-invalid");
                     }
 
                     $(this).focusout(function(){
                         var required = $(this).data("required");
                         var vl = $(this).val();
                         if(required && vl){
-                            field.removeClass("has-error");
+                            $(this).removeClass("is-invalid");
                             $("button[type='submit']", jqForm).attr("disabled", false);
                         }
                     });
