@@ -19,7 +19,6 @@ class AuthController extends BaseApiController
 {
     /**
      * @Rest\Post("/login")
-     * @ViewAnnotations()
      *
      */
     public function login(Request $request,  UserPasswordEncoderInterface $passwordEncoder, BaseUserRepository $baseUserRepository)
@@ -32,7 +31,6 @@ class AuthController extends BaseApiController
 
     /**
      * @Rest\Post("/register")
-     * @ViewAnnotations()
      * @return bool
      */
     public function register(){
@@ -42,7 +40,6 @@ class AuthController extends BaseApiController
     /**
      * 退出
      * @Rest\Get("/logout")
-     * @ViewAnnotations()
      */
     public function logout(){
 

@@ -96,3 +96,40 @@
         });
     };
 
+
+    function requestPost(url, data){
+        $.postJSON(url, data, function(responseText){
+            if(typeof  responseText == 'string') var responseText = $.parseJSON(responseText);
+            if(!$.isEmptyObject(responseText.data)){
+                if(responseText.message){
+                    show(responseText.code, responseText.message);
+                }
+                setTimeout(function(){
+                    location.assign(responseText.data._url);
+                }, 1000);
+            }else{
+                if(responseText.message){
+                    show(responseText.code, responseText.message);
+                }
+            }
+        },'json');
+    }
+
+    function requestGet(url, data){
+        $.getJSON(url,data,function(responseText){
+            if(typeof  responseText == 'string') var responseText = $.parseJSON(responseText);
+            if(!$.isEmptyObject(responseText.data)){
+                if(responseText.message){
+                    show(responseText.code, responseText.message);
+                }
+                setTimeout(function(){
+                    location.assign(responseText.data._url);
+                }, 1000);
+            }else{
+                if(responseText.message){
+                    show(responseText.code, responseText.message);
+                }
+            }
+        },'json');
+    }
+

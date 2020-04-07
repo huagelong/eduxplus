@@ -9,7 +9,9 @@
 namespace App\Bundle\AdminBundle\Controller;
 
 
+use App\Bundle\AdminBundle\Lib\Form\Form;
 use App\Bundle\AdminBundle\Lib\Grid\Grid;
+use App\Bundle\AdminBundle\Service\MenuService;
 use App\Bundle\AdminBundle\Service\RoleService;
 use App\Bundle\AppBundle\Lib\Base\BaseAdminController;
 use FOS\RestBundle\Controller\Annotations as Rest;
@@ -34,6 +36,12 @@ class RoleController extends BaseAdminController
         $grid->setSearchField("名称", "text", "a.name");
         $grid->setSearchField("创建时间", "datetimerange", "a.createdAt");
         $grid->setGridBar("添加", $this->generateUrl("admin_role_add"), "fas fa-plus", "btn-success");
+        //绑定菜单
+        $grid->setTableAction(function($obj){
+            $id = $obj->getId();
+            $url = $this->generateUrl('admin_role_bindmenu',['id'=>$id]);
+            return  '<a href='.$url.' data-title="绑定菜单" class=" btn btn-primary btn-xs poppage" ><i class="fa fa-chain"></i></a>';
+        });
         $grid->setTableAction(function($obj){
             if($obj->getIsLock()) return ;
             $id = $obj->getId();
@@ -56,22 +64,94 @@ class RoleController extends BaseAdminController
     /**
      * @Rest\Get("/role/add", name="admin_role_add")
      */
-    public function addAction(){
+    public function addAction(Form $form){
 
+        $form->setFormField("角色名称", 'text', 'name' ,1);
+        $form->setFormField("是否锁定", 'boole', 'isLock', 1);
+        $form->setFormField("描述", 'textarea', 'descr', 0);
+        $formData = $form->create($this->generateUrl("admin_api_role_add"));
+        $data = [];
+        $data["formData"] = $formData;
+        return $this->render("@AdminBundle/role/add.html.twig", $data);
+    }
+
+
+    /**
+     * @Rest\Post("/api/role/addDo", name="admin_api_role_add")
+     */
+    public function addDoAction(Request $request, RoleService $roleService){
+        $name = $request->get("name");
+        $isLock = $request->get("isLock");
+        $descr = $request->get("descr");
+        $isLock = $isLock=="on"?1:0;
+        if(!$name) return $this->responseError("角色名称不能为空!");
+
+        if(mb_strlen($name, 'utf-8')>20) return $this->responseError("角色名称不能超过20字!");
+
+        if($roleService->checkName($name))  return $this->responseError("角色名称已存在!");
+
+        $roleService->addRole($name, $isLock, $descr);
+
+        return $this->responseSuccess("添加成功!", $this->generateUrl("admin_role_index"));
     }
 
     /**
      * @Rest\Get("/role/edit/{id}", name="admin_role_edit")
      */
-    public function editAction(){
-
+    public function editAction($id, RoleService $roleService, Form $form){
+        $info = $roleService->getById($id);
+        $form->setFormField("角色名称", 'text', 'name' ,1, $info['name']);
+        $form->setFormField("是否锁定", 'boole', 'isLock', 1, $info['isLock']);
+        $form->setFormField("描述", 'textarea', 'descr', 0, $info['descr']);
+        $formData = $form->create($this->generateUrl("admin_api_role_edit",['id'=>$id]));
+        $data = [];
+        $data["formData"] = $formData;
+        return $this->render("@AdminBundle/role/edit.html.twig", $data);
     }
 
     /**
-     * @Rest\Post("/api/role/delete/{id}", name="admin_api_role_delete")
+     * @Rest\Post("/api/role/editDo/{id}", name="admin_api_role_edit")
      */
-    public function deleteAction(){
+    public function editDoAction($id, Request $request, RoleService $roleService){
+        $name = $request->get("name");
+        $isLock = $request->get("isLock");
+        $descr = $request->get("descr");
+        $isLock = $isLock=="on"?1:0;
+        if(!$name) return $this->responseError("角色名称不能为空!");
 
+        if(mb_strlen($name, 'utf-8')>20) return $this->responseError("角色名称不能超过20字!");
+
+        if($roleService->checkName($name, $id))  return $this->responseError("角色名称已存在!");
+
+        $roleService->updateRole($id, $name, $isLock, $descr);
+
+        return $this->responseSuccess("编辑成功!", $this->generateUrl("admin_role_index"));
     }
 
+    /**
+     * @Rest\Post("/api/role/deleteDo/{id}", name="admin_api_role_delete")
+     */
+    public function deleteAction($id, RoleService $roleService){
+        $roleService->deleteRole($id);
+        return $this->responseSuccess("删除成功!", $this->generateUrl("admin_role_index"));
+    }
+
+    /**
+     * @Rest\Get("/role/bindmenu/{id}", name="admin_role_bindmenu")
+     */
+    public function bindMenuAction($id,  MenuService $menuService, RoleService $roleService){
+        $info = $roleService->getById($id);
+        $data = [];
+        $data['info'] = $info;
+        $data['allMenu'] = $menuService->getAllMenu();
+        return $this->render("@AdminBundle/role/bindmenu.html.twig", $data);
+    }
+
+
+    /**
+     * @Rest\Get("/api/role/bindmenudo/{id}", name="admin_api_role_bindmenu")
+     */
+    public function bindMenuDoAction($id){
+
+    }
 }

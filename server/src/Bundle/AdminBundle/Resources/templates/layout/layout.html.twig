@@ -2,6 +2,7 @@
 {% block head_stylesheets %}
     {{ parent() }}
     <link rel="stylesheet" href="{{ asset('assets/plugins/fontawesome-free/css/all.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/plugins/fontawesome-free/css/v4-shims.css') }}">
     {% block style %}{% endblock %}
     <link rel="stylesheet" href="{{ asset('assets/admlte/css/adminlte.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/base/plugins/layer/layer.css') }}">
@@ -9,6 +10,7 @@
     <link rel="stylesheet" href="{{ asset('assets/plugins/daterangepicker/daterangepicker.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/plugins/select2/css/select2.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
 {% endblock %}
 
 {% block head_stylesheets_end %}
@@ -32,7 +34,7 @@
     <script src="{{ asset('assets/plugins/moment/moment.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/daterangepicker/daterangepicker.js') }}"></script>
     <script src="{{ asset('assets/plugins/select2/js/select2.full.min.js') }}"></script>
-
+    <script src="{{ asset('assets/plugins/bootstrap-switch/js/bootstrap-switch.min.js') }}"></script>
 {% endblock %}
 
 {% block head_favicon %}

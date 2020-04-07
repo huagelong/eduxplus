@@ -1,0 +1,159 @@
+{% extends "@AdminBundle/layout/pop.html.twig" %}
+
+{% block head_custom_stylesheets %}
+    <link rel="stylesheet" href="{{ asset('assets/plugins/jquery-nestable2/jquery.nestable.min.css') }}">
+{% endblock %}
+
+{% block body_javascript %}
+    {{ parent() }}
+    <script src="{{ asset('assets/plugins/jquery-nestable2/jquery.nestable.min.js') }}"></script>
+{% endblock %}
+
+{% block body_custom_javascript %}
+<script>
+$(function(){
+    $('#menu-tree').nestable({
+        maxDepth:3,
+        'onDragStart': function (l, e) {
+                return false;
+        }
+    });
+
+    $('.menu-tree-tools').on('click', function(e){
+        var action = $(this).data('action');
+        if (action === 'expand') {
+            $('.dd').nestable('expandAll');
+        }
+        if (action === 'collapse') {
+            $('.dd').nestable('collapseAll');
+        }
+    });
+
+    $("#menuSelectAll").click(function(){
+        var flag = this.checked;
+        $("input[type='checkbox']").each(function(){
+            // 将获取的状态赋值给当前对象，
+            this.checked = flag;
+        });
+    });
+
+    //单选
+    $("input[type='checkbox']", "#menu-tree").each(function(){
+        $(this).click(function(){
+            var flag = this.checked;
+            $("input[type='checkbox']", $(this).parents(".dd-item:first")).each(function(){
+                // 将获取的状态赋值给当前对象，
+                this.checked = flag;
+            });
+        });
+    })
+
+    //保存
+    $("#menuBindSave").click(function(){
+        $("input[type='checkbox']", "#menu-tree").each(function(){
+            var checkIdStr = "";
+            $("input[type='checkbox']").each(function(){
+                // 将获取的状态赋值给当前对象，
+                if(this.checked){
+                    checkIdStr += $(this).val()+",";
+                }
+            });
+
+            console.log(checkIdStr);
+        })
+    });
+
+})
+</script>
+{% endblock %}
+{% block page %}
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card card-default">
+                <div class="card-header">
+                    <div class="btn-group">
+                        <button class="btn btn-primary btn-sm menu-tree-tools" data-action="expand" title="展开">
+                            <i class="fas fa-plus-square-o"></i>&nbsp;展开
+                        </button>
+                        <button class="btn btn-primary btn-sm menu-tree-tools" data-action="collapse"
+                                title="收起">
+                            <i class="fas fa-minus-square-o"></i>&nbsp;收起
+                        </button>
+                    </div>
+                    {% if info['isLock'] ==0 %}
+                        <div class="btn-group">
+                            <button class="btn btn-info btn-sm" id="menuBindSave" title="保存">
+                                <i class="fas fa-save"></i><span class="hidden-xs">&nbsp;保存</span>
+                            </button>
+                        </div>
+
+                        <div class="icheck-primary d-inline pull-right">
+                            <input type="checkbox" id="menuSelectAll" ><label for="menuSelectAll">全选</label>
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="card-body table-responsive no-padding">
+                    <div class="dd" id="menu-tree">
+                        <ol class="dd-list">
+                            {% for menu in allMenu[0] %}
+                                <li class="dd-item" data-id="{{ menu.id }}">
+                                    <div class="dd-handle">
+                                        <i class="{{ menu.style|default('far fa-circle') }}"></i>&nbsp;<strong>{{ menu.name }}</strong>&nbsp;&nbsp;&nbsp;
+                                        {% if menu.url!="" and menu.isAccess==0 %}<a href="{{ path(menu.url) }}" class="dd-nodrag">{{ path(menu.url) }}</a>{% endif %}
+                                        <span class="font-weight-lighter"> {{ menu.descr }}</span>
+                                        {% if info['isLock'] ==0 %}
+                                            <span class="pull-right dd-nodrag">
+                                                <input type="checkbox" name="access[]" value="{{ menu.id }}" >
+                                            </span>
+                                        {% endif %}
+                                    </div>
+                                    {% if allMenu[menu.id] is defined %}
+                                        <ol class="dd-list">
+                                            {% for menu2 in allMenu[menu.id] %}
+                                                <li class="dd-item" data-id="{{ menu2.id }}">
+                                                    <div class="dd-handle">
+                                                        <i class="{{ menu2.style|default('far fa-circle') }}"></i>&nbsp;<strong>{{ menu2.name }}</strong>&nbsp;&nbsp;&nbsp;
+                                                        {% if menu2.url!="" and menu2.isAccess==0 %}<a href="{{ path(menu2.url) }}" class="dd-nodrag">{{ path(menu2.url) }}</a>{% endif %}
+                                                        <span class="font-weight-lighter"> {{ menu2.descr }}</span>
+                                                        {% if info['isLock'] ==0 %}
+                                                            <span class="pull-right dd-nodrag">
+                                                                    <input type="checkbox" name="access[]" value="{{ menu2.id }}" >
+                                                            </span>
+                                                        {% endif %}
+                                                    </div>
+                                                    {#第三级#}
+                                                    {% if allMenu[menu2.id] is defined %}
+                                                        <ol class="dd-list">
+                                                            {% for menu3 in allMenu[menu2.id] %}
+                                                                <li class="dd-item" data-id="{{ menu3.id }}">
+                                                                    <div class="dd-handle">
+                                                                        <i class="{{ menu3.style|default('far fa-circle') }}"></i>&nbsp;<strong>{{ menu3.name }}</strong>&nbsp;&nbsp;&nbsp;
+                                                                        {% if menu3.url!="" and menu3.isAccess==0 %}<a href="{{ path(menu3.url) }}" class="dd-nodrag">{{ path(menu3.url) }}</a>{% endif %}
+                                                                        <span class="font-weight-lighter"> {{ menu3.descr }}</span>
+                                                                        {% if info['isLock'] ==0 %}
+                                                                            <span class="pull-right dd-nodrag">
+                                                                                <input type="checkbox" name="access[]" value="{{ menu3.id }}" >
+                                                                            </span>
+                                                                        {% endif %}
+                                                                    </div>
+                                                                </li>
+                                                            {% endfor %}
+                                                        </ol>
+                                                    {% endif %}
+
+                                                </li>
+                                            {% endfor %}
+                                        </ol>
+                                    {% endif %}
+                                </li>
+                            {% endfor %}
+
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

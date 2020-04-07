@@ -6,3 +6,4 @@ twig:
     paths:
       "%kernel.project_dir%/src/Bundle/AdminBundle/Resources/templates": "AdminBundle"
       "%kernel.project_dir%/src/Bundle/AdminBundle/Lib/Grid/templates": "Grid"
+      "%kernel.project_dir%/src/Bundle/AdminBundle/Lib/Form/templates": "Form"

@@ -52,7 +52,7 @@ class Grid
         $params['tableActionCallback'] = $this->tableActionCallback;
         $params['gridBar'] = $this->gridBar;
 
-        $result = $this->twig->render("@Grid/tables/".$tableTpl.".html.twig", $params);
+        $result = $this->twig->render("@Grid/".$tableTpl.".html.twig", $params);
 
         return $result;
     }

@@ -13,7 +13,6 @@ class IndexController extends BaseApiController
 {
     /**
      * @Rest\Post("/")
-     * @ViewAnnotations()
      */
     public function index()
     {

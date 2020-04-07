@@ -10,6 +10,7 @@ namespace App\Bundle\AdminBundle\Service;
 
 
 use App\Bundle\AppBundle\Lib\Base\BaseService;
+use App\Entity\BaseRole;
 use Knp\Component\Pager\PaginatorInterface;
 
 class RoleService extends BaseService
@@ -35,6 +36,52 @@ class RoleService extends BaseService
             $pageSize
         );
         return $pagination;
+    }
+
+    public function addRole($name, $isLock, $descr){
+        $model = new BaseRole();
+        $model->setName($name);
+        $model->setIsLock($isLock);
+        $model->setDescr($descr);
+        $this->save($model);
+    }
+
+    public function updateRole($id, $name, $isLock, $descr){
+        $sql = "SELECT a FROM App:BaseRole a where a.id =:id ";
+        $params = [];
+        $params['id'] = $id;
+        $model = $this->fetchOne($sql, $params, 1);
+        $model->setName($name);
+        $model->setIsLock($isLock);
+        $model->setDescr($descr);
+        $this->save($model);
+    }
+
+    public function checkName($name, $id=0){
+        $sql = "SELECT a FROM App:BaseRole a where a.name =:name ";
+        $params = [];
+        $params['name'] = $name;
+        if($id){
+            $sql = $sql." AND a.id !=:id ";
+            $params['id'] = $id;
+        }
+        return $this->fetchOne($sql, $params);
+    }
+
+    public function getById($id){
+        $sql = "SELECT a FROM App:BaseRole a where a.id =:id ";
+        $params = [];
+        $params['id'] = $id;
+        return $this->fetchOne($sql, $params);
+    }
+
+    public function deleteRole($id){
+        $sql = "SELECT a FROM App:BaseRole a where a.id =:id ";
+        $params = [];
+        $params['id'] = $id;
+        $model = $this->fetchOne($sql, $params, 1);
+        $this->delete($model);
+        return true;
     }
 
 }

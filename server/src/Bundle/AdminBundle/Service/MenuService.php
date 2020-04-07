@@ -197,5 +197,26 @@ class MenuService extends BaseService
         $model= $this->fetchOne($sql, ['id'=>$id], 1);
         return $this->delete($model);
     }
+
+    /**
+     * 更新排序
+     * @param $data
+     */
+    public function updateSort($data){
+        if($data){
+            $sort = 0;
+            foreach ($data as $k=>$v){
+                $id = $v['id'];
+                $sql = "SELECT a FROM App:BaseMenu a WHERE a.id=:id";
+                $model = $this->fetchOne($sql, ['id'=>$id], 1);
+                $model->setSort($sort);
+                $this->update($model);
+                if(isset($v['children'])){
+                    $this->updateSort($v['children']);
+                }
+                $sort++;
+            }
+        }
+    }
 }
 

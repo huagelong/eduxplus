@@ -1,0 +1,49 @@
+{% if formField %}
+<div class="card card-default">
+        <form method="POST" action="{{ url }}" class="form-horizontal ajaxform" accept-charset="UTF-8" >
+            <div class="card-body" style="display: block;">
+            {% for k,v in formField %}
+                <div class="form-group  row">
+                    <label for="title" class="col-sm-2  require col-form-label">{{ k }}</label>
+                    {% if v['type'] == 'text' %}
+                        <div class="col-sm-8">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-edit fa-fw"></i></span>
+                                </div>
+                                <input type="text" id="{{ v['datakey'] }}" name="{{ v['datakey'] }}" {% if v['isRequire'] %} data-required="1" {% endif %} value="{{ v['defaultValue'] }}" class="form-control form-control-sm" placeholder="{{ v['placeholder'] }}" >
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {% if v['type'] == 'textarea' %}
+                        <div class="col-sm-8">
+                            <div class="input-group">
+                                <textarea  id="{{ v['datakey'] }}" name="{{ v['datakey'] }}" {% if v['isRequire'] %} data-required="1" {% endif %}  class="form-control form-control-sm" placeholder="{{ v['placeholder'] }}" >{{ v['defaultValue'] }}</textarea>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {% if v['type'] == 'boole' %}
+                    <div class="col-sm-8">
+                        <div class="input-group">
+                        <input type="checkbox" id="{{ v['datakey'] }}" name="{{ v['datakey'] }}" {% if v['defaultValue'] %} checked {% endif %} data-bootstrap-switch data-off-color="danger" data-on-color="success">
+                        </div>
+                    </div>
+                  {% endif %}
+
+                </div>
+            {% endfor %}
+            </div>
+            <div class="card-footer">
+                <div class="col-md-2"></div>
+                <div class="col-md-8">
+                    <div class="btn-group">
+                        <button type="submit" class="btn btn-sm btn-info " style="margin-right: 10px;">提交</button>
+                        <button type="reset" class="btn btn-default btn-sm reset"><i class="fa fa-undo"></i>&nbsp;&nbsp;重置</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+</div>
+{% endif %}
