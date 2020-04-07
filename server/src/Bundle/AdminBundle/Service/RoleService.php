@@ -11,6 +11,7 @@ namespace App\Bundle\AdminBundle\Service;
 
 use App\Bundle\AppBundle\Lib\Base\BaseService;
 use App\Entity\BaseRole;
+use App\Entity\BaseRoleMenu;
 use Knp\Component\Pager\PaginatorInterface;
 
 class RoleService extends BaseService
@@ -81,6 +82,26 @@ class RoleService extends BaseService
         $params['id'] = $id;
         $model = $this->fetchOne($sql, $params, 1);
         $this->delete($model);
+        return true;
+    }
+
+    public function bindMenu($roleId, $menuIds){
+        //先删除
+        $sql = "SELECT a FROM App:BaseRoleMenu a WHERE a.roleId=:roleId";
+        $models = $this->fetchAll($sql, ['roleId'=>$roleId], 1);
+        if($models){
+            foreach ($models as $model){
+                $this->delete($model);
+            }
+        }
+        if($menuIds){
+            foreach ($menuIds as $menuId){
+                $model = new BaseRoleMenu();
+                $model->setMenuId($menuId);
+                $model->setRoleId($roleId);
+                $this->save($model);
+            }
+        }
         return true;
     }
 

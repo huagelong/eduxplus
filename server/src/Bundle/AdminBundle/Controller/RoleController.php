@@ -149,9 +149,12 @@ class RoleController extends BaseAdminController
 
 
     /**
-     * @Rest\Get("/api/role/bindmenudo/{id}", name="admin_api_role_bindmenu")
+     * @Rest\Post("/api/role/bindmenudo/{id}", name="admin_api_role_bindmenu")
      */
-    public function bindMenuDoAction($id){
-
+    public function bindMenuDoAction($id, Request $request, RoleService $roleService){
+        $idstr = $request->request->get("data");
+        $ids = $idstr?explode(",", $idstr):[];
+        $roleService->bindMenu($id, $ids);
+        return $this->responseSuccess("绑定成功!", $this->generateUrl('admin_role_index'));
     }
 }

@@ -24,8 +24,13 @@
                     if(responseText.message){
                         show(responseText.code, responseText.message);
                     }
+
                     setTimeout(function(){
-                        location.assign(responseText.data._url);
+                        if (window.frames.length != parent.frames.length){
+                            parent.location.assign(responseText.data._url);
+                        }else{
+                            location.assign(responseText.data._url);
+                        }
                     }, 1000);
                 }else{
                     if(responseText.message){
@@ -68,7 +73,11 @@
                         show(responseText.code, responseText.message);
                     }
                     setTimeout(function(){
-                        location.assign(responseText.data._url);
+                        if (window.frames.length != parent.frames.length){
+                            parent.location.assign(responseText.data._url);
+                        }else{
+                            location.assign(responseText.data._url);
+                        }
                     }, 1000);
                 }else{
                     if(responseText.message){

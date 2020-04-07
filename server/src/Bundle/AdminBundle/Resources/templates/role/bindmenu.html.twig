@@ -50,17 +50,15 @@ $(function(){
 
     //保存
     $("#menuBindSave").click(function(){
+        var checkIdStr = "";
         $("input[type='checkbox']", "#menu-tree").each(function(){
-            var checkIdStr = "";
-            $("input[type='checkbox']").each(function(){
-                // 将获取的状态赋值给当前对象，
-                if(this.checked){
-                    checkIdStr += $(this).val()+",";
-                }
-            });
-
-            console.log(checkIdStr);
-        })
+            if(this.checked){
+                checkIdStr += $(this).val()+",";
+            }
+        });
+        checkIdStr = checkIdStr.substring(0, checkIdStr.lastIndexOf(','));
+        var data = {data:checkIdStr};
+        requestPost("{{ path('admin_api_role_bindmenu', {id:info['id']}) }}", JSON.stringify(data));
     });
 
 })

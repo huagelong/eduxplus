@@ -109,7 +109,7 @@ class BaseService extends AbstractFOSRestController
     }
 
     /**
-     * 删除
+     * 软删除
      *
      * @param $model
      * @param null $name
@@ -121,6 +121,7 @@ class BaseService extends AbstractFOSRestController
         $entityManage->flush();
         return true;
     }
+
 
     public function fetchField($field,$dql, $params=[]){
         $result = $this->fetchOne($dql, $params);
