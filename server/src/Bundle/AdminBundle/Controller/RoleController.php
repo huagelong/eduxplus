@@ -37,23 +37,25 @@ class RoleController extends BaseAdminController
         $grid->setSearchField("创建时间", "datetimerange", "a.createdAt");
         $grid->setGridBar("添加", $this->generateUrl("admin_role_add"), "fas fa-plus", "btn-success");
         //绑定菜单
-        $grid->setTableAction(function($obj){
+        $grid->setTableAction('admin_role_bindmenu', function($obj){
             $id = $obj->getId();
             $url = $this->generateUrl('admin_role_bindmenu',['id'=>$id]);
             return  '<a href='.$url.' data-title="绑定菜单" class=" btn btn-primary btn-xs poppage" ><i class="fa fa-chain"></i></a>';
         });
-        $grid->setTableAction(function($obj){
+
+        $grid->setTableAction('admin_role_edit', function($obj) use($roleService){
             if($obj->getIsLock()) return ;
             $id = $obj->getId();
             $url = $this->generateUrl('admin_role_edit',['id'=>$id]);
             $str = '<a href='.$url.' data-title="编辑角色" class=" btn btn-info btn-xs poppage"><i class="fas fa-edit"></i></a>';
             return  $str;
         });
-        $grid->setTableAction(function($obj){
-            if($obj->getIsLock()) return ;
+
+        $grid->setTableAction('admin_api_role_delete', function ($obj) {
+            if ($obj->getIsLock()) return;
             $id = $obj->getId();
-            $url = $this->generateUrl('admin_api_role_delete',['id'=>$id]);
-            return  '<a href='.$url.' data-confirm="确认要删除吗?"  class=" btn btn-danger btn-xs ajaxDelete"><i class="fas fa-trash"></i></a>';
+            $url = $this->generateUrl('admin_api_role_delete', ['id' => $id]);
+            return '<a href=' . $url . ' data-confirm="确认要删除吗?"  class=" btn btn-danger btn-xs ajaxDelete"><i class="fas fa-trash"></i></a>';
         });
 
         $data = [];

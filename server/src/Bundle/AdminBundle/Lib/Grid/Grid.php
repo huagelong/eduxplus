@@ -8,6 +8,7 @@
 
 namespace App\Bundle\AdminBundle\Lib\Grid;
 
+use App\Bundle\AppBundle\Lib\Base\BaseService;
 use Twig\Environment;
 
 class Grid
@@ -21,10 +22,12 @@ class Grid
     protected $action;
 
     private $twig;
+    protected $service;
 
-    public function __construct(Environment $twig)
+    public function __construct(Environment $twig, BaseService $service)
     {
         $this->twig = $twig;
+        $this->service = $service;
     }
 
     public function setRoute($route){
@@ -33,8 +36,9 @@ class Grid
     }
 
 
-    public function setTableAction($callback)
+    public function setTableAction($routeName, $callback)
     {
+        if(!$this->service->isAuthorized($routeName)) return ;
         $this->tableActionCallback[] = $callback;
         return $this;
     }

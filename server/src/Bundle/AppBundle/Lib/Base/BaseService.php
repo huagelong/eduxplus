@@ -187,4 +187,26 @@ class BaseService extends AbstractFOSRestController
         return $rs;
     }
 
+
+    public function isAuthorized($routeName){
+        $uid = $this->getUid();
+        if(!$uid) return false;
+
+        $sql = "SELECT a FROM App:BaseMenu a WHERE a.url=:url";
+        $menuInfo = $this->fetchOne($sql, ['url'=>$routeName]);
+        if(!$menuInfo) return false;
+        $menuId = $menuInfo['id'];
+
+        $userSql = "SELECT a.roleId FROM App:BaseRoleUser a WHERE a.uid=:uid";
+        $roleIds = $this->fetchFields("roleId", $userSql, ['uid'=>$uid]);
+        if(!$roleIds) return false;
+
+        $sql = "SELECT a.menuId FROM App:BaseRoleMenu a WHERE a.roleId IN(:roleId) ";
+        $menuIds = $this->fetchFields("menuId", $sql, ['roleId'=>$roleIds]);
+        if(!$menuIds) return false;
+        dump($menuId);
+        dump($menuIds);
+        return in_array($menuId, $menuIds);
+    }
+
 }
