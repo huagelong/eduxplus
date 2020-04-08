@@ -22,7 +22,7 @@
             $(this).click(function(){
                 var form = $(that).parents("form");
                 $(form)[0].reset();
-                $("input[type='hidden']", $(form)).val("");
+                $("input[data-type='hidden']", $(form)).val("");
             });
         });
 

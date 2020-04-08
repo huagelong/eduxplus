@@ -25,8 +25,8 @@ class RoleController extends BaseAdminController
      * @Rest\Get("/role/index", name="admin_role_index")
      */
     public function indexAction(Request $request, RoleService $roleService, Grid $grid){
-        $pageSize = 20;
-        $grid->setService($roleService, "roleMenu");
+        $pageSize = 1;
+        $grid->setListService($roleService, "roleMenu");
         $grid->setTableColumn("#", "text", "id","a.id");
         $grid->setTableColumn("名称", "text", "name");
         $grid->setTableColumn("创建时间", "datetime", "createdAt", "a.createdAt");
@@ -35,7 +35,8 @@ class RoleController extends BaseAdminController
         $grid->setSearchField("ID", "number", "a.id");
         $grid->setSearchField("名称", "text", "a.name");
         $grid->setSearchField("创建时间", "datetimerange", "a.createdAt");
-        $grid->setGridBar("添加", $this->generateUrl("admin_role_add"), "fas fa-plus", "btn-success");
+
+        $grid->setGridBar("admin_role_add","添加", $this->generateUrl("admin_role_add"), "fas fa-plus", "btn-success");
         //绑定菜单
         $grid->setTableAction('admin_role_bindmenu', function($obj){
             $id = $obj->getId();
@@ -43,7 +44,7 @@ class RoleController extends BaseAdminController
             return  '<a href='.$url.' data-title="绑定菜单" class=" btn btn-primary btn-xs poppage" ><i class="fa fa-chain"></i></a>';
         });
 
-        $grid->setTableAction('admin_role_edit', function($obj) use($roleService){
+        $grid->setTableAction('admin_role_edit', function($obj){
             if($obj->getIsLock()) return ;
             $id = $obj->getId();
             $url = $this->generateUrl('admin_role_edit',['id'=>$id]);

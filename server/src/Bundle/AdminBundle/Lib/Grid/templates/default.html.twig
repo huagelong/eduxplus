@@ -21,7 +21,7 @@
     </div>
     <div class="card-body table-responsive">
         {% if searchField %}
-        <form role="form" name="listSearchForm" id="listSearchForm" class="grid-search {% if app.request.query.all() is empty %} display-hide {% endif %}" action="{{ pathinfo }}" method="get">
+        <form role="form" name="listSearchForm" id="listSearchForm" class="grid-search {% if app.request.query.get('showSearch') != 1 %} display-hide {% endif %}" action="{{ pathinfo }}" method="get">
             <div class="row">
                 {% for k,v in searchField %}
                 <div class="col-sm-6">
@@ -51,7 +51,7 @@
                                 </select>
                             </div>
                             <div class="col-sm-8">
-                                <input type="hidden" name="{{ v['types'] }}" value="{{ v['type'] }}">
+                                <input type="hidden"  name="{{ v['types'] }}" value="{{ v['type'] }}">
                                 <input type="text" name="{{ v['values'] }}" value="{{ array_get(app.request.query.get("values"), v['field']) }}" class="form-control form-control-sm " placeholder="输入 ...">
                             </div>
                         {% endif %}
@@ -90,6 +90,7 @@
             <div class="row">
                 <div class="col-sm-6">
                     <div class="form-group row">
+                        <input type="hidden" name="showSearch" value="1">
                         <button type="submit" class="btn btn-info submit btn-sm" style="margin-right: 10px;"><i class="fa fa-search"></i>&nbsp;&nbsp;搜索</button>
                         <button type="reset" class="btn btn-default btn-sm reset"><i class="fa fa-undo"></i>&nbsp;&nbsp;重置</button>
                     </div>
@@ -102,8 +103,8 @@
             <tr>
                 {% for k, v in column %}
                     <th>
-                        {% if v[2] %}
-                         {{  knp_pagination_sortable(pagination, k, v[2]) }}
+                        {% if v['sort'] %}
+                         {{  knp_pagination_sortable(pagination, k, v['sort']) }}
                         {% else %}
                             {{  k }}
                         {% endif %}</th>
@@ -116,14 +117,14 @@
             <tr>
                 {% for cv in column %}
                     <td>
-                        {% if cv[0] == 'text' or cv[0] == 'datetime' or cv[0] == 'textarea' %}
-                        {{ get_prop(v, cv[1], cv[0])|raw }}
+                        {% if cv['type'] == 'text' or cv['type'] == 'datetime' or cv['type'] == 'textarea' %}
+                        {{ get_prop(v, cv["field"], cv['type'], cv['options'])|raw }}
                         {% endif %}
-                        {% if cv[0] == 'image'  %}
-                            <img src="{{  cv[0] }}" width="50px" />
+                        {% if cv['type'] == 'image'  %}
+                            <img src="{{  get_prop(v, cv["field"], cv['type'], cv['options'])|raw }}" width="30px" />
                         {% endif %}
-                        {% if cv[0] == 'boole' %}
-                            {% if get_prop(v, cv[1], cv[0]) %}
+                        {% if cv['type'] == 'boole' %}
+                            {% if get_prop(v, cv['field'], cv['type']) %}
                                 <span class="badge bg-success">√</span>
                             {% else %}
                                 <span class="badge bg-danger">×</span>

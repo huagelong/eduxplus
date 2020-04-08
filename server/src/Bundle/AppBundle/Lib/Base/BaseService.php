@@ -42,7 +42,6 @@ class BaseService extends AbstractFOSRestController
         $operates = $fields['operates'];
         $types = $fields['types'];
         $values = $fields['values'];
-        dump($fields);
         $sql = "";
         if($values){
             $sql .= " WHERE ";
@@ -204,8 +203,6 @@ class BaseService extends AbstractFOSRestController
         $sql = "SELECT a.menuId FROM App:BaseRoleMenu a WHERE a.roleId IN(:roleId) ";
         $menuIds = $this->fetchFields("menuId", $sql, ['roleId'=>$roleIds]);
         if(!$menuIds) return false;
-        dump($menuId);
-        dump($menuIds);
         return in_array($menuId, $menuIds);
     }
 

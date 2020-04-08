@@ -83,20 +83,21 @@ class Grid
      * @param null $sort
      * @return $this
      */
-    public function setTableColumn($title, $type, $datakey, $sort=null)
+    public function setTableColumn($title, $type, $datakey, $sort=null, $options=[])
     {
-        $this->gridColumn[$title] = [$type, $datakey, $sort];
+        $this->gridColumn[$title] = ["type"=>$type, "field"=>$datakey, "sort"=>$sort, "options"=>$options];
         return $this;
     }
 
-    public function setGridBar($title, $url, $iconCLass, $class='btn-info')
+    public function setGridBar($routeName, $title, $url, $iconCLass, $class='btn-info')
     {
+        if(!$this->service->isAuthorized($routeName)) return ;
         $this->gridBar[$title] = [$url, $iconCLass, $class];
         return $this;
     }
 
 
-    public function setService($service, $action){
+    public function setListService($service, $action){
         $this->gridService = $service;
         $this->action = $action;
         return $this;

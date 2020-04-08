@@ -73,18 +73,25 @@ class InstallFixtures extends Fixture
         $accMenuId = $this->addMenu("安全","安全方面的管理", 0,"", "fas fa-key",0, $roleId, 1, 0, 1);
         $menuMgId = $this->addMenu("菜单管理","管理菜单以及对应页面的权限", $accMenuId,"admin_menu_index", "",0, $roleId, 1, 0, 1);
         $this->addMenu("添加菜单","菜单新增处理", $menuMgId,"admin_api_menu_add", "",0, $roleId, 1, 1, 0);
-        $this->addMenu("编辑菜单页面","菜单编辑展示页面", $menuMgId,"admin_menu_edit", "",0, $roleId, 1, 1, 0);
-        $this->addMenu("编辑菜单","菜单编辑处理", $menuMgId,"admin_api_menu_edit", "",0, $roleId, 1, 1, 0);
-        $this->addMenu("删除菜单","删除菜单", $menuMgId,"admin_api_menu_delete", "",0, $roleId, 1, 1, 0);
-        $this->addMenu("更新菜单排序","更新菜单排序", $menuMgId,"admin_api_menu_updateSort", "",0, $roleId, 1, 1, 0);
-        $roleMgId = $this->addMenu("角色管理","管理角色", $accMenuId,"admin_role_index", "",0, $roleId, 1, 0, 1);
+        $this->addMenu("编辑菜单页面","菜单编辑展示页面", $menuMgId,"admin_menu_edit", "",1, $roleId, 1, 1, 0);
+        $this->addMenu("编辑菜单","菜单编辑处理", $menuMgId,"admin_api_menu_edit", "",2, $roleId, 1, 1, 0);
+        $this->addMenu("删除菜单","删除菜单", $menuMgId,"admin_api_menu_delete", "",3, $roleId, 1, 1, 0);
+        $this->addMenu("更新菜单排序","更新菜单排序", $menuMgId,"admin_api_menu_updateSort", "",4, $roleId, 1, 1, 0);
+        $roleMgId = $this->addMenu("角色管理","管理角色", $accMenuId,"admin_role_index", "",1, $roleId, 1, 0, 1);
         $this->addMenu("添加角色页面","显示添加角色页面", $roleMgId,"admin_role_add", "",0, $roleId, 1, 1, 0);
-        $this->addMenu("添加角色","添加角色处理", $roleMgId,"admin_api_role_add", "",0, $roleId, 1, 1, 0);
-        $this->addMenu("编辑角色页面","显示编辑角色页面", $roleMgId,"admin_role_edit", "",0, $roleId, 1, 1, 0);
-        $this->addMenu("编辑角色","编辑角色处理", $roleMgId,"admin_api_role_edit", "",0, $roleId, 1, 1, 0);
-        $this->addMenu("删除角色","删除角色处理", $roleMgId,"admin_api_role_delete", "",0, $roleId, 1, 1, 0);
-        $this->addMenu("角色绑定菜单页面","显示角色绑定菜单页面", $roleMgId,"admin_role_bindmenu", "",0, $roleId, 1, 1, 0);
-        $this->addMenu("角色绑定菜单","角色绑定菜单处理", $roleMgId,"admin_api_role_bindmenu", "",0, $roleId, 1, 1, 0);
+        $this->addMenu("添加角色","添加角色处理", $roleMgId,"admin_api_role_add", "",1, $roleId, 1, 1, 0);
+        $this->addMenu("编辑角色页面","显示编辑角色页面", $roleMgId,"admin_role_edit", "",2, $roleId, 1, 1, 0);
+        $this->addMenu("编辑角色","编辑角色处理", $roleMgId,"admin_api_role_edit", "",3, $roleId, 1, 1, 0);
+        $this->addMenu("删除角色","删除角色处理", $roleMgId,"admin_api_role_delete", "",4, $roleId, 1, 1, 0);
+        $this->addMenu("角色绑定菜单页面","显示角色绑定菜单页面", $roleMgId,"admin_role_bindmenu", "",5, $roleId, 1, 1, 0);
+        $this->addMenu("角色绑定菜单","角色绑定菜单处理", $roleMgId,"admin_api_role_bindmenu", "",6, $roleId, 1, 1, 0);
+        $userMgId = $this->addMenu("用户管理","管理用户", $accMenuId,"admin_user_index", "",1, $roleId, 1, 0, 1);
+        $this->addMenu("添加用户页面","显示添加用户页面", $userMgId,"admin_user_add", "",0, $roleId, 1, 1, 0);
+        $this->addMenu("添加用户","添加用户处理", $userMgId,"admin_api_user_add", "",1, $roleId, 1, 1, 0);
+        $this->addMenu("编辑用户页面","显示编辑用户页面", $userMgId,"admin_user_edit", "",2, $roleId, 1, 1, 0);
+        $this->addMenu("编辑用户","编辑用户处理", $userMgId,"admin_api_user_edit", "",3, $roleId, 1, 1, 0);
+        $this->addMenu("删除用户","删除用户处理", $userMgId,"admin_api_user_delete", "",4, $roleId, 1, 1, 0);
+
     }
 
     protected function addMenu($name, $descr, $pid, $uri, $style,$sort,$roleId, $isLock, $isAccess, $isShow){
