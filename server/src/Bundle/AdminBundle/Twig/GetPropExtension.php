@@ -17,7 +17,6 @@ class GetPropExtension extends AbstractExtension
 
     public function doSomething($obj, $name, $type=null, $options=null)
     {
-
         if($type == null){
             if(is_callable($obj)){
                 return call_user_func($obj, $name);
@@ -26,14 +25,38 @@ class GetPropExtension extends AbstractExtension
 
         $method = "get".ucfirst($name);
         if($type == 'datetime'){
-            $classObj = call_user_func([$obj, $method]);
-            $datetime = date('Y-m-d H:i:s',$classObj->getTimestamp());
-            return $datetime;
+            if(method_exists($obj, $method)){
+                $classObj = call_user_func([$obj, $method]);
+                $datetime = date('Y-m-d H:i:s',$classObj->getTimestamp());
+                return $datetime;
+            }else{
+                if(is_array($obj)){
+                    if(isset($obj[$name])){
+                        return date('Y-m-d H:i:s', $obj[$name]['timestamp']);
+                    }else{
+                        return "";
+                    }
+                }
+            }
         }elseif($type == 'textarea'){
-            return "<span class='overflow-auto font-weight-lighter'>".call_user_func([$obj, $method])."</span>";
+            if(method_exists($obj, $method)) {
+                return "<span class='overflow-auto font-weight-lighter'>" . call_user_func([$obj, $method]) . "</span>";
+            }else{
+                if(is_array($obj)){
+                    $value = isset($obj[$name])?$obj[$name]:"";
+                    return "<span class='overflow-auto font-weight-lighter'>" . $value . "</span>";
+                }
+            }
         }else{
-            $rs = call_user_func([$obj, $method]);
-            return $options?$options[$rs]:$rs;
+            if(method_exists($obj, $method)) {
+                $rs = call_user_func([$obj, $method]);
+                return $options ? $options[$rs] : $rs;
+            }else{
+                if(is_array($obj)){
+                    $rs = isset($obj[$name])?$obj[$name]:"";
+                    return $options ? $options[$rs] : $rs;
+                }
+            }
         }
     }
 }

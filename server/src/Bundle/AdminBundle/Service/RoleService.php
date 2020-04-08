@@ -28,7 +28,6 @@ class RoleService extends BaseService
         $sql = $this->getFormatRequestSql($request);
 
         $dql = "SELECT a FROM App:BaseRole a " . $sql;
-        dump($dql);
         $em = $this->getDoctrine()->getManager();
         $query = $em->createQuery($dql);
         $pagination = $this->paginator->paginate(

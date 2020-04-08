@@ -33,6 +33,7 @@ class UserController extends BaseAdminController
         $grid->setTableColumn("头像", "image", "gravatar");
         $grid->setTableColumn("性别", "text", "sex", "", [0=>"未知",1=>"男", 2=>"女"]);
         $grid->setTableColumn("是否被锁定", "boole", "isLock");
+        $grid->setTableColumn("是否管理员", "boole", "isAdmin");
         $grid->setTableColumn("注册来源", "text", "regSource");
         $grid->setTableColumn("创建时间", "datetime", "createdAt", "a.createdAt");
 
@@ -43,16 +44,17 @@ class UserController extends BaseAdminController
         $grid->setSearchField("手机号码", "text", "a.mobile");
         $grid->setSearchField("昵称", "text", "a.displayName");
         $grid->setSearchField("姓名", "text", "a.fullName");
+        $grid->setSearchField("是否管理员", "boole", "_role");
 
         $grid->setTableAction('admin_user_edit', function($obj){
-            $id = $obj->getId();
+            $id = $obj['id'];
             $url = $this->generateUrl('admin_user_edit',['id'=>$id]);
             $str = '<a href='.$url.' data-title="编辑" class=" btn btn-info btn-xs poppage"><i class="fas fa-edit"></i></a>';
             return  $str;
         });
 
         $grid->setTableAction('admin_api_user_delete', function ($obj) {
-            $id = $obj->getId();
+            $id = $obj['id'];
             $url = $this->generateUrl('admin_api_user_delete', ['id' => $id]);
             return '<a href=' . $url . ' data-confirm="确认要删除吗?"  class=" btn btn-danger btn-xs ajaxDelete"><i class="fas fa-trash"></i></a>';
         });
@@ -66,7 +68,7 @@ class UserController extends BaseAdminController
     /**
      * @Rest\Get("/user/add", name="admin_user_add")
      */
-    public function addAction(){
+    public function addAction(Form $form){
 
     }
 

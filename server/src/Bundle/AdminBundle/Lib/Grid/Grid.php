@@ -51,7 +51,8 @@ class Grid
         $params['request'] = $request;
         $params['searchField'] =$this->searchField;
         $params['pathinfo'] = $request->getPathInfo();
-        $params['pagination'] = $pagination;
+        $params['pagination'] = is_array($pagination)?$pagination[0]:$pagination;
+        $params['list'] =  is_array($pagination)?$pagination[1]:$pagination;;
         $params['column'] = $this->gridColumn;
         $params['tableActionCallback'] = $this->tableActionCallback;
         $params['gridBar'] = $this->gridBar;

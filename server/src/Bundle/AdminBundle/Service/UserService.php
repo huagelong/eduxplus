@@ -12,6 +12,7 @@ namespace App\Bundle\AdminBundle\Service;
 use App\Bundle\AppBundle\Lib\Base\BaseService;
 use Knp\Component\Pager\PaginatorInterface;
 
+
 class UserService extends BaseService
 {
 
@@ -26,7 +27,6 @@ class UserService extends BaseService
         $sql = $this->getFormatRequestSql($request);
 
         $dql = "SELECT a FROM App:BaseUser a " . $sql;
-        dump($dql);
         $em = $this->getDoctrine()->getManager();
         $query = $em->createQuery($dql);
         $pagination = $this->paginator->paginate(
@@ -34,6 +34,18 @@ class UserService extends BaseService
             $page,
             $pageSize
         );
-        return $pagination;
+
+        $items = $pagination->getItems();
+        $itemsArr = [];
+        if($items){
+            foreach ($items as $v){
+                $vArr =  $this->toArray($v);
+                $roles = $vArr['roles'];
+                $isAdmin  =  in_array("ROLE_ADMIN", $roles);
+                $vArr['isAdmin'] = $isAdmin;
+                $itemsArr[] = $vArr;
+            }
+        }
+        return [$pagination, $itemsArr];
     }
 }

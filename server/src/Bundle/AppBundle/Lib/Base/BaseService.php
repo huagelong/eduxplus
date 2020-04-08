@@ -10,6 +10,9 @@ namespace App\Bundle\AppBundle\Lib\Base;
 
 use Psr\Log\LoggerInterface;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
+use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 
 class BaseService extends AbstractFOSRestController
 {
@@ -36,6 +39,14 @@ class BaseService extends AbstractFOSRestController
         return 0;
     }
 
+    public function getFormatSortRequestSql($request)
+    {
+        $fields = $request->query->all();
+        if(!isset($fields['sort'])||!isset($fields['direction'])) return "";
+        $sql = " ORDEY BY {$fields['sort']} {$fields['direction']}";
+        return $sql;
+    }
+
     public function getFormatRequestSql($request){
         $fields = $request->query->all();
         if(!isset($fields['operates'])||!isset($fields['types'])||!isset($fields['values'])) return "";
@@ -46,7 +57,7 @@ class BaseService extends AbstractFOSRestController
         if($values){
             $sql .= " WHERE ";
             foreach ($values as $k=>$v){
-                if($v===""){
+                if( ($v==="") || (substr($k, 0, 1)=="_") ){
                     continue;
                 }
 
@@ -204,6 +215,14 @@ class BaseService extends AbstractFOSRestController
         $menuIds = $this->fetchFields("menuId", $sql, ['roleId'=>$roleIds]);
         if(!$menuIds) return false;
         return in_array($menuId, $menuIds);
+    }
+
+    public function toArray($model){
+        $encoders = array(new JsonEncoder());
+        $normalizers = array(new ObjectNormalizer());
+        $serializer = new Serializer($normalizers, $encoders);
+        $json = $serializer->serialize($model, 'json');
+        return json_decode($json, true);
     }
 
 }
