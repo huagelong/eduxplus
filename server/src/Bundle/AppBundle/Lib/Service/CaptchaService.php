@@ -8,9 +8,7 @@
 
 namespace App\Bundle\AppBundle\Lib\Service;
 
-use App\Bundle\AppBundle\Lib\Base\BaseService;
-
-class CaptchaService extends BaseService
+class CaptchaService
 {
     const IMG_CAPTCHA = "IMG_CAPTCHA";
 

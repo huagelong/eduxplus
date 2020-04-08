@@ -9,11 +9,10 @@
 namespace App\Bundle\AppBundle\Lib\Service;
 
 
-use App\Bundle\AppBundle\Lib\Base\BaseService;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\HttpFoundation\Request;
 
-class HelperService extends BaseService
+class HelperService
 {
 
     public function getUuid(){

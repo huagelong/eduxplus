@@ -9,8 +9,11 @@
 namespace App\Bundle\AdminBundle\Controller;
 
 
+use App\Bundle\AdminBundle\Service\RoleService;
 use App\Bundle\AdminBundle\Service\UserService;
 use App\Bundle\AppBundle\Lib\Base\BaseAdminController;
+use App\Bundle\AppBundle\Lib\Service\HelperService;
+use App\Bundle\AppBundle\Lib\Service\ValidateService;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use Symfony\Component\HttpFoundation\Request;
 use App\Bundle\AdminBundle\Lib\Form\Form;
@@ -37,8 +40,9 @@ class UserController extends BaseAdminController
         $grid->setTableColumn("注册来源", "text", "regSource");
         $grid->setTableColumn("创建时间", "datetime", "createdAt", "a.createdAt");
 
-        $grid->setGridBar("admin_user_add","添加", $this->generateUrl("admin_role_add"), "fas fa-plus", "btn-success");
+        $grid->setGridBar("admin_user_add","添加", $this->generateUrl("admin_user_add"), "fas fa-plus", "btn-success");
 
+        //搜索
         $grid->setSearchField("ID", "number", "a.id");
         $grid->setSearchField("唯一码", "text", "a.uuid");
         $grid->setSearchField("手机号码", "text", "a.mobile");
@@ -49,6 +53,7 @@ class UserController extends BaseAdminController
         });
         $grid->setSearchField("创建时间", "daterange", "a.createdAt");
 
+        //编辑等
         $grid->setTableAction('admin_user_edit', function($obj){
             $id = $obj['id'];
             $url = $this->generateUrl('admin_user_edit',['id'=>$id]);
@@ -71,15 +76,64 @@ class UserController extends BaseAdminController
     /**
      * @Rest\Get("/user/add", name="admin_user_add")
      */
-    public function addAction(Form $form){
+    public function addAction(Form $form, RoleService $roleService){
+        $form->setFormField("手机号码", 'text', 'mobile' ,1);
+        $form->setFormField("密码", 'password', 'pwd1' ,1);
+        $form->setFormField("确认密码", 'password', 'pwd2' ,1);
+        $form->setFormField("昵称", 'text', 'displayName' ,1);
+        $form->setFormField("姓名", 'text', 'fullName' ,1);
+        $form->setFormField("性别", 'select', 'sex' ,1, "", function(){
+            return ["男"=>1, "女"=>2];
+        }, "选择性别");
+        $form->setFormField("角色", 'multiSelect', 'roles[]', 0, "", function() use($roleService){
+                $all = $roleService->getAllRole();
+                if(!$all) return [];
+                $rs = [];
+                foreach ($all as $v){
+                    $rs[$v['name']] = $v['id'];
+                }
+                return $rs;
+        }, "选择角色");
 
+        $formData = $form->create($this->generateUrl("admin_api_user_add"));
+        $data = [];
+        $data["formData"] = $formData;
+        return $this->render("@AdminBundle/user/add.html.twig", $data);
     }
 
     /**
-     * @Rest\Get("/api/user/adddo", name="admin_api_user_add")
+     * @Rest\Post("/api/user/adddo", name="admin_api_user_add")
      */
-    public function addDoAction(){
+    public function addDoAction(Request $request, ValidateService $validateService,
+                                UserService $userService){
+        $mobile = $request->get("mobile");
+        $displayName = $request->get("displayName");
+        $pwd1 = $request->get("pwd1");
+        $pwd2 = $request->get("pwd2");
+        $fullName = $request->get("fullName");
+        $sex = $request->get("sex");
+        $roles = $request->get("roles");
 
+        if(!$mobile) return $this->responseError("手机号码不能为空!");
+        if(!$validateService->mobileValidate($mobile)) return $this->responseError($this->error()->getLast());
+        if($userService->checkMobile($mobile)) return $this->responseError("手机号码已存在!");
+
+        if(!$displayName) return $this->responseError("昵称不能为空!");
+        if(!$validateService->nicknameValidate($displayName)) return $this->responseError($this->error()->getLast());
+        if($userService->checkDisplayName($displayName)) return $this->responseError("昵称已存在!");
+
+        if(!$fullName) return $this->responseError("姓名不能为空!");
+        if($userService->checkFullName($fullName)) return $this->responseError("姓名已存在!");
+
+        if(!$pwd1) return $this->responseError("密码不能为空!");
+        if(!$validateService->passwordValid($pwd1)) return $this->responseError($this->error()->getLast());
+        if($pwd1 != $pwd2) return $this->responseError("两次密码不能为空!");
+
+        if(!$sex) return $this->responseError("性别不能为空!");
+
+        $userService->add($mobile, $displayName, $pwd1, $fullName, $sex, $roles);
+
+        return $this->responseSuccess("操作成功!", $this->generateUrl('admin_user_index'));
     }
 
     /**
@@ -90,14 +144,14 @@ class UserController extends BaseAdminController
     }
 
     /**
-     * @Rest\Get("/api/user/editdo", name="admin_api_user_edit")
+     * @Rest\Post("/api/user/editdo", name="admin_api_user_edit")
      */
     public function editDoAction(){
 
     }
 
     /**
-     * @Rest\Get("/api/user/deletedo", name="admin_api_user_delete")
+     * @Rest\Post("/api/user/deletedo", name="admin_api_user_delete")
      */
     public function deleteAction(){
 

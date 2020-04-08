@@ -57,6 +57,13 @@
             $("select[name='values["+name+"]']").val(vl).trigger("change");
         });
 
+        $("input[name^='formHidden-']").each(function(){
+            var name = $(this).attr('name');
+            var vl =  $(this).val();
+            name = name.substr(name.lastIndexOf("-")+1);
+            $("select[name='"+name+"']").val(vl).trigger("change");
+        });
+
     })
 </script>
 

@@ -106,5 +106,10 @@ class RoleService extends BaseService
         return $menuIds;
     }
 
+    public function getAllRole(){
+        $sql = "SELECT a FROM App:BaseRole a";
+        return $this->fetchAll($sql);
+    }
+
 
 }

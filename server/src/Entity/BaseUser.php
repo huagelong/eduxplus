@@ -30,7 +30,7 @@ class BaseUser implements AdvancedUserInterface
 
 
     /**
-     * @ORM\Column(name="mobile",type="string", length=12, unique=true)
+     * @ORM\Column(name="mobile",type="string", length=12)
      */
     private $mobile;
 

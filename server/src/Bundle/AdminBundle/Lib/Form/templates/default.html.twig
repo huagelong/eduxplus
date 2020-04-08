@@ -4,7 +4,7 @@
             <div class="card-body" style="display: block;">
             {% for k,v in formField %}
                 <div class="form-group  row">
-                    <label for="title" class="col-sm-2  require col-form-label">{{ k }}</label>
+                    <label for="title" class="col-sm-2  {% if v['isRequire'] %} require {% endif %} col-form-label">{{ k }}</label>
                     {% if v['type'] == 'text' %}
                         <div class="col-sm-8">
                             <div class="input-group">
@@ -12,6 +12,17 @@
                                     <span class="input-group-text"><i class="fas fa-edit fa-fw"></i></span>
                                 </div>
                                 <input type="text" id="{{ v['datakey'] }}" name="{{ v['datakey'] }}" {% if v['isRequire'] %} data-required="1" {% endif %} value="{{ v['defaultValue'] }}" class="form-control form-control-sm" placeholder="{{ v['placeholder'] }}" >
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {% if v['type'] == 'pwd' %}
+                        <div class="col-sm-8">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-edit fa-key"></i></span>
+                                </div>
+                                <input type="password" id="{{ v['datakey'] }}" name="{{ v['datakey'] }}" {% if v['isRequire'] %} data-required="1" {% endif %} value="{{ v['defaultValue'] }}" class="form-control form-control-sm" placeholder="{{ v['placeholder'] }}" >
                             </div>
                         </div>
                     {% endif %}
@@ -31,6 +42,38 @@
                         </div>
                     </div>
                   {% endif %}
+
+                    {% if v['type'] == 'select' %}
+                    <div class="col-sm-8">
+                        <div class="input-group">
+                            <input type="hidden" name="formHidden-{{ v['datakey'] }}" value="{{ v['defaultValue'] }}"  />
+                            <select class="form-control form-control-sm select" style="width: 100%;" name="{{ v['datakey'] }}" {% if v['isRequire'] %} data-required="1" {% endif %} data-value="" >
+                                {% set selectV = get_prop(v['initData'],"") %}
+                                {% if selectV %}
+                                    {% for k,v in selectV %}
+                                        <option value="{{ v }}">{{ k|raw }}</option>
+                                    {% endfor %}
+                                {% endif %}
+                            </select>
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    {% if v['type'] == 'multiSelect' %}
+                        <div class="col-sm-8">
+                            <div class="input-group" >
+                                <input type="hidden" name="formHidden-{{ v['datakey'] }}" value="{{ v['defaultValue'] }}"  />
+                                <select class="form-control form-control-sm select" multiple="multiple" style="width: 100%;" {% if v['isRequire'] %} data-required="1" {% endif %} name="{{ v['datakey'] }}" data-value="" >
+                                    {% set selectV = get_prop(v['initData'],"") %}
+                                    {% if selectV %}
+                                        {% for k,v in selectV %}
+                                            <option value="{{ v }}">{{ k|raw }}</option>
+                                        {% endfor %}
+                                    {% endif %}
+                                </select>
+                            </div>
+                        </div>
+                    {% endif %}
 
                 </div>
             {% endfor %}

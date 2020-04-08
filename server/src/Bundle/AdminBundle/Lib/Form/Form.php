@@ -29,13 +29,20 @@ class Form
      * @param $type text,textarea,boole
      * @param $datakey
      * @param int $isRequire
-     * @param null $callback
+     * @param null $initData
      * @param string $defaultValue
      * @param string $placeholder
      * @return $this
      */
-    public function setFormField($title, $type, $datakey, $isRequire=0, $defaultValue='', $placeholder='',$callback=null){
-        $this->formField[$title] = ["type"=>$type, "datakey"=>$datakey, "isRequire"=>$isRequire, "defaultValue"=>$defaultValue, 'placeholder'=>$placeholder, "callback"=>$callback];
+    public function setFormField($title, $type, $datakey, $isRequire=0, $defaultValue='', $initData=null, $placeholder=''){
+        $this->formField[$title] = [
+            "type"=>$type,
+            "datakey"=>$datakey,
+            "isRequire"=>$isRequire,
+            "defaultValue"=>$defaultValue,
+            "placeholder"=>$placeholder,
+            "initData"=>$initData
+        ];
         return $this;
     }
 
