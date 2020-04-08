@@ -26,7 +26,7 @@
                 {% for k,v in searchField %}
                 <div class="col-sm-6">
                     <div class="form-group row ">
-                        <label class="col-sm-2 col-form-label">{{ k }} ：</label>
+                        <label class="col-sm-3 col-form-label">{{ k }} ：</label>
                         {% if v['type'] == "text" %}
                             <div class="col-sm-2">
                                 <select name="{{ v['operates'] }}" class="form-control form-control-sm">
@@ -34,12 +34,26 @@
                                     <option value="like" {% if array_get(app.request.query.get("operates"), v['field']) == 'like' %} selected {% endif %}>包含</option>
                                 </select>
                             </div>
-                            <div class="col-sm-8">
+                            <div class="col-sm-7">
                                 <input type="hidden" name="{{ v['types'] }}" value="{{ v['type'] }}">
                                 <input type="text" name="{{ v['values'] }}" value="{{ array_get(app.request.query.get("values"), v['field']) }}" class="form-control form-control-sm " placeholder="输入 ...">
                             </div>
                         {% endif %}
 
+                        {% if v['type'] == "boole" %}
+                            <div class="col-sm-9">
+                                <input type="hidden"  name="{{ v['operates'] }}" value="=">
+                                <input type="hidden" name="hidden-{{ v['field'] }}" value="{{ array_get(app.request.query.get("values"), v['field']) }}"/>
+                                <select class="form-control form-control-sm select" style="width: 100%;" name="{{ v['values'] }}" data-value="" >
+                                    {% set selectV = get_prop(v['initData'],"") %}
+                                    {% if selectV %}
+                                        {% for k,v in selectV %}
+                                            <option value="{{ v }}">{{ k|raw }}</option>
+                                        {% endfor %}
+                                    {% endif %}
+                                </select>
+                            </div>
+                        {% endif %}
                         {% if v['type'] == "number" %}
                             <div class="col-sm-2">
                                 <select name="{{ v['operates'] }}" class="form-control form-control-sm">
@@ -50,14 +64,14 @@
                                     <option value="<=" {% if array_get(app.request.query.get("operates"), v['field']) == '<=' %} selected {% endif %}> <= </option>
                                 </select>
                             </div>
-                            <div class="col-sm-8">
+                            <div class="col-sm-7">
                                 <input type="hidden"  name="{{ v['types'] }}" value="{{ v['type'] }}">
                                 <input type="text" name="{{ v['values'] }}" value="{{ array_get(app.request.query.get("values"), v['field']) }}" class="form-control form-control-sm " placeholder="输入 ...">
                             </div>
                         {% endif %}
 
                         {% if v['type'] == 'daterange' %}
-                            <div class="col-sm-10">
+                            <div class="col-sm-9">
                                 <input type="hidden" name="{{ v['operates'] }}" value="BETWEEN">
                                 <input type="hidden" name="{{ v['types'] }}" value="{{ v['type'] }}">
                                 <div class="input-group">
@@ -72,7 +86,7 @@
                         {% endif %}
 
                         {% if v['type'] == 'datetimerange' %}
-                            <div class="col-sm-10">
+                            <div class="col-sm-9">
                                 <input type="hidden" name="{{ v['operates'] }}" value="BETWEEN">
                                 <input type="hidden" name="{{ v['types'] }}" value="{{ v['type'] }}">
                                 <div class="input-group">

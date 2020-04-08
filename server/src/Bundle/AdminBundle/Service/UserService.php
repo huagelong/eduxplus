@@ -25,8 +25,24 @@ class UserService extends BaseService
 
     public function userList($request, $page, $pageSize){
         $sql = $this->getFormatRequestSql($request);
+        $values = $request->get("values");
+        $isAdmin = $values['_isAdmin'];
+        if($isAdmin == 1){
+            if($sql){
+                $sql .= " AND a.roles LIKE '%ROLE_ADMIN%'";
+            }else{
+                $sql = " WHERE a.roles LIKE '%ROLE_ADMIN%'";
+            }
+        }elseif($isAdmin == 0){
+            if($sql) {
+                $sql .= " AND a.roles NOT LIKE '%ROLE_ADMIN%'";
+            }else{
+                $sql .= " WHERE a.roles NOT LIKE '%ROLE_ADMIN%'";
+            }
+        }
 
         $dql = "SELECT a FROM App:BaseUser a " . $sql;
+        dump($dql);
         $em = $this->getDoctrine()->getManager();
         $query = $em->createQuery($dql);
         $pagination = $this->paginator->paginate(

@@ -80,6 +80,7 @@ class BaseService extends AbstractFOSRestController
                 $sql .= " AND ";
             }
         }
+        if($sql == " WHERE ") return "";
         $sql = rtrim($sql, " AND ");
         return $sql;
     }

@@ -44,7 +44,10 @@ class UserController extends BaseAdminController
         $grid->setSearchField("手机号码", "text", "a.mobile");
         $grid->setSearchField("昵称", "text", "a.displayName");
         $grid->setSearchField("姓名", "text", "a.fullName");
-        $grid->setSearchField("是否管理员", "boole", "_role");
+        $grid->setSearchField("是否管理员", "boole", "_isAdmin", function(){
+            return ["全部"=>-1,"是"=>1, "否"=>0];
+        });
+        $grid->setSearchField("创建时间", "daterange", "a.createdAt");
 
         $grid->setTableAction('admin_user_edit', function($obj){
             $id = $obj['id'];
