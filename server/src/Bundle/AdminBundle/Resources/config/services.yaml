@@ -8,3 +8,7 @@ services:
         class: App\Bundle\AdminBundle\Twig\ArrayGetExtension
         tags:
             - { name: twig.extension }
+    admin.inArray.twig.extension:
+        class: App\Bundle\AdminBundle\Twig\InArrayExtension
+        tags:
+            - { name: twig.extension }

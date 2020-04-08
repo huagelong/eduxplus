@@ -115,13 +115,41 @@ class BaseService extends AbstractFOSRestController
      * @param null $name
      * @return bool
      */
-    public function delete($model, $name=null){
+    public function delete($models, $name=null){
         $entityManage = $this->getDoctrine()->getManager($name);
-        $entityManage->remove($model);
+        if(is_array($models)){
+            foreach ($models as $model){
+                $entityManage->remove($model);
+            }
+        }
         $entityManage->flush();
         return true;
     }
 
+    /**
+     * 硬删除
+     *
+     * @param $models
+     * @param null $name
+     * @return bool
+     */
+    public function hardDelete($models, $name=null){
+        $entityManage = $this->getDoctrine()->getManager($name);
+        foreach ($entityManage->getEventManager()->getListeners() as $eventName => $listeners) {
+            foreach ($listeners as $listener) {
+                if ($listener instanceof \Gedmo\SoftDeleteable\SoftDeleteableListener) {
+                    $entityManage->getEventManager()->removeEventListener($eventName, $listener);
+                }
+            }
+        }
+        if(is_array($models)){
+            foreach ($models as $model){
+                $entityManage->remove($model);
+            }
+        }
+        $entityManage->flush();
+        return true;
+    }
 
     public function fetchField($field,$dql, $params=[]){
         $result = $this->fetchOne($dql, $params);

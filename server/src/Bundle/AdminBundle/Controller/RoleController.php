@@ -141,8 +141,10 @@ class RoleController extends BaseAdminController
      */
     public function bindMenuAction($id,  MenuService $menuService, RoleService $roleService){
         $info = $roleService->getById($id);
+        $menuIds = $roleService->getRoleMenu($id);
         $data = [];
         $data['info'] = $info;
+        $data['menuIds'] = $menuIds;
         $data['allMenu'] = $menuService->getAllMenu();
         return $this->render("@AdminBundle/role/bindmenu.html.twig", $data);
     }

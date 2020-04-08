@@ -41,10 +41,18 @@ $(function(){
     $("input[type='checkbox']", "#menu-tree").each(function(){
         $(this).click(function(){
             var flag = this.checked;
+            //父节点取消全部取消
             $("input[type='checkbox']", $(this).parents(".dd-item:first")).each(function(){
                 // 将获取的状态赋值给当前对象，
-                this.checked = flag;
+                if(!flag) this.checked = flag;
             });
+
+            //子节点选中，父节点选中
+            $("input[type='checkbox']", $(this).parents(".dd-item:first").parents(".dd-item:first").find(".dd-handle:first")).each(function(){
+                // 将获取的状态赋值给当前对象，
+                if(flag) this.checked = flag;
+            });
+
         });
     })
 
@@ -102,7 +110,7 @@ $(function(){
                                         <span class="font-weight-lighter"> {{ menu.descr }}</span>
                                         {% if info['isLock'] ==0 %}
                                             <span class="pull-right dd-nodrag">
-                                                <input type="checkbox" name="access[]" value="{{ menu.id }}" >
+                                                <input type="checkbox" name="access[]" value="{{ menu.id }}" {% if in_array(menu.id, menuIds) %} checked {% endif %} >
                                             </span>
                                         {% endif %}
                                     </div>
@@ -116,7 +124,7 @@ $(function(){
                                                         <span class="font-weight-lighter"> {{ menu2.descr }}</span>
                                                         {% if info['isLock'] ==0 %}
                                                             <span class="pull-right dd-nodrag">
-                                                                    <input type="checkbox" name="access[]" value="{{ menu2.id }}" >
+                                                                    <input type="checkbox" name="access[]" value="{{ menu2.id }}"  {% if in_array(menu2.id, menuIds) %} checked {% endif %}  >
                                                             </span>
                                                         {% endif %}
                                                     </div>
@@ -131,7 +139,7 @@ $(function(){
                                                                         <span class="font-weight-lighter"> {{ menu3.descr }}</span>
                                                                         {% if info['isLock'] ==0 %}
                                                                             <span class="pull-right dd-nodrag">
-                                                                                <input type="checkbox" name="access[]" value="{{ menu3.id }}" >
+                                                                                <input type="checkbox" name="access[]" value="{{ menu3.id }}"  {% if in_array(menu3.id, menuIds) %} checked {% endif %}  >
                                                                             </span>
                                                                         {% endif %}
                                                                     </div>

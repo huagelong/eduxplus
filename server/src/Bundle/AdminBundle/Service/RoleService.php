@@ -89,11 +89,7 @@ class RoleService extends BaseService
         //先删除
         $sql = "SELECT a FROM App:BaseRoleMenu a WHERE a.roleId=:roleId";
         $models = $this->fetchAll($sql, ['roleId'=>$roleId], 1);
-        if($models){
-            foreach ($models as $model){
-                $this->delete($model);
-            }
-        }
+        $this->hardDelete($models);
         if($menuIds){
             foreach ($menuIds as $menuId){
                 $model = new BaseRoleMenu();
@@ -103,6 +99,12 @@ class RoleService extends BaseService
             }
         }
         return true;
+    }
+
+    public function getRoleMenu($roleId){
+        $sql = "SELECT a.menuId FROM App:BaseRoleMenu a WHERE a.roleId=:roleId";
+        $menuIds = $this->fetchFields("menuId", $sql, ['roleId'=>$roleId]);
+        return $menuIds;
     }
 
 }
