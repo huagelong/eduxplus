@@ -1,0 +1,92 @@
+{% if searchField %}
+    <form role="form" name="listSearchForm" id="listSearchForm" class="grid-search {% if app.request.query.get('showSearch') != 1 %} display-hide {% endif %}" action="{{ pathinfo }}" method="get">
+        <div class="row">
+            {% for k,v in searchField %}
+                <div class="col-sm-6">
+                    <div class="form-group row ">
+                        <label class="col-sm-3 col-form-label">{{ k }} ：</label>
+                        {% if v['type'] == "text" %}
+                            <div class="col-sm-2">
+                                <select name="{{ v['operates'] }}" class="form-control form-control-sm">
+                                    <option value="=" {% if array_get(app.request.query.get("operates"), v['field']) == '=' %} selected {% endif %}>=</option>
+                                    <option value="like" {% if array_get(app.request.query.get("operates"), v['field']) == 'like' %} selected {% endif %}>包含</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-7">
+                                <input type="hidden" name="{{ v['types'] }}" value="{{ v['type'] }}">
+                                <input type="text" name="{{ v['values'] }}" value="{{ array_get(app.request.query.get("values"), v['field']) }}" class="form-control form-control-sm " placeholder="输入 ...">
+                            </div>
+                        {% endif %}
+
+                        {% if v['type'] == "boole" %}
+                            <div class="col-sm-9">
+                                <input type="hidden"  name="{{ v['operates'] }}" value="=">
+                                <input type="hidden" name="hidden-{{ v['field'] }}" value="{{ array_get(app.request.query.get("values"), v['field']) }}"/>
+                                <select class="form-control form-control-sm select" style="width: 100%;" name="{{ v['values'] }}" data-value="" >
+                                    {% set selectV = get_prop(v['initData'],"") %}
+                                    {% if selectV %}
+                                        {% for k,v in selectV %}
+                                            <option value="{{ v }}">{{ k|raw }}</option>
+                                        {% endfor %}
+                                    {% endif %}
+                                </select>
+                            </div>
+                        {% endif %}
+                        {% if v['type'] == "number" %}
+                            <div class="col-sm-2">
+                                <select name="{{ v['operates'] }}" class="form-control form-control-sm">
+                                    <option value="=" {% if array_get(app.request.query.get("operates"), v['field']) == '=' %} selected {% endif %}>=</option>
+                                    <option value=">" {% if array_get(app.request.query.get("operates"), v['field']) == '>' %} selected {% endif %}> > </option>
+                                    <option value="<" {% if array_get(app.request.query.get("operates"), v['field']) == '<' %} selected {% endif %}> < </option>
+                                    <option value=">=" {% if array_get(app.request.query.get("operates"), v['field']) == '>=' %} selected {% endif %}> >= </option>
+                                    <option value="<=" {% if array_get(app.request.query.get("operates"), v['field']) == '<=' %} selected {% endif %}> <= </option>
+                                </select>
+                            </div>
+                            <div class="col-sm-7">
+                                <input type="hidden"  name="{{ v['types'] }}" value="{{ v['type'] }}">
+                                <input type="text" name="{{ v['values'] }}" value="{{ array_get(app.request.query.get("values"), v['field']) }}" class="form-control form-control-sm " placeholder="输入 ...">
+                            </div>
+                        {% endif %}
+
+                        {% if v['type'] == 'daterange' %}
+                            <div class="col-sm-9">
+                                <input type="hidden" name="{{ v['operates'] }}" value="BETWEEN">
+                                <input type="hidden" name="{{ v['types'] }}" value="{{ v['type'] }}">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                  <span class="input-group-text">
+                                    <i class="far fa-calendar-alt"></i>
+                                  </span>
+                                    </div>
+                                    <input type="text" name="{{ v['values'] }}" value="{{ array_get(app.request.query.get("values"), v['field']) }}" class="form-control form-control-sm daterange" placeholder="输入 ...">
+                                </div>
+                            </div>
+                        {% endif %}
+
+                        {% if v['type'] == 'datetimerange' %}
+                            <div class="col-sm-9">
+                                <input type="hidden" name="{{ v['operates'] }}" value="BETWEEN">
+                                <input type="hidden" name="{{ v['types'] }}" value="{{ v['type'] }}">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="far fa-clock"></i></span>
+                                    </div>
+                                    <input type="text" name="{{ v['values'] }}" value="{{ array_get(app.request.query.get("values"), v['field']) }}" class="form-control form-control-sm datetimerange" placeholder="输入 ...">
+                                </div>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group row">
+                    <input type="hidden" name="showSearch" value="1">
+                    <button type="submit" class="btn btn-info submit btn-sm" style="margin-right: 10px;"><i class="fa fa-search"></i>&nbsp;&nbsp;搜索</button>
+                    <button type="reset" class="btn btn-default btn-sm reset"><i class="fa fa-undo"></i>&nbsp;&nbsp;重置</button>
+                </div>
+            </div>
+        </div>
+    </form>
+{% endif %}
