@@ -22,16 +22,18 @@ class UserService extends BaseService
     protected $paginator;
     protected $userPasswordEncoder;
 
-    public function __construct(PaginatorInterface $paginator, UserPasswordEncoderInterface $userPasswordEncoder)
+    public function __construct(PaginatorInterface $paginator,
+                                UserPasswordEncoderInterface $userPasswordEncoder
+    )
     {
         $this->paginator = $paginator;
         $this->userPasswordEncoder = $userPasswordEncoder;
     }
 
     public function userList($request, $page, $pageSize){
+//        $this->redis()->set("hello", '111');
         $sql = $this->getFormatRequestSql($request);
         $values = $request->get("values");
-        dump($values);
         $isAdmin = (int) (isset($values['_isAdmin'])?$values['_isAdmin']:-1);
         if($isAdmin === 1){
             if($sql){

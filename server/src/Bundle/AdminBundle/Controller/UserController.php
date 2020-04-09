@@ -12,7 +12,6 @@ namespace App\Bundle\AdminBundle\Controller;
 use App\Bundle\AdminBundle\Service\RoleService;
 use App\Bundle\AdminBundle\Service\UserService;
 use App\Bundle\AppBundle\Lib\Base\BaseAdminController;
-use App\Bundle\AppBundle\Lib\Service\HelperService;
 use App\Bundle\AppBundle\Lib\Service\ValidateService;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use Symfony\Component\HttpFoundation\Request;

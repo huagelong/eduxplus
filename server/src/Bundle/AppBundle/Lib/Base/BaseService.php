@@ -10,6 +10,8 @@ namespace App\Bundle\AppBundle\Lib\Base;
 
 use Psr\Log\LoggerInterface;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
@@ -19,6 +21,21 @@ class BaseService extends AbstractFOSRestController
 
     public function error(){
         return new Error();
+    }
+
+    /**
+     * @return \redis
+     */
+    public function redis(){
+        return $this->get("storage.redis");
+    }
+
+    /**
+     * @return Request
+     */
+    public function request(){
+        $requestStack = $this->get("request_stack");
+        return $requestStack->getCurrentRequest();
     }
 
     /**

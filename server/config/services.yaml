@@ -2,8 +2,10 @@ imports:
     - { resource: '../src/Bundle/AppBundle/Resources/config/services.yaml' }
     - { resource: '../src/Bundle/ApiBundle/Resources/config/services.yaml' }
     - { resource: '../src/Bundle/AdminBundle/Resources/config/services.yaml' }
+
 parameters:
     redis_host: '%env(REDIS_HOST)%'
+
 services:
 
     # default configuration for services in *this* file
@@ -23,3 +25,17 @@ services:
     App\EventSubscriber\DatabaseActivitySubscriber:
         tags:
           - { name: 'doctrine.event_subscriber'}
+
+    App\Bundle\AppBundle\Lib\Service\RedisService:
+        lazy: true
+        arguments:
+            $redisCLient: '@snc_redis.default'
+    storage.redis:
+        alias: App\Bundle\AppBundle\Lib\Service\RedisService
+        public: true
+
+    App\Bundle\AppBundle\Lib\Service\CacheService:
+        public: true
+        lazy: true
+        arguments:
+            $cacheCLient: '@snc_redis.cache'
