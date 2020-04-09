@@ -74,15 +74,14 @@
                             ,btn: ['是', '否']
                             ,yes: function(index){
                                 layer.close(index);
-                                requestPost(chref,{'state':state});
+                                requestPost(chref,JSON.stringify({'state':state}));
                             }
                         });
 
                     }else{
-                        requestPost(chref,{'state':state});
+                        requestPost(chref,JSON.stringify({'state':state}));
                     }
-                    return false;
-
+                    return true;
                 }
             });
             $(this).bootstrapSwitch('state', $(this).prop('checked'));

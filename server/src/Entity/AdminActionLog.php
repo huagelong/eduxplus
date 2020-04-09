@@ -163,4 +163,16 @@ class AdminActionLog
         return $this;
     }
 
+    public function getMobile(): ?string
+    {
+        return $this->mobile;
+    }
+
+    public function setMobile(string $mobile): self
+    {
+        $this->mobile = $mobile;
+
+        return $this;
+    }
+
 }
