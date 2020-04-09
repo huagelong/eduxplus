@@ -53,6 +53,17 @@
                                 <span class="badge bg-danger">×</span>
                             {% endif %}
                         {% endif %}
+                        {% if cv['type'] == 'boole2' %}
+                            {% if cv['actionCall'] is defined %}
+                                {{ get_prop(cv['actionCall'],v)|raw }}
+                            {% else %}
+                                {% if get_prop(v, cv['field'], cv['type']) %}
+                                    <span class="badge bg-success">√</span>
+                                {% else %}
+                                    <span class="badge bg-danger">×</span>
+                                {% endif %}
+                            {% endif %}
+                        {% endif %}
                     </td>
                 {% endfor %}
                 {% if tableActionCallback %}
@@ -71,3 +82,8 @@
         </div>
     </div>
 </div>
+<script>
+$(function(){
+
+});
+</script>

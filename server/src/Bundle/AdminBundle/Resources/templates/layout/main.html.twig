@@ -28,6 +28,7 @@
 
         $(".daterange").each(function(){
             $(this).daterangepicker({
+                autoUpdateInput:false,
                 locale: {
                     format: 'YYYY-MM-DD'
                 }
@@ -36,6 +37,7 @@
 
         $(".datetimerange").each(function(){
             $(this).daterangepicker({
+                autoUpdateInput:false,
                 timePicker: true,
                 timePickerIncrement: 30,
                 locale: {
@@ -45,6 +47,44 @@
         })
 
         $("input[data-bootstrap-switch]").each(function(){
+            $(this).bootstrapSwitch({
+                size:'mini',
+                onText: '开',
+                offText: '关',
+                onColor: 'success',
+                offColor: 'danger'
+            });
+            $(this).bootstrapSwitch('state', $(this).prop('checked'));
+        });
+
+        $('input[data-bootstrap-switch-ajaxput]').each(function(){
+            $(this).bootstrapSwitch({
+                size:'mini',
+                onText: '开',
+                offText: '关',
+                onColor: 'success',
+                offColor: 'danger',
+                onSwitchChange: function(event, state){
+                    var chref = $(this).attr("href");
+                    state = state?1:0;
+                    var isconfirm = $(this).data("confirm");
+                    if(isconfirm){
+                        layer.msg(isconfirm, {
+                            time: 0 //不自动关闭
+                            ,btn: ['是', '否']
+                            ,yes: function(index){
+                                layer.close(index);
+                                requestPost(chref,{'state':state});
+                            }
+                        });
+
+                    }else{
+                        requestPost(chref,{'state':state});
+                    }
+                    return false;
+
+                }
+            });
             $(this).bootstrapSwitch('state', $(this).prop('checked'));
         });
 
@@ -61,9 +101,8 @@
             var name = $(this).attr('name');
             var vl =  $(this).val();
             name = name.substr(name.lastIndexOf("-")+1);
-            $("select[name='"+name+"']").val(vl).trigger("change");
+            if(vl) $("select[name='"+name+"']").val(JSON.parse(vl)).trigger("change");
         });
-
     })
 </script>
 

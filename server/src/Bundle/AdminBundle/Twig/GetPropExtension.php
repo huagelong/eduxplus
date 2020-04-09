@@ -8,6 +8,7 @@ use Twig\TwigFunction;
 
 class GetPropExtension extends AbstractExtension
 {
+
     public function getFunctions(): array
     {
         return [

@@ -7,7 +7,7 @@ security:
         api_token:
             entity:
                 class: App\Entity\BaseUser
-                property: mobile
+                property: uuid
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/

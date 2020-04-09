@@ -132,6 +132,8 @@ class BaseService extends AbstractFOSRestController
             foreach ($models as $model){
                 $entityManage->remove($model);
             }
+        }else{
+            $entityManage->remove($models);
         }
         $entityManage->flush();
         return true;
@@ -157,6 +159,8 @@ class BaseService extends AbstractFOSRestController
             foreach ($models as $model){
                 $entityManage->remove($model);
             }
+        }else{
+            $entityManage->remove($models);
         }
         $entityManage->flush();
         return true;
@@ -224,6 +228,21 @@ class BaseService extends AbstractFOSRestController
         $serializer = new Serializer($normalizers, $encoders);
         $json = $serializer->serialize($model, 'json');
         return json_decode($json, true);
+    }
+
+    public function getPro($obj, $name){
+
+        $method = "get".ucfirst($name);
+
+        if(method_exists($obj, $method)) {
+            $rs = call_user_func([$obj, $method]);
+            return $rs;
+        }else{
+            if(is_array($obj)){
+                $rs = isset($obj[$name])?$obj[$name]:"";
+                return $rs;
+            }
+        }
     }
 
 }

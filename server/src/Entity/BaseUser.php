@@ -12,7 +12,7 @@ use Symfony\Component\Security\Core\User\AdvancedUserInterface;
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false, hardDelete=true)
  * @ORM\Entity(repositoryClass="App\Repository\BaseUserRepository")
  */
-class BaseUser implements AdvancedUserInterface
+class BaseUser implements UserInterface
 {
     /**
      * @var int
@@ -24,13 +24,13 @@ class BaseUser implements AdvancedUserInterface
     private $id;
 
     /**
-     * @ORM\Column(name="uuid", type="guid", unique=true, nullable=true, options={"comment"="唯一码"})
+     * @ORM\Column(name="uuid", type="guid", unique=true,nullable=false, options={"comment"="唯一码"})
      */
     private $uuid;
 
 
     /**
-     * @ORM\Column(name="mobile",type="string", length=12)
+     * @ORM\Column(name="mobile", type="string", length=12, unique=false, nullable=false, options={"comment"="手机码"})
      */
     private $mobile;
 
@@ -97,7 +97,7 @@ class BaseUser implements AdvancedUserInterface
 
     /**
      * @var string The hashed password
-     * @ORM\Column(name="password",type="string", options={"comment"="密码"})
+     * @ORM\Column(name="password",type="string", nullable=true, options={"comment"="密码"})
      */
     private $password;
 
@@ -140,10 +140,6 @@ class BaseUser implements AdvancedUserInterface
      */
     private $deletedAt;
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
 
     /**
      * A visual identifier that represents this user.
@@ -152,19 +148,12 @@ class BaseUser implements AdvancedUserInterface
      */
     public function getUsername(): string
     {
-        return (string) $this->mobile;
+        return (string) $this->uuid;
     }
 
-    /**
-     * @see UserInterface
-     */
-    public function getRoles(): array
+    public function getRoles(): ?array
     {
-        $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
-
-        return array_unique($roles);
+        return $this->roles;
     }
 
     public function setRoles(array $roles): self
@@ -174,20 +163,6 @@ class BaseUser implements AdvancedUserInterface
         return $this;
     }
 
-    /**
-     * @see UserInterface
-     */
-    public function getPassword(): string
-    {
-        return (string) $this->password;
-    }
-
-    public function setPassword(string $password): self
-    {
-        $this->password = $password;
-
-        return $this;
-    }
 
     /**
      * @see UserInterface
@@ -204,6 +179,63 @@ class BaseUser implements AdvancedUserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+
+    /**
+     * Checks whether the user's credentials (password) has expired.
+     *
+     * Internally, if this method returns false, the authentication system
+     * will throw a CredentialsExpiredException and prevent login.
+     *
+     * @return bool true if the user's credentials are non expired, false otherwise
+     *
+     * @see CredentialsExpiredException
+     */
+    public function isCredentialsNonExpired()
+    {
+        return !$this->passwordChangeDate;
+    }
+
+    public function getPassword(): ?string
+    {
+        return $this->password;
+    }
+
+    public function setPassword(string $password): self
+    {
+        $this->password = $password;
+
+        return $this;
+    }
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getUuid(): ?string
+    {
+        return $this->uuid;
+    }
+
+    public function setUuid(?string $uuid): self
+    {
+        $this->uuid = $uuid;
+
+        return $this;
+    }
+
+    public function getMobile(): ?string
+    {
+        return $this->mobile;
+    }
+
+    public function setMobile(string $mobile): self
+    {
+        $this->mobile = $mobile;
+
+        return $this;
     }
 
     public function getFullName(): ?string
@@ -230,6 +262,29 @@ class BaseUser implements AdvancedUserInterface
         return $this;
     }
 
+    public function getGravatar(): ?string
+    {
+        return $this->gravatar;
+    }
+
+    public function setGravatar(?string $gravatar): self
+    {
+        $this->gravatar = $gravatar;
+
+        return $this;
+    }
+
+    public function getBirthday(): ?string
+    {
+        return $this->birthday;
+    }
+
+    public function setBirthday(?string $birthday): self
+    {
+        $this->birthday = $birthday;
+
+        return $this;
+    }
 
     public function getSex(): ?bool
     {
@@ -279,14 +334,50 @@ class BaseUser implements AdvancedUserInterface
         return $this;
     }
 
-    public function getUuid(): ?string
+    public function getPasswordChangeDate(): ?int
     {
-        return $this->uuid;
+        return $this->passwordChangeDate;
     }
 
-    public function setUuid(string $uuid): self
+    public function setPasswordChangeDate(?int $passwordChangeDate): self
     {
-        $this->uuid = $uuid;
+        $this->passwordChangeDate = $passwordChangeDate;
+
+        return $this;
+    }
+
+    public function getAppToken(): ?string
+    {
+        return $this->appToken;
+    }
+
+    public function setAppToken(?string $appToken): self
+    {
+        $this->appToken = $appToken;
+
+        return $this;
+    }
+
+    public function getHtmlToken(): ?string
+    {
+        return $this->htmlToken;
+    }
+
+    public function setHtmlToken(?string $htmlToken): self
+    {
+        $this->htmlToken = $htmlToken;
+
+        return $this;
+    }
+
+    public function getAdminToken(): ?string
+    {
+        return $this->adminToken;
+    }
+
+    public function setAdminToken(?string $adminToken): self
+    {
+        $this->adminToken = $adminToken;
 
         return $this;
     }
@@ -326,168 +417,4 @@ class BaseUser implements AdvancedUserInterface
 
         return $this;
     }
-
-    public function getPasswordChangeDate(): ?int
-    {
-        return $this->passwordChangeDate;
-    }
-
-    public function setPasswordChangeDate(?int $passwordChangeDate): self
-    {
-        $this->passwordChangeDate = $passwordChangeDate;
-
-        return $this;
-    }
-
-
-    public function getMobile(): ?string
-    {
-        return $this->mobile;
-    }
-
-    public function setMobile(string $mobile): self
-    {
-        $this->mobile = $mobile;
-
-        return $this;
-    }
-
-    public function getBirthday(): ?string
-    {
-        return $this->birthday;
-    }
-
-    public function setBirthday(?string $birthday): self
-    {
-        $this->birthday = $birthday;
-
-        return $this;
-    }
-
-
-    /**
-     * Checks whether the user's account has expired.
-     *
-     * Internally, if this method returns false, the authentication system
-     * will throw an AccountExpiredException and prevent login.
-     *
-     * @return bool true if the user's account is non expired, false otherwise
-     *
-     * @see AccountExpiredException
-     */
-    public function isAccountNonExpired()
-    {
-        // TODO: Implement isAccountNonExpired() method.
-        return true;
-    }
-
-    /**
-     * Checks whether the user is locked.
-     *
-     * Internally, if this method returns false, the authentication system
-     * will throw a LockedException and prevent login.
-     *
-     * @return bool true if the user is not locked, false otherwise
-     *
-     * @see LockedException
-     */
-    public function isAccountNonLocked()
-    {
-        return !$this->isLock;
-    }
-
-    /**
-     * Checks whether the user's credentials (password) has expired.
-     *
-     * Internally, if this method returns false, the authentication system
-     * will throw a CredentialsExpiredException and prevent login.
-     *
-     * @return bool true if the user's credentials are non expired, false otherwise
-     *
-     * @see CredentialsExpiredException
-     */
-    public function isCredentialsNonExpired()
-    {
-        return !$this->passwordChangeDate;
-    }
-
-    /**
-     * Checks whether the user is enabled.
-     *
-     * Internally, if this method returns false, the authentication system
-     * will throw a DisabledException and prevent login.
-     *
-     * @return bool true if the user is enabled, false otherwise
-     *
-     * @see DisabledException
-     */
-    public function isEnabled()
-    {
-        return $this->deletedAt?0:1;
-    }
-
-
-    public function serialize()
-    {
-        return serialize(array(
-            $this->deletedAt,
-            $this->isLock
-        ));
-    }
-    public function unserialize($serialized)
-    {
-        list (
-            $this->deletedAt,
-            $this->isLock
-            ) = unserialize($serialized);
-    }
-
-    public function getAppToken(): ?string
-    {
-        return $this->appToken;
-    }
-
-    public function setAppToken(?string $appToken): self
-    {
-        $this->appToken = $appToken;
-
-        return $this;
-    }
-
-    public function getHtmlToken(): ?string
-    {
-        return $this->htmlToken;
-    }
-
-    public function setHtmlToken(?string $htmlToken): self
-    {
-        $this->htmlToken = $htmlToken;
-
-        return $this;
-    }
-
-    public function getAdminToken(): ?string
-    {
-        return $this->adminToken;
-    }
-
-    public function setAdminToken(?string $adminToken): self
-    {
-        $this->adminToken = $adminToken;
-
-        return $this;
-    }
-
-    public function getGravatar(): ?string
-    {
-        return $this->gravatar;
-    }
-
-    public function setGravatar(?string $gravatar): self
-    {
-        $this->gravatar = $gravatar;
-
-        return $this;
-    }
-
 }

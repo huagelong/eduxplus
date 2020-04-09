@@ -90,6 +90,17 @@ class Grid
         return $this;
     }
 
+
+    public function setTableActionColumn($routeName, $title, $type, $datakey, $sort=null, $options=[], $actionCall=null)
+    {
+        if(!$this->service->isAuthorized($routeName)){
+            $this->gridColumn[$title] = ["type"=>$type, "field"=>$datakey, "sort"=>$sort, "options"=>$options];
+        }else{
+            $this->gridColumn[$title] = ["type"=>$type, "field"=>$datakey, "sort"=>$sort, "options"=>$options, "actionCall"=>$actionCall];
+        }
+        return $this;
+    }
+
     public function setGridBar($routeName, $title, $url, $iconCLass, $class='btn-info')
     {
         if(!$this->service->isAuthorized($routeName)) return ;

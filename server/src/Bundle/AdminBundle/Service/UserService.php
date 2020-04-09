@@ -11,6 +11,7 @@ namespace App\Bundle\AdminBundle\Service;
 
 use App\Bundle\AppBundle\Lib\Base\BaseService;
 use App\Bundle\AppBundle\Lib\Service\HelperService;
+use App\Entity\BaseRoleUser;
 use App\Entity\BaseUser;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -30,14 +31,15 @@ class UserService extends BaseService
     public function userList($request, $page, $pageSize){
         $sql = $this->getFormatRequestSql($request);
         $values = $request->get("values");
-        $isAdmin = $values['_isAdmin'];
-        if($isAdmin == 1){
+        dump($values);
+        $isAdmin = (int) (isset($values['_isAdmin'])?$values['_isAdmin']:-1);
+        if($isAdmin === 1){
             if($sql){
                 $sql .= " AND a.roles LIKE '%ROLE_ADMIN%'";
             }else{
                 $sql = " WHERE a.roles LIKE '%ROLE_ADMIN%'";
             }
-        }elseif($isAdmin == 0){
+        }elseif($isAdmin === 0){
             if($sql) {
                 $sql .= " AND a.roles NOT LIKE '%ROLE_ADMIN%'";
             }else{
@@ -114,12 +116,74 @@ class UserService extends BaseService
         $model->setFullName($fullName);
         $model->setDisplayName($displayName);
         $model->setSex($sex);
+        $model->setRegSource("admin");
         if($roles){
             $model->setRoles(['ROLE_ADMIN']);
         }
         $uid = $this->save($model);
-        
 
+        if($roles){
+            foreach ($roles as $roleId){
+                $modelRole = new BaseRoleUser();
+                $modelRole->setRoleId($roleId);
+                $modelRole->setUid($uid);
+                $this->save($modelRole);
+            }
+        }
+        return $uid;
+    }
+
+    public function getById($id){
+        $sql = "SELECT a FROM App:BaseUser a WHERE a.id=:id";
+        return $this->fetchOne($sql, ['id'=>$id]);
+    }
+
+    public function getMyRoleIds($uid){
+        $sql = "SELECT a FROM App:BaseRoleUser a WHERE a.uid=:uid";
+        return $this->fetchFields('roleId', $sql, ['uid'=>$uid]);
+    }
+
+    public function edit($id, $mobile, $displayName, $fullName, $sex, $roles){
+        $sql = "SELECT a FROM App:BaseUser a WHERE a.id=:id";
+        $model = $this->fetchOne($sql, ['id'=>$id], 1);
+        $model->setMobile($mobile);
+        $model->setFullName($fullName);
+        $model->setDisplayName($displayName);
+        $model->setSex($sex);
+        if($roles){
+            $model->setRoles(['ROLE_ADMIN']);
+        }else{
+            $model->setRoles(['ROLE_USER']);
+        }
+        $uid = $this->save($model);
+
+        if($roles){
+            //先删除
+            $sql = "SELECT a FROM App:BaseRoleUser a WHERE a.uid=:uid";
+            $models = $this->fetchAll($sql, ['uid'=>$id], 1);
+            $this->hardDelete($models);
+            //后添加
+            foreach ($roles as $roleId){
+                $modelRole = new BaseRoleUser();
+                $modelRole->setRoleId($roleId);
+                $modelRole->setUid($uid);
+                $this->save($modelRole);
+            }
+        }
+        return $uid;
+    }
+
+    public function delUser($id){
+        $sql = "SELECT a FROM App:BaseUser a WHERE a.id=:id";
+        $model = $this->fetchOne($sql, ["id"=>$id], 1);
+        $this->delete($model);
+    }
+
+    public function switchLock($id, $state){
+        $sql = "SELECT a FROM App:BaseUser a WHERE a.id=:id";
+        $model = $this->fetchOne($sql, ['id'=>$id], 1);
+        $model->setIsLock($state);
+        return $this->save($model);
     }
 
 }

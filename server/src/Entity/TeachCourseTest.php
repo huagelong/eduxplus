@@ -104,12 +104,12 @@ class TeachCourseTest
         return $this;
     }
 
-    public function getCreatedAt(): ?int
+    public function getCreatedAt(): ?\DateTimeInterface
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(?int $createdAt): self
+    public function setCreatedAt(?\DateTimeInterface $createdAt): self
     {
         $this->createdAt = $createdAt;
 

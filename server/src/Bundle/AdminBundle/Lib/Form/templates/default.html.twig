@@ -9,18 +9,18 @@
                         <div class="col-sm-8">
                             <div class="input-group">
                                 <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="fas fa-edit fa-fw"></i></span>
+                                    <span class="input-group-text"><i class="fas fa-edit"></i></span>
                                 </div>
                                 <input type="text" id="{{ v['datakey'] }}" name="{{ v['datakey'] }}" {% if v['isRequire'] %} data-required="1" {% endif %} value="{{ v['defaultValue'] }}" class="form-control form-control-sm" placeholder="{{ v['placeholder'] }}" >
                             </div>
                         </div>
                     {% endif %}
 
-                    {% if v['type'] == 'pwd' %}
+                    {% if v['type'] == 'password' %}
                         <div class="col-sm-8">
                             <div class="input-group">
                                 <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="fas fa-edit fa-key"></i></span>
+                                    <span class="input-group-text"><i class="fas fa-key"></i></span>
                                 </div>
                                 <input type="password" id="{{ v['datakey'] }}" name="{{ v['datakey'] }}" {% if v['isRequire'] %} data-required="1" {% endif %} value="{{ v['defaultValue'] }}" class="form-control form-control-sm" placeholder="{{ v['placeholder'] }}" >
                             </div>
@@ -62,7 +62,7 @@
                     {% if v['type'] == 'multiSelect' %}
                         <div class="col-sm-8">
                             <div class="input-group" >
-                                <input type="hidden" name="formHidden-{{ v['datakey'] }}" value="{{ v['defaultValue'] }}"  />
+                                <input type="hidden" name="formHidden-{{ v['datakey'] }}" value="{{ v['defaultValue']|json_encode }}"  />
                                 <select class="form-control form-control-sm select" multiple="multiple" style="width: 100%;" {% if v['isRequire'] %} data-required="1" {% endif %} name="{{ v['datakey'] }}" data-value="" >
                                     {% set selectV = get_prop(v['initData'],"") %}
                                     {% if selectV %}

@@ -25,7 +25,7 @@ class RoleController extends BaseAdminController
      * @Rest\Get("/role/index", name="admin_role_index")
      */
     public function indexAction(Request $request, RoleService $roleService, Grid $grid){
-        $pageSize = 1;
+        $pageSize = 20;
         $grid->setListService($roleService, "roleMenu");
         $grid->setTableColumn("#", "text", "id","a.id");
         $grid->setTableColumn("名称", "text", "name");

@@ -91,7 +91,7 @@ class InstallFixtures extends Fixture
         $this->addMenu("编辑用户页面","显示编辑用户页面", $userMgId,"admin_user_edit", "",2, $roleId, 1, 1, 0);
         $this->addMenu("编辑用户","编辑用户处理", $userMgId,"admin_api_user_edit", "",3, $roleId, 1, 1, 0);
         $this->addMenu("删除用户","删除用户处理", $userMgId,"admin_api_user_delete", "",4, $roleId, 1, 1, 0);
-
+        $this->addMenu("锁定/解锁用户","锁定/解锁用户", $userMgId,"admin_api_user_switchLock", "",5, $roleId, 1, 1, 0);
     }
 
     protected function addMenu($name, $descr, $pid, $uri, $style,$sort,$roleId, $isLock, $isAccess, $isShow){
