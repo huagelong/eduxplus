@@ -16,7 +16,7 @@ services:
             - { name: twig.extension }
 
     admin.isAuthorized.twig.extension:
-            class: App\Bundle\AdminBundle\Twig\IsAuthorizedExtension
-            arguments: ['@App\Bundle\AdminBundle\Service\RoleService']
-            tags:
-                - { name: twig.extension }
+        class: App\Bundle\AdminBundle\Twig\IsAuthorizedExtension
+        arguments: ['@App\Bundle\AdminBundle\Service\RoleService']
+        tags:
+            - { name: twig.extension }

@@ -23,12 +23,6 @@ class BaseOption
      */
     private $id;
 
-    /**
-     * @var string|null
-     *
-     * @ORM\Column(name="option_name", type="string", length=50, nullable=true, options={"comment"="配置名称"})
-     */
-    private $optionName;
 
     /**
      * @var string|null
@@ -38,18 +32,30 @@ class BaseOption
     private $optionKey;
 
     /**
-     * @var int|null
-     *
-     * @ORM\Column(name="group_id", type="integer", nullable=true, options={"comment"="group id"})
-     */
-    private $groupId;
-
-    /**
      * @var string|null
      *
      * @ORM\Column(name="option_value", type="text", length=65535, nullable=true, options={"comment"="配置值"})
      */
     private $optionValue;
+
+    /**
+     * @var bool|null
+     *
+     * @ORM\Column(name="is_lock", type="boolean", nullable=true, options={"comment"="是否被锁定,1-是，0-否"})
+     */
+    private $isLock = '0';
+
+    /**
+     * @var bool|null
+     *
+     * @ORM\Column(name="type", type="integer", length=1, nullable=true, options={"comment"="配置类型, 1-文本, 2-文件链接"})
+     */
+    private $type = '1';
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true, options={"comment"="描述"})
+     */
+    private $descr;
 
     /**
      * @var int|null
@@ -75,18 +81,6 @@ class BaseOption
         return $this->id;
     }
 
-    public function getOptionName(): ?string
-    {
-        return $this->optionName;
-    }
-
-    public function setOptionName(?string $optionName): self
-    {
-        $this->optionName = $optionName;
-
-        return $this;
-    }
-
     public function getOptionKey(): ?string
     {
         return $this->optionKey;
@@ -95,18 +89,6 @@ class BaseOption
     public function setOptionKey(?string $optionKey): self
     {
         $this->optionKey = $optionKey;
-
-        return $this;
-    }
-
-    public function getGroupId(): ?int
-    {
-        return $this->groupId;
-    }
-
-    public function setGroupId(?int $groupId): self
-    {
-        $this->groupId = $groupId;
 
         return $this;
     }
@@ -122,6 +104,43 @@ class BaseOption
 
         return $this;
     }
+
+    public function getIsLock(): ?bool
+    {
+        return $this->isLock;
+    }
+
+    public function setIsLock(?bool $isLock): self
+    {
+        $this->isLock = $isLock;
+
+        return $this;
+    }
+
+    public function getType(): ?int
+    {
+        return $this->type;
+    }
+
+    public function setType(?int $type): self
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    public function getDescr(): ?string
+    {
+        return $this->descr;
+    }
+
+    public function setDescr(?string $descr): self
+    {
+        $this->descr = $descr;
+
+        return $this;
+    }
+
 
     public function getCreatedAt(): ?\DateTimeInterface
     {
@@ -158,6 +177,7 @@ class BaseOption
 
         return $this;
     }
+
 
 
 }

@@ -101,7 +101,6 @@ class UserController extends BaseAdminController
                 }
                 return $rs;
         }, "选择角色");
-
         $formData = $form->create($this->generateUrl("admin_api_user_add"));
         $data = [];
         $data["formData"] = $formData;

@@ -41,11 +41,11 @@ class GetPropExtension extends AbstractExtension
             }
         }elseif($type == 'textarea'){
             if(method_exists($obj, $method)) {
-                return "<span class='overflow-auto font-weight-lighter'>" . call_user_func([$obj, $method]) . "</span>";
+                return "<div class='font-weight-lighter'>" . call_user_func([$obj, $method]) . "</div>";
             }else{
                 if(is_array($obj)){
                     $value = isset($obj[$name])?$obj[$name]:"";
-                    return "<span class='overflow-auto font-weight-lighter'>" . $value . "</span>";
+                    return "<div class='font-weight-lighter'>" . $value . "</div>";
                 }
             }
         }else{

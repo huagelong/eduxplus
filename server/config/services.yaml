@@ -5,6 +5,7 @@ imports:
 
 parameters:
     redis_host: '%env(REDIS_HOST)%'
+    upload_dir: '%env(UPLOAD_DIR)%'
 
 services:
 
@@ -30,9 +31,6 @@ services:
         lazy: true
         arguments:
             $redisCLient: '@snc_redis.default'
-    storage.redis:
-        alias: App\Bundle\AppBundle\Lib\Service\RedisService
-        public: true
 
     App\Bundle\AppBundle\Lib\Service\CacheService:
         public: true

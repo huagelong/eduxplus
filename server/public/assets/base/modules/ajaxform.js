@@ -54,6 +54,7 @@
                         if (vl === null || vl === undefined || vl === '') {
                             $(this).addClass("is-invalid");
                             check = false;
+                            // console.log($(this).attr("name"));
                             $("button[type='submit']", jqForm).attr("disabled", true);
                             $(this).focus();
                         }else{
@@ -74,6 +75,7 @@
                 });
 
             });
+            if(!check)  $("button[type='submit']", jqForm).attr("disabled", false);
             return check;
         }
 
@@ -85,7 +87,7 @@
                 form_name = form_name?form_name:"form";
                 $.Cookie(form_name, 1);
             }
-            if((!$.isEmptyObject(responseText.data._url)) && (!$.isPlainObject(responseText.data._url))){
+            if((responseText.data._url != "undefined") && (!$.isEmptyObject(responseText.data._url)) && (!$.isPlainObject(responseText.data._url))){
                 if(responseText.message){
                     show(responseText.code, responseText.message);
                 }

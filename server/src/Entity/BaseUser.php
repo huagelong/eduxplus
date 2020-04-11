@@ -64,7 +64,7 @@ class BaseUser implements UserInterface
     /**
      * @var bool|null
      *
-     * @ORM\Column(name="sex", type="boolean", nullable=true, options={"comment"="1-男,2-女"})
+     * @ORM\Column(name="sex", type="integer", length=1, nullable=true, options={"comment"="1-男,2-女"})
      */
     private $sex;
 

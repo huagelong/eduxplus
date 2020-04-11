@@ -110,3 +110,6 @@
 .display-hide{
     display: none;
 }
+.btn-file .btn-sm{
+    padding: .5rem .5rem;
+}

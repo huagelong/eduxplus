@@ -70,6 +70,8 @@ class InstallFixtures extends Fixture
 
         //新增菜单并绑定角色
         $this->addMenu("首页","后台首页", 0,"admin_dashboard", "fas fa-home",0, $roleId, 1, 0, 1);
+
+        //安全模块
         $accMenuId = $this->addMenu("安全","安全方面的管理", 0,"", "fas fa-key",0, $roleId, 1, 0, 1);
         $menuMgId = $this->addMenu("菜单管理","管理菜单以及对应页面的权限", $accMenuId,"admin_menu_index", "",0, $roleId, 1, 0, 1);
         $this->addMenu("添加菜单","菜单新增处理", $menuMgId,"admin_api_menu_add", "",0, $roleId, 1, 1, 0);
@@ -92,6 +94,15 @@ class InstallFixtures extends Fixture
         $this->addMenu("编辑用户","编辑用户处理", $userMgId,"admin_api_user_edit", "",3, $roleId, 1, 1, 0);
         $this->addMenu("删除用户","删除用户处理", $userMgId,"admin_api_user_delete", "",4, $roleId, 1, 1, 0);
         $this->addMenu("锁定/解锁用户","锁定/解锁用户", $userMgId,"admin_api_user_switchLock", "",5, $roleId, 1, 1, 0);
+        //系统模块
+        $sysMenuId = $this->addMenu("系统","系统方面的管理", 0,"", "fa fa-gears",1, $roleId, 1, 0, 1);
+        $optionMgId = $this->addMenu("配置","对系统的相关配置", $sysMenuId,"admin_option_index", "",0, $roleId, 1, 0, 1);
+        $this->addMenu("添加配置页面","添加配置页面展示", $optionMgId,"admin_option_add", "",3, $roleId, 1, 1, 0);
+        $this->addMenu("添加配置","添加配置处理", $optionMgId,"admin_api_option_add", "",4, $roleId, 1, 1, 0);
+        $this->addMenu("编辑配置页面","编辑配置页面展示", $optionMgId,"admin_option_edit", "",3, $roleId, 1, 1, 0);
+        $this->addMenu("编辑配置","编辑配置处理", $optionMgId,"admin_api_option_edit", "",4, $roleId, 1, 1, 0);
+        $this->addMenu("删除配置","删除配置处理", $optionMgId,"admin_api_option_delete", "",5, $roleId, 1, 1, 0);
+
     }
 
     protected function addMenu($name, $descr, $pid, $uri, $style,$sort,$roleId, $isLock, $isAccess, $isShow){

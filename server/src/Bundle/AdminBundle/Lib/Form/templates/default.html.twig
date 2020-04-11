@@ -1,17 +1,55 @@
 {% if formField %}
 <div class="card card-default">
+    {% if disableSubmit != 1 %}
         <form method="POST" action="{{ url }}" class="form-horizontal ajaxform" accept-charset="UTF-8" >
             <div class="card-body" style="display: block;">
+    {% endif %}
             {% for k,v in formField %}
                 <div class="form-group  row">
-                    <label for="title" class="col-sm-2  {% if v['isRequire'] %} require {% endif %} col-form-label">{{ k }}</label>
+                    {% if v['type'] != 'hidden' %}
+                    <label for="title" class="col-sm-2  {% if v['options']['data-required'] is defined and v['options']['data-required'] %} require {% endif %} col-form-label">{{ k }} :</label>
+                    {% endif %}
+
                     {% if v['type'] == 'text' %}
                         <div class="col-sm-8">
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-edit"></i></span>
                                 </div>
-                                <input type="text" id="{{ v['datakey'] }}" name="{{ v['datakey'] }}" {% if v['isRequire'] %} data-required="1" {% endif %} value="{{ v['defaultValue'] }}" class="form-control form-control-sm" placeholder="{{ v['placeholder'] }}" >
+                                <input type="text"
+
+                                {% if v['options'] %}
+                                    {% for ok,ov in v['options'] %}
+                                        {{ ok }}="{{ ov }}"
+                                    {% endfor %}
+                                {% endif %}
+
+                                       value="{{ v['defaultValue'] }}"
+                                       class="form-control form-control-sm"
+                                >
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {% if v['type'] == 'string' %}
+                        <div class="col-sm-8">{{ v['defaultValue'] }}</div>
+                    {% endif %}
+
+                    {% if v['type'] == 'file' %}
+                        <div class="col-sm-8">
+                            <div class="input-group">
+                                <input type="hidden" name="{{ v['field'] }}"  value="{{ v['defaultValue'] }}"  {% if v['options']['data-required'] is defined and v['options']['data-required'] %} data-required="1" {% endif %} >
+                                <input type="file" data-field="{{ v['field'] }}"
+                                       {% if v['options'] %}
+                                            {% for ok,ov in v['options'] %}
+                                                {% if ok != "name" and ok != "id" and ok != "data-required" %}
+                                                    {{ ok }}="{{ ov }}"
+                                                {% endif %}
+                                            {% endfor %}
+                                        {% endif %}
+                                        multiple
+                                       class="form-control form-control-sm ufile"
+                                />
                             </div>
                         </div>
                     {% endif %}
@@ -22,7 +60,16 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-key"></i></span>
                                 </div>
-                                <input type="password" id="{{ v['datakey'] }}" name="{{ v['datakey'] }}" {% if v['isRequire'] %} data-required="1" {% endif %} value="{{ v['defaultValue'] }}" class="form-control form-control-sm" placeholder="{{ v['placeholder'] }}" >
+                                <input type="password"
+
+                                        {% if v['options'] %}
+                                            {% for ok,ov in v['options'] %}
+                                                {{ ok }}="{{ ov }}"
+                                            {% endfor %}
+                                        {% endif %}
+
+                                       class="form-control form-control-sm"
+                                />
                             </div>
                         </div>
                     {% endif %}
@@ -30,7 +77,15 @@
                     {% if v['type'] == 'textarea' %}
                         <div class="col-sm-8">
                             <div class="input-group">
-                                <textarea  id="{{ v['datakey'] }}" name="{{ v['datakey'] }}" {% if v['isRequire'] %} data-required="1" {% endif %}  class="form-control form-control-sm" placeholder="{{ v['placeholder'] }}" >{{ v['defaultValue'] }}</textarea>
+                                <textarea
+                                {% if v['options'] %}
+                                    {% for ok,ov in v['options'] %}
+                                        {{ ok }}="{{ ov }}"
+                                    {% endfor %}
+                                {% endif %}
+                                class="form-control form-control-sm"
+
+                                >{{ v['defaultValue'] }}</textarea>
                             </div>
                         </div>
                     {% endif %}
@@ -38,7 +93,18 @@
                     {% if v['type'] == 'boole' %}
                     <div class="col-sm-8">
                         <div class="input-group">
-                        <input type="checkbox" id="{{ v['datakey'] }}" name="{{ v['datakey'] }}" {% if v['defaultValue'] %} checked {% endif %} data-bootstrap-switch data-off-color="danger" data-on-color="success">
+                        <input type="checkbox"
+
+                            {% if v['options'] %}
+                                {% for ok,ov in v['options'] %}
+                                    {{ ok }}="{{ ov }}"
+                                {% endfor %}
+                            {% endif %}
+
+                            {% if v['defaultValue'] %} checked {% endif %}
+
+                               data-bootstrap-switch data-off-color="danger" data-on-color="success"
+                        >
                         </div>
                     </div>
                   {% endif %}
@@ -46,8 +112,18 @@
                     {% if v['type'] == 'select' %}
                     <div class="col-sm-8">
                         <div class="input-group">
-                            <input type="hidden" name="formHidden-{{ v['datakey'] }}" value="{{ v['defaultValue'] }}"  />
-                            <select class="form-control form-control-sm select" style="width: 100%;" name="{{ v['datakey'] }}" {% if v['isRequire'] %} data-required="1" {% endif %} data-value="" >
+                            <input type="hidden" name="formHidden-{{ v['field'] }}" value="{{ v['defaultValue'] }}"  />
+                            <select
+                                    {% if v['options'] %}
+                                        {% for ok,ov in v['options'] %}
+                                            {{ ok }}="{{ ov }}"
+                                        {% endfor %}
+                                    {% endif %}
+
+                                    class="form-control form-control-sm select"
+                                    style="width: 100%;"
+
+                                     >
                                 {% set selectV = get_prop(v['initData'],"") %}
                                 {% if selectV %}
                                     {% for k,v in selectV %}
@@ -62,8 +138,19 @@
                     {% if v['type'] == 'multiSelect' %}
                         <div class="col-sm-8">
                             <div class="input-group" >
-                                <input type="hidden" name="formHidden-{{ v['datakey'] }}" value="{{ v['defaultValue']|json_encode }}"  />
-                                <select class="form-control form-control-sm select" multiple="multiple" style="width: 100%;" {% if v['isRequire'] %} data-required="1" {% endif %} name="{{ v['datakey'] }}" data-value="" >
+                                <input type="hidden" name="formHidden-{{ v['field'] }}" value="{{ v['defaultValue']|json_encode }}"  />
+                                <select
+
+                                {% if v['options'] %}
+                                    {% for ok,ov in v['options'] %}
+                                        {{ ok }}="{{ ov }}"
+                                    {% endfor %}
+                                {% endif %}
+
+                                        class="form-control form-control-sm select"
+                                        multiple="multiple"
+                                        style="width: 100%;"
+                                >
                                     {% set selectV = get_prop(v['initData'],"") %}
                                     {% if selectV %}
                                         {% for k,v in selectV %}
@@ -75,18 +162,32 @@
                         </div>
                     {% endif %}
 
+                    {% if v['type'] == 'hidden' %}
+                        <input type="hidden"
+
+                        {% if v['options'] %}
+                        {% for ok,ov in v['options'] %}
+                            {{ ok }}="{{ ov }}"
+                        {% endfor %}
+                        {% endif %}
+
+                        value="{{ v['defaultValue'] }}"  />
+                    {% endif %}
+
                 </div>
             {% endfor %}
+        {% if disableSubmit != 1 %}
             </div>
-            <div class="card-footer">
-                <div class="col-md-2"></div>
-                <div class="col-md-8">
-                    <div class="btn-group">
-                        <button type="submit" class="btn btn-sm btn-info " style="margin-right: 10px;">提交</button>
-                        <button type="reset" class="btn btn-default btn-sm reset"><i class="fa fa-undo"></i>&nbsp;&nbsp;重置</button>
+                <div class="card-footer">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-8">
+                        <div class="btn-group">
+                            <button type="submit" class="btn btn-sm btn-info " style="margin-right: 10px;">提交</button>
+                            <button type="reset" class="btn btn-default btn-sm reset"><i class="fa fa-undo"></i>&nbsp;&nbsp;重置</button>
+                        </div>
                     </div>
                 </div>
-            </div>
         </form>
+    {% endif %}
 </div>
 {% endif %}

@@ -9,13 +9,15 @@
         </div>
         <div class="card-tools">
             {% if gridBar %}
-                {% for gk, gv in gridBar %}
+
             <div class="input-group input-group-sm">
-                <a href="{{ gv[0] }}" class="btn btn-sm {{ gv[2] }}" title="{{ gk }}">
+                {% for gk, gv in gridBar %}
+                <a href="{{ gv[0] }}" class="btn btn-sm {{ gv[2] }}" title="{{ gk }}" style="margin-right: 10px;">
                     <i class="{{ gv[1] }}"></i><span class="hidden-xs">&nbsp;&nbsp;{{ gk }}</span>
                 </a>
+                {% endfor %}
             </div>
-            {% endfor %}
+
             {% endif %}
         </div>
     </div>
@@ -42,6 +44,12 @@
                     <td>
                         {% if cv['type'] == 'text' or cv['type'] == 'datetime' or cv['type'] == 'textarea' %}
                             {{ get_prop(v, cv["field"], cv['type'], cv['options'])|raw }}
+                        {% endif %}
+                        {% if cv['type'] == 'json' %}
+                            {{ get_prop(v, cv["field"], cv['type'], cv['options'])|json_encode }}
+                        {% endif %}
+                        {% if cv['type'] == 'code' %}
+                       <div  class='overflow-auto' style='width:300px'><code class="clipboard" data-clipboard-text="{{ get_prop(v, cv["field"], cv['type'], cv['options']) }}" >{{ get_prop(v, cv["field"], cv['type'], cv['options'])|raw }}</code></div>
                         {% endif %}
                         {% if cv['type'] == 'image'  %}
                             <img src="{{  get_prop(v, cv["field"], cv['type'], cv['options'])|raw }}" width="30px" />
