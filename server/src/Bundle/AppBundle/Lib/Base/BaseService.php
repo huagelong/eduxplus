@@ -91,6 +91,7 @@ class BaseService extends AbstractFOSRestController
         }
         if($sql == " WHERE ") return "";
         $sql = rtrim($sql, " AND ");
+        dump($sql);
         return $sql;
     }
 
@@ -209,6 +210,23 @@ class BaseService extends AbstractFOSRestController
         $resultType = !$getObject?2:null;
         $rs = $query->setMaxResults(1)->getOneOrNullResult($resultType);
         return $rs;
+    }
+
+    public function getOption($k, $isJson=0, $index=0, $default=null){
+        $sql = "SELECT a.optionValue FROM App:BaseOption a WHERE a.optionKey =:optionKey";
+        $rs = $this->fetchField("optionValue", $sql, ['optionKey'=>$k]);
+
+        if($rs){
+            if($isJson){
+                dump($rs);
+               $arr =  json_decode($rs, 1);
+                dump($arr);
+               return isset($arr[$index])?$arr[$index]:"";
+            }
+            return $rs;
+        }else{
+            return $default;
+        }
     }
 
 

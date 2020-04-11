@@ -38,8 +38,8 @@ class OptionController extends BaseAdminController
 
         //搜索
         $grid->setSearchField("健", "text", "a.optionKey");
-        $grid->setSearchField("值类型", "boole", "type", function(){
-            return ["全部"=>-1,"文本"=>1, "文件链接"=>0];
+        $grid->setSearchField("值类型", "select", "a.type", function(){
+            return ["全部"=>"","文本"=>1, "文件链接"=>2];
         });
 
         //编辑等

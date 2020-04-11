@@ -9,12 +9,13 @@
 namespace App\Bundle\AdminBundle\Controller;
 
 
+use App\Bundle\AppBundle\Lib\Base\BaseAdminController;
 use App\Bundle\AppBundle\Lib\Base\BaseController;
 use App\Bundle\AppBundle\Lib\Service\UploadService;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use Symfony\Component\HttpFoundation\Request;
 
-class GlobController extends BaseController
+class GlobController extends BaseAdminController
 {
     /**
      * @Rest\Post("/glob/upload/{type}", name="admin_glob_upload")

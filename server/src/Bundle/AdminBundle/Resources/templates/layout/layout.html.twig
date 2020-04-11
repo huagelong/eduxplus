@@ -45,7 +45,7 @@
 
 {% block head_favicon %}
     {{ parent() }}
-    <link rel="icon" type="image/png" href="{{ asset('assets/images/logo.png') }}">
+    <link rel="icon" type="image/png" href="{{ asset(option("app.icon", 1, 0)) }}">
 {% endblock %}
 
 {% block body_javascript %}

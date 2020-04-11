@@ -112,7 +112,7 @@ class UserService extends BaseService
         $model = new BaseUser();
         $model->setMobile($mobile);
         $model->setUuid($uuid);
-        $model->setGravatar("/assets/images/defaultFace.jpeg");
+        $model->setGravatar($this->getOption("app.user.default.gravatar", 1));
         $pwd = $this->userPasswordEncoder->encodePassword($model, $pwd1);
         $model->setPassword($pwd);
         $model->setFullName($fullName);

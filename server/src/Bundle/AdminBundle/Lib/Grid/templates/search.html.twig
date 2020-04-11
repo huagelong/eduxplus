@@ -18,9 +18,10 @@
                             </div>
                         {% endif %}
 
-                        {% if v['type'] == "boole" %}
+                        {% if v['type'] == "select" %}
                             <div class="col-sm-9">
                                 <input type="hidden"  name="{{ v['operates'] }}" value="=">
+                                <input type="hidden" name="{{ v['types'] }}" value="{{ v['type'] }}">
                                 <input type="hidden" name="hidden-{{ v['field'] }}" value="{{ array_get(app.request.query.get("values"), v['field']) }}"/>
                                 <select class="form-control form-control-sm select" style="width: 100%;" name="{{ v['values'] }}" data-value="" >
                                     {% set selectV = get_prop(v['initData'],"") %}

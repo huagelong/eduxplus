@@ -4,6 +4,7 @@ namespace App\DataFixtures;
 
 use App\Bundle\AppBundle\Lib\Service\HelperService;
 use App\Entity\BaseMenu;
+use App\Entity\BaseOption;
 use App\Entity\BaseRole;
 use App\Entity\BaseRoleMenu;
 use App\Entity\BaseRoleUser;
@@ -33,6 +34,11 @@ class InstallFixtures extends Fixture
     public function load(ObjectManager $manager)
     {
         $this->manager = $manager;
+        //配置初始化
+        $this->addOption("app.name", "多学课堂", "应用名称", 1, 1);
+        $this->addOption("app.logo", '["/assets/images/logo.png"]', "应用logo", 2, 1);
+        $this->addOption("app.user.default.gravatar", '["/assets/images/gravatar.jpeg"]', "用户默认头像", 2, 1);
+        $this->addOption("app.icon", '["/assets/fav.png"]', "应用icon", 2, 1);
         //初始化用户
         $userModel = new BaseUser();
         $uuid = $this->helperService->getUuid();
@@ -47,7 +53,7 @@ class InstallFixtures extends Fixture
         $userModel->setFullName("管理员大大");
         $userModel->setRoles(["ROLE_ADMIN"]);
         $userModel->setPassword($pwd);
-        $userModel->setGravatar("/assets/images/defaultFace.jpeg");
+        $userModel->setGravatar("/assets/images/gravatar.jpeg");
         $manager->persist($userModel);
         $manager->flush();
         $uid = $userModel->getId();
@@ -70,6 +76,7 @@ class InstallFixtures extends Fixture
 
         //新增菜单并绑定角色
         $this->addMenu("首页","后台首页", 0,"admin_dashboard", "fas fa-home",0, $roleId, 1, 0, 1);
+        $this->addMenu("文件上传","文件上传处理", 0,"admin_glob_upload", "fas fa-upload",0, $roleId, 1, 1, 0);
 
         //安全模块
         $accMenuId = $this->addMenu("安全","安全方面的管理", 0,"", "fas fa-key",0, $roleId, 1, 0, 1);
@@ -103,6 +110,17 @@ class InstallFixtures extends Fixture
         $this->addMenu("编辑配置","编辑配置处理", $optionMgId,"admin_api_option_edit", "",4, $roleId, 1, 1, 0);
         $this->addMenu("删除配置","删除配置处理", $optionMgId,"admin_api_option_delete", "",5, $roleId, 1, 1, 0);
 
+    }
+
+    protected function addOption($key, $value, $descr, $type=1, $isLock=1){
+        $optionModel = new BaseOption();
+        $optionModel->setOptionKey($key);
+        $optionModel->setOptionValue($value);
+        $optionModel->setDescr($descr);
+        $optionModel->setIsLock($isLock);
+        $optionModel->setType($type);
+        $this->manager->persist($optionModel);
+        $this->manager->flush();
     }
 
     protected function addMenu($name, $descr, $pid, $uri, $style,$sort,$roleId, $isLock, $isAccess, $isShow){

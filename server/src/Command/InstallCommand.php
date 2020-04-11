@@ -25,7 +25,7 @@ class InstallCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
-
+        //----1
         $command = $this->getApplication()->find('make:entity');
         $arguments = [
             'command' => 'make:entity',
@@ -34,14 +34,14 @@ class InstallCommand extends Command
         $greetInput = new ArrayInput($arguments);
 //        $greetInput->setInteractive(false);
         $command->run($greetInput, $output);
-
+        //----2
         $command = $this->getApplication()->find('make:migration');
         $arguments = [
             'command' => 'make:migration',
         ];
         $greetInput = new ArrayInput($arguments);
         $command->run($greetInput, $output);
-
+        //----3
         $command = $this->getApplication()->find('doctrine:migrations:migrate');
         $arguments = [
             'command' => 'doctrine:migrations:migrate',
@@ -50,6 +50,16 @@ class InstallCommand extends Command
         $greetInput->setInteractive(false);
         $command->run($greetInput, $output);
 
+        //----4
+        $command = $this->getApplication()->find('doctrine:fixtures:load');
+        $arguments = [
+            'command' => 'doctrine:fixtures:load',
+            "--purge-with-truncate"=>true,
+            "--group"=>["InstallFixtures"]
+        ];
+        $greetInput = new ArrayInput($arguments);
+        $greetInput->setInteractive(false);
+        $command->run($greetInput, $output);
 
         $io->success('Initialization the project success!');
 

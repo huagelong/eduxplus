@@ -74,7 +74,7 @@
                     <div class="dd" id="menu-tree">
                         <ol class="dd-list">
                             {% for menu in allMenu[0] %}
-                            <li class="dd-item" data-id="{{ menu.id }}">
+                            <li class="dd-item dd-collapsed" data-id="{{ menu.id }}">
                                 <div class="dd-handle">
 <i class="{{ menu.style|default('far fa-circle') }}"></i>&nbsp;<strong>{{ menu.name }}</strong>&nbsp;&nbsp;&nbsp;
                                     {% if menu.url!="" and menu.isAccess==0 %}<a href="{{ path(menu.url) }}" class="dd-nodrag">{{ path(menu.url) }}</a>{% endif %}
@@ -103,7 +103,7 @@
                                 {% if allMenu[menu.id] is defined %}
                                 <ol class="dd-list">
                                     {% for menu2 in allMenu[menu.id] %}
-                                    <li class="dd-item" data-id="{{ menu2.id }}">
+                                    <li class="dd-item dd-collapsed" data-id="{{ menu2.id }}">
                                         <div class="dd-handle">
         <i class="{{ menu2.style|default('far fa-circle') }}"></i>&nbsp;<strong>{{ menu2.name }}</strong>&nbsp;&nbsp;&nbsp;
                                             {% if menu2.url!="" and menu2.isAccess==0 %}<a href="{{ path(menu2.url) }}" class="dd-nodrag">{{ path(menu2.url) }}</a>{% endif %}

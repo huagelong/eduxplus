@@ -1,4 +1,2 @@
 parameters:
-  ApiBundle.app.name: "hello center1"
-
 services:

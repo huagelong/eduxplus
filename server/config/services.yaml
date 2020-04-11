@@ -37,3 +37,18 @@ services:
         lazy: true
         arguments:
             $cacheCLient: '@snc_redis.cache'
+
+    arrayGet.twig.extension:
+        class: App\Twig\ArrayGetExtension
+        tags:
+            - { name: twig.extension }
+
+    inArray.twig.extension:
+        class: App\Twig\InArrayExtension
+        tags:
+            - { name: twig.extension }
+
+    option.twig.extension:
+        class: App\Twig\OptionExtension
+        tags:
+            - { name: twig.extension }
