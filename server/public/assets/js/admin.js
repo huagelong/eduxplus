@@ -2,6 +2,32 @@
  * Created by wangkaihui on 2020/4/11.
  */
 $(function(){
+
+    var activeName = "";
+    $(".nav-link").each(function(){
+        var href = $(this).attr("href");
+        if($(this).hasClass("active")){
+            activeName = href
+        }
+        $(this).click(function(){
+            $.Cookie("menu_current", href);
+            return true;
+        });
+    })
+
+    console.log(activeName);
+
+    if(!activeName){
+        activeName = $.Cookie("menu_current");
+    }
+
+    //导航选中处理
+    if(activeName){
+        $(".nav-link[href='"+activeName+"']").parents(".nav-item").find(".nav-link:first").addClass("active");
+        $(".nav-link[href='"+activeName+"']").parents(".nav-item").addClass("menu-open");
+    }
+
+
     var clipboard = new Clipboard('.clipboard');
     clipboard.on('success', function(e) {
         layer.msg("复制成功", {
