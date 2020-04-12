@@ -36,7 +36,6 @@ class Form
      * @return $this
      */
     public function setFormField($title, $type, $field, $isRequire=0, $defaultValue='', $initData=null, $placeholder='', $options=[]){
-        $options = [];
         if($isRequire) $options['data-required']=1;
         if($placeholder) $options['placeholder']= $placeholder;
         if($field){

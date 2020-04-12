@@ -218,9 +218,7 @@ class BaseService extends AbstractFOSRestController
 
         if($rs){
             if($isJson){
-                dump($rs);
                $arr =  json_decode($rs, 1);
-                dump($arr);
                return isset($arr[$index])?$arr[$index]:"";
             }
             return $rs;

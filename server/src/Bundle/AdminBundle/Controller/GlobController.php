@@ -41,4 +41,5 @@ class GlobController extends BaseAdminController
             return $this->json(['error'=>$e->getMessage()]);
         }
     }
+
 }

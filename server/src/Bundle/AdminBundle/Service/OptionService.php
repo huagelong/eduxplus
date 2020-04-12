@@ -17,7 +17,6 @@ class OptionService extends BaseService
 {
 
     protected $paginator;
-    protected $userPasswordEncoder;
 
     public function __construct(PaginatorInterface $paginator)
     {

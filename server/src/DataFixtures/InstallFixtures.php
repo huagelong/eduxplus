@@ -38,7 +38,7 @@ class InstallFixtures extends Fixture
         $this->addOption("app.name", "多学课堂", "应用名称", 1, 1);
         $this->addOption("app.logo", '["/assets/images/logo.png"]', "应用logo", 2, 1);
         $this->addOption("app.user.default.gravatar", '["/assets/images/gravatar.jpeg"]', "用户默认头像", 2, 1);
-        $this->addOption("app.icon", '["/assets/fav.png"]', "应用icon", 2, 1);
+        $this->addOption("app.icon", '["/assets/images/fav.png"]', "应用icon", 2, 1);
         //初始化用户
         $userModel = new BaseUser();
         $uuid = $this->helperService->getUuid();
@@ -95,7 +95,7 @@ class InstallFixtures extends Fixture
         $this->addMenu("角色绑定菜单页面","显示角色绑定菜单页面", $roleMgId,"admin_role_bindmenu", "",5, $roleId, 1, 1, 0);
         $this->addMenu("角色绑定菜单","角色绑定菜单处理", $roleMgId,"admin_api_role_bindmenu", "",6, $roleId, 1, 1, 0);
         $userMgId = $this->addMenu("用户管理","管理用户", $accMenuId,"admin_user_index", "",1, $roleId, 1, 0, 1);
-        $this->addMenu("添加用户页面","显示添加用户页面", $userMgId,"admin_user_add", "",0, $roleId, 1, 1, 0);
+        $this->addMenu("添加页面","显示添加用户页面", $userMgId,"admin_user_add", "",0, $roleId, 1, 1, 0);
         $this->addMenu("添加用户","添加用户处理", $userMgId,"admin_api_user_add", "",1, $roleId, 1, 1, 0);
         $this->addMenu("编辑用户页面","显示编辑用户页面", $userMgId,"admin_user_edit", "",2, $roleId, 1, 1, 0);
         $this->addMenu("编辑用户","编辑用户处理", $userMgId,"admin_api_user_edit", "",3, $roleId, 1, 1, 0);
@@ -104,11 +104,19 @@ class InstallFixtures extends Fixture
         //系统模块
         $sysMenuId = $this->addMenu("系统","系统方面的管理", 0,"", "fa fa-gears",1, $roleId, 1, 0, 1);
         $optionMgId = $this->addMenu("配置","对系统的相关配置", $sysMenuId,"admin_option_index", "",0, $roleId, 1, 0, 1);
-        $this->addMenu("添加配置页面","添加配置页面展示", $optionMgId,"admin_option_add", "",3, $roleId, 1, 1, 0);
-        $this->addMenu("添加配置","添加配置处理", $optionMgId,"admin_api_option_add", "",4, $roleId, 1, 1, 0);
-        $this->addMenu("编辑配置页面","编辑配置页面展示", $optionMgId,"admin_option_edit", "",3, $roleId, 1, 1, 0);
-        $this->addMenu("编辑配置","编辑配置处理", $optionMgId,"admin_api_option_edit", "",4, $roleId, 1, 1, 0);
-        $this->addMenu("删除配置","删除配置处理", $optionMgId,"admin_api_option_delete", "",5, $roleId, 1, 1, 0);
+        $this->addMenu("添加页面","添加配置页面展示", $optionMgId,"admin_option_add", "",3, $roleId, 1, 1, 0);
+        $this->addMenu("添加","添加配置处理", $optionMgId,"admin_api_option_add", "",4, $roleId, 1, 1, 0);
+        $this->addMenu("编辑页面","编辑配置页面展示", $optionMgId,"admin_option_edit", "",3, $roleId, 1, 1, 0);
+        $this->addMenu("编辑","编辑配置处理", $optionMgId,"admin_api_option_edit", "",4, $roleId, 1, 1, 0);
+        $this->addMenu("删除","删除配置处理", $optionMgId,"admin_api_option_delete", "",5, $roleId, 1, 1, 0);
+        //教研
+        $teachMenuId = $this->addMenu("教研","教学产品方面的管理", 0,"", "fa fa-bank",1, $roleId, 1, 0, 1);
+        $agreementMgId = $this->addMenu("协议管理","针对各种协议的管理", $teachMenuId,"admin_teach_agreement_index", "",0, $roleId, 1, 0, 1);
+        $this->addMenu("添加页面","添加页面展示", $agreementMgId,"admin_teach_agreement_add", "",3, $roleId, 1, 1, 0);
+        $this->addMenu("添加","添加处理", $agreementMgId,"admin_api_teach_agreement_add", "",4, $roleId, 1, 1, 0);
+        $this->addMenu("编辑页面","编辑页面展示", $agreementMgId,"admin_teach_agreement_edit", "",3, $roleId, 1, 1, 0);
+        $this->addMenu("编辑","编辑处理", $agreementMgId,"admin_api_teach_agreement_edit", "",4, $roleId, 1, 1, 0);
+        $this->addMenu("删除","删除处理", $agreementMgId,"admin_api_teach_agreement_delete", "",5, $roleId, 1, 1, 0);
 
     }
 

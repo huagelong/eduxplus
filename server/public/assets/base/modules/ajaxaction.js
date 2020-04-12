@@ -26,7 +26,8 @@
                     }
 
                     setTimeout(function(){
-                        if (window.frames.length != parent.frames.length){
+                        // if (window.frames.length != parent.frames.length){
+                        if (self.frameElement && self.frameElement.tagName == "IFRAME") {
                             parent.location.assign(responseText.data._url);
                         }else{
                             location.assign(responseText.data._url);
@@ -73,7 +74,8 @@
                         show(responseText.code, responseText.message);
                     }
                     setTimeout(function(){
-                        if (window.frames.length != parent.frames.length){
+                        // if (window.frames.length != parent.frames.length){
+                        if (self.frameElement && self.frameElement.tagName == "IFRAME") {
                             parent.location.assign(responseText.data._url);
                         }else{
                             location.assign(responseText.data._url);
