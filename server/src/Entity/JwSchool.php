@@ -40,23 +40,30 @@ class JwSchool
     /**
      * @var string|null
      *
-     * @ORM\Column(name="descr", type="text", length=65535, nullable=true, options={"comment"="描叙"})
+     * @ORM\Column(name="descr", type="text", length=65535, nullable=true, options={"comment"="描述"})
      */
     private $descr;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="state_code", type="string", length=64, nullable=true, options={"comment"="省份"})
+     * @ORM\Column(name="state", type="string", length=64, nullable=true, options={"comment"="省份"})
      */
-    private $stateCode;
+    private $state;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="city_id", type="integer", nullable=true, options={"comment"="城市id"})
+     * @ORM\Column(name="city", type="string", nullable=true, options={"comment"="市"})
      */
-    private $cityId;
+    private $city;
+
+    /**
+     * @var int|null
+     *
+     * @ORM\Column(name="region", type="integer", nullable=true, options={"comment"="区、县"})
+     */
+    private $region;
 
     /**
      * @var string|null
@@ -64,13 +71,6 @@ class JwSchool
      * @ORM\Column(name="linkin", type="string", length=100, nullable=true, options={"comment"="联系方式"})
      */
     private $linkin = '';
-
-    /**
-     * @var bool|null
-     *
-     * @ORM\Column(name="status", type="boolean", nullable=true, options={"default"="1","comment"="是否有效"})
-     */
-    private $status = true;
 
     /**
      * @var int|null
@@ -132,26 +132,38 @@ class JwSchool
         return $this;
     }
 
-    public function getStateCode(): ?string
+    public function getState(): ?string
     {
-        return $this->stateCode;
+        return $this->state;
     }
 
-    public function setStateCode(?string $stateCode): self
+    public function setState(?string $state): self
     {
-        $this->stateCode = $stateCode;
+        $this->state = $state;
 
         return $this;
     }
 
-    public function getCityId(): ?int
+    public function getCity(): ?string
     {
-        return $this->cityId;
+        return $this->city;
     }
 
-    public function setCityId(?int $cityId): self
+    public function setCity(?string $city): self
     {
-        $this->cityId = $cityId;
+        $this->city = $city;
+
+        return $this;
+    }
+
+    public function getRegion(): ?int
+    {
+        return $this->region;
+    }
+
+    public function setRegion(?int $region): self
+    {
+        $this->region = $region;
 
         return $this;
     }
@@ -164,18 +176,6 @@ class JwSchool
     public function setLinkin(?string $linkin): self
     {
         $this->linkin = $linkin;
-
-        return $this;
-    }
-
-    public function getStatus(): ?bool
-    {
-        return $this->status;
-    }
-
-    public function setStatus(?bool $status): self
-    {
-        $this->status = $status;
 
         return $this;
     }
@@ -215,6 +215,5 @@ class JwSchool
 
         return $this;
     }
-
 
 }

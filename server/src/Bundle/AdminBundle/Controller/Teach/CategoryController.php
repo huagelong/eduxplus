@@ -29,7 +29,7 @@ class CategoryController extends BaseAdminController
         $form->setFormField("父节点", 'select', 'parentId' ,1, "", function()use($select){
             return $select;
         });
-        $form->setFormField("排序", 'text', 'sort' ,1);
+        $form->setFormField("排序", 'text', 'sort' ,1, 0);
         $form->setFormField("是否展示", 'boole', 'isShow', 1);
 
         $formData = $form->create($this->generateUrl("admin_api_teach_category_add"));

@@ -1,0 +1,51 @@
+{% extends "@AdminBundle/layout/main.html.twig" %}
+
+{% block page_title %}添加学校{% endblock %}
+
+{% block body_javascript %}
+    {{ parent() }}
+    <script src="{{ asset('assets/plugins/jquery-distpicker/distpicker.js') }}"></script>
+    <script>
+        $(function(){
+            $('#distpicker').distpicker();
+        });
+    </script>
+{% endblock %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item"><a href="{{ path("admin_jw_school_index") }}">学校管理</a></li>
+{% endblock %}
+{% block page %}
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card card-default">
+                <form method="POST" action="{{ path("admin_api_jw_school_add") }}" class="form-horizontal ajaxform" accept-charset="UTF-8" >
+                    <div class="card-body" style="display: block;">
+                {{ formData|raw }}
+                        <div class="form-group  row">
+                            <label for="title" class="col-sm-2 require col-form-label">省市:</label>
+                            <div class="btn-group">
+                                <div data-toggle="distpicker" id="distpicker">
+                                    <select data-province="---- 选择省 ----"></select>
+                                    <select data-city="---- 选择市 ----"></select>
+                                    <select data-district="---- 选择区 ----"></select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="col-md-2"></div>
+                        <div class="col-md-8">
+                            <div class="btn-group">
+                                <button type="submit" class="btn btn-sm btn-info " style="margin-right: 10px;">提交</button>
+                                <button type="reset" class="btn btn-default btn-sm reset"><i class="fa fa-undo"></i>&nbsp;&nbsp;重置</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+    </div>
+    </div>
+</section>
+{% endblock %}

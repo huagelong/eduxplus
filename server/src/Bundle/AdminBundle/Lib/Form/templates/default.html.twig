@@ -1,6 +1,6 @@
 {% if formField %}
-<div class="card card-default">
     {% if disableSubmit != 1 %}
+        <div class="card card-default">
         <form method="POST" action="{{ url }}" class="form-horizontal ajaxform" accept-charset="UTF-8" >
             <div class="card-body" style="display: block;">
     {% endif %}
@@ -202,6 +202,6 @@
                     </div>
                 </div>
         </form>
+            </div>
     {% endif %}
-</div>
 {% endif %}

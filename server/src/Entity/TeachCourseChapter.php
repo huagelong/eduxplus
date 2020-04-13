@@ -54,23 +54,23 @@ class TeachCourseChapter
     /**
      * @var bool|null
      *
-     * @ORM\Column(name="is_free", type="boolean", nullable=true, options={"comment"="是否试听课，1-是，0-否"})
+     * @ORM\Column(name="is_free", type="boolean", nullable=true, options={"comment"="是否免费（试听课），1-是，0-否"})
      */
     private $isFree = '0';
 
     /**
      * @var bool|null
      *
-     * @ORM\Column(name="is_del", type="boolean", nullable=true, options={"comment"="1-是，0-否"})
+     * @ORM\Column(name="study_way", type="boolean", nullable=true, options={"comment"="学习方式, 1-线上，2-线下，3-混合"})
      */
-    private $isDel = '0';
+    private $studyWay = '1';
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="fsort", type="integer", nullable=true, options={"comment"="排序"})
+     * @ORM\Column(name="sort", type="integer", nullable=true, options={"comment"="排序"})
      */
-    private $fsort = '0';
+    private $sort = '0';
 
     /**
      * @var int|null
@@ -156,26 +156,26 @@ class TeachCourseChapter
         return $this;
     }
 
-    public function getIsDel(): ?bool
+    public function getStudyWay(): ?bool
     {
-        return $this->isDel;
+        return $this->studyWay;
     }
 
-    public function setIsDel(?bool $isDel): self
+    public function setStudyWay(?bool $studyWay): self
     {
-        $this->isDel = $isDel;
+        $this->studyWay = $studyWay;
 
         return $this;
     }
 
-    public function getFsort(): ?int
+    public function getSort(): ?int
     {
-        return $this->fsort;
+        return $this->sort;
     }
 
-    public function setFsort(?int $fsort): self
+    public function setSort(?int $sort): self
     {
-        $this->fsort = $fsort;
+        $this->sort = $sort;
 
         return $this;
     }
