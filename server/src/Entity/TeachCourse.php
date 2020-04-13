@@ -54,16 +54,16 @@ class TeachCourse
     /**
      * @var int|null
      *
-     * @ORM\Column(name="cate_id", type="integer", nullable=true, options={"comment"="类目id"})
+     * @ORM\Column(name="category_id", type="integer", nullable=true, options={"comment"="类目id"})
      */
-    private $cateId;
+    private $categoryId;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="brand_id", type="integer", nullable=true, options={"comment"="品类id"})
+     * @ORM\Column(name="first_category_id", type="integer", nullable=true, options={"comment"="品类id"})
      */
-    private $brandId;
+    private $firstCategoryId;
 
     /**
      * @var int|null
@@ -165,26 +165,26 @@ class TeachCourse
         return $this;
     }
 
-    public function getCateId(): ?int
+    public function getCategoryId(): ?int
     {
-        return $this->cateId;
+        return $this->categoryId;
     }
 
-    public function setCateId(?int $cateId): self
+    public function setCategoryId(?int $categoryId): self
     {
-        $this->cateId = $cateId;
+        $this->categoryId = $categoryId;
 
         return $this;
     }
 
-    public function getBrandId(): ?int
+    public function getFirstCategoryId(): ?int
     {
-        return $this->brandId;
+        return $this->firstCategoryId;
     }
 
-    public function setBrandId(?int $brandId): self
+    public function setFirstCategoryId(?int $firstCategoryId): self
     {
-        $this->brandId = $brandId;
+        $this->firstCategoryId = $firstCategoryId;
 
         return $this;
     }
@@ -272,6 +272,7 @@ class TeachCourse
 
         return $this;
     }
+
 
 
 }

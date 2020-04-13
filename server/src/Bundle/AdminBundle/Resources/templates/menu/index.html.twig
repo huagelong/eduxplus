@@ -1,4 +1,5 @@
 {% extends "@AdminBundle/layout/main.html.twig" %}
+{% import "@AdminBundle/macros/menu_links.html.twig" as macros %}
 
 {% block page_title %}菜单管理{% endblock %}
 
@@ -12,6 +13,7 @@
     <script src="{{ asset('assets/plugins/jquery-nestable2/jquery.nestable.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/fontawesome-iconpicker/js/fontawesome-iconpicker.min.js') }}"></script>
 {% endblock %}
+
 {% block body_custom_javascript %}
     <script>
         $(function(){
@@ -72,106 +74,7 @@
                 <!-- /.box-header -->
                 <div class="card-body table-responsive no-padding">
                     <div class="dd" id="menu-tree">
-                        <ol class="dd-list">
-                            {% for menu in allMenu[0] %}
-                            <li class="dd-item dd-collapsed" data-id="{{ menu.id }}">
-                                <div class="dd-handle">
-<i class="{{ menu.style|default('far fa-circle') }}"></i>&nbsp;<strong>{{ menu.name }}</strong>&nbsp;&nbsp;&nbsp;
-                                    {% if menu.url!="" and menu.isAccess==0 %}<a href="{{ path(menu.url) }}" class="dd-nodrag">{{ path(menu.url) }}</a>{% endif %}
-                                    <span class="font-weight-lighter"> {{ menu.descr }}</span>
-             {% if menu.isLock %}
-                 <span class="right badge badge-secondary dd-nodrag tip" title="已锁定，不能修改">
-                  <i class="fas fa-lock"></i>
-                </span>
-             {% endif %}
-             {% if menu.isAccess %}
-            <span class="right badge badge-success dd-nodrag tip" title="对象为权限,导航上不会显示">
-                <i class="fas fa-key"></i>
-            </span>
-             {% endif %}
-{% if menu.isLock == 0 %}
-<span class="pull-right dd-nodrag">
-    {% if is_authorized('admin_menu_edit') %}
-<a href="{{ path("admin_menu_edit", {"id":menu.id}) }}" data-title="编辑"  class="mypoppage"><i class="fas fa-edit"></i></a>
-    {% endif %}
-    {% if is_authorized('admin_api_menu_delete') %}
-<a href="{{ path("admin_api_menu_delete", {"id":menu.id}) }}"  data-confirm="确认要删除吗?" class="tree_branch_delete ajaxDelete"><i class="fas fa-trash"></i></>
-    {% endif %}
-</span>
-{% endif %}
-                                </div>
-                                {% if allMenu[menu.id] is defined %}
-                                <ol class="dd-list">
-                                    {% for menu2 in allMenu[menu.id] %}
-                                    <li class="dd-item dd-collapsed" data-id="{{ menu2.id }}">
-                                        <div class="dd-handle">
-        <i class="{{ menu2.style|default('far fa-circle') }}"></i>&nbsp;<strong>{{ menu2.name }}</strong>&nbsp;&nbsp;&nbsp;
-                                            {% if menu2.url!="" and menu2.isAccess==0 %}<a href="{{ path(menu2.url) }}" class="dd-nodrag">{{ path(menu2.url) }}</a>{% endif %}
-                                            <span class="font-weight-lighter"> {{ menu2.descr }}</span>
-{% if menu2.isLock %}
-    <span class="right badge badge-secondary dd-nodrag tip" title="已锁定，不能修改">
-<i class="fas fa-lock"></i>
-</span>
-{% endif %}
-{% if menu2.isAccess %}
-    <span class="right badge badge-success dd-nodrag tip" title="对象为权限,导航上不会显示">
-<i class="fas fa-key"></i>
-</span>
-{% endif %}
-{% if menu2.isLock == 0 %}
-    <span class="pull-right dd-nodrag">
-        {% if is_authorized('admin_menu_edit') %}
-<a href="{{ path("admin_menu_edit", {"id":menu2.id}) }}" data-title="编辑" class="mypoppage"><i class="fas fa-edit"></i></a>
-        {% endif %}
-        {% if is_authorized('admin_api_menu_delete') %}
-<a href="{{ path("admin_api_menu_delete", {"id":menu2.id}) }}" data-confirm="确认要删除吗?" class="tree_branch_delete ajaxDelete"><i class="fas fa-trash"></i></a>
-        {% endif %}
-    </span>
-{% endif %}
-                                        </div>
-                                        {#第三级#}
-                                        {% if allMenu[menu2.id] is defined %}
-                                            <ol class="dd-list">
-                                                {% for menu3 in allMenu[menu2.id] %}
-                                                    <li class="dd-item" data-id="{{ menu3.id }}">
-                                                        <div class="dd-handle">
-                                                            <i class="{{ menu3.style|default('far fa-circle') }}"></i>&nbsp;<strong>{{ menu3.name }}</strong>&nbsp;&nbsp;&nbsp;
-                                                            {% if menu3.url!="" and menu3.isAccess==0 %}<a href="{{ path(menu3.url) }}" class="dd-nodrag">{{ path(menu3.url) }}</a>{% endif %}
-                                                            <span class="font-weight-lighter"> {{ menu3.descr }}</span>
-{% if menu3.isLock %}
-    <span class="right badge badge-secondary dd-nodrag tip" title="已锁定，不能修改">
-<i class="fas fa-lock"></i>
-</span>
-{% endif %}
-{% if menu3.isAccess %}
-    <span class="right badge badge-success dd-nodrag tip" title="对象为权限,导航上不会显示">
-<i class="fas fa-key"></i>
-</span>
-{% endif %}
-{% if menu3.isLock == 0 %}
-    <span class="pull-right dd-nodrag">
-        {% if is_authorized('admin_menu_edit') %}
-        <a href="{{ path("admin_menu_edit", {"id":menu3.id}) }}" data-title="编辑"  class="mypoppage"><i class="fas fa-edit"></i></a>
-        {% endif %}
-        {% if is_authorized('admin_api_menu_delete') %}
-        <a href="{{ path("admin_api_menu_delete", {"id":menu3.id}) }}"  data-confirm="确认要删除吗?" class="tree_branch_delete ajaxDelete"><i class="fas fa-trash"></i></a>
-        {% endif %}
-    </span>
-{% endif %}
-                                                        </div>
-                                                    </li>
-                                                {% endfor %}
-                                            </ol>
-                                        {% endif %}
-
-                                    </li>
-                                    {% endfor %}
-                                </ol>
-                                {% endif %}
-                            </li>
-                            {% endfor %}
-
-                        </ol>
+                        {{ macros.menu_links(allMenu, 0) }}
                     </div>
                 </div>
                 <!-- /.box-body -->
@@ -189,7 +92,7 @@
                                 <label class="col-sm-2 require col-form-label">父级菜单</label>
                                 <div class="col-sm-8">
                                     <select class="form-control form-control-sm select2" style="width: 100%;" name="parent_id" data-value="" >
-                                        <option value="0">ROOT</option>
+                                        <option value="0">root</option>
                                         {% if menuSelect %}
                                             {% for menus in menuSelect %}
                                         <option value="{{ menus.id }}">{{ menus.name|raw }}</option>

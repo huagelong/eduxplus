@@ -40,16 +40,16 @@ class MallGoods
     /**
      * @var int|null
      *
-     * @ORM\Column(name="cate_id", type="integer", nullable=true, options={"comment"="分类id"})
+     * @ORM\Column(name="category_id", type="integer", nullable=true, options={"comment"="类目id"})
      */
-    private $cateId = '0';
+    private $categoryId;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="brand_id", type="integer", nullable=true, options={"comment"="品类id"})
+     * @ORM\Column(name="first_category_id", type="integer", nullable=true, options={"comment"="品类id"})
      */
-    private $brandId;
+    private $firstCategoryId;
 
     /**
      * @var int|null
@@ -124,13 +124,6 @@ class MallGoods
     /**
      * @var string|null
      *
-     * @ORM\Column(name="recommended_img", type="string", length=250, nullable=true, options={"comment"="推荐图"})
-     */
-    private $recommendedImg;
-
-    /**
-     * @var string|null
-     *
      * @ORM\Column(name="goods_small_img", type="string", length=250, nullable=true, options={"comment"="商品默认小图对应的标签"})
      */
     private $goodsSmallImg;
@@ -138,7 +131,7 @@ class MallGoods
     /**
      * @var bool|null
      *
-     * @ORM\Column(name="is_show", type="boolean", nullable=true, options={"comment"="是否上架,0-下家,1-上架"})
+     * @ORM\Column(name="is_show", type="boolean", nullable=true, options={"comment"="是否上架,0-下架,1-上架"})
      */
     private $isShow = '0';
 
@@ -225,26 +218,26 @@ class MallGoods
         return $this;
     }
 
-    public function getCateId(): ?int
+    public function getCategoryId(): ?int
     {
-        return $this->cateId;
+        return $this->categoryId;
     }
 
-    public function setCateId(?int $cateId): self
+    public function setCategoryId(?int $categoryId): self
     {
-        $this->cateId = $cateId;
+        $this->categoryId = $categoryId;
 
         return $this;
     }
 
-    public function getBrandId(): ?int
+    public function getFirstCategoryId(): ?int
     {
-        return $this->brandId;
+        return $this->firstCategoryId;
     }
 
-    public function setBrandId(?int $brandId): self
+    public function setFirstCategoryId(?int $firstCategoryId): self
     {
-        $this->brandId = $brandId;
+        $this->firstCategoryId = $firstCategoryId;
 
         return $this;
     }
@@ -365,18 +358,6 @@ class MallGoods
     public function setGoodsImg(?string $goodsImg): self
     {
         $this->goodsImg = $goodsImg;
-
-        return $this;
-    }
-
-    public function getRecommendedImg(): ?string
-    {
-        return $this->recommendedImg;
-    }
-
-    public function setRecommendedImg(?string $recommendedImg): self
-    {
-        $this->recommendedImg = $recommendedImg;
 
         return $this;
     }

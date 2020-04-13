@@ -30,19 +30,20 @@ class TeachCategory
      */
     private $name = '';
 
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="find_path", type="string", length=90, nullable=false, options={"comment"="分类路由,以,隔开"})
+     */
+    private $findPath = '';
+
     /**
      * @var int
      *
      * @ORM\Column(name="parent_id", type="integer", nullable=false, options={"unsigned"=true,"comment"="父id"})
      */
     private $parentId = '0';
-
-    /**
-     * @var int|null
-     *
-     * @ORM\Column(name="brand_id", type="integer", nullable=true, options={"comment"="品类id"})
-     */
-    private $brandId;
 
     /**
      * @var int|null
@@ -106,18 +107,6 @@ class TeachCategory
         return $this;
     }
 
-    public function getBrandId(): ?int
-    {
-        return $this->brandId;
-    }
-
-    public function setBrandId(?int $brandId): self
-    {
-        $this->brandId = $brandId;
-
-        return $this;
-    }
-
     public function getSort(): ?int
     {
         return $this->sort;
@@ -174,6 +163,18 @@ class TeachCategory
     public function setDeletedAt(?\DateTimeInterface $deletedAt): self
     {
         $this->deletedAt = $deletedAt;
+
+        return $this;
+    }
+
+    public function getFindPath(): ?string
+    {
+        return $this->findPath;
+    }
+
+    public function setFindPath(string $findPath): self
+    {
+        $this->findPath = $findPath;
 
         return $this;
     }

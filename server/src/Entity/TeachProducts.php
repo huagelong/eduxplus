@@ -33,9 +33,9 @@ class TeachProducts
     /**
      * @var int|null
      *
-     * @ORM\Column(name="cate_id", type="integer", nullable=true, options={"comment"="分类id"})
+     * @ORM\Column(name="category_id", type="integer", nullable=true, options={"comment"="类目id"})
      */
-    private $cateId;
+    private $categoryId;
 
     /**
      * @var string|null
@@ -109,14 +109,14 @@ class TeachProducts
         return $this;
     }
 
-    public function getCateId(): ?int
+    public function getCategoryId(): ?int
     {
-        return $this->cateId;
+        return $this->categoryId;
     }
 
-    public function setCateId(?int $cateId): self
+    public function setCategoryId(?int $categoryId): self
     {
-        $this->cateId = $cateId;
+        $this->categoryId = $categoryId;
 
         return $this;
     }
@@ -216,6 +216,5 @@ class TeachProducts
 
         return $this;
     }
-
 
 }
