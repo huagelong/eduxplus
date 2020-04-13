@@ -40,16 +40,9 @@ class JwClasses
     /**
      * @var int|null
      *
-     * @ORM\Column(name="study_plan_id", type="integer", nullable=true, options={"comment"="学习计划"})
+     * @ORM\Column(name="study_plan_id", type="integer", nullable=true, options={"comment"="学习计划id"})
      */
     private $studyPlanId;
-
-    /**
-     * @var int|null
-     *
-     * @ORM\Column(name="max_member_number", type="integer", nullable=true, options={"comment"="最大班级人数，自动分班用"})
-     */
-    private $maxMemberNumber;
 
     /**
      * @var int|null
@@ -118,18 +111,6 @@ class JwClasses
         return $this;
     }
 
-    public function getMaxMemberNumber(): ?int
-    {
-        return $this->maxMemberNumber;
-    }
-
-    public function setMaxMemberNumber(?int $maxMemberNumber): self
-    {
-        $this->maxMemberNumber = $maxMemberNumber;
-
-        return $this;
-    }
-
     public function getProductId(): ?int
     {
         return $this->productId;
@@ -177,6 +158,5 @@ class JwClasses
 
         return $this;
     }
-
 
 }

@@ -54,7 +54,7 @@ class TeachCourseChapter
     /**
      * @var bool|null
      *
-     * @ORM\Column(name="is_free", type="boolean", nullable=true, options={"comment"="1-是，0-否"})
+     * @ORM\Column(name="is_free", type="boolean", nullable=true, options={"comment"="是否试听课，1-是，0-否"})
      */
     private $isFree = '0';
 

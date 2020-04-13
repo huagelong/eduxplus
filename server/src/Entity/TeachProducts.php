@@ -44,6 +44,7 @@ class TeachProducts
      */
     private $descr;
 
+
     /**
      * @var int|null
      *
@@ -57,6 +58,13 @@ class TeachProducts
      * @ORM\Column(name="status", type="boolean", nullable=true, options={"comment"="0-草稿，2-上架,1-下架"})
      */
     private $status;
+
+    /**
+     * @var bool|null
+     *
+     * @ORM\Column(name="study_plan_auto", type="boolean", nullable=true, options={"comment"="是否根据报名时间自动更新学习计划,1-是，0-否"})
+     */
+    private $studyPlanAuto;
 
     /**
      * @var int|null
@@ -76,6 +84,13 @@ class TeachProducts
      * @ORM\Column(name="deleted_at", type="datetime", nullable=true)
      */
     private $deletedAt;
+
+    /**
+     * @var int|null
+     *
+     * @ORM\Column(name="max_member_number", type="integer", nullable=true, options={"comment"="自动分班，最大班级人数"})
+     */
+    private $maxMemberNumber;
 
     public function getId(): ?int
     {
@@ -142,6 +157,18 @@ class TeachProducts
         return $this;
     }
 
+    public function getStudyPlanAuto(): ?bool
+    {
+        return $this->studyPlanAuto;
+    }
+
+    public function setStudyPlanAuto(?bool $studyPlanAuto): self
+    {
+        $this->studyPlanAuto = $studyPlanAuto;
+
+        return $this;
+    }
+
     public function getCreatedAt(): ?\DateTimeInterface
     {
         return $this->createdAt;
@@ -174,6 +201,18 @@ class TeachProducts
     public function setDeletedAt(?\DateTimeInterface $deletedAt): self
     {
         $this->deletedAt = $deletedAt;
+
+        return $this;
+    }
+
+    public function getMaxMemberNumber(): ?int
+    {
+        return $this->maxMemberNumber;
+    }
+
+    public function setMaxMemberNumber(?int $maxMemberNumber): self
+    {
+        $this->maxMemberNumber = $maxMemberNumber;
 
         return $this;
     }

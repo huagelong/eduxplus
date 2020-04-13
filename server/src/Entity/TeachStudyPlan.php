@@ -31,16 +31,29 @@ class TeachStudyPlan
     private $name;
 
     /**
-     * @var bool|null
+     * @var int|null
      *
-     * @ORM\Column(name="is_default", type="boolean", nullable=true, options={"comment"="是否默认计划"})
+     * @ORM\Column(name="product_id", type="integer", nullable=true, options={"comment"="产品id"})
      */
-    private $isDefault;
+    private $productId;
+
+    /**
+     * @var int|null
+     * @ORM\Column(name="applyed_at", type="datetime", nullable=true, options={"comment"="预计报名时间，程序根据预计报名时间给出预警"})
+     */
+    private $applyedAt;
 
     /**
      * @var bool|null
      *
-     * @ORM\Column(name="is_block", type="boolean", nullable=true, options={"comment"="是否挡板"})
+     * @ORM\Column(name="is_default", type="boolean", nullable=true, options={"comment"="是否当前默认计划"})
+     */
+    private $isDefault=0;
+
+    /**
+     * @var bool|null
+     *
+     * @ORM\Column(name="is_block", type="boolean", nullable=true, options={"comment"="是否有挡板，必须一节节往下看"})
      */
     private $isBlock;
 
@@ -76,6 +89,30 @@ class TeachStudyPlan
     public function setName(?string $name): self
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    public function getProductId(): ?int
+    {
+        return $this->productId;
+    }
+
+    public function setProductId(?int $productId): self
+    {
+        $this->productId = $productId;
+
+        return $this;
+    }
+
+    public function getApplyedAt(): ?\DateTimeInterface
+    {
+        return $this->applyedAt;
+    }
+
+    public function setApplyedAt(?\DateTimeInterface $applyedAt): self
+    {
+        $this->applyedAt = $applyedAt;
 
         return $this;
     }
@@ -139,6 +176,4 @@ class TeachStudyPlan
 
         return $this;
     }
-
-
 }

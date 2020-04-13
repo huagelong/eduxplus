@@ -33,6 +33,13 @@ class TeachStudyPlanSub
     /**
      * @var int|null
      *
+     * @ORM\Column(name="sort", type="integer", nullable=true, options={"comment"="排序"})
+     */
+    private $sort = '0';
+
+    /**
+     * @var int|null
+     *
      * @ORM\Column(name="course_id", type="integer", nullable=true, options={"comment"="课程"})
      */
     private $courseId;
@@ -69,6 +76,18 @@ class TeachStudyPlanSub
     public function setStudyPlanId(?int $studyPlanId): self
     {
         $this->studyPlanId = $studyPlanId;
+
+        return $this;
+    }
+
+    public function getSort(): ?int
+    {
+        return $this->sort;
+    }
+
+    public function setSort(?int $sort): self
+    {
+        $this->sort = $sort;
 
         return $this;
     }
@@ -120,6 +139,4 @@ class TeachStudyPlanSub
 
         return $this;
     }
-
-
 }

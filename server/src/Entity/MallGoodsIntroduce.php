@@ -33,7 +33,7 @@ class MallGoodsIntroduce
     /**
      * @var bool|null
      *
-     * @ORM\Column(name="introduce_type", type="boolean", nullable=true, options={"comment"="课程介绍类型,1-版型介绍， 2-特色服务，3-适用人群，4-学习目标，0-图文介绍"})
+     * @ORM\Column(name="introduce_type", type="boolean", nullable=true, options={"comment"="课程介绍类型 1-课程试听, 2-班型介绍， 3-特色服务，4-适用人群，5-学习目标, 6-图文介绍"})
      */
     private $introduceType = '0';
 
@@ -43,6 +43,13 @@ class MallGoodsIntroduce
      * @ORM\Column(name="content", type="text", length=65535, nullable=true, options={"comment"="课程介绍内容"})
      */
     private $content;
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="course_chapter_id", type="text", length=65535, nullable=true, options={"comment"="视频章节ID"})
+     */
+    private $courseChapterId;
 
     /**
      * @var int|null
@@ -62,13 +69,6 @@ class MallGoodsIntroduce
      * @ORM\Column(name="deleted_at", type="datetime", nullable=true)
      */
     private $deletedAt;
-
-    /**
-     * @var string|null
-     *
-     * @ORM\Column(name="href", type="text", length=65535, nullable=true, options={"comment"="视频ID"})
-     */
-    private $href;
 
     public function getId(): ?int
     {
@@ -111,6 +111,18 @@ class MallGoodsIntroduce
         return $this;
     }
 
+    public function getCourseChapterId(): ?string
+    {
+        return $this->courseChapterId;
+    }
+
+    public function setCourseChapterId(?string $courseChapterId): self
+    {
+        $this->courseChapterId = $courseChapterId;
+
+        return $this;
+    }
+
     public function getCreatedAt(): ?\DateTimeInterface
     {
         return $this->createdAt;
@@ -135,18 +147,6 @@ class MallGoodsIntroduce
         return $this;
     }
 
-    public function getHref(): ?string
-    {
-        return $this->href;
-    }
-
-    public function setHref(?string $href): self
-    {
-        $this->href = $href;
-
-        return $this;
-    }
-
     public function getDeletedAt(): ?\DateTimeInterface
     {
         return $this->deletedAt;
@@ -158,6 +158,5 @@ class MallGoodsIntroduce
 
         return $this;
     }
-
 
 }

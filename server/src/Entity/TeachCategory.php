@@ -52,13 +52,6 @@ class TeachCategory
     private $sort;
 
     /**
-     * @var bool|null
-     *
-     * @ORM\Column(name="is_delete", type="boolean", nullable=true, options={"comment"="是否删除"})
-     */
-    private $isDelete = '0';
-
-    /**
      * @var bool
      *
      * @ORM\Column(name="is_show", type="boolean", nullable=false, options={"default"="1","comment"="是否显示"})
@@ -137,18 +130,6 @@ class TeachCategory
         return $this;
     }
 
-    public function getIsDelete(): ?bool
-    {
-        return $this->isDelete;
-    }
-
-    public function setIsDelete(?bool $isDelete): self
-    {
-        $this->isDelete = $isDelete;
-
-        return $this;
-    }
-
     public function getIsShow(): ?bool
     {
         return $this->isShow;
@@ -196,7 +177,5 @@ class TeachCategory
 
         return $this;
     }
-
-
 
 }

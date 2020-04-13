@@ -40,7 +40,7 @@ class MallGoodsGroup
     /**
      * @var string
      *
-     * @ORM\Column(name="group_goods__id", type="string", length=100, nullable=false, options={"comment"="组名下商品id"})
+     * @ORM\Column(name="group_goods_id", type="string", length=100, nullable=false, options={"comment"="组名下商品id"})
      */
     private $groupGoodsId = '';
 

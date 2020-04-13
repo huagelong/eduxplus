@@ -59,23 +59,16 @@ class MallGoods
     private $productId;
 
     /**
-     * @var int|null
-     *
-     * @ORM\Column(name="study_plan_id", type="integer", nullable=true, options={"comment"="学习计划,可为空，如果不为空，直接分班"})
-     */
-    private $studyPlanId;
-
-    /**
      * @var bool|null
      *
      * @ORM\Column(name="type", type="boolean", nullable=true, options={"default"="1","comment"="1-直播,2-录播,3-混合"})
      */
-    private $type = true;
+    private $type = 1;
 
     /**
      * @var bool|null
      *
-     * @ORM\Column(name="teaching_method", type="boolean", nullable=true, options={"comment"="授课方式1.面授2.直播3.面授+直播4录播5.VIP"})
+     * @ORM\Column(name="teaching_method", type="boolean", nullable=true, options={"comment"="授课方式 1.面授 2.直播 4.录播 5.面授+直播 6.直播+录播"})
      */
     private $teachingMethod;
 
@@ -91,35 +84,35 @@ class MallGoods
      *
      * @ORM\Column(name="course_hour", type="integer", nullable=true, options={"comment"="课时，乘以10"})
      */
-    private $courseHour;
+    private $courseHour = '0';
 
     /**
      * @var int|null
      *
      * @ORM\Column(name="course_count", type="integer", nullable=true, options={"comment"="课次数"})
      */
-    private $courseCount;
+    private $courseCount = '0';
 
     /**
      * @var int|null
      *
      * @ORM\Column(name="market_price", type="integer", nullable=true, options={"comment"="成本价,乘以100"})
      */
-    private $marketPrice;
+    private $marketPrice = '0';
 
     /**
      * @var int|null
      *
      * @ORM\Column(name="shop_price", type="integer", nullable=true, options={"comment"="售价,乘以100"})
      */
-    private $shopPrice;
+    private $shopPrice = '0';
 
     /**
      * @var int|null
      *
      * @ORM\Column(name="buy_number", type="integer", nullable=true, options={"comment"="购买人数"})
      */
-    private $buyNumber;
+    private $buyNumber = '0';
 
     /**
      * @var string|null
@@ -154,14 +147,14 @@ class MallGoods
      *
      * @ORM\Column(name="creater_uid", type="integer", nullable=true, options={"comment"="后台创建人"})
      */
-    private $createrUid;
+    private $createrUid = '0';
 
     /**
-     * @var bool|null
+     * @var int|null
      *
-     * @ORM\Column(name="recommended_position", type="boolean", nullable=true, options={"comment"="5个位置，每个位置只能有一个"})
+     * @ORM\Column(name="sort", type="integer", nullable=true, options={"comment"="排序"})
      */
-    private $recommendedPosition = '0';
+    private $sort = '0';
 
     /**
      * @var bool
@@ -173,7 +166,7 @@ class MallGoods
     /**
      * @var bool|null
      *
-     * @ORM\Column(name="group_type", type="boolean", nullable=true, options={"comment"="1-选择,2-全部"})
+     * @ORM\Column(name="group_type", type="boolean", nullable=true, options={"comment"="1-可选,2-全部"})
      */
     private $groupType = '0';
 
@@ -264,18 +257,6 @@ class MallGoods
     public function setProductId(?int $productId): self
     {
         $this->productId = $productId;
-
-        return $this;
-    }
-
-    public function getStudyPlanId(): ?int
-    {
-        return $this->studyPlanId;
-    }
-
-    public function setStudyPlanId(?int $studyPlanId): self
-    {
-        $this->studyPlanId = $studyPlanId;
 
         return $this;
     }
@@ -436,14 +417,14 @@ class MallGoods
         return $this;
     }
 
-    public function getRecommendedPosition(): ?bool
+    public function getSort(): ?int
     {
-        return $this->recommendedPosition;
+        return $this->sort;
     }
 
-    public function setRecommendedPosition(?bool $recommendedPosition): self
+    public function setSort(?int $sort): self
     {
-        $this->recommendedPosition = $recommendedPosition;
+        $this->sort = $sort;
 
         return $this;
     }
@@ -519,6 +500,5 @@ class MallGoods
 
         return $this;
     }
-
 
 }
