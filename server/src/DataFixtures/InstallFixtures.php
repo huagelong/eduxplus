@@ -111,12 +111,21 @@ class InstallFixtures extends Fixture
         $this->addMenu("删除","删除配置处理", $optionMgId,"admin_api_option_delete", "",5, $roleId, 1, 1, 0);
         //教研
         $teachMenuId = $this->addMenu("教研","教学产品方面的管理", 0,"", "fa fa-bank",1, $roleId, 1, 0, 1);
+        //协议
         $agreementMgId = $this->addMenu("协议管理","针对各种协议的管理", $teachMenuId,"admin_teach_agreement_index", "",0, $roleId, 1, 0, 1);
         $this->addMenu("添加页面","添加页面展示", $agreementMgId,"admin_teach_agreement_add", "",3, $roleId, 1, 1, 0);
         $this->addMenu("添加","添加处理", $agreementMgId,"admin_api_teach_agreement_add", "",4, $roleId, 1, 1, 0);
         $this->addMenu("编辑页面","编辑页面展示", $agreementMgId,"admin_teach_agreement_edit", "",3, $roleId, 1, 1, 0);
         $this->addMenu("编辑","编辑处理", $agreementMgId,"admin_api_teach_agreement_edit", "",4, $roleId, 1, 1, 0);
         $this->addMenu("删除","删除处理", $agreementMgId,"admin_api_teach_agreement_delete", "",5, $roleId, 1, 1, 0);
+        //品类
+        $mgId = $this->addMenu("品类管理","品类的管理", $teachMenuId,"admin_teach_brand_index", "",0, $roleId, 1, 0, 1);
+        $this->addMenu("添加页面","添加页面展示", $mgId,"admin_teach_brand_add", "",3, $roleId, 1, 1, 0);
+        $this->addMenu("添加","添加处理", $mgId,"admin_api_teach_brand_add", "",4, $roleId, 1, 1, 0);
+        $this->addMenu("编辑页面","编辑页面展示", $mgId,"admin_teach_brand_edit", "",3, $roleId, 1, 1, 0);
+        $this->addMenu("编辑","编辑处理", $mgId,"admin_api_teach_brand_edit", "",4, $roleId, 1, 1, 0);
+        $this->addMenu("删除","删除处理", $mgId,"admin_api_teach_brand_delete", "",5, $roleId, 1, 1, 0);
+
 
     }
 

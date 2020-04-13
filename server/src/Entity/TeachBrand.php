@@ -45,13 +45,6 @@ class TeachBrand
     private $sort;
 
     /**
-     * @var bool|null
-     *
-     * @ORM\Column(name="is_delete", type="boolean", nullable=true, options={"comment"="是否删除"})
-     */
-    private $isDelete = '0';
-
-    /**
      * @var int|null
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(name="created_at", type="datetime", nullable=true)
@@ -111,18 +104,6 @@ class TeachBrand
         return $this;
     }
 
-    public function getIsDelete(): ?bool
-    {
-        return $this->isDelete;
-    }
-
-    public function setIsDelete(?bool $isDelete): self
-    {
-        $this->isDelete = $isDelete;
-
-        return $this;
-    }
-
     public function getCreatedAt(): ?\DateTimeInterface
     {
         return $this->createdAt;
@@ -158,6 +139,5 @@ class TeachBrand
 
         return $this;
     }
-
 
 }
