@@ -63,7 +63,7 @@
 				map.panTo(r.point);
 			}else {
 				//alert('failed'+this.getStatus());
-			}        
+			}
 		},{enableHighAccuracy: true})*/
 
 		var gc = new BMap.Geocoder();
@@ -100,7 +100,7 @@
 		var keyword = document.getElementById("kw").value;
 		localSearch.setSearchCompleteCallback(function (searchResult) {
 			console.log(searchResult);
-			if(searchResult.Qq.length==0){
+			if(searchResult.Uq.length==0){
 				alert('搜索不到该地区');
 				return false;
 			}
