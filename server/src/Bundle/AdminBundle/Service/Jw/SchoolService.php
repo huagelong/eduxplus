@@ -32,13 +32,23 @@ class SchoolService extends BaseService
             $page,
             $pageSize
         );
-        return $pagination;
+
+        $items = $pagination->getItems();
+        $itemsArr = [];
+        if($items){
+            foreach ($items as $v){
+                $vArr =  $this->toArray($v);
+                $vArr['stateCity'] = $vArr['state']."-".$vArr['city']."-".$vArr['region'];
+                $itemsArr[] = $vArr;
+            }
+        }
+        return [$pagination, $itemsArr];
     }
 
     public function add($name, $descr, $address, $linkin, $state, $city, $region){
         $model = new JwSchool();
         $model->setName($name);
-        $model->setDescr($descr);
+        if($descr) $model->setDescr($descr);
         $model->setAddress($address);
         $model->setLinkin($linkin);
         $model->setState($state);

@@ -39,6 +39,7 @@ class InstallFixtures extends Fixture
         $this->addOption("app.logo", '["/assets/images/logo.png"]', "应用logo", 2, 1);
         $this->addOption("app.user.default.gravatar", '["/assets/images/gravatar.jpeg"]', "用户默认头像", 2, 1);
         $this->addOption("app.icon", '["/assets/images/fav.png"]', "应用icon", 2, 1);
+        $this->addOption("app.domain", 'http://www.eduxplus.test/', "应用域名网址", 1, 1);
         //初始化用户
         $userModel = new BaseUser();
         $uuid = $this->helperService->getUuid();

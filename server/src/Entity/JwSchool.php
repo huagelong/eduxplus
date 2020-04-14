@@ -61,7 +61,7 @@ class JwSchool
     /**
      * @var int|null
      *
-     * @ORM\Column(name="region", type="integer", nullable=true, options={"comment"="区、县"})
+     * @ORM\Column(name="region", type="string", nullable=true, options={"comment"="区、县"})
      */
     private $region;
 
@@ -156,12 +156,12 @@ class JwSchool
         return $this;
     }
 
-    public function getRegion(): ?int
+    public function getRegion(): ?string
     {
         return $this->region;
     }
 
-    public function setRegion(?int $region): self
+    public function setRegion(?string $region): self
     {
         $this->region = $region;
 

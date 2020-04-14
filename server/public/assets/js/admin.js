@@ -179,9 +179,10 @@ $(function(){
         var height = $(this).data('height');
         width = width?width:"800";
         height = height?height:"200";
-        console.log(height);
         tinymce.init({
             selector: "#"+id,
+            convert_urls : false,
+            document_base_url:"http://www.eduxplus.test/assets/plugins/tinymce",
             width:width,
             min_height: height,
             plugins :  'print preview searchreplace autolink directionality visualblocks visualchars fullscreen image link media template code codesample table charmap hr pagebreak nonbreaking anchor insertdatetime advlist lists wordcount imagetools textpattern help emoticons autosave bdmap indent2em autoresize lineheight',

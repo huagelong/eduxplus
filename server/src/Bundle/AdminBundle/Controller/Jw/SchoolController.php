@@ -110,6 +110,7 @@ class SchoolController extends BaseAdminController
         $formData = $form->create($this->generateUrl("admin_api_jw_school_edit", ['id'=>$id]));
         $data = [];
         $data["formData"] = $formData;
+        $data['info'] = $info;
         return $this->render("@AdminBundle/jw/school/edit.html.twig", $data);
     }
 
