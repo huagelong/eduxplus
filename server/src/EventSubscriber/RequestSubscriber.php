@@ -10,15 +10,10 @@ namespace App\EventSubscriber;
 
 
 use App\Bundle\AdminBundle\Service\MenuService;
-use App\Bundle\AppBundle\Lib\Base\BaseAdminController;
-use App\Bundle\AppBundle\Lib\Base\BaseApiController;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
-use Symfony\Component\HttpKernel\Event\ViewEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
-use Symfony\Component\HttpKernel\Event\ControllerEvent;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Stopwatch\Stopwatch;
 
 class RequestSubscriber implements EventSubscriberInterface
@@ -36,7 +31,6 @@ class RequestSubscriber implements EventSubscriberInterface
     {
         return [
             KernelEvents::REQUEST=>['onKernelRequest', 9999],
-            KernelEvents::CONTROLLER => ['onKernelController', 9999],
             KernelEvents::RESPONSE=>['onKernelResponse', -9999]
         ];
     }
@@ -70,59 +64,5 @@ class RequestSubscriber implements EventSubscriberInterface
             }
             $response->setContent(json_encode($responseData, true));
         }
-    }
-
-    public function onKernelController(ControllerEvent $event)
-    {
-        if (!$event->isMasterRequest()) {
-            return true;
-        }
-        $request = $event->getRequest();
-        $controller = $event->getController();
-
-        if (is_array($controller)) {
-            $controller = $controller[0];
-        }
-
-        //admin
-//        if ($controller instanceof BaseAdminController) {
-//            $route = $request->get("_route");
-//            $session = $request->getSession();
-//            $session->set("_route", $route);
-//            $uid = $this->menuService->getUid();
-//            //权限验证
-//            if($uid){
-//                $allMenu = $this->menuService->getMyMenuUrl($uid);
-//                if(!in_array($route, $allMenu)){
-//                    throw new AccessDeniedException("没有权限!");
-//                }
-//            }
-//        }
-
-        //api
-        if ($controller instanceof BaseApiController) {
-
-            $sign = $request->headers->get("X-AUTH-SIGN");
-            $debug = $request->headers->get("X-AUTH-DEBUG");
-
-            $env = $_SERVER['APP_ENV'];
-            if(($env === 'dev') && $debug){
-                return true;
-            }
-
-            if($sign){
-                try {
-                    $realSign = base64_decode($sign);
-                    list($time, $sign) = json_decode($realSign, true);
-
-                }catch (\Exception $e){
-                    throw new AccessDeniedException("This api needs X-AUTH-SIGN");
-                }
-            }else{
-                throw new AccessDeniedException("This api needs X-AUTH-SIGN");
-            }
-        }
-
-        return true;
     }
 }
