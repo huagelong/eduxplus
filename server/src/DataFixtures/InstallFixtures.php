@@ -133,7 +133,7 @@ class InstallFixtures extends Fixture
         //教务
         $jwMenuId = $this->addMenu("教务","教务方面的管理", 0,"", "fa fa-envira",2, $roleId, 1, 0, 1);
         //学校管理
-        $mgId = $this->addMenu("学校管理","学校信息管理", $jwMenuId,"admin_jw_school_index", "",0, $roleId, 1, 0, 1);
+        $mgId = $this->addMenu("校区管理","校区信息管理", $jwMenuId,"admin_jw_school_index", "",0, $roleId, 1, 0, 1);
         $this->addMenu("添加页面","添加页面展示", $mgId,"admin_jw_school_add", "",3, $roleId, 1, 1, 0);
         $this->addMenu("添加","添加处理", $mgId,"admin_api_jw_school_add", "",4, $roleId, 1, 1, 0);
         $this->addMenu("编辑页面","编辑页面展示", $mgId,"admin_jw_school_edit", "",3, $roleId, 1, 1, 0);

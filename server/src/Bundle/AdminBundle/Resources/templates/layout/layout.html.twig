@@ -22,6 +22,11 @@
 
 {% block head_javascript %}
     {{ parent() }}
+    <script>
+        var globOption = {
+            appDomain:"{{ option("app.domain") }}"
+        }
+    </script>
     <script src="{{ asset('assets/plugins/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('assets/admlte/js/adminlte.min.js') }}"></script>

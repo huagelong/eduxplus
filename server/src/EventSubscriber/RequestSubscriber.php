@@ -23,8 +23,6 @@ use Symfony\Component\Stopwatch\Stopwatch;
 
 class RequestSubscriber implements EventSubscriberInterface
 {
-
-
     protected $stopwatch;
     protected $menuService;
 
@@ -39,13 +37,8 @@ class RequestSubscriber implements EventSubscriberInterface
         return [
             KernelEvents::REQUEST=>['onKernelRequest', 9999],
             KernelEvents::CONTROLLER => ['onKernelController', 9999],
-            KernelEvents::RESPONSE=>['onKernelResponse', -9999],
-            KernelEvents::VIEW=>['onKernelView', 99999]
+            KernelEvents::RESPONSE=>['onKernelResponse', -9999]
         ];
-    }
-
-    public function onKernelView(ViewEvent $event){
-
     }
 
 
@@ -92,20 +85,19 @@ class RequestSubscriber implements EventSubscriberInterface
         }
 
         //admin
-        if ($controller instanceof BaseAdminController) {
-            $route = $request->get("_route");
-            $session = $request->getSession();
-            $session->set("_route", $route);
-            $uid = $this->menuService->getUid();
-            //权限验证
-            if($uid){
-                $allMenu = $this->menuService->getMyMenuUrl($uid);
-                if(!in_array($route, $allMenu)){
-                    throw new AccessDeniedException("没有权限!");
-                }
-            }
-
-        }
+//        if ($controller instanceof BaseAdminController) {
+//            $route = $request->get("_route");
+//            $session = $request->getSession();
+//            $session->set("_route", $route);
+//            $uid = $this->menuService->getUid();
+//            //权限验证
+//            if($uid){
+//                $allMenu = $this->menuService->getMyMenuUrl($uid);
+//                if(!in_array($route, $allMenu)){
+//                    throw new AccessDeniedException("没有权限!");
+//                }
+//            }
+//        }
 
         //api
         if ($controller instanceof BaseApiController) {
