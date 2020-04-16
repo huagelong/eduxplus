@@ -8,6 +8,7 @@
 
 namespace App\Bundle\AdminBundle\Controller\Teach;
 
+use App\Bundle\AdminBundle\Service\Teach\CategoryService;
 use App\Bundle\AdminBundle\Service\Teach\CourseService;
 use App\Bundle\AppBundle\Lib\Base\BaseAdminController;
 use FOS\RestBundle\Controller\Annotations as Rest;
@@ -34,7 +35,7 @@ class CourseController extends BaseAdminController
         $grid->setTableColumn("创建人", "text", "creater");
         $grid->setTableColumn("状态", "boole", "status", [0=>"下架",1=>"上架"]);
         $grid->setTableColumn("课时", "text", "courseHourView");
-        $grid->setTableColumn("校区", "text", "school");
+        $grid->setTableColumn("上课校区", "text", "school");
         $grid->setTableColumn("创建时间", "datetime", "createdAt", "a.createdAt");
 
         $grid->setGridBar("admin_teach_course_add","添加", $this->generateUrl("admin_teach_course_add"), "fas fa-plus", "btn-success");
@@ -65,18 +66,31 @@ class CourseController extends BaseAdminController
     /**
      * @Rest\Get("/teach/course/add", name="admin_teach_course_add")
      */
-    public function addAction($id, Form $form, CourseService $courseService){
-        $info = $courseService->getById($id);
+    public function addAction(Form $form, CourseService $courseService, CategoryService $categoryService){
 
-        $form->setFormField("课程名称", 'text', 'name' ,1,  $info['name']);
-        $form->setFormField("类型", 'select', 'type' ,1,  $info['type'], function()use($select){
-            return [1=>"线上", 2=>"线下", 3=>"混合"];
+        $form->setFormField("课程名称", 'text', 'name' ,1);
+        $form->setFormField("类型", 'select', 'type' ,1, "", function(){
+            return ["线上"=>1, "线下"=>2, "混合"=>3];
         });
-        $form->setFormField("排序", 'text', 'sort' ,1,  $info['sort']);
-        $form->setFormField("是否展示", 'boole', 'isShow', 1,  $info['isShow']);
 
+        $options = [];
+        $options["data-upload-url"] = $this->generateUrl("admin_glob_upload", ["type"=>"img_course"]);
+        $options["data-min-file-count"] = 1;
+        $options['data-max-total-file-count'] = 1;
+        $options["data-max-file-size"] = 1024*2;//50m
+        $options["data-required"] = 1;
 
-        $formData = $form->create($this->generateUrl("admin_api_teach_course_add", ['id'=>$id]));
+        $form->setFormAdvanceField("封面图", 'file', 'bigImg' ,$options);
+        $form->setFormField("简介", 'textarea', 'descr');
+        $form->setFormField("类目", 'select', 'categoryId', 1, "", function() use($categoryService){
+            return $categoryService->categorySelect();
+        });
+        $form->setFormField("课时", 'text', 'courseHour' ,1);
+        $form->setFormField("上课校区", 'select', 'categoryId', 0, "", function() use($courseService){
+            return $courseService->getSchools();
+        });
+
+        $formData = $form->create($this->generateUrl("admin_api_teach_course_add"));
         $data = [];
         $data["formData"] = $formData;
         return $this->render("@AdminBundle/teach/course/add.html.twig", $data);

@@ -12,7 +12,7 @@ namespace App\Bundle\AdminBundle\Service\Teach;
 use App\Bundle\AppBundle\Lib\Base\BaseService;
 use App\Entity\TeachCategory;
 
-class CategroyService extends BaseService
+class CategoryService extends BaseService
 {
 
 

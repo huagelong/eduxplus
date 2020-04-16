@@ -18,14 +18,14 @@ use Knp\Component\Pager\PaginatorInterface;
 class CourseService extends BaseService
 {
     protected $paginator;
-    protected $categroyService;
+    protected $categoryService;
     protected $userService;
     protected $schoolService;
 
-    public function __construct(PaginatorInterface $paginator, CategroyService $categroyService, UserService $userService, SchoolService $schoolService)
+    public function __construct(PaginatorInterface $paginator, CategoryService $categoryService, UserService $userService, SchoolService $schoolService)
     {
         $this->paginator = $paginator;
-        $this->categroyService = $categroyService;
+        $this->categoryService = $categoryService;
         $this->userService = $userService;
         $this->schoolService = $schoolService;
     }
@@ -50,9 +50,9 @@ class CourseService extends BaseService
                 $cateGoryId = $vArr['category_id'];
                 $schooleId = $vArr['school_id'];
                 $createrUid = $vArr['create_uid'];
-                $firstCateGory = $this->categroyService->getById($firstCateGoryId);
+                $firstCateGory = $this->categoryService->getById($firstCateGoryId);
                 $vArr['brand'] = $firstCateGory['name'];
-                $cateGroy = $this->categroyService->getById($cateGoryId);
+                $cateGroy = $this->categoryService->getById($cateGoryId);
                 $vArr['category'] = $cateGroy['name'];
                 $createrUser = $this->userService->getById($createrUid);
                 $vArr['creater'] = $createrUser['full_name'];

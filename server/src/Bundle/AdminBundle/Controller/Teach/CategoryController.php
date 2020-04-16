@@ -8,7 +8,7 @@
 
 namespace App\Bundle\AdminBundle\Controller\Teach;
 
-use App\Bundle\AdminBundle\Service\Teach\CategroyService;
+use App\Bundle\AdminBundle\Service\Teach\CategoryService;
 use App\Bundle\AppBundle\Lib\Base\BaseAdminController;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,9 +20,9 @@ class CategoryController extends BaseAdminController
     /**
      * @Rest\Get("/teach/category/index", name="admin_teach_category_index")
      */
-    public function indexAction(Form $form,CategroyService $categroyService){
+    public function indexAction(Form $form,CategoryService $categoryService){
 
-        $select = $categroyService->categorySelect();
+        $select = $categoryService->categorySelect();
 
         $data = [];
         $form->setFormField("名称", 'text', 'name' ,1);
@@ -34,7 +34,7 @@ class CategoryController extends BaseAdminController
 
         $formData = $form->create($this->generateUrl("admin_api_teach_category_add"));
         $data["addFormData"] = $formData;
-        $data['categorys'] = $categroyService->getCategoryTree(0);
+        $data['categorys'] = $categoryService->getCategoryTree(0);
 //        dump($data['categorys']);exit;
         return $this->render("@AdminBundle/teach/category/index.html.twig", $data);
     }
@@ -42,7 +42,7 @@ class CategoryController extends BaseAdminController
     /**
      * @Rest\Post("/api/teach/category/addDo", name="admin_api_teach_category_add")
      */
-    public function addDoAction(Request $request, CategroyService $categroyService){
+    public function addDoAction(Request $request, CategoryService $categoryService){
         $name = $request->get("name");
         $sort = (int) $request->get("sort");
         $parentId= $request->get("parentId");
@@ -52,7 +52,7 @@ class CategoryController extends BaseAdminController
         if(!$name) return $this->responseError("分类名称不能为空!");
         if(mb_strlen($name, 'utf-8')>30) return $this->responseError("分类名称不能大于30字!");
 
-        $categroyService->add($name, $parentId, $sort, $isShow);
+        $categoryService->add($name, $parentId, $sort, $isShow);
 
         return $this->responseSuccess("添加成功!", $this->generateUrl("admin_teach_category_index"));
     }
@@ -60,9 +60,9 @@ class CategoryController extends BaseAdminController
     /**
      * @Rest\Get("/teach/category/edit/{id}", name="admin_teach_category_edit")
      */
-    public function editAction($id, Form $form, CategroyService $categroyService){
-        $info = $categroyService->getById($id);
-        $select = $categroyService->categorySelect();
+    public function editAction($id, Form $form, CategoryService $categoryService){
+        $info = $categoryService->getById($id);
+        $select = $categoryService->categorySelect();
 
         $form->setFormField("名称", 'text', 'name' ,1,  $info['name']);
         $form->setFormField("父节点", 'select', 'parentId' ,1,  $info['parentId'], function()use($select){
@@ -81,7 +81,7 @@ class CategoryController extends BaseAdminController
     /**
      * @Rest\Post("/api/teach/category/editDo/{id}", name="admin_api_teach_category_edit")
      */
-    public function editDoAction($id, Request $request, CategroyService $categroyService){
+    public function editDoAction($id, Request $request, CategoryService $categoryService){
         $name = $request->get("name");
         $sort = (int) $request->get("sort");
         $parentId= (int) $request->get("parentId");
@@ -91,7 +91,7 @@ class CategoryController extends BaseAdminController
         if(!$name) return $this->responseError("分类名称不能为空!");
         if(mb_strlen($name, 'utf-8')>30) return $this->responseError("分类名称不能大于30字!");
 
-        $categroyService->edit($id, $parentId, $name, $sort, $isShow);
+        $categoryService->edit($id, $parentId, $name, $sort, $isShow);
 
         return $this->responseSuccess("编辑成功!", $this->generateUrl("admin_teach_category_index"));
     }
@@ -99,18 +99,18 @@ class CategoryController extends BaseAdminController
     /**
      * @Rest\Post("/api/teach/category/deleteDo/{id}", name="admin_api_teach_category_delete")
      */
-    public function deleteDoAction($id, CategroyService $categroyService){
-        if($categroyService->hasChild($id)) return $this->responseError("删除失败，请先删除子分类!");
-        $categroyService->del($id);
+    public function deleteDoAction($id, CategoryService $categoryService){
+        if($categoryService->hasChild($id)) return $this->responseError("删除失败，请先删除子分类!");
+        $categoryService->del($id);
         return $this->responseSuccess("删除成功!", $this->generateUrl("admin_teach_category_index"));
     }
 
     /**
      * @Rest\Post("/api/teach/category/updateSortDo", name="admin_api_teach_category_updateSort")
      */
-    public function updateSortAction(Request $request,CategroyService $categroyService){
+    public function updateSortAction(Request $request,CategoryService $categoryService){
         $data = $request->request->all();
-        $categroyService->updateSort($data);
+        $categoryService->updateSort($data);
         return $this->responseSuccess("更新排序成功!", $this->generateUrl("admin_teach_category_index"));
     }
 

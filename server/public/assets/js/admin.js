@@ -114,11 +114,12 @@ $(function(){
         $(this).bootstrapSwitch('state', $(this).prop('checked'));
     });
 
-    $('.select').select2({ theme: 'bootstrap4', "allowClear":true});
+    $('.select').select2({ language:'zh-CN', theme: 'bootstrap4', "allowClear":true});
 
     $('.search_select').each(function(){
         var url = $(this).data("url")
         $(this).select2({
+            language:'zh-CN',
             theme: 'bootstrap4',
             "allowClear":true,
             placeholder: '',
