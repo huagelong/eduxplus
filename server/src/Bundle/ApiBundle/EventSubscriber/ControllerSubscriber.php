@@ -6,7 +6,7 @@
  * @Date: 2020/3/19 10:02
  */
 
-namespace App\EventSubscriber;
+namespace App\Bundle\ApiBundle\EventSubscriber;
 
 
 use App\Bundle\AdminBundle\Service\MenuService;

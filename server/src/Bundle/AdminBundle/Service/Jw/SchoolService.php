@@ -45,6 +45,11 @@ class SchoolService extends BaseService
         return [$pagination, $itemsArr];
     }
 
+    public function getAll(){
+        $dql = "SELECT a FROM App:JwSchool a ";
+        return $this->fetchAll($dql);
+    }
+
     public function add($name, $descr, $address, $linkin, $state, $city, $region){
         $model = new JwSchool();
         $model->setName($name);

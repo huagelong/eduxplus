@@ -116,6 +116,32 @@ $(function(){
 
     $('.select').select2({ theme: 'bootstrap4', "allowClear":true});
 
+    $('.search_select').each(function(){
+        var url = $(this).data("url")
+        $(this).select2({
+            theme: 'bootstrap4',
+            "allowClear":true,
+            placeholder: '',
+            ajax: {
+                url: url,
+                dataType: 'json',
+                delay: 250,
+                data: function (params) {
+                    return {
+                        kw: params.term,
+                    };
+                },
+                processResults: function (data) {
+                    return {
+                        results: data.data
+                    };
+                },
+                cache: true
+            },
+            minimumInputLength: 2
+        });
+    })
+
     $("input[name^='hidden-']").each(function(){
         var name = $(this).attr('name');
         var vl =  $(this).val();

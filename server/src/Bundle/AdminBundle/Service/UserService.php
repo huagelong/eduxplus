@@ -95,6 +95,13 @@ class UserService extends BaseService
         return $this->fetchOne($sql, $params);
     }
 
+    public function searchAdminFullName($name){
+        $sql = "SELECT a FROM App:BaseUser a where a.fullName like :fullName AND a.roles LIKE '%ROLE_ADMIN%' ";
+        $params = [];
+        $params['fullName'] = "%".$name."%";
+        return $this->fetchAll($sql, $params);
+    }
+
     public function checkMobile($name, $id=0){
         $sql = "SELECT a FROM App:BaseUser a where a.mobile =:mobile ";
         $params = [];

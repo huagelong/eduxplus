@@ -1,10 +1,10 @@
 {% if searchField %}
-    <form role="form" name="listSearchForm" id="listSearchForm" class="grid-search {% if app.request.query.get('showSearch') != 1 %} display-hide {% endif %}" action="{{ pathinfo }}" method="get">
+    <form role="form" name="listSearchForm" id="listSearchForm" class="grid-search" action="{{ pathinfo }}" method="get">
         <div class="row">
             {% for k,v in searchField %}
                 <div class="col-sm-6">
-                    <div class="form-group row ">
-                        <label class="col-sm-3 col-form-label">{{ k }} ：</label>
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label" >{{ k }} ：</label>
                         {% if v['type'] == "text" %}
                             <div class="col-sm-2">
                                 <select name="{{ v['operates'] }}" class="form-control form-control-sm">
@@ -33,6 +33,18 @@
                                 </select>
                             </div>
                         {% endif %}
+
+                        {% if v['type'] == "search_select" %}
+                            <div class="col-sm-9">
+                                <input type="hidden"  name="{{ v['operates'] }}" value="=">
+                                <input type="hidden" name="{{ v['types'] }}" value="{{ v['type'] }}">
+                                <input type="hidden" name="hidden-{{ v['field'] }}" value="{{ array_get(app.request.query.get("values"), v['field']) }}"/>
+                                {% set selectV = get_prop(v['initData'],"") %}
+                                <select class="form-control form-control-sm search_select" data-url="{{ selectV }}" style="width: 100%;" name="{{ v['values'] }}" data-value="" >
+                                </select>
+                            </div>
+                        {% endif %}
+
                         {% if v['type'] == "number" %}
                             <div class="col-sm-2">
                                 <select name="{{ v['operates'] }}" class="form-control form-control-sm">
@@ -81,13 +93,14 @@
             {% endfor %}
         </div>
         <div class="row">
-            <div class="col-sm-6">
-                <div class="form-group row">
-                    <input type="hidden" name="showSearch" value="1">
+            <div class="col-sm-3"></div>
+            <div class="col-sm-3">
+                <div class="form-group row float-right">
                     <button type="submit" class="btn btn-info submit btn-sm" style="margin-right: 10px;"><i class="fa fa-search"></i>&nbsp;&nbsp;搜索</button>
                     <button type="reset" class="btn btn-default btn-sm reset"><i class="fa fa-undo"></i>&nbsp;&nbsp;重置</button>
                 </div>
             </div>
+            <div class="col-sm-3"></div>
         </div>
     </form>
 {% endif %}
