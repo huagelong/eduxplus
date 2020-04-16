@@ -84,16 +84,18 @@ class BaseUser implements UserInterface
     private $isLock = '0';
 
     /**
+     * @var bool|null
+     *
+     * @ORM\Column(name="is_admin", type="boolean", nullable=true, options={"comment"="是否是管理员,1-是，0-否"})
+     */
+    private $isAdmin= '0';
+
+    /**
      * @var string|null
      *
      * @ORM\Column(name="reg_source", type="string", length=11, nullable=true, options={"comment"="pc,ios,android"})
      */
     private $regSource;
-
-    /**
-     * @ORM\Column(type="json", options={"comment"="角色"})
-     */
-    private $roles = [];
 
     /**
      * @var string The hashed password
@@ -149,18 +151,6 @@ class BaseUser implements UserInterface
     public function getUsername(): string
     {
         return (string) $this->uuid;
-    }
-
-    public function getRoles(): ?array
-    {
-        return $this->roles;
-    }
-
-    public function setRoles(array $roles): self
-    {
-        $this->roles = $roles;
-
-        return $this;
     }
 
 
@@ -414,6 +404,24 @@ class BaseUser implements UserInterface
     public function setDeletedAt(?\DateTimeInterface $deletedAt): self
     {
         $this->deletedAt = $deletedAt;
+
+        return $this;
+    }
+
+
+    public function getRoles()
+    {
+        return ['ROLE_USER'];
+    }
+
+    public function getIsAdmin(): ?bool
+    {
+        return $this->isAdmin;
+    }
+
+    public function setIsAdmin(?bool $isAdmin): self
+    {
+        $this->isAdmin = $isAdmin;
 
         return $this;
     }

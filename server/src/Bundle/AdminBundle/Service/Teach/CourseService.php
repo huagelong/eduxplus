@@ -97,7 +97,7 @@ class CourseService extends BaseService
     }
 
     public function getById($id){
-        $sql = "SELECT a FROM App:TeachAgreement a WHERE a.id=:id";
+        $sql = "SELECT a FROM App:TeachCourse a WHERE a.id=:id";
         return $this->fetchOne($sql, ['id'=>$id]);
     }
 

@@ -103,6 +103,10 @@ class AdminLoginAuthenticator extends AbstractFormLoginAuthenticator implements 
             throw new CustomUserMessageAuthenticationException('手机号码或者密码错误！');
         }
 
+        if(!$user->getIsAdmin()){
+            throw new CustomUserMessageAuthenticationException('没有权限登入后台！');
+        }
+
         if($user->getIsLock()){
             throw new CustomUserMessageAuthenticationException('该用户已被锁定，没有权限登入！');
         }

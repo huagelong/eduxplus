@@ -66,7 +66,7 @@ class BaseService extends AbstractFOSRestController
         if($values){
             $sql .= " WHERE ";
             foreach ($values as $k=>$v){
-                if( ($v==="") || (substr($k, 0, 1)=="_") ){
+                if( ($v==="") || (substr($k, 0, 1)=="_") || ($v == -1)){
                     continue;
                 }
 

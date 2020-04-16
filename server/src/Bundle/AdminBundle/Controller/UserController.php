@@ -55,21 +55,21 @@ class UserController extends BaseAdminController
         $grid->setSearchField("手机号码", "text", "a.mobile");
         $grid->setSearchField("昵称", "text", "a.displayName");
         $grid->setSearchField("姓名", "text", "a.fullName");
-        $grid->setSearchField("是否管理员", "select", "_isAdmin", function(){
+        $grid->setSearchField("是否管理员", "select", "a.isAdmin", function(){
             return ["全部"=>-1,"是"=>1, "否"=>0];
         });
         $grid->setSearchField("创建时间", "daterange", "a.createdAt");
 
         //编辑等
         $grid->setTableAction('admin_user_edit', function($obj){
-            $id = $obj['id'];
+            $id = $obj->getId();
             $url = $this->generateUrl('admin_user_edit',['id'=>$id]);
             $str = '<a href='.$url.' data-title="编辑" class=" btn btn-info btn-xs poppage"><i class="fas fa-edit"></i></a>';
             return  $str;
         });
 
         $grid->setTableAction('admin_api_user_delete', function ($obj) {
-            $id = $obj['id'];
+            $id = $obj->getId();
             $url = $this->generateUrl('admin_api_user_delete', ['id' => $id]);
             return '<a href=' . $url . ' data-confirm="确认要删除吗?"  class=" btn btn-danger btn-xs ajaxDelete"><i class="fas fa-trash"></i></a>';
         });

@@ -31,24 +31,7 @@ class UserService extends BaseService
     }
 
     public function userList($request, $page, $pageSize){
-//        $this->redis()->set("hello", '111');
         $sql = $this->getFormatRequestSql($request);
-        $values = $request->get("values");
-        $isAdmin = (int) (isset($values['_isAdmin'])?$values['_isAdmin']:-1);
-        if($isAdmin === 1){
-            if($sql){
-                $sql .= " AND a.roles LIKE '%ROLE_ADMIN%'";
-            }else{
-                $sql = " WHERE a.roles LIKE '%ROLE_ADMIN%'";
-            }
-        }elseif($isAdmin === 0){
-            if($sql) {
-                $sql .= " AND a.roles NOT LIKE '%ROLE_ADMIN%'";
-            }else{
-                $sql .= " WHERE a.roles NOT LIKE '%ROLE_ADMIN%'";
-            }
-        }
-
         $dql = "SELECT a FROM App:BaseUser a " . $sql;
         dump($dql);
         $em = $this->getDoctrine()->getManager();
@@ -59,18 +42,7 @@ class UserService extends BaseService
             $pageSize
         );
 
-        $items = $pagination->getItems();
-        $itemsArr = [];
-        if($items){
-            foreach ($items as $v){
-                $vArr =  $this->toArray($v);
-                $roles = $vArr['roles'];
-                $isAdmin  =  in_array("ROLE_ADMIN", $roles);
-                $vArr['isAdmin'] = $isAdmin;
-                $itemsArr[] = $vArr;
-            }
-        }
-        return [$pagination, $itemsArr];
+        return $pagination;
     }
 
     public function checkDisplayName($name, $id=0){
@@ -96,7 +68,7 @@ class UserService extends BaseService
     }
 
     public function searchAdminFullName($name){
-        $sql = "SELECT a FROM App:BaseUser a where a.fullName like :fullName AND a.roles LIKE '%ROLE_ADMIN%' ";
+        $sql = "SELECT a FROM App:BaseUser a where a.fullName like :fullName AND a.isAdmin=1 ";
         $params = [];
         $params['fullName'] = "%".$name."%";
         return $this->fetchAll($sql, $params);
@@ -127,7 +99,7 @@ class UserService extends BaseService
         $model->setSex($sex);
         $model->setRegSource("admin");
         if($roles){
-            $model->setRoles(['ROLE_ADMIN']);
+            $model->setIsAdmin(1);
         }
         $uid = $this->save($model);
 
@@ -160,9 +132,9 @@ class UserService extends BaseService
         $model->setDisplayName($displayName);
         $model->setSex($sex);
         if($roles){
-            $model->setRoles(['ROLE_ADMIN']);
+            $model->setIsAdmin(1);
         }else{
-            $model->setRoles(['ROLE_USER']);
+            $model->setIsAdmin(0);
         }
         $uid = $this->save($model);
 

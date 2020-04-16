@@ -67,17 +67,16 @@ class CourseController extends BaseAdminController
      */
     public function addAction($id, Form $form, CourseService $courseService){
         $info = $courseService->getById($id);
-        $select = $courseService->courseSelect();
 
-        $form->setFormField("名称", 'text', 'name' ,1,  $info['name']);
-        $form->setFormField("父节点", 'select', 'parentId' ,1,  $info['parentId'], function()use($select){
-            return $select;
+        $form->setFormField("课程名称", 'text', 'name' ,1,  $info['name']);
+        $form->setFormField("类型", 'select', 'type' ,1,  $info['type'], function()use($select){
+            return [1=>"线上", 2=>"线下", 3=>"混合"];
         });
         $form->setFormField("排序", 'text', 'sort' ,1,  $info['sort']);
         $form->setFormField("是否展示", 'boole', 'isShow', 1,  $info['isShow']);
 
 
-        $formData = $form->create($this->generateUrl("admin_api_teach_course_edit", ['id'=>$id]));
+        $formData = $form->create($this->generateUrl("admin_api_teach_course_add", ['id'=>$id]));
         $data = [];
         $data["formData"] = $formData;
         return $this->render("@AdminBundle/teach/course/add.html.twig", $data);

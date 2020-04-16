@@ -52,7 +52,7 @@ class InstallFixtures extends Fixture
         $userModel->setUuid($uuid);
         $userModel->setDisplayName("超级管理员");
         $userModel->setFullName("管理员大大");
-        $userModel->setRoles(["ROLE_ADMIN"]);
+        $userModel->setIsAdmin(1);
         $userModel->setPassword($pwd);
         $userModel->setGravatar("/assets/images/gravatar.jpeg");
         $manager->persist($userModel);
