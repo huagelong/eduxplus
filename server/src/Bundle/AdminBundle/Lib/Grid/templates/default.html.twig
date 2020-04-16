@@ -47,7 +47,7 @@
                        <div  class='overflow-auto' style='width:300px'><code class="clipboard" data-clipboard-text="{{ get_prop(v, cv["field"], cv['type'], cv['options']) }}" >{{ get_prop(v, cv["field"], cv['type'], cv['options'])|raw }}</code></div>
                         {% endif %}
                         {% if cv['type'] == 'image'  %}
-                            <img src="{{  get_prop(v, cv["field"], cv['type'], cv['options'])|raw }}" width="30px" />
+                            <img src="{{  get_prop(v, cv["field"], cv['type'], cv['options'])|raw }}" class="imgpreview" width="30px" />
                         {% endif %}
                         {% if cv['type'] == 'boole' %}
                             {% if get_prop(v, cv['field'], cv['type']) %}

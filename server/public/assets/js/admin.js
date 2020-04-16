@@ -94,20 +94,7 @@ $(function(){
             onSwitchChange: function(event, state){
                 var chref = $(this).attr("href");
                 state = state?1:0;
-                var isconfirm = $(this).data("confirm");
-                if(isconfirm){
-                    layer.msg(isconfirm, {
-                        time: 0 //不自动关闭
-                        ,btn: ['是', '否']
-                        ,yes: function(index){
-                            layer.close(index);
-                            requestPost(chref,JSON.stringify({'state':state}));
-                        }
-                    });
-
-                }else{
-                    requestPost(chref,JSON.stringify({'state':state}));
-                }
+                requestPost(chref,JSON.stringify({'state':state}));
                 return true;
             }
         });
@@ -244,6 +231,29 @@ $(function(){
             }
 
         });
+    })
+
+    $('.imgpreview').click(function(){
+        var imgSrc=$(this).attr('src')
+            ,width=$(this).width()
+            ,height=$(this).height()
+            ,scaleWH=width/height
+            ,bigH=$(window).height()-60
+            ,bigW=scaleWH*bigH
+        if(bigW>1000){
+            bigW=1000
+            bigH=bigW/scaleWH
+        }
+        layer.open({
+            type:1
+            ,title:false
+            ,closeBtn:0
+            ,skin:'layui-layer-nobg'
+            ,shadeClose:true
+            ,area: [bigW+'px', bigH+'px']
+            ,content:'<img src="'+imgSrc+'" width="'+bigW+'" height="'+bigH+'"/>'
+            ,scrollbar:true
+        })
     })
 
 })

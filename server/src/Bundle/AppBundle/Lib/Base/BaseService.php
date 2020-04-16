@@ -22,6 +22,7 @@ class BaseService extends AbstractFOSRestController
         return new Error();
     }
 
+
     /**
      * @return Request
      */
@@ -48,13 +49,6 @@ class BaseService extends AbstractFOSRestController
         return 0;
     }
 
-    public function getFormatSortRequestSql($request)
-    {
-        $fields = $request->query->all();
-        if(!isset($fields['sort'])||!isset($fields['direction'])) return "";
-        $sql = " ORDEY BY {$fields['sort']} {$fields['direction']}";
-        return $sql;
-    }
 
     public function getFormatRequestSql($request){
         $fields = $request->query->all();

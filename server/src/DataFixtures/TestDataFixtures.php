@@ -38,7 +38,7 @@ class TestDataFixtures extends Fixture
     {
         $this->manager = $manager;
         //添加分类
-        $pid = $this->addCateGory("计算机", 1, 0, 0, ",0,");
+        $pid = $this->addCateGory("计算机", 1, 0, 0, "");
         $this->addCateGory("前言技术", 1, 0, $pid, ",{$pid},");
         $this->addCateGory("程序设计与开发", 1, 0, $pid, ",{$pid},");
         $this->addCateGory("计算机基础与应用", 1, 0, $pid, ",{$pid},");
@@ -47,7 +47,7 @@ class TestDataFixtures extends Fixture
         $this->addCateGory("硬件系统及原理", 1, 0, $pid, ",{$pid},");
         $this->addCateGory("c语言不挂科", 1, 0, $pid, ",{$pid},");
         $this->addCateGory("2020考研计算机", 1, 0, $pid, ",{$pid},");
-        $pid = $this->addCateGory("外语", 1, 0, 0, ",0,");
+        $pid = $this->addCateGory("外语", 1, 0, 0, "");
         $this->addCateGory("听力/口语", 1, 0, $pid, ",{$pid},");
         $this->addCateGory("语法/阅读", 1, 0, $pid, ",{$pid},");
         $this->addCateGory("协作/翻译", 1, 0, $pid, ",{$pid},");

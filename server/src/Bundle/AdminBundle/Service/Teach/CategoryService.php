@@ -34,7 +34,7 @@ class CategoryService extends BaseService
     public function findPath($id){
         $sql = "SELECT a.parentId FROM App:TeachCategory a WHERE a.id = :id";
         $pid = $this->fetchField("parentId", $sql, ['id'=>$id]);
-        if(!$pid) return ",{$pid},";
+        if(!$pid) return "";
         $str = ",{$pid},";
         $str .= $this->findPath($id);
         return $str;
@@ -120,24 +120,24 @@ class CategoryService extends BaseService
                 $id= $vv['id'];
                 $name = "┝&nbsp;".$vv['name'];
                 $rs[$name] = $id;
-                if(isset($allMenu[$id])){
+                if(isset($all[$id])){
                     $pre = "&nbsp;&nbsp;&nbsp;&nbsp;";
-                    $this->_Select($allMenu[$id], $pre, $rs);
+                    $this->_Select($all,$id, $pre, $rs);
                 }
             }
         }
         return $rs;
     }
 
-    protected function _Select($menuArr, $pre="", &$rs){
-        if($menuArr){
-            foreach ($menuArr as $v){
+    protected function _Select($all, $id, $pre="", &$rs){
+        if($all[$id]){
+            foreach ($all[$id] as $v){
                 $id= $v['id'];
                 $name = $pre."┝&nbsp;".$v['name'];
                 $rs[$name] = $id;
-                if(isset($menuArr[$id])){
+                if(isset($all[$id])){
                     $pre = $pre."&nbsp;&nbsp;&nbsp;&nbsp;";
-                    $this->_Select($menuArr[$id], $pre, $rs);
+                    $this->_Select($all[$id], $id, $pre, $rs);
                 }
             }
         }

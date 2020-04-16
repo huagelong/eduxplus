@@ -12,7 +12,7 @@ namespace App\Bundle\AdminBundle\Service\Teach;
 use App\Bundle\AdminBundle\Service\Jw\SchoolService;
 use App\Bundle\AdminBundle\Service\UserService;
 use App\Bundle\AppBundle\Lib\Base\BaseService;
-use App\Entity\TeachAgreement;
+use App\Entity\TeachCourse;
 use Knp\Component\Pager\PaginatorInterface;
 
 class CourseService extends BaseService
@@ -46,17 +46,20 @@ class CourseService extends BaseService
         if($items){
             foreach ($items as $v){
                 $vArr =  $this->toArray($v);
-                $firstCateGoryId = $vArr['first_category_id'];
-                $cateGoryId = $vArr['category_id'];
-                $schooleId = $vArr['school_id'];
-                $createrUid = $vArr['create_uid'];
+                $firstCateGoryId = $vArr['firstCategoryId'];
+                $cateGoryId = $vArr['categoryId'];
+                $schooleId = $vArr['schoolId'];
+                $createrUid = $vArr['createUid'];
                 $firstCateGory = $this->categoryService->getById($firstCateGoryId);
                 $vArr['brand'] = $firstCateGory['name'];
+                $bigImg = $vArr['bigImg'];
+                $bigImgArr = $bigImg?current(json_decode($bigImg, true)):"";
+                $vArr['bigImg'] = $bigImgArr;
                 $cateGroy = $this->categoryService->getById($cateGoryId);
                 $vArr['category'] = $cateGroy['name'];
                 $createrUser = $this->userService->getById($createrUid);
-                $vArr['creater'] = $createrUser['full_name'];
-                $vArr['courseHourView'] = $vArr['course_hour']/100;
+                $vArr['creater'] = $createrUser['fullName'];
+                $vArr['courseHourView'] = $vArr['courseHour']/100;
                 $school = $this->schoolService->getById($schooleId);
                 $vArr['school'] = $school['name'];
                 $itemsArr[] = $vArr;
@@ -88,11 +91,22 @@ class CourseService extends BaseService
         return $result;
     }
 
-    public function add($name, $content, $isShow){
-        $model = new TeachAgreement();
+    public function add($uid,$name, $type, $bigImg, $descr, $categoryId, $schoolId, $courseHour){
+        $cate = $this->categoryService->getById($categoryId);
+        $path = trim($cate['findPath'], ',');
+        $pathArr = explode(",", $path);
+        $brandId = end($pathArr);
+        $model = new TeachCourse();
         $model->setName($name);
-        $model->setIsShow($isShow);
-        $model->setContent($content);
+        $model->setDescr($descr);
+        $model->setType($type);
+        $model->setBigImg($bigImg);
+        $model->setFirstCategoryId($brandId);
+        $model->setStatus(0);
+        $model->setCategoryId($categoryId);
+        $model->setSchoolId($schoolId);
+        $model->setCourseHour($courseHour*100);
+        $model->setCreateUid($uid);
         return $this->save($model);
     }
 
@@ -102,7 +116,7 @@ class CourseService extends BaseService
     }
 
     public function getByName($name, $id=0){
-        $sql = "SELECT a FROM App:TeachAgreement a WHERE a.name=:name";
+        $sql = "SELECT a FROM App:TeachCourse a WHERE a.name=:name";
         $params = [];
         $params['name'] = $name;
         if($id){
@@ -113,7 +127,7 @@ class CourseService extends BaseService
     }
 
     public function edit($id, $name, $content, $isShow){
-        $sql = "SELECT a FROM App:TeachAgreement a WHERE a.id=:id";
+        $sql = "SELECT a FROM App:TeachCourse a WHERE a.id=:id";
         $model = $this->fetchOne($sql, ['id'=>$id] ,1 );
         $model->setName($name);
         $model->setIsShow($isShow);
@@ -122,9 +136,16 @@ class CourseService extends BaseService
     }
 
     public function del($id){
-        $sql = "SELECT a FROM App:TeachAgreement a WHERE a.id=:id";
+        $sql = "SELECT a FROM App:TeachCourse a WHERE a.id=:id";
         $model = $this->fetchOne($sql, ['id'=>$id] ,1 );
         return $this->delete($model);
+    }
+
+    public function switchStatus($id, $state){
+        $sql = "SELECT a FROM App:TeachCourse a WHERE a.id=:id";
+        $model = $this->fetchOne($sql, ['id'=>$id], 1);
+        $model->setStatus($state);
+        return $this->save($model);
     }
 
 }

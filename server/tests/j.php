@@ -6,7 +6,5 @@
  * @Date: 2020/4/11 22:01
  */
 
-$str = '["/assets/fav.png"]';
-$arr = ["/assets/fav.png"];
-var_dump(json_encode($arr));
-var_dump(json_decode($str, 1));
+$str = 'Apr 15, 2020';
+echo date('Y-m-d', strtotime($str));
