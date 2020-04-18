@@ -171,7 +171,7 @@ class CourseController extends BaseAdminController
             return $courseService->getSchools();
         });
         $form->setFormField("简介", 'textarea', 'descr');
-        
+
 
         $formData = $form->create($this->generateUrl("admin_api_teach_course_edit", ['id'=>$id]));
         $data = [];

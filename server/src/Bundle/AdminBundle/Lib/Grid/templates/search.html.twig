@@ -1,5 +1,5 @@
 {% if searchField %}
-    <form role="form" name="listSearchForm" id="listSearchForm" class="grid-search" action="{{ pathinfo }}" method="get">
+<form role="form" name="listSearchForm" id="listSearchForm" class="grid-search {% if app.request.query.get('showSearch') != 1 %} display-hide {% endif %}" action="{{ pathinfo }}" method="get">
         <div class="row">
             {% for k,v in searchField %}
                 <div class="col-sm-6">
@@ -96,6 +96,7 @@
             <div class="col-sm-3"></div>
             <div class="col-sm-3">
                 <div class="form-group row float-right">
+                    <input type="hidden" name="showSearch" value="1">
                     <button type="submit" class="btn btn-info submit btn-sm" style="margin-right: 10px;"><i class="fa fa-search"></i>&nbsp;&nbsp;搜索</button>
                     <button type="reset" class="btn btn-default btn-sm reset"><i class="fa fa-undo"></i>&nbsp;&nbsp;重置</button>
                 </div>
