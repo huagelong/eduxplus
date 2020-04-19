@@ -28,12 +28,12 @@ class CourseController extends BaseAdminController
         $grid->setListService($courseService, "getList");
         $grid->setTableColumn("#", "text", "id","a.id");
         $grid->setTableColumn("课程名称", "text", "name","a.name");
-        $grid->setTableColumn("类型", "text", "type", [1=>"线上", 2=>"线下", 3=>"混合"]);
+        $grid->setTableColumn("类型", "text", "type", "a.type", [1=>"线上", 2=>"线下", 3=>"混合"]);
         $grid->setTableColumn("品类", "text", "brand");
         $grid->setTableColumn("类目", "text", "category");
         $grid->setTableColumn("封面图", "image", "bigImg");
         $grid->setTableColumn("创建人", "text", "creater");
-        $grid->setTableColumn("是否上架", "boole2", "status", [0=>"下架",1=>"上架"]);
+        $grid->setTableColumn("是否上架", "boole2", "status","a.status", [0=>"下架",1=>"上架"]);
         $grid->setTableActionColumn("admin_api_teach_course_switchStatus", "是否上架", "boole2", "status", null,null,function($obj){
             $id = $this->getPro($obj, "id");
             $defaultValue = $this->getPro($obj, "status");
@@ -48,18 +48,24 @@ class CourseController extends BaseAdminController
         $grid->setTableColumn("上课校区", "text", "school");
         $grid->setTableColumn("创建时间", "datetime", "createdAt", "a.createdAt");
 
-        //编辑等
+        $grid->setTableAction('admin_teach_chapter_index', function($obj){
+            $id = $obj['id'];
+            $url = $this->generateUrl('admin_teach_chapter_index',['id'=>$id]);
+            $str = '<a href='.$url.' data-width="1000px" title="章节管理" class=" btn btn-info btn-xs"><i class="fa fa-indent"></i></a>';
+            return  $str;
+        });
+
         $grid->setTableAction('admin_teach_course_edit', function($obj){
             $id = $obj['id'];
             $url = $this->generateUrl('admin_teach_course_edit',['id'=>$id]);
-            $str = '<a href='.$url.' data-title="编辑" class=" btn btn-info btn-xs poppage"><i class="fas fa-edit"></i></a>';
+            $str = '<a href='.$url.' data-width="1000px" data-title="编辑" title="编辑" class=" btn btn-info btn-xs poppage"><i class="fas fa-edit"></i></a>';
             return  $str;
         });
 
         $grid->setTableAction('admin_api_teach_course_delete', function ($obj) {
             $id = $obj['id'];
             $url = $this->generateUrl('admin_api_teach_course_delete', ['id' => $id]);
-            return '<a href=' . $url . ' data-confirm="确认要删除吗?"  class=" btn btn-danger btn-xs ajaxDelete"><i class="fas fa-trash"></i></a>';
+            return '<a href=' . $url . ' data-confirm="确认要删除吗?" title="删除" class=" btn btn-danger btn-xs ajaxDelete"><i class="fas fa-trash"></i></a>';
         });
 
         $grid->setGridBar("admin_teach_course_add","添加", $this->generateUrl("admin_teach_course_add"), "fas fa-plus", "btn-success");
@@ -134,7 +140,7 @@ class CourseController extends BaseAdminController
         $courseHour = (int) $request->get("courseHour");
 
         if(!$name) return $this->responseError("课程名称不能为空!");
-        if(mb_strlen($name, 'utf-8')>30) return $this->responseError("课程名称不能大于50字!");
+        if(mb_strlen($name, 'utf-8')>50) return $this->responseError("课程名称不能大于50字!");
         if($categoryId <=0) return $this->responseError("请选择分类!");
         if(!$courseHour) return $this->responseError("课时不能为空!");
         $uid = $this->getUid();
@@ -146,11 +152,11 @@ class CourseController extends BaseAdminController
     /**
      * @Rest\Get("/teach/course/edit/{id}", name="admin_teach_course_edit")
      */
-    public function editAction($id, Form $form, CourseService $courseService){
+    public function editAction($id, Form $form, CourseService $courseService,  CategoryService $categoryService){
         $info = $courseService->getById($id);
 
-        $form->setFormField("课程名称", 'text', 'name' ,1);
-        $form->setFormField("类型", 'select', 'type' ,1, "", function(){
+        $form->setFormField("课程名称", 'text', 'name' ,1, $info['name']);
+        $form->setFormField("类型", 'select', 'type' ,1, $info['type'], function(){
             return ["线上"=>1, "线下"=>2, "混合"=>3];
         });
 
@@ -160,17 +166,18 @@ class CourseController extends BaseAdminController
         $options['data-max-total-file-count'] = 1;
         $options["data-max-file-size"] = 1024*2;//2m
         $options["data-required"] = 0;
+        $options['data-initial-preview']=$info["bigImg"];
 
         $form->setFormAdvanceField("封面图", 'file', 'bigImg' ,$options);
-        $form->setFormField("类目", 'select', 'categoryId', 1, "", function() use($categoryService){
+        $form->setFormField("类目", 'select', 'categoryId', 1, $info['categoryId'], function() use($categoryService){
             $rs = $categoryService->categorySelect();
             return $rs;
         });
-        $form->setFormField("课时", 'text', 'courseHour' ,1, "","", "课时为整数");
-        $form->setFormField("上课校区", 'select', 'schoolId', 0, "", function() use($courseService){
+        $form->setFormField("课时", 'text', 'courseHour' ,1, $info['courseHour']/100,"", "课时为整数");
+        $form->setFormField("上课校区", 'select', 'schoolId', 0, $info['schoolId'], function() use($courseService){
             return $courseService->getSchools();
         });
-        $form->setFormField("简介", 'textarea', 'descr');
+        $form->setFormField("简介", 'textarea', 'descr', 0, $info['descr']);
 
 
         $formData = $form->create($this->generateUrl("admin_api_teach_course_edit", ['id'=>$id]));
@@ -184,15 +191,18 @@ class CourseController extends BaseAdminController
      */
     public function editDoAction($id, Request $request, CourseService $courseService){
         $name = $request->get("name");
-        $sort = (int) $request->get("sort");
-        $parentId= (int) $request->get("parentId");
-        $isShow = $request->get("isShow");
-        $isShow = $isShow=="on"?1:0;
+        $type = (int) $request->get("type");
+        $bigImg= $request->get("bigImg");
+        $descr = $request->get("descr");
+        $categoryId = (int) $request->get("categoryId");
+        $schoolId = (int) $request->get("schoolId");
+        $courseHour = (int) $request->get("courseHour");
 
         if(!$name) return $this->responseError("课程名称不能为空!");
-        if(mb_strlen($name, 'utf-8')>30) return $this->responseError("课程名称不能大于30字!");
-
-        $courseService->edit($id, $parentId, $name, $sort, $isShow);
+        if(mb_strlen($name, 'utf-8')>50) return $this->responseError("课程名称不能大于50字!");
+        if($categoryId <=0) return $this->responseError("请选择分类!");
+        if(!$courseHour) return $this->responseError("课时不能为空!");
+        $courseService->edit($id, $name, $type, $bigImg, $descr, $categoryId, $schoolId, $courseHour);
 
         return $this->responseSuccess("编辑成功!", $this->generateUrl("admin_teach_course_index"));
     }
@@ -201,7 +211,7 @@ class CourseController extends BaseAdminController
      * @Rest\Post("/api/teach/course/deleteDo/{id}", name="admin_api_teach_course_delete")
      */
     public function deleteDoAction($id, CourseService $courseService){
-        if($courseService->hasChild($id)) return $this->responseError("删除失败，请先删除子分类!");
+        if($courseService->hasChapter($id)) return $this->responseError("删除失败，请先删除子章节!");
         $courseService->del($id);
         return $this->responseSuccess("删除成功!", $this->generateUrl("admin_teach_course_index"));
     }
@@ -219,7 +229,7 @@ class CourseController extends BaseAdminController
     /**
      * @Rest\Post("/api/teach/course/switchStatusDo/{id}", name="admin_api_teach_course_switchStatus")
      */
-    public function switchLockAction($id, CourseService $courseService, Request $request){
+    public function switchStatusAction($id, CourseService $courseService, Request $request){
         $state = (int) $request->get("state");
         $courseService->switchStatus($id, $state);
         return $this->responseSuccess("操作成功!");

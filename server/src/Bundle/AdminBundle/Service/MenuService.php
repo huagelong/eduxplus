@@ -202,7 +202,7 @@ class MenuService extends BaseService
      * 更新排序
      * @param $data
      */
-    public function updateSort($data){
+    public function updateSort($data, $pid=0){
         if($data){
             $sort = 0;
             foreach ($data as $k=>$v){
@@ -210,9 +210,10 @@ class MenuService extends BaseService
                 $sql = "SELECT a FROM App:BaseMenu a WHERE a.id=:id";
                 $model = $this->fetchOne($sql, ['id'=>$id], 1);
                 $model->setSort($sort);
+                $model->setPid($pid);
                 $this->update($model);
                 if(isset($v['children'])){
-                    $this->updateSort($v['children']);
+                    $this->updateSort($v['children'], $id);
                 }
                 $sort++;
             }

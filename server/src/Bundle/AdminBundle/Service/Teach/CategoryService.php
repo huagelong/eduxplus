@@ -81,7 +81,7 @@ class CategoryService extends BaseService
         return $this->delete($model);
     }
 
-    public function updateSort($data){
+    public function updateSort($data, $pid=0){
         if($data){
             $sort = 0;
             foreach ($data as $k=>$v){
@@ -89,9 +89,10 @@ class CategoryService extends BaseService
                 $sql = "SELECT a FROM App:TeachCategory a WHERE a.id=:id";
                 $model = $this->fetchOne($sql, ['id'=>$id], 1);
                 $model->setSort($sort);
+                $model->setParentId($pid);
                 $this->update($model);
                 if(isset($v['children'])){
-                    $this->updateSort($v['children']);
+                    $this->updateSort($v['children'], $id);
                 }
                 $sort++;
             }

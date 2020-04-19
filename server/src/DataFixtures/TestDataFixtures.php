@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+use App\Bundle\AdminBundle\Service\Teach\CourseService;
 use App\Bundle\AppBundle\Lib\Service\HelperService;
 use App\Entity\BaseMenu;
 use App\Entity\BaseOption;
@@ -25,13 +26,16 @@ class TestDataFixtures extends Fixture
      */
     protected $manager;
     protected $helperService;
+    protected $courseService;
 
     public function __construct(UserPasswordEncoderInterface $passwordEncoder
-        ,HelperService $helperService
+        ,HelperService $helperService,
+        CourseService $courseService
     )
     {
         $this->passwordEncoder = $passwordEncoder;
         $this->helperService = $helperService;
+        $this->courseService = $courseService;
     }
 
     public function load(ObjectManager $manager)
@@ -40,7 +44,7 @@ class TestDataFixtures extends Fixture
         //添加分类
         $pid = $this->addCateGory("计算机", 1, 0, 0, "");
         $this->addCateGory("前言技术", 1, 0, $pid, ",{$pid},");
-        $this->addCateGory("程序设计与开发", 1, 0, $pid, ",{$pid},");
+        $cid1 = $this->addCateGory("程序设计与开发", 1, 0, $pid, ",{$pid},");
         $this->addCateGory("计算机基础与应用", 1, 0, $pid, ",{$pid},");
         $this->addCateGory("软件工程", 1, 0, $pid, ",{$pid},");
         $this->addCateGory("网络与安全技术", 1, 0, $pid, ",{$pid},");
@@ -62,7 +66,9 @@ class TestDataFixtures extends Fixture
 您使用或继续使用我们的服务，即意味着同意我们按照本《隐私政策》收集、使用、储存和分享您的相关信息。', 1);
         //校区
         $this->addSchool("同济大学北校区","上海市","上海城区", "杨浦区", "(021)66052500","国康路47号同济大学北校区", '<p><iframe style="width: 560px; height: 362px;" src="http://www.eduxplus.test/assets/plugins/tinymce/plugins/bdmap/bd.html?center=121.50707705070504%2C31.291328353729664&amp;zoom=14&amp;width=558&amp;height=360" frameborder="0"><span id="mce_marker" data-mce-type="bookmark">﻿​</span></iframe></p>');
-        $this->addSchool("上海大学(宝山校区)","上海市","上海城区", "宝山区", "(021)66132222","上海市宝山区上大路99号", '<p><iframe style="width: 560px; height: 362px;" src="http://www.eduxplus.test/assets/plugins/tinymce/plugins/bdmap/bd.html?center=121.39903048091482%2C31.32144004759091&amp;zoom=14&amp;width=558&amp;height=360" frameborder="0"><span id="mce_marker" data-mce-type="bookmark">﻿​</span></iframe></p>');
+        $schoolId1 = $this->addSchool("上海大学(宝山校区)","上海市","上海城区", "宝山区", "(021)66132222","上海市宝山区上大路99号", '<p><iframe style="width: 560px; height: 362px;" src="http://www.eduxplus.test/assets/plugins/tinymce/plugins/bdmap/bd.html?center=121.39903048091482%2C31.32144004759091&amp;zoom=14&amp;width=558&amp;height=360" frameborder="0"><span id="mce_marker" data-mce-type="bookmark">﻿​</span></iframe></p>');
+
+        $this->courseService->add(1,"JAVA编程思想", 1, "", "JAVA编程思想", $cid1, $schoolId1, 33);
 
     }
 
@@ -77,6 +83,7 @@ class TestDataFixtures extends Fixture
         $model->setDescr($descr);
         $this->manager->persist($model);
         $this->manager->flush();
+        return $model->getId();
     }
 
     protected function addAgreement($name,$isShow,$content){
@@ -86,6 +93,7 @@ class TestDataFixtures extends Fixture
         $model->setContent($content);
         $this->manager->persist($model);
         $this->manager->flush();
+        return $model->getId();
     }
 
     protected function addCateGory($name, $isShow, $sort, $pid, $path){

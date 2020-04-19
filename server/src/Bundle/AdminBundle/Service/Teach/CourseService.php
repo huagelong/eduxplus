@@ -100,6 +100,9 @@ class CourseService extends BaseService
         $model->setName($name);
         $model->setDescr($descr);
         $model->setType($type);
+        if(!$bigImg){
+            $bigImg = json_encode(["/assets/images/course.jpg"]);
+        }
         $model->setBigImg($bigImg);
         $model->setFirstCategoryId($brandId);
         $model->setStatus(0);
@@ -126,12 +129,24 @@ class CourseService extends BaseService
         return $this->fetchOne($sql, $params);
     }
 
-    public function edit($id, $name, $content, $isShow){
-        $sql = "SELECT a FROM App:TeachCourse a WHERE a.id=:id";
-        $model = $this->fetchOne($sql, ['id'=>$id] ,1 );
+    public function edit($id, $name, $type, $bigImg, $descr, $categoryId, $schoolId, $courseHour){
+        $cate = $this->categoryService->getById($categoryId);
+        $path = trim($cate['findPath'], ',');
+        $pathArr = explode(",", $path);
+        $brandId = end($pathArr);
+        $courceSql= "SELECT a FROM App:TeachCourse a WHERE a.id=:id";
+        $model = $this->fetchOne($courceSql, ['id'=>$id], 1);
         $model->setName($name);
-        $model->setIsShow($isShow);
-        $model->setContent($content);
+        $model->setDescr($descr);
+        $model->setType($type);
+        if(!$bigImg){
+            $bigImg = json_encode(["/assets/images/course.jpg"]);
+        }
+        $model->setBigImg($bigImg);
+        $model->setFirstCategoryId($brandId);
+        $model->setCategoryId($categoryId);
+        $model->setSchoolId($schoolId);
+        $model->setCourseHour($courseHour*100);
         return $this->save($model);
     }
 
@@ -146,6 +161,11 @@ class CourseService extends BaseService
         $model = $this->fetchOne($sql, ['id'=>$id], 1);
         $model->setStatus($state);
         return $this->save($model);
+    }
+
+    public function hasChapter($id){
+        $sql = "SELECT a FROM App:TeachCourseChapter a WHERE a.courseId=:courseId";
+        return $this->fetchOne($sql, ["courseId"=>$id]);
     }
 
 }

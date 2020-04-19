@@ -82,6 +82,10 @@
                     </td>
                 {% endif %}
             </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="{{ column|length }}">暂无数据</td><td></td>
+                    </tr>
             {% endfor %}
             </tbody>
         </table>

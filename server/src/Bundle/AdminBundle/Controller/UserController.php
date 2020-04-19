@@ -64,14 +64,14 @@ class UserController extends BaseAdminController
         $grid->setTableAction('admin_user_edit', function($obj){
             $id = $obj->getId();
             $url = $this->generateUrl('admin_user_edit',['id'=>$id]);
-            $str = '<a href='.$url.' data-title="编辑" class=" btn btn-info btn-xs poppage"><i class="fas fa-edit"></i></a>';
+            $str = '<a href='.$url.' data-title="编辑" title="编辑" class=" btn btn-info btn-xs poppage"><i class="fas fa-edit"></i></a>';
             return  $str;
         });
 
         $grid->setTableAction('admin_api_user_delete', function ($obj) {
             $id = $obj->getId();
             $url = $this->generateUrl('admin_api_user_delete', ['id' => $id]);
-            return '<a href=' . $url . ' data-confirm="确认要删除吗?"  class=" btn btn-danger btn-xs ajaxDelete"><i class="fas fa-trash"></i></a>';
+            return '<a href=' . $url . ' data-confirm="确认要删除吗?" title="删除"  class=" btn btn-danger btn-xs ajaxDelete"><i class="fas fa-trash"></i></a>';
         });
 
         $data = [];
