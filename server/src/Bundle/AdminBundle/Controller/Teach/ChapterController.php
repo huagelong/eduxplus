@@ -53,6 +53,7 @@ class ChapterController extends BaseAdminController
         $formData = $form->create($this->generateUrl("admin_api_teach_chapter_add", ['id'=>$id]));
         $data = [];
         $data["formData"] = $formData;
+        $data['id'] = $id;
         return $this->render("@AdminBundle/teach/chapter/add.html.twig", $data);
     }
 
@@ -64,7 +65,7 @@ class ChapterController extends BaseAdminController
         $parentId = $request->get("parentId");
         $openTime = $request->get("openTime");
         $studyWay = $request->get("studyWay");
-        
+
     }
 
     /**
