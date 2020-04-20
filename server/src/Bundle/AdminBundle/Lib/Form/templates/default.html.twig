@@ -35,6 +35,90 @@
                         <div class="col-sm-8">{{ v['defaultValue'] }}</div>
                     {% endif %}
 
+                    {% if v['type'] == 'daterange' %}
+                        <div class="col-sm-8">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                  <span class="input-group-text">
+                                    <i class="far fa-calendar-alt"></i>
+                                  </span>
+                                </div>
+                                <input type="text"
+                                {% if v['options'] %}
+                                    {% for ok,ov in v['options'] %}
+                                            {{ ok }}="{{ ov }}"
+                                    {% endfor %}
+                                {% endif %}
+                                value="{{ v['defaultValue'] }}"
+                                class="form-control form-control-sm daterange"
+                                placeholder="输入 ..."
+                                >
+                            </div>
+                        </div>
+                    {% endif %}
+
+                     {% if v['type'] == 'datetime' %}
+                        <div class="col-sm-8">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="far fa-clock"></i></span>
+                                </div>
+                                <input type="text"
+
+                                {% if v['options'] %}
+                                    {% for ok,ov in v['options'] %}
+                                        {{ ok }}="{{ ov }}"
+                                    {% endfor %}
+                                {% endif %}
+
+                                value="{{ v['defaultValue'] }}"
+                                class="form-control form-control-sm datetime"
+                                placeholder="输入 ...">
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {% if v['type'] == 'date' %}
+                        <div class="col-sm-8">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="far fa-clock"></i></span>
+                                </div>
+                                <input type="text"
+                                {% if v['options'] %}
+                                    {% for ok,ov in v['options'] %}
+                                        {{ ok }}="{{ ov }}"
+                                    {% endfor %}
+                                {% endif %}
+
+                                value="{{ v['defaultValue'] }}"
+                                class="form-control form-control-sm date"
+                                placeholder="输入 ...">
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {% if v['type'] == 'datetimerange' %}
+                        <div class="col-sm-8">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="far fa-clock"></i></span>
+                                </div>
+                                <input type="text"
+
+                                {% if v['options'] %}
+                                    {% for ok,ov in v['options'] %}
+                                            {{ ok }}="{{ ov }}"
+                                    {% endfor %}
+                                {% endif %}
+
+                                 value="{{ v['defaultValue'] }}"
+                                class="form-control form-control-sm datetimerange"
+                                placeholder="输入 ...">
+                            </div>
+                        </div>
+                    {% endif %}
+
                     {% if v['type'] == 'file' %}
                         <div class="col-sm-8">
                             <div class="input-group">

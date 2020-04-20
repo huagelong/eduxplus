@@ -139,12 +139,13 @@ class InstallFixtures extends Fixture
         $this->addMenu("搜索用户名","搜索用户名", $mgId,"admin_api_teach_course_searchUserDo", "",5, $roleId, 1, 1, 0);
         $this->addMenu("课程上下架","课程上下架", $mgId,"admin_api_teach_course_switchStatus", "",6, $roleId, 1, 1, 0);
         //章节管理
-        $this->addMenu("章节添加页面","章节添加页面展示", $mgId,"admin_teach_chapter_index", "",7, $roleId, 1, 1, 0);
-        $this->addMenu("章节添加","添加处理", $mgId,"admin_api_teach_chapter_add", "",8, $roleId, 1, 1, 0);
-        $this->addMenu("章节编辑页面","编辑页面展示", $mgId,"admin_teach_chapter_edit", "",9, $roleId, 1, 1, 0);
-        $this->addMenu("章节编辑","编辑处理", $mgId,"admin_api_teach_chapter_edit", "",10, $roleId, 1, 1, 0);
-        $this->addMenu("章节删除","删除处理", $mgId,"admin_api_teach_chapter_delete", "",11, $roleId, 1, 1, 0);
-        $this->addMenu("章节更新排序","章节更新排序", $mgId,"admin_api_teach_chapter_updateSort", "",12, $roleId, 1, 1, 0);
+        $mgId = $this->addMenu("章节首页","章节首页", $mgId,"admin_teach_chapter_index", "",7, $roleId, 1, 1, 0);
+        $this->addMenu("章节添加页面","章节添加页面展示", $mgId,"admin_teach_chapter_add", "",8, $roleId, 1, 1, 0);
+        $this->addMenu("章节添加","添加处理", $mgId,"admin_api_teach_chapter_add", "",9, $roleId, 1, 1, 0);
+        $this->addMenu("章节编辑页面","编辑页面展示", $mgId,"admin_teach_chapter_edit", "",10, $roleId, 1, 1, 0);
+        $this->addMenu("章节编辑","编辑处理", $mgId,"admin_api_teach_chapter_edit", "",11, $roleId, 1, 1, 0);
+        $this->addMenu("章节删除","删除处理", $mgId,"admin_api_teach_chapter_delete", "",12, $roleId, 1, 1, 0);
+        $this->addMenu("章节更新排序","章节更新排序", $mgId,"admin_api_teach_chapter_updateSort", "",13, $roleId, 1, 1, 0);
 
         //教务
         $jwMenuId = $this->addMenu("教务","教务方面的管理", 0,"", "fa fa-envira",2, $roleId, 1, 0, 1);

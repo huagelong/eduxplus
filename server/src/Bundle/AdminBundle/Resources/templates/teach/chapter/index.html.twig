@@ -32,7 +32,7 @@
 
             $("#sortSave").click(function(){
                 var serialize = $('#tree').nestable('serialize');
-                requestPost('{{ path('admin_api_teach_chapter_updateSortDo', {"id":id}) }}', JSON.stringify(serialize));
+                requestPost('{{ path('admin_api_teach_chapter_updateSort', {"id":id}) }}', JSON.stringify(serialize));
             });
         });
 
@@ -42,7 +42,7 @@
 {% block page %}
 <section class="content">
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-12">
             <div class="card card-default">
                 <div class="card-header">
                     <div class="btn-group">
@@ -54,13 +54,22 @@
                             <i class="fas fa-minus-square-o"></i>&nbsp;收起
                         </button>
                     </div>
-                    {% if is_authorized('admin_api_teach_chapter_updateSortDo') %}
+                    {% if is_authorized('admin_api_teach_chapter_updateSort') %}
                         <div class="btn-group">
                             <button class="btn btn-info btn-sm" id="sortSave" title="保存">
                                 <i class="fas fa-save"></i><span class="hidden-xs">&nbsp;保存排序 </span>
                             </button>
                         </div>
                     {% endif %}
+
+                    {% if is_authorized('admin_teach_chapter_add') %}
+                    <div class="btn-group">
+                        <a href="{{ path("admin_teach_chapter_add", {"id":id}) }}" class="btn btn-sm btn-success" title="添加" style="margin-right: 10px;">
+                            <i class="fas fa-plus"></i><span class="hidden-sm">添加</span>
+                        </a>
+                    </div>
+                    {% endif %}
+
                 </div>
                 <!-- /.box-header -->
                 <div class="card-body table-responsive no-padding">

@@ -62,11 +62,34 @@ $(function(){
         });
     })
 
+    $(".date").each(function(){
+        $(this).daterangepicker({
+            singleDatePicker:true,
+            showDropdowns:true,
+            autoUpdateInput:false,
+            locale: {
+                format: 'YYYY-MM-DD'
+            }
+        });
+    })
+
     $(".datetimerange").each(function(){
         $(this).daterangepicker({
             autoUpdateInput:false,
             timePicker: true,
             timePickerIncrement: 30,
+            locale: {
+                format: 'YYYY-MM-DD hh:mm'
+            }
+        });
+    })
+
+    $(".datetime").each(function(){
+        $(this).daterangepicker({
+            singleDatePicker:true,
+            showDropdowns:true,
+            autoUpdateInput:false,
+            timePicker: true,
             locale: {
                 format: 'YYYY-MM-DD hh:mm'
             }

@@ -1299,6 +1299,8 @@
                         var ampm = this.container.find('.left .ampmselect').val();
                         if (ampm === 'PM' && hour < 12)
                             hour += 12;
+
+
                         if (ampm === 'AM' && hour === 12)
                             hour = 0;
                     }
@@ -1387,6 +1389,7 @@
         },
 
         clickApply: function(e) {
+            this.autoUpdateInput=true;
             this.hide();
             this.element.trigger('apply.daterangepicker', this);
         },
