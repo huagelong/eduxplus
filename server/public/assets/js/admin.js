@@ -209,6 +209,12 @@ $(function(){
         });
     })
 
+    $("form").each(function(){
+        $(this).bind('form-pre-serialize', function(event,form,options,veto){
+            tinyMCE.triggerSave();
+        });
+    });
+
     //富文本
     $(".rich_text").each(function(){
         var id = $(this).attr("id");
@@ -216,7 +222,6 @@ $(function(){
         var height = $(this).data('height');
         width = width?width:"800";
         height = height?height:"200";
-        var defaultvl = $("input[name^='editorHidden-"+id+"']").val()
         tinymce.init({
             selector: "#"+id,
             convert_urls : false,
@@ -252,9 +257,6 @@ $(function(){
                 formData = new FormData();
                 formData.append('file', file, file.name );//此处与源文档不一样
                 xhr.send(formData);
-            },
-            init_instance_callback:function(inst){
-                inst.setContent(defaultvl);
             }
         });
     })

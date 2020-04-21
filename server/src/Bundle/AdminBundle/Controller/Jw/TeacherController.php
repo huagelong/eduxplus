@@ -28,7 +28,6 @@ class TeacherController extends BaseAdminController
         $grid->setListService($teacherService, "getList");
         $grid->setTableColumn("#", "text", "id","a.id");
         $grid->setTableColumn("名称", "text", "name");
-        $grid->setTableColumn("描述", "textarea", "descr");
         $grid->setTableColumn("类型", "text", "type", "", [-1=>"全部",1=>"网课老师", 2=>"分校老师"]);
         $grid->setTableColumn("分校", "text", "school");
 
