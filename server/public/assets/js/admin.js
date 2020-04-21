@@ -216,13 +216,14 @@ $(function(){
         var height = $(this).data('height');
         width = width?width:"800";
         height = height?height:"200";
+        var defaultvl = $("input[name^='editorHidden-"+id+"']").val()
         tinymce.init({
             selector: "#"+id,
             convert_urls : false,
             document_base_url:globOption.appDomain+"assets/plugins/tinymce",
             width:width,
             min_height: height,
-            plugins :  'print preview searchreplace autolink directionality visualblocks visualchars fullscreen image link media template code codesample table charmap hr pagebreak nonbreaking anchor insertdatetime advlist lists wordcount imagetools textpattern help emoticons autosave bdmap indent2em autoresize lineheight',
+            plugins :  'autosave print preview searchreplace autolink directionality visualblocks visualchars fullscreen image link media template code codesample table charmap hr pagebreak nonbreaking anchor insertdatetime advlist lists wordcount imagetools textpattern help emoticons autosave bdmap indent2em autoresize lineheight',
             language:'zh_CN',
             fontsize_formats: '12px 14px 16px 18px 24px 36px 48px 56px 72px',
             toolbar: 'fontsizeselect forecolor link blockquote | alignleft aligncenter alignright | \
@@ -251,8 +252,10 @@ $(function(){
                 formData = new FormData();
                 formData.append('file', file, file.name );//此处与源文档不一样
                 xhr.send(formData);
+            },
+            init_instance_callback:function(inst){
+                inst.setContent(defaultvl);
             }
-
         });
     })
 

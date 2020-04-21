@@ -1,0 +1,15 @@
+{% extends "@AdminBundle/layout/main.html.twig" %}
+
+{% block page_title %}添加老师{% endblock %}
+{% block breadcrumb %}
+    <li class="breadcrumb-item"><a href="{{ path("admin_jw_teacher_index") }}">老师管理</a></li>
+{% endblock %}
+{% block page %}
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            {{ formData|raw }}
+        </div>
+    </div>
+</section>
+{% endblock %}

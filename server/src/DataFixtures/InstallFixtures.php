@@ -156,6 +156,14 @@ class InstallFixtures extends Fixture
         $this->addMenu("编辑页面","编辑页面展示", $mgId,"admin_jw_school_edit", "",2, $roleId, 1, 1, 0);
         $this->addMenu("编辑","编辑处理", $mgId,"admin_api_jw_school_edit", "",3, $roleId, 1, 1, 0);
         $this->addMenu("删除","删除处理", $mgId,"admin_api_jw_school_delete", "",4, $roleId, 1, 1, 0);
+        //老师管理
+        $mgId = $this->addMenu("老师管理","老师信息管理", $jwMenuId,"admin_jw_teacher_index", "",0, $roleId, 1, 0, 1);
+        $this->addMenu("添加页面","添加页面展示", $mgId,"admin_jw_teacher_add", "",0, $roleId, 1, 1, 0);
+        $this->addMenu("添加","添加处理", $mgId,"admin_api_jw_teacher_add", "",1, $roleId, 1, 1, 0);
+        $this->addMenu("编辑页面","编辑页面展示", $mgId,"admin_jw_teacher_edit", "",2, $roleId, 1, 1, 0);
+        $this->addMenu("编辑","编辑处理", $mgId,"admin_api_jw_teacher_edit", "",3, $roleId, 1, 1, 0);
+        $this->addMenu("删除","删除处理", $mgId,"admin_api_jw_teacher_delete", "",4, $roleId, 1, 1, 0);
+        $this->addMenu("锁定/解锁老师","锁定/解锁老师", $userMgId,"admin_api_jw_teacher_switchStatus", "",5, $roleId, 1, 1, 0);
     }
 
     protected function addOption($key, $value, $descr, $type=1, $isLock=1){

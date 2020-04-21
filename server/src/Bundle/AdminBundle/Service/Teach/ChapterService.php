@@ -10,6 +10,7 @@ namespace App\Bundle\AdminBundle\Service\Teach;
 
 
 use App\Bundle\AppBundle\Lib\Base\BaseService;
+use App\Entity\TeachCourseChapter;
 
 class ChapterService extends BaseService
 {
@@ -88,10 +89,50 @@ class ChapterService extends BaseService
                 $rs[$name] = $id;
                 if(isset($all[$id])){
                     $pre = $pre."&nbsp;&nbsp;&nbsp;&nbsp;";
-                    $this->_Select($all[$id], $id, $pre, $rs);
+                    $this->_Select($all, $id, $pre, $rs);
                 }
             }
         }
+    }
+
+    public function add($name, $parentId, $openTime, $studyWay, $isFree, $sort, $id){
+        $model = new TeachCourseChapter();
+        $model->setName($name);
+        $model->setParentId($parentId);
+        if($openTime) $model->setOpenTime($openTime);
+        $model->setStudyWay($studyWay);
+        $model->setIsFree($isFree);
+        $model->setSort($sort);
+        $model->setCourseId($id);
+        return $this->save($model);
+    }
+
+    public function edit($id , $name, $parentId, $openTime, $studyWay, $isFree, $sort){
+        $sql = "SELECT a FROM App:TeachCourseChapter a WHERE a.id=:id";
+        $model = $this->fetchOne($sql, ['id'=>$id], 1);
+        $model->setName($name);
+        $model->setParentId($parentId);
+        if($openTime) $model->setOpenTime($openTime);
+        $model->setStudyWay($studyWay);
+        $model->setIsFree($isFree);
+        $model->setSort($sort);
+        return $this->save($model);
+    }
+
+    public function getById($id){
+        $sql = "SELECT a FROM App:TeachCourseChapter a WHERE a.id=:id";
+        return $this->fetchOne($sql, ['id'=>$id]);
+    }
+
+    public function del($id){
+        $sql = "SELECT a FROM App:TeachCourseChapter a WHERE a.id=:id";
+        $model = $this->fetchOne($sql, ['id'=>$id] ,1 );
+        return $this->delete($model);
+    }
+
+    public function hasChild($id){
+        $sql = "SELECT a FROM App:TeachCourseChapter a WHERE a.parentId=:parentId";
+        return $this->fetchOne($sql, ['parentId'=>$id]);
     }
 
 }

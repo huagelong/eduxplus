@@ -138,7 +138,7 @@ class CategoryService extends BaseService
                 $rs[$name] = $id;
                 if(isset($all[$id])){
                     $pre = $pre."&nbsp;&nbsp;&nbsp;&nbsp;";
-                    $this->_Select($all[$id], $id, $pre, $rs);
+                    $this->_Select($all, $id, $pre, $rs);
                 }
             }
         }

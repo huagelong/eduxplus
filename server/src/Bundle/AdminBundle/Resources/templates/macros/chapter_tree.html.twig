@@ -5,7 +5,14 @@
             <li class="dd-item dd-collapsed" data-id="{{ chapter['id'] }}">
                 <div class="dd-handle">
                     <i class="far fa-circle"></i>&nbsp;<strong>{{ chapter['name']|raw }}</strong>
+                    {% if chapter['openTime'] %}
+                    <span class='font-weight-lighter' style="margin-left: 20px; color: #999">{{ chapter['openTime']|date('Y-m-d H:i') }}</span>
+                    {% endif %}
                     <span class="pull-right dd-nodrag">
+                {% if is_authorized('admin_teach_chapter_add') %}
+                    <a href="{{ path("admin_teach_chapter_add", {"id":chapter['courseId']}) }}?pid={{ chapter['id'] }}" data-title="添加"  title="添加" class="poppage"><i class="fas fa-plus"></i></a>
+                {% endif %}
+
                 {% if is_authorized('admin_teach_chapter_edit') %}
                     <a href="{{ path("admin_teach_chapter_edit", {"id":chapter['id']}) }}" data-title="编辑"  title="编辑" class="poppage"><i class="fas fa-edit"></i></a>
                 {% endif %}

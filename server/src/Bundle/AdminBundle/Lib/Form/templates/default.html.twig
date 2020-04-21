@@ -261,13 +261,14 @@
                     {% if v['type'] == 'rich_editor' %}
                         <div class="col-sm-8">
                             <div class="input-group" >
+                 <input type="hidden" name="editorHidden-{{ v['field'] }}" value="{{ v['defaultValue']}}"  />
                 <textarea  class="form-control form-control-sm rich_text"
                 {% if v['options'] %}
                     {% for ok,ov in v['options'] %}
                         {{ ok }}="{{ ov }}"
                     {% endfor %}
                 {% endif %}
-                >{{ v['defaultValue'] }}</textarea>
+                ></textarea>
                             </div>
                         </div>
                     {% endif %}

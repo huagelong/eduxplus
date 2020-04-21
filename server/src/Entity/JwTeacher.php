@@ -47,7 +47,7 @@ class JwTeacher
     /**
      * @var bool|null
      *
-     * @ORM\Column(name="type", type="boolean", nullable=true, options={"comment"="1-网课老师，2-分校老师，3-全部"})
+     * @ORM\Column(name="type", type="boolean", nullable=true, options={"comment"="1-网课老师，2-分校老师，-1-全部"})
      */
     private $type;
 

@@ -113,3 +113,10 @@
 .btn-file .btn-sm{
     padding: .5rem .5rem;
 }
+.dd{
+    max-width: 100%!important;
+}
+
+.dd-nodrag a{
+    margin-right: 10px;
+}
