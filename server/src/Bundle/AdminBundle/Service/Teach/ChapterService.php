@@ -9,12 +9,20 @@
 namespace App\Bundle\AdminBundle\Service\Teach;
 
 
+use App\Bundle\AdminBundle\Service\Jw\TeacherService;
 use App\Bundle\AppBundle\Lib\Base\BaseService;
 use App\Entity\TeachCourseChapter;
+use App\Entity\TeachCourseTeachers;
 
 class ChapterService extends BaseService
 {
 
+    protected $teacherService;
+
+    public function __construct(TeacherService $teacherService)
+    {
+        $this->teacherService = $teacherService;
+    }
 
     public function getChapterTree($parentId)
     {
@@ -95,7 +103,17 @@ class ChapterService extends BaseService
         }
     }
 
-    public function add($name, $parentId, $openTime, $studyWay, $isFree, $sort, $id){
+    public function getTeachers(){
+        $allTeachers = $this->teacherService->getAll();
+        if(!$allTeachers) return [];
+        $rs = [];
+        foreach ($allTeachers as $v){
+            $rs[$v['name']] = $v['id'];
+        }
+        return $rs;
+    }
+
+    public function add($name, $teachers, $parentId, $openTime, $studyWay, $isFree, $sort, $id){
         $model = new TeachCourseChapter();
         $model->setName($name);
         $model->setParentId($parentId);
@@ -104,24 +122,54 @@ class ChapterService extends BaseService
         $model->setIsFree($isFree);
         $model->setSort($sort);
         $model->setCourseId($id);
-        return $this->save($model);
+        $chapterId = $this->save($model);
+
+        if($teachers){
+            foreach ($teachers as $teacherId){
+                $tmodel = new TeachCourseTeachers();
+                $tmodel->setCourseId($id);
+                $tmodel->setChapterId($chapterId);
+                $tmodel->setTeacherId($teacherId);
+                $this->save($tmodel);
+            }
+        }
+
     }
 
-    public function edit($id , $name, $parentId, $openTime, $studyWay, $isFree, $sort){
+    public function edit($id , $name, $teachers, $parentId, $openTime, $studyWay, $isFree, $sort){
         $sql = "SELECT a FROM App:TeachCourseChapter a WHERE a.id=:id";
         $model = $this->fetchOne($sql, ['id'=>$id], 1);
+        $courseId = $model->getCourseId();
+
         $model->setName($name);
         $model->setParentId($parentId);
         if($openTime) $model->setOpenTime($openTime);
         $model->setStudyWay($studyWay);
         $model->setIsFree($isFree);
         $model->setSort($sort);
-        return $this->save($model);
+        $this->save($model);
+        if($teachers){
+            $sql2 = "SELECT a FROM App:TeachCourseTeachers a WHERE a.chapterId=:chapterId";
+            $tmodels = $this->fetchAll($sql2, ["chapterId"=>$id], 1);
+            $this->delete($tmodels);
+            foreach ($teachers as $teacherId){
+                $tmodel = new TeachCourseTeachers();
+                $tmodel->setCourseId($courseId);
+                $tmodel->setChapterId($id);
+                $tmodel->setTeacherId($teacherId);
+                $this->save($tmodel);
+            }
+        }
     }
 
     public function getById($id){
         $sql = "SELECT a FROM App:TeachCourseChapter a WHERE a.id=:id";
         return $this->fetchOne($sql, ['id'=>$id]);
+    }
+
+    public function getTeacherIds($chapterId){
+        $sql = "SELECT a FROM App:TeachCourseTeachers a WHERE a.chapterId=:chapterId";
+        return $this->fetchFields('teacherId', $sql, ['chapterId'=>$chapterId]);
     }
 
     public function del($id){
