@@ -40,6 +40,8 @@ class InstallFixtures extends Fixture
         $this->addOption("app.user.default.gravatar", '["/assets/images/gravatar.jpeg"]', "用户默认头像", 2, 1);
         $this->addOption("app.icon", '["/assets/images/fav.png"]', "应用icon", 2, 1);
         $this->addOption("app.domain", 'http://www.eduxplus.test/', "应用域名网址", 1, 1);
+        $this->addOption("app.vod.channel", 1, "点播渠道选择，1-获得场景视频", 1, 1);
+        $this->addOption("app.bokecc.key", '1xaBDOtW1a4SSanrqeqXjYlTj5D9gGgO', "获得场景视频点播key", 1, 1);
         //初始化用户
         $userModel = new BaseUser();
         $uuid = $this->helperService->getUuid();
@@ -146,6 +148,7 @@ class InstallFixtures extends Fixture
         $this->addMenu("章节编辑","编辑处理", $mgId,"admin_api_teach_chapter_edit", "",11, $roleId, 1, 1, 0);
         $this->addMenu("章节删除","删除处理", $mgId,"admin_api_teach_chapter_delete", "",12, $roleId, 1, 1, 0);
         $this->addMenu("章节更新排序","章节更新排序", $mgId,"admin_api_teach_chapter_updateSort", "",13, $roleId, 1, 1, 0);
+        $this->addMenu("视频管理","管理视频", $mgId,"admin_teach_chapter_video", "",14, $roleId, 1, 1, 0);
 
         //教务
         $jwMenuId = $this->addMenu("教务","教务方面的管理", 0,"", "fa fa-envira",2, $roleId, 1, 0, 1);

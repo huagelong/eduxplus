@@ -133,7 +133,7 @@ class ChapterService extends BaseService
                 $this->save($tmodel);
             }
         }
-
+        return $chapterId;
     }
 
     public function edit($id , $name, $teachers, $parentId, $openTime, $studyWay, $isFree, $sort){
@@ -181,6 +181,18 @@ class ChapterService extends BaseService
     public function hasChild($id){
         $sql = "SELECT a FROM App:TeachCourseChapter a WHERE a.parentId=:parentId";
         return $this->fetchOne($sql, ['parentId'=>$id]);
+    }
+
+    public function getVideoById($id){
+        $sql = "SELECT a FROM App:TeachCourseVideos a WHERE a.chapterId=:chapterId";
+        return $this->fetchOne($sql, ['chapterId'=>$id]);
+    }
+
+    /**
+     * 创建点播
+     */
+    public function createVod(){
+
     }
 
 }

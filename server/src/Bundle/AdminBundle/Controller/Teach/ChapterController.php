@@ -169,10 +169,36 @@ class ChapterController extends BaseAdminController
 
 
     /**
-     * @Rest\Get("/teach/chapter/teacher/{id}", name="admin_teach_chapter_teacher")
+     * @Rest\Get("/teach/chapter/video/{id}", name="admin_teach_chapter_video")
      */
-    public function teacherAction($id){
+    public function videoAction($id, Form $form, ChapterService $chapterService){
+        $info =  $chapterService->getVideoById($id);
+        $form->setFormField("视频类型", 'select', 'type' ,1,  $info['type'], function(){
+            return ["直播"=>1, "录播"=>2];
+        });
 
+        $form->setFormField("渠道", 'select', 'videoChannel' ,1,  $info['videoChannel'], function(){
+            return ["cc视频"=>1];
+        });
+
+        $form->setFormField("渠道数据", 'textarea', 'channelData' ,0,  $info['channelData']);
+
+        $formData = $form->create($this->generateUrl("admin_api_teach_chapter_video", ['id'=>$id]));
+        $data = [];
+        $data["formData"] = $formData;
+        $data['id'] = $id;
+        return $this->render("@AdminBundle/teach/chapter/video.html.twig", $data);
+    }
+
+    /**
+     * @Rest\Post("/api/teach/chapter/videoDo/{id}", name="admin_api_teach_chapter_video")
+     */
+    public function videoDoAction($id, Request $request, ChapterService $chapterService){
+        $data = $request->request->all();
+
+
+
+        return $this->responseSuccess("更新排序成功!", $this->generateUrl("admin_teach_chapter_index", ["id"=>$id]));
     }
 
 

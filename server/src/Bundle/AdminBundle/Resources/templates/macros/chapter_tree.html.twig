@@ -10,7 +10,11 @@
                     {% endif %}
                     <span class="pull-right dd-nodrag">
                 {% if is_authorized('admin_teach_chapter_add') %}
-                    <a href="{{ path("admin_teach_chapter_add", {"id":chapter['courseId']}) }}?pid={{ chapter['id'] }}" data-title="添加"  title="添加" class="poppage"><i class="fas fa-plus"></i></a>
+                    <a href="{{ path("admin_teach_chapter_add", {"id":chapter['courseId']}) }}?pid={{ chapter['id'] }}" data-title="添加子章节"  title="添加子章节" class="poppage"><i class="fas fa-plus"></i></a>
+                {% endif %}
+
+                {% if is_authorized('admin_teach_chapter_video') %}
+                    <a href="{{ path("admin_teach_chapter_video", {"id":chapter['id']}) }}" data-title="管理视频"  title="管理视频" class="poppage"><i class="fa fa-play-circle-o"></i></a>
                 {% endif %}
 
                 {% if is_authorized('admin_teach_chapter_edit') %}

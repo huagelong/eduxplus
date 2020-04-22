@@ -2,6 +2,8 @@
 
 namespace App\DataFixtures;
 
+use App\Bundle\AdminBundle\Service\Jw\TeacherService;
+use App\Bundle\AdminBundle\Service\Teach\ChapterService;
 use App\Bundle\AdminBundle\Service\Teach\CourseService;
 use App\Bundle\AppBundle\Lib\Service\HelperService;
 use App\Entity\BaseMenu;
@@ -27,15 +29,21 @@ class TestDataFixtures extends Fixture
     protected $manager;
     protected $helperService;
     protected $courseService;
+    protected $chapterService;
+    protected $teacherService;
 
     public function __construct(UserPasswordEncoderInterface $passwordEncoder
         ,HelperService $helperService,
-        CourseService $courseService
+        CourseService $courseService,
+        ChapterService $chapterService,
+        TeacherService $teacherService
     )
     {
         $this->passwordEncoder = $passwordEncoder;
         $this->helperService = $helperService;
         $this->courseService = $courseService;
+        $this->chapterService = $chapterService;
+        $this->teacherService = $teacherService;
     }
 
     public function load(ObjectManager $manager)
@@ -67,9 +75,13 @@ class TestDataFixtures extends Fixture
         //校区
         $this->addSchool("同济大学北校区","上海市","上海城区", "杨浦区", "(021)66052500","国康路47号同济大学北校区", '<p><iframe style="width: 560px; height: 362px;" src="http://www.eduxplus.test/assets/plugins/tinymce/plugins/bdmap/bd.html?center=121.50707705070504%2C31.291328353729664&amp;zoom=14&amp;width=558&amp;height=360" frameborder="0"><span id="mce_marker" data-mce-type="bookmark">﻿​</span></iframe></p>');
         $schoolId1 = $this->addSchool("上海大学(宝山校区)","上海市","上海城区", "宝山区", "(021)66132222","上海市宝山区上大路99号", '<p><iframe style="width: 560px; height: 362px;" src="http://www.eduxplus.test/assets/plugins/tinymce/plugins/bdmap/bd.html?center=121.39903048091482%2C31.32144004759091&amp;zoom=14&amp;width=558&amp;height=360" frameborder="0"><span id="mce_marker" data-mce-type="bookmark">﻿​</span></iframe></p>');
+        $teacherId1 = $this->teacherService->add("刘德华", "老牌实力明星", 1, $schoolId1, 1);
 
-        $this->courseService->add(1,"JAVA编程思想", 1, "", "JAVA编程思想", $cid1, $schoolId1, 33);
-
+        $courseId = $this->courseService->add(1,"JAVA编程思想", 1, "", "JAVA编程思想", $cid1, $schoolId1, 33);
+        $chapterId = $this->chapterService->add("JAVA基础", [$teacherId1], 0, time(), 1, 0, 0, $courseId);
+        $this->chapterService->add("变量", [$teacherId1], $chapterId, time(), 1, 0, 0, $courseId);
+        $this->chapterService->add("函数", [$teacherId1], $chapterId, time(), 1, 0, 1, $courseId);
+        $this->chapterService->add("类", [$teacherId1], $chapterId, time(), 1, 0, 2, $courseId);
     }
 
     protected function addSchool($name,$state,$city, $region, $linkin,$address, $descr){
