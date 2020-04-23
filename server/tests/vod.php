@@ -8,3 +8,9 @@
 
 include_once "bootstrap.php";
 
+use \Symfony\Component\DependencyInjection\Container;
+
+$container = new Container();
+
+$service = $container->get(\App\Bundle\AppBundle\Lib\Service\Vod\BokeccService::class);
+var_dump($service->categoryCreate("测试分类"));

@@ -20,7 +20,7 @@ class GlobController extends BaseHtmlController
     /**
      * @Rest\Get("/recaptcha/{type}", name="app_glob_recaptcha")
      */
-    public function recaptcha($type, CaptchaService $captchaService, Request $request){
+    public function recaptchaAction($type, CaptchaService $captchaService, Request $request){
         $session = $request->getSession();
         list($source, $header) = $captchaService->get($session, $type);
 
@@ -33,4 +33,5 @@ class GlobController extends BaseHtmlController
         }
         return $response;
     }
+
 }

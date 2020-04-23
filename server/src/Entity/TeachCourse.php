@@ -52,6 +52,13 @@ class TeachCourse
     private $descr;
 
     /**
+     * @var string|null
+     *
+     * @ORM\Column(name="cc_gategory_id", type="string", length=100, nullable=true, options={"comment"="cc视频分类"})
+     */
+    private $ccGategoryId;
+
+    /**
      * @var int|null
      *
      * @ORM\Column(name="category_id", type="integer", nullable=true, options={"comment"="类目id"})
