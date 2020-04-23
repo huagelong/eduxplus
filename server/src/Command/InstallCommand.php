@@ -35,16 +35,25 @@ class InstallCommand extends Command
 //        $greetInput->setInteractive(false);
         $command->run($greetInput, $output);
         //----2
-        $command = $this->getApplication()->find('make:migration');
+//        $command = $this->getApplication()->find('make:migration');
+//        $arguments = [
+//            'command' => 'make:migration',
+//        ];
+//        $greetInput = new ArrayInput($arguments);
+//        $command->run($greetInput, $output);
+//        //----3
+//        $command = $this->getApplication()->find('doctrine:migrations:migrate');
+//        $arguments = [
+//            'command' => 'doctrine:migrations:migrate',
+//        ];
+//        $greetInput = new ArrayInput($arguments);
+//        $greetInput->setInteractive(false);
+//        $command->run($greetInput, $output);
+
+        $command = $this->getApplication()->find('doctrine:schema:update');
         $arguments = [
-            'command' => 'make:migration',
-        ];
-        $greetInput = new ArrayInput($arguments);
-        $command->run($greetInput, $output);
-        //----3
-        $command = $this->getApplication()->find('doctrine:migrations:migrate');
-        $arguments = [
-            'command' => 'doctrine:migrations:migrate',
+            'command' => 'doctrine:schema:update',
+            "--force"=>true,
         ];
         $greetInput = new ArrayInput($arguments);
         $greetInput->setInteractive(false);
