@@ -14,6 +14,50 @@ use App\Bundle\AppBundle\Lib\Base\BaseService;
 class BokeccService extends BaseService
 {
 
+    public function searchVideo($kw,$cateGoryId, $page=1, $pageSize=20){
+        /**
+         * userid	用户id，不可为空
+        q	查询条件，不可为空
+        格式：查询字段:查询内容
+        查询字段：目前只支持TITLE
+        查询内容：查询关键字
+        注：格式中的”:”为英文半角
+        Example：q=TITLE:test
+        sort	查询结果排序，不可为空
+        格式：排序字段:排序方式
+        排序字段：CREATION_DATE或FILE_SIZE
+        排序方式：ASC或DESC
+        注：格式中的”:”为英文半角
+        Example：sort=CREATION_DATE:DESC
+        categoryid	视频子分类 id，如果不查询指定分类下的视频，请勿加入此参数
+        num_per_page	返回信息时，每页包含的视频个数.注:阈值为 1~100
+        page	当前页码
+         */
+
+        $params = [];
+        if($cateGoryId) $params['categoryid'] = $cateGoryId;
+        $params['userid'] = $this->getCCUID();
+        $params["q"] = "TITLE:".$kw;
+        $params["sort"] = "CREATION_DATE:DESC";
+        $params['num_per_page'] = $pageSize;
+        $params['page'] = $page;
+        return $this->ccReq("videos/search", $params);
+    }
+
+    /**
+     * 获取分类下视频信息
+     *
+     * @param $cateGoryId
+     */
+    public function getVideosByCateGoryId($cateGoryId, $page=1, $pageSize=20){
+        $params = [];
+        $params['categoryid'] = $cateGoryId;
+        $params['userid'] = $this->getCCUID();
+        $params['num_per_page'] = $pageSize;
+        $params['page'] = $page;
+        return $this->ccReq("videos/category/v2", $params);
+    }
+
     /**
      * 创建视频分类
      * @param $name

@@ -280,6 +280,18 @@ class TeachCourse
         return $this;
     }
 
+    public function getCcGategoryId(): ?string
+    {
+        return $this->ccGategoryId;
+    }
+
+    public function setCcGategoryId(?string $ccGategoryId): self
+    {
+        $this->ccGategoryId = $ccGategoryId;
+
+        return $this;
+    }
+
 
 
 }

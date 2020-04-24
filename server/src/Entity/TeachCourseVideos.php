@@ -47,7 +47,7 @@ class TeachCourseVideos
     /**
      * @var bool|null
      *
-     * @ORM\Column(name="video_channel", type="boolean", nullable=true, options={"comment"="1-cc视频，2-百度云"})
+     * @ORM\Column(name="video_channel", type="boolean", nullable=true, options={"comment"="1-cc视频"})
      */
     private $videoChannel;
 
@@ -57,6 +57,13 @@ class TeachCourseVideos
      * @ORM\Column(name="channel_data", type="text", length=65535, nullable=true, options={"comment"="渠道数据"})
      */
     private $channelData;
+
+    /**
+     * @var bool|null
+     *
+     * @ORM\Column(name="status", type="boolean", nullable=true, options={"comment"="是否可用，转码，审核已完成等，1-是,0-否"})
+     */
+    private $status=0;
 
     /**
      * @var int|null
@@ -174,6 +181,18 @@ class TeachCourseVideos
     public function setDeletedAt(?\DateTimeInterface $deletedAt): self
     {
         $this->deletedAt = $deletedAt;
+
+        return $this;
+    }
+
+    public function getStatus(): ?bool
+    {
+        return $this->status;
+    }
+
+    public function setStatus(?bool $status): self
+    {
+        $this->status = $status;
 
         return $this;
     }

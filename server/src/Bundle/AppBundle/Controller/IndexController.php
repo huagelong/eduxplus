@@ -21,7 +21,7 @@ class IndexController extends BaseHtmlController
      * @Rest\Get("/", name="app_glob_index")
      */
     public function indexAction(BokeccService $bokeccService){
-        $rs = $bokeccService->categoryCreate("测试分类");
+        $rs = $bokeccService->searchVideo("手把手", "BE59FAE6BE3646CE");
         dump($rs);
         exit;
     }

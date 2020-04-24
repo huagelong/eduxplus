@@ -34,4 +34,24 @@ class GlobController extends BaseHtmlController
         return $response;
     }
 
+    /**
+     * 点播回调网址
+     * @Rest\Get("/vodnotify/{type}", name="app_glob_vodnotify")
+     */
+    public function vodNotifyAction($type='cc', Request $request){
+        if($type == 'cc'){
+            $data = $request->get("data");
+            $kernelSecret = $this->getParameter("kernel.secret");
+            if($data!=$kernelSecret){
+                $str = '<?xml version="1.0" encoding="UTF-8"?><result>ERROR</result>';
+            }else{
+                $str = '<?xml version="1.0" encoding="UTF-8"?><result>OK</result>';
+            }
+
+            $response = new Response($str);
+            $response->headers->set("Content-Type", "text/xml");
+            return $response;
+        }
+    }
+
 }

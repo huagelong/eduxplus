@@ -91,6 +91,7 @@ class TeachCourseChapter
      */
     private $deletedAt;
 
+
     public function getId(): ?int
     {
         return $this->id;
