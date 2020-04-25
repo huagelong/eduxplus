@@ -40,14 +40,14 @@ class TeachCourseVideos
     /**
      * @var bool|null
      *
-     * @ORM\Column(name="type", type="boolean", nullable=true, options={"comment"="1-直播,2-录播"})
+     * @ORM\Column(name="type", type="integer", length=1,nullable=true, options={"comment"="1-直播,2-录播"})
      */
     private $type;
 
     /**
      * @var bool|null
      *
-     * @ORM\Column(name="video_channel", type="boolean", nullable=true, options={"comment"="1-cc视频"})
+     * @ORM\Column(name="video_channel", type="integer",length=1, nullable=true, options={"comment"="1-cc视频"})
      */
     private $videoChannel;
 
@@ -113,24 +113,24 @@ class TeachCourseVideos
         return $this;
     }
 
-    public function getType(): ?bool
+    public function getType(): ?int
     {
         return $this->type;
     }
 
-    public function setType(?bool $type): self
+    public function setType(?int $type): self
     {
         $this->type = $type;
 
         return $this;
     }
 
-    public function getVideoChannel(): ?bool
+    public function getVideoChannel(): ?int
     {
         return $this->videoChannel;
     }
 
-    public function setVideoChannel(?bool $videoChannel): self
+    public function setVideoChannel(?int $videoChannel): self
     {
         $this->videoChannel = $videoChannel;
 
@@ -145,6 +145,18 @@ class TeachCourseVideos
     public function setChannelData(?string $channelData): self
     {
         $this->channelData = $channelData;
+
+        return $this;
+    }
+
+    public function getStatus(): ?bool
+    {
+        return $this->status;
+    }
+
+    public function setStatus(?bool $status): self
+    {
+        $this->status = $status;
 
         return $this;
     }
@@ -184,18 +196,5 @@ class TeachCourseVideos
 
         return $this;
     }
-
-    public function getStatus(): ?bool
-    {
-        return $this->status;
-    }
-
-    public function setStatus(?bool $status): self
-    {
-        $this->status = $status;
-
-        return $this;
-    }
-
 
 }

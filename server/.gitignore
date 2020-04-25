@@ -2,9 +2,12 @@
 /.env.local
 /.env.local.php
 /.env.*.local
+/.settings
 /config/secrets/prod/prod.decrypt.private.php
 /public/bundles/
 /public/upload/
+/.buildpath
+/.project
 /var/
 /vendor/
 ###< symfony/framework-bundle ###

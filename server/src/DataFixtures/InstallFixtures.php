@@ -149,7 +149,8 @@ class InstallFixtures extends Fixture
         $this->addMenu("章节删除","删除处理", $mgId,"admin_api_teach_chapter_delete", "",12, $roleId, 1, 1, 0);
         $this->addMenu("章节更新排序","章节更新排序", $mgId,"admin_api_teach_chapter_updateSort", "",13, $roleId, 1, 1, 0);
         $this->addMenu("视频管理","管理视频", $mgId,"admin_teach_chapter_video", "",14, $roleId, 1, 1, 0);
-
+        $this->addMenu("视频管理处理","视频添加、编辑等处理", $mgId,"admin_api_teach_chapter_video", "",14, $roleId, 1, 1, 0);
+        
         //教务
         $jwMenuId = $this->addMenu("教务","教务方面的管理", 0,"", "fa fa-envira",2, $roleId, 1, 0, 1);
         //学校管理

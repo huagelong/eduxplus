@@ -194,14 +194,19 @@ class ChapterService extends BaseService
      */
     public function addVideos($chapterId, $type, $videoChannel, $channelData){
         $chapterInfo = $this->getById($chapterId);
-        $courseId = $chapterInfo['course_id'];
-        $model = new TeachCourseVideos();
+        $courseId = $chapterInfo['courseId'];
+        $sql = "SELECT a FROM App:TeachCourseVideos a WHERE a.chapterId=:chapterId";
+        $model = $this->fetchOne($sql, ["chapterId"=>$chapterId], 1);
+        if(!$model){
+            $model = new TeachCourseVideos();
+        }
         $model->setChapterId($chapterId);
         $model->setCourseId($courseId);
         $model->setType($type);
-        $model->setStatus(0);
+        $model->setStatus(1);
         $model->setChannelData($channelData);
         $model->setVideoChannel($videoChannel);
+
         return $this->save($model);
     }
 
