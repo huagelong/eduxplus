@@ -5,12 +5,47 @@
     <li class="breadcrumb-item"><a href="{{ path("admin_teach_course_index") }}">课程管理</a></li>
     <li class="breadcrumb-item"><a href="{{ path("admin_teach_chapter_index", {"id":id}) }}">章节管理</a></li>
 {% endblock %}
+{% block body_javascript %}
+    <script src="{{ asset('assets/bokecc/swfobject/swfobject.js') }}"></script>
+    {{ parent() }}
+<script type="text/javascript">
+    $(function(){
+        var swfobj=new swfobject('/assets/bokecc/uploader.swf','swfname','80','80','8');
+        swfobj.addVariable('title','test');
+        swfobj.addVariable('number',123);
+        swfobj.addParam('allowFullscreen','true');
+        swfobj.addParam('allowScriptAccess','always');
+        swfobj.addParam('wmode','transparent');
+        swfobj.write('ccupload');
+    });
+</script>
+{% endblock %}
 
 {% block page %}
 <section class="content">
     <div class="row">
         <div class="col-md-12">
-            {{ formData|raw }}
+            <div class="card card-default">
+                <form method="POST" action="{{ path("admin_api_teach_chapter_video", {id:id}) }}" class="form-horizontal ajaxform" accept-charset="UTF-8" >
+                    <div class="card-body" style="display: block;">
+                        {{ formData|raw }}
+                        <div class="form-group  row">
+                            <label for="title" class="col-sm-2 require col-form-label">上传视频</label>
+                            <div class="btn-group" id="ccupload">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="col-md-2"></div>
+                        <div class="col-md-8">
+                            <div class="btn-group">
+                                <button type="submit" class="btn btn-sm btn-info " style="margin-right: 10px;">提交</button>
+                                <button type="reset" class="btn btn-default btn-sm reset"><i class="fa fa-undo"></i>&nbsp;&nbsp;重置</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </section>

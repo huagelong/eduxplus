@@ -13,6 +13,7 @@ use App\Bundle\AdminBundle\Service\Jw\TeacherService;
 use App\Bundle\AppBundle\Lib\Base\BaseService;
 use App\Entity\TeachCourseChapter;
 use App\Entity\TeachCourseTeachers;
+use App\Entity\TeachCourseVideos;
 
 class ChapterService extends BaseService
 {
@@ -191,8 +192,17 @@ class ChapterService extends BaseService
     /**
      * 创建点播
      */
-    public function createVod(){
-
+    public function addVideos($chapterId, $type, $videoChannel, $channelData){
+        $chapterInfo = $this->getById($chapterId);
+        $courseId = $chapterInfo['course_id'];
+        $model = new TeachCourseVideos();
+        $model->setChapterId($chapterId);
+        $model->setCourseId($courseId);
+        $model->setType($type);
+        $model->setStatus(0);
+        $model->setChannelData($channelData);
+        $model->setVideoChannel($videoChannel);
+        return $this->save($model);
     }
 
 }

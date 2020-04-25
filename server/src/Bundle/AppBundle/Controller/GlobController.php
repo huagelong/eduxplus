@@ -35,7 +35,7 @@ class GlobController extends BaseHtmlController
     }
 
     /**
-     * 点播回调网址
+     * 点播回调网址  todo
      * @Rest\Get("/vodnotify/{type}", name="app_glob_vodnotify")
      */
     public function vodNotifyAction($type='cc', Request $request){

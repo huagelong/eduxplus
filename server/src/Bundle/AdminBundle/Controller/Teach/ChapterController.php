@@ -183,6 +183,8 @@ class ChapterController extends BaseAdminController
 
         $form->setFormField("渠道数据", 'textarea', 'channelData' ,0,  $info['channelData']);
 
+        $form->disableSubmit();
+
         $formData = $form->create($this->generateUrl("admin_api_teach_chapter_video", ['id'=>$id]));
         $data = [];
         $data["formData"] = $formData;
@@ -194,11 +196,13 @@ class ChapterController extends BaseAdminController
      * @Rest\Post("/api/teach/chapter/videoDo/{id}", name="admin_api_teach_chapter_video")
      */
     public function videoDoAction($id, Request $request, ChapterService $chapterService){
-        $data = $request->request->all();
+        $type = (int) $request->get("type");
+        $videoChannel = $request->get("videoChannel");
+        $channelData = $request->get("channelData");
 
+        $chapterService->add($id, $type, $videoChannel, $channelData);
 
-
-        return $this->responseSuccess("更新排序成功!", $this->generateUrl("admin_teach_chapter_index", ["id"=>$id]));
+        return $this->responseSuccess("操作成功!", $this->generateUrl("admin_teach_chapter_index", ["id"=>$id]));
     }
 
 

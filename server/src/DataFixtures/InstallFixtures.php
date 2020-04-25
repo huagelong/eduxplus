@@ -40,7 +40,6 @@ class InstallFixtures extends Fixture
         $this->addOption("app.user.default.gravatar", '["/assets/images/gravatar.jpeg"]', "用户默认头像", 2, 1);
         $this->addOption("app.icon", '["/assets/images/fav.png"]', "应用icon", 2, 1);
         $this->addOption("app.domain", 'http://www.eduxplus.test/', "应用域名网址", 1, 1);
-        $this->addOption("app.vod.channel", 1, "点播渠道选择，1-获得场景视频", 1, 1);
         $this->addOption("app.bokecc.key", '1xaBDOtW1a4SSanrqeqXjYlTj5D9gGgO', "获得场景视频点播key", 1, 1);
         $this->addOption("app.bokecc.uid", '401ABBE68F38B6DA', "获得场景视频账户ID", 1, 1);
         //初始化用户
