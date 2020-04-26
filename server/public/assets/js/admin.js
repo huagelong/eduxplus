@@ -173,7 +173,7 @@ $(function(){
             "theme": "fa",
             "language":"zh",
             "browseClass": "btn btn-primary",
-            "allowedFileExtensions": ['jpg', 'png', 'gif', 'jpeg', 'zip', 'rar', 'txt', 'doc', 'ppt', 'xls', 'pdf', 'docx', 'pptx', 'xlsx'],
+            "allowedFileExtensions": ['jpg', 'png', 'gif', 'jpeg', 'zip', 'rar', 'txt', 'doc', 'ppt', 'xls', 'pdf', 'docx', 'pptx', 'xlsx', 'csv'],
             "overwriteInitial":true,
             "initialPreviewAsData":true,
             // "uploadExtraData": function(previewId, index) {
@@ -188,9 +188,11 @@ $(function(){
             "showRemove":true,
             "showUpload":true,
             "showCancel":false,
+            "previewFileIcon":"fa fa-file-o",
             "previewFileIconSettings": {
                 'docx': '<i class="fa fa-file-word-o text-primary"></i>',
                 'xlsx': '<i class="fa fa-file-excel-o text-success"></i>',
+                'csv': '<i class="fa fa-file-excel-o text-success"></i>',
                 'pptx': '<i class="fa fa-file-powerpoint-o text-danger"></i>',
                 'doc': '<i class="fa fa-file-word-o text-primary"></i>',
                 'xls': '<i class="fa fa-file-excel-o text-success"></i>',
@@ -202,7 +204,7 @@ $(function(){
             "fileActionSettings":{"showRemove":true,"showDrag":true}
         });
 
-        $(this).on('filebatchuploadcomplete',function (event,files,extra) {
+        $(this).on('filebatchuploadcomplete',function (event, filePath) {
             var plugin = $(this).data('fileinput');
             var initialPreview = plugin.initialPreview;
             $("input[name="+field+"]").val(JSON.stringify(initialPreview));

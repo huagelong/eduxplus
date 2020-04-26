@@ -24,17 +24,39 @@ class GlobController extends BaseAdminController
 //        $exists = $request->get("exists");
 //        dump($exists);exit;
         $file = $request->files->all();
+
         if(!$file){
             return $this->json(['error'=>"没有文件上传!"]);
         }
         try{
             $filePaths = [];
+            $initialPreview= [];
+            $initialPreviewConfig = [];
             foreach ($file as $v){
+                $size = $v->getFileInfo()->getSize();
                 $filePath = $uploadService->upload($v, $type);
+                $miniType = $v->getClientMimeType();
+                $originalName = $v->getClientOriginalName();
+                if(stristr($miniType, "image")){
+                    $initialPreview[] = $filePath;
+                    $tmp=[];
+                    $tmp['type'] = 'image';
+                    $tmp['caption'] = $originalName;
+                    $tmp['size'] =  $size;
+                    $initialPreviewConfig[] = $tmp;
+                }else{
+                    $initialPreview[] = $filePath;
+                    $tmp=[];
+                    $tmp['type'] = 'other';
+                    $tmp['caption'] = $originalName;
+                    $tmp['size'] =  $size;
+                    $initialPreviewConfig[] = $tmp;
+                }
                 $filePaths[] = $filePath;
             }
             $data = [];
-            $data["initialPreview"] = $filePaths;
+            $data["initialPreview"] = $initialPreview;
+            $data['initialPreviewConfig'] = $initialPreviewConfig;
             $data['append'] = true;
             return $this->json($data);
         }catch (\Exception $e){

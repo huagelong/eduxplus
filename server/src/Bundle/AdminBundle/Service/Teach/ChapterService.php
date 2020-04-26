@@ -12,6 +12,7 @@ namespace App\Bundle\AdminBundle\Service\Teach;
 use App\Bundle\AdminBundle\Service\Jw\TeacherService;
 use App\Bundle\AppBundle\Lib\Base\BaseService;
 use App\Entity\TeachCourseChapter;
+use App\Entity\TeachCourseMaterials;
 use App\Entity\TeachCourseTeachers;
 use App\Entity\TeachCourseVideos;
 
@@ -222,6 +223,11 @@ class ChapterService extends BaseService
         $model->setCourseId($courseId);
         $model->setPath($path);
         return $this->save($model);
+    }
+
+    public function getMaterialsById($id){
+        $sql = "SELECT a FROM App:TeachCourseMaterials a WHERE a.chapterId=:chapterId";
+        return $this->fetchOne($sql, ['chapterId'=>$id]);
     }
 
 }

@@ -264,4 +264,41 @@ class BaseService extends AbstractFOSRestController
         }
     }
 
+    public function getInitialPreviewConfig($path){
+        if(!$path) return [];
+        $initialPreviewConfig = [];
+        $path = \GuzzleHttp\json_decode($path,1);
+        foreach ($path as $v){
+            $fileInfo = $this->getFileInfo($v);
+            dump($fileInfo);
+            $type = stristr($fileInfo['mime'], "image")?"image":"other";
+            $tmp=[];
+            $tmp['type'] = $type;
+            $tmp['caption'] = $fileInfo['filename'];
+            $tmp['size'] = $fileInfo['length'];
+            $initialPreviewConfig[] = $tmp;
+        }
+
+        return \GuzzleHttp\json_encode($initialPreviewConfig);
+    }
+
+    protected function getFileInfo($strUrl){
+        if(!stristr($strUrl, "http")){
+            $domain = $this->getOption("app.domain");
+            $strUrl = trim($domain, "/").$strUrl;
+        }
+
+        $arrRet = [];
+        if(($arrTmp=get_headers($strUrl,true))){
+            dump($arrTmp);
+            $arrRet=array("length"=>$arrTmp['Content-Length'],"mime"=>$arrTmp['Content-Type']);
+            $arrRet["filename"]= pathinfo($strUrl, PATHINFO_FILENAME).".".pathinfo($strUrl, PATHINFO_EXTENSION);
+            if(preg_match('/\s(\d+)\s/',$arrTmp[0],$arr)){
+                $arrRet["status"]=$arr[1];
+            }
+        }
+
+        return $arrRet;
+    }
+
 }

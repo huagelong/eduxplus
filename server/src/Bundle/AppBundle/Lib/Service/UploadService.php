@@ -16,10 +16,11 @@ class UploadService extends BaseService
 
     public function upload(UploadedFile $file, $type)
     {
+//        $file->getFileInfo()->getSize();
         $targetDirRoot = $this->getParameter("upload_dir");
         $pathTmp = "/upload/".$type."/".date('Y')."/".date('m')."/".date('d')."/";
         $targetDir = $targetDirRoot.$pathTmp;
-        $fileName = $file->getClientOriginalName()."-".md5(uniqid()).'.'.$file->guessExtension();
+        $fileName = $file->getClientOriginalName().".".md5(uniqid()).'.'.$file->guessExtension();
         $file->move($targetDir, $fileName);
         $path = $pathTmp.$fileName;
         return $path;

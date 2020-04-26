@@ -75,7 +75,7 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    width: 160px;
+    width: 50px;
     height: 15px;
     margin: auto;
 }
@@ -213,8 +213,8 @@
 }
 
 .krajee-default.file-preview-frame .kv-file-content {
-    width: 213px;
-    height: 160px;
+    width: 66px;
+    height: 50px;
 }
 
 .krajee-default .file-preview-other-frame {
@@ -258,7 +258,7 @@
 }
 
 .krajee-default .file-other-icon {
-    font-size: 6em;
+    font-size: 2em;
     line-height: 1;
 }
 
@@ -272,7 +272,7 @@
     padding-top: 4px;
     font-size: 11px;
     color: #777;
-    margin-bottom: 30px;
+    margin-bottom: 10px;
 }
 
 .file-upload-stats {
@@ -516,7 +516,7 @@
 
 @media (max-width: 350px) {
     .krajee-default.file-preview-frame:not([data-template="audio"]) .kv-file-content {
-        width: 160px;
+        width: 50px;
     }
 }
 

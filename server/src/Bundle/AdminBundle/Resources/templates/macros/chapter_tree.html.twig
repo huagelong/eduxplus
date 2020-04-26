@@ -17,6 +17,10 @@
                     <a href="{{ path("admin_teach_chapter_video", {"id":chapter['id']}) }}" data-title="管理视频"  title="管理视频" class="poppage"><i class="fa fa-play-circle-o"></i></a>
                 {% endif %}
 
+                {% if is_authorized('admin_teach_chapter_materials') %}
+                    <a href="{{ path("admin_teach_chapter_materials", {"id":chapter['id']}) }}" data-width="800px" data-title="管理附件"  title="管理附件" class="poppage"><i class="fas fa-upload"></i></a>
+                {% endif %}
+
                 {% if is_authorized('admin_teach_chapter_edit') %}
                     <a href="{{ path("admin_teach_chapter_edit", {"id":chapter['id']}) }}" data-title="编辑"  title="编辑" class="poppage"><i class="fas fa-edit"></i></a>
                 {% endif %}

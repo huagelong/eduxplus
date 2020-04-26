@@ -133,6 +133,7 @@ class OptionController extends BaseAdminController
             $options["data-max-file-size"] = 1024*50;//50m
             $options["data-required"] = 1;
             $options['data-initial-preview'] = $info['optionValue'];
+            $options['data-initial-preview-config']= $optionService->getInitialPreviewConfig($info['optionValue']);
         }else{
             $options["data-required"] = 1;
         }

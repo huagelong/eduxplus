@@ -253,18 +253,20 @@ class ChapterController extends BaseAdminController
 
     /**
      *
-     * @Rest\Post("/teach/chapter/materials/{id}", name="admin_teach_chapter_materials")
+     * @Rest\Get("/teach/chapter/materials/{id}", name="admin_teach_chapter_materials")
      */
     public function materialsAction($id, Form $form, ChapterService $chapterService){
-        $info = $chapterService->getVideoById($id);
+        $info = $chapterService->getMaterialsById($id);
         $options = [];
         $options["data-upload-url"] = $this->generateUrl("admin_glob_upload", ["type"=>"course_materials"]);
         $options["data-min-file-count"] = 1;
         $options['data-max-total-file-count'] = 100;
         $options["data-max-file-size"] = 1024*50;//50m
         $options["data-required"] = 1;
+        if($info) $options['data-initial-preview'] = $info['path'];
+        if($info) $options['data-initial-preview-config']= $chapterService->getInitialPreviewConfig($info['path']);
 
-        $form->setFormAdvanceField("附件", "file", 'path' , $options, $info['path']);
+        $form->setFormAdvanceField("附件", "file", 'path' , $options);
 
         $formData = $form->create($this->generateUrl("admin_api_teach_chapter_materials", [
             'id' => $id
