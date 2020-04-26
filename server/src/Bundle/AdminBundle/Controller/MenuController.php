@@ -84,6 +84,8 @@ class MenuController extends BaseAdminController
      * @Rest\Post("/api/menu/deleteDo/{id}", name="admin_api_menu_delete")
      */
     public function deleteAction($id, MenuService $menuService){
+        $child = $menuService->getChild($id);
+        if($child) return $this->responseError("请先删除子节点菜单");
         $menuService->deleteMenuById($id);
         return $this->responseSuccess("删除成功!", $this->generateUrl("admin_menu_index"));
     }

@@ -40,14 +40,7 @@ class TeachCourseMaterials
     /**
      * @var string|null
      *
-     * @ORM\Column(name="name", type="string", length=100, nullable=true, options={"comment"="资料名称"})
-     */
-    private $name;
-
-    /**
-     * @var string|null
-     *
-     * @ORM\Column(name="path", type="string", length=254, nullable=true, options={"comment"="资料下载路径"})
+     * @ORM\Column(name="path",  type="text", length=16777215, nullable=true, options={"comment"="资料下载路径"})
      */
     private $path;
 
@@ -95,18 +88,6 @@ class TeachCourseMaterials
     public function setChapterId(?int $chapterId): self
     {
         $this->chapterId = $chapterId;
-
-        return $this;
-    }
-
-    public function getName(): ?string
-    {
-        return $this->name;
-    }
-
-    public function setName(?string $name): self
-    {
-        $this->name = $name;
 
         return $this;
     }

@@ -79,12 +79,12 @@ class InstallFixtures extends Fixture
 
         //新增菜单并绑定角色
         $this->addMenu("首页","后台首页", 0,"admin_dashboard", "fas fa-home",0, $roleId, 1, 0, 1);
-        $this->addMenu("文件上传","文件上传处理", 0,"admin_glob_upload", "fas fa-upload",0, $roleId, 1, 1, 0);
+        $this->addMenu("文件上传","文件上传处理", 0,"admin_glob_upload", "fas fa-upload",1, $roleId, 1, 1, 0);
 
         //安全模块
-        $accMenuId = $this->addMenu("安全","安全方面的管理", 0,"", "fas fa-key",0, $roleId, 1, 0, 1);
+        $accMenuId = $this->addMenu("安全","安全方面的管理", 0,"", "fas fa-key",2, $roleId, 1, 0, 1);
         //菜单
-        $menuMgId = $this->addMenu("菜单管理","管理菜单以及对应页面的权限", $accMenuId,"admin_menu_index", "",0, $roleId, 1, 0, 1);
+        $menuMgId = $this->addMenu("菜单管理","管理菜单以及对应页面的权限", $accMenuId,"admin_menu_index", "",3, $roleId, 1, 0, 1);
         $this->addMenu("添加菜单","菜单新增处理", $menuMgId,"admin_api_menu_add", "",0, $roleId, 1, 1, 0);
         $this->addMenu("编辑菜单页面","菜单编辑展示页面", $menuMgId,"admin_menu_edit", "",1, $roleId, 1, 1, 0);
         $this->addMenu("编辑菜单","菜单编辑处理", $menuMgId,"admin_api_menu_edit", "",2, $roleId, 1, 1, 0);
@@ -100,7 +100,7 @@ class InstallFixtures extends Fixture
         $this->addMenu("角色绑定菜单页面","显示角色绑定菜单页面", $roleMgId,"admin_role_bindmenu", "",5, $roleId, 1, 1, 0);
         $this->addMenu("角色绑定菜单","角色绑定菜单处理", $roleMgId,"admin_api_role_bindmenu", "",6, $roleId, 1, 1, 0);
         //用户
-        $userMgId = $this->addMenu("用户管理","管理用户", $accMenuId,"admin_user_index", "",1, $roleId, 1, 0, 1);
+        $userMgId = $this->addMenu("用户管理","管理用户", $accMenuId,"admin_user_index", "",2, $roleId, 1, 0, 1);
         $this->addMenu("添加页面","显示添加用户页面", $userMgId,"admin_user_add", "",0, $roleId, 1, 1, 0);
         $this->addMenu("添加用户","添加用户处理", $userMgId,"admin_api_user_add", "",1, $roleId, 1, 1, 0);
         $this->addMenu("编辑用户页面","显示编辑用户页面", $userMgId,"admin_user_edit", "",2, $roleId, 1, 1, 0);
@@ -108,7 +108,7 @@ class InstallFixtures extends Fixture
         $this->addMenu("删除用户","删除用户处理", $userMgId,"admin_api_user_delete", "",4, $roleId, 1, 1, 0);
         $this->addMenu("锁定/解锁用户","锁定/解锁用户", $userMgId,"admin_api_user_switchLock", "",5, $roleId, 1, 1, 0);
         //系统模块
-        $sysMenuId = $this->addMenu("系统","系统方面的管理", 0,"", "fa fa-gears",1, $roleId, 1, 0, 1);
+        $sysMenuId = $this->addMenu("系统","系统方面的管理", 0,"", "fa fa-gears",3, $roleId, 1, 0, 1);
         $optionMgId = $this->addMenu("配置","对系统的相关配置", $sysMenuId,"admin_option_index", "",0, $roleId, 1, 0, 1);
         $this->addMenu("添加页面","添加配置页面展示", $optionMgId,"admin_option_add", "",3, $roleId, 1, 1, 0);
         $this->addMenu("添加","添加配置处理", $optionMgId,"admin_api_option_add", "",4, $roleId, 1, 1, 0);
@@ -116,58 +116,60 @@ class InstallFixtures extends Fixture
         $this->addMenu("编辑","编辑配置处理", $optionMgId,"admin_api_option_edit", "",4, $roleId, 1, 1, 0);
         $this->addMenu("删除","删除配置处理", $optionMgId,"admin_api_option_delete", "",5, $roleId, 1, 1, 0);
         //教研
-        $teachMenuId = $this->addMenu("教研","教学产品方面的管理", 0,"", "fa fa-bank",1, $roleId, 1, 0, 1);
+        $teachMenuId = $this->addMenu("教研","教学产品方面的管理", 0,"", "fa fa-bank",4, $roleId, 0, 0, 1);
         //协议
-        $agreementMgId = $this->addMenu("协议管理","针对各种协议的管理", $teachMenuId,"admin_teach_agreement_index", "",0, $roleId, 1, 0, 1);
-        $this->addMenu("添加页面","添加页面展示", $agreementMgId,"admin_teach_agreement_add", "",3, $roleId, 1, 1, 0);
-        $this->addMenu("添加","添加处理", $agreementMgId,"admin_api_teach_agreement_add", "",4, $roleId, 1, 1, 0);
-        $this->addMenu("编辑页面","编辑页面展示", $agreementMgId,"admin_teach_agreement_edit", "",3, $roleId, 1, 1, 0);
-        $this->addMenu("编辑","编辑处理", $agreementMgId,"admin_api_teach_agreement_edit", "",4, $roleId, 1, 1, 0);
-        $this->addMenu("删除","删除处理", $agreementMgId,"admin_api_teach_agreement_delete", "",5, $roleId, 1, 1, 0);
+        $agreementMgId = $this->addMenu("协议管理","针对各种协议的管理", $teachMenuId,"admin_teach_agreement_index", "",0, $roleId, 0, 0, 1);
+        $this->addMenu("添加页面","添加页面展示", $agreementMgId,"admin_teach_agreement_add", "",3, $roleId, 0, 1, 0);
+        $this->addMenu("添加","添加处理", $agreementMgId,"admin_api_teach_agreement_add", "",4, $roleId, 0, 1, 0);
+        $this->addMenu("编辑页面","编辑页面展示", $agreementMgId,"admin_teach_agreement_edit", "",3, $roleId, 0, 1, 0);
+        $this->addMenu("编辑","编辑处理", $agreementMgId,"admin_api_teach_agreement_edit", "",4, $roleId, 0, 1, 0);
+        $this->addMenu("删除","删除处理", $agreementMgId,"admin_api_teach_agreement_delete", "",5, $roleId, 0, 1, 0);
         //分类
-        $mgId = $this->addMenu("分类管理","分类的管理", $teachMenuId,"admin_teach_category_index", "",0, $roleId, 1, 0, 1);
-        $this->addMenu("添加","添加处理", $mgId,"admin_api_teach_category_add", "",4, $roleId, 1, 1, 0);
-        $this->addMenu("编辑页面","编辑页面展示", $mgId,"admin_teach_category_edit", "",3, $roleId, 1, 1, 0);
-        $this->addMenu("编辑","编辑处理", $mgId,"admin_api_teach_category_edit", "",4, $roleId, 1, 1, 0);
-        $this->addMenu("删除","删除处理", $mgId,"admin_api_teach_category_delete", "",5, $roleId, 1, 1, 0);
-        $this->addMenu("更新排序","更新排序", $mgId,"admin_api_teach_category_updateSort", "",6, $roleId, 1, 1, 0);
+        $mgId = $this->addMenu("分类管理","分类的管理", $teachMenuId,"admin_teach_category_index", "",0, $roleId, 0, 0, 1);
+        $this->addMenu("添加","添加处理", $mgId,"admin_api_teach_category_add", "",4, $roleId, 0, 1, 0);
+        $this->addMenu("编辑页面","编辑页面展示", $mgId,"admin_teach_category_edit", "",3, $roleId, 0, 1, 0);
+        $this->addMenu("编辑","编辑处理", $mgId,"admin_api_teach_category_edit", "",5, $roleId, 0, 1, 0);
+        $this->addMenu("删除","删除处理", $mgId,"admin_api_teach_category_delete", "",6, $roleId, 0, 1, 0);
+        $this->addMenu("更新排序","更新排序", $mgId,"admin_api_teach_category_updateSort", "",7, $roleId, 0, 1, 0);
         //课程管理
-        $mgId = $this->addMenu("课程管理","课程的管理", $teachMenuId,"admin_teach_course_index", "",0, $roleId, 1, 0, 1);
-        $this->addMenu("添加页面","添加页面展示", $mgId,"admin_teach_course_add", "",0, $roleId, 1, 1, 0);
-        $this->addMenu("添加","添加处理", $mgId,"admin_api_teach_course_add", "",1, $roleId, 1, 1, 0);
-        $this->addMenu("编辑页面","编辑页面展示", $mgId,"admin_teach_course_edit", "",2, $roleId, 1, 1, 0);
-        $this->addMenu("编辑","编辑处理", $mgId,"admin_api_teach_course_edit", "",3, $roleId, 1, 1, 0);
-        $this->addMenu("删除","删除处理", $mgId,"admin_api_teach_course_delete", "",4, $roleId, 1, 1, 0);
-        $this->addMenu("搜索用户名","搜索用户名", $mgId,"admin_api_teach_course_searchUserDo", "",5, $roleId, 1, 1, 0);
-        $this->addMenu("课程上下架","课程上下架", $mgId,"admin_api_teach_course_switchStatus", "",6, $roleId, 1, 1, 0);
+        $mgId = $this->addMenu("课程管理","课程的管理", $teachMenuId,"admin_teach_course_index", "",0, $roleId, 0, 0, 1);
+        $this->addMenu("添加页面","添加页面展示", $mgId,"admin_teach_course_add", "",0, $roleId, 0, 1, 0);
+        $this->addMenu("添加","添加处理", $mgId,"admin_api_teach_course_add", "",1, $roleId, 0, 1, 0);
+        $this->addMenu("编辑页面","编辑页面展示", $mgId,"admin_teach_course_edit", "",2, $roleId, 0, 1, 0);
+        $this->addMenu("编辑","编辑处理", $mgId,"admin_api_teach_course_edit", "",3, $roleId, 0, 1, 0);
+        $this->addMenu("删除","删除处理", $mgId,"admin_api_teach_course_delete", "",4, $roleId, 0, 1, 0);
+        $this->addMenu("搜索用户名","搜索用户名", $mgId,"admin_api_teach_course_searchUserDo", "",5, $roleId, 0, 1, 0);
+        $this->addMenu("课程上下架","课程上下架", $mgId,"admin_api_teach_course_switchStatus", "",6, $roleId, 0, 1, 0);
         //章节管理
-        $mgId = $this->addMenu("章节首页","章节首页", $mgId,"admin_teach_chapter_index", "",7, $roleId, 1, 1, 0);
-        $this->addMenu("章节添加页面","章节添加页面展示", $mgId,"admin_teach_chapter_add", "",8, $roleId, 1, 1, 0);
-        $this->addMenu("章节添加","添加处理", $mgId,"admin_api_teach_chapter_add", "",9, $roleId, 1, 1, 0);
-        $this->addMenu("章节编辑页面","编辑页面展示", $mgId,"admin_teach_chapter_edit", "",10, $roleId, 1, 1, 0);
-        $this->addMenu("章节编辑","编辑处理", $mgId,"admin_api_teach_chapter_edit", "",11, $roleId, 1, 1, 0);
-        $this->addMenu("章节删除","删除处理", $mgId,"admin_api_teach_chapter_delete", "",12, $roleId, 1, 1, 0);
-        $this->addMenu("章节更新排序","章节更新排序", $mgId,"admin_api_teach_chapter_updateSort", "",13, $roleId, 1, 1, 0);
-        $this->addMenu("视频管理","管理视频", $mgId,"admin_teach_chapter_video", "",14, $roleId, 1, 1, 0);
-        $this->addMenu("视频管理处理","视频添加、编辑等处理", $mgId,"admin_api_teach_chapter_video", "",14, $roleId, 1, 1, 0);
+        $mgId = $this->addMenu("课程章节管理","课程章节管理", $mgId,"admin_teach_chapter_index", "",7, $roleId, 0, 1, 0);
+        $this->addMenu("章节添加页面","章节添加页面展示", $mgId,"admin_teach_chapter_add", "",8, $roleId, 0, 1, 0);
+        $this->addMenu("章节添加","添加处理", $mgId,"admin_api_teach_chapter_add", "",9, $roleId, 0, 1, 0);
+        $this->addMenu("章节编辑页面","编辑页面展示", $mgId,"admin_teach_chapter_edit", "",10, $roleId, 0, 1, 0);
+        $this->addMenu("章节编辑","编辑处理", $mgId,"admin_api_teach_chapter_edit", "",11, $roleId, 0, 1, 0);
+        $this->addMenu("章节删除","删除处理", $mgId,"admin_api_teach_chapter_delete", "",12, $roleId, 0, 1, 0);
+        $this->addMenu("章节更新排序","章节更新排序", $mgId,"admin_api_teach_chapter_updateSort", "",13, $roleId, 0, 1, 0);
+        $this->addMenu("视频管理","管理视频", $mgId,"admin_teach_chapter_video", "",14, $roleId, 0, 1, 0);
+        $this->addMenu("视频管理处理","视频添加、编辑等处理", $mgId,"admin_api_teach_chapter_video", "",14, $roleId, 0, 1, 0);
+        $this->addMenu("附件管理","附件添加、编辑", $mgId,"admin_teach_chapter_materials", "",15, $roleId, 0, 1, 0);
+        $this->addMenu("附件管理处理","附件添加、编辑等处理", $mgId,"admin_api_teach_chapter_materials", "",16, $roleId, 0, 1, 0);
         
         //教务
-        $jwMenuId = $this->addMenu("教务","教务方面的管理", 0,"", "fa fa-envira",2, $roleId, 1, 0, 1);
+        $jwMenuId = $this->addMenu("教务","教务方面的管理", 0,"", "fa fa-envira",5, $roleId, 0, 0, 1);
         //学校管理
-        $mgId = $this->addMenu("校区管理","校区信息管理", $jwMenuId,"admin_jw_school_index", "",0, $roleId, 1, 0, 1);
-        $this->addMenu("添加页面","添加页面展示", $mgId,"admin_jw_school_add", "",0, $roleId, 1, 1, 0);
-        $this->addMenu("添加","添加处理", $mgId,"admin_api_jw_school_add", "",1, $roleId, 1, 1, 0);
-        $this->addMenu("编辑页面","编辑页面展示", $mgId,"admin_jw_school_edit", "",2, $roleId, 1, 1, 0);
-        $this->addMenu("编辑","编辑处理", $mgId,"admin_api_jw_school_edit", "",3, $roleId, 1, 1, 0);
-        $this->addMenu("删除","删除处理", $mgId,"admin_api_jw_school_delete", "",4, $roleId, 1, 1, 0);
+        $mgId = $this->addMenu("校区管理","校区信息管理", $jwMenuId,"admin_jw_school_index", "",0, $roleId, 0, 0, 1);
+        $this->addMenu("添加页面","添加页面展示", $mgId,"admin_jw_school_add", "",0, $roleId, 0, 1, 0);
+        $this->addMenu("添加","添加处理", $mgId,"admin_api_jw_school_add", "",1, $roleId, 0, 1, 0);
+        $this->addMenu("编辑页面","编辑页面展示", $mgId,"admin_jw_school_edit", "",2, $roleId, 0, 1, 0);
+        $this->addMenu("编辑","编辑处理", $mgId,"admin_api_jw_school_edit", "",3, $roleId, 0, 1, 0);
+        $this->addMenu("删除","删除处理", $mgId,"admin_api_jw_school_delete", "",4, $roleId, 0, 1, 0);
         //老师管理
-        $mgId = $this->addMenu("老师管理","老师信息管理", $jwMenuId,"admin_jw_teacher_index", "",0, $roleId, 1, 0, 1);
-        $this->addMenu("添加页面","添加页面展示", $mgId,"admin_jw_teacher_add", "",0, $roleId, 1, 1, 0);
-        $this->addMenu("添加","添加处理", $mgId,"admin_api_jw_teacher_add", "",1, $roleId, 1, 1, 0);
-        $this->addMenu("编辑页面","编辑页面展示", $mgId,"admin_jw_teacher_edit", "",2, $roleId, 1, 1, 0);
-        $this->addMenu("编辑","编辑处理", $mgId,"admin_api_jw_teacher_edit", "",3, $roleId, 1, 1, 0);
-        $this->addMenu("删除","删除处理", $mgId,"admin_api_jw_teacher_delete", "",4, $roleId, 1, 1, 0);
-        $this->addMenu("锁定/解锁老师","锁定/解锁老师", $userMgId,"admin_api_jw_teacher_switchStatus", "",5, $roleId, 1, 1, 0);
+        $mgId = $this->addMenu("老师管理","老师信息管理", $jwMenuId,"admin_jw_teacher_index", "",0, $roleId, 0, 0, 1);
+        $this->addMenu("添加页面","添加页面展示", $mgId,"admin_jw_teacher_add", "",0, $roleId, 0, 1, 0);
+        $this->addMenu("添加","添加处理", $mgId,"admin_api_jw_teacher_add", "",1, $roleId, 0, 1, 0);
+        $this->addMenu("编辑页面","编辑页面展示", $mgId,"admin_jw_teacher_edit", "",2, $roleId, 0, 1, 0);
+        $this->addMenu("编辑","编辑处理", $mgId,"admin_api_jw_teacher_edit", "",3, $roleId, 0, 1, 0);
+        $this->addMenu("删除","删除处理", $mgId,"admin_api_jw_teacher_delete", "",4, $roleId, 0, 1, 0);
+        $this->addMenu("锁定/解锁老师","锁定/解锁老师", $userMgId,"admin_api_jw_teacher_switchStatus", "",5, $roleId, 0, 1, 0);
     }
 
     protected function addOption($key, $value, $descr, $type=1, $isLock=1){

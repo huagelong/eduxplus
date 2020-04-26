@@ -210,4 +210,18 @@ class ChapterService extends BaseService
         return $this->save($model);
     }
 
+    public function addMaterials($chapterId, $path){
+        $chapterInfo = $this->getById($chapterId);
+        $courseId = $chapterInfo['courseId'];
+        $sql = "SELECT a FROM App:TeachCourseMaterials a WHERE a.chapterId=:chapterId";
+        $model = $this->fetchOne($sql, ["chapterId"=>$chapterId], 1);
+        if(!$model){
+            $model = new TeachCourseMaterials();
+        }
+        $model->setChapterId($chapterId);
+        $model->setCourseId($courseId);
+        $model->setPath($path);
+        return $this->save($model);
+    }
+
 }

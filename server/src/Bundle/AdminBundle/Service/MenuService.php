@@ -192,6 +192,11 @@ class MenuService extends BaseService
         return $this->fetchOne($sql, ['id'=>$id]);
     }
 
+    public function getChild($id){
+        $sql = "SELECT a FROM App:BaseMenu a WHERE a.pid=:pid";
+        return $this->fetchOne($sql, ['pid'=>$id]);
+    }
+
     public function deleteMenuById($id){
         $sql = "SELECT a FROM App:BaseMenu a WHERE a.id=:id";
         $model= $this->fetchOne($sql, ['id'=>$id], 1);

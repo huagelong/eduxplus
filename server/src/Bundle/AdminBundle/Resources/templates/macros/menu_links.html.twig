@@ -23,9 +23,9 @@
         <a href="{{ path("admin_menu_edit", {"id":menu.id}) }}" data-title="编辑"  class="mypoppage"><i class="fas fa-edit"></i></a>
     {% endif %}
                                 {% if is_authorized('admin_api_menu_delete') %}
-                                    <a href="{{ path("admin_api_menu_delete", {"id":menu.id}) }}"  data-confirm="确认要删除吗?" class="tree_branch_delete ajaxDelete"><i class="fas fa-trash"></i></>
+                                    <a href="{{ path("admin_api_menu_delete", {"id":menu.id}) }}"  data-confirm="确认要删除吗?" class="tree_branch_delete ajaxDelete"><i class="fas fa-trash"></i></a>
                                 {% endif %}
-                </span>
+                            </span>
                         {% endif %}
                     </div>
                     {{ _self.menu_links(allMenu, menu.id) }}

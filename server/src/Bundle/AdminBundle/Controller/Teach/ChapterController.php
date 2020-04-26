@@ -250,4 +250,45 @@ class ChapterController extends BaseAdminController
             "id" => $id
         ]));
     }
+
+    /**
+     *
+     * @Rest\Post("/teach/chapter/materials/{id}", name="admin_teach_chapter_materials")
+     */
+    public function materialsAction($id, Form $form, ChapterService $chapterService){
+        $info = $chapterService->getVideoById($id);
+        $options = [];
+        $options["data-upload-url"] = $this->generateUrl("admin_glob_upload", ["type"=>"course_materials"]);
+        $options["data-min-file-count"] = 1;
+        $options['data-max-total-file-count'] = 100;
+        $options["data-max-file-size"] = 1024*50;//50m
+        $options["data-required"] = 1;
+
+        $form->setFormAdvanceField("附件", "file", 'path' , $options, $info['path']);
+
+        $formData = $form->create($this->generateUrl("admin_api_teach_chapter_materials", [
+            'id' => $id
+        ]));
+        $data = [];
+        $data["formData"] = $formData;
+        $data['id'] = $id;
+        return $this->render("@AdminBundle/teach/chapter/materials.html.twig", $data);
+    }
+
+    /**
+     *
+     * @Rest\Post("/api/teach/chapter/materialsDo/{id}", name="admin_api_teach_chapter_materials")
+     */
+    public function materialsDoAction($id, Request $request, ChapterService $chapterService)
+    {
+        $path = $request->get("path");
+        if(!$path) return $this->responseError("附件不能为空!");
+
+        $chapterService->addMaterials($id, $path);
+
+        return $this->responseSuccess("操作成功!", $this->generateUrl("admin_teach_chapter_index", [
+            "id" => $id
+        ]));
+    }
+
 }
