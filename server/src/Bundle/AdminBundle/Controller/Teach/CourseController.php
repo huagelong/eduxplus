@@ -167,6 +167,7 @@ class CourseController extends BaseAdminController
         $options["data-max-file-size"] = 1024*2;//2m
         $options["data-required"] = 0;
         $options['data-initial-preview']=$info["bigImg"];
+        $options['data-initial-preview-config']= $categoryService->getInitialPreviewConfig($info['bigImg']);
 
         $form->setFormAdvanceField("封面图", 'file', 'bigImg' ,$options);
         $form->setFormField("类目", 'select', 'categoryId', 1, $info['categoryId'], function() use($categoryService){

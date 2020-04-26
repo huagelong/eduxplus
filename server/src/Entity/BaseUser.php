@@ -124,6 +124,11 @@ class BaseUser implements UserInterface
     private $adminToken;
 
     /**
+     * @ORM\Column(type="json", options={"comment"="角色-占位"})
+     */
+    private $roles = ['ROLE_USER'];
+
+    /**
      * @var int|null
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(name="created_at", type="datetime", nullable=true)
@@ -408,12 +413,6 @@ class BaseUser implements UserInterface
         return $this;
     }
 
-
-    public function getRoles()
-    {
-        return ['ROLE_USER'];
-    }
-
     public function getIsAdmin(): ?bool
     {
         return $this->isAdmin;
@@ -422,6 +421,32 @@ class BaseUser implements UserInterface
     public function setIsAdmin(?bool $isAdmin): self
     {
         $this->isAdmin = $isAdmin;
+
+        return $this;
+    }
+
+    /**
+     * Returns the roles granted to the user.
+     *
+     *     public function getRoles()
+     *     {
+     *         return ['ROLE_USER'];
+     *     }
+     *
+     * Alternatively, the roles might be stored on a ``roles`` property,
+     * and populated in any number of different ways when the user object
+     * is created.
+     *
+     * @return (Role|string)[] The user roles
+     */
+    public function getRoles() : ?array
+    {
+        return $this->roles;
+    }
+
+    public function setRoles(array $roles): self
+    {
+        $this->roles = $roles;
 
         return $this;
     }

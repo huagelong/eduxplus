@@ -278,7 +278,7 @@ class BaseService extends AbstractFOSRestController
             $tmp['size'] = $fileInfo['length'];
             $initialPreviewConfig[] = $tmp;
         }
-
+//        dump($initialPreviewConfig);
         return \GuzzleHttp\json_encode($initialPreviewConfig);
     }
 
