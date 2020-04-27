@@ -31,15 +31,6 @@ class ProductController extends BaseAdminController
         $grid->setTableColumn("#", "text", "id","a.id");
         $grid->setTableColumn("产品名称", "text", "name","a.name");
         $grid->setTableColumn("类别", "text", "category");
-        $grid->setTableActionColumn("admin_api_teach_product_switchPlanAutoStatus", "自动更新学习计划", "boole2", "studyPlanAuto", null,null,function($obj){
-            $id = $this->getPro($obj, "id");
-            $defaultValue = $this->getPro($obj, "studyPlanAuto");
-            $url = $this->generateUrl('admin_api_teach_product_switchPlanAutoStatus', ['id' => $id]);
-            $checkStr = $defaultValue?"checked":"";
-            $confirmStr = $defaultValue? "确认要关闭吗？":"确认要开启吗?";
-            $str = "<input type=\"checkbox\" data-bootstrap-switch-ajaxput href=\"{$url}\" data-confirm=\"{$confirmStr}\" {$checkStr} >";
-            return $str;
-        });
         $grid->setTableColumn("自动分班最大班级人数", "text", "maxMemberNumber");
         $grid->setTableColumn("创建人", "text", "creater");
         $grid->setTableActionColumn("admin_api_teach_product_switchStatus", "是否上架", "boole2", "status", null,null,function($obj){
@@ -55,9 +46,9 @@ class ProductController extends BaseAdminController
         $grid->setTableColumn("协议", "text", "agreement");
         $grid->setTableColumn("创建时间", "datetime", "createdAt", "a.createdAt");
 
-        $grid->setTableAction('admin_teach_chapter_index', function($obj){
+        $grid->setTableAction('admin_teach_studyplan_index', function($obj){
             $id = $obj['id'];
-            $url = $this->generateUrl('admin_teach_chapter_index',['id'=>$id]);
+            $url = $this->generateUrl('admin_teach_studyplan_index',['id'=>$id]);
             $str = '<a href='.$url.' data-width="1000px" title="学习计划管理" class=" btn btn-info btn-xs"><i class="fa fa-list"></i></a>';
             return  $str;
         });
@@ -112,7 +103,6 @@ class ProductController extends BaseAdminController
             return $rs;
         });
         $form->setFormField("是否上架", 'boole', 'status', 1);
-        $form->setFormField("自动更新学习计划", 'boole', 'studyPlanAuto', 1);
         $form->setFormField("自动分班最大班级人数", 'text', 'maxMemberNumber' ,1, "","", "请输入整数");
         $form->setFormField("简介", 'textarea', 'descr');
 
@@ -131,16 +121,14 @@ class ProductController extends BaseAdminController
         $categoryId = (int) $request->get("categoryId");
         $descr = $request->get("descr");
         $status = $request->get("status");
-        $studyPlanAuto = $request->get("studyPlanAuto");
         $maxMemberNumber = (int) $request->get("maxMemberNumber");
         $status = $status=="on"?1:0;
-        $studyPlanAuto = $studyPlanAuto=="on"?1:0;
 
         if(!$name) return $this->responseError("产品名称不能为空!");
         if(mb_strlen($name, 'utf-8')>50) return $this->responseError("产品名称不能大于50字!");
         if($categoryId <=0) return $this->responseError("请选择分类!");
         $uid = $this->getUid();
-        $productService->add($uid, $name, $agreementId, $status, $maxMemberNumber, $categoryId, $studyPlanAuto, $descr);
+        $productService->add($uid, $name, $agreementId, $status, $maxMemberNumber, $categoryId, $descr);
 
         return $this->responseSuccess("添加成功!", $this->generateUrl("admin_teach_product_index"));
     }
@@ -161,7 +149,6 @@ class ProductController extends BaseAdminController
             return $rs;
         });
         $form->setFormField("是否上架", 'boole', 'status', 1, $info['status']);
-        $form->setFormField("自动更新学习计划", 'boole', 'studyPlanAuto', 1, $info['studyPlanAuto']);
         $form->setFormField("自动分班最大班级人数", 'text', 'maxMemberNumber' ,1,$info['maxMemberNumber'],"", "请输入整数");
         $form->setFormField("简介", 'textarea', 'descr', 0, $info['descr']);
 
@@ -180,16 +167,14 @@ class ProductController extends BaseAdminController
         $categoryId = (int) $request->get("categoryId");
         $descr = $request->get("descr");
         $status = $request->get("status");
-        $studyPlanAuto = $request->get("studyPlanAuto");
         $maxMemberNumber = (int) $request->get("maxMemberNumber");
         $status = $status=="on"?1:0;
-        $studyPlanAuto = $studyPlanAuto=="on"?1:0;
 
         if(!$name) return $this->responseError("产品名称不能为空!");
         if(mb_strlen($name, 'utf-8')>50) return $this->responseError("产品名称不能大于50字!");
         if($categoryId <=0) return $this->responseError("请选择分类!");
         $uid = $this->getUid();
-        $productService->edit($id, $name, $agreementId, $status, $maxMemberNumber, $categoryId, $studyPlanAuto, $descr);
+        $productService->edit($id, $name, $agreementId, $status, $maxMemberNumber, $categoryId, $descr);
 
         return $this->responseSuccess("编辑成功!", $this->generateUrl("admin_teach_product_index"));
     }

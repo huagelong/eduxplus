@@ -163,6 +163,15 @@ class InstallFixtures extends Fixture
         $this->addMenu("产品上下架","产品上下架", $mgId,"admin_api_teach_product_switchStatus", "",6, $roleId, 0, 1, 0);
         $this->addMenu("是否自动更新学习计划","是否根据报名时间自动更新学习计划", $mgId,"admin_api_teach_product_switchPlanAutoStatus", "",6, $roleId, 0, 1, 0);
         $this->addMenu("搜索用户名","搜索用户名", $mgId,"admin_api_teach_product_searchUserDo", "",7, $roleId, 0, 1, 0);
+        //学习计划管理
+        $mgId = $this->addMenu("学习计划管理","学习计划管理页面展示", $mgId,"admin_teach_studyplan_index", "",8, $roleId, 0, 1, 0);
+        $this->addMenu("搜索课程","搜索课程", $mgId,"admin_api_teach_studyplan_searchCourseDo", "",0, $roleId, 0, 1, 0);
+        $this->addMenu("添加页面","添加页面展示", $mgId,"admin_teach_studyplan_add", "",1, $roleId, 0, 1, 0);
+        $this->addMenu("添加","添加处理", $mgId,"admin_api_teach_studyplan_add", "",2, $roleId, 0, 1, 0);
+        $this->addMenu("编辑页面","编辑页面展示", $mgId,"admin_teach_studyplan_edit", "",3, $roleId, 0, 1, 0);
+        $this->addMenu("编辑","编辑处理", $mgId,"admin_api_teach_studyplan_edit", "",4, $roleId, 0, 1, 0);
+        $this->addMenu("删除","删除处理", $mgId,"admin_api_teach_studyplan_delete", "",5, $roleId, 0, 1, 0);
+        $this->addMenu("更新排序","更新排序", $mgId,"admin_api_teach_studyplan_updateSort", "",7, $roleId, 0, 1, 0);
 
         //教务
         $jwMenuId = $this->addMenu("教务","教务方面的管理", 0,"", "fa fa-envira",5, $roleId, 0, 0, 1);

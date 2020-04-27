@@ -6,7 +6,7 @@
                 <div class="dd-handle">
                     <i class="far fa-circle"></i>&nbsp;<strong>{{ chapter['name']|raw }}</strong>
                     {% if chapter['openTime'] %}
-                    <span class='font-weight-lighter' style="margin-left: 20px; color: #999">{{ chapter['openTime']|date('Y-m-d H:i') }}</span>
+                    <span class='font-weight-lighter' style="margin-left: 20px; color: #999">开课时间：{{ chapter['openTime']|date('Y-m-d H:i') }}</span>
                     {% endif %}
                     <span class="pull-right dd-nodrag">
                 {% if is_authorized('admin_teach_chapter_add') %}

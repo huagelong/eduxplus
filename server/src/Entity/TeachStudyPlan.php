@@ -39,9 +39,16 @@ class TeachStudyPlan
 
     /**
      * @var int|null
-     * @ORM\Column(name="applyed_at", type="datetime", nullable=true, options={"comment"="预计报名时间，程序根据预计报名时间给出预警"})
+     * @ORM\Column(name="applyed_at", type="integer", nullable=true, options={"comment"="预计报名时间，程序根据预计报名时间给出预警"})
      */
     private $applyedAt;
+
+    /**
+     * @var int|null
+     *
+     * @ORM\Column(name="create_uid", type="integer", nullable=true, options={"comment"="创建人uid，自己创建的自己可见"})
+     */
+    private $createUid;
 
     /**
      * @var bool|null
@@ -56,6 +63,13 @@ class TeachStudyPlan
      * @ORM\Column(name="is_block", type="boolean", nullable=true, options={"comment"="是否有挡板，必须一节节往下看"})
      */
     private $isBlock;
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="descr", type="text", length=65535, nullable=true, options={"comment"="简介"})
+     */
+    private $descr;
 
     /**
      * @var int|null
@@ -105,14 +119,26 @@ class TeachStudyPlan
         return $this;
     }
 
-    public function getApplyedAt(): ?\DateTimeInterface
+    public function getApplyedAt(): ?int
     {
         return $this->applyedAt;
     }
 
-    public function setApplyedAt(?\DateTimeInterface $applyedAt): self
+    public function setApplyedAt(?int $applyedAt): self
     {
         $this->applyedAt = $applyedAt;
+
+        return $this;
+    }
+
+    public function getCreateUid(): ?int
+    {
+        return $this->createUid;
+    }
+
+    public function setCreateUid(?int $createUid): self
+    {
+        $this->createUid = $createUid;
 
         return $this;
     }
@@ -137,6 +163,18 @@ class TeachStudyPlan
     public function setIsBlock(?bool $isBlock): self
     {
         $this->isBlock = $isBlock;
+
+        return $this;
+    }
+
+    public function getDescr(): ?string
+    {
+        return $this->descr;
+    }
+
+    public function setDescr(?string $descr): self
+    {
+        $this->descr = $descr;
 
         return $this;
     }
@@ -176,4 +214,5 @@ class TeachStudyPlan
 
         return $this;
     }
+
 }

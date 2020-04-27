@@ -73,12 +73,6 @@ class TeachProducts
      */
     private $createUid;
 
-    /**
-     * @var bool|null
-     *
-     * @ORM\Column(name="study_plan_auto", type="boolean", nullable=true, options={"comment"="是否根据报名时间自动更新学习计划,1-是，0-否"})
-     */
-    private $studyPlanAuto;
 
     /**
      * @var int|null
@@ -119,6 +113,18 @@ class TeachProducts
     public function setName(?string $name): self
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    public function getFirstCategoryId(): ?int
+    {
+        return $this->firstCategoryId;
+    }
+
+    public function setFirstCategoryId(?int $firstCategoryId): self
+    {
+        $this->firstCategoryId = $firstCategoryId;
 
         return $this;
     }
@@ -171,14 +177,14 @@ class TeachProducts
         return $this;
     }
 
-    public function getStudyPlanAuto(): ?bool
+    public function getCreateUid(): ?int
     {
-        return $this->studyPlanAuto;
+        return $this->createUid;
     }
 
-    public function setStudyPlanAuto(?bool $studyPlanAuto): self
+    public function setCreateUid(?int $createUid): self
     {
-        $this->studyPlanAuto = $studyPlanAuto;
+        $this->createUid = $createUid;
 
         return $this;
     }
@@ -227,30 +233,6 @@ class TeachProducts
     public function setMaxMemberNumber(?int $maxMemberNumber): self
     {
         $this->maxMemberNumber = $maxMemberNumber;
-
-        return $this;
-    }
-
-    public function getCreateUid(): ?int
-    {
-        return $this->createUid;
-    }
-
-    public function setCreateUid(?int $createUid): self
-    {
-        $this->createUid = $createUid;
-
-        return $this;
-    }
-
-    public function getFirstCategoryId(): ?int
-    {
-        return $this->firstCategoryId;
-    }
-
-    public function setFirstCategoryId(?int $firstCategoryId): self
-    {
-        $this->firstCategoryId = $firstCategoryId;
 
         return $this;
     }

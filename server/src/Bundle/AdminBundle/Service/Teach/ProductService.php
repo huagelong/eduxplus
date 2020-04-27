@@ -85,7 +85,7 @@ class ProductService extends BaseService
         return $result;
     }
 
-    public function add($uid, $name, $agreementId, $status, $maxMemberNumber, $categoryId, $studyPlanAuto,$descr){
+    public function add($uid, $name, $agreementId, $status, $maxMemberNumber, $categoryId,$descr){
         $cate = $this->categoryService->getById($categoryId);
         $path = trim($cate['findPath'], ',');
         $pathArr = explode(",", $path);
@@ -99,7 +99,6 @@ class ProductService extends BaseService
         $model->setCategoryId($categoryId);
         $model->setAgreementId($agreementId);
         $model->setMaxMemberNumber($maxMemberNumber);
-        $model->setStudyPlanAuto($studyPlanAuto);
         $model->setCreateUid($uid);
         return $this->save($model);
     }
@@ -120,12 +119,12 @@ class ProductService extends BaseService
         return $this->fetchOne($sql, $params);
     }
 
-    public function edit($id, $name, $agreementId, $status, $maxMemberNumber, $categoryId, $studyPlanAuto,$descr){
+    public function edit($id, $name, $agreementId, $status, $maxMemberNumber, $categoryId,$descr){
         $cate = $this->categoryService->getById($categoryId);
         $path = trim($cate['findPath'], ',');
         $pathArr = explode(",", $path);
         $brandId = end($pathArr);
-        
+
         $courceSql= "SELECT a FROM App:TeachProducts a WHERE a.id=:id";
         $model = $this->fetchOne($courceSql, ['id'=>$id], 1);
         $model->setName($name);
@@ -135,7 +134,6 @@ class ProductService extends BaseService
         $model->setCategoryId($categoryId);
         $model->setAgreementId($agreementId);
         $model->setMaxMemberNumber($maxMemberNumber);
-        $model->setStudyPlanAuto($studyPlanAuto);
         return $this->save($model);
     }
 

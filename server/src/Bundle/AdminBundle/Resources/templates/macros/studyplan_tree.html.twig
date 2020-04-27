@@ -1,0 +1,43 @@
+{% macro studyplan_tree(studyplans) %}
+    {% if studyplans is not empty %}
+    <ol class="dd-list">
+        {% for studyplan in studyplans %}
+            <li class="dd-item dd-collapsed" data-id="{{ studyplan['id'] }}">
+                <div class="dd-handle">
+                    <i class="far fa-circle"></i>&nbsp;<strong>{{ studyplan['name']|raw }}</strong>
+                    {% if studyplan['applyedAt'] %}
+                    <span class='font-weight-lighter' style="margin-left: 20px; color: #999">报名时间：{{ studyplan['applyedAt']|date('Y-m-d H:i') }}</span>
+                    {% endif %}
+                    <span class="pull-right dd-nodrag">
+
+                {% if is_authorized('admin_teach_studyplan_edit') %}
+                    <a href="{{ path("admin_teach_studyplan_edit", {"id":studyplan['id']}) }}" data-title="编辑"  title="编辑" class="poppage"><i class="fas fa-edit"></i></a>
+                {% endif %}
+
+                {% if is_authorized('admin_api_teach_studyplan_delete') %}
+                    <a href="{{ path("admin_api_teach_studyplan_delete", {"id":studyplan['id']}) }}" title="删除"  data-confirm="确认要删除吗?" class="tree_branch_delete ajaxDelete"><i class="fas fa-trash"></i></a>
+                {% endif %}
+                    </span>
+                </div>
+                {% if studyplan['sub'] is not empty %}
+                <ol class="dd-list">
+                    {% for course in studyplan['sub']['courses'] %}
+                        <li class="dd-item dd-collapsed" data-id="course_{{ course['id'] }}">
+                            <div class="dd-handle">
+                                <i class="far fa-circle"></i>&nbsp;<strong>{{ course['name']|raw }}</strong>
+                                <span class="pull-right dd-nodrag">
+                                    {% if is_authorized('admin_api_teach_studyplan_delete') %}
+                                        <a href="{{ path("admin_api_teach_studyplan_delete", {"id":course['id']}) }}" title="删除"  data-confirm="确认要删除吗?" class="tree_branch_delete ajaxDelete"><i class="fas fa-trash"></i></a>
+                                    {% endif %}
+                                </span>
+                            </div>
+
+                        </li>
+                    {% endfor %}
+                </ol>
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ol>
+    {% endif %}
+{% endmacro %}

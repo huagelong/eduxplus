@@ -246,6 +246,30 @@
                         </div>
                     {% endif %}
 
+                    {% if v['type'] == "search_select" %}
+                          <div class="col-sm-8">
+                                <div class="input-group" >
+                                   <input type="hidden" name="formHidden-{{ v['field'] }}" value="{{ v['defaultValue']|json_encode }}"  />
+                                    {% set selectV = get_prop(v['initData'],"") %}
+                                    <select
+
+                                    {% if v['options'] %}
+                                        {% for ok,ov in v['options'] %}
+                                            {{ ok }}="{{ ov }}"
+                                        {% endfor %}
+                                    {% endif %}
+
+                                    class="form-control form-control-sm search_select"
+                                    multiple="multiple"
+                                    data-url="{{ selectV }}"
+                                    style="width: 100%;"
+
+                                    >
+                                    </select>
+                                </div>
+                          </div>
+                    {% endif %}
+
                     {% if v['type'] == 'hidden' %}
                         <input type="hidden"
 

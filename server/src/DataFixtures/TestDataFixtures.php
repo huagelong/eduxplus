@@ -5,6 +5,7 @@ namespace App\DataFixtures;
 use App\Bundle\AdminBundle\Service\Jw\TeacherService;
 use App\Bundle\AdminBundle\Service\Teach\ChapterService;
 use App\Bundle\AdminBundle\Service\Teach\CourseService;
+use App\Bundle\AdminBundle\Service\Teach\ProductService;
 use App\Bundle\AppBundle\Lib\Service\HelperService;
 use App\Entity\BaseMenu;
 use App\Entity\BaseOption;
@@ -15,6 +16,7 @@ use App\Entity\BaseUser;
 use App\Entity\JwSchool;
 use App\Entity\TeachAgreement;
 use App\Entity\TeachCategory;
+use App\Entity\TeachProducts;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 //use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Persistence\ObjectManager;
@@ -31,12 +33,15 @@ class TestDataFixtures extends Fixture
     protected $courseService;
     protected $chapterService;
     protected $teacherService;
+    protected $productService;
 
-    public function __construct(UserPasswordEncoderInterface $passwordEncoder
-        ,HelperService $helperService,
+    public function __construct(
+        UserPasswordEncoderInterface $passwordEncoder,
+        HelperService $helperService,
         CourseService $courseService,
         ChapterService $chapterService,
-        TeacherService $teacherService
+        TeacherService $teacherService,
+        ProductService $productService
     )
     {
         $this->passwordEncoder = $passwordEncoder;
@@ -44,6 +49,7 @@ class TestDataFixtures extends Fixture
         $this->courseService = $courseService;
         $this->chapterService = $chapterService;
         $this->teacherService = $teacherService;
+        $this->productService = $productService;
     }
 
     public function load(ObjectManager $manager)
@@ -65,7 +71,7 @@ class TestDataFixtures extends Fixture
         $this->addCateGory("协作/翻译", 1, 0, $pid, ",{$pid},");
         $this->addCateGory("文学与语言学", 1, 0, $pid, ",{$pid},");
         //添加协议
-        $this->addAgreement('用户协议','欢迎您来到多学课堂。请您仔细阅读以下条款，如果您对本协议的任何条款表示异议，您可以选择不进入多学课堂。当您注册成功，无论是进入多学课堂，还是在多学课堂上发布任何内容（即“内容”），以及直接或通过各类方式（如站外API引用等）间接使用多学课堂服务和数据的行为，均意味着您（即“用户”）完全接受本协议项下的全部条款。 若您对本声明的任何条款有异议，请停止使用多学课堂所提供的全部服务。', 1);
+        $agreeId = $this->addAgreement('用户协议','欢迎您来到多学课堂。请您仔细阅读以下条款，如果您对本协议的任何条款表示异议，您可以选择不进入多学课堂。当您注册成功，无论是进入多学课堂，还是在多学课堂上发布任何内容（即“内容”），以及直接或通过各类方式（如站外API引用等）间接使用多学课堂服务和数据的行为，均意味着您（即“用户”）完全接受本协议项下的全部条款。 若您对本声明的任何条款有异议，请停止使用多学课堂所提供的全部服务。', 1);
         $this->addAgreement('隐私政策','保护用户隐私是多学课堂的基本政策，非经用户许可，多学课堂保证不对外公开或向第三方提供单个用户注册资料及用户在使用网络服务时存储在多学课堂的非公开内容，但下列情况除外：
 (1)遵守有关法律、法规的规定，包括在国家有关机关查询时，提供用户注册信息、用户在多学课堂的网页上发布的信息内容及其发布时间、互联网地址或者域名。
 (2)保持维护多学课堂知识产权和其他重要权利。
@@ -82,7 +88,15 @@ class TestDataFixtures extends Fixture
         $this->chapterService->add("变量", [$teacherId1], $chapterId, time(), 1, 0, 0, $courseId);
         $this->chapterService->add("函数", [$teacherId1], $chapterId, time(), 1, 0, 1, $courseId);
         $this->chapterService->add("类", [$teacherId1], $chapterId, time(), 1, 0, 2, $courseId);
+        $courseId = $this->courseService->add(1,"Golang编程思想", 1, "", "Golang编程思想", $cid1, $schoolId1, 33);
+        $chapterId = $this->chapterService->add("Golang基础", [$teacherId1], 0, time(), 1, 0, 0, $courseId);
+        $this->chapterService->add("变量", [$teacherId1], $chapterId, time(), 1, 0, 0, $courseId);
+        $this->chapterService->add("函数", [$teacherId1], $chapterId, time(), 1, 0, 1, $courseId);
+        $this->chapterService->add("类", [$teacherId1], $chapterId, time(), 1, 0, 2, $courseId);
+        $this->productService->add(1,"高级编程", $agreeId, 1,22, $cid1, "高级编程");
+
     }
+
 
     protected function addSchool($name,$state,$city, $region, $linkin,$address, $descr){
         $model = new JwSchool();

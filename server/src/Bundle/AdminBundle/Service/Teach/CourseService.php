@@ -168,4 +168,11 @@ class CourseService extends BaseService
         return $this->fetchOne($sql, ["courseId"=>$id]);
     }
 
+    public function searchName($name){
+        $sql = "SELECT a FROM App:TeachCourse a where a.name like :name ";
+        $params = [];
+        $params['name'] = "%".$name."%";
+        return $this->fetchAll($sql, $params);
+    }
+
 }
