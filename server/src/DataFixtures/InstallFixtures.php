@@ -152,7 +152,18 @@ class InstallFixtures extends Fixture
         $this->addMenu("视频管理处理","视频添加、编辑等处理", $mgId,"admin_api_teach_chapter_video", "",14, $roleId, 0, 1, 0);
         $this->addMenu("附件管理","附件添加、编辑", $mgId,"admin_teach_chapter_materials", "",15, $roleId, 0, 1, 0);
         $this->addMenu("附件管理处理","附件添加、编辑等处理", $mgId,"admin_api_teach_chapter_materials", "",16, $roleId, 0, 1, 0);
-        
+
+        //产品管理
+        $mgId = $this->addMenu("产品管理","产品的管理", $teachMenuId,"admin_teach_product_index", "",0, $roleId, 0, 0, 1);
+        $this->addMenu("添加页面","添加页面展示", $mgId,"admin_teach_product_add", "",0, $roleId, 0, 1, 0);
+        $this->addMenu("添加","添加处理", $mgId,"admin_api_teach_product_add", "",1, $roleId, 0, 1, 0);
+        $this->addMenu("编辑页面","编辑页面展示", $mgId,"admin_teach_product_edit", "",2, $roleId, 0, 1, 0);
+        $this->addMenu("编辑","编辑处理", $mgId,"admin_api_teach_product_edit", "",3, $roleId, 0, 1, 0);
+        $this->addMenu("删除","删除处理", $mgId,"admin_api_teach_product_delete", "",4, $roleId, 0, 1, 0);
+        $this->addMenu("产品上下架","产品上下架", $mgId,"admin_api_teach_product_switchStatus", "",6, $roleId, 0, 1, 0);
+        $this->addMenu("是否自动更新学习计划","是否根据报名时间自动更新学习计划", $mgId,"admin_api_teach_product_switchPlanAutoStatus", "",6, $roleId, 0, 1, 0);
+        $this->addMenu("搜索用户名","搜索用户名", $mgId,"admin_api_teach_product_searchUserDo", "",7, $roleId, 0, 1, 0);
+
         //教务
         $jwMenuId = $this->addMenu("教务","教务方面的管理", 0,"", "fa fa-envira",5, $roleId, 0, 0, 1);
         //学校管理

@@ -33,7 +33,6 @@ class CourseController extends BaseAdminController
         $grid->setTableColumn("类目", "text", "category");
         $grid->setTableColumn("封面图", "image", "bigImg");
         $grid->setTableColumn("创建人", "text", "creater");
-        $grid->setTableColumn("是否上架", "boole2", "status","a.status", [0=>"下架",1=>"上架"]);
         $grid->setTableActionColumn("admin_api_teach_course_switchStatus", "是否上架", "boole2", "status", null,null,function($obj){
             $id = $this->getPro($obj, "id");
             $defaultValue = $this->getPro($obj, "status");

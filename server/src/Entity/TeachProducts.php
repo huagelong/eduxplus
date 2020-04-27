@@ -33,6 +33,13 @@ class TeachProducts
     /**
      * @var int|null
      *
+     * @ORM\Column(name="first_category_id", type="integer", nullable=true, options={"comment"="品类id"})
+     */
+    private $firstCategoryId;
+
+    /**
+     * @var int|null
+     *
      * @ORM\Column(name="category_id", type="integer", nullable=true, options={"comment"="类目id"})
      */
     private $categoryId;
@@ -55,9 +62,16 @@ class TeachProducts
     /**
      * @var bool|null
      *
-     * @ORM\Column(name="status", type="boolean", nullable=true, options={"comment"="0-草稿，2-上架,1-下架"})
+     * @ORM\Column(name="status", type="boolean", nullable=true, options={"comment"="1-上架,0-下架"})
      */
     private $status;
+
+    /**
+     * @var int|null
+     *
+     * @ORM\Column(name="create_uid", type="integer", nullable=true, options={"comment"="创建人uid，自己创建的自己可见"})
+     */
+    private $createUid;
 
     /**
      * @var bool|null
@@ -213,6 +227,30 @@ class TeachProducts
     public function setMaxMemberNumber(?int $maxMemberNumber): self
     {
         $this->maxMemberNumber = $maxMemberNumber;
+
+        return $this;
+    }
+
+    public function getCreateUid(): ?int
+    {
+        return $this->createUid;
+    }
+
+    public function setCreateUid(?int $createUid): self
+    {
+        $this->createUid = $createUid;
+
+        return $this;
+    }
+
+    public function getFirstCategoryId(): ?int
+    {
+        return $this->firstCategoryId;
+    }
+
+    public function setFirstCategoryId(?int $firstCategoryId): self
+    {
+        $this->firstCategoryId = $firstCategoryId;
 
         return $this;
     }

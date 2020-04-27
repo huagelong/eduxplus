@@ -35,6 +35,11 @@ class AgreementService extends BaseService
         return $pagination;
     }
 
+    public function getAll(){
+        $dql = "SELECT a FROM App:TeachAgreement a WHERE a.isShow=1";
+        return $this->fetchAll($dql);
+    }
+
     public function add($name, $content, $isShow){
         $model = new TeachAgreement();
         $model->setName($name);
