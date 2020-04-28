@@ -261,10 +261,15 @@
 
                                     class="form-control form-control-sm search_select"
                                     multiple="multiple"
-                                    data-url="{{ selectV }}"
+                                    data-url="{{ selectV[0] }}"
                                     style="width: 100%;"
 
                                     >
+                                    {% if selectV[1] %}
+                                        {% for k,v in selectV[1] %}
+                                            <option value="{{ v }}">{{ k|raw }}</option>
+                                        {% endfor %}
+                                    {% endif %}
                                     </select>
                                 </div>
                           </div>

@@ -10,6 +10,7 @@ namespace App\Bundle\AdminBundle\Controller\Teach;
 
 use App\Bundle\AdminBundle\Service\Teach\CategoryService;
 use App\Bundle\AdminBundle\Service\Teach\ProductService;
+use App\Bundle\AdminBundle\Service\UserService;
 use App\Bundle\AppBundle\Lib\Base\BaseAdminController;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,7 +23,7 @@ class ProductController extends BaseAdminController
     /**
      * @Rest\Get("/teach/product/index", name="admin_teach_product_index")
      */
-    public function indexAction(Request $request, Grid $grid,ProductService $productService,CategoryService $categoryService){
+    public function indexAction(Request $request, Grid $grid,ProductService $productService,CategoryService $categoryService, UserService $userService){
 
         $select = $categoryService->categorySelect();
 
@@ -78,8 +79,15 @@ class ProductController extends BaseAdminController
             return ["全部"=>-1,"下架"=>0, "上架"=>1];
         });
 
-        $grid->setSearchField("创建人", "search_select", "a.createUid",function(){
-            return $this->generateUrl("admin_api_teach_product_searchUserDo");
+        $grid->setSearchField("创建人", "search_select", "a.createUid",function()use($request, $userService){
+            $values = $request->get("values");
+            $createUid = ($values&&isset($values["a.createUid"]))?$values["a.createUid"]:0;
+            if($createUid){
+                $users = $userService->searchResult($createUid);
+            }else{
+                $users = [];
+            }
+            return [$this->generateUrl("admin_api_glob_searchUserDo"),$users];
         });
         $grid->setSearchField("创建时间", "daterange", "a.createdAt");
 
@@ -185,16 +193,6 @@ class ProductController extends BaseAdminController
     public function deleteDoAction($id, ProductService $productService){
         $productService->del($id);
         return $this->responseSuccess("删除成功!", $this->generateUrl("admin_teach_product_index"));
-    }
-
-    /**
-     * @Rest\Get("/api/teach/product/searchUserDo", name="admin_api_teach_product_searchUserDo")
-     */
-    public function searchUserDoAction(Request $request, ProductService $productService){
-        $kw = $request->get("kw");
-        if(!$kw) return [];
-        $data = $productService->searchAdminFullName($kw);
-        return $data;
     }
 
     /**

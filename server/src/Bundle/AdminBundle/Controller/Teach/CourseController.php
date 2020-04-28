@@ -10,6 +10,7 @@ namespace App\Bundle\AdminBundle\Controller\Teach;
 
 use App\Bundle\AdminBundle\Service\Teach\CategoryService;
 use App\Bundle\AdminBundle\Service\Teach\CourseService;
+use App\Bundle\AdminBundle\Service\UserService;
 use App\Bundle\AppBundle\Lib\Base\BaseAdminController;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,7 +23,7 @@ class CourseController extends BaseAdminController
     /**
      * @Rest\Get("/teach/course/index", name="admin_teach_course_index")
      */
-    public function indexAction(Request $request, Grid $grid,CourseService $courseService){
+    public function indexAction(Request $request, Grid $grid,CourseService $courseService, UserService  $userService){
 
         $pageSize = 20;
         $grid->setListService($courseService, "getList");
@@ -82,8 +83,15 @@ class CourseController extends BaseAdminController
             return $courseService->getSchools();
         });
 
-        $grid->setSearchField("创建人", "search_select", "a.createUid",function(){
-            return $this->generateUrl("admin_api_teach_course_searchUserDo");
+        $grid->setSearchField("创建人", "search_select", "a.createUid", function()use($request, $userService){
+            $values = $request->get("values");
+            $createUid = ($values&&isset($values["a.createUid"]))?$values["a.createUid"]:0;
+            if($createUid){
+                $users = $userService->searchResult($createUid);
+            }else{
+                $users = [];
+            }
+            return [$this->generateUrl("admin_api_glob_searchUserDo"),$users];
         });
         $grid->setSearchField("创建时间", "daterange", "a.createdAt");
 
@@ -214,16 +222,6 @@ class CourseController extends BaseAdminController
         if($courseService->hasChapter($id)) return $this->responseError("删除失败，请先删除子章节!");
         $courseService->del($id);
         return $this->responseSuccess("删除成功!", $this->generateUrl("admin_teach_course_index"));
-    }
-
-    /**
-     * @Rest\Get("/api/teach/course/searchUserDo", name="admin_api_teach_course_searchUserDo")
-     */
-    public function searchUserDoAction(Request $request, CourseService $courseService){
-        $kw = $request->get("kw");
-        if(!$kw) return [];
-        $data = $courseService->searchAdminFullName($kw);
-        return $data;
     }
 
     /**

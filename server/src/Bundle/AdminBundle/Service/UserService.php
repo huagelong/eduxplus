@@ -119,6 +119,11 @@ class UserService extends BaseService
         return $this->fetchOne($sql, ['id'=>$id]);
     }
 
+    public function searchResult($id){
+        $info = $this->getById($id);
+        return [$info['fullName']=>$info['id']];
+    }
+
     public function getMyRoleIds($uid){
         $sql = "SELECT a FROM App:BaseRoleUser a WHERE a.uid=:uid";
         return $this->fetchFields('roleId', $sql, ['uid'=>$uid]);

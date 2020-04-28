@@ -9,6 +9,7 @@
 namespace App\Bundle\AdminBundle\Controller;
 
 
+use App\Bundle\AdminBundle\Service\Teach\ProductService;
 use App\Bundle\AppBundle\Lib\Base\BaseAdminController;
 use App\Bundle\AppBundle\Lib\Base\BaseController;
 use App\Bundle\AppBundle\Lib\Service\UploadService;
@@ -62,6 +63,16 @@ class GlobController extends BaseAdminController
         }catch (\Exception $e){
             return $this->json(['error'=>$e->getMessage()]);
         }
+    }
+
+    /**
+     * @Rest\Get("/api/glob/searchUserDo", name="admin_api_glob_searchUserDo")
+     */
+    public function searchUserDoAction(Request $request, ProductService $productService){
+        $kw = $request->get("kw");
+        if(!$kw) return [];
+        $data = $productService->searchAdminFullName($kw);
+        return $data;
     }
 
 }

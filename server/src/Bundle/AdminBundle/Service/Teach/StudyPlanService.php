@@ -53,10 +53,10 @@ class StudyPlanService extends BaseService
                 $subArr = $this->fetchAll($sql2, ["studyPlanId"=>$studyPlanId]);
 
                 if($subArr){
-                    foreach ($subArr as $sub){
-                        $courseId = $sub['id'];
+                    foreach ($subArr as &$sub){
+                        $courseId = $sub['courseId'];
                         $course = $this->courseService->getById($courseId);
-                        $subArr['courses'][] = $course;
+                        $sub['course'] = $course;
                     }
                 }
                 $vArr['sub'] = $subArr;
@@ -107,7 +107,29 @@ class StudyPlanService extends BaseService
 
     public function getById($id){
         $sql = "SELECT a FROM App:TeachStudyPlan a WHERE a.id=:id";
-        return $this->fetchOne($sql, ['id'=>$id]);
+        $info = $this->fetchOne($sql, ['id'=>$id]);
+        $sqlSub = "SELECT a.courseId FROM App:TeachStudyPlanSub a WHERE a.studyPlanId=:studyPlanId ORDER BY a.sort";
+        $sub=$this->fetchFields("courseId", $sqlSub, ['studyPlanId'=>$id]);
+        if(!$sub){
+            $info['sub'] = [];
+        }else{
+            $info['sub'] = $sub;
+        }
+        return $info;
+    }
+
+    public function getSubById($subId){
+        $sqlSub = "SELECT a FROM App:TeachStudyPlanSub a WHERE a.id=:id ORDER BY a.sort";
+        $sub=$this->fetchOne( $sqlSub, ['id'=>$subId]);
+        if($sub){
+            $studyPlanId = $sub['studyPlanId'];
+            $sql = "SELECT a FROM App:TeachStudyPlan a WHERE a.id=:id";
+            $info = $this->fetchOne($sql, ['id'=>$studyPlanId]);
+            $sub['study_plan'] = $info;
+            return $sub;
+        }else{
+            return [];
+        }
     }
 
     public function getByName($name, $id=0){
@@ -121,29 +143,42 @@ class StudyPlanService extends BaseService
         return $this->fetchOne($sql, $params);
     }
 
-    public function edit($id, $name, $agreementId, $status, $maxMemberNumber, $categoryId, $studyPlanAuto,$descr){
-        $cate = $this->categoryService->getById($categoryId);
-        $path = trim($cate['findPath'], ',');
-        $pathArr = explode(",", $path);
-        $brandId = end($pathArr);
-
-        $courceSql= "SELECT a FROM App:TeachStudyPlan a WHERE a.id=:id";
-        $model = $this->fetchOne($courceSql, ['id'=>$id], 1);
+    public function edit($id, $name, $isDefault, $isBlock, $applyedAt, $courseIds, $descr){
+        $sql= "SELECT a FROM App:TeachStudyPlan a WHERE a.id=:id";
+        $model = $this->fetchOne($sql, ['id'=>$id], 1);
         $model->setName($name);
         $model->setDescr($descr);
-        $model->setStatus($status);
-        $model->setFirstCategoryId($brandId);
-        $model->setCategoryId($categoryId);
-        $model->setAgreementId($agreementId);
-        $model->setMaxMemberNumber($maxMemberNumber);
-        $model->setStudyPlanAuto($studyPlanAuto);
-        return $this->save($model);
+        $model->setIsDefault($isDefault);
+        $model->setIsBlock($isBlock);
+        $applyedAt = strtotime($applyedAt);
+        $model->setApplyedAt($applyedAt);
+        $this->save($model);
+        if($courseIds) {
+            $sqlSub = "SELECT a FROM App:TeachStudyPlanSub a WHERE a.studyPlanId=:studyPlanId";
+            $models = $this->fetchAll($sqlSub, ["studyPlanId"=>$id], 1);
+            if($models) $this->hardDelete($models);
+            $sort = 0;
+            foreach ($courseIds as $courseId) {
+                $modelSub = new TeachStudyPlanSub();
+                $modelSub->setCourseId($courseId);
+                $modelSub->setSort($sort);
+                $modelSub->setStudyPlanId($id);
+                $this->save($modelSub);
+                $sort++;
+            }
+        }
+    }
+
+    public function delsub($id){
+        $sql = "SELECT a FROM App:TeachStudyPlanSub a WHERE a.id=:id";
+        $model = $this->fetchOne($sql, ['id'=>$id] ,1 );
+        return $model?$this->hardDelete($model):false;
     }
 
     public function del($id){
         $sql = "SELECT a FROM App:TeachStudyPlan a WHERE a.id=:id";
         $model = $this->fetchOne($sql, ['id'=>$id] ,1 );
-        return $this->delete($model);
+        return $model?$this->delete($model):false;
     }
 
    public function updateSort($id, $data){
@@ -156,10 +191,10 @@ class StudyPlanService extends BaseService
    }
 
    public function searchCourseName($kw){
-       $users = $this->courseService->searchName($kw);
-       if(!$users) return [];
+       $courses = $this->courseService->searchName($kw);
+       if(!$courses) return [];
        $rs = [];
-       foreach ($users as $v){
+       foreach ($courses as $v){
            $tmp = [];
            $tmp['id'] = $v['id'];
            $tmp['text'] = $v['name'];
@@ -167,5 +202,15 @@ class StudyPlanService extends BaseService
        }
        return $rs;
    }
+
+    public function getCourseByIds($courseIds){
+        $courses = $this->courseService->getByIds($courseIds);
+        if(!$courses) return [];
+        $rs = [];
+        foreach ($courses as $v){
+            $rs[$v['name']] = $v['id'];
+        }
+        return $rs;
+    }
 
 }

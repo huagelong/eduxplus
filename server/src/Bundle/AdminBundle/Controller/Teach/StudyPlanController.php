@@ -32,7 +32,7 @@ class StudyPlanController extends BaseAdminController
         $data['planList'] = $all;
         $data['id'] = $id;
         $data['pagination'] = $pagination;
-
+//        print_r($all);exit;
         return $this->render("@AdminBundle/teach/studyplan/index.html.twig", $data);
     }
 
@@ -47,7 +47,7 @@ class StudyPlanController extends BaseAdminController
         $form->setFormField("是否有挡板", 'boole', 'isBlock', 1);
         $form->setFormField("预计报名时间", 'datetime', 'applyedAt');
         $form->setFormField("课程", 'search_select', 'courseId[]', 1, "", function (){
-            return $this->generateUrl("admin_api_teach_studyplan_searchCourseDo");
+            return [$this->generateUrl("admin_api_teach_studyplan_searchCourseDo"),[]];
         });
 
         $form->setFormField("描述", 'textarea', 'descr');
@@ -108,29 +108,15 @@ class StudyPlanController extends BaseAdminController
     {
         $info = $studyPlanService->getById($id);
 
-        $select = $studyPlanService->chapterSelect();
-
         $form->setFormField("名称", 'text', 'name', 1, $info['name']);
-        $form->setFormField("父章节", 'select', 'parentId', 1, $info['parentId'], function () use ($select) {
-            return $select;
-        });
-        $form->setFormField("上课时间", 'datetime', 'openTime', 0, date('Y-m-d H:i', $info['openTime']));
-
-        $teacherIds = $studyPlanService->getTeacherIds($id);
-        $form->setFormField("上课老师", 'multiSelect', 'teachers[]', 0, $teacherIds, function () use ($studyPlanService) {
-            return $studyPlanService->getTeachers();
+        $form->setFormField("是否当前默认计划", 'boole', 'isDefault', 1, $info['isDefault']);
+        $form->setFormField("是否有挡板", 'boole', 'isBlock', 1, $info['isBlock']);
+        $form->setFormField("预计报名时间", 'datetime', 'applyedAt', 0, $info['applyedAt']?date('Y-m-d H:i:s',$info['applyedAt']):"");
+        $form->setFormField("课程", 'search_select', 'courseId[]', 1, $info['sub'], function ()use($studyPlanService,$info){
+            return [$this->generateUrl("admin_api_teach_studyplan_searchCourseDo"), $studyPlanService->getCourseByIds($info['sub'])];
         });
 
-        $form->setFormField("学习方式", "select", "studyWay", 1, $info['studyWay'], function () {
-            return [
-                "线上" => 1,
-                "线下" => 2,
-                "混合" => 3
-            ];
-        });
-        $form->setFormField("是否免费", 'boole', 'isFree', 1, $info['isFree']);
-
-        $form->setFormField("排序", 'text', 'sort', 1, $info['sort']);
+        $form->setFormField("描述", 'textarea', 'descr',0, $info['descr']);
 
         $formData = $form->create($this->generateUrl("admin_api_teach_studyplan_edit", [
             'id' => $id
@@ -148,27 +134,26 @@ class StudyPlanController extends BaseAdminController
     public function editDoAction($id, Request $request, StudyPlanService $studyPlanService)
     {
         $name = $request->get("name");
-        $parentId = (int) $request->get("parentId");
-        $openTime = $request->get("openTime");
-        $studyWay = (int) $request->get("studyWay");
-        $isFree = $request->get("isFree");
-        $sort = (int) $request->get("sort");
-        $teachers = $request->get("teachers");
-        $isFree = $isFree == "on" ? 1 : 0;
+        $isDefault = $request->get("isDefault");
+        $isBlock = $request->get("isBlock");
+        $applyedAt = $request->get("applyedAt");
+        $courseIds = $request->get("courseId");
+        $descr = $request->get("descr");
 
-        if (! $name)
-            return $this->responseError("章节名称不能为空!");
-        if (mb_strlen($name, 'utf-8') > 50)
-            return $this->responseError("章节名称不能大于50字!");
+        $isDefault = $isDefault == "on" ? 1 : 0;
+        $isBlock = $isBlock == "on" ? 1 : 0;
 
-        $openTime = $openTime ? strtotime($openTime) : "";
+        if (! $name) return $this->responseError("课程计划名称不能为空!");
+        if (mb_strlen($name, 'utf-8') > 50) return $this->responseError("课程计划名称不能大于50字!");
 
-        $studyPlanService->edit($id, $name, $teachers, $parentId, $openTime, $studyWay, $isFree, $sort);
+        if(!$courseIds) return $this->responseError("课程必须选择!");
+
+        $studyPlanService->edit($id, $name, $isDefault, $isBlock, $applyedAt, $courseIds, $descr);
 
         $info = $studyPlanService->getById($id);
 
         return $this->responseSuccess("操作成功!", $this->generateUrl('admin_teach_studyplan_index', [
-            'id' => $info['courseId']
+            'id' => $info['productId']
         ]));
     }
 
@@ -183,9 +168,20 @@ class StudyPlanController extends BaseAdminController
         $studyPlanService->del($id);
         $info = $studyPlanService->getById($id);
 
-        return $this->responseSuccess("删除成功!", $this->generateUrl("admin_teach_studyplan_index"), [
-            'id' => $info['productId']
-        ]);
+        return $this->responseSuccess("删除成功!", $this->generateUrl("admin_teach_studyplan_index",['id' => $info['productId']]));
+    }
+
+    /**
+     *
+     * @Rest\Post("/api/teach/studyplansub/deleteDo/{id}", name="admin_api_teach_studyplansub_delete")
+     */
+    public function deleteSubDoAction($id, StudyPlanService $studyPlanService)
+    {
+        $info = $studyPlanService->getSubById($id);
+        $studyPlanService->delsub($id);
+        return $this->responseSuccess("删除成功!", $this->generateUrl("admin_teach_studyplan_index",[
+            'id' => $info['study_plan']['productId']
+        ]));
     }
 
     /**

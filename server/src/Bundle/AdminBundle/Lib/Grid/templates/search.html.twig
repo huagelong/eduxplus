@@ -40,7 +40,12 @@
                                 <input type="hidden" name="{{ v['types'] }}" value="{{ v['type'] }}">
                                 <input type="hidden" name="hidden-{{ v['field'] }}" value="{{ array_get(app.request.query.get("values"), v['field']) }}"/>
                                 {% set selectV = get_prop(v['initData'],"") %}
-                                <select class="form-control form-control-sm search_select" data-url="{{ selectV }}" style="width: 100%;" name="{{ v['values'] }}" data-value="" >
+                                <select class="form-control form-control-sm search_select" data-url="{{ selectV[0] }}" style="width: 100%;" name="{{ v['values'] }}" data-value="" >
+                                    {% if selectV[1] %}
+                                        {% for k,v in selectV[1] %}
+                                            <option value="{{ v }}">{{ k|raw }}</option>
+                                        {% endfor %}
+                                    {% endif %}
                                 </select>
                             </div>
                         {% endif %}

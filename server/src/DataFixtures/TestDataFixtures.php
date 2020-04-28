@@ -6,6 +6,7 @@ use App\Bundle\AdminBundle\Service\Jw\TeacherService;
 use App\Bundle\AdminBundle\Service\Teach\ChapterService;
 use App\Bundle\AdminBundle\Service\Teach\CourseService;
 use App\Bundle\AdminBundle\Service\Teach\ProductService;
+use App\Bundle\AdminBundle\Service\Teach\StudyPlanService;
 use App\Bundle\AppBundle\Lib\Service\HelperService;
 use App\Entity\BaseMenu;
 use App\Entity\BaseOption;
@@ -34,6 +35,7 @@ class TestDataFixtures extends Fixture
     protected $chapterService;
     protected $teacherService;
     protected $productService;
+    protected $studyPlanService;
 
     public function __construct(
         UserPasswordEncoderInterface $passwordEncoder,
@@ -41,7 +43,8 @@ class TestDataFixtures extends Fixture
         CourseService $courseService,
         ChapterService $chapterService,
         TeacherService $teacherService,
-        ProductService $productService
+        ProductService $productService,
+        StudyPlanService $studyPlanService
     )
     {
         $this->passwordEncoder = $passwordEncoder;
@@ -50,6 +53,7 @@ class TestDataFixtures extends Fixture
         $this->chapterService = $chapterService;
         $this->teacherService = $teacherService;
         $this->productService = $productService;
+        $this->studyPlanService = $studyPlanService;
     }
 
     public function load(ObjectManager $manager)
@@ -88,13 +92,13 @@ class TestDataFixtures extends Fixture
         $this->chapterService->add("变量", [$teacherId1], $chapterId, time(), 1, 0, 0, $courseId);
         $this->chapterService->add("函数", [$teacherId1], $chapterId, time(), 1, 0, 1, $courseId);
         $this->chapterService->add("类", [$teacherId1], $chapterId, time(), 1, 0, 2, $courseId);
-        $courseId = $this->courseService->add(1,"Golang编程思想", 1, "", "Golang编程思想", $cid1, $schoolId1, 33);
-        $chapterId = $this->chapterService->add("Golang基础", [$teacherId1], 0, time(), 1, 0, 0, $courseId);
-        $this->chapterService->add("变量", [$teacherId1], $chapterId, time(), 1, 0, 0, $courseId);
-        $this->chapterService->add("函数", [$teacherId1], $chapterId, time(), 1, 0, 1, $courseId);
-        $this->chapterService->add("类", [$teacherId1], $chapterId, time(), 1, 0, 2, $courseId);
-        $this->productService->add(1,"高级编程", $agreeId, 1,22, $cid1, "高级编程");
-
+        $courseId1 = $this->courseService->add(1,"Golang编程思想", 1, "", "Golang编程思想", $cid1, $schoolId1, 33);
+        $chapterId = $this->chapterService->add("Golang基础", [$teacherId1], 0, time(), 1, 0, 0, $courseId1);
+        $this->chapterService->add("变量", [$teacherId1], $chapterId, time(), 1, 0, 0, $courseId1);
+        $this->chapterService->add("函数", [$teacherId1], $chapterId, time(), 1, 0, 1, $courseId1);
+        $this->chapterService->add("类", [$teacherId1], $chapterId, time(), 1, 0, 2, $courseId1);
+        $productId = $this->productService->add(1,"高级编程", $agreeId, 1,22, $cid1, "高级编程");
+        $this->studyPlanService->add($productId, "5.1学习计划", 1, 1, "2021-01-12 11:21:00",[$courseId, $courseId1],1,"5.1学习计划");
     }
 
 
