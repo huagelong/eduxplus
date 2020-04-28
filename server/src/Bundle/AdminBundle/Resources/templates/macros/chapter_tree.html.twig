@@ -2,7 +2,7 @@
     {% if chapters is not empty %}
     <ol class="dd-list">
         {% for chapter in chapters %}
-            <li class="dd-item dd-collapsed" data-id="{{ chapter['id'] }}">
+            <li class="dd-item" data-id="{{ chapter['id'] }}">
                 <div class="dd-handle">
                     <i class="far fa-circle"></i>&nbsp;<strong>{{ chapter['name']|raw }}</strong>
                     {% if chapter['openTime'] %}

@@ -2,7 +2,7 @@
     {% if studyplans is not empty %}
     <ol class="dd-list">
         {% for studyplan in studyplans %}
-            <li class="dd-item dd-collapsed" data-id="{{ studyplan['id'] }}">
+            <li class="dd-item" data-id="{{ studyplan['id'] }}">
                 <div class="dd-handle">
                     <i class="far fa-circle"></i>&nbsp;<strong>{{ studyplan['name']|raw }}</strong>
                     {% if studyplan['applyedAt'] %}
@@ -22,7 +22,7 @@
                 {% if studyplan['sub'] is not empty %}
                 <ol class="dd-list">
                     {% for sub in studyplan['sub'] %}
-                        <li class="dd-item dd-collapsed" data-id="sub_{{ sub['id'] }}">
+                        <li class="dd-item" data-id="sub_{{ sub['id'] }}">
                             <div class="dd-handle">
                                 <i class="far fa-circle"></i>&nbsp;<strong>{{ sub['course']['name']|raw }}</strong>
                                 <span class="pull-right dd-nodrag">

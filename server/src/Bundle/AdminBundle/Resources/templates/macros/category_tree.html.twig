@@ -2,7 +2,7 @@
     {% if categorys is not empty %}
     <ol class="dd-list">
         {% for category in categorys %}
-            <li class="dd-item dd-collapsed" data-id="{{ category['id'] }}">
+            <li class="dd-item" data-id="{{ category['id'] }}">
                 <div class="dd-handle">
                     <i class="far fa-circle"></i>&nbsp;<strong>{{ category['name']|raw }}</strong>
                     <span class="pull-right dd-nodrag">
