@@ -23,7 +23,7 @@ class CourseController extends BaseAdminController
     /**
      * @Rest\Get("/teach/course/index", name="admin_teach_course_index")
      */
-    public function indexAction(Request $request, Grid $grid,CourseService $courseService, UserService  $userService){
+    public function indexAction(Request $request, Grid $grid,CourseService $courseService, UserService  $userService, CategoryService $categoryService){
 
         $pageSize = 20;
         $grid->setListService($courseService, "getList");
@@ -71,6 +71,8 @@ class CourseController extends BaseAdminController
         $grid->setGridBar("admin_teach_course_add","添加", $this->generateUrl("admin_teach_course_add"), "fas fa-plus", "btn-success");
 
         //搜索
+        $select = $categoryService->categorySelect();
+
         $grid->setSearchField("ID", "number", "a.id");
         $grid->setSearchField("课程名称", "text", "a.name");
         $grid->setSearchField("类型", "select", "a.type", function(){
@@ -93,6 +95,11 @@ class CourseController extends BaseAdminController
             }
             return [$this->generateUrl("admin_api_glob_searchUserDo"),$users];
         });
+
+        $grid->setSearchField("类别", 'select', 'a.categoryId' , function()use($select){
+            return $select;
+        });
+
         $grid->setSearchField("创建时间", "daterange", "a.createdAt");
 
         $data = [];

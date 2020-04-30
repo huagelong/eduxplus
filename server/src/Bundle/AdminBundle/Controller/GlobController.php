@@ -75,4 +75,15 @@ class GlobController extends BaseAdminController
         return $data;
     }
 
+    /**
+     * @Rest\Get("/api/glob/searchProductDo", name="admin_api_glob_searchProductDo")
+     */
+    public function searchProductDoAction(Request $request, ProductService $productService){
+        $kw = $request->get("kw");
+        if(!$kw) return [];
+        $data = $productService->searchProductName($kw);
+        return $data;
+    }I
+
+
 }

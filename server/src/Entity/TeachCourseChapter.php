@@ -61,7 +61,7 @@ class TeachCourseChapter
     /**
      * @var bool|null
      *
-     * @ORM\Column(name="study_way", type="boolean", nullable=true, options={"comment"="学习方式, 1-线上，2-线下，3-混合"})
+     * @ORM\Column(name="study_way", type="boolean", nullable=true, options={"comment"="学习方式, 1-直播，2-录播，3-面授"})
      */
     private $studyWay = '1';
 

@@ -75,6 +75,23 @@ class ProductService extends BaseService
         return $rs;
     }
 
+
+    public function searchProductName($name){
+        $sql = "SELECT a FROM App:TeachProducts a where a.name like :name AND a.status=1 ";
+        $params = [];
+        $params['name'] = "%".$name."%";
+        $all = $this->fetchAll($sql, $params);
+        if(!$all) return [];
+        $rs = [];
+        foreach ($all as $v){
+            $tmp = [];
+            $tmp['id'] = $v['id'];
+            $tmp['text'] = $v['name'];
+            $rs[] = $tmp;
+        }
+        return $rs;
+    }
+
     public function getAgreements(){
         $schools = $this->agreementService->getAll();
         if(!$schools) return [];

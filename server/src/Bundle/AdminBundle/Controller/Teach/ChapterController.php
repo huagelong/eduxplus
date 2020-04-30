@@ -50,9 +50,9 @@ class ChapterController extends BaseAdminController
 
         $form->setFormField("学习方式", "select", "studyWay", 1, "", function () {
             return [
-                "线上" => 1,
-                "线下" => 2,
-                "混合" => 3
+                "直播" => 1,
+                "录播" => 2,
+                "面授" => 3
             ];
         });
         $form->setFormField("是否免费", 'boole', 'isFree', 1);
@@ -121,9 +121,9 @@ class ChapterController extends BaseAdminController
 
         $form->setFormField("学习方式", "select", "studyWay", 1, $info['studyWay'], function () {
             return [
-                "线上" => 1,
-                "线下" => 2,
-                "混合" => 3
+                "直播" => 1,
+                "录播" => 2,
+                "面授" => 3
             ];
         });
         $form->setFormField("是否免费", 'boole', 'isFree', 1, $info['isFree']);

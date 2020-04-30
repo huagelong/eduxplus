@@ -81,6 +81,7 @@ class InstallFixtures extends Fixture
         $this->addMenu("首页","后台首页", 0,"admin_dashboard", "fas fa-home",0, $roleId, 1, 0, 1);
         $this->addMenu("文件上传","文件上传处理", 0,"admin_glob_upload", "fas fa-upload",1, $roleId, 1, 1, 0);
         $this->addMenu("搜索用户名","搜索用户名", 0,"admin_api_glob_searchUserDo", "",2, $roleId, 1, 1, 0);
+        $this->addMenu("搜索产品","搜索产品", 0,"admin_api_glob_searchProductDo", "",3, $roleId, 1, 1, 0);
         //安全模块
         $accMenuId = $this->addMenu("安全","安全方面的管理", 0,"", "fas fa-key",2, $roleId, 1, 0, 1);
         //菜单
