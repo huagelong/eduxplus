@@ -41,7 +41,7 @@
             {% for v in list %}
             <tr>
                 {% for cv in column %}
-                    <td>
+                    <td align="center">
                         {% if cv['type'] == 'text' or cv['type'] == 'datetime' or cv['type'] == 'textarea' %}
                             {{ get_prop(v, cv["field"], cv['type'], cv['options'])|raw }}
                         {% endif %}
@@ -75,7 +75,7 @@
                     </td>
                 {% endfor %}
                 {% if tableActionCallback %}
-                    <td>
+                    <td align="center">
                         {% for tb in  tableActionCallback %}
                             {{ get_prop(tb, v)|raw }}
                         {% endfor %}
@@ -84,7 +84,7 @@
             </tr>
                 {% else %}
                     <tr>
-                        <td colspan="{{ column|length }}">暂无数据</td><td></td>
+                        <td colspan="{{ column|length }}" align="center">暂无数据</td><td></td>
                     </tr>
             {% endfor %}
             </tbody>

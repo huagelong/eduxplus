@@ -77,7 +77,7 @@ class ProductService extends BaseService
 
 
     public function searchProductName($name){
-        $sql = "SELECT a FROM App:TeachProducts a where a.name like :name AND a.status=1 ";
+        $sql = "SELECT a FROM App:TeachProducts a WHERE a.name like :name AND a.status=1 ";
         $params = [];
         $params['name'] = "%".$name."%";
         $all = $this->fetchAll($sql, $params);

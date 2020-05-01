@@ -33,13 +33,6 @@ class MallGoodsGroup
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=100, nullable=false, options={"comment"="组名"})
-     */
-    private $name = '';
-
-    /**
-     * @var string
-     *
      * @ORM\Column(name="group_goods_id", type="string", length=100, nullable=false, options={"comment"="组名下商品id"})
      */
     private $groupGoodsId = '';
@@ -76,18 +69,6 @@ class MallGoodsGroup
     public function setGoodsId(?int $goodsId): self
     {
         $this->goodsId = $goodsId;
-
-        return $this;
-    }
-
-    public function getName(): ?string
-    {
-        return $this->name;
-    }
-
-    public function setName(string $name): self
-    {
-        $this->name = $name;
 
         return $this;
     }
@@ -139,6 +120,4 @@ class MallGoodsGroup
 
         return $this;
     }
-
-
 }

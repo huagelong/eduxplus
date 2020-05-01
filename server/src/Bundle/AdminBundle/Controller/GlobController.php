@@ -9,7 +9,9 @@
 namespace App\Bundle\AdminBundle\Controller;
 
 
+use App\Bundle\AdminBundle\Service\Mall\GoodsService;
 use App\Bundle\AdminBundle\Service\Teach\ProductService;
+use App\Bundle\AdminBundle\Service\Teach\StudyPlanService;
 use App\Bundle\AppBundle\Lib\Base\BaseAdminController;
 use App\Bundle\AppBundle\Lib\Base\BaseController;
 use App\Bundle\AppBundle\Lib\Service\UploadService;
@@ -83,7 +85,25 @@ class GlobController extends BaseAdminController
         if(!$kw) return [];
         $data = $productService->searchProductName($kw);
         return $data;
-    }I
+    }
 
+    /**
+     * @Rest\Get("/api/glob/searchGoodsDo", name="admin_api_glob_searchGoodsDo")
+     */
+    public function searchGoodsDoAction(Request $request, GoodsService $goodsService){
+        $kw = $request->get("kw");
+        if(!$kw) return [];
+        $data = $goodsService->searchGoodsName($kw);
+        return $data;
+    }
 
+    /**
+     * @Rest\Get("/api/glob/searchCourseDo", name="admin_api_glob_searchCourseDo")
+     */
+    public function searchCourseDoAction(Request $request, StudyPlanService $studyPlanService){
+        $kw = $request->get("kw");
+        if(!$kw) return [];
+        $data = $studyPlanService->searchCourseName($kw);
+        return $data;
+    }
 }

@@ -46,8 +46,8 @@ class StudyPlanController extends BaseAdminController
         $form->setFormField("是否当前默认计划", 'boole', 'isDefault', 1);
         $form->setFormField("是否有挡板", 'boole', 'isBlock', 1);
         $form->setFormField("预计报名时间", 'datetime', 'applyedAt');
-        $form->setFormField("课程", 'search_select', 'courseId[]', 1, "", function (){
-            return [$this->generateUrl("admin_api_teach_studyplan_searchCourseDo"),[]];
+        $form->setFormField("课程", 'search_multiple_select', 'courseId[]', 1, "", function (){
+            return [$this->generateUrl("admin_api_glob_searchCourseDo"),[]];
         });
 
         $form->setFormField("描述", 'textarea', 'descr');
@@ -59,16 +59,6 @@ class StudyPlanController extends BaseAdminController
         $data["formData"] = $formData;
         $data['id'] = $id;
         return $this->render("@AdminBundle/teach/studyplan/add.html.twig", $data);
-    }
-
-    /**
-     * @Rest\Get("/api/teach/studyplan/searchCourseDo", name="admin_api_teach_studyplan_searchCourseDo")
-     */
-    public function searchCourseDoAction(Request $request, StudyPlanService $studyPlanService){
-        $kw = $request->get("kw");
-        if(!$kw) return [];
-        $data = $studyPlanService->searchCourseName($kw);
-        return $data;
     }
 
     /**
@@ -112,8 +102,8 @@ class StudyPlanController extends BaseAdminController
         $form->setFormField("是否当前默认计划", 'boole', 'isDefault', 1, $info['isDefault']);
         $form->setFormField("是否有挡板", 'boole', 'isBlock', 1, $info['isBlock']);
         $form->setFormField("预计报名时间", 'datetime', 'applyedAt', 0, $info['applyedAt']?date('Y-m-d H:i:s',$info['applyedAt']):"");
-        $form->setFormField("课程", 'search_select', 'courseId[]', 1, $info['sub'], function ()use($studyPlanService,$info){
-            return [$this->generateUrl("admin_api_teach_studyplan_searchCourseDo"), $studyPlanService->getCourseByIds($info['sub'])];
+        $form->setFormField("课程", 'search_multiple_select', 'courseId[]', 1, $info['sub'], function ()use($studyPlanService,$info){
+            return [$this->generateUrl("admin_api_glob_searchCourseDo"), $studyPlanService->getCourseByIds($info['sub'])];
         });
 
         $form->setFormField("描述", 'textarea', 'descr',0, $info['descr']);

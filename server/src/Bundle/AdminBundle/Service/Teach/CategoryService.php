@@ -59,7 +59,7 @@ class CategoryService extends BaseService
 
 
     public function getById($id){
-        $sql = "SELECT a FROM App:TeachCategory a WHERE a.id=:id";
+        $sql = "SELECT a.id, a.name, a.parentId, a.sort,a.isShow, a.findPath FROM App:TeachCategory a WHERE a.id=:id";
         return $this->fetchOne($sql, ['id'=>$id]);
     }
 

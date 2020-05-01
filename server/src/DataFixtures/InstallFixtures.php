@@ -82,6 +82,9 @@ class InstallFixtures extends Fixture
         $this->addMenu("文件上传","文件上传处理", 0,"admin_glob_upload", "fas fa-upload",1, $roleId, 1, 1, 0);
         $this->addMenu("搜索用户名","搜索用户名", 0,"admin_api_glob_searchUserDo", "",2, $roleId, 1, 1, 0);
         $this->addMenu("搜索产品","搜索产品", 0,"admin_api_glob_searchProductDo", "",3, $roleId, 1, 1, 0);
+        $this->addMenu("搜索商品","搜索商品", 0,"admin_api_glob_searchGoodsDo", "",4, $roleId, 1, 1, 0);
+        $this->addMenu("搜索课程","搜索课程", 0,"admin_api_glob_searchCourseDo", "",5, $roleId, 1, 1, 0);
+
         //安全模块
         $accMenuId = $this->addMenu("安全","安全方面的管理", 0,"", "fas fa-key",2, $roleId, 1, 0, 1);
         //菜单
@@ -189,6 +192,18 @@ class InstallFixtures extends Fixture
         $this->addMenu("编辑","编辑处理", $mgId,"admin_api_jw_teacher_edit", "",3, $roleId, 0, 1, 0);
         $this->addMenu("删除","删除处理", $mgId,"admin_api_jw_teacher_delete", "",4, $roleId, 0, 1, 0);
         $this->addMenu("锁定/解锁老师","锁定/解锁老师", $userMgId,"admin_api_jw_teacher_switchStatus", "",5, $roleId, 0, 1, 0);
+
+        //商城
+        $mallMenuId = $this->addMenu("商城","商城方面的管理", 0,"", "fa fa-shopping-cart",6, $roleId, 0, 0, 1);
+        //商品管理
+        $mgId = $this->addMenu("商品管理","商品信息管理", $mallMenuId,"admin_mall_goods_index", "",0, $roleId, 0, 0, 1);
+        $this->addMenu("添加页面","添加页面展示", $mgId,"admin_mall_goods_add", "",0, $roleId, 0, 1, 0);
+        $this->addMenu("添加","添加处理", $mgId,"admin_api_mall_goods_add", "",1, $roleId, 0, 1, 0);
+        $this->addMenu("编辑页面","编辑页面展示", $mgId,"admin_mall_goods_edit", "",2, $roleId, 0, 1, 0);
+        $this->addMenu("编辑","编辑处理", $mgId,"admin_api_mall_goods_edit", "",3, $roleId, 0, 1, 0);
+        $this->addMenu("删除","删除处理", $mgId,"admin_api_mall_goods_delete", "",4, $roleId, 0, 1, 0);
+        $this->addMenu("商品上下架","商品上下架", $mgId,"admin_api_mall_goods_switchStatus", "",5, $roleId, 0, 1, 0);
+
     }
 
     protected function addOption($key, $value, $descr, $type=1, $isLock=1){

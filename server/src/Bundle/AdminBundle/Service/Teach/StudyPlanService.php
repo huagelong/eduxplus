@@ -182,7 +182,21 @@ class StudyPlanService extends BaseService
     }
 
    public function updateSort($id, $data){
-
+       if($data){
+           foreach ($data as $v){
+               $childrens = isset($v["children"])?$v["children"]:[];
+               if(!$childrens) continue;
+               $i=0;
+               foreach ($childrens as $cv){
+                   $childId = $cv["id"];
+                   $sql = "SELECT a FROM App:TeachStudyPlanSub a WHERE a.id=:id";
+                   $model = $this->fetchOne($sql, ['id'=>$childId] ,1 );
+                   $model->setSort($i);
+                   $this->save($model);
+                   $i++;
+               }
+           }
+       }
    }
 
    public function hasSub($id){

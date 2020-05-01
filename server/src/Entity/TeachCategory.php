@@ -95,6 +95,18 @@ class TeachCategory
         return $this;
     }
 
+    public function getFindPath(): ?string
+    {
+        return $this->findPath;
+    }
+
+    public function setFindPath(string $findPath): self
+    {
+        $this->findPath = $findPath;
+
+        return $this;
+    }
+
     public function getParentId(): ?int
     {
         return $this->parentId;
@@ -163,18 +175,6 @@ class TeachCategory
     public function setDeletedAt(?\DateTimeInterface $deletedAt): self
     {
         $this->deletedAt = $deletedAt;
-
-        return $this;
-    }
-
-    public function getFindPath(): ?string
-    {
-        return $this->findPath;
-    }
-
-    public function setFindPath(string $findPath): self
-    {
-        $this->findPath = $findPath;
 
         return $this;
     }
