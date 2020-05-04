@@ -223,7 +223,7 @@ class GoodsController extends BaseAdminController
         }
 
         if($subhead){
-            if (mb_strlen($subhead, 'utf-8') > 100) return $this->responseError("副标题不能大于50字!");
+            if (mb_strlen($subhead, 'utf-8') > 80) return $this->responseError("副标题不能大于80字!");
         }
 
         if(!$teachers){
@@ -242,42 +242,54 @@ class GoodsController extends BaseAdminController
      *
      * @Rest\Get("/mall/goods/edit/{id}", name="admin_mall_goods_edit")
      */
-    public function editAction($id, Form $form, GoodsService $goodsService)
+    public function editAction($id, Form $form, GoodsService $goodsService,
+                               CategoryService $categoryService, ChapterService $chapterService,
+                                ProductService $productService
+    )
     {
         $info = $goodsService->getById($id);
 
         $form->setFormField("商品名称", 'text', 'name', 1, $info['name']);
-        $form->setFormField("副标题", 'text', 'subhead', $info['subhead']);
+        $form->setFormField("副标题", 'text', 'subhead',0, $info['subhead']);
 
-        $form->setFormField("产品", 'search_multiple_select', 'productId[]', 0, "", function (){
-            return [$this->generateUrl("admin_api_glob_searchProductDo"),[]];
+        $form->setFormField("产品", 'search_select', 'productId', 0, $info['productId'], function ()use($info, $productService){
+            $productInfo = $productService->getById($info['productId']);
+            $tmp =[];
+            if($productInfo){
+                $tmp[$productInfo['name']] = $productInfo["id"];
+            }
+            dump($tmp);
+            return [$this->generateUrl("admin_api_glob_searchProductDo"),$tmp];
         });
 
-        $form->setFormField("商品", 'search_multiple_select', 'goodsId[]', 0, "", function (){
-            return [$this->generateUrl("admin_api_glob_searchGoodsDo"),[]];
+        $groupGoods = $goodsService->getGroupGoods($id);
+        $form->setFormField("商品", 'search_multiple_select', 'goodsId[]', 0, $groupGoods, function ()use($id,$goodsService){
+            $tmp = $goodsService->getSelectGoods($id);
+            return [$this->generateUrl("admin_api_glob_searchGoodsDo"),$tmp];
         });
 
-        $form->setFormField("类目", 'select', 'categoryId', 1, "", function() use($categoryServce){
+        $form->setFormField("类目", 'select', 'categoryId', 1, $info["categoryId"], function() use($categoryService){
             $rs = $categoryService->categorySelect();
             return $rs;
         });
 
-        $form->setFormField("授课方式", 'select', 'teachingMethod' ,1, "", function(){
+        $form->setFormField("授课方式", 'select', 'teachingMethod' ,1, $info["teachingMethod"], function(){
             return ["面授"=>1, "直播"=>2, "录播"=>3, "直播+面授"=>4, "直播+录播"=>5, "录播+面授"=>6, "直播+录播+面授"=>7];
         });
 
-        $form->setFormField("上课老师", 'multiSelect', 'teachers[]', 1, "", function () use ($chapterService) {
+        $teachers = $info["teachingTeacher"];
+        $teachersId = $teachers?\GuzzleHttp\json_decode($teachers, true):[];
+        dump($teachersId);
+        $form->setFormField("上课老师", 'multiSelect', 'teachers[]', 1, $teachersId, function () use ($chapterService) {
             return $chapterService->getTeachers();
         });
 
-        //agreement_id
-
-        $form->setFormField("课时", 'text', 'courseHour', 1);
-        $form->setFormField("课次", 'text', 'courseCount', 1);
-        $form->setFormField("成本价", 'text', 'marketPrice', 1);
-        $form->setFormField("售价", 'text', 'shopPrice', 1);
-        $form->setFormField("购买人数", 'text', 'buyNumberFalse', 1);
-        $form->setFormField("购买协议", 'select', 'agreementId' ,1, "", function()use($productService){
+        $form->setFormField("课时", 'text', 'courseHour', 1, $info["courseHour"]);
+        $form->setFormField("课次", 'text', 'courseCount', 1, $info["courseCount"]);
+        $form->setFormField("成本价", 'text', 'marketPrice', 1, $info["marketPrice"]/100);
+        $form->setFormField("售价", 'text', 'shopPrice', 1, $info["shopPrice"]/100);
+        $form->setFormField("购买人数", 'text', 'buyNumberFalse', 1, $info["buyNumberFalse"]);
+        $form->setFormField("购买协议", 'select', 'agreementId' ,1, $info["agreementId"], function()use($productService){
             return $productService->getAgreements();
         });
 
@@ -287,7 +299,10 @@ class GoodsController extends BaseAdminController
         $options['data-max-total-file-count'] = 1;
         $options["data-max-file-size"] = 1024*50;//50m
         $options["data-required"] = 1;
-        $form->setFormAdvanceField("详情页海报图", "file", 'goodsImg' , $options);
+        if($info) $options['data-initial-preview'] = $info['goodsImg'];
+        if($info) $options['data-initial-preview-config']= $goodsService->getInitialPreviewConfig($info['goodsImg']);
+
+        $form->setFormAdvanceField("详情页海报图", "file", 'goodsImg' , $options, $info['goodsImg']);
 
         $options= [];
         $options["data-upload-url"] = $this->generateUrl("admin_glob_upload", ["type"=>"img_small_goods"]);
@@ -295,9 +310,11 @@ class GoodsController extends BaseAdminController
         $options['data-max-total-file-count'] = 1;
         $options["data-max-file-size"] = 1024*50;//50m
         $options["data-required"] = 1;
-        $form->setFormAdvanceField("缩略图", "file", 'goodsSmallImg' , $options);
-        $form->setFormField("是否上架", 'boole', 'status', 1);
-        $form->setFormField("排序", 'text', 'sort');
+        if($info) $options['data-initial-preview'] = $info['goodsSmallImg'];
+        if($info) $options['data-initial-preview-config']= $goodsService->getInitialPreviewConfig($info['goodsSmallImg']);
+        $form->setFormAdvanceField("缩略图", "file", 'goodsSmallImg' , $options,$info['goodsSmallImg']);
+        $form->setFormField("是否上架", 'boole', 'status', 1, $info['status']);
+        $form->setFormField("排序", 'text', 'sort', 1, $info['sort']);
 
         $formData = $form->create($this->generateUrl("admin_api_mall_goods_edit", [
             'id' => $id
@@ -314,23 +331,50 @@ class GoodsController extends BaseAdminController
     public function editDoAction($id, Request $request, GoodsService $goodsService)
     {
         $name = $request->get("name");
-        $isDefault = $request->get("isDefault");
-        $isBlock = $request->get("isBlock");
-        $applyedAt = $request->get("applyedAt");
-        $courseIds = $request->get("courseId");
-        $descr = $request->get("descr");
+        $productId = $request->get("productId");
+        $goodsId = $request->get("goodsId");
+        $categoryId = $request->get("categoryId");
+        $subhead = $request->get("subhead");
+        $teachingMethod = (int) $request->get("teachingMethod");
+        $teachers = $request->get("teachers");
+        $courseHour = $request->get("courseHour");
+        $courseCount = $request->get("courseCount");
+        $marketPrice = $request->get("marketPrice");
+        $shopPrice = $request->get("shopPrice");
+        $buyNumberFalse = (int)  $request->get("buyNumberFalse");
+        $goodsImg = $request->get("goodsImg");
+        $goodsSmallImg = $request->get("goodsSmallImg");
+        $status = $request->get("status");
+        $sort = (int) $request->get("sort");
+        $agreementId = (int) $request->get("agreementId");
+        $groupType =  (int) $request->get("groupType");
 
-        $isDefault = $isDefault == "on" ? 1 : 0;
-        $isBlock = $isBlock == "on" ? 1 : 0;
+        $status = $status == "on" ? 1 : 0;
 
-        if (! $name) return $this->responseError("课程计划名称不能为空!");
-        if (mb_strlen($name, 'utf-8') > 50) return $this->responseError("课程计划名称不能大于50字!");
+        if (! $name) return $this->responseError("商品名称不能为空!");
+        if (mb_strlen($name, 'utf-8') > 50) return $this->responseError("商品名称不能大于50字!");
 
-        if(!$courseIds) return $this->responseError("课程必须选择!");
+        if($goodsService->checkName($name, $id)) return $this->responseError("商品名称已存在!");
 
-        $goodsService->edit($id, $name, $isDefault, $isBlock, $applyedAt, $courseIds, $descr);
+        if(!$productId && !$goodsId) return $this->responseError("产品或者商品必须选其一!");
 
-        $info = $goodsService->getById($id);
+        if($goodsId){
+            if($productId) return $this->responseError("组合商品不能添加产品!");
+        }else{
+            if(!$shopPrice) return $this->responseError("非组合商品商品售价不能为空!");
+        }
+
+        if($subhead){
+            if (mb_strlen($subhead, 'utf-8') > 80) return $this->responseError("副标题不能大于80字!");
+        }
+
+        if(!$teachers){
+            return $this->responseError("老师不能为空!");
+        }
+
+        $goodsService->edit($id, $name, $productId, $goodsId, $categoryId, $subhead,
+            $teachingMethod, $teachers, $courseHour, $courseCount,
+            $marketPrice,$shopPrice,$buyNumberFalse, $goodsImg, $goodsSmallImg, $status, $sort,$agreementId, $groupType);
 
         return $this->responseSuccess("操作成功!", $this->generateUrl('admin_mall_goods_index'));
     }

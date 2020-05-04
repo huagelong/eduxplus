@@ -266,7 +266,7 @@ class ChapterController extends BaseAdminController
         if($info) $options['data-initial-preview'] = $info['path'];
         if($info) $options['data-initial-preview-config']= $chapterService->getInitialPreviewConfig($info['path']);
 
-        $form->setFormAdvanceField("附件", "file", 'path' , $options);
+        $form->setFormAdvanceField("附件", "file", 'path' , $options, $info['path']);
 
         $formData = $form->create($this->generateUrl("admin_api_teach_chapter_materials", [
             'id' => $id

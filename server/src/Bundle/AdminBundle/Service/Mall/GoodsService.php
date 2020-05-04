@@ -168,30 +168,86 @@ class GoodsService extends BaseService
         return $this->fetchOne($sql, $params);
     }
 
-    public function edit($id, $name, $isDefault, $isBlock, $applyedAt, $courseIds, $descr){
+    public function getGroupGoods($id){
+        $sql = "SELECT a FROM App:MallGoodsGroup a WHERE a.goodsId=:goodsId";
+        $params = [];
+        $params['goodsId'] = $id;
+        $allGoodIds = $this->fetchFields("groupGoodsId", $sql, $params);
+        if(!$allGoodIds) return [];
+        return $allGoodIds;
+    }
+
+    public function getSelectGoods($id){
+        $sql = "SELECT a FROM App:MallGoodsGroup a WHERE a.goodsId=:goodsId";
+        $params = [];
+        $params['goodsId'] = $id;
+        $allGoodIds = $this->fetchFields("groupGoodsId", $sql, $params);
+        if(!$allGoodIds) return [];
+        $sql2 = "SELECT a FROM App::MallGoods a WHERE a.id IN(:id)";
+        $params2 = [];
+        $params2['id'] = $allGoodIds;
+        $allGoods =  $this->fetchAll($sql2, $params2);
+        $tmp = [];
+        foreach ($allGoods as $v){
+            $tmp[$v["name"]] = $v["id"];
+        }
+        return $tmp;
+    }
+
+    public function edit($id, $name, $productId, $goodsId, $categoryId, $subhead,
+                         $teachingMethod, $teachers, $courseHour, $courseCount,
+                         $marketPrice,$shopPrice,$buyNumberFalse, $goodsImg,
+                         $goodsSmallImg, $status, $sort, $agreementId, $groupType){
+        $cate = $this->categoryService->getById($categoryId);
+        $path = trim($cate['findPath'], ',');
+        $pathArr = explode(",", $path);
+        $brandId = end($pathArr);
+
         $sql= "SELECT a FROM App:MallGoods a WHERE a.id=:id";
         $model = $this->fetchOne($sql, ['id'=>$id], 1);
+
         $model->setName($name);
-        $model->setDescr($descr);
-        $model->setIsDefault($isDefault);
-        $model->setIsBlock($isBlock);
-        $applyedAt = strtotime($applyedAt);
-        $model->setApplyedAt($applyedAt);
+        $model->setSort($sort);
+        if($productId) $model->setProductId($productId);
+        $model->setFirstCategoryId($brandId);
+        $model->setCategoryId($categoryId);
+        $model->setAgreementId($agreementId);
+        if($subhead) $model->setSubhead($subhead);
+        $model->setTeachingMethod($teachingMethod);
+        $model->setTeachingTeacher(json_encode($teachers));
+        $model->setCourseHour($courseHour);
+        $model->setCourseCount($courseCount);
+        $model->setMarketPrice($marketPrice*100);
+        $model->setShopPrice($shopPrice*100);
+        $model->setBuyNumberFalse($buyNumberFalse);
+        $model->setBuyNumber(0);
+        if($goodsImg) $model->setGoodsImg($goodsImg);
+        if($goodsSmallImg) $model->setGoodsSmallImg($goodsSmallImg);
+        $model->setStatus($status);
+        //
+        if($goodsId){
+            $model->setGroupType($groupType);
+            $model->setIsGroup(1);
+        }else{
+            $model->setGroupType(0);
+            $model->setIsGroup(0);
+
+        }
         $this->save($model);
-        if($courseIds) {
-            $sqlSub = "SELECT a FROM App:MallGoods a WHERE a.studyPlanId=:studyPlanId";
-            $models = $this->fetchAll($sqlSub, ["studyPlanId"=>$id], 1);
-            if($models) $this->hardDelete($models);
-            $sort = 0;
-            foreach ($courseIds as $courseId) {
-                $modelSub = new MallGoods();
-                $modelSub->setCourseId($courseId);
-                $modelSub->setSort($sort);
-                $modelSub->setStudyPlanId($id);
-                $this->save($modelSub);
-                $sort++;
+
+        if($goodsId && $id){
+            $dql = "DELETE FROM App:MallGoodsGroup a WHERE a.goodsId=:goodsId";
+            $this->hardExecute($dql, ["goodsId"=>$id]);
+            foreach ($goodsId as $gid){
+                $goodsModel = new MallGoodsGroup();
+                $goodsModel->setGoodsId($id);
+                $goodsModel->setGroupGoodsId($gid);
+                $this->save($goodsModel);
             }
         }
+
+        return $id;
+
     }
 
     public function del($id){

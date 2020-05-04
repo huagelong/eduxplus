@@ -144,6 +144,46 @@ class BaseService extends AbstractFOSRestController
     }
 
     /**
+     * dql删除,更新等
+     *
+     * @param $dql
+     * @param null $name
+     */
+    public function execute($dql, $params=[], $name=null){
+        //execute
+        $em = $this->getDoctrine()->getManager($name);
+        $query = $em->createQuery($dql);
+        if($params) $query= $query->setParameters($params);
+        $rs = $query->execute();
+        return $rs;
+    }
+
+    /**
+     * 硬处理
+     * @param $dql
+     * @param array $params
+     * @param null $name
+     * @return mixed
+     */
+    public function hardExecute($dql, $params=[], $name=null){
+        //execute
+        $em = $this->getDoctrine()->getManager($name);
+
+        foreach ($entityManage->getEventManager()->getListeners() as $eventName => $listeners) {
+            foreach ($listeners as $listener) {
+                if ($listener instanceof \Gedmo\SoftDeleteable\SoftDeleteableListener) {
+                    $entityManage->getEventManager()->removeEventListener($eventName, $listener);
+                }
+            }
+        }
+
+        $query = $em->createQuery($dql);
+        if($params) $query= $query->setParameters($params);
+        $rs = $query->execute();
+        return $rs;
+    }
+
+    /**
      * 硬删除
      *
      * @param $models
@@ -191,7 +231,7 @@ class BaseService extends AbstractFOSRestController
         }else{
             $rs = $query->getResult();
         }
-
+//            dump(get_class_methods($query));
 //        dump($query->getSql());
         return $rs;
     }
@@ -270,7 +310,7 @@ class BaseService extends AbstractFOSRestController
         $path = \GuzzleHttp\json_decode($path,1);
         foreach ($path as $v){
             $fileInfo = $this->getFileInfo($v);
-            dump($fileInfo);
+//            dump($fileInfo);
             $type = stristr($fileInfo['mime'], "image")?"image":"other";
             $tmp=[];
             $tmp['type'] = $type;
@@ -290,7 +330,7 @@ class BaseService extends AbstractFOSRestController
 
         $arrRet = [];
         if(($arrTmp=get_headers($strUrl,true))){
-            dump($arrTmp);
+//            dump($arrTmp);
             $arrRet=array("length"=>$arrTmp['Content-Length'],"mime"=>$arrTmp['Content-Type']);
             $arrRet["filename"]= pathinfo($strUrl, PATHINFO_FILENAME).".".pathinfo($strUrl, PATHINFO_EXTENSION);
             if(preg_match('/\s(\d+)\s/',$arrTmp[0],$arr)){
