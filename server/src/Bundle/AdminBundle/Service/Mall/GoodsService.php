@@ -103,7 +103,6 @@ class GoodsService extends BaseService
                         $marketPrice,$shopPrice,$buyNumberFalse, $goodsImg,
                         $goodsSmallImg, $status, $sort, $agreementId, $groupType){
         $cate = $this->categoryService->getById($categoryId);
-        var_dump($cate);
         $path = trim($cate['findPath'], ',');
         $pathArr = explode(",", $path);
         $brandId = end($pathArr);
@@ -267,10 +266,10 @@ class GoodsService extends BaseService
        return $this->fetchOne($sql, ['groupGoodsId'=>$id] );
    }
 
-   public function searchGoodsName($kw){
-       $sql = "SELECT a FROM App:MallGoods a WHERE a.name like :goodsName AND a.status=1 ";
+   public function searchGoodsName($name){
+       $sql = "SELECT a FROM App:MallGoods a WHERE a.name like :name AND a.status=1 ";
        $params = [];
-       $params['goodsName'] = "%".$name."%";
+       $params['name'] = "%".$name."%";
        $all = $this->fetchAll($sql, $params);
        if(!$all) return [];
        $rs = [];

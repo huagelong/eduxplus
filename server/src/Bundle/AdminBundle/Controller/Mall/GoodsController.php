@@ -32,6 +32,16 @@ class GoodsController extends BaseAdminController
         $grid->setListService($goodsService, "getList");
         $grid->setTableColumn("#", "text", "id","a.id");
         $grid->setTableColumn("商品名称", "text", "name");
+        $grid->setTableColumn("组合商品?", "boole", "isGroup", "a.isGroup");
+        $grid->setTableActionColumn("admin_api_mall_goods_switchStatus", "是否上架", "boole2", "status", "a.status",null,function($obj){
+            $id = $this->getPro($obj, "id");
+            $defaultValue = $this->getPro($obj, "status");
+            $url = $this->generateUrl('admin_api_mall_goods_switchStatus', ['id' => $id]);
+            $checkStr = $defaultValue?"checked":"";
+            $confirmStr = $defaultValue? "确认要下架吗？":"确认要上架吗?";
+            $str = "<input type=\"checkbox\" data-bootstrap-switch-ajaxput href=\"{$url}\" data-confirm=\"{$confirmStr}\" {$checkStr} >";
+            return $str;
+        });
         $grid->setTableColumn("品类", "text", "brand");
         $grid->setTableColumn("类目", "text", "category", "a.categoryId");
         $grid->setTableColumn("授课方式", "text", "teachingMethod", "a.teachingMethod", [1=>"面授",2=>"直播", 3=>"录播", 4=>"直播+面授", 5=>"直播+录播", 6=>"录播+面授", 7=>"直播+录播+面授"]);
@@ -42,17 +52,7 @@ class GoodsController extends BaseAdminController
         $grid->setTableColumn("真实购买人数", "text", "buyNumber");
         $grid->setTableColumn("详情页海报图", "image", "goodsImg");
         $grid->setTableColumn("缩略图", "image", "goodsSmallImg");
-        $grid->setTableActionColumn("admin_api_mall_goods_switchStatus", "是否上架", "boole2", "status", "a.status",null,function($obj){
-            $id = $this->getPro($obj, "id");
-            $defaultValue = $this->getPro($obj, "status");
-            $url = $this->generateUrl('admin_api_mall_goods_switchStatus', ['id' => $id]);
-            $checkStr = $defaultValue?"checked":"";
-            $confirmStr = $defaultValue? "确认要下架吗？":"确认要上架吗?";
-            $str = "<input type=\"checkbox\" data-bootstrap-switch-ajaxput href=\"{$url}\" data-confirm=\"{$confirmStr}\" {$checkStr} >";
-            return $str;
-        });
         $grid->setTableColumn("创建人", "text", "creater", "a.createUid");
-        $grid->setTableColumn("是否是组合商品", "boole", "isGroup", "a.isGroup");
         $grid->setTableColumn("组合商品类型", "text", "groupType", "a.groupType", [0=>"-", 1=>"可选", 2=>"全选"]);
         $grid->setTableColumn("协议", "text", "agreement", "a.agreementId");
         $grid->setTableColumn("创建时间", "datetime", "createdAt", "a.createdAt");
