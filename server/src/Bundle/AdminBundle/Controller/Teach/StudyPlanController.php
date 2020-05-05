@@ -43,8 +43,8 @@ class StudyPlanController extends BaseAdminController
     public function addAction($id, Form $form, Request $request, StudyPlanService $studyPlanService)
     {
         $form->setFormField("名称", 'text', 'name', 1);
-        $form->setFormField("是否当前默认计划", 'boole', 'isDefault', 1);
-        $form->setFormField("是否有挡板", 'boole', 'isBlock', 1);
+        $form->setFormField("当前默认计划？", 'boole', 'isDefault', 1);
+        $form->setFormField("有挡板？", 'boole', 'isBlock', 1);
         $form->setFormField("预计报名时间", 'datetime', 'applyedAt');
         $form->setFormField("课程", 'search_multiple_select', 'courseId[]', 1, "", function (){
             return [$this->generateUrl("admin_api_glob_searchCourseDo"),[]];
@@ -99,8 +99,8 @@ class StudyPlanController extends BaseAdminController
         $info = $studyPlanService->getById($id);
 
         $form->setFormField("名称", 'text', 'name', 1, $info['name']);
-        $form->setFormField("是否当前默认计划", 'boole', 'isDefault', 1, $info['isDefault']);
-        $form->setFormField("是否有挡板", 'boole', 'isBlock', 1, $info['isBlock']);
+        $form->setFormField("当前默认计划？", 'boole', 'isDefault', 1, $info['isDefault']);
+        $form->setFormField("有挡板？", 'boole', 'isBlock', 1, $info['isBlock']);
         $form->setFormField("预计报名时间", 'datetime', 'applyedAt', 0, $info['applyedAt']?date('Y-m-d H:i:s',$info['applyedAt']):"");
         $form->setFormField("课程", 'search_multiple_select', 'courseId[]', 1, $info['sub'], function ()use($studyPlanService,$info){
             return [$this->generateUrl("admin_api_glob_searchCourseDo"), $studyPlanService->getCourseByIds($info['sub'])];

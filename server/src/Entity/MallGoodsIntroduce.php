@@ -33,7 +33,7 @@ class MallGoodsIntroduce
     /**
      * @var bool|null
      *
-     * @ORM\Column(name="introduce_type", type="boolean", nullable=true, options={"comment"="课程介绍类型 1-课程试听, 2-班型介绍， 3-特色服务，4-适用人群，5-学习目标, 6-图文介绍"})
+     * @ORM\Column(name="introduce_type", type="boolean", nullable=true, options={"comment"="课程介绍类型 1-图文介绍"})
      */
     private $introduceType = '0';
 
@@ -43,13 +43,6 @@ class MallGoodsIntroduce
      * @ORM\Column(name="content", type="text", length=65535, nullable=true, options={"comment"="课程介绍内容"})
      */
     private $content;
-
-    /**
-     * @var string|null
-     *
-     * @ORM\Column(name="course_chapter_id", type="text", length=65535, nullable=true, options={"comment"="视频章节ID"})
-     */
-    private $courseChapterId;
 
     /**
      * @var int|null
@@ -107,18 +100,6 @@ class MallGoodsIntroduce
     public function setContent(?string $content): self
     {
         $this->content = $content;
-
-        return $this;
-    }
-
-    public function getCourseChapterId(): ?string
-    {
-        return $this->courseChapterId;
-    }
-
-    public function setCourseChapterId(?string $courseChapterId): self
-    {
-        $this->courseChapterId = $courseChapterId;
 
         return $this;
     }

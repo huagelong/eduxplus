@@ -33,7 +33,7 @@ class GoodsController extends BaseAdminController
         $grid->setTableColumn("#", "text", "id","a.id");
         $grid->setTableColumn("商品名称", "text", "name");
         $grid->setTableColumn("组合商品?", "boole", "isGroup", "a.isGroup");
-        $grid->setTableActionColumn("admin_api_mall_goods_switchStatus", "是否上架", "boole2", "status", "a.status",null,function($obj){
+        $grid->setTableActionColumn("admin_api_mall_goods_switchStatus", "上架？", "boole2", "status", "a.status",null,function($obj){
             $id = $this->getPro($obj, "id");
             $defaultValue = $this->getPro($obj, "status");
             $url = $this->generateUrl('admin_api_mall_goods_switchStatus', ['id' => $id]);
@@ -81,7 +81,7 @@ class GoodsController extends BaseAdminController
             return ["全部"=>-1,"面授"=>1, "直播"=>2, "录播"=>3, "直播+面授"=>4, "直播+录播"=>5, "录播+面授"=>6, "直播+录播+面授"=>7];
         });
 
-        $grid->setSearchField("是否上架", "select", "a.status", function(){
+        $grid->setSearchField("上架？", "select", "a.status", function(){
             return ["全部"=>-1,"下架"=>0, "上架"=>1];
         });
 
@@ -173,8 +173,9 @@ class GoodsController extends BaseAdminController
         $options["data-required"] = 1;
         $form->setFormAdvanceField("缩略图", "file", 'goodsSmallImg' , $options);
 
-        $form->setFormField("是否上架", 'boole', 'status', 1);
+        $form->setFormField("上架？", 'boole', 'status', 1);
         $form->setFormField("排序", 'text', 'sort', 1, 0);
+        $form->setFormField("课程介绍", 'rich_editor', 'descr' ,0,'','','',['data-width'=>800, 'data-height'=>200]);
 
         $formData = $form->create($this->generateUrl("admin_api_mall_goods_add"));
         $data = [];
@@ -206,6 +207,7 @@ class GoodsController extends BaseAdminController
         $sort = (int) $request->get("sort");
         $agreementId = (int) $request->get("agreementId");
         $groupType =  (int) $request->get("groupType");
+        $descr = $request->get("descr");
 
         $status = $status == "on" ? 1 : 0;
 
@@ -223,7 +225,7 @@ class GoodsController extends BaseAdminController
         }
 
         if($subhead){
-            if (mb_strlen($subhead, 'utf-8') > 80) return $this->responseError("副标题不能大于80字!");
+            if (mb_strlen($subhead, 'utf-8') > 100) return $this->responseError("副标题不能大于100字!");
         }
 
         if(!$teachers){
@@ -233,7 +235,7 @@ class GoodsController extends BaseAdminController
         $uid = $this->getUid();
         $goodsService->add($uid, $name, $productId, $goodsId, $categoryId, $subhead,
             $teachingMethod, $teachers, $courseHour, $courseCount,
-            $marketPrice,$shopPrice,$buyNumberFalse, $goodsImg, $goodsSmallImg, $status, $sort,$agreementId, $groupType);
+            $marketPrice,$shopPrice,$buyNumberFalse, $goodsImg, $goodsSmallImg, $status, $sort,$agreementId, $groupType, $descr);
 
         return $this->responseSuccess("操作成功!", $this->generateUrl('admin_mall_goods_index'));
     }
@@ -313,8 +315,11 @@ class GoodsController extends BaseAdminController
         if($info) $options['data-initial-preview'] = $info['goodsSmallImg'];
         if($info) $options['data-initial-preview-config']= $goodsService->getInitialPreviewConfig($info['goodsSmallImg']);
         $form->setFormAdvanceField("缩略图", "file", 'goodsSmallImg' , $options,$info['goodsSmallImg']);
-        $form->setFormField("是否上架", 'boole', 'status', 1, $info['status']);
+        $form->setFormField("上架？", 'boole', 'status', 1, $info['status']);
         $form->setFormField("排序", 'text', 'sort', 1, $info['sort']);
+
+        $descr = isset($info["introduce"]["content"])?$info["introduce"]["content"]:"";
+        $form->setFormField("课程介绍", 'rich_editor', 'descr' ,0,$descr,'','',['data-width'=>800, 'data-height'=>200]);
 
         $formData = $form->create($this->generateUrl("admin_api_mall_goods_edit", [
             'id' => $id
@@ -348,6 +353,7 @@ class GoodsController extends BaseAdminController
         $sort = (int) $request->get("sort");
         $agreementId = (int) $request->get("agreementId");
         $groupType =  (int) $request->get("groupType");
+        $descr = $request->get("descr");
 
         $status = $status == "on" ? 1 : 0;
 
@@ -365,7 +371,7 @@ class GoodsController extends BaseAdminController
         }
 
         if($subhead){
-            if (mb_strlen($subhead, 'utf-8') > 80) return $this->responseError("副标题不能大于80字!");
+            if (mb_strlen($subhead, 'utf-8') > 100) return $this->responseError("副标题不能大于100字!");
         }
 
         if(!$teachers){
@@ -374,7 +380,8 @@ class GoodsController extends BaseAdminController
 
         $goodsService->edit($id, $name, $productId, $goodsId, $categoryId, $subhead,
             $teachingMethod, $teachers, $courseHour, $courseCount,
-            $marketPrice,$shopPrice,$buyNumberFalse, $goodsImg, $goodsSmallImg, $status, $sort,$agreementId, $groupType);
+            $marketPrice,$shopPrice,$buyNumberFalse, $goodsImg, $goodsSmallImg, $status,
+            $sort,$agreementId, $groupType, $descr);
 
         return $this->responseSuccess("操作成功!", $this->generateUrl('admin_mall_goods_index'));
     }
@@ -385,11 +392,7 @@ class GoodsController extends BaseAdminController
      */
     public function deleteDoAction($id, GoodsService $goodsService)
     {
-        if ($goodsService->hasSub($id))
-            return $this->responseError("删除失败，请先删除课程数据!");
         $goodsService->del($id);
-        $info = $goodsService->getById($id);
-
         return $this->responseSuccess("删除成功!", $this->generateUrl("admin_mall_goods_index"));
     }
 

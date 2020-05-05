@@ -30,7 +30,7 @@ class OptionController extends BaseAdminController
         $grid->setTableColumn("健", "text", "optionKey","a.optionKey");
         $grid->setTableColumn("值", "code", "optionValue");
         $grid->setTableColumn("值类型", "text", "type", "", [1=>"文本", 2=>"文件链接"]);
-        $grid->setTableColumn("是否锁定", "boole", "isLock");
+        $grid->setTableColumn("锁定？", "boole", "isLock");
         $grid->setTableColumn("创建时间", "datetime", "createdAt", "a.createdAt");
 
         $grid->setGridBar("admin_option_add","文本配置", $this->generateUrl("admin_option_add",["type"=>1]), "fas fa-plus", "btn-success");

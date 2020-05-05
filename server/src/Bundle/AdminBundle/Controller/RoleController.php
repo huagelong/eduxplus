@@ -30,7 +30,7 @@ class RoleController extends BaseAdminController
         $grid->setTableColumn("#", "text", "id","a.id");
         $grid->setTableColumn("名称", "text", "name");
         $grid->setTableColumn("创建时间", "datetime", "createdAt", "a.createdAt");
-        $grid->setTableColumn("是否锁定", "boole", "isLock");
+        $grid->setTableColumn("锁定？", "boole", "isLock");
         $grid->setTableColumn("描述", "textarea", "descr");
         $grid->setSearchField("ID", "number", "a.id");
         $grid->setSearchField("名称", "text", "a.name");
@@ -70,7 +70,7 @@ class RoleController extends BaseAdminController
     public function addAction(Form $form){
 
         $form->setFormField("角色名称", 'text', 'name' ,1);
-        $form->setFormField("是否锁定", 'boole', 'isLock', 1);
+        $form->setFormField("锁定？", 'boole', 'isLock', 1);
         $form->setFormField("描述", 'textarea', 'descr', 0);
         $formData = $form->create($this->generateUrl("admin_api_role_add"));
         $data = [];
@@ -104,7 +104,7 @@ class RoleController extends BaseAdminController
     public function editAction($id, RoleService $roleService, Form $form){
         $info = $roleService->getById($id);
         $form->setFormField("角色名称", 'text', 'name' ,1, $info['name']);
-        $form->setFormField("是否锁定", 'boole', 'isLock', 1, $info['isLock']);
+        $form->setFormField("锁定？", 'boole', 'isLock', 1, $info['isLock']);
         $form->setFormField("描述", 'textarea', 'descr', 0, $info['descr']);
         $formData = $form->create($this->generateUrl("admin_api_role_edit",['id'=>$id]));
         $data = [];

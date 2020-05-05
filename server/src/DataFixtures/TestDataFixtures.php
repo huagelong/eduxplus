@@ -3,6 +3,7 @@
 namespace App\DataFixtures;
 
 use App\Bundle\AdminBundle\Service\Jw\TeacherService;
+use App\Bundle\AdminBundle\Service\Mall\GoodsService;
 use App\Bundle\AdminBundle\Service\Teach\ChapterService;
 use App\Bundle\AdminBundle\Service\Teach\CourseService;
 use App\Bundle\AdminBundle\Service\Teach\ProductService;
@@ -36,6 +37,7 @@ class TestDataFixtures extends Fixture
     protected $teacherService;
     protected $productService;
     protected $studyPlanService;
+    protected $goodsService;
 
     public function __construct(
         UserPasswordEncoderInterface $passwordEncoder,
@@ -44,7 +46,8 @@ class TestDataFixtures extends Fixture
         ChapterService $chapterService,
         TeacherService $teacherService,
         ProductService $productService,
-        StudyPlanService $studyPlanService
+        StudyPlanService $studyPlanService,
+        GoodsService $goodsService
     )
     {
         $this->passwordEncoder = $passwordEncoder;
@@ -54,6 +57,7 @@ class TestDataFixtures extends Fixture
         $this->teacherService = $teacherService;
         $this->productService = $productService;
         $this->studyPlanService = $studyPlanService;
+        $this->goodsService = $goodsService;
     }
 
     public function load(ObjectManager $manager)
@@ -99,6 +103,10 @@ class TestDataFixtures extends Fixture
         $this->chapterService->add("类", [$teacherId1], $chapterId, time(), 1, 0, 2, $courseId1);
         $productId = $this->productService->add(1,"高级编程", $agreeId, 1,22, $cid1, "高级编程");
         $this->studyPlanService->add($productId, "5.1学习计划", 1, 1, "2021-01-12 11:21:00",[$courseId, $courseId1],1,"5.1学习计划");
+        //添加商品
+        $goodImg = \GuzzleHttp\json_encode(["/assets/images/bigSmallFace.jpg"]);
+        $smallImg = \GuzzleHttp\json_encode(["/assets/images/smallMallFace.jpg"]);
+        $this->goodsService->add(1, "高级编程就业班", $productId, 0, $cid1, "保证就业", 1, [1], 160, 20, "6000.00", "5000.00", "2134",$goodImg,$smallImg, 1,0,$agreeId, 0);
     }
 
 

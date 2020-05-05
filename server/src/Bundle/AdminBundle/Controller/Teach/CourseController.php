@@ -34,7 +34,7 @@ class CourseController extends BaseAdminController
         $grid->setTableColumn("类目", "text", "category");
         $grid->setTableColumn("封面图", "image", "bigImg");
         $grid->setTableColumn("创建人", "text", "creater");
-        $grid->setTableActionColumn("admin_api_teach_course_switchStatus", "是否上架", "boole2", "status", null,null,function($obj){
+        $grid->setTableActionColumn("admin_api_teach_course_switchStatus", "上架？", "boole2", "status", null,null,function($obj){
             $id = $this->getPro($obj, "id");
             $defaultValue = $this->getPro($obj, "status");
             $url = $this->generateUrl('admin_api_teach_course_switchStatus', ['id' => $id]);
@@ -78,7 +78,7 @@ class CourseController extends BaseAdminController
         $grid->setSearchField("类型", "select", "a.type", function(){
             return ["全部"=>-1,"线上"=>1, "线下"=>2, "混合"=>3];
         });
-        $grid->setSearchField("是否上架", "select", "a.status", function(){
+        $grid->setSearchField("上架？", "select", "a.status", function(){
             return ["全部"=>-1,"下架"=>0, "上架"=>1];
         });
         $grid->setSearchField("校区", "select", "a.schoolId", function()use($courseService){

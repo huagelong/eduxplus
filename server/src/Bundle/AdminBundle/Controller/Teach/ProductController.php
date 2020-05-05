@@ -34,7 +34,7 @@ class ProductController extends BaseAdminController
         $grid->setTableColumn("类别", "text", "category");
         $grid->setTableColumn("自动分班最大班级人数", "text", "maxMemberNumber");
         $grid->setTableColumn("创建人", "text", "creater");
-        $grid->setTableActionColumn("admin_api_teach_product_switchStatus", "是否上架", "boole2", "status", null,null,function($obj){
+        $grid->setTableActionColumn("admin_api_teach_product_switchStatus", "上架？", "boole2", "status", null,null,function($obj){
             $id = $this->getPro($obj, "id");
             $defaultValue = $this->getPro($obj, "status");
             $url = $this->generateUrl('admin_api_teach_product_switchStatus', ['id' => $id]);
@@ -75,7 +75,7 @@ class ProductController extends BaseAdminController
         $grid->setSearchField("类别", 'select', 'a.categoryId' , function()use($select){
             return $select;
         });
-        $grid->setSearchField("是否上架", "select", "a.status", function(){
+        $grid->setSearchField("上架？", "select", "a.status", function(){
             return ["全部"=>-1,"下架"=>0, "上架"=>1];
         });
 
@@ -110,7 +110,7 @@ class ProductController extends BaseAdminController
             $rs = $categoryService->categorySelect();
             return $rs;
         });
-        $form->setFormField("是否上架", 'boole', 'status', 1);
+        $form->setFormField("上架？", 'boole', 'status', 1);
         $form->setFormField("自动分班最大班级人数", 'text', 'maxMemberNumber' ,1, "","", "请输入整数");
         $form->setFormField("简介", 'textarea', 'descr');
 
@@ -156,7 +156,7 @@ class ProductController extends BaseAdminController
             $rs = $categoryService->categorySelect();
             return $rs;
         });
-        $form->setFormField("是否上架", 'boole', 'status', 1, $info['status']);
+        $form->setFormField("上架？", 'boole', 'status', 1, $info['status']);
         $form->setFormField("自动分班最大班级人数", 'text', 'maxMemberNumber' ,1,$info['maxMemberNumber'],"", "请输入整数");
         $form->setFormField("简介", 'textarea', 'descr', 0, $info['descr']);
 

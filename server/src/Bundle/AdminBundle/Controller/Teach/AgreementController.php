@@ -27,7 +27,7 @@ class AgreementController extends BaseAdminController
         $grid->setListService($agreementService, "agreementList");
         $grid->setTableColumn("#", "text", "id","a.id");
         $grid->setTableColumn("名称", "text", "name");
-        $grid->setTableColumn("是否展示", "boole", "isShow");
+        $grid->setTableColumn("展示？", "boole", "isShow");
         $grid->setTableColumn("创建时间", "datetime", "createdAt", "a.createdAt");
 
         $grid->setGridBar("admin_teach_agreement_add","添加", $this->generateUrl("admin_teach_agreement_add"), "fas fa-plus", "btn-success");
@@ -61,7 +61,7 @@ class AgreementController extends BaseAdminController
     public function addAction(Form $form, AgreementService $agreementService){
         $form->setFormField("名称", 'text', 'name' ,1);
         $form->setFormField("内容", 'rich_editor', 'content' ,1,'','','',['data-width'=>800, 'data-height'=>400]);
-        $form->setFormField("是否展示", 'boole', 'isShow', 1);
+        $form->setFormField("展示？", 'boole', 'isShow', 1);
 
         $formData = $form->create($this->generateUrl("admin_api_teach_agreement_add"));
         $data = [];
@@ -95,7 +95,7 @@ class AgreementController extends BaseAdminController
         $info = $agreementService->getById($id);
         $form->setFormField("名称", 'text', 'name' ,1, $info['name']);
         $form->setFormField("内容", 'rich_editor', 'content' ,1,$info['content'],'','',['data-width'=>800, 'data-height'=>400]);
-        $form->setFormField("是否展示", 'boole', 'isShow', 1, $info['isShow']);
+        $form->setFormField("展示？", 'boole', 'isShow', 1, $info['isShow']);
 
         $formData = $form->create($this->generateUrl("admin_api_teach_agreement_edit", ['id'=>$id]));
         $data = [];

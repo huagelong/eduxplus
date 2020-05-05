@@ -16,6 +16,7 @@ use App\Bundle\AdminBundle\Service\UserService;
 use App\Bundle\AppBundle\Lib\Base\BaseService;
 use App\Entity\MallGoods;
 use App\Entity\MallGoodsGroup;
+use App\Entity\MallGoodsIntroduce;
 use Knp\Component\Pager\PaginatorInterface;
 
 class GoodsService extends BaseService
@@ -101,7 +102,7 @@ class GoodsService extends BaseService
     public function add($uid, $name, $productId, $goodsId, $categoryId, $subhead,
                         $teachingMethod, $teachers, $courseHour, $courseCount,
                         $marketPrice,$shopPrice,$buyNumberFalse, $goodsImg,
-                        $goodsSmallImg, $status, $sort, $agreementId, $groupType){
+                        $goodsSmallImg, $status, $sort, $agreementId, $groupType, $descr){
         $cate = $this->categoryService->getById($categoryId);
         $path = trim($cate['findPath'], ',');
         $pathArr = explode(",", $path);
@@ -147,12 +148,24 @@ class GoodsService extends BaseService
             }
         }
 
+        if($descr){
+            $descrModel = new MallGoodsIntroduce();
+            $descrModel->setGoodsId($id);
+            $descrModel->setContent($descr);
+            $descrModel->setIntroduceType(1);
+            $this->save($descrModel);
+        }
+
         return $id;
     }
 
     public function getById($id){
         $sql = "SELECT a FROM App:MallGoods a WHERE a.id=:id";
         $info = $this->fetchOne($sql, ['id'=>$id]);
+        if(!$info) return [];
+        $sql2 = "SELECT a FROM App:MallGoodsIntroduce a WHERE a.goodsId=:goodsId AND a.introduceType=1";
+        $introduce = $this->fetchOne($sql2, ['goodsId'=>$id]);
+        $info["introduce"] = $introduce;
         return $info;
     }
 
@@ -196,7 +209,7 @@ class GoodsService extends BaseService
     public function edit($id, $name, $productId, $goodsId, $categoryId, $subhead,
                          $teachingMethod, $teachers, $courseHour, $courseCount,
                          $marketPrice,$shopPrice,$buyNumberFalse, $goodsImg,
-                         $goodsSmallImg, $status, $sort, $agreementId, $groupType){
+                         $goodsSmallImg, $status, $sort, $agreementId, $groupType, $descr){
         $cate = $this->categoryService->getById($categoryId);
         $path = trim($cate['findPath'], ',');
         $pathArr = explode(",", $path);
@@ -245,14 +258,29 @@ class GoodsService extends BaseService
             }
         }
 
+        if($descr){
+            $dql = "DELETE FROM App:MallGoodsIntroduce a WHERE a.goodsId=:goodsId AND a.introduceType=1";
+            $descrModel = $this->fetchOne($dql, ["goodsId"=>$id], 1);
+            $descrModel->setContent($descr);
+            $this->save($descrModel);
+        }
+
         return $id;
 
     }
 
     public function del($id){
-        $sql = "SELECT a FROM App:MallGoods a WHERE a.id=:id";
-        $model = $this->fetchOne($sql, ['id'=>$id] ,1 );
-        return $model?$this->delete($model):false;
+        //先删除说明
+        $sql = "DELETE FROM App:MallGoodsIntroduce a WHERE a.goodsId=:goodsId";
+        $this->execute($sql, ["goodsId"=>$id]);
+        //删除group
+        $sql = "DELETE FROM App:MallGoodsGroup a WHERE a.goodsId=:goodsId";
+        $this->execute($sql, ["goodsId"=>$id]);
+
+        $sql = "DELETE FROM App:MallGoods a WHERE a.id=:id";
+        $this->execute($sql, ["id"=>$id]);
+
+        return true;
     }
 
     /**
@@ -280,6 +308,13 @@ class GoodsService extends BaseService
            $rs[] = $tmp;
        }
        return $rs;
+   }
+
+   public function switchStatus($id, $state){
+       $sql = "SELECT a FROM App:MallGoods a WHERE a.id=:id";
+       $model = $this->fetchOne($sql, ['id'=>$id], 1);
+       $model->setStatus($state);
+       return $this->save($model);
    }
 
 }

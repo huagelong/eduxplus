@@ -55,7 +55,7 @@ class ChapterController extends BaseAdminController
                 "面授" => 3
             ];
         });
-        $form->setFormField("是否免费", 'boole', 'isFree', 1);
+        $form->setFormField("免费？", 'boole', 'isFree', 1);
 
         $form->setFormField("排序", 'text', 'sort', 1, 0);
 
@@ -126,7 +126,7 @@ class ChapterController extends BaseAdminController
                 "面授" => 3
             ];
         });
-        $form->setFormField("是否免费", 'boole', 'isFree', 1, $info['isFree']);
+        $form->setFormField("免费？", 'boole', 'isFree', 1, $info['isFree']);
 
         $form->setFormField("排序", 'text', 'sort', 1, $info['sort']);
 

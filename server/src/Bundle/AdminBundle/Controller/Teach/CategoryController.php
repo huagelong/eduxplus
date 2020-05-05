@@ -30,7 +30,7 @@ class CategoryController extends BaseAdminController
             return $select;
         });
         $form->setFormField("排序", 'text', 'sort' ,1, 0);
-        $form->setFormField("是否展示", 'boole', 'isShow', 1);
+        $form->setFormField("展示？", 'boole', 'isShow', 1);
 
         $formData = $form->create($this->generateUrl("admin_api_teach_category_add"));
         $data["addFormData"] = $formData;
@@ -69,7 +69,7 @@ class CategoryController extends BaseAdminController
             return $select;
         });
         $form->setFormField("排序", 'text', 'sort' ,1,  $info['sort']);
-        $form->setFormField("是否展示", 'boole', 'isShow', 1,  $info['isShow']);
+        $form->setFormField("展示？", 'boole', 'isShow', 1,  $info['isShow']);
 
 
         $formData = $form->create($this->generateUrl("admin_api_teach_category_edit", ['id'=>$id]));

@@ -31,7 +31,7 @@ class TeacherController extends BaseAdminController
         $grid->setTableColumn("类型", "text", "type", "", [-1=>"全部",1=>"网课老师", 2=>"分校老师"]);
         $grid->setTableColumn("分校", "text", "school");
 
-        $grid->setTableActionColumn("admin_api_jw_teacher_switchStatus", "是否锁定", "boole2", "status", null,null,function($obj){
+        $grid->setTableActionColumn("admin_api_jw_teacher_switchStatus", "锁定？", "boole2", "status", null,null,function($obj){
             $id = $this->getPro($obj, "id");
             $defaultValue = $this->getPro($obj, "status");
             $url = $this->generateUrl('admin_api_jw_teacher_switchStatus', ['id' => $id]);
@@ -78,7 +78,7 @@ class TeacherController extends BaseAdminController
         $form->setFormField("分校", "select", "schoolId", 1, "", function()use($teacherService){
             return $teacherService->schoolSelect();
         });
-        $form->setFormField("是否锁定", 'boole', 'status', 1);
+        $form->setFormField("锁定？", 'boole', 'status', 1);
         $form->setFormField("描述", 'rich_editor', 'descr' ,0,'','','',['data-width'=>800, 'data-height'=>200]);
         $formData = $form->create($this->generateUrl("admin_api_jw_teacher_add"));
         $data = [];
@@ -119,7 +119,7 @@ class TeacherController extends BaseAdminController
         $form->setFormField("分校", "select", "schoolId", 1, $info['schoolId'], function()use($teacherService){
             return $teacherService->schoolSelect();
         });
-        $form->setFormField("是否锁定", 'boole', 'status', 1, $info['status']);
+        $form->setFormField("锁定？", 'boole', 'status', 1, $info['status']);
         $form->setFormField("描述", 'rich_editor', 'descr' ,0,$info['descr'],'','',['data-width'=>800, 'data-height'=>200]);
         $formData = $form->create($this->generateUrl("admin_api_jw_teacher_edit", ["id"=>$id]));
         $data = [];

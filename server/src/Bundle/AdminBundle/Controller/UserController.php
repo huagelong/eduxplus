@@ -43,7 +43,7 @@ class UserController extends BaseAdminController
             $str = "<input type=\"checkbox\" data-bootstrap-switch-ajaxput href=\"{$url}\" data-confirm=\"确认更改锁定状态吗?\" {$checkStr} >";
             return $str;
         });
-        $grid->setTableColumn("是否管理员", "boole", "isAdmin");
+        $grid->setTableColumn("管理员？", "boole", "isAdmin");
         $grid->setTableColumn("注册来源", "text", "regSource");
         $grid->setTableColumn("创建时间", "datetime", "createdAt", "a.createdAt");
 
@@ -55,7 +55,7 @@ class UserController extends BaseAdminController
         $grid->setSearchField("手机号码", "text", "a.mobile");
         $grid->setSearchField("昵称", "text", "a.displayName");
         $grid->setSearchField("姓名", "text", "a.fullName");
-        $grid->setSearchField("是否管理员", "select", "a.isAdmin", function(){
+        $grid->setSearchField("管理员？", "select", "a.isAdmin", function(){
             return ["全部"=>-1,"是"=>1, "否"=>0];
         });
         $grid->setSearchField("创建时间", "daterange", "a.createdAt");
