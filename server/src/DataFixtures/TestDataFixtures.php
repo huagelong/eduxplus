@@ -106,7 +106,7 @@ class TestDataFixtures extends Fixture
         //添加商品
         $goodImg = \GuzzleHttp\json_encode(["/assets/images/bigSmallFace.jpg"]);
         $smallImg = \GuzzleHttp\json_encode(["/assets/images/smallMallFace.jpg"]);
-        $this->goodsService->add(1, "高级编程就业班", $productId, 0, $cid1, "保证就业", 1, [1], 160, 20, "6000.00", "5000.00", "2134",$goodImg,$smallImg, 1,0,$agreeId, 0);
+        $this->goodsService->add(1, "高级编程就业班", $productId, 0, $cid1, "保证就业", 1, [1], 160, 20, "6000.00", "5000.00", "2134",$goodImg,$smallImg, 1,0,$agreeId, 0, "保证就业");
     }
 
 

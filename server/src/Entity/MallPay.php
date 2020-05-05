@@ -61,7 +61,7 @@ class MallPay
     /**
      * @var int
      *
-     * @ORM\Column(name="amount", type="integer", nullable=false, options={"unsigned"=true,"comment"="乘以100"})
+     * @ORM\Column(name="amount", type="integer", nullable=false, options={"unsigned"=true,"comment"="金额,乘以100"})
      */
     private $amount;
 

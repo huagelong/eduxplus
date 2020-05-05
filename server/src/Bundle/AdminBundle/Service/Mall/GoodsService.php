@@ -259,10 +259,19 @@ class GoodsService extends BaseService
         }
 
         if($descr){
-            $dql = "DELETE FROM App:MallGoodsIntroduce a WHERE a.goodsId=:goodsId AND a.introduceType=1";
+            $dql = "SELECT a FROM App:MallGoodsIntroduce a WHERE a.goodsId=:goodsId AND a.introduceType=1";
             $descrModel = $this->fetchOne($dql, ["goodsId"=>$id], 1);
-            $descrModel->setContent($descr);
-            $this->save($descrModel);
+            if($descrModel){
+                $descrModel->setContent($descr);
+                $this->save($descrModel);
+            }else{
+                $descrModel = new MallGoodsIntroduce();
+                $descrModel->setGoodsId($id);
+                $descrModel->setContent($descr);
+                $descrModel->setIntroduceType(1);
+                $this->save($descrModel);
+            }
+
         }
 
         return $id;

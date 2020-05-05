@@ -40,7 +40,7 @@ class MallOrder
     /**
      * @var int
      *
-     * @ORM\Column(name="goods_id", type="integer", nullable=false, options={"unsigned"=true,"comment"="goods表的商品id"})
+     * @ORM\Column(name="goods_id", type="integer", nullable=false, options={"unsigned"=true,"comment"="商品id"})
      */
     private $goodsId;
 
@@ -84,7 +84,7 @@ class MallOrder
      *
      * @ORM\Column(name="referer", type="string", length=20, nullable=false, options={"default"="CRM后台创建","comment"="订单来源"})
      */
-    private $referer = 'CRM后台创建';
+    private $referer = '前台创建';
 
     /**
      * @var string
