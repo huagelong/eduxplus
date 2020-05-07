@@ -31,6 +31,16 @@ class MenuController extends BaseAdminController
     }
 
     /**
+     * @Rest\Get("/menu/add", name="admin_menu_add")
+     */
+    public function addAction(MenuService $menuService){
+        $data = [];
+        $data['menuSelect'] = $menuService->menuSelect();
+        $data['adminRoute'] = $menuService->getAdminRoute();
+        return $this->render("@AdminBundle/menu/add.html.twig", $data);
+    }
+
+    /**
      * @Rest\Get("/menu/edit/{id}", name="admin_menu_edit")
      */
     public function editAction($id, MenuService $menuService){
@@ -93,7 +103,7 @@ class MenuController extends BaseAdminController
     /**
      * @Rest\Post("/api/menu/addDo", name="admin_api_menu_add")
      */
-    public function addAction(Request $request, MenuService $menuService){
+    public function addDoAction(Request $request, MenuService $menuService){
         $pid = (int) $request->get("parentId");
         $name = $request->get("title");
         $sort = (int) $request->get("sort");

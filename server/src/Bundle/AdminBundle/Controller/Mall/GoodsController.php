@@ -53,7 +53,7 @@ class GoodsController extends BaseAdminController
         $grid->setTableColumn("详情页海报图", "image", "goodsImg");
         $grid->setTableColumn("缩略图", "image", "goodsSmallImg");
         $grid->setTableColumn("创建人", "text", "creater", "a.createUid");
-        $grid->setTableColumn("组合商品类型", "text", "groupType", "a.groupType", [0=>"-", 1=>"可选", 2=>"全选"]);
+        $grid->setTableColumn("组合商品类型", "text", "groupType", "a.groupType", [0=>"未知", 1=>"可选", 2=>"全选"]);
         $grid->setTableColumn("协议", "text", "agreement", "a.agreementId");
         $grid->setTableColumn("创建时间", "datetime", "createdAt", "a.createdAt");
 
@@ -80,6 +80,7 @@ class GoodsController extends BaseAdminController
         $grid->setSearchField("授课方式", "select", "a.teachingMethod", function(){
             return ["全部"=>-1,"面授"=>1, "直播"=>2, "录播"=>3, "直播+面授"=>4, "直播+录播"=>5, "录播+面授"=>6, "直播+录播+面授"=>7];
         });
+
 
         $grid->setSearchField("上架？", "select", "a.status", function(){
             return ["全部"=>-1,"下架"=>0, "上架"=>1];
@@ -316,6 +317,7 @@ class GoodsController extends BaseAdminController
         if($info) $options['data-initial-preview-config']= $goodsService->getInitialPreviewConfig($info['goodsSmallImg']);
         $form->setFormAdvanceField("缩略图", "file", 'goodsSmallImg' , $options,$info['goodsSmallImg']);
         $form->setFormField("上架？", 'boole', 'status', 1, $info['status']);
+
         $form->setFormField("排序", 'text', 'sort', 1, $info['sort']);
 
         $descr = isset($info["introduce"]["content"])?$info["introduce"]["content"]:"";

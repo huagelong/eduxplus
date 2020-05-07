@@ -33,7 +33,7 @@ class MallCouponGroup
     /**
      * @var bool
      *
-     * @ORM\Column(name="coupon_type", type="boolean", nullable=false, options={"comment"="类型:0金额优惠,1折扣优惠"})
+     * @ORM\Column(name="coupon_type", type="boolean", nullable=false, options={"comment"="类型:1金额优惠,2折扣优惠"})
      */
     private $couponType = '0';
 
@@ -43,13 +43,6 @@ class MallCouponGroup
      * @ORM\Column(name="discount", type="integer", nullable=false, options={"unsigned"=true,"comment"="优惠码折扣(百分数)/优惠码金额(乘以100)"})
      */
     private $discount = '0';
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="order_lower_limit", type="integer", nullable=false, options={"unsigned"=true,"comment"="订单下限售价,乘以100"})
-     */
-    private $orderLowerLimit = '0';
 
     /**
      * @var int
@@ -82,9 +75,9 @@ class MallCouponGroup
     /**
      * @var bool
      *
-     * @ORM\Column(name="is_show", type="boolean", nullable=false, options={"default"="1","comment"="上架1，下架0"})
+     * @ORM\Column(name="status", type="boolean", nullable=false, options={"default"="1","comment"="上架1，下架0"})
      */
-    private $isShow = true;
+    private $status = true;
 
     /**
      * @var int
@@ -96,9 +89,9 @@ class MallCouponGroup
     /**
      * @var string
      *
-     * @ORM\Column(name="coupon_description", type="string", length=200, nullable=false, options={"comment"="优惠码描述"})
+     * @ORM\Column(name="descr", type="string", length=200, nullable=false, options={"comment"="描述"})
      */
-    private $couponDescription = '';
+    private $descr = '';
 
     /**
      * @var string|null
@@ -110,16 +103,16 @@ class MallCouponGroup
     /**
      * @var string|null
      *
-     * @ORM\Column(name="teaching_method", type="string", length=50, nullable=true, options={"comment"="授课方式,配套班型:1面授课,2直播课,3面授课+直播课,4网课,5VIP"})
+     * @ORM\Column(name="teaching_method", type="string", length=50, nullable=true, options={"comment"="授课方式 1.面授 2.直播 3.录播 4.面授+直播 5.直播+录播 6.录播+面授 7.直播+录播+面授"})
      */
     private $teachingMethod;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="goods_id", type="string", length=50, nullable=true, options={"comment"="商品id"})
+     * @ORM\Column(name="goods_ids", type="text", length=65535, nullable=true, options={"comment"="商品id,以','隔开"})
      */
-    private $goodsId;
+    private $goodsIds;
 
     /**
      * @var int|null
@@ -135,220 +128,9 @@ class MallCouponGroup
      */
     private $updatedAt;
 
-
     /**
      * @ORM\Column(name="deleted_at", type="datetime", nullable=true)
      */
     private $deletedAt;
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
-
-    public function getCouponName(): ?string
-    {
-        return $this->couponName;
-    }
-
-    public function setCouponName(string $couponName): self
-    {
-        $this->couponName = $couponName;
-
-        return $this;
-    }
-
-    public function getCouponType(): ?bool
-    {
-        return $this->couponType;
-    }
-
-    public function setCouponType(bool $couponType): self
-    {
-        $this->couponType = $couponType;
-
-        return $this;
-    }
-
-    public function getDiscount(): ?int
-    {
-        return $this->discount;
-    }
-
-    public function setDiscount(int $discount): self
-    {
-        $this->discount = $discount;
-
-        return $this;
-    }
-
-    public function getOrderLowerLimit(): ?int
-    {
-        return $this->orderLowerLimit;
-    }
-
-    public function setOrderLowerLimit(int $orderLowerLimit): self
-    {
-        $this->orderLowerLimit = $orderLowerLimit;
-
-        return $this;
-    }
-
-    public function getCountNum(): ?int
-    {
-        return $this->countNum;
-    }
-
-    public function setCountNum(int $countNum): self
-    {
-        $this->countNum = $countNum;
-
-        return $this;
-    }
-
-    public function getUsedNum(): ?int
-    {
-        return $this->usedNum;
-    }
-
-    public function setUsedNum(int $usedNum): self
-    {
-        $this->usedNum = $usedNum;
-
-        return $this;
-    }
-
-    public function getExpirationStart(): ?int
-    {
-        return $this->expirationStart;
-    }
-
-    public function setExpirationStart(int $expirationStart): self
-    {
-        $this->expirationStart = $expirationStart;
-
-        return $this;
-    }
-
-    public function getExpirationEnd(): ?int
-    {
-        return $this->expirationEnd;
-    }
-
-    public function setExpirationEnd(int $expirationEnd): self
-    {
-        $this->expirationEnd = $expirationEnd;
-
-        return $this;
-    }
-
-    public function getIsShow(): ?bool
-    {
-        return $this->isShow;
-    }
-
-    public function setIsShow(bool $isShow): self
-    {
-        $this->isShow = $isShow;
-
-        return $this;
-    }
-
-    public function getCreateUid(): ?int
-    {
-        return $this->createUid;
-    }
-
-    public function setCreateUid(int $createUid): self
-    {
-        $this->createUid = $createUid;
-
-        return $this;
-    }
-
-    public function getCouponDescription(): ?string
-    {
-        return $this->couponDescription;
-    }
-
-    public function setCouponDescription(string $couponDescription): self
-    {
-        $this->couponDescription = $couponDescription;
-
-        return $this;
-    }
-
-    public function getCategoryId(): ?string
-    {
-        return $this->categoryId;
-    }
-
-    public function setCategoryId(?string $categoryId): self
-    {
-        $this->categoryId = $categoryId;
-
-        return $this;
-    }
-
-    public function getTeachingMethod(): ?string
-    {
-        return $this->teachingMethod;
-    }
-
-    public function setTeachingMethod(?string $teachingMethod): self
-    {
-        $this->teachingMethod = $teachingMethod;
-
-        return $this;
-    }
-
-    public function getGoodsId(): ?string
-    {
-        return $this->goodsId;
-    }
-
-    public function setGoodsId(?string $goodsId): self
-    {
-        $this->goodsId = $goodsId;
-
-        return $this;
-    }
-
-    public function getCreatedAt(): ?\DateTimeInterface
-    {
-        return $this->createdAt;
-    }
-
-    public function setCreatedAt(?\DateTimeInterface $createdAt): self
-    {
-        $this->createdAt = $createdAt;
-
-        return $this;
-    }
-
-    public function getUpdatedAt(): ?\DateTimeInterface
-    {
-        return $this->updatedAt;
-    }
-
-    public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
-    {
-        $this->updatedAt = $updatedAt;
-
-        return $this;
-    }
-
-    public function getDeletedAt(): ?\DateTimeInterface
-    {
-        return $this->deletedAt;
-    }
-
-    public function setDeletedAt(?\DateTimeInterface $deletedAt): self
-    {
-        $this->deletedAt = $deletedAt;
-
-        return $this;
-    }
-
 
 }
