@@ -236,6 +236,9 @@
     "knplabs/knp-paginator-bundle": {
         "version": "v5.1.1"
     },
+    "mk-j/php_xlsxwriter": {
+        "version": "0.37"
+    },
     "monolog/monolog": {
         "version": "1.25.3"
     },

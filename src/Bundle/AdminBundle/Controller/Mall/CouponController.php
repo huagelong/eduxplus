@@ -34,7 +34,7 @@ class CouponController extends BaseAdminController
         $grid->setTableColumn("优惠类型", "text", "couponType", "a.couponType", [0=>"未知", 1=>"金额优惠", 2=>"折扣优惠"]);
         $grid->setTableColumn("折扣值", "text", "discount");
         $grid->setTableColumn("发放数量", "text", "countNum");
-        $grid->setTableColumn("已使用数量", "text", "usedum");
+        $grid->setTableColumn("已使用数量", "text", "usedNum");
         $grid->setTableColumn("开始有效时间", "text", "expirationStart");
         $grid->setTableColumn("结束有效时间", "text", "expirationEnd");
 
@@ -55,6 +55,13 @@ class CouponController extends BaseAdminController
         $grid->setTableColumn("创建时间", "datetime", "createdAt", "a.createdAt");
 
 
+        $grid->setTableAction('admin_mall_couponsub_index', function($obj){
+            $id = $obj['id'];
+            $url = $this->generateUrl('admin_mall_couponsub_index',['id'=>$id]);
+            $str = '<a href='.$url.' data-width="1000px" data-title="优惠码管理" title="优惠码管理" class=" btn btn-info btn-xs"><i class="fas fa-database"></i></a>';
+            return  $str;
+        });
+        
         $grid->setTableAction('admin_mall_coupon_edit', function($obj){
             $id = $obj['id'];
             $url = $this->generateUrl('admin_mall_coupon_edit',['id'=>$id]);
@@ -293,6 +300,7 @@ class CouponController extends BaseAdminController
         $grid->setTableColumn("赠送时间", "text", "sendTime");
         $grid->setTableColumn("使用状态", "text", "status", "a.status", [0=>"未使用", 1=>"已使用"]);
         $grid->setTableColumn("创建时间", "datetime", "createdAt", "a.createdAt");
+        $grid->setGridBar("admin_mall_couponsub_create","生成", $this->generateUrl("admin_mall_couponsub_create", ["id"=>$id]), "fas fa-gavel", "btn-primary", 1);
         $grid->setGridBar("admin_mall_couponsub_export","导出", $this->generateUrl("admin_mall_couponsub_export", ["id"=>$id]), "fas fa-download", "btn-success", 1);
         //搜索
         $grid->setSearchField("ID", "number", "a.id");
@@ -300,6 +308,14 @@ class CouponController extends BaseAdminController
         $data = [];
         $data['list'] = $grid->create($request, $pageSize);
         return $this->render("@AdminBundle/mall/coupon/index.html.twig", $data);
+    }
+
+    /**
+     *
+     * @Rest\Get("/mall/couponsub/create/{id}", name="admin_mall_couponsub_create")
+     */
+    public function subCreateAction($id){
+        
     }
 
     /**

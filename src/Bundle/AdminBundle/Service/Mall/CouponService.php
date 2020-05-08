@@ -49,14 +49,13 @@ class CouponService extends BaseService
         if($items){
             foreach ($items as $v){
                 $vArr =  $this->toArray($v);
-                $createrUid = $vArr['createrUid'];
+                $createrUid = $vArr['createUid'];
                 $createrUser = $this->userService->getById($createrUid);
                 $vArr['creater'] = $createrUser['fullName'];
                 $categoryId = $vArr["categoryId"];
                 $cate = $this->categoryService->getById($categoryId);
                 $vArr['category'] = $cate["name"];
                 $vArr['discount'] = $vArr['discount']/100;
-                $vArr['orderLowerLimit'] = $vArr['orderLowerLimit']/100;
 
                 $itemsArr[] = $vArr;
             }
