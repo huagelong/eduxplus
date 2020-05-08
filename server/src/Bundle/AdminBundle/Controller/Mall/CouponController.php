@@ -279,4 +279,12 @@ class CouponController extends BaseAdminController
         return $this->responseSuccess("操作成功!");
     }
 
+    /**
+     *
+     * @Rest\Get("/mall/couponsub/index/{id}", name="admin_mall_couponsub_index")
+     */
+    public function subAction($id){
+            
+    }
+
 }
