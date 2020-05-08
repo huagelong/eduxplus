@@ -3,6 +3,7 @@
 namespace App\DataFixtures;
 
 use App\Bundle\AdminBundle\Service\Jw\TeacherService;
+use App\Bundle\AdminBundle\Service\Mall\CouponService;
 use App\Bundle\AdminBundle\Service\Mall\GoodsService;
 use App\Bundle\AdminBundle\Service\Teach\ChapterService;
 use App\Bundle\AdminBundle\Service\Teach\CourseService;
@@ -38,6 +39,7 @@ class TestDataFixtures extends Fixture
     protected $productService;
     protected $studyPlanService;
     protected $goodsService;
+    protected $couponService;
 
     public function __construct(
         UserPasswordEncoderInterface $passwordEncoder,
@@ -47,7 +49,8 @@ class TestDataFixtures extends Fixture
         TeacherService $teacherService,
         ProductService $productService,
         StudyPlanService $studyPlanService,
-        GoodsService $goodsService
+        GoodsService $goodsService,
+        CouponService $couponService
     )
     {
         $this->passwordEncoder = $passwordEncoder;
@@ -58,6 +61,7 @@ class TestDataFixtures extends Fixture
         $this->productService = $productService;
         $this->studyPlanService = $studyPlanService;
         $this->goodsService = $goodsService;
+        $this->couponService = $couponService;
     }
 
     public function load(ObjectManager $manager)
@@ -106,7 +110,9 @@ class TestDataFixtures extends Fixture
         //添加商品
         $goodImg = \GuzzleHttp\json_encode(["/assets/images/bigSmallFace.jpg"]);
         $smallImg = \GuzzleHttp\json_encode(["/assets/images/smallMallFace.jpg"]);
-        $this->goodsService->add(1, "高级编程就业班", $productId, 0, $cid1, "保证就业", 1, [1], 160, 20, "6000.00", "5000.00", "2134",$goodImg,$smallImg, 1,0,$agreeId, 0, "保证就业");
+        $goods1 = $this->goodsService->add(1, "高级编程就业班", $productId, 0, $cid1, "保证就业", 1, [1], 160, 20, "6000.00", "5000.00", "2134",$goodImg,$smallImg, 1,0,$agreeId, 0, "保证就业");
+        //添加优惠券
+        $this->couponService->add(1,"程序设计3折",2,30,100,time(), (time()+10*3600), 1, $cid1, 7,[$goods1], "程序设计语言打3折");
     }
 
 

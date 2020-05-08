@@ -169,6 +169,23 @@ class GoodsService extends BaseService
         return $info;
     }
 
+    public function getByIds($ids){
+        $sql = "SELECT a FROM App:MallGoods a where a.id IN(:id) ";
+        $params = [];
+        $params['id'] = $ids;
+        return $this->fetchAll($sql, $params);
+    }
+
+    public function getSelectByIds($ids){
+        $courses = $this->getByIds($ids);
+        if(!$courses) return [];
+        $rs = [];
+        foreach ($courses as $v){
+            $rs[$v['name']] = $v['id'];
+        }
+        return $rs;
+    }
+
     public function getByName($name, $id=0){
         $sql = "SELECT a FROM App:MallGoods a WHERE a.name=:name";
         $params = [];

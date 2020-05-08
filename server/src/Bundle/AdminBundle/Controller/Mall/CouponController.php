@@ -17,6 +17,7 @@ use FOS\RestBundle\Controller\Annotations as Rest;
 use Symfony\Component\HttpFoundation\Request;
 use App\Bundle\AdminBundle\Lib\Form\Form;
 use App\Bundle\AdminBundle\Lib\Grid\Grid;
+use App\Bundle\AdminBundle\Service\Mall\GoodsService;
 
 class CouponController extends BaseAdminController
 {
@@ -127,7 +128,7 @@ class CouponController extends BaseAdminController
         $form->setFormField("开始有效时间", 'datetime', 'expirationStart',1);
         $form->setFormField("结束有效时间", 'datetime', 'expirationEnd',1);
         $form->setFormField("上架？", 'boole', 'status', 1);
-        $form->setFormField("类目", 'select', 'categoryId', 1, "", function() use($categoryService){
+        $form->setFormField("类目", 'select', 'categoryId', 0, "", function() use($categoryService){
             $rs = $categoryService->categorySelect();
             return $rs;
         });
@@ -152,23 +153,77 @@ class CouponController extends BaseAdminController
      *
      * @Rest\Post("/api/mall/coupon/addDo", name="admin_api_mall_coupon_add")
      */
-    public function addDoAction(Request $request)
+    public function addDoAction(Request $request, CouponService $couponService)
     {
-        $couponName = $request->get("couponName");
+        $name = $request->get("couponName");
         $couponType = (int) $request->get("couponType");
         $discount = (int) $request->get("discount");
         $countNum = (int) $request->get("countNum");
         $expirationStart = $request->get("expirationStart");
         $expirationEnd = $request->get("expirationEnd");
+        $status = $request->get("status");
+        $categoryId = (int) $request->get("categoryId");
+        $teachingMethod = (int) $request->get("teachingMethod");
+        $goodsIds = $request->get("goodsIds");
+        $descr = $request->get("descr");
+        $status = $status == "on" ? 1 : 0;
+        $uid = $this->getUid();
+        if (!$name) return $this->responseError("优惠券名称不能为空!");
+        if (mb_strlen($name, 'utf-8') > 50) return $this->responseError("优惠券名称不能大于50字!");
+        if($couponService->getByName($name)) return $this->responseError("优惠券名称重复!");
+        if(!$expirationStart) return $this->responseError("过期开始时间不能为空!");
+        if(!$expirationEnd) return $this->responseError("过期结束时间不能为空!");
         
+        $expirationStartTime = strtotime($expirationStart);
+        $expirationEndTime = strtotime($expirationEnd);
+        if($expirationEndTime < $expirationStartTime) return $this->responseError("过期开始时间不能大于结束时间!");
+        
+        $couponService->add($uid, $name, $couponType, $discount,$countNum, $expirationStartTime,
+                 $expirationEndTime, $status, $categoryId, $teachingMethod, $goodsIds, $descr);
+        return $this->responseSuccess("操作成功!", $this->generateUrl('admin_mall_coupon_index'));
     }
 
     /**
      *
      * @Rest\Get("/mall/coupon/edit/{id}", name="admin_mall_coupon_edit")
      */
-    public function editAction($id, Form $form){
+    public function editAction($id, Form $form, CouponService $couponService, CategoryService $categoryService, GoodsService $goodsService){
 
+        $info = $couponService->getById($id);
+        
+        $form->setFormField("优惠券名称", 'text', 'couponName', 1, $info['couponName']);
+        $form->setFormField("优惠券类型", 'select', 'couponType' ,1, $info['couponType'], function(){
+            return ["请选择"=>0,"金额优惠"=>1, "折扣优惠"=>2];
+        });
+        $form->setFormField("折扣值", 'text', 'discount', 1, $info['discount']/100);
+        $form->setFormField("发放数量", "text", "countNum", 1, $info['countNum']);
+        $expirationStart = date('Y-m-d H:i:s', $info["expirationStart"]);
+        $expirationEnd = date('Y-m-d H:i:s', $info["expirationEnd"]);
+        $form->setFormField("开始有效时间", 'datetime', 'expirationStart',1, $expirationStart);
+        $form->setFormField("结束有效时间", 'datetime', 'expirationEnd',1, $expirationEnd);
+        $form->setFormField("上架？", 'boole', 'status', 1, $info['status']);
+        $form->setFormField("类目", 'select', 'categoryId', 0, $info["categoryId"], function() use($categoryService){
+            $rs = $categoryService->categorySelect();
+            return $rs;
+        });
+        $form->setFormField("授课方式", 'select', 'teachingMethod' ,1, $info["teachingMethod"], function(){
+            return ["面授"=>1, "直播"=>2, "录播"=>3, "直播+面授"=>4, "直播+录播"=>5, "录播+面授"=>6, "直播+录播+面授"=>7];
+        });
+        $goodsIdArr = [];
+        if($info["goodsIds"]){
+            $goodsIdArr = explode(",", $info["goodsIds"]);
+        }
+        $form->setFormField("优惠对应商品", 'search_multiple_select', 'goodsIds[]', 0, $goodsIdArr, function ()use($goodsIdArr, $goodsService){
+            $cate = $goodsIdArr?[]:$goodsService->getSelectByIds($goodsIdArr);
+            return [$this->generateUrl("admin_api_glob_searchGoodsDo"),$cate];
+        });
+
+        $form->setFormField("描述", 'textarea', 'descr', 0, $info["descr"]);
+
+        $formData = $form->create($this->generateUrl("admin_api_mall_coupon_edit"));
+        $data = [];
+        $data["formData"] = $formData;
+        return $this->render("@AdminBundle/mall/coupon/edit.html.twig", $data);
     }
 
 
@@ -178,7 +233,31 @@ class CouponController extends BaseAdminController
      */
     public function editDoAction($id, Request $request, CouponService $couponService)
     {
-
+        $name = $request->get("couponName");
+        $couponType = (int) $request->get("couponType");
+        $discount = (int) $request->get("discount");
+        $countNum = (int) $request->get("countNum");
+        $expirationStart = $request->get("expirationStart");
+        $expirationEnd = $request->get("expirationEnd");
+        $status = $request->get("status");
+        $categoryId = (int) $request->get("categoryId");
+        $teachingMethod = (int) $request->get("teachingMethod");
+        $goodsIds = $request->get("goodsIds");
+        $descr = $request->get("descr");
+        $status = $status == "on" ? 1 : 0;
+    
+        if (!$name) return $this->responseError("优惠券名称不能为空!");
+        if (mb_strlen($name, 'utf-8') > 50) return $this->responseError("优惠券名称不能大于50字!");
+        if(!$expirationStart) return $this->responseError("过期开始时间不能为空!");
+        if(!$expirationEnd) return $this->responseError("过期结束时间不能为空!");
+        
+        $expirationStartTime = strtotime($expirationStart);
+        $expirationEndTime = strtotime($expirationEnd);
+        if($expirationEndTime < $expirationStartTime) return $this->responseError("过期开始时间不能大于结束时间!");
+        
+        $couponService->edit($id, $name, $couponType, $discount,$countNum, $expirationStartTime,
+                 $expirationEndTime, $status, $categoryId, $teachingMethod, $goodsIds, $descr);
+        return $this->responseSuccess("操作成功!", $this->generateUrl('admin_mall_coupon_index'));
     }
 
     /**
@@ -187,7 +266,8 @@ class CouponController extends BaseAdminController
      */
     public function deleteDoAction($id, CouponService $couponService)
     {
-
+        $couponService->del($id);
+        return $this->responseSuccess("删除成功!", $this->generateUrl('admin_mall_coupon_index'));
     }
 
     /**

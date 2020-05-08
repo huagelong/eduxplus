@@ -133,4 +133,201 @@ class MallCouponGroup
      */
     private $deletedAt;
 
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getCouponName(): ?string
+    {
+        return $this->couponName;
+    }
+
+    public function setCouponName(string $couponName): self
+    {
+        $this->couponName = $couponName;
+
+        return $this;
+    }
+
+    public function getCouponType(): ?bool
+    {
+        return $this->couponType;
+    }
+
+    public function setCouponType(bool $couponType): self
+    {
+        $this->couponType = $couponType;
+
+        return $this;
+    }
+
+    public function getDiscount(): ?int
+    {
+        return $this->discount;
+    }
+
+    public function setDiscount(int $discount): self
+    {
+        $this->discount = $discount;
+
+        return $this;
+    }
+
+    public function getCountNum(): ?int
+    {
+        return $this->countNum;
+    }
+
+    public function setCountNum(int $countNum): self
+    {
+        $this->countNum = $countNum;
+
+        return $this;
+    }
+
+    public function getUsedNum(): ?int
+    {
+        return $this->usedNum;
+    }
+
+    public function setUsedNum(int $usedNum): self
+    {
+        $this->usedNum = $usedNum;
+
+        return $this;
+    }
+
+    public function getExpirationStart(): ?int
+    {
+        return $this->expirationStart;
+    }
+
+    public function setExpirationStart(int $expirationStart): self
+    {
+        $this->expirationStart = $expirationStart;
+
+        return $this;
+    }
+
+    public function getExpirationEnd(): ?int
+    {
+        return $this->expirationEnd;
+    }
+
+    public function setExpirationEnd(int $expirationEnd): self
+    {
+        $this->expirationEnd = $expirationEnd;
+
+        return $this;
+    }
+
+    public function getStatus(): ?bool
+    {
+        return $this->status;
+    }
+
+    public function setStatus(bool $status): self
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    public function getCreateUid(): ?int
+    {
+        return $this->createUid;
+    }
+
+    public function setCreateUid(int $createUid): self
+    {
+        $this->createUid = $createUid;
+
+        return $this;
+    }
+
+    public function getDescr(): ?string
+    {
+        return $this->descr;
+    }
+
+    public function setDescr(string $descr): self
+    {
+        $this->descr = $descr;
+
+        return $this;
+    }
+
+    public function getCategoryId(): ?string
+    {
+        return $this->categoryId;
+    }
+
+    public function setCategoryId(?string $categoryId): self
+    {
+        $this->categoryId = $categoryId;
+
+        return $this;
+    }
+
+    public function getTeachingMethod(): ?string
+    {
+        return $this->teachingMethod;
+    }
+
+    public function setTeachingMethod(?string $teachingMethod): self
+    {
+        $this->teachingMethod = $teachingMethod;
+
+        return $this;
+    }
+
+    public function getGoodsIds(): ?string
+    {
+        return $this->goodsIds;
+    }
+
+    public function setGoodsIds(?string $goodsIds): self
+    {
+        $this->goodsIds = $goodsIds;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(?\DateTimeInterface $createdAt): self
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function getDeletedAt(): ?\DateTimeInterface
+    {
+        return $this->deletedAt;
+    }
+
+    public function setDeletedAt(?\DateTimeInterface $deletedAt): self
+    {
+        $this->deletedAt = $deletedAt;
+
+        return $this;
+    }
+
 }
