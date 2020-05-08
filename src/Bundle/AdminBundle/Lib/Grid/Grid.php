@@ -20,6 +20,7 @@ class Grid
     protected $searchField=[];
     protected $gridBar=[];
     protected $action;
+    protected $params;
 
     private $twig;
     protected $service;
@@ -46,7 +47,7 @@ class Grid
     public function create($request, $pageSize=20, $tableTpl='default', $searchTpl='default')
     {
         $page = $request->query->getInt("page", 1);
-        $pagination =  call_user_func_array([$this->gridService, $this->action], [$request, $page, $pageSize]);
+        $pagination =  call_user_func_array([$this->gridService, $this->action], [$request, $page, $pageSize, $this->params]);
         $params = [];
         $params['request'] = $request;
         $params['searchField'] =$this->searchField;
@@ -101,17 +102,18 @@ class Grid
         return $this;
     }
 
-    public function setGridBar($routeName, $title, $url, $iconCLass, $class='btn-info')
+    public function setGridBar($routeName, $title, $url, $iconCLass, $class='btn-info', $isBlank=0)
     {
         if(!$this->service->isAuthorized($routeName)) return ;
-        $this->gridBar[$title] = [$url, $iconCLass, $class];
+        $this->gridBar[$title] = [$url, $iconCLass, $class, $isBlank];
         return $this;
     }
 
 
-    public function setListService($service, $action){
+    public function setListService($service, $action, $params=null){
         $this->gridService = $service;
         $this->action = $action;
+        $this->params = $params;
         return $this;
     }
 }

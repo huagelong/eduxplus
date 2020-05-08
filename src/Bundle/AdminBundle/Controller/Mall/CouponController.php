@@ -283,8 +283,31 @@ class CouponController extends BaseAdminController
      *
      * @Rest\Get("/mall/couponsub/index/{id}", name="admin_mall_couponsub_index")
      */
-    public function subAction($id){
-            
+    public function subAction($id, Request $request,Grid $grid, CouponService $couponService){
+        $pageSize = 20;
+        $grid->setListService($couponService, "getSubList", $id);
+        $grid->setTableColumn("#", "text", "id","a.id");
+        $grid->setTableColumn("优惠券编码", "text", "couponSn");
+        $grid->setTableColumn("创建人", "text", "creater");
+        $grid->setTableColumn("使用时间", "text", "usedTime");
+        $grid->setTableColumn("赠送时间", "text", "sendTime");
+        $grid->setTableColumn("使用状态", "text", "status", "a.status", [0=>"未使用", 1=>"已使用"]);
+        $grid->setTableColumn("创建时间", "datetime", "createdAt", "a.createdAt");
+        $grid->setGridBar("admin_mall_couponsub_export","导出", $this->generateUrl("admin_mall_couponsub_export", ["id"=>$id]), "fas fa-download", "btn-success", 1);
+        //搜索
+        $grid->setSearchField("ID", "number", "a.id");
+        $grid->setSearchField("优惠券编码", "text", "a.couponSn");
+        $data = [];
+        $data['list'] = $grid->create($request, $pageSize);
+        return $this->render("@AdminBundle/mall/coupon/index.html.twig", $data);
+    }
+
+    /**
+     *
+     * @Rest\Get("/mall/couponsub/export/{id}", name="admin_mall_couponsub_export")
+     */
+    public function subexportAction($id){
+
     }
 
 }

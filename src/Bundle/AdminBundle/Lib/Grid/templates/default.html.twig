@@ -12,7 +12,7 @@
 
             <div class="input-group input-group-sm">
                 {% for gk, gv in gridBar %}
-                <a href="{{ gv[0] }}" class="btn btn-sm {{ gv[2] }}" title="{{ gk }}" style="margin-right: 10px;">
+                <a href="{{ gv[0] }}" class="btn btn-sm {{ gv[2] }}" title="{{ gk }}" style="margin-right: 10px;" {% if gv[2] %} target="_blank" {% endif %}>
                     <i class="{{ gv[1] }}"></i><span class="hidden-xs">&nbsp;&nbsp;{{ gk }}</span>
                 </a>
                 {% endfor %}

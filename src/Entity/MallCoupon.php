@@ -61,16 +61,9 @@ class MallCoupon
     /**
      * @var bool
      *
-     * @ORM\Column(name="coupon_status", type="boolean", nullable=false, options={"comment"="优惠码状态:0未使用,1已使用"})
+     * @ORM\Column(name="status", type="boolean", nullable=false, options={"comment"="优惠码状态:0未使用,1已使用"})
      */
-    private $couponStatus = '0';
-
-    /**
-     * @var bool
-     *
-     * @ORM\Column(name="export_status", type="boolean", nullable=false, options={"comment"="导出状态0：不导出1：导出"})
-     */
-    private $exportStatus = '0';
+    private $status = '0';
 
     /**
      * @var int|null
@@ -156,26 +149,14 @@ class MallCoupon
         return $this;
     }
 
-    public function getCouponStatus(): ?bool
+    public function getStatus(): ?bool
     {
-        return $this->couponStatus;
+        return $this->status;
     }
 
-    public function setCouponStatus(bool $couponStatus): self
+    public function setStatus(bool $status): self
     {
-        $this->couponStatus = $couponStatus;
-
-        return $this;
-    }
-
-    public function getExportStatus(): ?bool
-    {
-        return $this->exportStatus;
-    }
-
-    public function setExportStatus(bool $exportStatus): self
-    {
-        $this->exportStatus = $exportStatus;
+        $this->status = $status;
 
         return $this;
     }
@@ -215,6 +196,5 @@ class MallCoupon
 
         return $this;
     }
-
 
 }

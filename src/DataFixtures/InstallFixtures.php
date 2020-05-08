@@ -212,6 +212,8 @@ class InstallFixtures extends Fixture
         $this->addMenu("编辑","编辑处理", $mgId,"admin_api_mall_coupon_edit", "",3, $roleId, 0, 1, 0);
         $this->addMenu("删除","删除处理", $mgId,"admin_api_mall_coupon_delete", "",4, $roleId, 0, 1, 0);
         $this->addMenu("优惠券上下架","优惠券上下架", $mgId,"admin_api_mall_coupon_switchStatus", "",5, $roleId, 0, 1, 0);
+        $this->addMenu("优惠码管理","优惠码管理", $mgId,"admin_mall_couponsub_index", "",6, $roleId, 0, 1, 0);
+        $this->addMenu("优惠码导出","优惠码导出", $mgId,"admin_mall_couponsub_export", "",7, $roleId, 0, 1, 0);
     }
 
     protected function addOption($key, $value, $descr, $type=1, $isLock=1){
