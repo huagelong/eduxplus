@@ -295,7 +295,6 @@ class CouponController extends BaseAdminController
         $grid->setListService($couponService, "getSubList", $id);
         $grid->setTableColumn("#", "text", "id","a.id");
         $grid->setTableColumn("优惠券编码", "text", "couponSn");
-        $grid->setTableColumn("创建人", "text", "creater");
         $grid->setTableColumn("使用时间", "text", "usedTime");
         $grid->setTableColumn("赠送时间", "text", "sendTime");
         $grid->setTableColumn("使用状态", "text", "status", "a.status", [0=>"未使用", 1=>"已使用"]);
@@ -307,7 +306,7 @@ class CouponController extends BaseAdminController
         $grid->setSearchField("优惠券编码", "text", "a.couponSn");
         $data = [];
         $data['list'] = $grid->create($request, $pageSize);
-        return $this->render("@AdminBundle/mall/coupon/index.html.twig", $data);
+        return $this->render("@AdminBundle/mall/coupon/subindex.html.twig", $data);
     }
 
     /**

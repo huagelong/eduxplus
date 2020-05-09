@@ -147,10 +147,12 @@ class CouponService extends BaseService
 
     public function getSubList($request, $page, $pageSize, $id){
         $sql = $this->getFormatRequestSql($request);
-
-        $dql = "SELECT a FROM App:MallCouponGroup a WHERE a.couponGroupId=:couponGroupId" . $sql;
+        if($sql) $sql .= " AND ". $sql;
+        $dql = "SELECT a FROM App:MallCoupon a WHERE a.couponGroupId = :couponGroupId " . $sql;
+        dump($dql);
         $em = $this->getDoctrine()->getManager();
-        $query = $em->createQuery($dql, ['couponGroupId'=>$id]);
+        $query = $em->createQuery($dql);
+        $query= $query->setParameters(['couponGroupId'=>$id]);
         $pagination = $this->paginator->paginate(
             $query,
             $page,
@@ -162,9 +164,6 @@ class CouponService extends BaseService
         if($items){
             foreach ($items as $v){
                 $vArr =  $this->toArray($v);
-                $createrUid = $vArr['createrUid'];
-                $createrUser = $this->userService->getById($createrUid);
-                $vArr['creater'] = $createrUser['fullName'];
                 $vArr['usedTime'] = date('Y-m-d H:i:s', $vArr['usedTime']);
                 $vArr['sendTime'] = date('Y-m-d H:i:s', $vArr['sendTime']);
                 $itemsArr[] = $vArr;
