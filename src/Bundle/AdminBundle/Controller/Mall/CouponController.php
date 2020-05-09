@@ -310,10 +310,10 @@ class CouponController extends BaseAdminController
     }
 
     /**
-     *
+     * 生成优惠券码
      * @Rest\Get("/mall/couponsub/create/{id}", name="admin_mall_couponsub_create")
      */
-    public function subCreateAction($id){
+    public function subCreateCouponAction($id){
         
     }
 
