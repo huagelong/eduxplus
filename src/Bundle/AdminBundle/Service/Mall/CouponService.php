@@ -13,6 +13,7 @@ use App\Bundle\AppBundle\Lib\Base\BaseService;
 use Knp\Component\Pager\PaginatorInterface;
 use App\Bundle\AdminBundle\Service\Teach\CategoryService;
 use App\Bundle\AdminBundle\Service\UserService;
+use App\Entity\MallCoupon;
 use App\Entity\MallCouponGroup;
 
 class CouponService extends BaseService
@@ -173,7 +174,18 @@ class CouponService extends BaseService
     }
 
     public function createCoupon($id){
-        
+        $sql = "SELECT a FROM App:MallCouponGroup a WHERE a.id=:id";
+        $couponGroup = $this->fetchOne($sql, ["id"=>$id]);
+        $countNum = $couponGroup["countNum"];
+        for($i=0;$i<$countNum;$i++){
+            $setCouponSn = session_create_id();
+            $model = new MallCoupon();
+            $model->setCouponGroupId($id);
+            $model->setStatus(0);
+            $model->setCouponSn($setCouponSn);
+            $this->save($model);
+        }
+        return true;
     }
 
 }

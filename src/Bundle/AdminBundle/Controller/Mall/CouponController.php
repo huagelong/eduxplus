@@ -313,8 +313,9 @@ class CouponController extends BaseAdminController
      * 生成优惠券码
      * @Rest\Get("/mall/couponsub/create/{id}", name="admin_mall_couponsub_create")
      */
-    public function subCreateCouponAction($id){
-        
+    public function subCreateCouponAction($id, CouponService $couponService){
+        $couponService->createCoupon($id);
+        return $this->render("@AdminBundle/mall/coupon/subCreateCoupon.html.twig", $data);
     }
 
     /**

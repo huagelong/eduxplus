@@ -59,12 +59,12 @@ class InstallCommand extends Command
         $greetInput->setInteractive(false);
         $command->run($greetInput, $output);
 
-        //----4
+        //----4  ./bin/console doctrine:fixtures:load --purge-with-truncate
         $command = $this->getApplication()->find('doctrine:fixtures:load');
         $arguments = [
             'command' => 'doctrine:fixtures:load',
             "--purge-with-truncate"=>true,
-            "--group"=>["InstallFixtures"]
+            // "--group"=>["InstallFixtures"]
         ];
         $greetInput = new ArrayInput($arguments);
         $greetInput->setInteractive(false);

@@ -6,5 +6,5 @@
  * @Date: 2020/4/11 22:01
  */
 
-$str = 'Apr 15, 2020';
-echo date('Y-m-d', strtotime($str));
+$str = session_create_id();
+echo  strlen($str);
