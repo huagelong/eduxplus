@@ -100,6 +100,7 @@ class BaseService extends AbstractFOSRestController
         $entityManage = $this->getDoctrine()->getManager($name);
         $entityManage->persist($model);
         $entityManage->flush();
+        // $entityManage->clear($name);
         return $model->getId();
     }
 

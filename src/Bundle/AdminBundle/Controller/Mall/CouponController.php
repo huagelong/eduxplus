@@ -299,7 +299,7 @@ class CouponController extends BaseAdminController
         $grid->setTableColumn("赠送时间", "text", "sendTime");
         $grid->setTableColumn("使用状态", "text", "status", "a.status", [0=>"未使用", 1=>"已使用"]);
         $grid->setTableColumn("创建时间", "datetime", "createdAt", "a.createdAt");
-        $grid->setGridBar("admin_mall_couponsub_create","生成", $this->generateUrl("admin_mall_couponsub_create", ["id"=>$id]), "fas fa-gavel", "btn-primary", 1);
+        $grid->setGridBar("admin_mall_couponsub_create","生成", $this->generateUrl("admin_mall_couponsub_create", ["id"=>$id]), "fas fa-gavel", "btn-primary");
         $grid->setGridBar("admin_mall_couponsub_export","导出", $this->generateUrl("admin_mall_couponsub_export", ["id"=>$id]), "fas fa-download", "btn-success", 1);
         //搜索
         $grid->setSearchField("ID", "number", "a.id");
@@ -315,6 +315,9 @@ class CouponController extends BaseAdminController
      */
     public function subCreateCouponAction($id, CouponService $couponService){
         $couponService->createCoupon($id);
+        $data = [];
+        $data["id"] = $id;
+
         return $this->render("@AdminBundle/mall/coupon/subCreateCoupon.html.twig", $data);
     }
 

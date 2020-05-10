@@ -27,7 +27,7 @@
             <thead>
             <tr>
                 {% for k, v in column %}
-                    <th>
+                    <th align="left">
                         {% if v['sort'] %}
                          {{  knp_pagination_sortable(pagination, k, v['sort']) }}
                         {% else %}
@@ -41,7 +41,7 @@
             {% for v in list %}
             <tr>
                 {% for cv in column %}
-                    <td align="center">
+                    <td align="left">
                         {% if cv['type'] == 'text' or cv['type'] == 'datetime' or cv['type'] == 'textarea' %}
                             {{ get_prop(v, cv["field"], cv['type'], cv['options'])|raw }}
                         {% endif %}
@@ -75,7 +75,7 @@
                     </td>
                 {% endfor %}
                 {% if tableActionCallback %}
-                    <td align="center">
+                    <td align="left">
                         {% for tb in  tableActionCallback %}
                             {{ get_prop(tb, v)|raw }}
                         {% endfor %}
@@ -84,7 +84,7 @@
             </tr>
                 {% else %}
                     <tr>
-                        <td colspan="{{ column|length }}" align="center">暂无数据</td><td></td>
+                        <td colspan="{{ column|length }}" align="left">暂无数据</td><td></td>
                     </tr>
             {% endfor %}
             </tbody>

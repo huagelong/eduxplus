@@ -165,8 +165,8 @@ class CouponService extends BaseService
         if($items){
             foreach ($items as $v){
                 $vArr =  $this->toArray($v);
-                $vArr['usedTime'] = date('Y-m-d H:i:s', $vArr['usedTime']);
-                $vArr['sendTime'] = date('Y-m-d H:i:s', $vArr['sendTime']);
+                $vArr['usedTime'] = !$vArr['usedTime']?"-":date('Y-m-d H:i:s', $vArr['usedTime']);
+                $vArr['sendTime'] = !$vArr['sendTime']?"-":date('Y-m-d H:i:s', $vArr['sendTime']);
                 $itemsArr[] = $vArr;
             }
         }
@@ -177,14 +177,28 @@ class CouponService extends BaseService
         $sql = "SELECT a FROM App:MallCouponGroup a WHERE a.id=:id";
         $couponGroup = $this->fetchOne($sql, ["id"=>$id]);
         $countNum = $couponGroup["countNum"];
-        for($i=0;$i<$countNum;$i++){
+        
+        $entityManage = $this->getDoctrine()->getManager();
+        for($i=1;$i<=$countNum;$i++){
             $setCouponSn = session_create_id();
+            var_dump($setCouponSn);
             $model = new MallCoupon();
             $model->setCouponGroupId($id);
-            $model->setStatus(0);
+            // $model->setStatus(0);
             $model->setCouponSn($setCouponSn);
-            $this->save($model);
+            $entityManage->persist($model);
+            var_dump($i%50);
+            if ($i%10==0) {
+                var_dump("111");
+                $entityManage->flush();
+                $entityManage->clear(); 
+            }
+            var_dump($i);
         }
+        $entityManage->flush();
+        $entityManage->clear(); 
+
+        exit('111');
         return true;
     }
 
