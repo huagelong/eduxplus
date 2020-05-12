@@ -51,6 +51,14 @@ class MallCouponGroup
      */
     private $countNum = '0';
 
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="created_num", type="integer", nullable=false, options={"unsigned"=true,"comment"="已生成数量"})
+     */
+    private $createdNum = '0';
+
     /**
      * @var int
      *
@@ -326,6 +334,18 @@ class MallCouponGroup
     public function setDeletedAt(?\DateTimeInterface $deletedAt): self
     {
         $this->deletedAt = $deletedAt;
+
+        return $this;
+    }
+
+    public function getCreatedNum(): ?int
+    {
+        return $this->createdNum;
+    }
+
+    public function setCreatedNum(int $createdNum): self
+    {
+        $this->createdNum = $createdNum;
 
         return $this;
     }

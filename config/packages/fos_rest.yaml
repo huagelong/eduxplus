@@ -14,6 +14,7 @@ fos_rest:
     exception:
 #        exception_controller: 'fos_rest.exception.controller:showAction'
         codes:
+            Symfony\Component\HttpKernel\Exception\NotAcceptableHttpException: 500
             Doctrine\ORM\EntityNotFoundException: 404
             \LogicException: 400
             \DomainException: 400
@@ -21,6 +22,7 @@ fos_rest:
             Symfony\Component\Security\Core\Exception\AuthenticationException: 403
             Symfony\Component\Security\Core\Exception\AccessDeniedException: 403
         messages:
+            Symfony\Component\HttpKernel\Exception\NotAcceptableHttpException: true
             Doctrine\ORM\EntityNotFoundException: true
             \LogicException: true
             \DomainException: true
@@ -35,6 +37,7 @@ fos_rest:
              - { path: '^/admin/api',prefer_extension: true,fallback_format: 'json',priorities: ['json'] }
              - { path: '^/admin',prefer_extension: true,fallback_format: 'html',priorities: ['html'] }
              - { path: '^/app',prefer_extension: true,fallback_format: 'html',priorities: ['html'] }
+             - { path: '^/', priorities: [ 'text/html', '*/*'], fallback_format: html, prefer_extension: true }
 
     versioning:
         enabled: true

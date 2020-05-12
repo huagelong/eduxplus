@@ -291,6 +291,7 @@ class CouponController extends BaseAdminController
      * @Rest\Get("/mall/couponsub/index/{id}", name="admin_mall_couponsub_index")
      */
     public function subAction($id, Request $request,Grid $grid, CouponService $couponService){
+        $couponGroupInfo = $couponService->getById($id);
         $pageSize = 20;
         $grid->setListService($couponService, "getSubList", $id);
         $grid->setTableColumn("#", "text", "id","a.id");
@@ -299,7 +300,9 @@ class CouponController extends BaseAdminController
         $grid->setTableColumn("赠送时间", "text", "sendTime");
         $grid->setTableColumn("使用状态", "text", "status", "a.status", [0=>"未使用", 1=>"已使用"]);
         $grid->setTableColumn("创建时间", "datetime", "createdAt", "a.createdAt");
-        $grid->setGridBar("admin_mall_couponsub_create","生成", $this->generateUrl("admin_mall_couponsub_create", ["id"=>$id]), "fas fa-gavel", "btn-primary");
+        if($couponGroupInfo['countNum']>$couponGroupInfo['createdNum']){
+            $grid->setGridBar("admin_mall_couponsub_create","生成", $this->generateUrl("admin_mall_couponsub_create", ["id"=>$id]), "fas fa-gavel", "btn-primary");
+        }
         $grid->setGridBar("admin_mall_couponsub_export","导出", $this->generateUrl("admin_mall_couponsub_export", ["id"=>$id]), "fas fa-download", "btn-success", 1);
         //搜索
         $grid->setSearchField("ID", "number", "a.id");
@@ -313,11 +316,14 @@ class CouponController extends BaseAdminController
      * 生成优惠券码
      * @Rest\Get("/mall/couponsub/create/{id}", name="admin_mall_couponsub_create")
      */
-    public function subCreateCouponAction($id, CouponService $couponService){
+    public function subCouponCreateAction($id, CouponService $couponService){
+        set_time_limit(0);
+        // ignore_user_abort(true);
+        // TODO 批量生成有502的情况，待排查
         $couponService->createCoupon($id);
         $data = [];
         $data["id"] = $id;
-
+        exit;
         return $this->render("@AdminBundle/mall/coupon/subCreateCoupon.html.twig", $data);
     }
 

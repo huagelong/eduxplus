@@ -1,8 +1,3 @@
-AppBundle.Controllers:
-    resource: ../../src/Bundle/AppBundle/Controller/
-    type: annotation
-    prefix: /app
-
 adminBundle.Controllers:
     resource: ../../src/Bundle/AdminBundle/Controller/
     type: annotation
@@ -12,6 +7,11 @@ ApiBundle.Controllers:
     resource: ../../src/Bundle/ApiBundle/Controller/
     type: annotation
     prefix: /api
+    
+AppBundle.Controllers:
+    resource: ../../src/Bundle/AppBundle/Controller/
+    type: annotation
+    prefix: /
 
 kernel:
     resource: ../../src/Kernel.php

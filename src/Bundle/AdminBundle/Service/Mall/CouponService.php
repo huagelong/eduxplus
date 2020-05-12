@@ -15,6 +15,7 @@ use App\Bundle\AdminBundle\Service\Teach\CategoryService;
 use App\Bundle\AdminBundle\Service\UserService;
 use App\Entity\MallCoupon;
 use App\Entity\MallCouponGroup;
+use Doctrine\DBAL\ParameterType;
 
 class CouponService extends BaseService
 {
@@ -150,7 +151,7 @@ class CouponService extends BaseService
         $sql = $this->getFormatRequestSql($request);
         if($sql) $sql .= " AND ". $sql;
         $dql = "SELECT a FROM App:MallCoupon a WHERE a.couponGroupId = :couponGroupId " . $sql;
-        dump($dql);
+        // dump($dql);
         $em = $this->getDoctrine()->getManager();
         $query = $em->createQuery($dql);
         $query= $query->setParameters(['couponGroupId'=>$id]);
@@ -175,30 +176,34 @@ class CouponService extends BaseService
 
     public function createCoupon($id){
         $sql = "SELECT a FROM App:MallCouponGroup a WHERE a.id=:id";
-        $couponGroup = $this->fetchOne($sql, ["id"=>$id]);
-        $countNum = $couponGroup["countNum"];
-        
-        $entityManage = $this->getDoctrine()->getManager();
-        for($i=1;$i<=$countNum;$i++){
+        $couponGroup = $this->fetchOne($sql, ["id"=>$id]); 
+        $countNum = (int) $couponGroup["countNum"];
+        $createdNum =  (int) $couponGroup["createdNum"];
+        //检查是否已经生成完成
+       if($countNum<=$createdNum) return true;
+        $this->conn()->getConfiguration()->setSQLLogger(null);
+        $em = $this->getDoctrine()->getManager();
+        $batchSize = 50;
+        for($i=1;$i<=$countNum;++$i){
             $setCouponSn = session_create_id();
-            var_dump($setCouponSn);
             $model = new MallCoupon();
             $model->setCouponGroupId($id);
-            // $model->setStatus(0);
             $model->setCouponSn($setCouponSn);
-            $entityManage->persist($model);
-            var_dump($i%50);
-            if ($i%10==0) {
-                var_dump("111");
-                $entityManage->flush();
-                $entityManage->clear(); 
+            $em->persist($model);
+            if (($i % $batchSize) === 0) {
+                $em->flush();
+                //更新生成数量
+                $sql = "UPDATE App:MallCouponGroup a SET a.createdNum=:createdNum WHERE a.id=:id";
+                $this->execute($sql,["id"=>$id, "createdNum"=>$i]);
+                $em->clear();
             }
-            var_dump($i);
+           
         }
-        $entityManage->flush();
-        $entityManage->clear(); 
-
-        exit('111');
+        $em->flush();
+        $sql = "UPDATE App:MallCouponGroup a SET a.createdNum=:createdNum WHERE a.id=:id";
+        $n = $i-1;
+        $this->execute($sql,["id"=>$id, "createdNum"=>$n]);
+        $em->clear();
         return true;
     }
 
