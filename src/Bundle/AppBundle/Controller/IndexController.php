@@ -11,6 +11,7 @@ namespace App\Bundle\AppBundle\Controller;
 use App\Bundle\AdminBundle\Service\Mall\CouponService;
 use App\Bundle\AppBundle\Lib\Base\BaseHtmlController;
 use FOS\RestBundle\Controller\Annotations as Rest;
+use Symfony\Component\HttpFoundation\Response;
 
 class IndexController extends BaseHtmlController
 {
@@ -18,9 +19,8 @@ class IndexController extends BaseHtmlController
     /**
      * @Rest\Get("/", name="app_index")
      */
-    public function indexAction(CouponService $couponService){
-        $id = 1;
-        $couponService->createCoupon($id);
-        exit;
+    public function indexAction(){
+        $response = new Response("Hello World!");
+        return  $response;
     }
 }

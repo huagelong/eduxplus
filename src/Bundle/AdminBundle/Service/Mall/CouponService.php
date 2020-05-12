@@ -149,9 +149,15 @@ class CouponService extends BaseService
 
     public function getSubList($request, $page, $pageSize, $id){
         $sql = $this->getFormatRequestSql($request);
-        if($sql) $sql .= " AND ". $sql;
-        $dql = "SELECT a FROM App:MallCoupon a WHERE a.couponGroupId = :couponGroupId " . $sql;
-        // dump($dql);
+
+        $sqlStr = "a.couponGroupId = :couponGroupId";
+        if($sql){
+            $sqlStr = " AND ". $sqlStr;
+        }else{
+            $sqlStr = " WHERE ". $sqlStr;
+        }
+        $dql = "SELECT a FROM App:MallCoupon a " . $sql.$sqlStr;
+        
         $em = $this->getDoctrine()->getManager();
         $query = $em->createQuery($dql);
         $query= $query->setParameters(['couponGroupId'=>$id]);

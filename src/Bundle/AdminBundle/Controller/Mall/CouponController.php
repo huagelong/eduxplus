@@ -295,13 +295,19 @@ class CouponController extends BaseAdminController
         $pageSize = 20;
         $grid->setListService($couponService, "getSubList", $id);
         $grid->setTableColumn("#", "text", "id","a.id");
-        $grid->setTableColumn("优惠券编码", "text", "couponSn");
+        $grid->setTableColumn("优惠券编码", "code", "couponSn");
         $grid->setTableColumn("使用时间", "text", "usedTime");
         $grid->setTableColumn("赠送时间", "text", "sendTime");
         $grid->setTableColumn("使用状态", "text", "status", "a.status", [0=>"未使用", 1=>"已使用"]);
         $grid->setTableColumn("创建时间", "datetime", "createdAt", "a.createdAt");
         if($couponGroupInfo['countNum']>$couponGroupInfo['createdNum']){
-            $grid->setGridBar("admin_mall_couponsub_create","生成", $this->generateUrl("admin_mall_couponsub_create", ["id"=>$id]), "fas fa-gavel", "btn-primary");
+            if($couponGroupInfo['countNum']!=$couponGroupInfo['createdNum']){
+                $str = "(已生成:{$couponGroupInfo['createdNum']})";
+            }else{
+                $str = "";
+            }
+           
+            $grid->setGridBar("admin_mall_couponsub_create","生成".$str, $this->generateUrl("admin_mall_couponsub_create", ["id"=>$id]), "fas fa-gavel", "btn-primary");
         }
         $grid->setGridBar("admin_mall_couponsub_export","导出", $this->generateUrl("admin_mall_couponsub_export", ["id"=>$id]), "fas fa-download", "btn-success", 1);
         //搜索
@@ -309,6 +315,7 @@ class CouponController extends BaseAdminController
         $grid->setSearchField("优惠券编码", "text", "a.couponSn");
         $data = [];
         $data['list'] = $grid->create($request, $pageSize);
+       
         return $this->render("@AdminBundle/mall/coupon/subindex.html.twig", $data);
     }
 
@@ -320,9 +327,10 @@ class CouponController extends BaseAdminController
         set_time_limit(0);
         // ignore_user_abort(true);
         $couponService->createCoupon($id);
-        $data = [];
-        $data["id"] = $id;
-        return $this->render("@AdminBundle/mall/coupon/subCreateCoupon.html.twig", $data);
+        return $this->redirectToRoute("admin_mall_couponsub_index", ['id'=>$id]);
+        // $data = [];
+        // $data["id"] = $id;
+        // return $this->render("@AdminBundle/mall/coupon/subCreateCoupon.html.twig", $data);
     }
 
     /**
@@ -330,7 +338,7 @@ class CouponController extends BaseAdminController
      * @Rest\Get("/mall/couponsub/export/{id}", name="admin_mall_couponsub_export")
      */
     public function subexportAction($id){
-
+        
     }
 
 }
