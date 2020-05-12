@@ -111,18 +111,6 @@
     "easycorp/easy-deploy-bundle": {
         "version": "v1.0.6"
     },
-    "easycorp/easy-log-handler": {
-        "version": "1.0",
-        "recipe": {
-            "repo": "github.com/symfony/recipes",
-            "branch": "master",
-            "version": "1.0",
-            "ref": "70062abc2cd58794d2a90274502f81b55cd9951b"
-        },
-        "files": [
-            "config/packages/dev/easy_log_handler.yaml"
-        ]
-    },
     "egulias/email-validator": {
         "version": "2.1.17"
     },
@@ -537,9 +525,6 @@
     },
     "symfony/options-resolver": {
         "version": "v4.4.4"
-    },
-    "symfony/orm-pack": {
-        "version": "v1.0.8"
     },
     "symfony/phpunit-bridge": {
         "version": "4.3",

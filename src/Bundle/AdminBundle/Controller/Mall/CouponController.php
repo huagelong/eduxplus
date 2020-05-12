@@ -319,11 +319,9 @@ class CouponController extends BaseAdminController
     public function subCouponCreateAction($id, CouponService $couponService){
         set_time_limit(0);
         // ignore_user_abort(true);
-        // TODO 批量生成有502的情况，待排查
         $couponService->createCoupon($id);
         $data = [];
         $data["id"] = $id;
-        exit;
         return $this->render("@AdminBundle/mall/coupon/subCreateCoupon.html.twig", $data);
     }
 
