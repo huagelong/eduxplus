@@ -23,9 +23,9 @@ class AdminActionLog
     private $id;
 
     /**
-     * @ORM\Column(name="mobile", type="string", length=12, unique=false, nullable=false, options={"comment"="手机码"})
+     * @ORM\Column(name="full_name", type="string", length=100, unique=false, nullable=false, options={"comment"="用户全称"})
      */
-    private $mobile;
+    private $fullName;
 
     /**
      * @var int|null
@@ -47,6 +47,13 @@ class AdminActionLog
      * @ORM\Column(name="ip", type="string", length=20, nullable=true)
      */
     private $ip;
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="descr", type="text", length=65535, nullable=true)
+     */
+    private $descr;
 
     /**
      * @var string|null
@@ -77,6 +84,18 @@ class AdminActionLog
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getFullName(): ?string
+    {
+        return $this->fullName;
+    }
+
+    public function setFullName(string $fullName): self
+    {
+        $this->fullName = $fullName;
+
+        return $this;
     }
 
     public function getUid(): ?int
@@ -111,6 +130,18 @@ class AdminActionLog
     public function setIp(?string $ip): self
     {
         $this->ip = $ip;
+
+        return $this;
+    }
+
+    public function getDescr(): ?string
+    {
+        return $this->descr;
+    }
+
+    public function setDescr(?string $descr): self
+    {
+        $this->descr = $descr;
 
         return $this;
     }
@@ -162,17 +193,4 @@ class AdminActionLog
 
         return $this;
     }
-
-    public function getMobile(): ?string
-    {
-        return $this->mobile;
-    }
-
-    public function setMobile(string $mobile): self
-    {
-        $this->mobile = $mobile;
-
-        return $this;
-    }
-
 }

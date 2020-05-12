@@ -10,9 +10,12 @@ namespace App\Bundle\AdminBundle\Service;
 
 
 use App\Bundle\AppBundle\Lib\Base\BaseService;
+use App\Entity\AdminActionLog;
 use App\Entity\BaseMenu;
 use App\Repository\BaseMenuRepository;
 use Symfony\Component\HttpFoundation\Request;
+
+use function GuzzleHttp\json_decode;
 
 class MenuService extends BaseService
 {
@@ -106,6 +109,35 @@ class MenuService extends BaseService
             if($url) $result[] = $url;
         }
         return $result;
+    }
+
+    public function addActionLog($route, $pathinfo, $inputdata, $ip){
+        $user = $this->getUser();
+        //通过route获取动作消息
+        $menuDql = "SELECT a FROM App:BaseMenu a WHERE a.url =:url";
+        $menuInfo = $this->fetchOne($menuDql, ["url"=>$route]);
+        if($menuInfo){
+            $name = $menuInfo["name"];
+            $pid = $menuInfo["pid"];
+            $sql = "SELECT a FROM App:BaseMenu a WHERE a.id =:id";
+            $pidInfo = $this->fetchOne($sql, ["id"=>$pid]);
+            $descr = "";
+            if($pidInfo){
+                $descr = $pidInfo["name"]."-";
+            }
+            $descr .=$name;
+            $uid = $user->getId();
+            $fullName = $user->getFullName();
+            $model = new AdminActionLog();
+            $model->setUid($uid);
+            $model->setRoute($route);
+            $model->setIp($ip);
+            $model->setFullName($fullName);
+            $model->setDescr($descr);
+            $inputdata['pathinfo'] = $pathinfo;
+            $model->setInputData(json_encode($inputdata));
+            $this->save($model);
+        }
     }
 
     /**

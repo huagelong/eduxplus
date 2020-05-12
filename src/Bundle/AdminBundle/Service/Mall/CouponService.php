@@ -232,7 +232,7 @@ class CouponService extends BaseService
                 $writer->writeSheetRow('优惠券', $row, $styles1);
             }
         }
-        $basePath = $this->getParameter("kernel.project_dir")."/var/tmp";
+        $basePath = $this->getBasePath()."/var/tmp";
         if(!is_dir($basePath)){
             mkdir($basePath, 0777, true);
         }

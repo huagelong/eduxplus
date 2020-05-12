@@ -62,6 +62,13 @@ class ControllerSubscriber implements EventSubscriberInterface
                 if(!in_array($route, $allMenu)){
                     throw new AccessDeniedException("没有权限!");
                 }
+                //记录日志
+                $pathinfo = $request->getPathInfo();
+                $queryData = $request->query->all();
+                $postData = $request->query->all();
+                $data = array_merge($queryData, $postData);
+                $ip = $request->getClientIp();
+                $this->menuService->addActionLog($route, $pathinfo, $data, $ip);
             }
         }
 
