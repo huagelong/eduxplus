@@ -18,6 +18,9 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Bundle\AdminBundle\Lib\Form\Form;
 use App\Bundle\AdminBundle\Lib\Grid\Grid;
 use App\Bundle\AdminBundle\Service\Mall\GoodsService;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
 class CouponController extends BaseAdminController
 {
@@ -337,8 +340,22 @@ class CouponController extends BaseAdminController
      *
      * @Rest\Get("/mall/couponsub/export/{id}", name="admin_mall_couponsub_export")
      */
-    public function subexportAction($id){
-        
+    public function subexportAction($id, CouponService $couponService){
+        $path =  $couponService->export($id);
+        // $response = new Response();
+        // // Set headers
+        // $response->headers->set('Cache-Control', 'private');
+        // $response->headers->set('Content-type', mime_content_type($path));
+        // $response->headers->set('Content-Disposition', 'attachment; filename="' . basename($filename) . '";');
+        // $response->headers->set('Content-length', filesize($path));
+
+        // // Send headers before outputting anything
+        // $response->sendHeaders();
+
+        // $response->setContent(file_get_contents($path));
+        $response = new BinaryFileResponse($path);
+        $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT);
+        return $response;
     }
 
 }

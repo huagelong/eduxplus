@@ -16,6 +16,7 @@ use App\Bundle\AdminBundle\Service\UserService;
 use App\Entity\MallCoupon;
 use App\Entity\MallCouponGroup;
 use Doctrine\DBAL\ParameterType;
+use XLSXWriter;
 
 class CouponService extends BaseService
 {
@@ -157,7 +158,7 @@ class CouponService extends BaseService
             $sqlStr = " WHERE ". $sqlStr;
         }
         $dql = "SELECT a FROM App:MallCoupon a " . $sql.$sqlStr;
-        
+
         $em = $this->getDoctrine()->getManager();
         $query = $em->createQuery($dql);
         $query= $query->setParameters(['couponGroupId'=>$id]);
@@ -211,6 +212,33 @@ class CouponService extends BaseService
         $this->execute($sql,["id"=>$id, "createdNum"=>$n]);
         $em->clear();
         return true;
+    }
+
+    public function export($id){
+        $info = $this->getById($id);
+        $sql = "SELECT a FROM App:MallCoupon a WHERE a.couponGroupId=:couponGroupId";
+        $list = $this->fetchAll($sql, ["couponGroupId"=>$id]);
+        $headers = [
+            "优惠券"=>"string",
+            "使用时间"=>"YYYY-MM-DD HH:MM:SS",
+            "赠送时间"=>"YYYY-MM-DD HH:MM:SS"
+        ];
+        $styles1 = array( 'font'=>'Arial','font-size'=>10, 'halign'=>'center', 'border'=>'left,right,top,bottom');
+        $writer = new XLSXWriter();
+        $writer->writeSheetHeader('优惠券', $headers);
+        if($list){
+            foreach($list as $v){
+                $row = [$v["couponSn"], $v['usedTime']?date('Y-m-d H:i:s', $v['usedTime']):"", $v['sendTime']?date('Y-m-d H:i:s', $v['sendTime']):""];
+                $writer->writeSheetRow('优惠券', $row, $styles1);
+            }
+        }
+        $basePath = $this->getParameter("kernel.project_dir")."/var/tmp";
+        if(!is_dir($basePath)){
+            mkdir($basePath, 0777, true);
+        }
+        $path = $basePath."/".$info["couponName"].date("YmdHis").".xlsx";
+        $writer->writeToFile($path);
+        return  $path;
     }
 
 }
