@@ -133,7 +133,7 @@ class MenuService extends BaseService
             $model->setIp($ip);
             $model->setDescr($descr);
             $inputdata['pathinfo'] = $pathinfo;
-            $model->setInputData(json_encode($inputdata));
+            $model->setInputData(json_encode($inputdata, JSON_UNESCAPED_UNICODE));
             $this->save($model);
         }
     }

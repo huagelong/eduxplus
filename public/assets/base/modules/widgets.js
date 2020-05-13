@@ -5,10 +5,16 @@
             $(this).css("cursor", "pointer");
             $(this).click(function(){
                 var title = $(this).attr("title");
-                layer.tips(title, $(this), {
-                    tips: [1, '#333643'],
-                    time: 2500
-                });
+                layer.open({
+                    type: 1,
+                    skin: 'layui-layer-rim', //加上边框
+                    area: ['420px', '240px'], //宽高
+                    content: title
+                  });
+                // layer.tips(title, $(this), {
+                //     tips: [1, '#333643'],
+                //     time: 2500
+                // });
             });
         });
     };

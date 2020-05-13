@@ -47,7 +47,7 @@
                         {% endif %}
 
                          {% if cv['type'] == 'tip' %}
-                            <a title={{ get_prop(v, cv["field"], cv['type'], cv['options'])|raw }} class="tip">
+                            <a title='<code>{{ get_prop(v, cv["field"], cv['type'], cv['options'])|raw }}</code>' class="tip" style="color:#343A40">
                             {{ get_prop(v, cv["field"], cv['type'], cv['options'])|raw|striptags|substr(0, 20)}}
                             </a>
                         {% endif %}
