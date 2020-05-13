@@ -38,17 +38,8 @@ services:
         arguments:
             $cacheCLient: '@snc_redis.cache'
 
-    arrayGet.twig.extension:
-        class: App\Twig\ArrayGetExtension
-        tags:
-            - { name: twig.extension }
+    App\Twig\FuncExtension:
+        tags: ['twig.extension']
 
-    inArray.twig.extension:
-        class: App\Twig\InArrayExtension
-        tags:
-            - { name: twig.extension }
-
-    option.twig.extension:
-        class: App\Twig\OptionExtension
-        tags:
-            - { name: twig.extension }
+    App\Twig\FiltersExtension: 
+        tags: ['twig.extension']

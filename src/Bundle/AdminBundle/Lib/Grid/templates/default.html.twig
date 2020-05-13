@@ -45,9 +45,17 @@
                         {% if cv['type'] == 'text' or cv['type'] == 'datetime' or cv['type'] == 'textarea' %}
                             {{ get_prop(v, cv["field"], cv['type'], cv['options'])|raw }}
                         {% endif %}
+
+                         {% if cv['type'] == 'tip' %}
+                            <a title={{ get_prop(v, cv["field"], cv['type'], cv['options'])|raw }} class="tip">
+                            {{ get_prop(v, cv["field"], cv['type'], cv['options'])|raw|striptags|substr(0, 20)}}
+                            </a>
+                        {% endif %}
+
                         {% if cv['type'] == 'json' %}
                             {{ get_prop(v, cv["field"], cv['type'], cv['options'])|json_encode }}
                         {% endif %}
+
                         {% if cv['type'] == 'code' %}
                        <div  class='overflow-auto' style='width:300px'><code class="clipboard" data-clipboard-text="{{ get_prop(v, cv["field"], cv['type'], cv['options']) }}" >{{ get_prop(v, cv["field"], cv['type'], cv['options'])|raw }}</code></div>
                         {% endif %}

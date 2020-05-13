@@ -5,13 +5,13 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 /**
- * AdminActionLog
+ * BaseAdminLog
  *
- * @ORM\Table(name="admin_action_log")
+ * @ORM\Table(name="base_admin_log")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false, hardDelete=true)
- * @ORM\Entity(repositoryClass="App\Repository\AdminActionLogRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\BaseAdminLogRepository")
  */
-class AdminActionLog
+class BaseAdminLog
 {
     /**
      * @var int
@@ -21,11 +21,6 @@ class AdminActionLog
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
-
-    /**
-     * @ORM\Column(name="full_name", type="string", length=100, unique=false, nullable=false, options={"comment"="用户全称"})
-     */
-    private $fullName;
 
     /**
      * @var int|null
@@ -84,18 +79,6 @@ class AdminActionLog
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getFullName(): ?string
-    {
-        return $this->fullName;
-    }
-
-    public function setFullName(string $fullName): self
-    {
-        $this->fullName = $fullName;
-
-        return $this;
     }
 
     public function getUid(): ?int

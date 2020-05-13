@@ -112,6 +112,8 @@ class InstallFixtures extends Fixture
         $this->addMenu("编辑用户","编辑用户处理", $userMgId,"admin_api_user_edit", "",3, $roleId, 1, 1, 0);
         $this->addMenu("删除用户","删除用户处理", $userMgId,"admin_api_user_delete", "",4, $roleId, 1, 1, 0);
         $this->addMenu("锁定/解锁用户","锁定/解锁用户", $userMgId,"admin_api_user_switchLock", "",5, $roleId, 1, 1, 0);
+        //操作日志
+        $adminlogMgId = $this->addMenu("操作日志","操作日志", $accMenuId,"admin_adminlog_index", "",3, $roleId, 1, 0, 1);
         //系统模块
         $sysMenuId = $this->addMenu("系统","系统方面的管理", 0,"", "fa fa-gears",3, $roleId, 1, 0, 1);
         $optionMgId = $this->addMenu("配置","对系统的相关配置", $sysMenuId,"admin_option_index", "",0, $roleId, 1, 0, 1);

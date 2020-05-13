@@ -10,7 +10,7 @@ namespace App\Bundle\AdminBundle\Service;
 
 
 use App\Bundle\AppBundle\Lib\Base\BaseService;
-use App\Entity\AdminActionLog;
+use App\Entity\BaseAdminLog;
 use App\Entity\BaseMenu;
 use App\Repository\BaseMenuRepository;
 use Symfony\Component\HttpFoundation\Request;
@@ -127,12 +127,10 @@ class MenuService extends BaseService
             }
             $descr .=$name;
             $uid = $user->getId();
-            $fullName = $user->getFullName();
-            $model = new AdminActionLog();
+            $model = new BaseAdminLog();
             $model->setUid($uid);
             $model->setRoute($route);
             $model->setIp($ip);
-            $model->setFullName($fullName);
             $model->setDescr($descr);
             $inputdata['pathinfo'] = $pathinfo;
             $model->setInputData(json_encode($inputdata));
