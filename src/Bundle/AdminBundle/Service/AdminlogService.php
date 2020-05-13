@@ -46,6 +46,7 @@ class AdminlogService extends BaseService
                 $uid = $vArr['uid'];
                 $user = $this->userService->getById($uid);
                 $vArr['fullName'] = $user['fullName'];
+                // $vArr['inputData'] = var_export(json_decode($vArr['inputData'], true), true);
                 $itemsArr[] = $vArr;
             }
         }
