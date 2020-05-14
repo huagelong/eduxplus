@@ -26,9 +26,9 @@ class MallCouponGroup
     /**
      * @var string
      *
-     * @ORM\Column(name="coupon_name", type="string", length=20, nullable=false, options={"comment"="优惠码名称"})
+     * @ORM\Column(name="name", type="string", length=20, nullable=false, options={"comment"="优惠码名称"})
      */
-    private $couponName = '';
+    private $name = '';
 
     /**
      * @var bool
@@ -144,18 +144,6 @@ class MallCouponGroup
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getCouponName(): ?string
-    {
-        return $this->couponName;
-    }
-
-    public function setCouponName(string $couponName): self
-    {
-        $this->couponName = $couponName;
-
-        return $this;
     }
 
     public function getCouponType(): ?bool
@@ -346,6 +334,18 @@ class MallCouponGroup
     public function setCreatedNum(int $createdNum): self
     {
         $this->createdNum = $createdNum;
+
+        return $this;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): self
+    {
+        $this->name = $name;
 
         return $this;
     }

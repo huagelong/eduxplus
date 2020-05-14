@@ -71,7 +71,7 @@ class CouponService extends BaseService
                         $expirationEndTime, $status, $categoryId, $teachingMethod, $goodsIds, $descr){
         $model = new MallCouponGroup();
         $model->setCreateUid($uid);
-        $model->setCouponName($name);
+        $model->setName($name);
         $model->setCouponType($couponType);
         $model->setDiscount($discount);
         $model->setCountNum($countNum);
@@ -121,7 +121,7 @@ class CouponService extends BaseService
                         $expirationEndTime, $status, $categoryId, $teachingMethod, $goodsIds, $descr){
         $sql = "SELECT a FROM App:MallCouponGroup a WHERE a.id=:id";
         $model = $this->fetchOne($sql, ['id'=>$id], 1);
-        $model->setCouponName($name);
+        $model->setName($name);
         $model->setCouponType($couponType);
         $model->setDiscount($discount);
         $model->setCountNum($countNum);
@@ -236,7 +236,7 @@ class CouponService extends BaseService
         if(!is_dir($basePath)){
             mkdir($basePath, 0777, true);
         }
-        $path = $basePath."/".$info["couponName"].date("YmdHis").".xlsx";
+        $path = $basePath."/".$info["name"].date("YmdHis").".xlsx";
         $writer->writeToFile($path);
         return  $path;
     }

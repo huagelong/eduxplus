@@ -33,7 +33,7 @@ class CouponController extends BaseAdminController
         $pageSize = 20;
         $grid->setListService($couponService, "getList");
         $grid->setTableColumn("#", "text", "id","a.id");
-        $grid->setTableColumn("优惠券名称", "text", "couponName");
+        $grid->setTableColumn("优惠券名称", "text", "name");
         $grid->setTableColumn("优惠类型", "text", "couponType", "a.couponType", [0=>"未知", 1=>"金额优惠", 2=>"折扣优惠"]);
         $grid->setTableColumn("折扣值", "text", "discount");
         $grid->setTableColumn("发放数量", "text", "countNum");
@@ -83,7 +83,7 @@ class CouponController extends BaseAdminController
         //搜索
         $select = $categoryService->categorySelect();
         $grid->setSearchField("ID", "number", "a.id");
-        $grid->setSearchField("优惠券名称", "text", "a.couponName");
+        $grid->setSearchField("优惠券名称", "text", "a.name");
         $grid->setSearchField("优惠券类型", "select", "a.couponType", function(){
             return ["全部"=>-1,"金额优惠"=>1, "折扣优惠"=>2];
         });
@@ -129,7 +129,7 @@ class CouponController extends BaseAdminController
      */
 
     public function addAction(Form $form, CouponService $couponService, CategoryService $categoryService){
-        $form->setFormField("优惠券名称", 'text', 'couponName', 1);
+        $form->setFormField("优惠券名称", 'text', 'name', 1);
         $form->setFormField("优惠券类型", 'select', 'couponType' ,1, "", function(){
             return ["请选择"=>0,"金额优惠"=>1, "折扣优惠"=>2];
         });
@@ -165,7 +165,7 @@ class CouponController extends BaseAdminController
      */
     public function addDoAction(Request $request, CouponService $couponService)
     {
-        $name = $request->get("couponName");
+        $name = $request->get("name");
         $couponType = (int) $request->get("couponType");
         $discount = (int) $request->get("discount");
         $countNum = (int) $request->get("countNum");
@@ -201,7 +201,7 @@ class CouponController extends BaseAdminController
 
         $info = $couponService->getById($id);
         
-        $form->setFormField("优惠券名称", 'text', 'couponName', 1, $info['couponName']);
+        $form->setFormField("优惠券名称", 'text', 'name', 1, $info['name']);
         $form->setFormField("优惠券类型", 'select', 'couponType' ,1, $info['couponType'], function(){
             return ["请选择"=>0,"金额优惠"=>1, "折扣优惠"=>2];
         });
@@ -243,7 +243,7 @@ class CouponController extends BaseAdminController
      */
     public function editDoAction($id, Request $request, CouponService $couponService)
     {
-        $name = $request->get("couponName");
+        $name = $request->get("name");
         $couponType = (int) $request->get("couponType");
         $discount = (int) $request->get("discount");
         $countNum = (int) $request->get("countNum");
