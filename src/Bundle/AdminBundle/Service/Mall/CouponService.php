@@ -191,7 +191,8 @@ class CouponService extends BaseService
         $this->conn()->getConfiguration()->setSQLLogger(null);
         $em = $this->getDoctrine()->getManager();
         $batchSize = 50;
-        for($i=1;$i<=$countNum;++$i){
+        $diffNum = $countNum-$createdNum;
+        for($i=1;$i<=$diffNum;++$i){
             $setCouponSn = session_create_id();
             $model = new MallCoupon();
             $model->setCouponGroupId($id);
