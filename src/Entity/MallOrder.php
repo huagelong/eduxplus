@@ -119,4 +119,177 @@ class MallOrder
      */
     private $deletedAt;
 
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getOrderNo(): ?string
+    {
+        return $this->orderNo;
+    }
+
+    public function setOrderNo(string $orderNo): self
+    {
+        $this->orderNo = $orderNo;
+
+        return $this;
+    }
+
+    public function getUid(): ?int
+    {
+        return $this->uid;
+    }
+
+    public function setUid(int $uid): self
+    {
+        $this->uid = $uid;
+
+        return $this;
+    }
+
+    public function getGoodsId(): ?int
+    {
+        return $this->goodsId;
+    }
+
+    public function setGoodsId(int $goodsId): self
+    {
+        $this->goodsId = $goodsId;
+
+        return $this;
+    }
+
+    public function getOrderAmount(): ?int
+    {
+        return $this->orderAmount;
+    }
+
+    public function setOrderAmount(int $orderAmount): self
+    {
+        $this->orderAmount = $orderAmount;
+
+        return $this;
+    }
+
+    public function getDiscountAmount(): ?int
+    {
+        return $this->discountAmount;
+    }
+
+    public function setDiscountAmount(int $discountAmount): self
+    {
+        $this->discountAmount = $discountAmount;
+
+        return $this;
+    }
+
+    public function getOrderStatus(): ?bool
+    {
+        return $this->orderStatus;
+    }
+
+    public function setOrderStatus(bool $orderStatus): self
+    {
+        $this->orderStatus = $orderStatus;
+
+        return $this;
+    }
+
+    public function getUserNotes(): ?string
+    {
+        return $this->userNotes;
+    }
+
+    public function setUserNotes(string $userNotes): self
+    {
+        $this->userNotes = $userNotes;
+
+        return $this;
+    }
+
+    public function getReferer(): ?string
+    {
+        return $this->referer;
+    }
+
+    public function setReferer(string $referer): self
+    {
+        $this->referer = $referer;
+
+        return $this;
+    }
+
+    public function getCouponSn(): ?string
+    {
+        return $this->couponSn;
+    }
+
+    public function setCouponSn(string $couponSn): self
+    {
+        $this->couponSn = $couponSn;
+
+        return $this;
+    }
+
+    public function getGoodsAll(): ?string
+    {
+        return $this->goodsAll;
+    }
+
+    public function setGoodsAll(string $goodsAll): self
+    {
+        $this->goodsAll = $goodsAll;
+
+        return $this;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): self
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(?\DateTimeInterface $createdAt): self
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function getDeletedAt(): ?\DateTimeInterface
+    {
+        return $this->deletedAt;
+    }
+
+    public function setDeletedAt(?\DateTimeInterface $deletedAt): self
+    {
+        $this->deletedAt = $deletedAt;
+
+        return $this;
+    }
+
 }

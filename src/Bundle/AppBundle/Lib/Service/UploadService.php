@@ -9,10 +9,17 @@
 namespace App\Bundle\AppBundle\Lib\Service;
 
 use App\Bundle\AppBundle\Lib\Base\BaseService;
+use App\Bundle\AppBundle\Lib\Service\File\AliyunOssService;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class UploadService extends BaseService
 {
+    protected $aliyunOssService;
+
+    public function __construct(AliyunOssService $aliyunOssService)
+    {
+        $this->aliyunOssService = $aliyunOssService;
+    }
 
     public function upload(UploadedFile $file, $type)
     {
@@ -23,6 +30,13 @@ class UploadService extends BaseService
         $fileName = $file->getClientOriginalName().".".md5(uniqid()).'.'.$file->guessExtension();
         $file->move($targetDir, $fileName);
         $path = $pathTmp.$fileName;
-        return $path;
+
+        $uploadAdapter = (int) $this->getOption("app.upload.adapter");
+        $uploadAdapter = $uploadAdapter?$uploadAdapter:1;
+        if($uploadAdapter == 1) return $path;
+        if($uploadAdapter == 2){
+            $remoteFilePath = $type."/".date('Y/m/d')."/".$fileName;
+            return $this->aliyunOssService->upOss($remoteFilePath, $path);
+        }
     }
 }

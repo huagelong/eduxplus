@@ -7,6 +7,7 @@
         "ext-iconv": "*",
         "ext-redis": ">=4.3",
         "alibabacloud/client": "^1.5",
+        "aliyuncs/oss-sdk-php": "^2.3",
         "doctrine/doctrine-bundle": "^2.0",
         "doctrine/doctrine-migrations-bundle": "^2.1",
         "doctrine/orm": "^2.7",

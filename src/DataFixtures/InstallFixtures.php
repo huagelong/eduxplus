@@ -42,6 +42,13 @@ class InstallFixtures extends Fixture
         $this->addOption("app.domain", 'http://www.eduxplus.test/', "应用域名网址", 1, 1);
         $this->addOption("app.bokecc.key", '1xaBDOtW1a4SSanrqeqXjYlTj5D9gGgO', "获得场景视频点播key", 1, 1);
         $this->addOption("app.bokecc.uid", '401ABBE68F38B6DA', "获得场景视频账户ID", 1, 1);
+        $this->addOption("app.upload.adapter", '2', "文件上传方式,1-本地，2-阿里云oss", 1, 1);
+        $this->addOption("app.aliyun.accesskeyId", 'LTAI4G81aC1zgpkUsDXHdmVG', "阿里云 accesskeyId", 1, 1);
+        $this->addOption("app.aliyun.accesskeySecret", 'ljeQEmQgXGo0oKfwZIMrn9r3rkN74o', "阿里云 accesskeySecret ", 1, 1);
+        $this->addOption("app.aliyun.oss.bucket", 'eduxplus', "阿里云oss Bucket ", 1, 1);
+        $this->addOption("app.aliyun.oss.endpoint", 'http://oss-cn-shanghai.aliyuncs.com', "阿里云oss endpoint ", 1, 1);
+        $this->addOption("app.cdn.domain", '', "cdn域名", 1, 1);
+
         //初始化用户
         $userModel = new BaseUser();
         $uuid = $this->helperService->getUuid();

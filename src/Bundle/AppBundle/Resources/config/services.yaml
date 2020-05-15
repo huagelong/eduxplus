@@ -5,8 +5,3 @@ parameters:
       android: '%env(APP_CLIENTID_ANDROID)%'
       html: '%env(APP_CLIENTID_HTML)%'
       admin: '%env(APP_CLIENTID_ADMIN)%'
-   app.aliyun:
-      accesskeyId: '%env(ALI_ACCESSKEY_ID)%'
-      accesskeySecret: '%env(ALI_ACCESSKEY_SECRET)%'
-      smsSign: '%env(ALI_SMS_SIGN)%'
-      smsCode: '%env(ALI_SMS_CODE)%'
