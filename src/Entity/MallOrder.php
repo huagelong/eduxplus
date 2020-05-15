@@ -33,7 +33,7 @@ class MallOrder
     /**
      * @var int
      *
-     * @ORM\Column(name="uid", type="integer", nullable=false, options={"unsigned"=true,"comment"="users表的用户id"})
+     * @ORM\Column(name="uid", type="integer", nullable=false, options={"unsigned"=true,"comment"="下单人"})
      */
     private $uid;
 
@@ -47,7 +47,7 @@ class MallOrder
     /**
      * @var int
      *
-     * @ORM\Column(name="order_amount", type="integer", nullable=false, options={"comment"="订单原价"})
+     * @ORM\Column(name="order_amount", type="integer", nullable=false, options={"comment"="订单实际支付价格，已减去优惠价格"})
      */
     private $orderAmount = '0';
 
@@ -57,13 +57,6 @@ class MallOrder
      * @ORM\Column(name="discount_amount", type="integer", nullable=false, options={"comment"="优惠金额"})
      */
     private $discountAmount = '0';
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="order_time", type="integer", nullable=false, options={"unsigned"=true,"comment"="下单时间"})
-     */
-    private $orderTime = '0';
 
     /**
      * @var bool
@@ -89,7 +82,7 @@ class MallOrder
     /**
      * @var string
      *
-     * @ORM\Column(name="coupon_sn", type="string", length=20, nullable=false, options={"comment"="订单使用优惠码编号"})
+     * @ORM\Column(name="coupon_sn", type="string", length=26, nullable=false, options={"comment"="订单使用优惠码编号"})
      */
     private $couponSn = '';
 
@@ -103,9 +96,9 @@ class MallOrder
     /**
      * @var string
      *
-     * @ORM\Column(name="goods_name", type="string", length=1000, nullable=false, options={"comment"="订单商品名称"})
+     * @ORM\Column(name="name", type="string", length=1000, nullable=false, options={"comment"="订单名称"})
      */
-    private $goodsName = '';
+    private $name = '';
 
     /**
      * @var int|null
@@ -125,191 +118,5 @@ class MallOrder
      * @ORM\Column(name="deleted_at", type="datetime", nullable=true)
      */
     private $deletedAt;
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
-
-    public function getOrderNo(): ?string
-    {
-        return $this->orderNo;
-    }
-
-    public function setOrderNo(string $orderNo): self
-    {
-        $this->orderNo = $orderNo;
-
-        return $this;
-    }
-
-    public function getUid(): ?int
-    {
-        return $this->uid;
-    }
-
-    public function setUid(int $uid): self
-    {
-        $this->uid = $uid;
-
-        return $this;
-    }
-
-    public function getGoodsId(): ?int
-    {
-        return $this->goodsId;
-    }
-
-    public function setGoodsId(int $goodsId): self
-    {
-        $this->goodsId = $goodsId;
-
-        return $this;
-    }
-
-    public function getOrderAmount(): ?int
-    {
-        return $this->orderAmount;
-    }
-
-    public function setOrderAmount(int $orderAmount): self
-    {
-        $this->orderAmount = $orderAmount;
-
-        return $this;
-    }
-
-    public function getDiscountAmount(): ?int
-    {
-        return $this->discountAmount;
-    }
-
-    public function setDiscountAmount(int $discountAmount): self
-    {
-        $this->discountAmount = $discountAmount;
-
-        return $this;
-    }
-
-    public function getOrderTime(): ?int
-    {
-        return $this->orderTime;
-    }
-
-    public function setOrderTime(int $orderTime): self
-    {
-        $this->orderTime = $orderTime;
-
-        return $this;
-    }
-
-    public function getOrderStatus(): ?bool
-    {
-        return $this->orderStatus;
-    }
-
-    public function setOrderStatus(bool $orderStatus): self
-    {
-        $this->orderStatus = $orderStatus;
-
-        return $this;
-    }
-
-    public function getUserNotes(): ?string
-    {
-        return $this->userNotes;
-    }
-
-    public function setUserNotes(string $userNotes): self
-    {
-        $this->userNotes = $userNotes;
-
-        return $this;
-    }
-
-    public function getReferer(): ?string
-    {
-        return $this->referer;
-    }
-
-    public function setReferer(string $referer): self
-    {
-        $this->referer = $referer;
-
-        return $this;
-    }
-
-    public function getCouponSn(): ?string
-    {
-        return $this->couponSn;
-    }
-
-    public function setCouponSn(string $couponSn): self
-    {
-        $this->couponSn = $couponSn;
-
-        return $this;
-    }
-
-    public function getGoodsAll(): ?string
-    {
-        return $this->goodsAll;
-    }
-
-    public function setGoodsAll(string $goodsAll): self
-    {
-        $this->goodsAll = $goodsAll;
-
-        return $this;
-    }
-
-    public function getGoodsName(): ?string
-    {
-        return $this->goodsName;
-    }
-
-    public function setGoodsName(string $goodsName): self
-    {
-        $this->goodsName = $goodsName;
-
-        return $this;
-    }
-
-    public function getCreatedAt(): ?\DateTimeInterface
-    {
-        return $this->createdAt;
-    }
-
-    public function setCreatedAt(?\DateTimeInterface $createdAt): self
-    {
-        $this->createdAt = $createdAt;
-
-        return $this;
-    }
-
-    public function getUpdatedAt(): ?\DateTimeInterface
-    {
-        return $this->updatedAt;
-    }
-
-    public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
-    {
-        $this->updatedAt = $updatedAt;
-
-        return $this;
-    }
-
-    public function getDeletedAt(): ?\DateTimeInterface
-    {
-        return $this->deletedAt;
-    }
-
-    public function setDeletedAt(?\DateTimeInterface $deletedAt): self
-    {
-        $this->deletedAt = $deletedAt;
-
-        return $this;
-    }
-
 
 }
