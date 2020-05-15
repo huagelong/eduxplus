@@ -207,7 +207,7 @@ class InstallFixtures extends Fixture
         $this->addMenu("删除","删除处理", $mgId,"admin_api_mall_goods_delete", "",4, $roleId, 0, 1, 0);
         $this->addMenu("商品上下架","商品上下架", $mgId,"admin_api_mall_goods_switchStatus", "",5, $roleId, 0, 1, 0);
         //优惠券管理
-        $mgId = $this->addMenu("优惠券管理","优惠券信息管理", $mallMenuId,"admin_mall_coupon_index", "",0, $roleId, 0, 0, 1);
+        $mgId = $this->addMenu("优惠券管理","优惠券信息管理", $mallMenuId,"admin_mall_coupon_index", "",1, $roleId, 0, 0, 1);
         $this->addMenu("添加页面","添加页面展示", $mgId,"admin_mall_coupon_add", "",0, $roleId, 0, 1, 0);
         $this->addMenu("添加","添加处理", $mgId,"admin_api_mall_coupon_add", "",1, $roleId, 0, 1, 0);
         $this->addMenu("编辑页面","编辑页面展示", $mgId,"admin_mall_coupon_edit", "",2, $roleId, 0, 1, 0);
@@ -217,6 +217,8 @@ class InstallFixtures extends Fixture
         $this->addMenu("优惠码管理","优惠码管理", $mgId,"admin_mall_couponsub_index", "",6, $roleId, 0, 1, 0);
         $this->addMenu("优惠码导出","优惠码导出", $mgId,"admin_mall_couponsub_export", "",7, $roleId, 0, 1, 0);
         $this->addMenu("优惠码生成","优惠码生成", $mgId,"admin_mall_couponsub_create", "",8, $roleId, 0, 1, 0);
+        //订单管理
+        $orderId = $this->addMenu("订单管理","订单信息管理", $mallMenuId,"admin_mall_order_index", "",2, $roleId, 0, 0, 1);
     }
 
     protected function addOption($key, $value, $descr, $type=1, $isLock=1){
