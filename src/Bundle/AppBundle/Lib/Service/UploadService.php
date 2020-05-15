@@ -33,10 +33,12 @@ class UploadService extends BaseService
 
         $uploadAdapter = (int) $this->getOption("app.upload.adapter");
         $uploadAdapter = $uploadAdapter?$uploadAdapter:1;
-        if($uploadAdapter == 1) return $path;
+        
         if($uploadAdapter == 2){
             $remoteFilePath = $type."/".date('Y/m/d')."/".$fileName;
             return $this->aliyunOssService->upOss($remoteFilePath, $path);
         }
+
+        return $path;
     }
 }
