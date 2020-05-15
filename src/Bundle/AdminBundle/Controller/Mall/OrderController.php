@@ -27,7 +27,7 @@ class OrderController extends BaseAdminController
      *
      * @Rest\Get("/mall/order/index", name="admin_mall_order_index")
      */
-    public function indexAction(Request $request, Grid $grid, OrderService $orderService, CategoryService $categoryService, UserService $userService){
+    public function indexAction(Request $request, Grid $grid, OrderService $orderService, UserService $userService){
         $pageSize = 20;
         $grid->setListService($orderService, "getList");
         $grid->setTableColumn("#", "text", "id","a.id");
@@ -38,8 +38,8 @@ class OrderController extends BaseAdminController
         $grid->setTableColumn("订单实际支付金额", "text", "orderAmount");
         $grid->setTableColumn("优惠金额", "text", "discountAmount");
         $grid->setTableColumn("优惠券", "text", "couponSn");
-        $grid->setTableColumn("商品id", "text", "groupId");
-        $grid->setTableColumn("商品组商品", "text", "Allgroup");
+        $grid->setTableColumn("商品", "tip", "goodName");
+        $grid->setTableColumn("组合商品", "text", "AllGoodNames");
         $grid->setTableColumn("用户备注", "tip", "userNotes");
         $grid->setTableColumn("下单人", "text", "creater", "a.createUid");
         $grid->setTableColumn("下单时间", "datetime", "createdAt", "a.createdAt");
@@ -50,8 +50,18 @@ class OrderController extends BaseAdminController
         $grid->setSearchField("订单状态", "select", "a.orderStatus", function(){
             return ["全部"=>-1,"待支付"=>0, "已支付"=>1, "已取消"=>2];
         });
+        $grid->setSearchField("下单人", "search_select", "a.uid", function()use($request, $userService){
+            $values = $request->get("values");
+            $createUid = ($values&&isset($values["a.uid"]))?$values["a.uid"]:0;
+            if($createUid){
+                $users = $userService->searchResult($createUid);
+            }else{
+                $users = [];
+            }
+            return [$this->generateUrl("admin_api_glob_searchUserDo"),$users];
+        });
         $grid->setSearchField("下单时间", "daterange", "a.createdAt");
-        
+
 
         $data = [];
 

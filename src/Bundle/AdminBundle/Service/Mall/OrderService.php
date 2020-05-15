@@ -13,8 +13,6 @@ use App\Bundle\AppBundle\Lib\Base\BaseService;
 use Knp\Component\Pager\PaginatorInterface;
 use App\Bundle\AdminBundle\Service\Teach\CategoryService;
 use App\Bundle\AdminBundle\Service\UserService;
-use App\Entity\MallCoupon;
-use App\Entity\MallCouponGroup;
 
 class OrderService extends BaseService
 {
