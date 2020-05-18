@@ -46,7 +46,7 @@ class InstallFixtures extends Fixture
         $this->addOption("app.aliyun.accesskeyId", 'LTAI4G81aC1zgpkUsDXHdmVG', "阿里云 accesskeyId", 1, 1);
         $this->addOption("app.aliyun.accesskeySecret", 'ljeQEmQgXGo0oKfwZIMrn9r3rkN74o', "阿里云 accesskeySecret ", 1, 1);
         $this->addOption("app.aliyun.oss.bucket", 'eduxplus', "阿里云oss Bucket ", 1, 1);
-        $this->addOption("app.aliyun.oss.endpoint", 'http://oss-cn-shanghai.aliyuncs.com', "阿里云oss endpoint ", 1, 1);
+        $this->addOption("app.aliyun.oss.endpoint", 'oss-cn-shanghai.aliyuncs.com', "阿里云oss endpoint ", 1, 1);
         $this->addOption("app.cdn.domain", '', "cdn域名", 1, 1);
 
         //初始化用户

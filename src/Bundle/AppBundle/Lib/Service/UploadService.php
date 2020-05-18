@@ -24,19 +24,29 @@ class UploadService extends BaseService
     public function upload(UploadedFile $file, $type)
     {
 //        $file->getFileInfo()->getSize();
-        $targetDirRoot = $this->getParameter("upload_dir");
+        // $targetDirRoot = $this->getParameter("upload_dir");
+        $targetDirRoot = $this->getBasePath()."/var/tmp";
+        $uploadAdapter = (int) $this->getOption("app.upload.adapter");
+        $uploadAdapter = $uploadAdapter?$uploadAdapter:1;
+
         $pathTmp = "/upload/".$type."/".date('Y')."/".date('m')."/".date('d')."/";
-        $targetDir = $targetDirRoot.$pathTmp;
+        if( $uploadAdapter == 1){
+            $targetDir = $pathTmp;
+        }else{
+            $targetDir = $targetDirRoot.$pathTmp;
+        }
+
+        if(!is_dir($targetDir)){
+            mkdir($targetDir, 0777, true);
+        }
+
         $fileName = $file->getClientOriginalName().".".md5(uniqid()).'.'.$file->guessExtension();
         $file->move($targetDir, $fileName);
         $path = $pathTmp.$fileName;
 
-        $uploadAdapter = (int) $this->getOption("app.upload.adapter");
-        $uploadAdapter = $uploadAdapter?$uploadAdapter:1;
-        
         if($uploadAdapter == 2){
             $remoteFilePath = $type."/".date('Y/m/d')."/".$fileName;
-            return $this->aliyunOssService->upOss($remoteFilePath, $path);
+            return $this->aliyunOssService->upOss($remoteFilePath, $targetDir);
         }
 
         return $path;

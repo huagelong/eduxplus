@@ -25,7 +25,7 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
-class TestDataFixtures extends Fixture
+class InitDataFixtures extends Fixture
 {
     protected $passwordEncoder;
     /**

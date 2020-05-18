@@ -77,6 +77,7 @@ class AliyunOssService extends BaseService{
 //        print_r(func_get_args());
         $remotePath = trim($remotePath, '/');
         $ossClient = $this->getOssClient();
+
         $result = $ossClient->uploadFile($this->bucket, $remotePath, $localPath);
         $this->ossReturn = $result;
         return isset($result['oss-request-url'])?$result['oss-request-url']:"";
@@ -99,13 +100,13 @@ class AliyunOssService extends BaseService{
         $accessKeySecret = $this->getOption("app.aliyun.accesskeySecret");
         $this->bucket = $this->getOption("app.aliyun.oss.bucket");
         $this->endpoint = $this->getOption("app.aliyun.oss.endpoint");
-        $useCname = true;
+        $useCname = false;
 
         try {
             $ossClient = new OssClient($accessKeyID, $accessKeySecret, $this->endpoint, $useCname);
             return $ossClient;
         } catch (OssException $e) {
-            throw new \Exception($e->getMessage() . "\n");
+            throw new \Exception("error:".$e->getMessage() . "\n");
         }
     }
 
