@@ -46,7 +46,8 @@ class UploadService extends BaseService
 
         if($uploadAdapter == 2){
             $remoteFilePath = $type."/".date('Y/m/d')."/".$fileName;
-            return $this->aliyunOssService->upOss($remoteFilePath, $targetDir);
+            $localFile = $targetDir.$fileName;
+            return $this->aliyunOssService->upOss($remoteFilePath, $localFile);
         }
 
         return $path;

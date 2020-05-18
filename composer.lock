@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "ac772b54137ea340a90a8a608124eedf",
+    "content-hash": "91796e96b35655b1e2ebb4250f30c8e5",
     "packages": [
         {
             "name": "adbario/php-dot-notation",
