@@ -19,6 +19,7 @@ class InstallCommand extends Command
     {
         $this
             ->setDescription('Initialize the project')
+            ->addArgument('all', InputArgument::OPTIONAL, 'Argument description')
         ;
     }
 
@@ -34,21 +35,6 @@ class InstallCommand extends Command
         $greetInput = new ArrayInput($arguments);
 //        $greetInput->setInteractive(false);
         $command->run($greetInput, $output);
-        //----2
-//        $command = $this->getApplication()->find('make:migration');
-//        $arguments = [
-//            'command' => 'make:migration',
-//        ];
-//        $greetInput = new ArrayInput($arguments);
-//        $command->run($greetInput, $output);
-//        //----3
-//        $command = $this->getApplication()->find('doctrine:migrations:migrate');
-//        $arguments = [
-//            'command' => 'doctrine:migrations:migrate',
-//        ];
-//        $greetInput = new ArrayInput($arguments);
-//        $greetInput->setInteractive(false);
-//        $command->run($greetInput, $output);
 
         $command = $this->getApplication()->find('doctrine:schema:update');
         $arguments = [
@@ -61,11 +47,22 @@ class InstallCommand extends Command
 
         //----4  ./bin/console doctrine:fixtures:load --purge-with-truncate
         $command = $this->getApplication()->find('doctrine:fixtures:load');
-        $arguments = [
-            'command' => 'doctrine:fixtures:load',
-            "--purge-with-truncate"=>true,
-            // "--group"=>["InstallFixtures"]
-        ];
+
+        $argAll = $input->getArgument('all');
+
+        if($argAll){
+            $arguments = [
+                'command' => 'doctrine:fixtures:load',
+                "--purge-with-truncate"=>true
+            ];
+        }else{
+            $arguments = [
+                'command' => 'doctrine:fixtures:load',
+                "--purge-with-truncate"=>true,
+                 "--group"=>["InstallFixtures"]
+            ];
+        }
+
         $greetInput = new ArrayInput($arguments);
         $greetInput->setInteractive(false);
         $command->run($greetInput, $output);

@@ -56,7 +56,7 @@ class InstallFixtures extends Fixture
         $userModel->setSex(1);
         $userModel->setBirthday('1988-10-01');
         $userModel->setRegSource("web");
-        $userModel->setMobile("17621487072");
+        $userModel->setMobile("17621487000");
         $userModel->setReportUid(0);
         $userModel->setUuid($uuid);
         $userModel->setDisplayName("超级管理员");
