@@ -20,37 +20,36 @@ use App\Bundle\AdminBundle\Lib\Grid\Grid;
 use App\Bundle\AdminBundle\Service\Mall\GoodsService;
 use App\Bundle\AdminBundle\Service\Mall\OrderService;
 
-class OrderController extends BaseAdminController
+class PayController extends BaseAdminController
 {
 
     /**
      *
-     * @Rest\Get("/mall/order/index", name="admin_mall_order_index")
+     * @Rest\Get("/mall/pay/index", name="admin_mall_pay_index")
      */
     public function indexAction(Request $request, Grid $grid, OrderService $orderService, UserService $userService){
         $pageSize = 20;
         $grid->setListService($orderService, "getList");
         $grid->setTableColumn("#", "text", "id","a.id");
-        $grid->setTableColumn("订单名称", "text", "name");
         $grid->setTableColumn("订单号", "text", "orderNo");
-        $grid->setTableColumn("订单状态", "text", "orderStatus", "a.orderStatus", [0=>"待支付", 1=>"已支付", 2=>"已取消"]);
-        $grid->setTableColumn("下单来源", "text", "referer");
-        $grid->setTableColumn("订单实际支付金额", "text", "orderAmount");
-        $grid->setTableColumn("优惠金额", "text", "discountAmount");
-        $grid->setTableColumn("优惠券", "text", "couponSn");
-        $grid->setTableColumn("商品", "tip", "goodName");
-        $grid->setTableColumn("组合商品", "text", "AllGoodNames");
-        $grid->setTableColumn("用户备注", "tip", "userNotes");
-        $grid->setTableColumn("下单人", "text", "creater", "a.uid");
-        $grid->setTableColumn("下单时间", "datetime", "createdAt", "a.createdAt");
+        $grid->setTableColumn("支付流水号", "text", "transactionId");
+        $grid->setTableColumn("支付状态", "text", "payStatus", "a.payStatus", [0=>"支付失败", 1=>"待支付", 2=>"已支付"]);
+        $grid->setTableColumn("支付方式", "text", "paymentType", "a.paymentType", [1=>"支付宝", 2=>"微信"]);
+        $grid->setTableColumn("支付人", "text", "creater", "a.uid");
+        $grid->setTableColumn("支付金额", "text", "amount");
+        $grid->setTableColumn("支付完成时间", "text", "payTime");
+        $grid->setTableColumn("支付生成时间", "datetime", "createdAt", "a.createdAt");
         //搜索
         $grid->setSearchField("ID", "number", "a.id");
-        $grid->setSearchField("订单名称", "text", "a.name");
         $grid->setSearchField("订单号", "text", "a.orderNo");
-        $grid->setSearchField("订单状态", "select", "a.orderStatus", function(){
-            return ["全部"=>-1,"待支付"=>0, "已支付"=>1, "已取消"=>2];
+        $grid->setSearchField("支付流水号", "text", "a.transactionId");
+        $grid->setSearchField("支付状态", "select", "a.payStatus", function(){
+            return ["全部"=>-1,"支付失败"=>0, "待支付"=>1, "已支付"=>2];
         });
-        $grid->setSearchField("下单人", "search_select", "a.uid", function()use($request, $userService){
+        $grid->setSearchField("支付方式", "select", "a.paymentType", function(){
+            return ["全部"=>-1, "支付宝"=>1, "微信"=>2];
+        });
+        $grid->setSearchField("支付人", "search_select", "a.uid", function()use($request, $userService){
             $values = $request->get("values");
             $createUid = ($values&&isset($values["a.uid"]))?$values["a.uid"]:0;
             if($createUid){
@@ -60,8 +59,8 @@ class OrderController extends BaseAdminController
             }
             return [$this->generateUrl("admin_api_glob_searchUserDo"),$users];
         });
-        $grid->setSearchField("下单时间", "daterange", "a.createdAt");
-
+        $grid->setSearchField("支付完成时间", "daterange2", "a.payTime");
+        $grid->setSearchField("支付生成时间", "daterange", "a.createdAt");
 
         $data = [];
 

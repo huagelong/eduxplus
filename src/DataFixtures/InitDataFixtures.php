@@ -113,6 +113,9 @@ class InitDataFixtures extends Fixture
         $goods1 = $this->goodsService->add(1, "高级编程就业班", $productId, 0, $cid1, "保证就业", 1, [1], 160, 20, "6000.00", "5000.00", "2134",$goodImg,$smallImg, 1,0,$agreeId, 0, "保证就业");
         //添加优惠券
         $this->couponService->add(1,"程序设计3折",2,30,100,time(), (time()+10*3600), 1, $cid1, 7,[$goods1], "程序设计语言打3折");
+        //添加订单
+        
+        //添加支付
     }
 
 

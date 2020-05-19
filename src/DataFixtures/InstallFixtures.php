@@ -226,6 +226,8 @@ class InstallFixtures extends Fixture
         $this->addMenu("优惠码生成","优惠码生成", $mgId,"admin_mall_couponsub_create", "",8, $roleId, 0, 1, 0);
         //订单管理
         $orderId = $this->addMenu("订单管理","订单信息管理", $mallMenuId,"admin_mall_order_index", "",2, $roleId, 0, 0, 1);
+        //支付管理
+        $orderId = $this->addMenu("支付管理","支付信息管理", $mallMenuId,"admin_mall_pay_index", "",3, $roleId, 0, 0, 1);
     }
 
     protected function addOption($key, $value, $descr, $type=1, $isLock=1){

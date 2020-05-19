@@ -89,7 +89,11 @@ class BaseService extends AbstractFOSRestController
                 }elseif($types[$k] === "daterange" || $types[$k] === "datetimerange"){
                     list($startDate, $endDate) = explode(" - ", $v);
                     $sql .= $k . " {$operates[$k]} '{$startDate}' AND '{$endDate}' ";
-
+                }elseif($types[$k] === "daterange2" || $types[$k] === "datetimerange2"){
+                    list($startDate, $endDate) = explode(" - ", $v);
+                    $startDateStr = strtotime($startDate);
+                    $endDateStr = strtotime($endDate);
+                    $sql .= $k . " {$operates[$k]} '{$startDateStr}' AND '{$endDateStr}' ";
                 }else{
                     $sql .= $k . " = '".$v."' ";
                 }

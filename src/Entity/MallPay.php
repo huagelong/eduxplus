@@ -33,9 +33,16 @@ class MallPay
     /**
      * @var int
      *
-     * @ORM\Column(name="order_id", type="integer", nullable=false, options={"unsigned"=true,"comment"="订单表id"})
+     * @ORM\Column(name="order_no", type="string",length=200, nullable=false, options={"unsigned"=true,"comment"="订单号"})
      */
-    private $orderId;
+    private $orderNo;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="uid", type="integer", nullable=false, options={"unsigned"=true,"comment"="下单人"})
+     */
+    private $uid;
 
     /**
      * @var int
@@ -47,14 +54,14 @@ class MallPay
     /**
      * @var bool
      *
-     * @ORM\Column(name="payment_type", type="boolean", nullable=false, options={"comment"="支付方式:0支付宝,1微信支付"})
+     * @ORM\Column(name="payment_type", type="boolean", nullable=false, options={"comment"="支付方式:1支付宝,2微信支付"})
      */
     private $paymentType = '0';
 
     /**
      * @var bool
      *
-     * @ORM\Column(name="pay_status", type="boolean", nullable=false, options={"comment"="付款状态:0支付失败,1支付成功"})
+     * @ORM\Column(name="pay_status", type="boolean", nullable=false, options={"comment"="付款状态:0支付失败,1待支付,2支付成功"})
      */
     private $payStatus = '0';
 
@@ -101,14 +108,26 @@ class MallPay
         return $this;
     }
 
-    public function getOrderId(): ?int
+    public function getOrderNo(): ?string
     {
-        return $this->orderId;
+        return $this->orderNo;
     }
 
-    public function setOrderId(int $orderId): self
+    public function setOrderNo(string $orderNo): self
     {
-        $this->orderId = $orderId;
+        $this->orderNo = $orderNo;
+
+        return $this;
+    }
+
+    public function getUid(): ?int
+    {
+        return $this->uid;
+    }
+
+    public function setUid(int $uid): self
+    {
+        $this->uid = $uid;
 
         return $this;
     }
@@ -161,18 +180,6 @@ class MallPay
         return $this;
     }
 
-    public function getUpdatedAt(): ?\DateTimeInterface
-    {
-        return $this->updatedAt;
-    }
-
-    public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
-    {
-        $this->updatedAt = $updatedAt;
-
-        return $this;
-    }
-
     public function getCreatedAt(): ?\DateTimeInterface
     {
         return $this->createdAt;
@@ -181,6 +188,18 @@ class MallPay
     public function setCreatedAt(?\DateTimeInterface $createdAt): self
     {
         $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }
@@ -196,6 +215,5 @@ class MallPay
 
         return $this;
     }
-
 
 }

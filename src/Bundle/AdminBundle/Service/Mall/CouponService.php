@@ -193,7 +193,7 @@ class CouponService extends BaseService
         $batchSize = 50;
         $diffNum = $countNum-$createdNum;
         for($i=1;$i<=$diffNum;++$i){
-            $setCouponSn = session_create_id();
+            $setCouponSn = session_create_id("");
             $model = new MallCoupon();
             $model->setCouponGroupId($id);
             $model->setCouponSn($setCouponSn);

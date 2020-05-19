@@ -13,9 +13,8 @@ use App\Bundle\AppBundle\Lib\Base\BaseService;
 use Knp\Component\Pager\PaginatorInterface;
 use App\Bundle\AdminBundle\Service\Teach\CategoryService;
 use App\Bundle\AdminBundle\Service\UserService;
-use App\Entity\MallOrder;
 
-class OrderService extends BaseService
+class PayService extends BaseService
 {
 
 
@@ -35,7 +34,7 @@ class OrderService extends BaseService
     public function getList($request, $page, $pageSize){
         $sql = $this->getFormatRequestSql($request);
 
-        $dql = "SELECT a FROM App:MallOrder a " . $sql;
+        $dql = "SELECT a FROM App:MallPay a " . $sql;
         $em = $this->getDoctrine()->getManager();
         $query = $em->createQuery($dql);
         $pagination = $this->paginator->paginate(
@@ -52,22 +51,12 @@ class OrderService extends BaseService
                 $createrUid = $vArr['uid'];
                 $createrUser = $this->userService->getById($createrUid);
                 $vArr['creater'] = $createrUser['fullName'];
-                $categoryId = $vArr["categoryId"];
-                $cate = $this->categoryService->getById($categoryId);
-                $vArr['category'] = $cate["name"];
-                $vArr['discount'] = $vArr['discount']/100;
-
+                $vArr['amount'] = $vArr['amount']/100;
+                $vArr['payTime'] = $vArr['payTime']?date('Y-m-d H:i:s', $vArr['payTime']):"-";
                 $itemsArr[] = $vArr;
             }
         }
         return [$pagination, $itemsArr];
-    }
-
-    public function add($uid, $name, $goodsId, $goodsAll, $orderAmount, $discountAmount, $couponSn,$orderStatus, $referer, $userNotes){
-        $orderNo = "D".date('Ymd').session_create_id("");
-        echo $orderNo;
-        $model = new MallOrder();
-        $model->setOrderNo($orderNo);
     }
 
 }
