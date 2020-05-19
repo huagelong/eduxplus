@@ -33,7 +33,7 @@ class PayController extends BaseAdminController
         $grid->setTableColumn("#", "text", "id","a.id");
         $grid->setTableColumn("订单号", "text", "orderNo");
         $grid->setTableColumn("支付流水号", "text", "transactionId");
-        $grid->setTableColumn("支付状态", "text", "payStatus", "a.payStatus", [0=>"支付失败", 1=>"待支付", 2=>"已支付"]);
+        $grid->setTableColumn("支付状态", "text", "payStatus", "a.payStatus", [0=>"支付过期",1=>"待支付", 2=>"已支付", 3=>"已取消"]);
         $grid->setTableColumn("支付方式", "text", "paymentType", "a.paymentType", [1=>"支付宝", 2=>"微信"]);
         $grid->setTableColumn("支付人", "text", "creater", "a.uid");
         $grid->setTableColumn("支付金额", "text", "amount");

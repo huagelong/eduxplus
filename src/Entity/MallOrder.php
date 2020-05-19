@@ -26,7 +26,7 @@ class MallOrder
     /**
      * @var string
      *
-     * @ORM\Column(name="order_no", type="string", length=20, nullable=false, options={"comment"="订单号"})
+     * @ORM\Column(name="order_no", type="string", length=36, nullable=false, options={"comment"="订单号"})
      */
     private $orderNo = '';
 
@@ -61,7 +61,7 @@ class MallOrder
     /**
      * @var bool
      *
-     * @ORM\Column(name="order_status", type="boolean", nullable=false, options={"comment"="订单状态:0待支付,1已支付,2已取消"})
+     * @ORM\Column(name="order_status", type="boolean", nullable=false, options={"comment"="订单状态:0支付过期,1待支付,2支付成功,3已取消"})
      */
     private $orderStatus = '0';
 

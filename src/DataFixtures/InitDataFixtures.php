@@ -5,6 +5,8 @@ namespace App\DataFixtures;
 use App\Bundle\AdminBundle\Service\Jw\TeacherService;
 use App\Bundle\AdminBundle\Service\Mall\CouponService;
 use App\Bundle\AdminBundle\Service\Mall\GoodsService;
+use App\Bundle\AdminBundle\Service\Mall\OrderService;
+use App\Bundle\AdminBundle\Service\Mall\PayService;
 use App\Bundle\AdminBundle\Service\Teach\ChapterService;
 use App\Bundle\AdminBundle\Service\Teach\CourseService;
 use App\Bundle\AdminBundle\Service\Teach\ProductService;
@@ -40,6 +42,8 @@ class InitDataFixtures extends Fixture
     protected $studyPlanService;
     protected $goodsService;
     protected $couponService;
+    protected $orderService;
+    protected $payService;
 
     public function __construct(
         UserPasswordEncoderInterface $passwordEncoder,
@@ -50,7 +54,9 @@ class InitDataFixtures extends Fixture
         ProductService $productService,
         StudyPlanService $studyPlanService,
         GoodsService $goodsService,
-        CouponService $couponService
+        CouponService $couponService,
+        OrderService $orderService,
+        PayService $payService
     )
     {
         $this->passwordEncoder = $passwordEncoder;
@@ -62,6 +68,8 @@ class InitDataFixtures extends Fixture
         $this->studyPlanService = $studyPlanService;
         $this->goodsService = $goodsService;
         $this->couponService = $couponService;
+        $this->orderService = $orderService;
+        $this->payService = $payService;
     }
 
     public function load(ObjectManager $manager)
@@ -112,10 +120,17 @@ class InitDataFixtures extends Fixture
         $smallImg = \GuzzleHttp\json_encode(["/assets/images/smallMallFace.jpg"]);
         $goods1 = $this->goodsService->add(1, "高级编程就业班", $productId, 0, $cid1, "保证就业", 1, [1], 160, 20, "6000.00", "5000.00", "2134",$goodImg,$smallImg, 1,0,$agreeId, 0, "保证就业");
         //添加优惠券
-        $this->couponService->add(1,"程序设计3折",2,30,100,time(), (time()+10*3600), 1, $cid1, 7,[$goods1], "程序设计语言打3折");
+        $couponId = $this->couponService->add(1,"程序设计3折",2,30,100,time(), (time()+10*3600), 1, $cid1, 7,[$goods1], "程序设计语言打3折");
+        $this->couponService->createCoupon($couponId);
+        $couponSn = $this->couponService->sendCoupon(1, $couponId);
+        $this->couponService->useCoupon(1, $couponSn);
         //添加订单
-        
+        $orderNo = $this->orderService->add(1, "高级编程就业班", $goods1, [], 320, 20, $couponSn, 2, "test", "测试");
         //添加支付
+        $this->payService->add(1, 1, 320, $orderNo);
+        $this->payService->completedPay($orderNo);
+        $this->orderService->setOrderStatus($orderNo, 2);
+
     }
 
 

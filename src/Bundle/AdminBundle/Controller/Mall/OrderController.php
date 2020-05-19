@@ -33,7 +33,8 @@ class OrderController extends BaseAdminController
         $grid->setTableColumn("#", "text", "id","a.id");
         $grid->setTableColumn("订单名称", "text", "name");
         $grid->setTableColumn("订单号", "text", "orderNo");
-        $grid->setTableColumn("订单状态", "text", "orderStatus", "a.orderStatus", [0=>"待支付", 1=>"已支付", 2=>"已取消"]);
+        //0支付过期,1待支付,2支付成功,3已取消
+        $grid->setTableColumn("订单状态", "text", "orderStatus", "a.orderStatus", [0=>"支付过期",1=>"待支付", 2=>"已支付", 3=>"已取消"]);
         $grid->setTableColumn("下单来源", "text", "referer");
         $grid->setTableColumn("订单实际支付金额", "text", "orderAmount");
         $grid->setTableColumn("优惠金额", "text", "discountAmount");

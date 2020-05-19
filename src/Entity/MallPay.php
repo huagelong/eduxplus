@@ -47,7 +47,7 @@ class MallPay
     /**
      * @var int
      *
-     * @ORM\Column(name="pay_time", type="integer", nullable=false, options={"unsigned"=true,"comment"="支付时间"})
+     * @ORM\Column(name="pay_time", type="integer", nullable=true, options={"unsigned"=true,"comment"="支付完成时间"})
      */
     private $payTime;
 
@@ -61,7 +61,7 @@ class MallPay
     /**
      * @var bool
      *
-     * @ORM\Column(name="pay_status", type="boolean", nullable=false, options={"comment"="付款状态:0支付失败,1待支付,2支付成功"})
+     * @ORM\Column(name="pay_status", type="boolean", nullable=false, options={"comment"="付款状态:0支付过期,1待支付,2支付成功,3已取消"})
      */
     private $payStatus = '0';
 

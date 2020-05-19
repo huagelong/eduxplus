@@ -64,10 +64,30 @@ class OrderService extends BaseService
     }
 
     public function add($uid, $name, $goodsId, $goodsAll, $orderAmount, $discountAmount, $couponSn,$orderStatus, $referer, $userNotes){
-        $orderNo = "D".date('Ymd').session_create_id("");
-        echo $orderNo;
+        $orderNo = date('Ymd')."o".session_create_id("");
         $model = new MallOrder();
         $model->setOrderNo($orderNo);
+        $model->setUid($uid);
+        $model->setName($name);
+        $model->setGoodsId($goodsId);
+        $goodsAllStr = implode(",", $goodsAll);
+        if($goodsAll) $model->setGoodsAll($goodsAllStr);
+        $model->setOrderAmount($orderAmount*100);
+        $model->setDiscountAmount($discountAmount*100);
+        if($couponSn) $model->setCouponSn($couponSn);
+        $model->setOrderStatus($orderStatus);
+        $model->setReferer($referer);
+        $model->setUserNotes($userNotes);
+        $this->save($model);
+        return $orderNo;
+    }
+
+    public function setOrderStatus($orderNo, $orderStatus){
+        $sql = "SELECT a FROM App:MallOrder a WHERE a.orderNo=:orderNo";
+        $model = $this->fetchOne($sql, ["orderNo"=>$orderNo], 1);
+        if(!$model) return false;
+        $model->setOrderStatus($orderStatus);
+        $this->save($model);
     }
 
 }

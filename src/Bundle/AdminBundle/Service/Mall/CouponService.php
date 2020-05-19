@@ -181,6 +181,30 @@ class CouponService extends BaseService
         return [$pagination, $itemsArr];
     }
 
+    public function sendCoupon($uid, $id){
+        $sql = "SELECT a FROM App:MallCoupon a WHERE a.couponGroupId=:couponGroupId AND a.status=:status";
+        $detail = $this->fetchOne($sql, ["couponGroupId"=>$id, "status"=>0], 1);
+        if($detail){
+            $detail->setUid($uid);
+            $detail->setSendTime(time());
+            $this->save($detail);
+            return $detail->getCouponSn();
+        }
+        return "";
+    }
+
+    public function useCoupon($uid, $couponSn){
+        $sql = "SELECT a FROM App:MallCoupon a WHERE a.couponSn=:couponSn";
+        $detail = $this->fetchOne($sql, ["couponSn"=>$couponSn], 1);
+        if(!$detail) return false;
+        if($detail->getUid() != $uid) return false;
+        if($detail->getStatus() != 0) return false;
+        $detail->setUsedTime(time());
+        $detail->setStatus(1);
+        $this->save($detail);
+        return true;
+    }
+
     public function createCoupon($id){
         $sql = "SELECT a FROM App:MallCouponGroup a WHERE a.id=:id";
         $couponGroup = $this->fetchOne($sql, ["id"=>$id]); 
