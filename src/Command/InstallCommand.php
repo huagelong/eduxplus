@@ -19,7 +19,7 @@ class InstallCommand extends Command
     {
         $this
             ->setDescription('Initialize the project')
-            ->addArgument('all', InputArgument::OPTIONAL, 'Argument description')
+            ->addArgument('all', InputArgument::OPTIONAL, 'init all data')
         ;
     }
 
