@@ -9,6 +9,7 @@
 namespace App\Bundle\AdminBundle\Service\Mall;
 
 
+use App\Bundle\AdminBundle\Service\AdminBaseService;
 use App\Bundle\AppBundle\Lib\Base\BaseService;
 use Knp\Component\Pager\PaginatorInterface;
 use App\Bundle\AdminBundle\Service\Teach\CategoryService;
@@ -18,7 +19,7 @@ use App\Entity\MallCouponGroup;
 use Doctrine\DBAL\ParameterType;
 use XLSXWriter;
 
-class CouponService extends BaseService
+class CouponService extends AdminBaseService
 {
 
 

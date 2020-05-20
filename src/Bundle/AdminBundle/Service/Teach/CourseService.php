@@ -9,13 +9,14 @@
 namespace App\Bundle\AdminBundle\Service\Teach;
 
 
+use App\Bundle\AdminBundle\Service\AdminBaseService;
 use App\Bundle\AdminBundle\Service\Jw\SchoolService;
 use App\Bundle\AdminBundle\Service\UserService;
 use App\Bundle\AppBundle\Lib\Base\BaseService;
 use App\Entity\TeachCourse;
 use Knp\Component\Pager\PaginatorInterface;
 
-class CourseService extends BaseService
+class CourseService extends AdminBaseService
 {
     protected $paginator;
     protected $categoryService;

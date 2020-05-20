@@ -4,4 +4,3 @@ parameters:
       ios: '%env(APP_CLIENTID_IOS)%'
       android: '%env(APP_CLIENTID_ANDROID)%'
       html: '%env(APP_CLIENTID_HTML)%'
-      admin: '%env(APP_CLIENTID_ADMIN)%'

@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 use function GuzzleHttp\json_decode;
 
-class MenuService extends BaseService
+class MenuService extends AdminBaseService
 {
 
 

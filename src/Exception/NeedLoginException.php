@@ -11,13 +11,13 @@ namespace App\Exception;
 
 use Throwable;
 
-class EmptyBodyException extends \Exception
+class NeedLoginException extends \Exception
 {
     public function __construct(
         string $message = "",
         int $code = 0,
         Throwable $previous = null
     ) {
-        parent::__construct('The body of the POST/PUT method cannot be empty', $code, $previous);
+        parent::__construct('请先登录!', $code, $previous);
     }
 }

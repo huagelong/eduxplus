@@ -9,12 +9,13 @@
 namespace App\Bundle\AdminBundle\Service\Jw;
 
 
+use App\Bundle\AdminBundle\Service\AdminBaseService;
 use App\Bundle\AppBundle\Lib\Base\BaseService;
 use App\Entity\JwTeacher;
 use Knp\Component\Pager\PaginatorInterface;
 use Overtrue\Pinyin\Pinyin;
 
-class TeacherService extends BaseService
+class TeacherService extends AdminBaseService
 {
     protected $paginator;
     protected $schoolService;

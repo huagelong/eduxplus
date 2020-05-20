@@ -119,11 +119,6 @@ class BaseUser implements UserInterface
     private $htmlToken;
 
     /**
-     * @ORM\Column(name="admin_token",type="string",length=50,nullable=true,unique=true, options={"comment"="后台 token"})
-     */
-    private $adminToken;
-
-    /**
      * @ORM\Column(type="json", options={"comment"="角色-占位"})
      */
     private $roles = ['ROLE_USER'];
@@ -361,18 +356,6 @@ class BaseUser implements UserInterface
     public function setHtmlToken(?string $htmlToken): self
     {
         $this->htmlToken = $htmlToken;
-
-        return $this;
-    }
-
-    public function getAdminToken(): ?string
-    {
-        return $this->adminToken;
-    }
-
-    public function setAdminToken(?string $adminToken): self
-    {
-        $this->adminToken = $adminToken;
 
         return $this;
     }

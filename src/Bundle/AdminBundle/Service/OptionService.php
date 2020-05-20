@@ -13,7 +13,7 @@ use App\Bundle\AppBundle\Lib\Base\BaseService;
 use App\Entity\BaseOption;
 use Knp\Component\Pager\PaginatorInterface;
 
-class OptionService extends BaseService
+class OptionService extends AdminBaseService
 {
 
     protected $paginator;

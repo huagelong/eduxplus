@@ -9,6 +9,7 @@
 namespace App\Bundle\AdminBundle\Service\Mall;
 
 
+use App\Bundle\AdminBundle\Service\AdminBaseService;
 use App\Bundle\AdminBundle\Service\Teach\AgreementService;
 use App\Bundle\AdminBundle\Service\Teach\CategoryService;
 use App\Bundle\AdminBundle\Service\Teach\ProductService;
@@ -19,7 +20,7 @@ use App\Entity\MallGoodsGroup;
 use App\Entity\MallGoodsIntroduce;
 use Knp\Component\Pager\PaginatorInterface;
 
-class GoodsService extends BaseService
+class GoodsService extends AdminBaseService
 {
     protected $paginator;
     protected $userService;

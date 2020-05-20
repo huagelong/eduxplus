@@ -9,14 +9,13 @@
 namespace App\Bundle\AdminBundle\Service;
 
 
-use App\Bundle\AppBundle\Lib\Base\BaseService;
 use App\Bundle\AppBundle\Lib\Service\HelperService;
 use App\Entity\BaseRoleUser;
 use App\Entity\BaseUser;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
-class UserService extends BaseService
+class UserService extends AdminBaseService
 {
 
     protected $paginator;

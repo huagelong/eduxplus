@@ -8,6 +8,9 @@
 
 namespace App\Bundle\AppBundle\Lib\Base;
 
+use App\Exception\NeedLoginException;
+use Jobby\Exception;
+
 class BaseApiController extends BaseController
 {
 

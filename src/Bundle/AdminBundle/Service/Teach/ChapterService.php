@@ -9,6 +9,7 @@
 namespace App\Bundle\AdminBundle\Service\Teach;
 
 
+use App\Bundle\AdminBundle\Service\AdminBaseService;
 use App\Bundle\AdminBundle\Service\Jw\TeacherService;
 use App\Bundle\AppBundle\Lib\Base\BaseService;
 use App\Entity\TeachCourseChapter;
@@ -16,7 +17,7 @@ use App\Entity\TeachCourseMaterials;
 use App\Entity\TeachCourseTeachers;
 use App\Entity\TeachCourseVideos;
 
-class ChapterService extends BaseService
+class ChapterService extends AdminBaseService
 {
 
     protected $teacherService;

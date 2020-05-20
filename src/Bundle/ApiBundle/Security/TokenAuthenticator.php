@@ -8,7 +8,8 @@
 
 namespace App\Bundle\ApiBundle\Security;
 
-use App\Repository\BaseUserRepository;
+use App\Bundle\ApiBundle\Service\ApiBaseService;
+use App\Exception\LoginExpiredException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,14 +22,11 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
 class TokenAuthenticator extends AbstractGuardAuthenticator
 {
 
-    /**
-     * @var BaseUserRepository
-     */
-    protected $userRepository;
+    protected $apiBaseService;
 
-    public function __construct(BaseUserRepository $userRepository)
+    public function __construct(ApiBaseService $apiBaseService)
     {
-        $this->userRepository = $userRepository;
+        $this->apiBaseService = $apiBaseService;
     }
 
     /**
@@ -121,13 +119,11 @@ class TokenAuthenticator extends AbstractGuardAuthenticator
             return null;
         }
 
-        if($clientId=='ios' || $clientId=='android'){
-            return $this->userRepository->findOneBy(["appToken"=>$token]);
-        }elseif($clientId == 'html'){
-            return $this->userRepository->findOneBy(["htmlToken"=>$token]);
-        }elseif($clientId == 'admin'){
-            return $this->userRepository->findOneBy(["adminToken"=>$token]);
-        }
+        $userModel = $this->apiBaseService->getUserByToken($token, $clientId);
+        //账号在其他地方登录
+        if(!$userModel) throw new LoginExpiredException();
+
+        return $userModel;
     }
 
     /**

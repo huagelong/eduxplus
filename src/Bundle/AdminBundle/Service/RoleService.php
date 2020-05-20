@@ -14,7 +14,7 @@ use App\Entity\BaseRole;
 use App\Entity\BaseRoleMenu;
 use Knp\Component\Pager\PaginatorInterface;
 
-class RoleService extends BaseService
+class RoleService extends AdminBaseService
 {
 
     protected $paginator;

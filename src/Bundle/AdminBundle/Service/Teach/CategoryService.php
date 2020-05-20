@@ -9,10 +9,11 @@
 namespace App\Bundle\AdminBundle\Service\Teach;
 
 
+use App\Bundle\AdminBundle\Service\AdminBaseService;
 use App\Bundle\AppBundle\Lib\Base\BaseService;
 use App\Entity\TeachCategory;
 
-class CategoryService extends BaseService
+class CategoryService extends AdminBaseService
 {
 
 

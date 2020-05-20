@@ -64,6 +64,7 @@ class InstallFixtures extends Fixture
         $userModel->setIsAdmin(1);
         $userModel->setPassword($pwd);
         $userModel->setGravatar("/assets/images/gravatar.jpeg");
+        $userModel->setAppToken("111111");
         $manager->persist($userModel);
         $manager->flush();
         $uid = $userModel->getId();

@@ -38,6 +38,10 @@ class BaseService extends AbstractFOSRestController
         return $this->get("logger");
     }
 
+    public function getConfig($str){
+        return $this->getParameter($str);
+    }
+
     /**
      * dbal conn
      *
@@ -57,55 +61,13 @@ class BaseService extends AbstractFOSRestController
         return $this->getParameter("kernel.project_dir");
     }
 
+
     public function getUid(){
         $user = $this->getUser();
         if($user) return $user->getId();
         return 0;
     }
 
-
-    public function getFormatRequestSql($request){
-        $fields = $request->query->all();
-        if(!isset($fields['operates'])||!isset($fields['types'])||!isset($fields['values'])) return "";
-        $operates = $fields['operates'];
-        $types = $fields['types'];
-        $values = $fields['values'];
-        $sql = "";
-        if($values){
-            $sql .= " WHERE ";
-            foreach ($values as $k=>$v){
-                if( ($v==="") || (substr($k, 0, 1)=="_") || ($v == -1)){
-                    continue;
-                }
-
-                if($types[$k] === "text"){
-                    if($operates[$k] == "like"){
-                        $sql .= $k . " like '%".$v."%'";
-                    }else{
-                        $sql .= $k . " = '".$v."' ";
-                    }
-                }elseif($types[$k] === "number"){
-                    $sql .= $k . " {$operates[$k]} '".$v."' ";
-                }elseif($types[$k] === "daterange" || $types[$k] === "datetimerange"){
-                    list($startDate, $endDate) = explode(" - ", $v);
-                    $sql .= $k . " {$operates[$k]} '{$startDate}' AND '{$endDate}' ";
-                }elseif($types[$k] === "daterange2" || $types[$k] === "datetimerange2"){
-                    list($startDate, $endDate) = explode(" - ", $v);
-                    $startDateStr = strtotime($startDate);
-                    $endDateStr = strtotime($endDate);
-                    $sql .= $k . " {$operates[$k]} '{$startDateStr}' AND '{$endDateStr}' ";
-                }else{
-                    $sql .= $k . " = '".$v."' ";
-                }
-
-                $sql .= " AND ";
-            }
-        }
-        if($sql == " WHERE ") return "";
-        $sql = rtrim($sql, " AND ");
-        dump($sql);
-        return $sql;
-    }
 
     /**
      * 添加
@@ -285,25 +247,6 @@ class BaseService extends AbstractFOSRestController
     }
 
 
-    public function isAuthorized($routeName){
-        $uid = $this->getUid();
-        if(!$uid) return false;
-
-        $sql = "SELECT a FROM App:BaseMenu a WHERE a.url=:url";
-        $menuInfo = $this->fetchOne($sql, ['url'=>$routeName]);
-        if(!$menuInfo) return false;
-        $menuId = $menuInfo['id'];
-
-        $userSql = "SELECT a.roleId FROM App:BaseRoleUser a WHERE a.uid=:uid";
-        $roleIds = $this->fetchFields("roleId", $userSql, ['uid'=>$uid]);
-        if(!$roleIds) return false;
-
-        $sql = "SELECT a.menuId FROM App:BaseRoleMenu a WHERE a.roleId IN(:roleId) ";
-        $menuIds = $this->fetchFields("menuId", $sql, ['roleId'=>$roleIds]);
-        if(!$menuIds) return false;
-        return in_array($menuId, $menuIds);
-    }
-
     public function toArray($model){
         $encoders = array(new JsonEncoder());
         $normalizers = array(new ObjectNormalizer());
@@ -325,43 +268,6 @@ class BaseService extends AbstractFOSRestController
                 return $rs;
             }
         }
-    }
-
-    public function getInitialPreviewConfig($path){
-        if(!$path) return [];
-        $initialPreviewConfig = [];
-        $path = \GuzzleHttp\json_decode($path,1);
-        foreach ($path as $v){
-            $fileInfo = $this->getFileInfo($v);
-//            dump($fileInfo);
-            $type = stristr($fileInfo['mime'], "image")?"image":"other";
-            $tmp=[];
-            $tmp['type'] = $type;
-            $tmp['caption'] = $fileInfo['filename'];
-            $tmp['size'] = $fileInfo['length'];
-            $initialPreviewConfig[] = $tmp;
-        }
-//        dump($initialPreviewConfig);
-        return \GuzzleHttp\json_encode($initialPreviewConfig);
-    }
-
-    protected function getFileInfo($strUrl){
-        if(!stristr($strUrl, "http")){
-            $domain = $this->getOption("app.domain");
-            $strUrl = trim($domain, "/").$strUrl;
-        }
-
-        $arrRet = [];
-        if(($arrTmp=get_headers($strUrl,true))){
-//            dump($arrTmp);
-            $arrRet=array("length"=>$arrTmp['Content-Length'],"mime"=>$arrTmp['Content-Type']);
-            $arrRet["filename"]= pathinfo($strUrl, PATHINFO_FILENAME).".".pathinfo($strUrl, PATHINFO_EXTENSION);
-            if(preg_match('/\s(\d+)\s/',$arrTmp[0],$arr)){
-                $arrRet["status"]=$arr[1];
-            }
-        }
-
-        return $arrRet;
     }
 
 }

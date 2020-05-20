@@ -9,11 +9,12 @@
 namespace App\Bundle\AdminBundle\Service\Jw;
 
 
+use App\Bundle\AdminBundle\Service\AdminBaseService;
 use App\Bundle\AppBundle\Lib\Base\BaseService;
 use App\Entity\JwSchool;
 use Knp\Component\Pager\PaginatorInterface;
 
-class SchoolService extends BaseService
+class SchoolService extends AdminBaseService
 {
     protected $paginator;
 

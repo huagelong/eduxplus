@@ -9,13 +9,14 @@
 namespace App\Bundle\AdminBundle\Service\Mall;
 
 
+use App\Bundle\AdminBundle\Service\AdminBaseService;
 use App\Bundle\AppBundle\Lib\Base\BaseService;
 use App\Entity\MallPay;
 use Knp\Component\Pager\PaginatorInterface;
 use App\Bundle\AdminBundle\Service\Teach\CategoryService;
 use App\Bundle\AdminBundle\Service\UserService;
 
-class PayService extends BaseService
+class PayService extends AdminBaseService
 {
 
 

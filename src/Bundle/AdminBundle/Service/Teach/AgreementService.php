@@ -9,11 +9,12 @@
 namespace App\Bundle\AdminBundle\Service\Teach;
 
 
+use App\Bundle\AdminBundle\Service\AdminBaseService;
 use App\Bundle\AppBundle\Lib\Base\BaseService;
 use App\Entity\TeachAgreement;
 use Knp\Component\Pager\PaginatorInterface;
 
-class AgreementService extends BaseService
+class AgreementService extends AdminBaseService
 {
     protected $paginator;
 

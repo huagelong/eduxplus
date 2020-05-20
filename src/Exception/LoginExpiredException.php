@@ -11,13 +11,13 @@ namespace App\Exception;
 
 use Throwable;
 
-class NeedLoginException extends \Exception
+class LoginExpiredException extends \Exception
 {
     public function __construct(
         string $message = "",
         int $code = 0,
         Throwable $previous = null
     ) {
-        parent::__construct('请先登录!', $code, $previous);
+        parent::__construct('账号在其他地方登录，请重新登录!', $code, $previous);
     }
 }
