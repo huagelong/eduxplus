@@ -1,9 +1,16 @@
 {% extends "@AdminBundle/layout/main.html.twig" %}
 
-{% block page_title %}添加商品{% endblock %}
+{% block page_title %}添加单个商品{% endblock %}
 {% block breadcrumb %}
     <li class="breadcrumb-item"><a href="{{ path("admin_mall_goods_index") }}">商品管理</a></li>
 {% endblock %}
+
+{% block head_javascript %}
+  {{ parent() }}
+  <script src="{{ asset('assets/plugins/tinymce/tinymce.min.js') }}"></script>
+  <script src="{{ asset('assets/plugins/tinymce/langs/zh_CN.js') }}"></script>
+{% endblock %}
+
 {% block page %}
 <section class="content">
     <div class="row">

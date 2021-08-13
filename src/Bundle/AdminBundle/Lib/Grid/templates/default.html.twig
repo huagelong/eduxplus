@@ -9,29 +9,37 @@
         </div>
         <div class="card-tools">
             {% if gridBar %}
-
             <div class="input-group input-group-sm">
                 {% for gk, gv in gridBar %}
-                <a href="{{ gv[0] }}" class="btn btn-sm {{ gv[2] }}" title="{{ gk }}" style="margin-right: 10px;" {% if gv[3] %} target="_blank" {% endif %}>
-                    <i class="{{ gv[1] }}"></i><span class="hidden-xs">&nbsp;&nbsp;{{ gk }}</span>
+                    {% if gv['type'] == 'button' %}
+                <a href="{{ gv['url'] }}" class="btn btn-sm {{ gv['class'] }}" title="{{ gk }}" style="margin-right: 10px;" {% if gv['isBlank'] %} target="_blank" {% endif %}>
+                    <i class="{{ gv['iconCLass'] }}"></i><span class="hidden-xs">&nbsp;&nbsp;{{ gk }}</span>
                 </a>
+                    {% endif %}
                 {% endfor %}
             </div>
 
             {% endif %}
         </div>
     </div>
-    <div class="card-body table-responsive">
-       {{ include("@Grid/search.html.twig", {'searchField':searchField}) }}
-        <table class="table table-hover text-nowrap ">
+  {{ include("@Grid/search.html.twig", {'searchField':searchField}) }}
+    <div class="card-body table-responsive .p-0" style="max-height: 600px;">
+        <table class="table table-hover text-nowrap table-head-fixed ">
             <thead>
             <tr>
+              {% for cv in column %}
+                {% if cv['type'] == 'id' %}
+                  <th align="left">
+                      <input type="checkbox" id="choose-all" name="choose-all">
+                  </th>
+                {% endif %}
+              {% endfor %}
                 {% for k, v in column %}
                     <th align="left">
                         {% if v['sort'] %}
                          {{  knp_pagination_sortable(pagination, k, v['sort']) }}
                         {% else %}
-                            {{  k }}
+                              {{  k }}
                         {% endif %}</th>
                 {% endfor %}
                 {% if tableActionCallback %} <th>操作</th> {% endif %}
@@ -41,13 +49,23 @@
             {% for v in list %}
             <tr>
                 {% for cv in column %}
+                  {% if cv['type'] == 'id' %}
+                  <td align="left">
+                      {% if array_get(v, 'isLock') %}
+                      {% else %}
+                      <input type="checkbox" name="ids[]" value="{{ get_prop(v, cv["field"], cv['type'], cv['options'])|raw }}">
+                      {% endif %}
+                  </td>
+                  {% endif %}
+                {% endfor %}
+                {% for cv in column %}
                     <td align="left">
                         {% if cv['type'] == 'text' or cv['type'] == 'datetime' or cv['type'] == 'textarea' %}
                             {{ get_prop(v, cv["field"], cv['type'], cv['options'])|raw }}
                         {% endif %}
 
                          {% if cv['type'] == 'tip' %}
-                            <a title='<code>{{ get_prop(v, cv["field"], cv['type'], cv['options'])|raw }}</code>' class="msgtip" style="color:#343A40">
+                            <a title='<code>{{ get_prop(v, cv["field"], cv['type'], cv['options'])|raw }}</code>' class="msgtip" style="color:#e83e8c">
                             {{ get_prop(v, cv["field"], cv['type'], cv['options'])|raw|striptags|substr(0, 20)}}
                             </a>
                         {% endif %}
@@ -70,7 +88,7 @@
                             {% endif %}
                         {% endif %}
                         {% if cv['type'] == 'boole2' %}
-                            {% if cv['actionCall'] is defined %}
+                            {% if cv['actionCall'] %}
                                 {{ get_prop(cv['actionCall'],v)|raw }}
                             {% else %}
                                 {% if get_prop(v, cv['field'], cv['type']) %}
@@ -92,18 +110,53 @@
             </tr>
                 {% else %}
                     <tr>
-                        <td colspan="{{ column|length }}" align="left">暂无数据</td><td></td>
+                        <td colspan="{{ sum(column|length, 1) }}" align="left">暂无数据</td><td></td>
                     </tr>
             {% endfor %}
             </tbody>
         </table>
-        <div class="navigation">
-            {{ knp_pagination_render(pagination) }}
-        </div>
     </div>
+  <div class="navigation row">
+    {% if(bathDelete) %}
+      <div class="col-1" style="padding-left: 20px;">
+        <a href='javascript:;' data-href="{{ bathDelete|raw }}" data-confirm="确认要删除选择的行吗?" title="删除" class="btn btn-danger btn-xs ajaxBathDelete"><i class="fas fa-trash"></i></a>
+      </div>
+    {% endif %}
+    <div class="col-11">
+      {{ knp_pagination_render(pagination) }}
+    </div>
+  </div>
 </div>
 <script>
 $(function(){
+    $(".ajaxBathDelete").each(function(){
+      var chref = $(this).data("href");
+      var isconfirm = $(this).data("confirm");
+      $(this).click(function () {
+        var params = [];
+        $("input[name='ids[]']:checkbox").each(function() {
+          if(this.checked){
+            var allid = $(this).val();
+            params.push(allid);
+          }
+        })
 
+        if(params.length==0){
+          showMsg(400, "请至少选择一行!");
+          return ;
+        }
+
+        layer.msg(isconfirm, {
+          time: 0 //不自动关闭
+          , btn: ['是', '否']
+          , yes: function (index) {
+            layer.close(index);
+            requestPost(chref, {"ids":params});
+          }
+        });
+        return false;
+      });
+
+    });
 });
 </script>

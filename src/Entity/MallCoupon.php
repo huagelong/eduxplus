@@ -33,7 +33,7 @@ class MallCoupon
     /**
      * @var string
      *
-     * @ORM\Column(name="coupon_sn", type="string", length=26, nullable=false, options={"comment"="优惠码编号"})
+     * @ORM\Column(name="coupon_sn", type="string", length=100, nullable=false, options={"comment"="优惠码编号"})
      */
     private $couponSn = '';
 

@@ -31,32 +31,25 @@ class TeachCourse
     private $name;
 
     /**
-     * @var bool|null
+     * @var integer|null
      *
-     * @ORM\Column(name="type", type="boolean", nullable=true, options={"comment"="1-线上,2-线下,3-混合"})
+     * @ORM\Column(name="type", type="integer",length=1, nullable=true, options={"comment"="1-线上,2-线下,3-混合"})
      */
     private $type;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="big_img", type="string", length=100, nullable=true, options={"comment"="封面图"})
+     * @ORM\Column(name="big_img", type="text", length=500, nullable=true, options={"comment"="封面图"})
      */
     private $bigImg;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="descr", type="string", length=200, nullable=true, options={"comment"="简介"})
+     * @ORM\Column(name="descr", type="text", length=500, nullable=true, options={"comment"="简介"})
      */
     private $descr;
-
-    /**
-     * @var string|null
-     *
-     * @ORM\Column(name="cc_gategory_id", type="string", length=100, nullable=true, options={"comment"="cc视频分类"})
-     */
-    private $ccGategoryId;
 
     /**
      * @var int|null
@@ -92,6 +85,13 @@ class TeachCourse
      * @ORM\Column(name="course_hour", type="integer", nullable=true, options={"comment"="课时，乘以100"})
      */
     private $courseHour;
+
+    /**
+     * @var int|null
+     *
+     * @ORM\Column(name="open_time", type="integer", nullable=true, options={"comment"="最早开课时间"})
+     */
+    private $openTime = '0';
 
     /**
      * @var string|null
@@ -136,12 +136,12 @@ class TeachCourse
         return $this;
     }
 
-    public function getType(): ?bool
+    public function getType(): ?int
     {
         return $this->type;
     }
 
-    public function setType(?bool $type): self
+    public function setType(?int $type): self
     {
         $this->type = $type;
 
@@ -232,6 +232,18 @@ class TeachCourse
         return $this;
     }
 
+    public function getOpenTime(): ?int
+    {
+        return $this->openTime;
+    }
+
+    public function setOpenTime(?int $openTime): self
+    {
+        $this->openTime = $openTime;
+
+        return $this;
+    }
+
     public function getSchoolId(): ?string
     {
         return $this->schoolId;
@@ -279,19 +291,4 @@ class TeachCourse
 
         return $this;
     }
-
-    public function getCcGategoryId(): ?string
-    {
-        return $this->ccGategoryId;
-    }
-
-    public function setCcGategoryId(?string $ccGategoryId): self
-    {
-        $this->ccGategoryId = $ccGategoryId;
-
-        return $this;
-    }
-
-
-
 }

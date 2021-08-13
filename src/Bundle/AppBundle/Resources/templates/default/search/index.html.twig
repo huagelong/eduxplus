@@ -1,0 +1,94 @@
+{% extends '@AppBundle/layout/layout.html.twig' %}
+{% import "@AppBundle/macros/pagination.html.twig" as macros %}
+{% import "@AppBundle/macros/pagination2.html.twig" as macros2 %}
+ {% block page %}
+   {{ parent() }}
+   <div id="main" class="commonMain">
+     <div class="layui-fluid">
+       <div class="layui-main searchHeader">
+         <form method="get" action="{{ path('app_search') }}" class="layui-form caller-seach">
+           <i class="layui-icon layui-icon-search caller-seach-icon caller-icon"></i>
+           <input type="text" name="kw" autocomplete="off" placeholder="请输入关键字搜索" class="layui-input caller-pl32" value="{{ app.request.query.get('kw') }}" />
+           <input type="submit" class="layui-btn layui-btn-danger caller-btn" value="搜索">
+         </form>
+       </div>
+     </div>
+     <div class="layui-main searchlist">
+       <div class="layui-tab layui-tab-brief">
+         <ul class="layui-tab-title">
+           <li {% if type==1 %} class="layui-this" {% endif %} >
+             <a href="{{ path('app_search', {type:1}) }}?kw={{ kw }}">课程</a>
+           </li>
+           <li {% if type==2 %} class="layui-this" {% endif %} >
+             <a href="{{ path('app_search', {type:2}) }}?kw={{ kw }}">资讯</a>
+           </li>
+         </ul>
+         <div class="layui-tab-content">
+           <div class="layui-tab-item layui-show">
+                {% if type ==1 %}
+                  <div class="layui-row layui-col-space20">
+                    {% if list %}
+                      {% for r in list %}
+                        <div class="layui-col-md3">
+                          <a href="{{ path('app_detail_index', {uuid:r['uuid']}) }}" class="gooda">
+                            <div class="goodCard layui-anim">
+                              <div class="goodCover">
+                                <img src="{% if r['goodsSmallImg'] %} {{ json_get(r['goodsSmallImg']) }} {% else %} /assets/images/course.jpg {% endif %}" />
+                              </div>
+                              <div class="goodInfo">
+                                <div class="goodTitle">{{ r['name'] }}</div>
+                                <div class="goodAttr">
+                                  <span class="goodPrice">¥{{ r['shopPriceView'] }}</span>
+                                  <span class="buyNum">{{ r['buyNumberFalse'] }}人购买</span>
+                                </div>
+                              </div>
+                            </div>
+                          </a>
+                        </div>
+                      {% endfor %}
+                    {% else %}
+                      <div class="layui-col-md12 layui-center">
+                        <img src="/assets/app/default/images/null-i2.png" alt="">
+                        <div>当前没有课程哦～</div>
+                      </div>
+                    {% endif %}
+                  </div>
+                {% endif %}
+
+             {% if type ==2 %}
+               <div class="layui-row newsSearchItem">
+               {% if list %}
+                 {% for iv in list %}
+                       <div class="layui-col-md12">
+                         <div class="title layui-elip">
+                           <a href="{{ path('app_news_detail', {id:iv['id']}) }}" target="_blank">
+                             {{ array_get(highlights, iv['id'])|raw }}
+                           </a>
+                         </div>
+                         <div class="other">
+                           <span class="timer"><i class="layui-icon layui-icon-time"></i> <span class="moment" data-time="{{ iv['createdAtTime'] }}"></span></span>
+                           <span class="viewnum"><i class="fas fa-eye"></i> {{ iv['viewNumber'] }}</span>
+                         </div>
+                       </div>
+
+                 {% endfor %}
+               {% else %}
+                 <div class="layui-col-md12 layui-center">
+                   <img src="/assets/app/default/images/null-i5.png" alt="">
+                   <div>当前没有资讯哦～</div>
+                 </div>
+               {% endif %}
+               </div>
+             {% endif %}
+             {% if adapter == 1 %}
+                {{ macros.pagination(pagination) }}
+             {% else %}
+               {{ macros2.pagination2(route, pageCount, params,query) }}
+             {% endif %}
+           </div>
+         </div>
+       </div>
+     </div>
+   </div>
+
+{% endblock %}

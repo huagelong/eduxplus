@@ -1,0 +1,275 @@
+.question_right_selected ul{
+	width: 100%;
+	height: 49px;
+	background: #fff;
+	border: 1px solid #E7E7E7;
+	border-radius: 4px;
+}
+
+.question_right_selected .nav li{
+    float: left;
+    cursor: pointer;
+    letter-spacing: 0;
+    text-align: center;
+    line-height: 14px;
+    margin:  17px   20px  18px 30px;
+    font-size: 14px;
+}
+.question_right_selected .nav li.sec{color: #2C8CFF;}
+/***   隐藏 添加class名*******/
+.question_mainCont .question_right .question_right_selected .nav p{
+	float: right;
+	font-size: 14px;
+	line-height: 49px;
+	margin-right: 30px;
+    color: #333333;
+
+}
+.question_mainCont .question_right .question_right_selected .nav p.lessonCountHiden{
+	display: none;
+}
+
+.question_right_selected .question_test{
+	display: none;
+}
+.question_right_selected .pagationSide_test_show{
+	display: block;
+	margin-top: 10px;
+	border: 1px solid #E7E7E7;
+	border-radius: 4px;
+}
+.question_right_selected .active{
+	color: #333333;
+}
+
+
+
+
+.question_right_selected .question_test .account_from{
+	padding-top: 50px;
+	display: block;
+	padding-left:60px ;
+	min-height: 600px;
+	height: auto;
+	background: #fff;
+	padding-bottom: 50px;
+}
+.question_right_selected .question_test .account_from fieldset{
+	border: 0;
+	margin-bottom: 30px;
+}
+.question_right_selected .question_test .account_from fieldset label{
+	width: 80px;
+	line-height: 35px;
+	display: inline-block;
+	font-size: 14px;
+}
+.question_right_selected .question_test .account_from fieldset input{
+	width: 310px;
+	height: 35px;
+	border: 1px solid #E7E7E7;
+    border-radius: 2px;
+    text-indent:10px;
+}
+.question_right_selected .question_test .account_from fieldset span a{
+	font-size: 14px;
+    color: #2C8CFF;
+}
+.question_right_selected .question_test .account_from fieldset span a:hover{
+	border-bottom:1px solid #0054B9;
+	display: inline-block;
+	color: #0054B9;
+}
+.question_right_selected .question_test .account_content{padding-top: 50px;padding-left: 60px;min-height: 600px;height: auto;background: #fff;}
+.question_right_selected .question_test .account_content_lf{float:left;width: 123px;margin-right: 45px;}
+.question_right_selected .question_test .account_content_lf{float:left;}
+.question_right_selected .question_test .account_content_lf img{width:80px ;height: 80px;}
+.question_right_selected .question_test .account_content_lf p{
+	font-size: 12px;color: #333333;text-align: center;
+}
+.question_right_selected .question_test .account_content_lf .account_content_img{
+	width: 80px;
+	height: 80px;
+	margin: 0 auto;
+	background: #fff;
+
+}
+.question_right_selected .question_test .account_content_lf .account_content_img img{
+	width: 100%;
+	height: 100%;
+	border-radius: 50%;
+}
+.question_right_selected .question_test .account_content_lf  p{
+	font-size: 12px;
+    color: #333333;
+    width: 108px;
+    margin: 0 auto;
+    margin-top: 16px;
+
+}
+.question_right_selected .question_test .account_content_lf  label{
+    cursor: pointer;
+	width: 121px;
+	height: 37px;
+	line-height: 37px;
+	font-size: 16px;
+    color: #2C8CFF;
+    text-align: center;
+    border: 1px solid #2C8CFF;
+    border-radius: 4px;
+    display: block;
+    margin-top: 16px;
+}
+.question_right_selected .question_test .account_content_lf  label:hover{
+	color: #1069D4;
+	border: 1px solid #1069D4;
+}
+.question_right_selected .question_test .account_content_rg{
+	float: left;
+}
+.question_right_selected .question_test .account_content_rg fieldset{
+	border: 0;
+	margin-bottom: 38px;
+}
+.question_right_selected .question_test .account_content_rg fieldset>.checkSex_bir>span{
+	display: inline-block;
+	width: 19px;
+	height: 19px;
+	background:url(../../../images/common/laydate-dat.png) no-repeat;
+	background-position: center;
+	background-size: cover;
+	margin-right: 10px;
+	vertical-align: middle;
+	position: relative;
+	top: -1px;
+	/*cursor: pointer;*/
+}
+.question_right_selected .question_test .account_content_rg label{
+	display: inline-block;
+	width: 75px;
+	height: 20px;
+	font-size: 14px;
+    color: #999;
+	line-height: 20px;
+}
+.question_right_selected .question_test .account_content_rg .laydate_box{
+	display: none;
+}
+.question_right_selected .question_test .account_content_rg input[type=text]{
+	display: inline-block;
+	width: 310px;
+	height: 35px;
+	font-size: 14px;
+    color: #333;
+	line-height: 35px;
+	border: 1px solid #E7E7E7;
+    border-radius: 2px;
+    text-indent: 10px;
+    padding-right: 0;
+}
+.question_right_selected .question_test .account_content_rg fieldset>.checkSex_bir{
+	width: 310px;
+	border: 1px solid #E7E7E7;
+    border-radius: 2px;
+    display: inline-block;
+}
+.question_right_selected .question_test .account_content_rg fieldset>.checkSex_bir>input{
+	width: 280px;
+	border: 0;
+	color: #333;
+	cursor: pointer;
+    
+}
+.question_right_selected .question_test .account_content_rg fieldset>.checkSex_bir>input::input-placeholder{
+	color: #999;
+}
+.question_right_selected .question_test .account_content_rg input[type=button]{
+	display: inline-block;
+	width: 130px;
+	height: 40px;
+	font-size: 14px;
+    color: #333;
+	line-height: 40px;
+	border: 1px solid #E7E7E7;
+    border-radius: 2px;
+    text-align: center;
+    margin-right: 16px;
+}
+
+.question_right_selected .question_test .account_content_rg select{
+	display: inline-block;
+	width:50px;
+	height:35px;
+	font-size: 14px;
+    color: #333;
+	line-height: 35px;
+	border: 1px solid #E7E7E7;
+    border-radius: 2px;
+    text-align: center;
+}
+.question_right_selected .question_test .account_content_rg select:first-of-type{
+	width: 67px;
+	height:35px;
+}
+
+.question_right_selected .question_test .account_content_rg .usersex_box{font-size: 0;display: inline-block;vertical-align: middle;}
+.question_right_selected .question_test .account_content_rg .usersex_box>div{float: left;height: 20px;line-height: 20px;font-size: 14px;color: #666;cursor: pointer;margin-right: 18px;}
+.question_right_selected .question_test .account_content_rg .usersex_box>div>label{display: inline-block;vertical-align: middle;height: 14px;width: 14px;border: 1px solid #979797;margin-right: 6px;border-radius: 10px;}
+.question_right_selected .question_test .account_content_rg .usersex_box>div>input.radio-btn{display: none;}
+.question_right_selected .question_test .account_content_rg .usersex_box div input.radio-btn+label:hover{cursor: pointer;}
+.question_right_selected .question_test .account_content_rg .usersex_box div input.radio-btn:checked+label{background: #2783FB;border: 1px solid #2783FB;display: inline-block;vertical-align: middle;height:14px;width:14px;position: relative}
+.question_right_selected .question_test .account_content_rg .usersex_box div input.radio-btn:checked+label:after{content: "";font-size: 0px;width: 6px;height: 6px;border-radius: 50%;display: block;background: #fff;position: absolute;left: 4px;top: 4px;}
+
+
+
+
+.account_content_rg .usersex_btn{
+	display:inline-block;
+	width:130px;
+	height:40px;
+	font-size:14px;
+	line-height:40px;
+	border-radius:3px;
+	text-align:center;
+	margin-right:16px;
+	font-size: 14px;
+	color: #fff;
+	background: #2C8CFF;
+	border: none;
+}
+.account_content_rg .usersex_btn:hover{background: #1D7AEA;}
+/**** 按钮被点击时的添加class 名   ***/
+.checkButton{
+	background: #2C8CFF;
+    color: #fff;
+    border-color: #2C8CFF;
+ }
+.question_right_selected .question_test .account_content_rg span{
+	display: inline-block;
+	width: 310px;
+	height: 35px;
+	font-size: 14px;
+    color: #333;
+	line-height: 35px;
+}
+
+
+
+.question_right_selected>.punch_contain_box{z-index:99999;position: fixed;z-index: 200;left: 0;top: 0;width: 100%;height: 100%;background: rgba(0,0,0,0.3);}
+.question_right_selected>.punch_contain_box>.punch_contain{z-index:999999;position: absolute;left: 50%;top: 50%;margin-left: -405px;transform: translateY(-50%); text-align: center; background: #FFFFFF;border-radius: 10px;width: 600px;padding: 30px;}
+.question_right_selected>.punch_contain_box>.punch_contain>h3{font-size: 24px;line-height: 32px; color: #111111;font-weight: normal;}
+
+.question_right_selected>.punch_contain_box>.punch_contain>.punch_contain_p1{padding: 10px 0 20px;line-height: 19px; font-size: 14px;color: #999999;}
+
+.question_right_selected>.punch_contain_box>.punch_contain>.punch_contain_p2{font-size: 16px;padding: 10px 0 30px; color: #FF662C;}
+.question_right_selected>.punch_contain_box>.punch_contain>.evaluate_box{width: 100%;overflow: hidden;}
+.question_right_selected>.punch_contain_box>.punch_contain>.evaluate_box>ul{width: 480px;padding-bottom: 10px;border: 0;float: left;height: auto;}
+.question_right_selected>.punch_contain_box>.punch_contain>.evaluate_box>ul>li{cursor: pointer; font-size: 14px;text-align: center; color: #666;border:1px solid rgba(221,221,221,1);float: left; border-radius: 30px;height: 33px;line-height: 33px;width: 128px;margin-bottom: 20px;margin-right: 25px;}
+.question_right_selected>.punch_contain_box>.punch_contain>.evaluate_box span{float: left;display: inline-block;width: 100px;height: 33px;line-height: 33px;font-size: 14px;text-align: center; color: #333;}
+.question_right_selected>.punch_contain_box>.punch_contain>.evaluate_box>ul>li.evaluate_sec{background: #2C8CFF;color: #fff;}
+/*鼠标滑过*/
+
+
+.question_right_selected>.punch_contain_box>.punch_contain>button{width: 150px;margin: 0 auto;margin-top: 30px; display: block;font-size: 18px;color: #ddd;border-radius:20px;border:1px solid #ddd;text-align: center;line-height: 40px;color:#666 }
+.question_right_selected .question_test .account_content_rg fieldset>.checkSex_bir>span.js_class_picker{background:url(../../../images/common/edits_icon.png) no-repeat;background-position: center;background-size: cover;cursor: pointer;}
+

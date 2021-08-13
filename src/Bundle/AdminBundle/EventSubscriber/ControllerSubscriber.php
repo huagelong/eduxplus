@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @Author: kaihui.wang
  * @Contact  hpuwang@gmail.com
@@ -15,6 +16,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\HttpKernel\Event\ControllerEvent;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Stopwatch\Stopwatch;
 
 class ControllerSubscriber implements EventSubscriberInterface
@@ -55,20 +57,29 @@ class ControllerSubscriber implements EventSubscriberInterface
             $route = $request->get("_route");
             $session = $request->getSession();
             $session->set("_route", $route);
-            $uid = $this->menuService->getUid();
+            $uid = $controller->getUid();
             //权限验证
-            if($uid){
-                $allMenu = $this->menuService->getMyMenuUrl($uid);
-                if(!in_array($route, $allMenu)){
-                    throw new AccessDeniedException("没有权限!");
+            if ($uid) {
+                //判断是否是全局权限
+                $menuInfo = $this->menuService->getMenuByRoute($route);
+                if (!$menuInfo) {
+                    throw new AuthenticationException("没有权限!");
+                } else {
+                    if (!$menuInfo['isGlobal']) {
+                        $allMenu = $this->menuService->getMyMenuUrl($uid);
+                        if (!in_array($route, $allMenu)) {
+                            throw new AuthenticationException("没有权限!");
+                        }
+                    }
+                    //记录日志
+                    $pathinfo = $request->getPathInfo();
+                    $queryData = $request->query->all();
+                    $postData = $request->getContent();
+                    $postData = mb_substr($postData,0, 400, "utf-8");
+                    $data = [$queryData, $postData];
+                    $ip = $request->getClientIp();
+                    $this->menuService->addActionLog($uid, $route, $pathinfo, $data, $ip);
                 }
-                //记录日志
-                $pathinfo = $request->getPathInfo();
-                $queryData = $request->query->all();
-                $postData = $request->request->all();
-                $data = array_merge($queryData, $postData);
-                $ip = $request->getClientIp();
-                $this->menuService->addActionLog($route, $pathinfo, $data, $ip);
             }
         }
 

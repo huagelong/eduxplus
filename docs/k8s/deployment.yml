@@ -1,0 +1,144 @@
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  annotations:
+    deployment.kubernetes.io/revision: "42"
+  creationTimestamp: "2020-06-09T07:31:09Z"
+  generation: 43
+  labels:
+    k8s-app: work1
+    qcloud-app: work1
+  name: work1
+  namespace: default
+  resourceVersion: "2474581325"
+  selfLink: /apis/apps/v1beta2/namespaces/default/deployments/work1
+  uid: 31636826-6f1f-4426-8ea1-635886fff212
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      k8s-app: work1
+      qcloud-app: work1
+  strategy:
+    rollingUpdate:
+      maxSurge: 0
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        k8s-app: work1
+        qcloud-app: work1
+        qcloud-redeploy-timestamp: "1591758677753"
+    spec:
+      containers:
+      - env:
+        - name: PATH
+          value: /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+        image: ccr.ccs.tencentyun.com/eduxplus/nginx:latest
+        imagePullPolicy: IfNotPresent
+        livenessProbe:
+          failureThreshold: 1
+          periodSeconds: 3
+          successThreshold: 1
+          tcpSocket:
+            port: 9001
+          timeoutSeconds: 2
+        name: nginx
+        resources:
+          limits:
+            cpu: 300m
+            memory: 512Mi
+          requests:
+            cpu: 250m
+            memory: 256Mi
+        securityContext:
+          privileged: true
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /var/www/symfony
+          name: code
+        - mountPath: /var/log/
+          name: log
+        workingDir: /var/www/symfony
+      - env:
+        - name: PATH
+          value: /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+        image: ccr.ccs.tencentyun.com/eduxplus/php:latest
+        imagePullPolicy: IfNotPresent
+        name: php
+        resources:
+          limits:
+            cpu: 300m
+            memory: 512Mi
+          requests:
+            cpu: 250m
+            memory: 256Mi
+        securityContext:
+          privileged: true
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /var/www/symfony
+          name: code
+        - mountPath: /var/log
+          name: log
+        workingDir: /var/www/symfony
+      - env:
+        - name: PATH
+          value: /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+        image: ccr.ccs.tencentyun.com/eduxplus/code:latest
+        imagePullPolicy: Always
+        name: code
+        resources:
+          limits:
+            cpu: 200m
+            memory: 256Mi
+          requests:
+            cpu: 200m
+            memory: 128Mi
+        securityContext:
+          privileged: true
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /www
+          name: code
+        workingDir: /var/www/symfony
+      dnsPolicy: ClusterFirst
+      imagePullSecrets:
+      - name: qcloudregistrykey
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - emptyDir: {}
+        name: code
+      - hostPath:
+          path: /var/log
+          type: DirectoryOrCreate
+        name: log
+status:
+  availableReplicas: 1
+  conditions:
+  - lastTransitionTime: "2020-06-09T08:51:05Z"
+    lastUpdateTime: "2020-06-09T08:51:05Z"
+    message: Deployment has minimum availability.
+    reason: MinimumReplicasAvailable
+    status: "True"
+    type: Available
+  - lastTransitionTime: "2020-06-09T14:28:19Z"
+    lastUpdateTime: "2020-06-10T03:12:07Z"
+    message: ReplicaSet "work1-58fdb69f56" has successfully progressed.
+    reason: NewReplicaSetAvailable
+    status: "True"
+    type: Progressing
+  observedGeneration: 43
+  readyReplicas: 1
+  replicas: 1
+  updatedReplicas: 1

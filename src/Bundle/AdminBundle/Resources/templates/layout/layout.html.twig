@@ -1,23 +1,14 @@
 {% extends '@AdminBundle/layout/base.html.twig' %}
 {% block head_stylesheets %}
     {{ parent() }}
-    <link rel="stylesheet" href="{{ asset('assets/plugins/fontawesome-free/css/all.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/plugins/fontawesome-free/css/v4-shims.css') }}">
     {% block style %}{% endblock %}
-    <link rel="stylesheet" href="{{ asset('assets/admlte/css/adminlte.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/plugins/layer/layer.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/admlte/googlefonts/fonts.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/plugins/glyphicons/css/glyphicons.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/plugins/daterangepicker/daterangepicker.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/plugins/select2/css/select2.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/plugins/bootstrap-fileinput/css/fileinput.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/dist/base/base.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/dist/baseAdmin/base.min.css') }}">
 {% endblock %}
 
 {% block head_stylesheets_end %}
     {{ parent() }}
-    <link rel="stylesheet" href="{{ asset('assets/css/admin.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/admin/css/admin.css') }}">
 {% endblock %}
 
 {% block head_javascript %}
@@ -27,28 +18,8 @@
             appDomain:"{{ option("app.domain") }}"
         }
     </script>
-    <script src="{{ asset('assets/plugins/jquery/jquery.min.js') }}"></script>
-    <script src="{{ asset('assets/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-    <script src="{{ asset('assets/admlte/js/adminlte.min.js') }}"></script>
-    <script src="{{ asset('assets/base/utils.js') }}"></script>
-    <script src="{{ asset('assets/plugins/jquery-form/jquery.form.js') }}"></script>
-    <script src="{{ asset('assets/plugins/jquery-cookie/jquerycookie.js') }}"></script>
-    <script src="{{ asset('assets/plugins/layer/layer.js') }}"></script>
-    <script src="{{ asset('assets/base/modules/ajaxform.js') }}"></script>
-    <script src="{{ asset('assets/base/modules/ajaxaction.js') }}"></script>
-    <script src="{{ asset('assets/base/modules/widgets.js') }}"></script>
-    <script src="{{ asset('assets/base/base.js') }}"></script>
-    <script src="{{ asset('assets/plugins/moment/moment.min.js') }}"></script>
-    <script src="{{ asset('assets/plugins/daterangepicker/daterangepicker.js') }}"></script>
-    <script src="{{ asset('assets/plugins/select2/js/select2.full.min.js') }}"></script>
-    <script src="{{ asset('assets/plugins/select2/js/i18n/zh-CN.js') }}"></script>
-    <script src="{{ asset('assets/plugins/bootstrap-switch/js/bootstrap-switch.min.js') }}"></script>
-    <script src="{{ asset('assets/plugins/bootstrap-fileinput/js/fileinput.min.js') }}"></script>
-    <script src="{{ asset('assets/plugins/bootstrap-fileinput/js/locales/zh.js') }}"></script>
-    <script src="{{ asset('assets/plugins/bootstrap-fileinput/js/plugins/piexif.js') }}"></script>
-    <script src="{{ asset('assets/plugins/clipboardjs/clipboard.min.js') }}"></script>
-    <script src="{{ asset('assets/plugins/tinymce/tinymce.min.js') }}"></script>
-    <script src="{{ asset('assets/plugins/tinymce/langs/zh_CN.js') }}"></script>
+  <script src="{{ asset('assets/dist/base/base.min.js') }}"></script>
+    <script src="{{ asset('assets/dist/baseAdmin/base.min.js') }}"></script>
 {% endblock %}
 
 {% block head_favicon %}

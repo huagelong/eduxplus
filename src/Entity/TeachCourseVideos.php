@@ -40,28 +40,42 @@ class TeachCourseVideos
     /**
      * @var bool|null
      *
-     * @ORM\Column(name="type", type="integer", length=1,nullable=true, options={"comment"="1-直播,2-录播"})
+     * @ORM\Column(name="type", type="integer", length=1,nullable=true, options={"comment"="1-直播,2-点播, 点播可以是直播转换过来"})
      */
     private $type;
 
     /**
      * @var bool|null
      *
-     * @ORM\Column(name="video_channel", type="integer",length=1, nullable=true, options={"comment"="1-cc视频"})
+     * @ORM\Column(name="video_channel", type="integer",length=1, nullable=true, options={"comment"="1-腾讯云,2-阿里云"})
      */
     private $videoChannel;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="channel_data", type="text", length=65535, nullable=true, options={"comment"="渠道数据"})
+     * @ORM\Column(name="video_id", type="string", length=60, nullable=true, options={"comment"="点播视频id"})
      */
-    private $channelData;
+    private $videoId;
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="vod_data", type="text", length=65535, nullable=true, options={"comment"="点播数据"})
+     */
+    private $vodData;
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="live_data", type="text", length=65535, nullable=true, options={"comment"="直播数据"})
+     */
+    private $liveData;
 
     /**
      * @var bool|null
      *
-     * @ORM\Column(name="status", type="boolean", nullable=true, options={"comment"="是否可用，转码，审核已完成等，1-是,0-否"})
+     * @ORM\Column(name="status", type="boolean", nullable=true, options={"comment"="点播是否可用，转码，审核已完成等，1-是,0-否"})
      */
     private $status=0;
 
@@ -137,14 +151,26 @@ class TeachCourseVideos
         return $this;
     }
 
-    public function getChannelData(): ?string
+    public function getVideoId(): ?string
     {
-        return $this->channelData;
+        return $this->videoId;
     }
 
-    public function setChannelData(?string $channelData): self
+    public function setVideoId(?string $videoId): self
     {
-        $this->channelData = $channelData;
+        $this->videoId = $videoId;
+
+        return $this;
+    }
+
+    public function getVodData(): ?string
+    {
+        return $this->vodData;
+    }
+
+    public function setVodData(?string $vodData): self
+    {
+        $this->vodData = $vodData;
 
         return $this;
     }
@@ -196,5 +222,18 @@ class TeachCourseVideos
 
         return $this;
     }
+
+    public function getLiveData(): ?string
+    {
+        return $this->liveData;
+    }
+
+    public function setLiveData(?string $liveData): self
+    {
+        $this->liveData = $liveData;
+
+        return $this;
+    }
+
 
 }

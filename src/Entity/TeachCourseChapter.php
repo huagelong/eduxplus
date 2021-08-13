@@ -52,6 +52,13 @@ class TeachCourseChapter
     private $parentId;
 
     /**
+     * @var string|null
+     *
+     * @ORM\Column(name="path", type="string", length=200, nullable=true, options={"comment"="子树路径"})
+     */
+    private $path;
+
+    /**
      * @var bool|null
      *
      * @ORM\Column(name="is_free", type="boolean", nullable=true, options={"comment"="是否免费（试听课），1-是，0-否"})
@@ -61,7 +68,7 @@ class TeachCourseChapter
     /**
      * @var bool|null
      *
-     * @ORM\Column(name="study_way", type="boolean", nullable=true, options={"comment"="学习方式, 1-直播，2-录播，3-面授"})
+     * @ORM\Column(name="study_way", type="integer", nullable=true, options={"comment"="学习方式, 1-直播，2-点播，3-面授"})
      */
     private $studyWay = '1';
 
@@ -71,6 +78,13 @@ class TeachCourseChapter
      * @ORM\Column(name="sort", type="integer", nullable=true, options={"comment"="排序"})
      */
     private $sort = '0';
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="im_group_id", type="string", length=40, nullable=true, options={"comment"="腾讯云im"})
+     */
+    private $imGroupId;
 
     /**
      * @var int|null
@@ -90,7 +104,6 @@ class TeachCourseChapter
      * @ORM\Column(name="deleted_at", type="datetime", nullable=true)
      */
     private $deletedAt;
-
 
     public function getId(): ?int
     {
@@ -145,6 +158,18 @@ class TeachCourseChapter
         return $this;
     }
 
+    public function getPath(): ?string
+    {
+        return $this->path;
+    }
+
+    public function setPath(?string $path): self
+    {
+        $this->path = $path;
+
+        return $this;
+    }
+
     public function getIsFree(): ?bool
     {
         return $this->isFree;
@@ -157,12 +182,12 @@ class TeachCourseChapter
         return $this;
     }
 
-    public function getStudyWay(): ?bool
+    public function getStudyWay(): ?int
     {
         return $this->studyWay;
     }
 
-    public function setStudyWay(?bool $studyWay): self
+    public function setStudyWay(?int $studyWay): self
     {
         $this->studyWay = $studyWay;
 
@@ -177,6 +202,18 @@ class TeachCourseChapter
     public function setSort(?int $sort): self
     {
         $this->sort = $sort;
+
+        return $this;
+    }
+
+    public function getImGroupId(): ?string
+    {
+        return $this->imGroupId;
+    }
+
+    public function setImGroupId(?string $imGroupId): self
+    {
+        $this->imGroupId = $imGroupId;
 
         return $this;
     }

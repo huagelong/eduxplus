@@ -1,0 +1,22 @@
+{% macro chaptersub_tree(list) %}
+  {% if list is not empty %}
+    <ol class="dd-list">
+      {% for l in list %}
+        <li class="dd-item dd-collapsed" data-id="{{ l['id'] }}">
+          <div class="dd-handle">
+            <strong>{{ l['name']|raw }}</strong>
+            <span class="pull-right dd-nodrag">
+                {% if is_authorized('qa_admin_chaptersub_edit') %}
+                  <a href="{{ path("qa_admin_chaptersub_edit", {"id":l['id']}) }}" data-title="编辑"  class="poppage"><i class="fas fa-edit"></i></a>
+                {% endif %}
+              {% if is_authorized('qa_admin_chaptersub_delete_do') %}
+                <a href="{{ path("qa_admin_chaptersub_delete_do", {"id":l['id']}) }}"  data-confirm="确认要删除吗?" class="tree_branch_delete ajaxDelete"><i class="fas fa-trash"></i></a>
+              {% endif %}
+                </span>
+          </div>
+          {{ _self.chaptersub_tree(l['childs']) }}
+        </li>
+      {% endfor %}
+    </ol>
+  {% endif %}
+{% endmacro %}

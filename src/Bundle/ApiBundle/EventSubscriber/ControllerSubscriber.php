@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @Author: kaihui.wang
  * @Contact  hpuwang@gmail.com
@@ -9,13 +10,13 @@
 namespace App\Bundle\ApiBundle\EventSubscriber;
 
 
-use App\Bundle\ApiBundle\Service\ApiBaseService;
+use App\Bundle\AppBundle\Lib\Base\ApiBaseService;
 use App\Bundle\AppBundle\Lib\Base\BaseApiController;
 use App\Bundle\AppBundle\Lib\Base\BaseService;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\HttpKernel\Event\ControllerEvent;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Component\Security\Core\Exception\AuthenticationException;
 
 class ControllerSubscriber implements EventSubscriberInterface
 {
@@ -53,59 +54,51 @@ class ControllerSubscriber implements EventSubscriberInterface
             $sign = $request->headers->get("X-AUTH-SIGN");
             $debug = $request->headers->get("X-AUTH-DEBUG");
             $clientId = $request->headers->get('X-AUTH-CLIENT-ID');
-//            $token = $request->headers->get('X-AUTH-TOKEN');
-            $clientId = $clientId?strtolower($clientId):"";
+            $clientId = $clientId ? strtolower($clientId) : "";
+            $body = $request->getContent();
+            $contentType = $request->getContentType();
+            $contentType = strtolower($contentType);
 
-            if(!$sign || !$clientId) {
-                throw new AccessDeniedException("X-AUTH-* Required!");
+            if (!$sign || !$clientId) {
+                throw new AuthenticationException("X-AUTH-* Required!");
             }
 
-            $clientIds = $this->baseService->getConfig("app.clientId");
-            if(!isset($clientIds[$clientId])) throw new AccessDeniedException("X-AUTH-CLIENT-ID Authentication failed!");
+            $clientIds = $this->apiBaseService->getConfig("app.clientId");
+            if (!isset($clientIds[$clientId])) throw new AuthenticationException("X-AUTH-CLIENT-ID Authentication failed!");
             $salt = $clientIds[$clientId];
 
-            $env = $_SERVER['APP_ENV'];
-            if(($env === 'dev') && $debug){
+            $env = $this->apiBaseService->getEnv();
+            if (($env === 'dev') && $debug) {
                 return true;
             }
 
-            if($sign){
-                try {
-                    $realSign = base64_decode($sign);
-                    list($time, $sign) = json_decode($realSign, true);
-                    $now = time();
-                    if(($now-$time)>600){
-                        throw new AccessDeniedException("Api Request Expired");
-                    }
+            $realSign = base64_decode($sign);
+            list($time, $sign) = json_decode($realSign, true);
+            $now = time();
 
-                    $body = $request->getContent();
-                    if(!$debug){
-                        $str = base64_decode($body);
-                    }else{
-                        $str = $body;
-                    }
-
-                    $contentType = $request->getContentType();
-                    $contentType = strtolower($contentType);
-                    if(strpos($contentType,'multipart/form-data') !==false){
-                        $str="";
-                        $body="";
-                    }
-
-                    $checkSign = md5($str . $salt.$time);
-
-                    if($sign != $checkSign){
-                        $checkSign = md5($body . $salt.$time);
-                    }
-
-                    if($sign != $checkSign) throw new AccessDeniedException("Permission denied!");
-                    return true;
-                }catch (\Exception $e){
-                    throw new AccessDeniedException($e->getMessage());
-                }
-            }else{
-                throw new AccessDeniedException("This api needs X-AUTH-SIGN");
+            if (($now - $time) > 600) {
+                throw new AuthenticationException("Api Request Expired");
             }
+            if (!$debug) {
+                $str = base64_decode($body);
+            } else {
+                $str = $body;
+            }
+
+            if (strpos($contentType, 'multipart/form-data') !== false) {
+                $str = "";
+                $body = "";
+            }
+
+            $checkSign = md5($str . $salt . $time);
+
+            if ($sign != $checkSign) {
+                $checkSign = md5($body . $salt . $time);
+            }
+
+            if ($sign != $checkSign) throw new AuthenticationException("Permission denied!");
+
+            return true;
         }
 
         return true;

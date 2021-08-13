@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @Author: kaihui.wang
  * @Contact  hpuwang@gmail.com
@@ -9,6 +10,7 @@
 namespace App\Bundle\AdminBundle\Service;
 
 
+use App\Bundle\AppBundle\Lib\Base\AdminBaseService;
 use App\Bundle\AppBundle\Lib\Base\BaseService;
 use App\Entity\BaseRole;
 use App\Entity\BaseRoleMenu;
@@ -26,10 +28,11 @@ class AdminlogService extends AdminBaseService
         $this->userService = $userService;
     }
 
-    public function getList($request, $page, $pageSize){
+    public function getList($request, $page, $pageSize)
+    {
         $sql = $this->getFormatRequestSql($request);
 
-        $dql = "SELECT a FROM App:BaseAdminLog a " . $sql;
+        $dql = "SELECT a FROM App:BaseAdminLog a " . $sql . " ORDER BY a.id DESC";
         $em = $this->getDoctrine()->getManager();
         $query = $em->createQuery($dql);
         $pagination = $this->paginator->paginate(
@@ -40,8 +43,8 @@ class AdminlogService extends AdminBaseService
 
         $items = $pagination->getItems();
         $itemsArr = [];
-        if($items){
-            foreach ($items as $v){
+        if ($items) {
+            foreach ($items as $v) {
                 $vArr =  $this->toArray($v);
                 $uid = $vArr['uid'];
                 $user = $this->userService->getById($uid);

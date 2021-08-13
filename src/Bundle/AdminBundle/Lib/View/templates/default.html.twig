@@ -1,0 +1,311 @@
+{% if viewField %}
+      {% if disableSubmit !=1 %}
+        <div class="card card-default" style="padding-top: 10px;">
+            <div class="card-body" style="display: block;">
+      {% endif %}
+            {% for k,v in viewField %}
+                <div class="form-group  row">
+                    <label for="title" class="col-sm-2  col-form-label">{{ k }} :</label>
+
+                    {% if v['type'] == 'text' %}
+                        <div class="col-sm-10">
+                            <div class="input-group">
+                                <input type="text"
+                                disabled="true"
+                                {% if v['attributes'] %}
+                                    {% for ok,ov in v['attributes'] %}
+                                        {{ ok }}="{{ ov }}"
+                                    {% endfor %}
+                                {% endif %}
+
+                                       value="{{ v['defaultValue'] }}"
+                                       class="form-control form-control-sm"
+                                >
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {% if v['type'] == 'string' %}
+                        <div class="col-sm-10">{{ v['defaultValue'] }}</div>
+                    {% endif %}
+
+                    {% if v['type'] == 'daterange' %}
+                        <div class="col-sm-10">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                  <span class="input-group-text">
+                                    <i class="far fa-calendar-alt"></i>
+                                  </span>
+                                </div>
+                                <input type="text"
+                                {% if v['attributes'] %}
+                                    {% for ok,ov in v['attributes'] %}
+                                            {{ ok }}="{{ ov }}"
+                                    {% endfor %}
+                                {% endif %}
+                                value="{{ if_get(v['defaultValue'], '') }}"
+                                class="form-control form-control-sm daterange"
+                                >
+                            </div>
+                        </div>
+                    {% endif %}
+
+                     {% if v['type'] == 'datetime' %}
+                        <div class="col-sm-10">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="far fa-clock"></i></span>
+                                </div>
+                                <input type="text"
+
+                                {% if v['attributes'] %}
+                                    {% for ok,ov in v['attributes'] %}
+                                        {{ ok }}="{{ ov }}"
+                                    {% endfor %}
+                                {% endif %}
+
+                                value="{{ if_get(v['defaultValue'], '') }}"
+                                class="form-control form-control-sm datetime"
+                              >
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {% if v['type'] == 'date' %}
+                        <div class="col-sm-10">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="far fa-clock"></i></span>
+                                </div>
+                                <input type="text"
+                                {% if v['attributes'] %}
+                                    {% for ok,ov in v['attributes'] %}
+                                        {{ ok }}="{{ ov }}"
+                                    {% endfor %}
+                                {% endif %}
+
+                                value="{{ if_get(v['defaultValue'], '') }}"
+                                class="form-control form-control-sm date"
+                              >
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {% if v['type'] == 'datetimerange' %}
+                        <div class="col-sm-10">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="far fa-clock"></i></span>
+                                </div>
+                                <input type="text"
+
+                                {% if v['attributes'] %}
+                                    {% for ok,ov in v['attributes'] %}
+                                            {{ ok }}="{{ ov }}"
+                                    {% endfor %}
+                                {% endif %}
+
+                                 value="{{ if_get(v['defaultValue'], '') }}"
+                                class="form-control form-control-sm datetimerange"
+                              >
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {% if v['type'] == 'file' %}
+                        <div class="col-sm-10">
+                            <div class="input-group">
+                                <input type="hidden" name="{{ v['field'] }}"  value="{{ v['defaultValue'] }}" >
+                                <input type="file" data-field="{{ v['field'] }}" data-disabled=1
+                                       {% if v['attributes'] %}
+                                            {% for ok,ov in v['attributes'] %}
+                                                {% if ok != "name" and ok != "id" %}
+                                                    {{ ok }}="{{ ov }}"
+                                                {% endif %}
+                                            {% endfor %}
+                                        {% endif %}
+                                        multiple
+                                       class="form-control form-control-sm ufile"
+                                />
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {% if v['type'] == 'password' %}
+                        <div class="col-sm-10">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-key"></i></span>
+                                </div>
+                                <input type="password"
+
+                                        {% if v['attributes'] %}
+                                            {% for ok,ov in v['attributes'] %}
+                                                {{ ok }}="{{ ov }}"
+                                            {% endfor %}
+                                        {% endif %}
+
+                                       class="form-control form-control-sm"
+                                />
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {% if v['type'] == 'textarea' %}
+                        <div class="col-sm-10">
+                            <div class="input-group">
+                                <textarea
+                                {% if v['attributes'] %}
+                                    {% for ok,ov in v['attributes'] %}
+                                        {{ ok }}="{{ ov }}"
+                                    {% endfor %}
+                                {% endif %}
+                                class="form-control form-control-sm"
+                              disabled="disabled"
+                                >{{ v['defaultValue'] }}</textarea>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {% if v['type'] == 'boole' %}
+                    <div class="col-sm-10">
+                        <div class="input-group">
+                        <input type="text"
+                            {% if v['attributes'] %}
+                                {% for ok,ov in v['attributes'] %}
+                                    {{ ok }}="{{ ov }}"
+                                {% endfor %}
+                            {% endif %}
+                          disabled="disabled"
+                          value="{% if v['defaultValue'] %}是{% else %}否{% endif %}"
+                        >
+                        </div>
+                    </div>
+                  {% endif %}
+
+                    {% if v['type'] == 'select' %}
+                    <div class="col-sm-10">
+                        <div class="input-group">
+                          <input type="text"
+                                    {% if v['attributes'] %}
+                                        {% for ok,ov in v['attributes'] %}
+                                            {{ ok }}="{{ ov }}"
+                                        {% endfor %}
+                                    {% endif %}
+                          class="form-control form-control-sm"
+                                   disabled="disabled"
+                          {% set selectV = get_prop(v['options'],"") %}
+                            value="{% if selectV %}{% for sk,sv in selectV %}{% if sv==v['defaultValue'] %}{{ sk|raw }}{% endif %}{% endfor %}{% endif %}"
+                                     />
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    {% if v['type'] == 'multiSelect' %}
+                        <div class="col-sm-10">
+                            <div class="input-group" >
+                                <input type="hidden" name="formHidden-{{ v['field'] }}" value="{{ v['defaultValue']|json_encode }}"  />
+                                <select
+
+                                {% if v['attributes'] %}
+                                    {% for ok,ov in v['attributes'] %}
+                                        {{ ok }}="{{ ov }}"
+                                    {% endfor %}
+                                {% endif %}
+
+                                        class="form-control form-control-sm select"
+                                        multiple="multiple"
+                                        style="width: 100%;"
+                              disabled="disabled"
+                                >
+                                    {% set selectV = get_prop(v['options'],"") %}
+                                    {% if selectV %}
+                                        {% for k,v in selectV %}
+                                            <option value="{{ v }}">{{ k|raw }}</option>
+                                        {% endfor %}
+                                    {% endif %}
+                                </select>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {% if v['type'] == "search_select" %}
+                          <div class="col-sm-10">
+                                <div class="input-group" >
+                                   <input type="hidden" name="formHidden-{{ v['field'] }}" value="{{ v['defaultValue']|json_encode }}"  />
+                                    {% set selectV = get_prop(v['options'],"") %}
+                                    <select
+
+                                    {% if v['attributes'] %}
+                                        {% for ok,ov in v['attributes'] %}
+                                            {{ ok }}="{{ ov }}"
+                                        {% endfor %}
+                                    {% endif %}
+
+                                    class="form-control form-control-sm search_select"
+                                    data-url="{{ selectV[0] }}"
+                                    style="width: 100%;"
+                                  disabled="disabled"
+                                    >
+                                    {% if selectV[1] %}
+                                        {% for k,v in selectV[1] %}
+                                            <option value="{{ v }}">{{ k|raw }}</option>
+                                        {% endfor %}
+                                    {% endif %}
+                                    </select>
+                                </div>
+                          </div>
+                    {% endif %}
+
+                    {% if v['type'] == "search_multiple_select" %}
+                        <div class="col-sm-10">
+                            <div class="input-group" >
+                                <input type="hidden" name="formHidden-{{ v['field'] }}" value="{{ v['defaultValue']|json_encode }}"  />
+                                {% set selectV = get_prop(v['options'],"") %}
+                                <select
+
+                                {% if v['attributes'] %}
+                                    {% for ok,ov in v['attributes'] %}
+                                        {{ ok }}="{{ ov }}"
+                                    {% endfor %}
+                                {% endif %}
+
+                                class="form-control form-control-sm search_select"
+                                multiple="multiple"
+                                data-url="{{ selectV[0] }}"
+                                style="width: 100%;"
+                              disabled="disabled"
+                                >
+                                {% if selectV[1] %}
+                                    {% for k,v in selectV[1] %}
+                                        <option value="{{ v }}">{{ k|raw }}</option>
+                                    {% endfor %}
+                                {% endif %}
+                                </select>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {% if v['type'] == 'rich_editor' %}
+                        <div class="col-sm-10">
+                            <div class="input-group" >
+                <textarea  class="form-control form-control-sm rich_text"
+                {% if v['attributes'] %}
+                    {% for ok,ov in v['attributes'] %}
+                        {{ ok }}="{{ ov }}"
+                    {% endfor %}
+                {% endif %}
+                              disabled="disabled"
+
+                />{{ v['defaultValue']}}</textarea>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                </div>
+            {% endfor %}
+              {% if disableSubmit !=1 %}
+            </div>
+        </div>
+              {% endif %}
+{% endif %}

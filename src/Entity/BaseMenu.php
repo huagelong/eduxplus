@@ -48,6 +48,12 @@ class BaseMenu
      */
     private $isShow ='0';
 
+
+    /**
+     * @ORM\Column(type="boolean", options={"default"="0","comment"="是否是全局权限"})
+     */
+    private $isGlobal ='0';
+
     /**
      * @ORM\Column(type="boolean", options={"default"="0","comment"="是否锁定，锁定后不能修改"})
      */
@@ -153,6 +159,18 @@ class BaseMenu
     public function setIsShow(bool $isShow): self
     {
         $this->isShow = $isShow;
+
+        return $this;
+    }
+
+    public function getIsGlobal(): ?bool
+    {
+        return $this->isGlobal;
+    }
+
+    public function setIsGlobal(bool $isGlobal): self
+    {
+        $this->isGlobal = $isGlobal;
 
         return $this;
     }

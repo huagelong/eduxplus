@@ -1,0 +1,16 @@
+{% extends "@AdminBundle/layout/pop.html.twig" %}
+
+{% block page_title %}编辑章节点{% endblock %}
+{% block breadcrumb %}
+    <li class="breadcrumb-item"><a href="{{ path("qa_admin_chapter_index") }}">章节点管理</a></li>
+{% endblock %}
+
+{% block page %}
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            {{ formData|raw }}
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -14,13 +14,12 @@ use App\Entity\BaseAdminLog;
 use App\Entity\BaseMenu;
 use App\Repository\BaseMenuRepository;
 use Symfony\Component\HttpFoundation\Request;
+use App\Bundle\AppBundle\Lib\Base\AdminBaseService;
 
 use function GuzzleHttp\json_decode;
 
 class MenuService extends AdminBaseService
 {
-
-
     public function getAllMenu(){
         $menuListDql = "SELECT a FROM App:BaseMenu a ORDER BY a.sort ASC";
         $menulist = $this->fetchAll($menuListDql);
@@ -28,6 +27,7 @@ class MenuService extends AdminBaseService
 
         $rs = [];
         foreach ($menulist as $v){
+            if($v['isGlobal']) continue;
             $pid = $v['pid'];
             $rs[$pid][] = $v;
         }
@@ -67,7 +67,7 @@ class MenuService extends AdminBaseService
         }
     }
 
-    public function getMyMenuDefault($uid){
+    public function getMyMenuDefault($uid, $onlyShow=0){
         $dqlRole = "SELECT a.roleId FROM App:BaseRoleUser a WHERE a.uid=:uid";
         $roleIds = $this->fetchFields("roleId", $dqlRole, ["uid"=>$uid]);
         if(!$roleIds) return [];
@@ -78,15 +78,20 @@ class MenuService extends AdminBaseService
         if(!$menuIds) return [];
 //        dump($menuIds);
         $menuIds = array_unique($menuIds);
-        $menuListDql = "SELECT a FROM App:BaseMenu a WHERE a.id in(:id) ORDER BY a.sort ASC";
+        if($onlyShow){
+            $menuListDql = "SELECT a FROM App:BaseMenu a WHERE a.id in(:id) AND a.isAccess=0 ORDER BY a.sort ASC";
+        }else{
+            $menuListDql = "SELECT a FROM App:BaseMenu a WHERE a.id in(:id) ORDER BY a.sort ASC";
+        }
+
         $menulist = $this->fetchAll($menuListDql, ["id"=>$menuIds]);
         if(!$menulist) return [];
         return $menulist;
     }
 
-    public function getMyMenu($uid){
+    public function getMyMenu($uid, $onlyShow=0){
         //获取用户角色
-        $menulist = $this->getMyMenuDefault($uid);
+        $menulist = $this->getMyMenuDefault($uid, $onlyShow);
 //        dump($menulist);
         //处理
         if(!$menulist) return [];
@@ -111,8 +116,12 @@ class MenuService extends AdminBaseService
         return $result;
     }
 
-    public function addActionLog($route, $pathinfo, $inputdata, $ip){
-        $user = $this->getUser();
+    public function getMenuByRoute($routeName){
+        $sql = "SELECT a FROM App:BaseMenu a WHERE a.url=:url";
+        return $this->fetchOne($sql, ['url'=>$routeName]);
+    }
+
+    public function addActionLog($uid, $route, $pathinfo, $inputdata, $ip){
         //通过route获取动作消息
         $menuDql = "SELECT a FROM App:BaseMenu a WHERE a.url =:url";
         $menuInfo = $this->fetchOne($menuDql, ["url"=>$route]);
@@ -126,7 +135,6 @@ class MenuService extends AdminBaseService
                 $descr = $pidInfo["name"]."-";
             }
             $descr .=$name;
-            $uid = $user->getId();
             $model = new BaseAdminLog();
             $model->setUid($uid);
             $model->setRoute($route);
@@ -220,6 +228,19 @@ class MenuService extends AdminBaseService
     public function getMenuById($id){
         $sql = "SELECT a FROM App:BaseMenu a WHERE a.id=:id";
         return $this->fetchOne($sql, ['id'=>$id]);
+    }
+
+    /**
+     * 检查导航三层
+     * @param $id
+     * @return bool
+     */
+    public function checkMenuThree($id){
+        $menuInfo = $this->getMenuById($id);
+        if(!$menuInfo || ($menuInfo['pid'] == 0)) return true;
+        $menuInfo2 = $this->getMenuById($menuInfo['pid']);
+        if(!$menuInfo2 || ($menuInfo2['pid'] == 0)) return true;
+        return false;
     }
 
     public function getChild($id){

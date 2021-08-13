@@ -25,6 +25,7 @@ class IsAuthorizedExtension extends AbstractExtension
 
     public function doSomething($routeName)
     {
-        return $this->roleService->isAuthorized($routeName);
+        $uid = $this->roleService->getUid();
+        return $this->roleService->isAuthorized($uid, $routeName);
     }
 }

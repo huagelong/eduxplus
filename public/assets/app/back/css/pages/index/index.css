@@ -1,0 +1,131 @@
+.exp_contain{padding-bottom: 60px;}
+
+/*banner  位置图*/
+.contain_box_banner{
+	width: 100%;
+	height: 400px;
+	position: relative;
+	overflow: hidden;
+
+}
+.contain_box_banner>ul{list-style-type: none;}
+/*跑马灯效果先隐藏*/
+.contain_box_banner>ul.uIndex{position: absolute;bottom: 10px;left: 135px;display: none;}
+.contain_box_banner>ul.uIndex li{width: 30px;height: 30px;background: #11c1f3;text-align: center;line-height: 30px;color: white;border-radius: 50%;float: left;margin-right: 10px;}
+.contain_box_banner>ul.uIndex li.bg{background: #e42012;}
+
+/*.contain_box_banner>ul.uItems li{position: absolute;left: 0;top: 0;}*/
+.contain_box_banner>ul.uItems>li div.contain_content>.contain_img{display: block;height: 400px; position: relative;overflow: hidden;width: 100%;}
+.contain_box_banner>ul.uItems>li div.contain_content>.contain_img>img{cursor:initial;height:100%;position: absolute;left: 50%;transform: translate(-50%,0);top: 0;}
+
+
+
+.contain_box_banner>ul.uItems li div.contain_content{width: 100%;height: 100%;position: relative;}
+.contain_box_banner>ul.uItems li div.contain_banner_box{position: absolute;left: 50%;top: 25%;margin-left: -510px;}
+.contain_box_banner>ul.uItems li div.contain_banner_box>p.banner_head{font-size: 48px;margin-bottom: 8px;color: #fff;}
+.contain_box_banner>ul.uItems li div.contain_banner_box>p.banner_title{font-size: 32px;margin-bottom: 48px;color: #fff;}
+.contain_box_banner>ul.uItems li div.contain_banner_box>a{border-radius: 4px;color: #fff;width: 188px;height: 50px;line-height: 50px;text-align: center;display: inline-block;font-size: 20px;}
+.contain_box_banner>ul.uItems li div.contain_banner_box>a.banner_lf_btn{background:#2C8CFF;color:#fff;}
+.contain_box_banner>ul.uItems li div.contain_banner_box>a.banner_rg_btn{background:rgba(255,255,255,.9);margin-left: 20px;color:#333 ;}
+.contain_box_banner>ul.uItems li div.contain_banner_box>a.banner_rg_btn:hover{background:#fff;}
+.contain_box_banner>ul.uItems li div.contain_banner_box>a.banner_lf_btn:hover{background: #1D7AEA;}
+
+.contain_box_banner>div.btn{display: none;width: 40px;height: 60px;text-align: center;line-height: 60px;background: #4d4d4d;opacity: .8;color: white;font-size: 20px;position: absolute;}
+.contain_box_banner>div.btnPrev{top: 130px;}
+.contain_box_banner>div.btnNext{top: 130px;right: 0;}
+/*三级导航位置*/
+.exp_headerPagation{margin: 0 auto}
+.exp_headerPagation>ul{position: relative;}
+.exp_headerPagation>ul>li{float: left;height: 80px;}
+.exp_headerPagation>ul>li>a{font-size: 14px;color: #333;display: block;padding: 0 24px;line-height: 80px;}
+.exp_headerPagation>ul>li>.iphone_down{line-height: 50px!important;display: inline-block; padding: 0!important}
+.exp_headerPagation>ul>li>a:hover,.exp_headerPagation>ul>li.sec>a{color: #2C8CFF;}
+
+.exp_headerPagation>ul>li.iphone{position: absolute;right: 0;top: 15px;z-index: 2; line-height: 50px;height: 50px; font-size: 14px;color: #333;padding-left: 26px;background-image: url(../../../images/common/iphone.png);background-repeat: no-repeat;background-size: 14px;background-position: 5px center;cursor: pointer;}
+
+.exp_headerPagation>ul>li.iphone>a>.iphone_pic{display: none; text-align: center; background-color: #fff; padding:20px 20px 0px 20px;position: absolute;left: 50%;width: 100px;z-index: 6;top: 46px;margin-left: -68px;cursor: default;}
+.exp_headerPagation>ul>li.iphone>a>.iphone_pic>img{display: block;width: 100%; vertical-align: bottom;}
+.exp_headerPagation>ul>li.iphone>a>.iphone_pic>span{display: block; height: 30px; line-height: 30px!important; padding-bottom: 10px; color: #333;font-size: 12px;}
+.exp_headerPagation>ul>li.iphone>a>.iphone_pic>.iphone_pic{height: 30px; display: inline-block;}
+.exp_headerPagation>ul>li.iphone:hover .iphone_pic{display: block;}
+
+
+/* 分类筛选 */
+.lession_class_box{padding-top: 30px;padding-bottom: 20px; border-top: 1px solid #e2e2e2;overflow: hidden;}
+.lession_class_box>ul{width: 1140px;margin-left: -20px;}
+.lession_class_box>ul>li{float: left;margin-left: 20px;margin-bottom: 20px;}
+.lession_class_box>ul>li>a{display: block;height: 22px;line-height: 22px;font-size: 12px;color: #999;text-align: center;padding: 0 10px;border: 1px solid #999;border-radius: 14px;}
+
+.lession_class_box>ul>li.sec>a{background: #2C8CFF;border-color: #2C8CFF;color: #fff;}
+.lession_class_box>ul>li>a:hover{background: #2C8CFF;border-color: #2C8CFF;color: #fff;}
+
+/* 课程列表 */
+.lession_list{width: 1144px;}
+
+.lession_list>li{border-radius: 4px;float: left;margin-right: 20px; overflow: hidden; border: 1px solid #E7E7E7;width: 358px;height: 278px;background: #fff;margin-bottom: 20px;transition: all .3s ease-in-out;}
+.lession_list>li.index1{width: 738px;}
+.lession_list>li:hover{box-shadow: 2px 2px 12px 0 rgba(64,64,64,0.2);transform: translateY(-3px);}
+/* .lession_list>li.index1:hover{transform: translateY(0px);box-shadow: none;} */
+.lession_list>li>a{display: block;width: 100%;height: 100%;position: relative;}
+.lession_list>li>a>.msg_box>.msg_l>.lesson_list_card{position: absolute;z-index: 999;top: 0;right: -1px;height: 24px;line-height: 24px;text-align: center;font-size: 12px;color: #fff;background: #E2B866;padding: 0 9px;font-style: inherit; }
+.lession_list>li>a>.msg_box>.msg_l>.lesson_list_card:before{content: '';position: absolute;left: -8px;top: 0;width: 0;height: 0;line-height: 0;font-size: 0;overflow: hidden;border-left: 8px dashed transparent;border-top: 24px solid #E2B866;border-bottom: 10px dashed transparent;}
+.lession_list>li .msg_box{height: 188px;width: 100%;position: relative;overflow: hidden; z-index: 1;}
+.lession_list>li .msg_l{padding: 30px 0 0;width: 100%;position: absolute;z-index: 4;left: 0;top: 0;}
+.lession_list>li .msg_l>.msg_box_name{padding-left: 20px;width: 320px; margin-top:6px;max-height: 55px; margin-bottom: 10px;overflow: hidden; line-height: 28px;font-size: 20px;font-weight: 700;color: #000;}
+.lession_list>li .msg_l>.msg_box_time{padding-left: 20px;width: 320px; margin-bottom: 14px; font-size:14px; overflow: hidden; color: #333;}
+.lession_list>li .msg_l>.msg_box_ul{ display: flex;}
+.lession_list>li .msg_l>.msg_box_ul li{color: #333;font-size:12px; padding: 2px 6px;background:#F2F2F2;border-radius:2px; }
+
+.lession_list>li .msg_l>ul{padding-left: 20px;}
+.lession_list>li .msg_l>ul>li{float: left; color: #000;margin-right: 10px; text-align: center;font-size: 12px;}
+.lession_list>li .msg_l>ul>li.teachers_lable{color: #999;margin-right: 0px;}
+.lession_list>li .msg_l>div{font-size: 12px;color: #999;padding-top: 14px;padding-left: 20px;}
+.lession_list>li .msg_l>div>span{color: #FF662C;}
+
+
+.lession_list>li .pic_r {position: absolute;z-index: 2;right: 1px;top: 5px;font-size: 0;width: 160px;height: 210px;line-height: 210px;overflow: hidden;}
+.lession_list>li.index1 .pic_r {right: 1px;width: 182px;height: 210px; top: auto;bottom:1px;line-height: 210px;text-align: right;}
+.lession_list>li .pic_r>img {max-width: 100%;max-height: 100%; vertical-align: bottom;}
+
+.lession_list>li .item_bott{padding: 0 20px;height: 60px;}
+.lession_list>li .item_bott>ul{width:68%; float: left;}
+.lession_list>li .item_bott>ul>li{ float: left; max-width: 60px; text-align: center; text-align: center; margin-right: 20px;}
+.lession_list>li .item_bott>ul>li>span{height:25px;max-width: 60px; font-size: 12px; text-align:center;line-height:22px; color: #666; display: block;  overflow: hidden;}
+.lession_list>li .item_bott>ul>li>div{ width: 40px;margin:0 auto; display: block; height: 40px; border-radius: 50%; text-align: center;}
+.lession_list>li .item_bott>.item_size{float: left; font-size: 12px;line-height: 52px;height: 52px; color: #999999;}
+.lession_list>li .item_bott>.item_money{float: right; color: #FF662C;width: 32%; text-align: right; margin-top: 10px; height: 50px; vertical-align: bottom;}
+.lession_list>li .item_bott>.item_money .money_price{ font-size: 14px; }
+.lession_list>li .item_bott>.item_money .money_price span{ font-size: 28px; margin-left: 2px; }
+.lession_list>li .item_bott>.item_money .money_bug{font-size:12px; color: #999}
+.lession_list>li .item_bott>.item_money .money_free{ font-size: 24px;}
+
+
+.lession_list>li.index1 .msg_box{height: 215px;}
+.lession_list>li.index1 .msg_l{padding: 30px 0px 0 0px;width: 530px;}
+.lession_list>li.index1 .msg_l>h3{padding-top: 3px;color: #000; font-size: 24px;font-weight: normal;padding-left: 20px;font-weight: 700;line-height: 28px;height: 28px;overflow: hidden;white-space: nowrap;text-overflow:ellipsis;}
+.lession_list>li.index1 .msg_l>p{font-weight: normal; width: 510px; font-size: 12px;line-height: 16px;height: 16px; overflow: hidden;white-space: nowrap;text-overflow:ellipsis;padding: 10px 0 0px 20px;color: #666;}
+/* .lession_list>li.index1 .msg_l>ul>li{text-align: center;font-size: 12px;line-height: 18px;height: 18px; border-radius: 15px;padding: 0 9px;} */
+.lession_list>li.index1 .msg_l>div{padding-top: 15px;}
+.lession_list>li.index1 .item_bott{padding: 0 20px;height: 62px;}
+.lession_list>li.index1 .item_bott>.item_size{font-size: 12px;line-height: 53px;height: 46px; padding-top: 10px;}
+.lession_list>li.index1 .item_bott>.item_money{line-height: 56px;height: 56px;font-size: 16px;}
+.lession_list>li.index1 .item_bott>.item_money>span{display: inline-block;vertical-align: baseline;}
+
+.lession_list>li .msg_l>div.course_from{font-size: 14px;height: 22px;line-height: 22px;text-align: center;padding: 0 10px; color: #2C8CFF;border: 1px solid #2C8CFF;border-radius: 12px;display: inline-block;margin: 0 0 10px 5px;}
+.lession_list>li .msg_l>div.course_from:first-of-type{margin-left: 20px;}
+
+
+
+/* 报考课程弹框选择 */
+/* .course_choose_box{position: fixed;z-index: 5000;left: 0;top: 0;width: 100%;height: 100%;background: rgba(0,0,0,0.3);}
+.course_choose_box>.course_choose_section{position: absolute;left: 50%;top: 50%;margin-left: -346px;transform: translateY(-50%);background: #FFFFFF;border-radius: 10px;width: 612px;padding: 30px 40px 25px;}
+.course_choose_box>.course_choose_section>h3{font-weight: normal;font-size: 20px;color: #333333;}
+.course_choose_box>.course_choose_section>ul{padding: 36px 0 10px;}
+.course_choose_box>.course_choose_section>ul>li{height: 32px;line-height: 32px;font-size: 0;padding-bottom: 24px;}
+.course_choose_box>.course_choose_section>ul>li>p{font-size: 16px;width: 114px;display: inline-block;vertical-align: middle; color: #333333;}
+.course_choose_box>.course_choose_section>ul>li>div{cursor: pointer; font-size: 14px;color: #666666;padding: 0 14px; display: inline-block;vertical-align: middle; height: 30px;line-height: 30px; text-align: center;margin-right: 20px;border: 1px solid #666666;border-radius: 16px;}
+.course_choose_box>.course_choose_section>ul>li>div.course_sec{border-color: #2C8CFF; background: #2C8CFF;color: #fff;}
+.course_choose_box>.course_choose_section button{background: #2C8CFF;border-radius: 17px;display: block;margin: 0 auto;width: 128px;height: 34px;line-height: 34px;font-size: 16px;color: #FFFFFF;} */
+
+
+

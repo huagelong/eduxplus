@@ -1,4 +1,4 @@
-adminBundle.Controllers:
+AdminBundle.Controllers:
     resource: ../../src/Bundle/AdminBundle/Controller/
     type: annotation
     prefix: /admin
@@ -7,7 +7,7 @@ ApiBundle.Controllers:
     resource: ../../src/Bundle/ApiBundle/Controller/
     type: annotation
     prefix: /api
-    
+
 AppBundle.Controllers:
     resource: ../../src/Bundle/AppBundle/Controller/
     type: annotation

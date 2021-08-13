@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @Author: kaihui.wang
  * @Contact  hpuwang@gmail.com
@@ -27,20 +28,22 @@ class WebTestCaseBase extends WebTestCase
         $this->sfcontainer = self::$container;
     }
 
-    protected function loginIn(){
-        $session = $this->sfcontainer->get('session');
-        $sql = "SELECT a FROM App:BaseUser a WHERE a.mobile = :mobile";
-        $service = $this->sfcontainer->get(\App\Bundle\AppBundle\Lib\Base\BaseService::class);
-        $user = $service->fetchOne($sql, ["mobile"=>"17621487000"], 1);
-        $firewallName = 'admin';
-        $firewallContext = 'admin';
+    protected function loginIn()
+    {
+        // $session = $this->sfcontainer->get('session');
+        // $sql = "SELECT a FROM App:BaseUser a WHERE a.mobile = :mobile";
+        // $service = $this->sfcontainer->get(\App\Bundle\AppBundle\Lib\Base\BaseService::class);
+        // $user = $service->fetchOne($sql, ["mobile"=>"17621487000"], 1);
+        // $firewallName = 'admin';
+        // $firewallContext = 'admin';
 
-        $token = new UsernamePasswordToken($user, null, $firewallName, $user->getRoles());
-        $session->set('_security_'.$firewallContext, serialize($token));
-        $session->save();
+        // $token = new UsernamePasswordToken($user, null, $firewallName, $user->getRoles());
+        // $session->set('_security_'.$firewallContext, serialize($token));
+        // $session->save();
 
-        $cookie = new Cookie($session->getName(), $session->getId());
-        $this->client->getCookieJar()->set($cookie);
+        // $cookie = new Cookie($session->getName(), $session->getId());
+        // $this->client->getCookieJar()->set($cookie);
+
+        
     }
-
 }

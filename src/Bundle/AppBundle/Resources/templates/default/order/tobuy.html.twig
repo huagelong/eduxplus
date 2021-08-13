@@ -1,0 +1,101 @@
+{% extends '@AppBundle/layout/layout.html.twig' %}
+{% block page_title %}{{ detail['name'] }} 购买 {% endblock %}
+
+{% block page %}
+     {{ parent() }}
+<div id="main" class="commonMain">
+  <div class="layui-main buyHead buyCard">
+
+    <table class="layui-table">
+      <colgroup>
+        <col width="150">
+        <col width="200">
+      </colgroup>
+      <thead>
+      <tr>
+        <th>课程名称</th>
+        <th>价格</th>
+      </tr>
+      </thead>
+      <tbody>
+      {% if goodsList %}
+        {% for key, info in goodsList %}
+            <tr>
+              <td>{{ info['name'] }}</td>
+              <td><span class="fontColorRed">¥{{ info['shopPriceView'] }}</span></td>
+            </tr>
+        {% endfor %}
+      {% endif %}
+      </tbody>
+    </table>
+  </div>
+
+{#  优惠券#}
+
+  <div class="layui-main buyCoupon buyCard">
+    <div class="layui-card">
+      <div class="layui-card-header">优惠码</div>
+      <div class="layui-card-body">
+        <form action="{{ path("app_order_tobuy", {'uuid':uuid}) }}" method="get" class="layui-form">
+          <div class="layui-form-item">
+            <div class="layui-inline">
+              <input autocomplete="off" class="layui-input" name="couponSn" type="text" value="{{ couponSn }}" placeholder="请输入优惠码" />
+            </div>
+            <div class="layui-inline">
+              <input type="hidden" name="goodsIdstr" value="{{ goodsIdstr|raw }}">
+              <input class="layui-btn layui-btn-normal layui-btn-sm" type="submit" value="使用"/>
+              {% if couponWarn %}
+                <span style="color: red">{{ couponWarn }}</span>
+              {% endif %}
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="layui-main buyChoosePay buyCard">
+    <div class="layui-card">
+      <div class="layui-card-header">选择支付方式</div>
+      <div class="layui-card-body">
+        <form action="{{ path("app_order_addbuy", {'uuid':uuid}) }}" method="POST" class="layui-form">
+          <div class="layui-form-item">
+            <div class="layui-input-block">
+              <input type="radio" name="paymentType" value="1" title="支付宝" checked>
+              <input type="radio" name="paymentType" value="2" title="微信" >
+            </div>
+          </div>
+          <div class="layui-form-item">
+            <div class="layui-input-block">
+                <div class="layui-row">
+                  <div class="layui-col-md6">优惠金额：<label class="fontColorRed">-¥{{ discount }}</label>元</div>
+                  <div class="layui-col-md6">应付金额：<label class="fontColorRed">¥{{ shopPrice }}</label>元</div>
+                </div>
+            </div>
+          </div>
+          <div class="layui-form-item">
+            <label class="layui-form-label">备注</label>
+            <div class="layui-input-block">
+              <textarea name="userNotes" placeholder="请输入备注内容" class="layui-textarea"></textarea>
+            </div>
+          </div>
+          <div class="layui-form-item">
+            <div class="layui-input-block">
+              <a href="#" style="color:#1E9FFF">阅读购买协议</a>
+            </div>
+          </div>
+          <div class="layui-form-item">
+            <div class="layui-input-block">
+              <input type="hidden" name="_csrf_token" value="{{ csrf_token('dobuy') }}" />
+              <input type="hidden" name="couponSn" value="{{ couponSn }}" />
+              <input type="hidden" name="goodsIdstr" value="{{ goodsIdstr|raw }}">
+              <button class="layui-btn layui-btn-normal  layui-btn-lg" >阅读协议并支付</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+</div>
+{% endblock %}

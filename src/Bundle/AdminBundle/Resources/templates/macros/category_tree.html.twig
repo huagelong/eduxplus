@@ -2,9 +2,12 @@
     {% if categorys is not empty %}
     <ol class="dd-list">
         {% for category in categorys %}
-            <li class="dd-item" data-id="{{ category['id'] }}">
+            <li class="dd-item dd-collapsed" data-id="{{ category['id'] }}">
                 <div class="dd-handle">
-                    <i class="far fa-circle"></i>&nbsp;<strong>{{ category['name']|raw }}</strong>
+                    <strong>{{ category['name']|raw }}</strong>
+                    {% if category['mobileIcon'] %}
+                  <img src="{{ get_prop(category, "mobileIcon", "image")|raw }}" class="imgpreview" width="20px" />
+                    {% endif %}
                     <span class="pull-right dd-nodrag">
                 {% if is_authorized('admin_teach_category_edit') %}
                     <a href="{{ path("admin_teach_category_edit", {"id":category['id']}) }}" data-title="编辑"  class="poppage"><i class="fas fa-edit"></i></a>

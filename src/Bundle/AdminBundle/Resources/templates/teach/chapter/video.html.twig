@@ -1,5 +1,54 @@
 {% extends "@AdminBundle/layout/pop.html.twig" %}
 
+{% if vodAdapter == 1 %}
+{% import "@AdminBundle/macros/vod/tengxunyun.html.twig" as vodMacros %}
+{% endif %}
+
+{% if vodAdapter == 2 %}
+    {% import "@AdminBundle/macros/vod/aliyun.html.twig" as vodMacros %}
+{% endif %}
+
+{% block head_stylesheets %}
+    {{ parent() }}
+    {% if vodAdapter == 1 %}
+    <link href="https://imgcache.qq.com/open/qcloud/video/tcplayer/tcplayer.css" rel="stylesheet">
+    {% endif %}
+
+    {% if vodAdapter == 2 %}
+    <link rel="stylesheet" href="https://g.alicdn.com/de/prismplayer/2.8.8/skins/default/aliplayer-min.css" />
+    {% endif %}
+
+{% endblock %}
+
+{% block head_javascript %}
+    {{ parent() }}
+    <script src="{{ asset('assets/plugins/es6-promise/es6-promise.auto.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/vue2.6/vue.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/axios0.19.2/axios.min.js') }}"></script>
+
+{% if vodAdapter == 1 %}
+    <script src="{{ asset('assets/plugins/tengxunyun/vod-js-sdk-v6/vod-js-sdk-v6.js') }}"></script>
+    <script src="{{ asset('assets/plugins/tengxunyun/vod.js') }}"></script>
+    <!--[if lt IE 9]>
+    <script src="//imgcache.qq.com/open/qcloud/video/tcplayer/ie8/videojs-ie8.js"></script>
+    <![endif]-->
+    <!--如果需要在 Chrome 和 Firefox 等现代浏览器中通过 H5 播放 HLS 格式的视频，需要在 tcplayer.v4.1.min.js 之前引入 hls.min.0.13.2m.js。-->
+    <script src="//imgcache.qq.com/open/qcloud/video/tcplayer/libs/hls.min.0.13.2m.js"></script>
+    <!--播放器脚本文件-->
+    <script src="//imgcache.qq.com/open/qcloud/video/tcplayer/tcplayer.v4.1.min.js"></script>
+{% endif %}
+
+{% if vodAdapter == 2 %}
+    <script src="{{ asset('assets/plugins/aliyun/aliyun-upload-sdk-1.5.0/aliyun-upload-sdk-1.5.0.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/aliyun/aliyun-upload-sdk-1.5.0/lib/aliyun-oss-sdk-5.3.1.min.js') }}"></script>
+    <script type="text/javascript" charset="utf-8" src="https://g.alicdn.com/de/prismplayer/2.8.8/aliplayer-min.js"></script>
+    {# <script src="https://g.alicdn.com/de/prismplayer/2.8.2/hls/aliplayer-vod-anti-min.js"></script> #}
+  <script src="{{ asset('assets/plugins/aliyun/aliplayercomponents-1.0.5.min.js') }}"></script>
+  <script src="{{ asset('assets/plugins/aliyun/vod.js') }}"></script>
+{% endif %}
+
+{% endblock %}
+
 {% block page_title %}视频管理{% endblock %}
 {% block breadcrumb %}
     <li class="breadcrumb-item"><a href="{{ path("admin_teach_course_index") }}">课程管理</a></li>
@@ -11,9 +60,15 @@
     <div class="row">
         <div class="col-md-12">
             <div class="card card-default">
-                <form method="POST" action="{{ path("admin_api_teach_chapter_video", {id:id}) }}" class="form-horizontal ajaxform" accept-charset="UTF-8" >
+                <form method="POST" action="{{ path("admin_api_teach_chapter_vod", {id:id}) }}" class="form-horizontal ajaxform" accept-charset="UTF-8" >
                     <div class="card-body" style="display: block;">
                         {{ formData|raw }}
+                        {% if vodAdapter == 1 %}
+                            {{ vodMacros.vod(tengxunyunAppId, fileName, region, videoInfo) }}
+                        {% endif %}
+                        {% if vodAdapter == 2 %}
+                            {{ vodMacros.vod(userId, fileName, region, videoInfo, palyAuth) }}
+                        {% endif %}
                     </div>
                     <div class="card-footer">
                         <div class="col-md-2"></div>

@@ -1,0 +1,12 @@
+{% if userinfo %}
+  <ul class="right-nav">
+    <li><a href="{{ path('app_logout') }}" style="font-size: 12px;">退出</a></li>
+    <li><a href="{{ path('app_user_msg') }}" style="font-size: 12px;">我的消息{% if msgUnreadCount>0 %}<span class="layui-badge">{{ msgUnreadCount }}</span>{% endif %}</a></li>
+    <li><a href="{{ path('app_user_home') }}" style="font-size: 12px;">我的主页</a></li>
+    <li><a href="{{ path('app_user_home') }}" style="font-size: 12px;">{{ userinfo.displayName }}</a></li>
+  </ul>
+{% else %}
+  <ul class="right-nav">
+    <li><a href="{{ path("app_login") }}" style="font-size: 12px;">登录&注册</a></li>
+  </ul>
+{% endif %}

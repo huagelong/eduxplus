@@ -1,0 +1,52 @@
+.learn_contain{padding-bottom: 60px;}
+/**********   左侧部分  start************/
+.question_content{
+	width: 100%;
+	padding-top: 21px;
+}
+
+.question_content .question_mainCont .question_pagationSide{margin-right: 16px;width: 222px;float: left;}
+.question_pagationSide ul{
+    background: #FFFFFF;
+    border: 1px solid #E7E7E7;
+    border-radius: 4px;
+}
+.question_pagationSide ul li{
+	margin:15px 0px
+}
+.question_pagationSide ul li.person_navl{display:none;}
+.question_pagationSide ul.person_nav_ul li{display:none;}
+.question_pagationSide ul.person_nav_ul li.person_navl{display:block;}
+
+/* .question_pagationSide ul li:first-of-type{
+	margin-top: 0;
+} */
+.question_pagationSide ul li a:hover{
+	color: #2C8CFF;
+}
+.question_pagationSide ul li.active a{
+	background: #EAF3FF;
+    border-left: 4px #2C8CFF solid;
+    color: #2C8CFF;
+}
+
+.question_pagationSide ul li a{
+    padding-right:4px;
+    border-left:4px solid #fff;
+    display: block;
+    color: black;
+    height: 40px;
+    text-align: center;
+    line-height: 40px;
+    color: black;
+    font-size: 14px;
+    color: #333333;
+}
+
+.question_mainCont .question_right{
+	width: 882px;
+	float: left;
+}
+
+
+.usersex_btn{cursor: pointer;}

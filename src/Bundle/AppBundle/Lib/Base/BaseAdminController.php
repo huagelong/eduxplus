@@ -10,5 +10,10 @@ namespace App\Bundle\AppBundle\Lib\Base;
 
 class BaseAdminController extends BaseController
 {
-
+    public function getUid()
+    {
+        $user = $this->getUser();
+        if($user) return $user->getId();
+        return 0;
+    }
 }

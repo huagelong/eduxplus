@@ -19,7 +19,7 @@ class AliyunOssService extends BaseService{
     protected $endpoint;
 
     protected $ossReturn;
-    
+
 
     /**
      * 删除文件
@@ -72,7 +72,7 @@ class AliyunOssService extends BaseService{
      * @param $localPath
      * @return string
      */
-    public function upOss($remotePath, $localPath)
+    public function up($remotePath, $localPath)
     {
 //        print_r(func_get_args());
         $remotePath = trim($remotePath, '/');
@@ -101,6 +101,10 @@ class AliyunOssService extends BaseService{
         $this->bucket = $this->getOption("app.aliyun.oss.bucket");
         $this->endpoint = $this->getOption("app.aliyun.oss.endpoint");
         $useCname = false;
+
+        if(!stristr($this->endpoint,"aliyuncs.com")){
+            $useCname = true;
+        }
 
         try {
             $ossClient = new OssClient($accessKeyID, $accessKeySecret, $this->endpoint, $useCname);

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @Author: kaihui.wang
  * @Contact  hpuwang@gmail.com
@@ -9,6 +10,7 @@
 namespace App\Bundle\AdminBundle\Controller;
 
 
+use App\Bundle\AdminBundle\Lib\View\View;
 use App\Bundle\AdminBundle\Service\MenuService;
 use App\Bundle\AppBundle\Lib\Base\BaseAdminController;
 use FOS\RestBundle\Controller\Annotations as Rest;
@@ -21,7 +23,8 @@ class MenuController extends BaseAdminController
     /**
      * @Rest\Get("/menu/index", name="admin_menu_index")
      */
-    public function indexAction( MenuService $menuService){
+    public function indexAction(MenuService $menuService)
+    {
 
         $data = [];
         $data['allMenu'] = $menuService->getAllMenu();
@@ -33,7 +36,8 @@ class MenuController extends BaseAdminController
     /**
      * @Rest\Get("/menu/add", name="admin_menu_add")
      */
-    public function addAction(MenuService $menuService){
+    public function addAction(MenuService $menuService)
+    {
         $data = [];
         $data['menuSelect'] = $menuService->menuSelect();
         $data['adminRoute'] = $menuService->getAdminRoute();
@@ -43,7 +47,8 @@ class MenuController extends BaseAdminController
     /**
      * @Rest\Get("/menu/edit/{id}", name="admin_menu_edit")
      */
-    public function editAction($id, MenuService $menuService){
+    public function editAction($id, MenuService $menuService)
+    {
         $detail = $menuService->getMenuById($id);
         $data = [];
         $data['menuSelect'] = $menuService->menuSelect();
@@ -53,9 +58,40 @@ class MenuController extends BaseAdminController
     }
 
     /**
-     * @Rest\Post("/api/menu/editDo/{id}", name="admin_api_menu_edit")
+     * @Rest\Get("/menu/view/{id}", name="admin_menu_view")
      */
-    public function editDoAction($id, Request $request, MenuService $menuService){
+    public function viewAction($id, MenuService $menuService, View $view)
+    {
+        $detail = $menuService->getMenuById($id);
+        $menuSelect = $menuService->menuSelect();
+        $adminRoute = $menuService->getAdminRoute(1);
+        $adminRouteTmp = [];
+        if($adminRoute){
+            foreach ($adminRoute as $k=>$v){
+                $adminRouteTmp[$v] = $v;
+            }
+        }
+//        $view->select("父级菜单")->field("pid")->defaultValue($detail["pid"])->options($menuSelect);
+        $view->text("标题")->field("title")->defaultValue($detail['name']);
+        $view->text("排序")->field("sort")->defaultValue($detail['sort']);
+        $view->text("图标")->field("style")->defaultValue($detail['style']);
+        $view->select("路径")->field("url")->defaultValue($detail['url'])->options($adminRouteTmp);
+        $view->boole("显示到导航")->field("isShow")->defaultValue($detail['isShow']);
+        $view->boole("锁定")->field("isLock")->defaultValue($detail['isLock']);
+        $view->boole("仅权限")->field("isAccess")->defaultValue($detail['isAccess']);
+        $view->textarea("描述")->field("descr")->defaultValue($detail['descr']);
+
+        $viewData = $view->create();
+        $data = [];
+        $data["viewData"] = $viewData;
+        return $this->render("@AdminBundle/menu/view.html.twig", $data);
+    }
+
+    /**
+     * @Rest\Post("/menu/edit/do/{id}", name="admin_api_menu_edit")
+     */
+    public function editDoAction($id, Request $request, MenuService $menuService)
+    {
         $pid = (int) $request->get("parentId");
         $name = $request->get("title");
         $sort = (int) $request->get("sort");
@@ -66,44 +102,46 @@ class MenuController extends BaseAdminController
         $isShow = $request->get("isShow");
         $descr = $request->get("descr");
 
-        $isLock = $isLock=="on"?1:0;
-        $isAccess = $isAccess=="on"?1:0;
-        $isShow = $isShow=="on"?1:0;
+        $isLock = $isLock == "on" ? 1 : 0;
+        $isAccess = $isAccess == "on" ? 1 : 0;
+        $isShow = $isShow == "on" ? 1 : 0;
 
-        if(!$name) return $this->responseError("标题不能为空!");
-        if(mb_strlen($name, 'utf-8')>20) return $this->responseError("标题不能大于20字!");
+        if (!$name) return $this->responseError("标题不能为空!");
+        if (mb_strlen($name, 'utf-8') > 20) return $this->responseError("标题不能大于20字!");
 
-        if($menuService->checkMenuName($name, $id)){
+        if ($menuService->checkMenuName($name, $id)) {
             return $this->responseError("标题已存在!");
         }
 
-        if($descr){
-            if(mb_strlen($descr, 'utf-8')>20) return $this->responseError("描述不能大于20字!");
+        if ($descr) {
+            if (mb_strlen($descr, 'utf-8') > 20) return $this->responseError("描述不能大于20字!");
         }
 
-        $menuService->editMenu($id, $name, $descr, $pid, $uri, $style,$sort, $isLock, $isAccess, $isShow);
+        $menuService->editMenu($id, $name, $descr, $pid, $uri, $style, $sort, $isLock, $isAccess, $isShow);
 
-        if($this->error()->has()){
+        if ($this->error()->has()) {
             return $this->responseError($this->error()->getLast());
         }
 
-        return $this->responseSuccess("操作成功!");
+        return $this->responseMsgRedirect("操作成功!");
     }
 
     /**
-     * @Rest\Post("/api/menu/deleteDo/{id}", name="admin_api_menu_delete")
+     * @Rest\Post("/menu/delete/do/{id}", name="admin_api_menu_delete")
      */
-    public function deleteAction($id, MenuService $menuService){
+    public function deleteAction($id, MenuService $menuService)
+    {
         $child = $menuService->getChild($id);
-        if($child) return $this->responseError("请先删除子节点菜单");
+        if ($child) return $this->responseError("请先删除子节点菜单");
         $menuService->deleteMenuById($id);
-        return $this->responseSuccess("删除成功!", $this->generateUrl("admin_menu_index"));
+        return $this->responseMsgRedirect("删除成功!", $this->generateUrl("admin_menu_index"));
     }
 
     /**
-     * @Rest\Post("/api/menu/addDo", name="admin_api_menu_add")
+     * @Rest\Post("/menu/add/do", name="admin_api_menu_add")
      */
-    public function addDoAction(Request $request, MenuService $menuService){
+    public function addDoAction(Request $request, MenuService $menuService)
+    {
         $pid = (int) $request->get("parentId");
         $name = $request->get("title");
         $sort = (int) $request->get("sort");
@@ -114,38 +152,37 @@ class MenuController extends BaseAdminController
         $isShow = $request->get("isShow");
         $descr = $request->get("descr");
 
-        $isLock = $isLock=="on"?1:0;
-        $isAccess = $isAccess=="on"?1:0;
-        $isShow = $isShow=="on"?1:0;
+        $isLock = $isLock == "on" ? 1 : 0;
+        $isAccess = $isAccess == "on" ? 1 : 0;
+        $isShow = $isShow == "on" ? 1 : 0;
 
-        if($isShow){
-            $parent = $menuService->getMenuById($pid);
-            if(!$parent) return $this->responseError("父菜单不存在!");
-            if($parent['pid'] != 0) return $this->responseError("显示的菜单不能超过二级!");
+        if ($isShow) {
+            if (!$menuService->checkMenuThree($pid)) return $this->responseError("显示的菜单不能超过三级!");
         }
 
-        if(!$name) return $this->responseError("标题不能为空!");
-        if(mb_strlen($name, 'utf-8')>20) return $this->responseError("标题不能大于20字!");
+        if (!$name) return $this->responseError("标题不能为空!");
+        if (mb_strlen($name, 'utf-8') > 20) return $this->responseError("标题不能大于20字!");
 
-        if($menuService->checkMenuName($name)){
+        if ($menuService->checkMenuName($name)) {
             return $this->responseError("标题已存在!");
         }
 
-        if($descr){
-            if(mb_strlen($descr, 'utf-8')>20) return $this->responseError("描述不能大于20字!");
+        if ($descr) {
+            if (mb_strlen($descr, 'utf-8') > 20) return $this->responseError("描述不能大于20字!");
         }
 
         $menuService->addMenu($name, $descr, $pid, $uri, $style, $sort, $isLock, $isAccess, $isShow);
 
-        return $this->responseSuccess("添加成功!", $this->generateUrl("admin_menu_index"));
+        return $this->responseMsgRedirect("添加成功!", $this->generateUrl("admin_menu_index"));
     }
 
     /**
-     * @Rest\Post("/api/menu/updateSortDo", name="admin_api_menu_updateSort")
+     * @Rest\Post("/menu/updateSort/do", name="admin_api_menu_updateSort")
      */
-    public function updateSort(Request $request, MenuService $menuService){
+    public function updateSort(Request $request, MenuService $menuService)
+    {
         $data = $request->request->all();
         $menuService->updateSort($data);
-        return $this->responseSuccess("更新排序成功!", $this->generateUrl("admin_menu_index"));
+        return $this->responseMsgRedirect("更新排序成功!", $this->generateUrl("admin_menu_index"));
     }
 }

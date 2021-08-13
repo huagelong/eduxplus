@@ -9,26 +9,34 @@
 namespace App\Bundle\AppBundle\Lib\Base;
 
 
-class BaseController extends BaseService
+use App\Bundle\AppBundle\Lib\Service\JsonResponseService;
+
+abstract class BaseController extends BaseService
 {
 
-    public function responseSuccess($msg='', $url=''){
-        $data = [];
-        if($msg) $data['_message']= $msg;
-        if($url) $data['_url']= $url;
-        return $data;
+    public function responseSuccess($data, $msg=''){
+        return JsonResponseService::genData($data, 200, $msg);
+    }
+
+    public function responseMsgRedirect($msg='', $url=''){
+        return JsonResponseService::genData([], 200, $msg, $url);
     }
 
     public function responseRedirect($url){
-        $data = [];
-        if($url) $data['_url']= $url;
-        return $data;
+        return JsonResponseService::genData([], 200, '', $url);
     }
 
-    public function responseError($msg=''){
-        $data = [];
-        if($msg) $data['message']= $msg;
-        $data['code'] = 400;
-        return $data;
+    public function responseError($msg='', $code = 400){
+        return JsonResponseService::genData([], $code, $msg);
     }
+
+    abstract public function getUid();
+
+    public function getUserInfo(){
+        $uid = $this->getUid();
+        $sql = "SELECT a FROM App:BaseUser a WHERE a.id = :id";
+        $model = $this->fetchOne($sql, ["id"=>$uid]);
+        return $model;
+    }
+
 }

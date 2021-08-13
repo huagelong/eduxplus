@@ -26,7 +26,14 @@ class MallOrder
     /**
      * @var string
      *
-     * @ORM\Column(name="order_no", type="string", length=36, nullable=false, options={"comment"="订单号"})
+     * @ORM\Column(name="name", type="string", length=1000, nullable=false, options={"comment"="订单名称"})
+     */
+    private $name = '';
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="order_no", type="string", length=100, nullable=false, options={"comment"="订单号"})
      */
     private $orderNo = '';
 
@@ -47,6 +54,13 @@ class MallOrder
     /**
      * @var int
      *
+     * @ORM\Column(name="order_agreement_id", type="integer", nullable=false, options={"unsigned"=true,"comment"="订单协议"})
+     */
+    private $orderAgreementId= '0';
+
+    /**
+     * @var int
+     *
      * @ORM\Column(name="order_amount", type="integer", nullable=false, options={"comment"="订单实际支付价格，已减去优惠价格"})
      */
     private $orderAmount = '0';
@@ -59,11 +73,26 @@ class MallOrder
     private $discountAmount = '0';
 
     /**
+     * @var int
+     *
+     * @ORM\Column(name="original_amount", type="integer", nullable=false, options={"comment"="原价"})
+     */
+    private $originalAmount = '0';
+
+    /**
      * @var bool
      *
-     * @ORM\Column(name="order_status", type="boolean", nullable=false, options={"comment"="订单状态:0支付过期,1待支付,2支付成功,3已取消"})
+     * @ORM\Column(name="order_status", type="integer", length=1,nullable=false, options={"comment"="订单状态:0支付过期,1待支付,2支付成功,3已取消"})
      */
     private $orderStatus = '0';
+
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="payment_type", type="integer", length=1,nullable=false, options={"comment"="支付方式:1支付宝,2微信支付"})
+     */
+    private $paymentType = '0';
 
     /**
      * @var string
@@ -75,16 +104,23 @@ class MallOrder
     /**
      * @var string
      *
-     * @ORM\Column(name="referer", type="string", length=20, nullable=false, options={"default"="CRM后台创建","comment"="订单来源"})
+     * @ORM\Column(name="referer", type="string", length=20, nullable=false, options={"default"="CRM","comment"="订单来源"})
      */
-    private $referer = '前台创建';
+    private $referer = 'pcweb';
 
     /**
      * @var string
      *
-     * @ORM\Column(name="coupon_sn", type="string", length=26, nullable=false, options={"comment"="订单使用优惠码编号"})
+     * @ORM\Column(name="coupon_sn", type="string", length=100, nullable=false, options={"comment"="订单使用优惠码编号"})
      */
     private $couponSn = '';
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="coupon_group_id", type="integer", nullable=false, options={"unsigned"=true,"comment"="优惠码组"})
+     */
+    private $couponGroupId= '0';
 
     /**
      * @var string
@@ -92,13 +128,6 @@ class MallOrder
      * @ORM\Column(name="goods_all", type="string", length=100, nullable=false, options={"comment"="多个goodsid"})
      */
     private $goodsAll = '';
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="name", type="string", length=1000, nullable=false, options={"comment"="订单名称"})
-     */
-    private $name = '';
 
     /**
      * @var int|null
@@ -122,6 +151,18 @@ class MallOrder
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): self
+    {
+        $this->name = $name;
+
+        return $this;
     }
 
     public function getOrderNo(): ?string
@@ -160,6 +201,18 @@ class MallOrder
         return $this;
     }
 
+    public function getOrderAgreementId(): ?int
+    {
+        return $this->orderAgreementId;
+    }
+
+    public function setOrderAgreementId(int $orderAgreementId): self
+    {
+        $this->orderAgreementId = $orderAgreementId;
+
+        return $this;
+    }
+
     public function getOrderAmount(): ?int
     {
         return $this->orderAmount;
@@ -184,14 +237,38 @@ class MallOrder
         return $this;
     }
 
-    public function getOrderStatus(): ?bool
+    public function getOriginalAmount(): ?int
+    {
+        return $this->originalAmount;
+    }
+
+    public function setOriginalAmount(int $originalAmount): self
+    {
+        $this->originalAmount = $originalAmount;
+
+        return $this;
+    }
+
+    public function getOrderStatus(): ?int
     {
         return $this->orderStatus;
     }
 
-    public function setOrderStatus(bool $orderStatus): self
+    public function setOrderStatus(int $orderStatus): self
     {
         $this->orderStatus = $orderStatus;
+
+        return $this;
+    }
+
+    public function getPaymentType(): ?int
+    {
+        return $this->paymentType;
+    }
+
+    public function setPaymentType(int $paymentType): self
+    {
+        $this->paymentType = $paymentType;
 
         return $this;
     }
@@ -232,6 +309,18 @@ class MallOrder
         return $this;
     }
 
+    public function getCouponGroupId(): ?int
+    {
+        return $this->couponGroupId;
+    }
+
+    public function setCouponGroupId(int $couponGroupId): self
+    {
+        $this->couponGroupId = $couponGroupId;
+
+        return $this;
+    }
+
     public function getGoodsAll(): ?string
     {
         return $this->goodsAll;
@@ -240,18 +329,6 @@ class MallOrder
     public function setGoodsAll(string $goodsAll): self
     {
         $this->goodsAll = $goodsAll;
-
-        return $this;
-    }
-
-    public function getName(): ?string
-    {
-        return $this->name;
-    }
-
-    public function setName(string $name): self
-    {
-        $this->name = $name;
 
         return $this;
     }

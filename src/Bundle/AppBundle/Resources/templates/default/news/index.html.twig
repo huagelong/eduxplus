@@ -1,0 +1,165 @@
+{% extends '@AppBundle/layout/layout.html.twig' %}
+{% import "@AppBundle/macros/pagination.html.twig" as macros %}
+ {% block page %}
+   {{ parent() }}
+    <div id="main" class="commonMain">
+      <div class="layui-main newsBanner">
+        <div class="layui-row layui-col-space20">
+            <div class="layui-col-md8">
+              <div class="layui-carousel bannerList" id="newsBanner">
+                <div carousel-item >
+                  {% if(banners) %}
+                    {% for b in banners %}
+                      <div>
+                        {% if b['url'] %}
+                          <a href="{{ b['url'] }}" target="_blank">
+                            <img src="{{ json_get(b['bannerImg']) }}" height="300px" />
+                          </a>
+                        {% else %}
+                          <img src="{{ json_get(b['bannerImg']) }}" height="300px" />
+                        {% endif %}
+                      </div>
+                    {% endfor %}
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+            <div class="layui-col-md4">
+              <div class="layui-card">
+                <div class="layui-card-body">
+                  <div class="layui-tab layui-tab-brief">
+                    <ul class="layui-tab-title">
+                      <li class="layui-this">公告</li>
+                      <li>推荐</li>
+                    </ul>
+                    <div class="layui-tab-content">
+                      <div class="layui-tab-item layui-show">
+                        <ul class="tabnews">
+                          {% if noticeNews %}
+                            {% for nv in noticeNews  %}
+                              <li class="layui-elip">
+                                <a href="{{ path('app_news_detail', {id:nv['id']}) }}" target="_blank" title="{{ nv['title'] }}">{{ nv['title'] }} <span class="moment" data-time="{{ nv['createdAtTime'] }}"></span></a>
+                              </li>
+                            {% endfor %}
+                          {% endif %}
+                        </ul>
+                      </div>
+                      <div class="layui-tab-item">
+                        <ul  class="tabnews">
+                          {% if recommendNews %}
+                            {% for rv in recommendNews  %}
+                              <li class="layui-elip">
+                                <a href="{{ path('app_news_detail', {id:rv['id']}) }}" target="_blank" title="{{ rv['title'] }}">{{ rv['title'] }} <span class="moment" data-time="{{ rv['createdAtTime'] }}"></span></a>
+                              </li>
+                            {% endfor %}
+                          {% endif %}
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+      </div>
+
+      <div class="layui-main newslist">
+        <div class="layui-row layui-col-space20">
+          <div class="layui-col-md8">
+            <div class="layui-card">
+              <div class="layui-card-body">
+                <div class="layui-tab layui-tab-brief">
+                  <ul class="layui-tab-title">
+                    <li {% if category == 0  %} class="layui-this" {% endif %}><a href="{{ path('app_news') }}">全部</a></li>
+                    {% if newsCategory %}
+                      {% for cv in newsCategory %}
+                        <li {% if category == cv['id']  %} class="layui-this" {% endif %}><a href="{{ path('app_news', {category:cv['id']}) }}">{{ cv['name'] }}</a></li>
+                      {% endfor %}
+                    {% endif %}
+                  </ul>
+                  <div class="layui-tab-content">
+                    <div class="layui-tab-item layui-show">
+                       {% if list %}
+                         {% for iv in list %}
+                        <div class="layui-row newsItem">
+                          {% if iv['img'] %}
+                            <div class="layui-col-md4">
+                              <a href="{{ path('app_news_detail', {id:iv['id']}) }}" target="_blank">
+                                <img src="{{ json_get(iv['img']) }}" />
+                              </a>
+                            </div>
+                            <div class="layui-col-md8">
+                               <div class="title layui-elip">
+                                 <a href="{{ path('app_news_detail', {id:iv['id']}) }}" target="_blank">
+                                 {{ iv['title'] }}
+                                 </a>
+                               </div>
+                                <div class="other">
+                                  <span class="timer"><i class="layui-icon layui-icon-time"></i> <span class="moment" data-time="{{ iv['createdAtTime'] }}"></span></span>
+                                  <span class="viewnum"><i class="fas fa-eye"></i> {{ iv['viewNumber'] }}</span>
+                                </div>
+                            </div>
+                          {% else %}
+                            <div class="layui-col-md12">
+                              <div class="title layui-elip">
+                                <a href="{{ path('app_news_detail', {id:iv['id']}) }}" target="_blank">
+                                  {{ iv['title'] }}
+                                </a>
+                              </div>
+                              <div class="other">
+                                <span class="timer"><i class="layui-icon layui-icon-time"></i> <span class="moment" data-time="{{ iv['createdAtTime'] }}"></span></span>
+                                <span class="viewnum"><i class="fas fa-eye"></i> {{ iv['viewNumber'] }}</span>
+                              </div>
+                            </div>
+                          {% endif %}
+                        </div>
+                         {% endfor %}
+                        {% else %}
+                          <div class="layui-center">
+                            <div><img src="/assets/app/default/images/null-i3.png" /></div>
+                            <div>没有数据～</div>
+                          </div>
+                       {% endif %}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {{ macros.pagination(pagination) }}
+          </div>
+          <div class="layui-col-md4">
+            <div class="layui-card">
+              <div class="layui-card-header">热门推荐</div>
+              <div class="layui-card-body">
+                <ul class="tabnews">
+                  {% if hotNews %}
+                    {% for hv in hotNews  %}
+                      <li class="layui-elip">
+                        <a href="{{ path('app_news_detail', {id:hv['id']}) }}" target="_blank" title="{{ hv['title'] }}">{{ hv['title'] }}</a>
+                      </li>
+                    {% endfor %}
+                  {% endif %}
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+ {% endblock %}
+
+{% block body_javascript %}
+  {{ parent() }}
+  <script>
+    $(function () {
+      var carousel = layui.carousel;
+      carousel.render({
+        elem: '#newsBanner'
+        ,width: '100%' //设置容器宽度
+        ,height: '300px'
+        ,arrow: 'always' //始终显示箭头
+      });
+    });
+
+  </script>
+{% endblock %}

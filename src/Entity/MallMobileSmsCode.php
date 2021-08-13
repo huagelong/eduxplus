@@ -33,7 +33,7 @@ class MallMobileSmsCode
     /**
      * @var string|null
      *
-     * @ORM\Column(name="type", type="string", length=25, nullable=true, options={"comment"="验证码类型"})
+     * @ORM\Column(name="type", type="string", length=100, nullable=true, options={"comment"="验证码类型"})
      */
     private $type;
 

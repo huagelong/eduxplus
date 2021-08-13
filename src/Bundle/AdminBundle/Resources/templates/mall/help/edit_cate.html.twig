@@ -1,0 +1,15 @@
+{% extends "@AdminBundle/layout/pop.html.twig" %}
+
+{% block page_title %}编辑分类{% endblock %}
+{% block breadcrumb %}
+    <li class="breadcrumb-item"><a href="{{ path("admin_mall_help_category_index") }}">分类管理</a></li>
+{% endblock %}
+{% block page %}
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            {{ formData|raw }}
+        </div>
+    </div>
+</section>
+{% endblock %}

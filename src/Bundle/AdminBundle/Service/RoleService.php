@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @Author: kaihui.wang
  * @Contact  hpuwang@gmail.com
@@ -9,7 +10,7 @@
 namespace App\Bundle\AdminBundle\Service;
 
 
-use App\Bundle\AppBundle\Lib\Base\BaseService;
+use App\Bundle\AppBundle\Lib\Base\AdminBaseService;
 use App\Entity\BaseRole;
 use App\Entity\BaseRoleMenu;
 use Knp\Component\Pager\PaginatorInterface;
@@ -24,10 +25,11 @@ class RoleService extends AdminBaseService
         $this->paginator = $paginator;
     }
 
-    public function roleMenu($request, $page, $pageSize){
+    public function roleMenu($request, $page, $pageSize)
+    {
         $sql = $this->getFormatRequestSql($request);
 
-        $dql = "SELECT a FROM App:BaseRole a " . $sql;
+        $dql = "SELECT a FROM App:BaseRole a " . $sql  . " ORDER BY a.id DESC";
         $em = $this->getDoctrine()->getManager();
         $query = $em->createQuery($dql);
         $pagination = $this->paginator->paginate(
@@ -38,7 +40,8 @@ class RoleService extends AdminBaseService
         return $pagination;
     }
 
-    public function addRole($name, $isLock, $descr){
+    public function addRole($name, $isLock, $descr)
+    {
         $model = new BaseRole();
         $model->setName($name);
         $model->setIsLock($isLock);
@@ -46,7 +49,8 @@ class RoleService extends AdminBaseService
         $this->save($model);
     }
 
-    public function updateRole($id, $name, $isLock, $descr){
+    public function updateRole($id, $name, $isLock, $descr)
+    {
         $sql = "SELECT a FROM App:BaseRole a where a.id =:id ";
         $params = [];
         $params['id'] = $id;
@@ -57,25 +61,28 @@ class RoleService extends AdminBaseService
         $this->save($model);
     }
 
-    public function checkName($name, $id=0){
+    public function checkName($name, $id = 0)
+    {
         $sql = "SELECT a FROM App:BaseRole a where a.name =:name ";
         $params = [];
         $params['name'] = $name;
-        if($id){
-            $sql = $sql." AND a.id !=:id ";
+        if ($id) {
+            $sql = $sql . " AND a.id !=:id ";
             $params['id'] = $id;
         }
         return $this->fetchOne($sql, $params);
     }
 
-    public function getById($id){
+    public function getById($id)
+    {
         $sql = "SELECT a FROM App:BaseRole a where a.id =:id ";
         $params = [];
         $params['id'] = $id;
         return $this->fetchOne($sql, $params);
     }
 
-    public function deleteRole($id){
+    public function deleteRole($id)
+    {
         $sql = "SELECT a FROM App:BaseRole a where a.id =:id ";
         $params = [];
         $params['id'] = $id;
@@ -84,13 +91,14 @@ class RoleService extends AdminBaseService
         return true;
     }
 
-    public function bindMenu($roleId, $menuIds){
+    public function bindMenu($roleId, $menuIds)
+    {
         //先删除
         $sql = "SELECT a FROM App:BaseRoleMenu a WHERE a.roleId=:roleId";
-        $models = $this->fetchAll($sql, ['roleId'=>$roleId], 1);
+        $models = $this->fetchAll($sql, ['roleId' => $roleId], 1);
         $this->hardDelete($models);
-        if($menuIds){
-            foreach ($menuIds as $menuId){
+        if ($menuIds) {
+            foreach ($menuIds as $menuId) {
                 $model = new BaseRoleMenu();
                 $model->setMenuId($menuId);
                 $model->setRoleId($roleId);
@@ -100,16 +108,16 @@ class RoleService extends AdminBaseService
         return true;
     }
 
-    public function getRoleMenu($roleId){
+    public function getRoleMenu($roleId)
+    {
         $sql = "SELECT a.menuId FROM App:BaseRoleMenu a WHERE a.roleId=:roleId";
-        $menuIds = $this->fetchFields("menuId", $sql, ['roleId'=>$roleId]);
+        $menuIds = $this->fetchFields("menuId", $sql, ['roleId' => $roleId]);
         return $menuIds;
     }
 
-    public function getAllRole(){
+    public function getAllRole()
+    {
         $sql = "SELECT a FROM App:BaseRole a";
         return $this->fetchAll($sql);
     }
-
-
 }

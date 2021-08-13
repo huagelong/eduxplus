@@ -57,12 +57,20 @@ class TeachStudyPlan
      */
     private $isDefault=0;
 
+
+    /**
+     * @var bool|null
+     *
+     * @ORM\Column(name="status", type="boolean", nullable=true, options={"comment"="1-上架,0-下架"})
+     */
+    private $status=0;
+
     /**
      * @var bool|null
      *
      * @ORM\Column(name="is_block", type="boolean", nullable=true, options={"comment"="是否有挡板，必须一节节往下看"})
      */
-    private $isBlock;
+    private $isBlock='0';
 
     /**
      * @var string|null
@@ -211,6 +219,18 @@ class TeachStudyPlan
     public function setDeletedAt(?\DateTimeInterface $deletedAt): self
     {
         $this->deletedAt = $deletedAt;
+
+        return $this;
+    }
+
+    public function getStatus(): ?bool
+    {
+        return $this->status;
+    }
+
+    public function setStatus(?bool $status): self
+    {
+        $this->status = $status;
 
         return $this;
     }

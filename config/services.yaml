@@ -6,6 +6,7 @@ imports:
 parameters:
     redis_host: '%env(REDIS_HOST)%'
     upload_dir: '%env(UPLOAD_DIR)%'
+    secret: '%env(APP_SECRET)%'
 
 services:
 
@@ -23,6 +24,10 @@ services:
         resource: '../src/Bundle/**/Controller'
         tags: ['controller.service_arguments']
 
+    App\EventListener\ExceptionListener:
+        tags:
+            - { name: kernel.event_listener, event: kernel.exception }
+
     App\EventSubscriber\DatabaseActivitySubscriber:
         tags:
           - { name: 'doctrine.event_subscriber'}
@@ -38,8 +43,23 @@ services:
         arguments:
             $cacheCLient: '@snc_redis.cache'
 
+    snc_second_level_cache:
+        class: '%snc_redis.doctrine_cache_phpredis.class%'
+#        lazy: true
+        arguments:
+            - '@snc_redis.secondlevelcache'
+
     App\Twig\FuncExtension:
         tags: ['twig.extension']
 
-    App\Twig\FiltersExtension: 
+    App\Twig\FiltersExtension:
         tags: ['twig.extension']
+
+    App\EventSubscriber\RedisClearer:
+        arguments:
+          - ["@snc_redis.cache","@snc_redis.secondlevelcache"]
+        tags:
+          - { name: kernel.cache_clearer }
+
+    App\Bundle\RoutingLoader:
+      tags: [routing.loader]

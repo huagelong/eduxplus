@@ -9,6 +9,7 @@
 namespace App\Bundle\AdminBundle\Controller\Jw;
 
 
+use App\Bundle\AdminBundle\Lib\View\View;
 use App\Bundle\AdminBundle\Service\Jw\SchoolService;
 use App\Bundle\AppBundle\Lib\Base\BaseAdminController;
 use FOS\RestBundle\Controller\Annotations as Rest;
@@ -22,21 +23,29 @@ class SchoolController extends BaseAdminController
      * @Rest\Get("/jw/school/index", name="admin_jw_school_index")
      */
     public function indexAction(Request $request, Grid $grid, SchoolService $schoolService){
-        $pageSize = 20;
+        $pageSize = 40;
         $grid->setListService($schoolService, "getList");
-        $grid->setTableColumn("#", "text", "id","a.id");
-        $grid->setTableColumn("名称", "text", "name");
-        $grid->setTableColumn("地址", "text", "address");
-        $grid->setTableColumn("省市", "text", "stateCity");
-        $grid->setTableColumn("联系方式", "text", "linkin");
-        $grid->setTableColumn("创建时间", "datetime", "createdAt", "a.createdAt");
+        $grid->text("#")->field("id")->sort("a.id");
+        $grid->text("名称")->field("name");
+        $grid->text("地址")->field("address");
+        $grid->text("省市")->field("stateCity");
+        $grid->text("联系方式")->field("linkin");
+        $grid->datetime("创建时间")->field("createdAt")->sort("a.createdAt");
 
-        $grid->setGridBar("admin_jw_school_add","添加", $this->generateUrl("admin_jw_school_add"), "fas fa-plus", "btn-success");
+        $grid->gbButton("添加")->route("admin_jw_school_add")
+            ->url($this->generateUrl("admin_jw_school_add"))->styleClass("btn-success")->iconClass("fas fa-plus");
 
-        $grid->setSearchField("名称", "text", "a.name");
-        $grid->setSearchField("创建时间", "daterange", "a.createdAt");
+        $grid->stext("名称")->field("a.name");
+        $grid->sdaterange("创建时间")->field("a.createdAt");
 
         //编辑等
+        $grid->setTableAction('admin_jw_school_view', function ($obj) {
+            $id = $obj["id"];
+            $url = $this->generateUrl('admin_jw_school_view', ['id' => $id]);
+            $str = '<a href=' . $url . ' data-title="查看" title="查看" class=" btn btn-default btn-xs poppage"><i class="fas fa-eye"></i></a>';
+            return  $str;
+        });
+
         $grid->setTableAction('admin_jw_school_edit', function($obj){
             $id = $obj["id"];
             $url = $this->generateUrl('admin_jw_school_edit',['id'=>$id]);
@@ -50,6 +59,10 @@ class SchoolController extends BaseAdminController
             return '<a href=' . $url . ' data-confirm="确认要删除吗?"  title="删除" class=" btn btn-danger btn-xs ajaxDelete"><i class="fas fa-trash"></i></a>';
         });
 
+        //批量删除
+        $bathDelUrl = $this->genUrl("admin_api_jw_school_bathdelete");
+        $grid->setBathDelete("admin_api_jw_school_bathdelete", $bathDelUrl);
+
         $data = [];
         $data['list'] = $grid->create($request, $pageSize);
         return $this->render("@AdminBundle/jw/school/index.html.twig", $data);
@@ -57,13 +70,31 @@ class SchoolController extends BaseAdminController
     }
 
     /**
+     * @Rest\Get("/jw/school/view/{id}", name="admin_jw_school_view")
+     */
+    public function viewAction($id, View $view, SchoolService $schoolService){
+        $info = $schoolService->getById($id);
+
+        $view->text("名称")->field("name")->defaultValue($info['name']);
+        $view->richEditor("描述")->field("descr")->attr(['data-width'=>800, 'data-height'=>200])->defaultValue($info['descr']);
+        $view->text("地址")->field("address")->defaultValue($info['address']);
+        $view->text("联系方式")->field("linkin")->defaultValue($info['linkin']);
+        $view->disableSubmit();
+        $formData = $view->create();
+        $data = [];
+        $data["formData"] = $formData;
+        $data['info'] = $info;
+        return $this->render("@AdminBundle/jw/school/view.html.twig", $data);
+    }
+
+    /**
      * @Rest\Get("/jw/school/add", name="admin_jw_school_add")
      */
     public function addAction(Form $form, SchoolService $schoolService){
-        $form->setFormField("名称", 'text', 'name' ,1);
-        $form->setFormField("描述", 'rich_editor', 'descr' ,0,'','','',['data-width'=>800, 'data-height'=>200]);
-        $form->setFormField("地址", "text", "address", 1);
-        $form->setFormField("联系方式", "text", "linkin", 1);
+        $form->text("名称")->field("name")->isRequire(1);
+        $form->richEditor("描述")->field("descr")->attr(['data-width'=>800, 'data-height'=>200]);
+        $form->text("地址")->field("address")->isRequire(1);
+        $form->text("联系方式")->field("linkin")->isRequire(1);
         $form->disableSubmit();
         $formData = $form->create($this->generateUrl("admin_api_jw_school_add"));
         $data = [];
@@ -72,7 +103,7 @@ class SchoolController extends BaseAdminController
     }
 
     /**
-     * @Rest\Post("/api/jw/school/addDo", name="admin_api_jw_school_add")
+     * @Rest\Post("/jw/school/add/do", name="admin_api_jw_school_add")
      */
     public function addDoAction(Request $request, SchoolService $schoolService){
         $name = $request->get("name");
@@ -94,7 +125,7 @@ class SchoolController extends BaseAdminController
 
         $schoolService->add($name, $descr, $address, $linkin, $state, $city, $region);
 
-        return $this->responseSuccess("添加成功!", $this->generateUrl("admin_jw_school_index"));
+        return $this->responseMsgRedirect("添加成功!", $this->generateUrl("admin_jw_school_index"));
     }
 
     /**
@@ -102,10 +133,12 @@ class SchoolController extends BaseAdminController
      */
     public function editAction($id, Form $form, SchoolService $schoolService){
         $info = $schoolService->getById($id);
-        $form->setFormField("名称", 'text', 'name' ,1, $info['name']);
-        $form->setFormField("描述", 'rich_editor', 'descr' ,0,$info['descr'],'','',['data-width'=>800, 'data-height'=>200]);
-        $form->setFormField("地址", "text", "address", 1, $info['address']);
-        $form->setFormField("联系方式", "text", "linkin", 1, $info['linkin']);
+
+        $form->text("名称")->field("name")->isRequire(1)->defaultValue($info['name']);
+        $form->richEditor("描述")->field("descr")->attr(['data-width'=>800, 'data-height'=>200])->defaultValue($info['descr']);
+        $form->text("地址")->field("address")->isRequire(1)->defaultValue($info['address']);
+        $form->text("联系方式")->field("linkin")->isRequire(1)->defaultValue($info['linkin']);
+
         $form->disableSubmit();
         $formData = $form->create($this->generateUrl("admin_api_jw_school_edit", ['id'=>$id]));
         $data = [];
@@ -115,7 +148,7 @@ class SchoolController extends BaseAdminController
     }
 
     /**
-     * @Rest\Post("/api/jw/school/editDo/{id}", name="admin_api_jw_school_edit")
+     * @Rest\Post("/jw/school/edit/do/{id}", name="admin_api_jw_school_edit")
      */
     public function editDoAction($id, Request $request, SchoolService $schoolService){
         $name = $request->get("name");
@@ -136,14 +169,33 @@ class SchoolController extends BaseAdminController
 
         $schoolService->edit($id, $name, $descr, $address, $linkin, $state, $city, $region);
 
-        return $this->responseSuccess("编辑成功!", $this->generateUrl("admin_jw_school_index"));
+        return $this->responseMsgRedirect("编辑成功!", $this->generateUrl("admin_jw_school_index"));
     }
 
     /**
-     * @Rest\Post("/api/jw/school/deleteDO/{id}", name="admin_api_jw_school_delete")
+     * @Rest\Post("/jw/school/delete/do/{id}", name="admin_api_jw_school_delete")
      */
     public function deleteAction($id, SchoolService $schoolService){
         $schoolService->del($id);
-        return $this->responseSuccess("删除成功!", $this->generateUrl("admin_jw_school_index"));
+        return $this->responseMsgRedirect("删除成功!", $this->generateUrl("admin_jw_school_index"));
     }
+
+    /**
+     * @Rest\Post("/jw/school/bathdelete/do", name="admin_api_jw_school_bathdelete")
+     */
+    public function bathdeleteAction(Request $request, SchoolService $schoolService){
+
+        $ids = $request->get("ids");
+        if($ids){
+            foreach ($ids as $id){
+                $schoolService->del($id);
+            }
+        }
+
+        if($this->error()->has()){
+            return $this->responseError($this->error()->getLast());
+        }
+        return $this->responseMsgRedirect("删除成功!", $this->generateUrl("admin_jw_school_index"));
+    }
+
 }

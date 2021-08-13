@@ -25,18 +25,22 @@ class RoleController extends BaseAdminController
      * @Rest\Get("/role/index", name="admin_role_index")
      */
     public function indexAction(Request $request, RoleService $roleService, Grid $grid){
-        $pageSize = 20;
+        $pageSize = 40;
         $grid->setListService($roleService, "roleMenu");
-        $grid->setTableColumn("#", "text", "id","a.id");
-        $grid->setTableColumn("名称", "text", "name");
-        $grid->setTableColumn("创建时间", "datetime", "createdAt", "a.createdAt");
-        $grid->setTableColumn("锁定？", "boole", "isLock");
-        $grid->setTableColumn("描述", "textarea", "descr");
-        $grid->setSearchField("ID", "number", "a.id");
-        $grid->setSearchField("名称", "text", "a.name");
-        $grid->setSearchField("创建时间", "datetimerange", "a.createdAt");
+        $grid->text("#")->field("id")->sort("a.id");
+        $grid->text("名称")->field("name");
+        $grid->datetime("创建时间")->field("createdAt")->sort("a.createdAt");
+        $grid->boole("锁定？")->field("isLock");
+        $grid->textarea("描述")->field("descr");
 
-        $grid->setGridBar("admin_role_add","添加", $this->generateUrl("admin_role_add"), "fas fa-plus", "btn-success");
+        $grid->snumber("ID")->field("a.id");
+        $grid->stext("名称")->field("a.name");
+        $grid->sdatetimerange("创建时间")->field("a.createdAt");
+
+        $grid->gbButton("添加")->route("admin_role_add")
+            ->url($this->generateUrl("admin_role_add"))
+            ->styleClass("btn-success")->iconClass("fas fa-plus");
+
         //绑定菜单
         $grid->setTableAction('admin_role_bindmenu', function($obj){
             $id = $obj->getId();
@@ -59,6 +63,10 @@ class RoleController extends BaseAdminController
             return '<a href=' . $url . ' data-confirm="确认要删除吗?"  class=" btn btn-danger btn-xs ajaxDelete"><i class="fas fa-trash"></i></a>';
         });
 
+        //批量删除
+        $bathDelUrl = $this->genUrl("admin_api_role_batchdelete");
+        $grid->setBathDelete("admin_api_role_batchdelete", $bathDelUrl);
+
         $data = [];
         $data['list'] = $grid->create($request, $pageSize);
         return $this->render("@AdminBundle/role/index.html.twig", $data);
@@ -69,9 +77,9 @@ class RoleController extends BaseAdminController
      */
     public function addAction(Form $form){
 
-        $form->setFormField("角色名称", 'text', 'name' ,1);
-        $form->setFormField("锁定？", 'boole', 'isLock', 1);
-        $form->setFormField("描述", 'textarea', 'descr', 0);
+        $form->text("角色名称")->field("name")->isRequire();
+        $form->boole("锁定?")->field("isLock")->isRequire();
+        $form->textarea("描述")->field("descr");
         $formData = $form->create($this->generateUrl("admin_api_role_add"));
         $data = [];
         $data["formData"] = $formData;
@@ -80,7 +88,7 @@ class RoleController extends BaseAdminController
 
 
     /**
-     * @Rest\Post("/api/role/addDo", name="admin_api_role_add")
+     * @Rest\Post("/role/add/do", name="admin_api_role_add")
      */
     public function addDoAction(Request $request, RoleService $roleService){
         $name = $request->get("name");
@@ -95,7 +103,7 @@ class RoleController extends BaseAdminController
 
         $roleService->addRole($name, $isLock, $descr);
 
-        return $this->responseSuccess("添加成功!", $this->generateUrl("admin_role_index"));
+        return $this->responseMsgRedirect("添加成功!", $this->generateUrl("admin_role_index"));
     }
 
     /**
@@ -103,9 +111,9 @@ class RoleController extends BaseAdminController
      */
     public function editAction($id, RoleService $roleService, Form $form){
         $info = $roleService->getById($id);
-        $form->setFormField("角色名称", 'text', 'name' ,1, $info['name']);
-        $form->setFormField("锁定？", 'boole', 'isLock', 1, $info['isLock']);
-        $form->setFormField("描述", 'textarea', 'descr', 0, $info['descr']);
+        $form->text("角色名称")->field("name")->isRequire()->defaultValue($info['name']);
+        $form->boole("锁定？")->field("isLock")->isRequire()->defaultValue($info['isLock']);
+        $form->textarea("描述")->field("descr")->defaultValue($info['descr']);
         $formData = $form->create($this->generateUrl("admin_api_role_edit",['id'=>$id]));
         $data = [];
         $data["formData"] = $formData;
@@ -113,7 +121,7 @@ class RoleController extends BaseAdminController
     }
 
     /**
-     * @Rest\Post("/api/role/editDo/{id}", name="admin_api_role_edit")
+     * @Rest\Post("/role/edit/do/{id}", name="admin_api_role_edit")
      */
     public function editDoAction($id, Request $request, RoleService $roleService){
         $name = $request->get("name");
@@ -128,15 +136,32 @@ class RoleController extends BaseAdminController
 
         $roleService->updateRole($id, $name, $isLock, $descr);
 
-        return $this->responseSuccess("编辑成功!", $this->generateUrl("admin_role_index"));
+        return $this->responseMsgRedirect("编辑成功!", $this->generateUrl("admin_role_index"));
     }
 
     /**
-     * @Rest\Post("/api/role/deleteDo/{id}", name="admin_api_role_delete")
+     * @Rest\Post("/role/delete/do/{id}", name="admin_api_role_delete")
      */
     public function deleteAction($id, RoleService $roleService){
         $roleService->deleteRole($id);
-        return $this->responseSuccess("删除成功!", $this->generateUrl("admin_role_index"));
+        return $this->responseMsgRedirect("删除成功!", $this->generateUrl("admin_role_index"));
+    }
+
+    /**
+     * @Rest\Post("/role/batchdelete/do", name="admin_api_role_batchdelete")
+     */
+    public function bathDeleteAction(RoleService $roleService, Request $request){
+
+        $ids = $request->get("ids");
+        if($ids){
+            foreach ($ids as $id){
+                $roleService->deleteRole($id);
+            }
+        }
+        if($this->error()->has()){
+            return $this->responseError($this->error()->getLast());
+        }
+        return $this->responseMsgRedirect("删除成功!", $this->generateUrl("admin_role_index"));
     }
 
     /**
@@ -154,12 +179,12 @@ class RoleController extends BaseAdminController
 
 
     /**
-     * @Rest\Post("/api/role/bindmenudo/{id}", name="admin_api_role_bindmenu")
+     * @Rest\Post("/role/bindmenu/do/{id}", name="admin_api_role_bindmenu")
      */
     public function bindMenuDoAction($id, Request $request, RoleService $roleService){
         $idstr = $request->request->get("data");
         $ids = $idstr?explode(",", $idstr):[];
         $roleService->bindMenu($id, $ids);
-        return $this->responseSuccess("绑定成功!", $this->generateUrl('admin_role_index'));
+        return $this->responseMsgRedirect("绑定成功!", $this->generateUrl('admin_role_index'));
     }
 }

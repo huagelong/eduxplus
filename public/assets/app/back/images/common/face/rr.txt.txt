@@ -1,0 +1,131 @@
+// 原生的ajax post
+    function subAjax(options){
+        var opt={
+        "url":"",
+        "ctp":"",
+        "data":'{}',
+        "successFunc":null,
+        "errorFunc":null,
+        "isError":true,
+        "header":null
+        };
+        opt["url"]=options["url"]?options["url"]:"";
+        opt["data"]=options["data"]?options["data"]:'{}';
+        opt["ctp"]=options["ctp"]?options["ctp"]:"application/json";
+        opt["successFunc"]=options["successFunc"]?options["successFunc"]:null;
+        opt["errorFunc"]=options["errorFunc"]?options["errorFunc"]:null;
+        opt["isError"]=options["isError"]!==undefined?options["isError"]:true;
+        opt["url"]+="?random_numbers="+Math.random();
+        var xhr=null;
+        if(typeof XMLHttpRequest !="undefined"){
+             xhr=new XMLHttpRequest();
+        }else if(typeof ActiveXObject!="undefined"){
+             xhr=new ActiveXObject('Microsoft.XMLHTTP');
+        }else{
+             console.log("你的浏览器版本不支持XHR");
+        }
+        xhr.onreadystatechange=function(){
+        if(xhr.readyState==4){
+             if((xhr.status>=200 && xhr.status<300) || xhr.status===304){
+        //console.log(xhr.responseText);
+        var data=xhr.responseText;
+        data=JSON.parse(data);
+        if(data["code"]===0){
+        if(opt.successFunc && opt.successFunc instanceof Function){
+             opt.successFunc(data);
+                  }
+             }else{
+                       if(opt.errorFunc && opt.errorFunc instanceof Function){
+                            opt.errorFunc(data);
+                            if(opt["isError"]===true){
+                                 pop.msg({"txt":data["message"]},800);
+                            }
+                       }
+                  }
+             }else{
+                  // alert(xhr.status);
+                  var data=xhr.responseText;
+                  if(opt.errorFunc && opt.errorFunc instanceof Function){
+                  // pop.msg({"txt":"网络似乎出现了错误，请稍后重试。","rname":"确定","error":opt.errorFunc},opt.errorFunc);
+                       opt.errorFunc();
+                  }else{
+                       // pop.msg({"txt":"网络似乎出现了错误，请稍后重试。","rname":"确定","error":null});
+                  }
+             }
+        }
+        }
+        xhr.open("POST",opt["url"],true);
+        xhr.setRequestHeader("content-Type",opt["ctp"]);
+        xhr.setRequestHeader("hash",login["hash"]);
+        xhr.setRequestHeader("access-token",login["token"]);
+        xhr.setRequestHeader("app-name","uliaow-app");
+        xhr.setRequestHeader("device-type",login["device"]);
+        xhr.setRequestHeader("version",login["version"]);
+        xhr.send(opt["data"]);
+    }    
+    
+// 原生ajax get请求
+    function subAjaxGet(options){
+        var opt={
+        "url":"",
+        "successFunc":null,
+        "errorFunc":null,
+        "isError":true,
+        "header":null
+        };
+        opt["url"]=options["url"]?options["url"]:"";
+        if(opt["url"].indexOf("?")===-1){
+             opt["url"]+="?"+Math.random();
+        }else{
+             opt["url"]+="&"+Math.random();
+        }
+        opt["successFunc"]=options["successFunc"]?options["successFunc"]:null;
+        opt["errorFunc"]=options["errorFunc"]?options["errorFunc"]:null;
+        opt["isError"]=options["isError"]!==undefined?options["isError"]:true;
+        var xhr=null;
+        if(typeof XMLHttpRequest !="undefined"){
+             xhr=new XMLHttpRequest();
+        }else if(typeof ActiveXObject!="undefined"){
+             xhr=new ActiveXObject('Microsoft.XMLHTTP');
+        }else{
+             console.log("你的浏览器版本不支持XHR");
+        }
+        xhr.onreadystatechange=function(){
+        if(xhr.readyState==4){
+             if((xhr.status>=200 && xhr.status<300) || xhr.status===304){
+                  //console.log(xhr.responseText);
+                  var data=xhr.responseText;
+                  data=JSON.parse(data);
+                  if(data["code"]===0){
+                  if(opt.successFunc && opt.successFunc instanceof Function){
+                       opt.successFunc(data);
+                  }
+             }else{
+                  if(opt.errorFunc && opt.errorFunc instanceof Function){
+                       opt.errorFunc(data);
+                       if(opt["isError"]===true){
+                            pop.msg({"txt":data["message"]},800);
+                       }
+                  }
+             }
+             }else{
+                  // alert(xhr.status);
+                  var data=xhr.responseText;
+                  if(opt.errorFunc && opt.errorFunc instanceof Function){
+                       // pop.msg({"txt":"网络似乎出现了错误，请稍后重试。","rname":"确定","error":opt.errorFunc},opt.errorFunc);
+                       opt.errorFunc();
+                  }else{
+                       // pop.msg({"txt":"网络似乎出现了错误，请稍后重试。","rname":"确定","error":null});
+                  }
+             }
+        }
+        }
+        xhr.open("GET",opt["url"],true);
+        // xhr.setRequestHeader("cache-control","no-cache");
+        xhr.setRequestHeader("hash",login["hash"]);
+        xhr.setRequestHeader("access-token",login["token"]);
+        xhr.setRequestHeader("app-name","uliaow-app");
+        xhr.setRequestHeader("device-type",login["device"]);
+        xhr.setRequestHeader("version",login["version"]);
+        xhr.send(null);
+    }    

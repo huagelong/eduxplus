@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @Author: kaihui.wang
  * @Contact  hpuwang@gmail.com
@@ -23,41 +24,43 @@ class ProductController extends BaseAdminController
     /**
      * @Rest\Get("/teach/product/index", name="admin_teach_product_index")
      */
-    public function indexAction(Request $request, Grid $grid,ProductService $productService,CategoryService $categoryService, UserService $userService){
+    public function indexAction(Request $request, Grid $grid, ProductService $productService, CategoryService $categoryService, UserService $userService)
+    {
 
         $select = $categoryService->categorySelect();
 
-        $pageSize = 20;
+        $pageSize = 40;
         $grid->setListService($productService, "getList");
-        $grid->setTableColumn("#", "text", "id","a.id");
-        $grid->setTableColumn("产品名称", "text", "name","a.name");
-        $grid->setTableColumn("类别", "text", "category");
-        $grid->setTableColumn("自动分班最大班级人数", "text", "maxMemberNumber");
-        $grid->setTableColumn("创建人", "text", "creater");
-        $grid->setTableActionColumn("admin_api_teach_product_switchStatus", "上架？", "boole2", "status", null,null,function($obj){
+        $grid->text("#")->field("id")->sort("a.id");
+        $grid->text("产品名称")->field("name")->sort("a.name");
+        $grid->text("类别")->field("category")->sort("a.category");
+        $grid->text("自动分班最大班级人数")->field("maxMemberNumber");
+        $grid->text("创建人")->field("creater");
+        $grid->boole2("上架？")->field("status")->actionCall("admin_api_teach_product_switchStatus", function ($obj) {
             $id = $this->getPro($obj, "id");
             $defaultValue = $this->getPro($obj, "status");
             $url = $this->generateUrl('admin_api_teach_product_switchStatus', ['id' => $id]);
-            $checkStr = $defaultValue?"checked":"";
-            $confirmStr = $defaultValue? "确认要下架吗？":"确认要上架吗?";
+            $checkStr = $defaultValue ? "checked" : "";
+            $confirmStr = $defaultValue ? "确认要下架吗？" : "确认要上架吗?";
             $str = "<input type=\"checkbox\" data-bootstrap-switch-ajaxput href=\"{$url}\" data-confirm=\"{$confirmStr}\" {$checkStr} >";
             return $str;
         });
-        $grid->setTableColumn("类别", "text", "category");
-        $grid->setTableColumn("协议", "text", "agreement");
-        $grid->setTableColumn("创建时间", "datetime", "createdAt", "a.createdAt");
+        $grid->text("类别")->field("category");
+        $grid->text("协议")->field("agreement");
+        $grid->datetime("创建时间")->field("createdAt")->sort("a.createdAt");
 
-        $grid->setTableAction('admin_teach_studyplan_index', function($obj){
+
+        $grid->setTableAction('admin_teach_studyplan_index', function ($obj) {
             $id = $obj['id'];
-            $url = $this->generateUrl('admin_teach_studyplan_index',['id'=>$id]);
-            $str = '<a href='.$url.' data-width="1000px" title="学习计划管理" class=" btn btn-info btn-xs"><i class="fa fa-list"></i></a>';
+            $url = $this->generateUrl('admin_teach_studyplan_index', ['id' => $id]);
+            $str = '<a href=' . $url . ' data-width="1000px" title="开课计划管理" class=" btn btn-info btn-xs"><i class="fas iconfont icon-zhangjiekecheng"></i></a>';
             return  $str;
         });
 
-        $grid->setTableAction('admin_teach_product_edit', function($obj){
+        $grid->setTableAction('admin_teach_product_edit', function ($obj) {
             $id = $obj['id'];
-            $url = $this->generateUrl('admin_teach_product_edit',['id'=>$id]);
-            $str = '<a href='.$url.' data-width="1000px" data-title="编辑" title="编辑" class=" btn btn-info btn-xs poppage"><i class="fas fa-edit"></i></a>';
+            $url = $this->generateUrl('admin_teach_product_edit', ['id' => $id]);
+            $str = '<a href=' . $url . ' data-width="1000px" data-title="编辑" title="编辑" class=" btn btn-info btn-xs poppage"><i class="fas fa-edit"></i></a>';
             return  $str;
         });
 
@@ -67,29 +70,30 @@ class ProductController extends BaseAdminController
             return '<a href=' . $url . ' data-confirm="确认要删除吗?" title="删除" class=" btn btn-danger btn-xs ajaxDelete"><i class="fas fa-trash"></i></a>';
         });
 
-        $grid->setGridBar("admin_teach_product_add","添加", $this->generateUrl("admin_teach_product_add"), "fas fa-plus", "btn-success");
+        //批量删除
+        $bathDelUrl = $this->genUrl("admin_api_teach_product_bathdelete");
+        $grid->setBathDelete("admin_api_teach_product_bathdelete", $bathDelUrl);
+
+        $grid->gbButton("添加")->route("admin_teach_product_add")
+            ->url($this->generateUrl("admin_teach_product_add"))
+            ->styleClass("btn-success")->iconClass("fas fa-plus");
 
         //搜索
-        $grid->setSearchField("ID", "number", "a.id");
-        $grid->setSearchField("名称", "text", "a.name");
-        $grid->setSearchField("类别", 'select', 'a.categoryId' , function()use($select){
-            return $select;
-        });
-        $grid->setSearchField("上架？", "select", "a.status", function(){
-            return ["全部"=>-1,"下架"=>0, "上架"=>1];
-        });
-
-        $grid->setSearchField("创建人", "search_select", "a.createUid",function()use($request, $userService){
+        $grid->snumber("ID")->field("a.id");
+        $grid->stext("名称")->field("a.name");
+        $grid->sselect("类别")->field("a.categoryId")->options($select);
+        $grid->sselect("上架？")->field("a.status")->options(["全部" => -1, "下架" => 0, "上架" => 1]);
+        $grid->ssearchselect("创建人")->field("a.createUid")->options(function () use ($request, $userService) {
             $values = $request->get("values");
-            $createUid = ($values&&isset($values["a.createUid"]))?$values["a.createUid"]:0;
-            if($createUid){
+            $createUid = ($values && isset($values["a.createUid"])) ? $values["a.createUid"] : 0;
+            if ($createUid) {
                 $users = $userService->searchResult($createUid);
-            }else{
+            } else {
                 $users = [];
             }
-            return [$this->generateUrl("admin_api_glob_searchUserDo"),$users];
+            return [$this->generateUrl("admin_api_glob_searchAdminUserDo"), $users];
         });
-        $grid->setSearchField("创建时间", "daterange", "a.createdAt");
+        $grid->sdaterange("创建时间")->field("a.createdAt");
 
         $data = [];
         $data['list'] = $grid->create($request, $pageSize);
@@ -99,20 +103,15 @@ class ProductController extends BaseAdminController
     /**
      * @Rest\Get("/teach/product/add", name="admin_teach_product_add")
      */
-    public function addAction(Form $form, ProductService $productService, CategoryService $categoryService){
+    public function addAction(Form $form, ProductService $productService, CategoryService $categoryService)
+    {
 
-        $form->setFormField("产品名称", 'text', 'name' ,1);
-        $form->setFormField("协议", 'select', 'agreementId' ,1, "", function()use($productService){
-            return $productService->getAgreements();
-        });
-
-        $form->setFormField("类目", 'select', 'categoryId', 1, "", function() use($categoryService){
-            $rs = $categoryService->categorySelect();
-            return $rs;
-        });
-        $form->setFormField("上架？", 'boole', 'status', 1);
-        $form->setFormField("自动分班最大班级人数", 'text', 'maxMemberNumber' ,1, "","", "请输入整数");
-        $form->setFormField("简介", 'textarea', 'descr');
+        $form->text("产品名称")->field("name")->isRequire(1);
+        $form->select("协议")->field("agreementId")->isRequire(1)->options($productService->getAgreements());
+        $form->select("类目")->field("categoryId")->isRequire(1)->options($categoryService->categorySelect());
+        $form->boole("上架？")->field("status")->isRequire(1);
+        $form->text("自动分班最大班级人数")->field("maxMemberNumber")->isRequire(1)->placeholder("请输入整数");
+        $form->textarea("简介")->field("descr");
 
         $formData = $form->create($this->generateUrl("admin_api_teach_product_add"));
         $data = [];
@@ -121,95 +120,105 @@ class ProductController extends BaseAdminController
     }
 
     /**
-     * @Rest\Post("/api/teach/product/addDo", name="admin_api_teach_product_add")
+     * @Rest\Post("/teach/product/add/do", name="admin_api_teach_product_add")
      */
-    public function addDoAction(Request $request, ProductService $productService){
+    public function addDoAction(Request $request, ProductService $productService)
+    {
         $name = $request->get("name");
         $agreementId = (int) $request->get("agreementId");
         $categoryId = (int) $request->get("categoryId");
         $descr = $request->get("descr");
         $status = $request->get("status");
         $maxMemberNumber = (int) $request->get("maxMemberNumber");
-        $status = $status=="on"?1:0;
+        $status = $status == "on" ? 1 : 0;
 
-        if(!$name) return $this->responseError("产品名称不能为空!");
-        if(mb_strlen($name, 'utf-8')>50) return $this->responseError("产品名称不能大于50字!");
-        if($categoryId <=0) return $this->responseError("请选择分类!");
+        if (!$name) return $this->responseError("产品名称不能为空!");
+        if (mb_strlen($name, 'utf-8') > 50) return $this->responseError("产品名称不能大于50字!");
+        if ($categoryId <= 0) return $this->responseError("请选择分类!");
         $uid = $this->getUid();
         $productService->add($uid, $name, $agreementId, $status, $maxMemberNumber, $categoryId, $descr);
 
-        return $this->responseSuccess("添加成功!", $this->generateUrl("admin_teach_product_index"));
+        return $this->responseMsgRedirect("添加成功!", $this->generateUrl("admin_teach_product_index"));
     }
 
     /**
      * @Rest\Get("/teach/product/edit/{id}", name="admin_teach_product_edit")
      */
-    public function editAction($id, Form $form, ProductService $productService,  CategoryService $categoryService){
+    public function editAction($id, Form $form, ProductService $productService,  CategoryService $categoryService)
+    {
         $info = $productService->getById($id);
 
-        $form->setFormField("产品名称", 'text', 'name' ,1, $info['name']);
-        $form->setFormField("协议", 'select', 'agreementId' ,1, $info['agreementId'], function()use($productService){
-            return $productService->getAgreements();
-        });
 
-        $form->setFormField("类目", 'select', 'categoryId', 1, $info['categoryId'], function() use($categoryService){
-            $rs = $categoryService->categorySelect();
-            return $rs;
-        });
-        $form->setFormField("上架？", 'boole', 'status', 1, $info['status']);
-        $form->setFormField("自动分班最大班级人数", 'text', 'maxMemberNumber' ,1,$info['maxMemberNumber'],"", "请输入整数");
-        $form->setFormField("简介", 'textarea', 'descr', 0, $info['descr']);
+        $form->text("产品名称")->field("name")->isRequire(1)->defaultValue($info['name']);
+        $form->select("协议")->field("agreementId")->isRequire(1)->options($productService->getAgreements())->defaultValue($info['agreementId']);
+        $form->select("类目")->field("categoryId")->isRequire(1)->options($categoryService->categorySelect())->defaultValue($info['categoryId']);
+        $form->boole("上架？")->field("status")->isRequire(1)->defaultValue($info['status']);
+        $form->text("自动分班最大班级人数")->field("maxMemberNumber")->isRequire(1)->placeholder("请输入整数")->defaultValue($info['maxMemberNumber']);
+        $form->textarea("简介")->field("descr")->defaultValue($info['descr']);
 
-        $formData = $form->create($this->generateUrl("admin_api_teach_product_edit", ['id'=>$id]));
+        $formData = $form->create($this->generateUrl("admin_api_teach_product_edit", ['id' => $id]));
         $data = [];
         $data["formData"] = $formData;
         return $this->render("@AdminBundle/teach/product/edit.html.twig", $data);
     }
 
     /**
-     * @Rest\Post("/api/teach/product/editDo/{id}", name="admin_api_teach_product_edit")
+     * @Rest\Post("/teach/product/edit/do/{id}", name="admin_api_teach_product_edit")
      */
-    public function editDoAction($id, Request $request, ProductService $productService){
+    public function editDoAction($id, Request $request, ProductService $productService)
+    {
         $name = $request->get("name");
         $agreementId = (int) $request->get("agreementId");
         $categoryId = (int) $request->get("categoryId");
         $descr = $request->get("descr");
         $status = $request->get("status");
         $maxMemberNumber = (int) $request->get("maxMemberNumber");
-        $status = $status=="on"?1:0;
+        $status = $status == "on" ? 1 : 0;
 
-        if(!$name) return $this->responseError("产品名称不能为空!");
-        if(mb_strlen($name, 'utf-8')>50) return $this->responseError("产品名称不能大于50字!");
-        if($categoryId <=0) return $this->responseError("请选择分类!");
+        if (!$name) return $this->responseError("产品名称不能为空!");
+        if (mb_strlen($name, 'utf-8') > 50) return $this->responseError("产品名称不能大于50字!");
+        if ($categoryId <= 0) return $this->responseError("请选择分类!");
         $uid = $this->getUid();
         $productService->edit($id, $name, $agreementId, $status, $maxMemberNumber, $categoryId, $descr);
 
-        return $this->responseSuccess("编辑成功!", $this->generateUrl("admin_teach_product_index"));
+        return $this->responseMsgRedirect("编辑成功!", $this->generateUrl("admin_teach_product_index"));
     }
 
     /**
-     * @Rest\Post("/api/teach/product/deleteDo/{id}", name="admin_api_teach_product_delete")
+     * @Rest\Post("/teach/product/delete/do/{id}", name="admin_api_teach_product_delete")
      */
-    public function deleteDoAction($id, ProductService $productService){
+    public function deleteDoAction($id, ProductService $productService)
+    {
         $productService->del($id);
-        return $this->responseSuccess("删除成功!", $this->generateUrl("admin_teach_product_index"));
+        return $this->responseMsgRedirect("删除成功!", $this->generateUrl("admin_teach_product_index"));
     }
 
     /**
-     * @Rest\Post("/api/teach/product/switchStatusDo/{id}", name="admin_api_teach_product_switchStatus")
+     * @Rest\Post("/teach/product/bathdelete/do", name="admin_api_teach_product_bathdelete")
      */
-    public function switchStatusAction($id, ProductService $productService, Request $request){
+    public function bathdeleteDoAction(Request $request, ProductService $productService)
+    {
+        $ids = $request->get("ids");
+        if($ids){
+            foreach ($ids as $id){
+                $productService->del($id);
+            }
+        }
+
+        if($this->error()->has()){
+            return $this->responseError($this->error()->getLast());
+        }
+
+        return $this->responseMsgRedirect("删除成功!", $this->generateUrl("admin_teach_product_index"));
+    }
+
+    /**
+     * @Rest\Post("/teach/product/switchStatus/do/{id}", name="admin_api_teach_product_switchStatus")
+     */
+    public function switchStatusAction($id, ProductService $productService, Request $request)
+    {
         $state = (int) $request->get("state");
         $productService->switchStatus($id, $state);
-        return $this->responseSuccess("操作成功!");
-    }
-
-    /**
-     * @Rest\Post("/api/teach/product/switchPlanAutoStatusDo/{id}", name="admin_api_teach_product_switchPlanAutoStatus")
-     */
-    public function switchPlanAutoStatusAction($id, ProductService $productService, Request $request){
-        $state = (int) $request->get("state");
-        $productService->switchPlanAutoStatus($id, $state);
-        return $this->responseSuccess("操作成功!");
+        return $this->responseMsgRedirect("操作成功!");
     }
 }

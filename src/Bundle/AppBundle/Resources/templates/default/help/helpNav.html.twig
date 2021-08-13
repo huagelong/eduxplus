@@ -1,0 +1,26 @@
+<div class="layui-card">
+  <div class="layui-card-header"><h3>热门</h3></div>
+</div>
+{% if  category %}
+  {% for c in category %}
+    <div class="layui-card">
+      <div class="layui-card-header"><h3>{{ c['name'] }}</h3></div>
+      <div class="layui-card-body cardlist">
+        <ul>
+          {% if c['childs'] %}
+            {% for cv in c['childs']  %}
+          <li {% if type==1 and id==cv['id'] %} class="active" {% endif %}><a href="{{ path('app_help', {"type":1, "id":cv['id']}) }}">{{ cv['name'] }}</a></li>
+            {% endfor %}
+          {% endif %}
+
+          {% if c['help'] %}
+            {% for cv in c['help']  %}
+              <li  {% if type==0 and id==cv['id'] %} class="active" {% endif %} ><a href="{{ path('app_help', {"type":0, "id":cv['id']}) }}">{{ cv['name'] }}</a></li>
+            {% endfor %}
+          {% endif %}
+
+        </ul>
+      </div>
+    </div>
+  {% endfor %}
+{% endif %}

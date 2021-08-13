@@ -39,6 +39,13 @@ class BaseOption
     private $optionValue;
 
     /**
+     * @var string|null
+     *
+     * @ORM\Column(name="option_group", type="string", length=50, nullable=true, options={"comment"="配置组"})
+     */
+    private $optionGroup;
+
+    /**
      * @var bool|null
      *
      * @ORM\Column(name="is_lock", type="boolean", nullable=true, options={"comment"="是否被锁定,1-是，0-否"})
@@ -105,6 +112,18 @@ class BaseOption
         return $this;
     }
 
+    public function getOptionGroup(): ?string
+    {
+        return $this->optionGroup;
+    }
+
+    public function setOptionGroup(?string $optionGroup): self
+    {
+        $this->optionGroup = $optionGroup;
+
+        return $this;
+    }
+
     public function getIsLock(): ?bool
     {
         return $this->isLock;
@@ -141,7 +160,6 @@ class BaseOption
         return $this;
     }
 
-
     public function getCreatedAt(): ?\DateTimeInterface
     {
         return $this->createdAt;
@@ -177,7 +195,6 @@ class BaseOption
 
         return $this;
     }
-
 
 
 }

@@ -1,0 +1,57 @@
+<div class="layui-card">
+  <div class="layui-card-body userInfo">
+    <div class="cover layui-center">
+      <img src="{{ userinfo.gravatar }}" class="layui-circle" style="width: 70px;"/>
+    </div>
+    <div class="displayName layui-center">
+      <span style="font-weight: bold">{{ userinfo.displayName }}</span>
+      {% if  userinfo.sex == 1 %}
+        <span class="layui-icon layui-icon-male"></span>
+      {% endif %}
+      {% if  userinfo.sex == 2 %}
+        <span class="layui-icon layui-icon-female"></span>
+      {% endif %}
+{#      1-管理员 ，2-讲师，3-助教，4-班主任,5-学生#}
+      {% if  userinfo.realRole == 1 %}
+      <span class="layui-badge layui-bg-gray">管理员</span>
+      {% endif %}
+      {% if  userinfo.realRole == 2 %}
+        <span class="layui-badge layui-bg-gray">讲师</span>
+      {% endif %}
+      {% if  userinfo.realRole == 3 %}
+        <span class="layui-badge layui-bg-gray">助教</span>
+      {% endif %}
+      {% if  userinfo.realRole == 4 %}
+        <span class="layui-badge layui-bg-gray">班主任</span>
+      {% endif %}
+      {% if  userinfo.realRole == 5 %}
+        <span class="layui-badge layui-bg-gray">学生</span>
+      {% endif %}
+
+    </div>
+
+  </div>
+</div>
+
+<div class="layui-card">
+  <div class="layui-card-header"><h3>课程中心</h3></div>
+  <div class="layui-card-body cardlist">
+    <ul>
+      <li {% if route == 'app_user_home' %} class="active" {% endif %} ><a href="{{ path('app_user_home') }}">我的课程</a></li>
+      <li {% if route == 'qa_mytest' %} class="active" {% endif %} ><a href="{{ path('qa_mytest') }}">我的试卷</a></li>
+      <li {% if route == 'app_user_fav' %} class="active" {% endif %} ><a href="{{ path('app_user_fav') }}">我的收藏</a></li>
+    </ul>
+  </div>
+</div>
+
+<div class="layui-card">
+  <div class="layui-card-header"><h3>个人中心</h3></div>
+  <div class="layui-card-body cardlist">
+    <ul>
+      <li {% if route == 'app_order_index' %} class="active" {% endif %} ><a href="{{ path('app_order_index') }}">我的订单</a></li>
+      <li {% if route == 'app_user_msg' %} class="active" {% endif %} ><a href="{{ path('app_user_msg') }}">我的消息{% if msgUnreadCount>0 %}<span class="layui-badge">{{ msgUnreadCount }}</span>{% endif %}</a></li>
+      <li {% if route == 'app_user_info' %} class="active" {% endif %} ><a href="{{ path('app_user_info') }}">个人信息</a></li>
+      <li {% if route == 'app_user_secure' %} class="active" {% endif %} ><a href="{{ path('app_user_secure') }}">安全相关</a></li>
+    </ul>
+  </div>
+</div>

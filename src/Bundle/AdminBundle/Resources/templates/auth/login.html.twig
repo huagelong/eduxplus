@@ -4,12 +4,8 @@
 
 {% block head_stylesheets %}
     {{ parent() }}
-    <link rel="stylesheet" href="{{ asset('assets/plugins/fontawesome-free/css/all.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/plugins/ionicons/css/ionicons.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/admlte/css/adminlte.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/plugins/layer/layer.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/admlte/googlefonts/fonts.css') }}">
+  <link rel="stylesheet" href="{{ asset('assets/dist/base/base.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('assets/dist/baseAdmin/base.min.css') }}">
 {% endblock %}
 
 {% block head_custom_stylesheets %}
@@ -27,16 +23,13 @@
 {% endblock %}
 
 {% block head_favicon %}
-    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('assets/fav.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('assets/favicon.ico') }}">
 {% endblock %}
 
 {% block body_javascript %}
     {{ parent() }}
-    <script src="{{ asset('assets/plugins/jquery/jquery.min.js') }}"></script>
-    <script src="{{ asset('assets/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-    <script src="{{ asset('assets/admlte/js/adminlte.min.js') }}"></script>
-    <script src="{{ asset('assets/plugins/layer/layer.js') }}"></script>
-    <script src="{{ asset('assets/base/modules/captcha.js') }}"></script>
+  <script src="{{ asset('assets/dist/base/base.min.js') }}"></script>
+  <script src="{{ asset('assets/dist/baseAdmin/base.min.js') }}"></script>
     <script type="text/javascript">
         $(function(){
             $(".recaptcha").captcha();
@@ -134,7 +127,10 @@
 {% block body_custom_javascript %}
 <script>
     $(function(){
-
+      $("input[name='mobile']").keyup(function(){
+          var mobile = $(this).val();
+          $.Cookie("last_username", mobile);
+      });
     });
 </script>
 {% endblock %}

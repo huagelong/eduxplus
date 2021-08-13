@@ -33,7 +33,7 @@ class MallGoodsIntroduce
     /**
      * @var bool|null
      *
-     * @ORM\Column(name="introduce_type", type="boolean", nullable=true, options={"comment"="课程介绍类型 1-图文介绍"})
+     * @ORM\Column(name="introduce_type", type="integer",length=1, nullable=true, options={"comment"="课程介绍类型 1-图文介绍"})
      */
     private $introduceType = '0';
 
@@ -80,12 +80,12 @@ class MallGoodsIntroduce
         return $this;
     }
 
-    public function getIntroduceType(): ?bool
+    public function getIntroduceType(): ?int
     {
         return $this->introduceType;
     }
 
-    public function setIntroduceType(?bool $introduceType): self
+    public function setIntroduceType(?int $introduceType): self
     {
         $this->introduceType = $introduceType;
 

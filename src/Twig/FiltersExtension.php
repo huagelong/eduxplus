@@ -17,6 +17,7 @@ class FiltersExtension extends AbstractExtension
 
     public function doSomething($string , $start, $length=null)
     {
-        return substr($string , $start, $length);
+
+        return mb_substr($string , $start, $length, "utf-8");
     }
 }

@@ -1,0 +1,279 @@
+{% extends '@AppBundle/layout/layout.html.twig' %}
+ {% block page %}
+   {{ parent() }}
+  <div id="main" class="commonMain">
+    <div class="layui-fluid" style="background-color: #393D49">
+        <div class="layui-main detailHead">
+          <div class="header">
+              <span class="layui-breadcrumb">
+              <a href="/">首页</a>
+              <a href="{{ path('app_detail_center', {categoryId:info['categoryId']}) }}">课程中心</a>
+              <a><cite>{{ info['name'] }}</cite></a>
+              </span>
+          </div>
+          <div class="body">
+            {% if info["isGroup"] == 0 %}
+              <div class="layui-row layui-col-space20">
+                  <div class="layui-col-md6">
+                    <div class="cover">
+                      <img src="{% if info['goodsImg'] %}{{ json_get(info['goodsImg'], 0) }}{% else %} /assets/app/default/images/lesson_default.png {% endif %}"   />
+                    </div>
+                  </div>
+                  <div class="layui-col-md6">
+                      <div class="info">
+                          <div class="title">{{ info['name'] }}</div>
+                          <div class="attr">
+                            <div class="lesson_time">
+                              <span>{{ info['courseCount']}}</span>课次/共<span>{{ info['courseHour']}}</span>课时
+                            </div>
+                            <div class="price">价格:  <span class="fontColorRed">{% if info['shopPrice']==0 %}免费{% else %}¥{{ info['shopPriceView'] }}{% endif %}</span></div>
+                            <div class="viewNum">购买人数: {{ info['buyNumberFalse'] }} 人</div>
+                          </div>
+                      </div>
+                      <div class="infoFooter">
+                         <ul>
+                           <li class="left">
+                             {% if info['shopPrice']==0 %}
+                               <a href="{{ path('app_order_tobuy', {'uuid':info['uuid']}) }}" class="layui-btn layui-btn-danger layui-btn-lg">免费获取</a>
+                             {% else %}
+                               <a  href="{{ path('app_order_tobuy', {'uuid':info['uuid']}) }}" class="layui-btn layui-btn-danger layui-btn-lg">立即购买</a>
+                             {% endif %}
+                           </li>
+                           <li class="right"><a href="{{ path('app_detail_doFav', {'uuid':info['uuid']}) }}" class="ajaxGet"><span class="layui-icon {% if fav %} layui-icon-star-fill {% else %} layui-icon-star {% endif %}"></span>收藏</a></li>
+                         </ul>
+                      </div>
+                  </div>
+              </div>
+            {% else %}
+{#              组合商品可选#}
+              {% if info["groupType"] == 1 %}
+            <form action="{{ path('app_order_tobuy', {'uuid':info['uuid']}) }}" method="get" class="layui-form">
+                <div class="layui-row layui-col-space20">
+                  <div class="layui-col-md6">
+                    <div class="cover">
+                      <img src="{% if info['goodsImg'] %}{{ json_get(info['goodsImg'], 0) }}{% else %} /assets/app/default/images/lesson_default.png {% endif %}"   />
+                    </div>
+                  </div>
+                  <div class="layui-col-md6">
+                    <div class="info">
+                      <div class="title">{{ info['name'] }}</div>
+                          {% if info['level'] == 0 %}
+                            <div class="goodsList">
+                              {% if info['childGoods'] %}
+                                <ul class="selectArea">
+                                  {% for key2, item2 in info['childGoods'] %}
+                                    <li>
+                                      <input type="checkbox" value="{{ item2['id'] }}" name="goodsId[]" title="{{ item2['name'] }}" {% if key2==0 %} checked {% endif %} />
+                                    </li>
+                                  {% endfor %}
+                                </ul>
+                              {% endif %}
+                            </div>
+                          {% else %}
+                                {% if info['childGoods'] %}
+                                  {% for key1, item1 in info['childGoods'] %}
+                                    <div class="goodsList">
+                                      <div class="goodsListTitle">{{ item1['name'] }}</div>
+                                      <ul class="selectArea">
+                                        {% for key2, item2 in item1['childGoods'] %}
+                                          <li>
+                                            <input type="checkbox" value="{{ item2['id'] }}" {% if key2==0 %} checked {% endif %} title="{{ item2['name'] }}"  name="goodsId[]" />
+                                          </li>
+                                        {% endfor %}
+                                      </ul>
+                                    </div>
+                                  {% endfor %}
+                                {% endif %}
+                        {% endif %}
+                      <div class="attr">
+                        <div class="lesson_time">
+                          <span>{{ info['courseCount']}}</span>课次/共<span>{{ info['courseHour']}}</span>课时
+                        </div>
+                        <div class="price">价格:  <span class="fontColorRed">{% if info['shopPrice']==0 %}免费{% else %}¥{{ info['shopPriceView'] }}{% endif %}</span></div>
+                        <div class="viewNum">购买人数: {{ info['buyNumberFalse'] }} 人</div>
+                      </div>
+                    </div>
+                    <div class="infoFooter">
+                      <ul>
+                        <li class="left">
+                          {% if info['shopPrice']==0 %}
+                            <a href="{{ path('app_order_tobuy', {'uuid':info['uuid']}) }}" class="layui-btn layui-btn-danger layui-btn-lg" id="tobuy">免费获取</a>
+                          {% else %}
+                            <a  href="{{ path('app_order_tobuy', {'uuid':info['uuid']}) }}" class="layui-btn layui-btn-danger layui-btn-lg"  id="tobuy">立即购买</a>
+                          {% endif %}
+                        </li>
+                        <li class="right"><a href="{{ path('app_detail_doFav', {'uuid':info['uuid']}) }}" class="ajaxGet"><span class="layui-icon {% if fav %} layui-icon-star-fill {% else %} layui-icon-star {% endif %}"></span>收藏</a></li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+            </form>
+              {% else %}
+                {#              组合商品全选#}
+                <div class="layui-row layui-col-space20">
+                  <div class="layui-col-md6">
+                    <div class="cover">
+                      <img src="{% if info['goodsImg'] %}{{ json_get(info['goodsImg'], 0) }}{% else %} /assets/app/default/images/lesson_default.png {% endif %}"   />
+                    </div>
+                  </div>
+                  <div class="layui-col-md6">
+                    <div class="info">
+                      <div class="title">{{ info['name'] }}</div>
+                      <div class="attr">
+                        <div class="lesson_time">
+                          <span>{{ info['courseCount']}}</span>课次/共<span>{{ info['courseHour']}}</span>课时
+                        </div>
+                        <div class="price">价格:  <span class="fontColorRed">{% if info['shopPrice']==0 %}免费{% else %}¥{{ info['shopPriceView'] }}{% endif %}</span></div>
+                        <div class="viewNum">购买人数: {{ info['buyNumberFalse'] }} 人</div>
+                      </div>
+                    </div>
+                    <div class="infoFooter">
+                      <ul>
+                        <li class="left">
+                          {% if info['shopPrice']==0 %}
+                            <a href="{{ path('app_order_tobuy', {'uuid':info['uuid']}) }}" class="layui-btn layui-btn-danger layui-btn-lg">免费获取</a>
+                          {% else %}
+                            <a  href="{{ path('app_order_tobuy', {'uuid':info['uuid']}) }}" class="layui-btn layui-btn-danger layui-btn-lg">立即购买</a>
+                          {% endif %}
+                        </li>
+                        <li class="right"><a href="{{ path('app_detail_doFav', {'uuid':info['uuid']}) }}" class="ajaxGet"><span class="layui-icon {% if fav %} layui-icon-star-fill {% else %} layui-icon-star {% endif %}"></span>收藏</a></li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              {% endif %}
+            {% endif %}
+          </div>
+        </div>
+    </div>
+    <div class="layui-main detailBody">
+      <div class="layui-row">
+        <div class="layui-col-md8">
+          <div class="wrap">
+            <div class="content">
+              <div class="layui-tab layui-tab-brief">
+                <ul class="layui-tab-title">
+                  <li class="layui-this">课程介绍</li>
+                  <li>课程安排</li>
+                  <li>咨询</li>
+                </ul>
+                <div class="layui-tab-content">
+                  <div class="layui-tab-item layui-show">
+                        {% if info['introduce'] %}
+                          {{ info['introduce']['content']|raw }}
+                        {% else %}
+                          <div class="layui-center">
+                            <div><img src="/assets/app/default/images/null-i2.png" /></div>
+                            <div>还没有当前课程的介绍哦～</div>
+                          </div>
+                        {% endif %}
+                  </div>
+                  <div class="layui-tab-item">
+                        {% if studyPlan is empty %}
+                          <div class="layui-center">
+                            <div><img src="/assets/app/default/images/null-i2.png" /></div>
+                            <div>还没有当前课程的安排哦～</div>
+                          </div>
+                        {% else %}
+                            {% if studyPlan['studyPlans'] %}
+                              {% for planv in studyPlan['studyPlans'] %}
+                                  <div class="layui-collapse">
+                                    <div class="layui-colla-item">
+                                      <h2 class="layui-colla-title"><span class="layui-icon layui-icon-release"></span> {{ planv['course']['name'] }}</h2>
+                                      <div class="layui-colla-content layui-show">
+                                        {% if planv['course']['chapters'] is defined %}
+                                                  {% for chapters in planv['course']['chapters'] %}
+                                                    {% set topIndex=loop.index %}
+                                                    {% if chapters['child'] %}
+                                                      <div class="layui-collapse">
+                                                        <div class="layui-colla-item">
+                                                          <h4 class="layui-colla-title">{{ topIndex }}、{{ chapters['name'] }}</h4>
+                                                          <div class="layui-colla-content layui-show">
+                                                              <ul>
+                                                                {% for childchapters in chapters['child'] %}
+                                                                  <li>{{ topIndex }}-{{ loop.index }}、{{ childchapters['name'] }}</li>
+                                                                {% endfor %}
+                                                              </ul>
+                                                          </div>
+                                                        </div>
+                                                      </div>
+                                                    {% else %}
+                                                      <div class="activeCourseMsgs">
+                                                        <span class="name">{{ topIndex }}、{{ chapters['name'] }}</span>
+                                                      </div>
+                                                    {% endif %}
+                                                  {% endfor %}
+                                        {% endif %}
+                                      </div>
+                                    </div>
+                                  </div>
+                              {% endfor %}
+                            {% else %}
+                              {% for groupGoods in studyPlan['child'] %}
+                                {% for planv in groupGoods['studyPlans'] %}
+                                    <div class="layui-collapse">
+                                        <div class="layui-colla-item">
+                                          <h2 class="layui-colla-title"><span class="layui-icon layui-icon-release"></span> {{ planv['course']['name'] }}</h2>
+                                          <div class="layui-colla-content layui-show">
+                                            {% if planv['course']['chapters'] is defined %}
+                                                {% for chapters in planv['course']['chapters'] %}
+                                                  {% set topIndex=loop.index %}
+                                                  {% if chapters['child'] %}
+                                                    <div class="layui-collapse">
+                                                        <div class="layui-colla-item">
+                                                          <h4 class="layui-colla-title">{{ topIndex }}、{{ chapters['name'] }}</h4>
+                                                          <div class="layui-colla-content layui-show">
+                                                              <ul>
+                                                                {% for childchapters in chapters['child'] %}
+                                                                  <li>{{ topIndex }}-{{ loop.index }}、{{ childchapters['name'] }}</li>
+                                                                {% endfor %}
+                                                              </ul>
+                                                          </div>
+                                                        </div>
+                                                      </div>
+                                                  {% else %}
+                                                   <div class="activeCourseMsgs">
+                                                     <span class="name">{{ topIndex }}、{{ chapters['name'] }}</span>
+                                                   </div>
+                                                  {% endif %}
+                                                {% endfor %}
+                                            </div>
+                                            {% endif %}
+                                          </div>
+                                    </div>
+                                {% endfor %}
+                              {% endfor %}
+                            {% endif %}
+                        {% endif %}
+                  </div>
+                  <div class="layui-tab-item">咨询</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="layui-col-md4">
+          <div class="layui-card margin-left20">
+            <div class="layui-card-header">讲师简介</div>
+            <div class="layui-card-body">
+              {% if info['teachers'] %}
+                {% for t in info['teachers'] %}
+                  <div class="layui-row">
+                    <div class="layui-col-md6">
+                      <div class="layui-center">
+                        <img src="{{ json_get(t['gravatar']) }}" class="layui-circle" style="width: 70px;"/>
+                      </div>
+                    </div>
+                    <div class="layui-col-md6">
+                      {{ t['name'] }}
+                    </div>
+                  </div>
+                {% endfor %}
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+ {% endblock %}

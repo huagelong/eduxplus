@@ -8,7 +8,10 @@
 /public/upload/
 /.buildpath
 /.project
+/.idea
+/node_modules
 /var/
+/logs/
 /vendor/
 ###< symfony/framework-bundle ###
 

@@ -10,20 +10,48 @@ namespace App\Bundle\AppBundle\Lib\Service;
 
 use App\Bundle\AppBundle\Lib\Base\BaseService;
 use App\Bundle\AppBundle\Lib\Service\File\AliyunOssService;
+use App\Bundle\AppBundle\Lib\Service\File\TengxunyunCosService;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class UploadService extends BaseService
 {
     protected $aliyunOssService;
+    protected $tengxunyunCosService;
 
-    public function __construct(AliyunOssService $aliyunOssService)
+    public function __construct(AliyunOssService $aliyunOssService, TengxunyunCosService $tengxunyunCosService)
     {
         $this->aliyunOssService = $aliyunOssService;
+        $this->tengxunyunCosService = $tengxunyunCosService;
     }
+
+    public function up($remoteFilePath, $localFile){
+
+        $uploadAdapter = (int) $this->getOption("app.upload.adapter");
+        $uploadAdapter = $uploadAdapter?$uploadAdapter:1;
+        //本地
+        if($uploadAdapter == 1){
+            rename($remoteFilePath, $localFile);
+            return $remoteFilePath;
+        }
+
+        //阿里云oss
+        if($uploadAdapter == 2){
+            return $this->aliyunOssService->up($remoteFilePath, $localFile);
+        }
+
+        //腾讯云cos
+        if($uploadAdapter == 3){
+            return $this->tengxunyunCosService->up($remoteFilePath, $localFile);
+        }
+    }
+
 
     public function upload(UploadedFile $file, $type)
     {
 //        $file->getFileInfo()->getSize();
+//        $file->getFileInfo()->getType();
+//        $file->getFileInfo()->getExtension();
+//        $file->getClientMimeType()
         // $targetDirRoot = $this->getParameter("upload_dir");
         $targetDirRoot = $this->getBasePath()."/var/tmp";
         $uploadAdapter = (int) $this->getOption("app.upload.adapter");
@@ -47,7 +75,13 @@ class UploadService extends BaseService
         if($uploadAdapter == 2){
             $remoteFilePath = $type."/".date('Y/m/d')."/".$fileName;
             $localFile = $targetDir.$fileName;
-            return $this->aliyunOssService->upOss($remoteFilePath, $localFile);
+            return $this->aliyunOssService->up($remoteFilePath, $localFile);
+        }
+
+        if($uploadAdapter == 3){
+            $remoteFilePath = $type."/".date('Y/m/d')."/".$fileName;
+            $localFile = $targetDir.$fileName;
+            return $this->tengxunyunCosService->up($remoteFilePath, $localFile);
         }
 
         return $path;

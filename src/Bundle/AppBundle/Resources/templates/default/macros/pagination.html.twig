@@ -1,0 +1,70 @@
+{% macro pagination(pagination) %}
+  {% set paginationData = pagination.getPaginationData %}
+  {% set pageCount = paginationData['pageCount'] %}
+  {% set last = paginationData['last'] %}
+  {% set current = paginationData['current'] %}
+  {% set numItemsPerPage = paginationData['numItemsPerPage'] %}
+  {% set first = paginationData['first'] %}
+  {% set totalCount = paginationData['totalCount'] %}
+  {% set pageRange = paginationData['pageRange'] %}
+  {% set startPage = paginationData['startPage'] %}
+  {% set endPage = paginationData['endPage'] %}
+  {% set previous = if_set(paginationData, 'previous', 0) %}
+  {% set next =if_set(paginationData, 'next', 0) %}
+  {% set pagesInRange = paginationData['pagesInRange'] %}
+  {% set firstPageInRange = paginationData['firstPageInRange'] %}
+  {% set lastPageInRange = paginationData['lastPageInRange'] %}
+  {% set currentItemCount = paginationData['currentItemCount'] %}
+  {% set firstItemNumber = paginationData['firstItemNumber'] %}
+  {% set lastItemNumber = paginationData['lastItemNumber'] %}
+  {% set route = pagination.getRoute %}
+  {% set pageParameterName = pagination.getPaginatorOption('pageParameterName') %}
+  {% set query = pagination.getQuery %}
+
+  {% if pageCount > 1 %}
+  <div class="layui-box layui-laypage layui-laypage-molv">
+  {% if previous >0 %}
+    <a href="{{ path(route, query|merge({(pageParameterName): previous})) }}" class="layui-laypage-prev" data-page="1">上一页</a>
+  {% else %}
+    <a href="javascript:;" class="layui-laypage-prev layui-disabled" data-page="0">上一页</a>
+  {% endif %}
+
+    {% if startPage > 1 %}
+      <a href="{{ path(route, query|merge({(pageParameterName): 1})) }}" data-page="1">1</a>
+      {% if startPage == 3 %}
+        <a href="{{ path(route, query|merge({(pageParameterName): 2})) }}" data-page="2">2</a>
+      {% elseif startPage != 2 %}
+        <a href="javascript:;" class="layui-laypage-prev layui-disabled" data-page="0">&hellip;</a>
+      {% endif %}
+    {% endif %}
+
+    {% for page in pagesInRange %}
+      {% if page != current %}
+        <a href="{{ path(route, query|merge({(pageParameterName): page})) }}" data-page="{{ page }}">{{ page }}</a>
+      {% else %}
+        <span class="layui-laypage-curr">
+      <em class="layui-laypage-em" style="background-color:#1E9FFF;"></em><em>{{ page }}</em>
+        </span>
+      {% endif %}
+    {% endfor %}
+
+    {% if pageCount > endPage %}
+      {% if pageCount > (endPage + 1) %}
+        {% if pageCount > (endPage + 2) %}
+          <span class="layui-laypage-spr">…</span>
+        {% else %}
+          <a href="{{ path(route, query|merge({(pageParameterName): pageCount - 1})) }}" data-page="{{ pageCount - 1 }}">{{ pageCount - 1 }}</a>
+        {% endif %}
+      {% endif %}
+      <a href="{{ path(route, query|merge({(pageParameterName): pageCount})) }}" data-page="{{ pageCount }}">{{ pageCount }}</a>
+    {% endif %}
+
+
+    {% if next >0 %}
+      <a href="{{ path(route, query|merge({(pageParameterName): next})) }}" data-page="{{ next }}">下一页</a>
+    {% else %}
+      <a href="javascript:;" class="layui-laypage-prev layui-disabled" data-page="0">下一页</a>
+    {% endif %}
+  </div>
+  {% endif %}
+{% endmacro %}

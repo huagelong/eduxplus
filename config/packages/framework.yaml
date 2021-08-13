@@ -1,11 +1,13 @@
 framework:
+    cache: 
+        app: cache.adapter.redis
+        default_redis_provider: snc_redis.default
+        pools: 
+            doctrine.second_level_cache_pool: 
+                adapter: cache.app
     secret: '%env(APP_SECRET)%'
     #csrf_protection: true
     #http_method_override: true
-    cache:
-        app: cache.adapter.redis
-        default_redis_provider: snc_redis.default
-
     session:
         handler_id: snc_redis.session.handler
         cookie_secure: auto
@@ -16,4 +18,4 @@ framework:
         log: true
 
     assets:
-      version: 'v20200327'
+      version: 'v20200702'

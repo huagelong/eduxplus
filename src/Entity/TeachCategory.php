@@ -57,7 +57,14 @@ class TeachCategory
      *
      * @ORM\Column(name="is_show", type="boolean", nullable=false, options={"default"="1","comment"="是否显示"})
      */
-    private $isShow = true;
+    private $isShow ='1';
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="mobile_icon", type="string", length=400, nullable=true, options={"comment"="移动端分类图标"})
+     */
+    private $mobileIcon;
 
     /**
      * @var int|null
@@ -143,6 +150,18 @@ class TeachCategory
         return $this;
     }
 
+    public function getMobileIcon(): ?string
+    {
+        return $this->mobileIcon;
+    }
+
+    public function setMobileIcon(?string $mobileIcon): self
+    {
+        $this->mobileIcon = $mobileIcon;
+
+        return $this;
+    }
+
     public function getCreatedAt(): ?\DateTimeInterface
     {
         return $this->createdAt;
@@ -178,5 +197,4 @@ class TeachCategory
 
         return $this;
     }
-
 }

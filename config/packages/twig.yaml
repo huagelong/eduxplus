@@ -7,3 +7,5 @@ twig:
       "%kernel.project_dir%/src/Bundle/AdminBundle/Resources/templates": "AdminBundle"
       "%kernel.project_dir%/src/Bundle/AdminBundle/Lib/Grid/templates": "Grid"
       "%kernel.project_dir%/src/Bundle/AdminBundle/Lib/Form/templates": "Form"
+      "%kernel.project_dir%/src/Bundle/AdminBundle/Lib/View/templates": "View"
+      "%kernel.project_dir%/src/Bundle/AppBundle/Resources/templates/default": "AppBundle"

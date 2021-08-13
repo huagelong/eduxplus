@@ -1,0 +1,16 @@
+{% extends '@AppBundle/layout/layout.html.twig' %}
+ {% block page %}
+     {{ parent() }}
+  <div id="main"  class="myMain">
+      <div class="layui-main">
+        <div class="layui-row layui-col-space20">
+          <div class="layui-col-md2">
+            {{ render(controller('AppBundle:User:userNav', {route:route})) }}
+          </div>
+          <div class="layui-col-md10">
+            {{ render(controller('AppBundle:Learn:index', {page:page})) }}
+          </div>
+        </div>
+      </div>
+  </div>
+ {% endblock %}

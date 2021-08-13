@@ -1,0 +1,75 @@
+{
+  "_args": [
+    [
+      "jquery-ajax-file-upload",
+      "/mnt/hgfs/php/tmp"
+    ]
+  ],
+  "_cnpm_publish_time": 1501854487194,
+  "_from": "jquery-ajax-file-upload@latest",
+  "_hasShrinkwrap": false,
+  "_id": "jquery-ajax-file-upload@1.0.0",
+  "_inCache": true,
+  "_installable": true,
+  "_location": "/jquery-ajax-file-upload",
+  "_nodeVersion": "6.11.1",
+  "_npmOperationalInternal": {
+    "host": "s3://npm-registry-packages",
+    "tmp": "tmp/jquery-ajax-file-upload-1.0.0.tgz_1501854487099_0.20985417999327183"
+  },
+  "_npmUser": {
+    "email": "nieyuge@163.com",
+    "name": "nieyuge"
+  },
+  "_npmVersion": "3.10.10",
+  "_phantomChildren": {},
+  "_requested": {
+    "name": "jquery-ajax-file-upload",
+    "raw": "jquery-ajax-file-upload",
+    "rawSpec": "",
+    "scope": null,
+    "spec": "latest",
+    "type": "tag"
+  },
+  "_requiredBy": [
+    "#USER"
+  ],
+  "_resolved": "http://registry.npm.taobao.org/jquery-ajax-file-upload/download/jquery-ajax-file-upload-1.0.0.tgz",
+  "_shasum": "ceb34b3b8d357151f3b40f5f412db6161493616a",
+  "_shrinkwrap": null,
+  "_spec": "jquery-ajax-file-upload",
+  "_where": "/mnt/hgfs/php/tmp",
+  "author": "",
+  "bugs": {
+    "url": "https://github.com/nieyuge/jQuery.AjaxFileUpload.js/issues"
+  },
+  "dependencies": {},
+  "description": "This plugin uploads the file somehwere, and passes the response to a callback, nothing else.",
+  "devDependencies": {},
+  "directories": {},
+  "dist": {
+    "shasum": "ceb34b3b8d357151f3b40f5f412db6161493616a",
+    "tarball": "https://registry.npmjs.org/jquery-ajax-file-upload/-/jquery-ajax-file-upload-1.0.0.tgz"
+  },
+  "gitHead": "3cc7d820c15fc0a2000355948636cd8f2d1daaba",
+  "homepage": "https://github.com/nieyuge/jQuery.AjaxFileUpload.js#readme",
+  "keywords": [],
+  "license": "ISC",
+  "maintainers": [
+    {
+      "name": "nieyuge",
+      "email": "nieyuge@163.com"
+    }
+  ],
+  "name": "jquery-ajax-file-upload",
+  "optionalDependencies": {},
+  "readme": "ERROR: No README data found!",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nieyuge/jQuery.AjaxFileUpload.js.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "version": "1.0.0"
+}

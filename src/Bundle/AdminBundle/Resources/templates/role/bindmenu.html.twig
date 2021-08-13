@@ -1,4 +1,5 @@
 {% extends "@AdminBundle/layout/pop.html.twig" %}
+{% import "@AdminBundle/macros/bind_menu.html.twig" as macros %}
 
 {% block head_custom_stylesheets %}
     <link rel="stylesheet" href="{{ asset('assets/plugins/jquery-nestable2/jquery.nestable.min.css') }}">
@@ -66,7 +67,7 @@ $(function(){
         });
         checkIdStr = checkIdStr.substring(0, checkIdStr.lastIndexOf(','));
         var data = {data:checkIdStr};
-        requestPost("{{ path('admin_api_role_bindmenu', {id:info['id']}) }}", JSON.stringify(data));
+        requestPost("{{ path('admin_api_role_bindmenu', {id:info['id']}) }}", data);
     });
 
 })
@@ -101,61 +102,7 @@ $(function(){
                 </div>
                 <div class="card-body table-responsive no-padding">
                     <div class="dd" id="menu-tree">
-                        <ol class="dd-list">
-                            {% for menu in allMenu[0] %}
-                                <li class="dd-item" data-id="{{ menu.id }}">
-                                    <div class="dd-handle">
-                                        <i class="{{ menu.style|default('far fa-circle') }}"></i>&nbsp;<strong>{{ menu.name }}</strong>&nbsp;&nbsp;&nbsp;
-                                        {% if menu.url!="" and menu.isAccess==0 %}<a href="{{ path(menu.url) }}" class="dd-nodrag">{{ path(menu.url) }}</a>{% endif %}
-                                        <span class="font-weight-lighter"> {{ menu.descr }}</span>
-                                        {% if info['isLock'] ==0 %}
-                                            <span class="pull-right dd-nodrag">
-                                                <input type="checkbox" name="access[]" value="{{ menu.id }}" {% if in_array(menu.id, menuIds) %} checked {% endif %} >
-                                            </span>
-                                        {% endif %}
-                                    </div>
-                                    {% if allMenu[menu.id] is defined %}
-                                        <ol class="dd-list">
-                                            {% for menu2 in allMenu[menu.id] %}
-                                                <li class="dd-item" data-id="{{ menu2.id }}">
-                                                    <div class="dd-handle">
-                                                        <i class="{{ menu2.style|default('far fa-circle') }}"></i>&nbsp;<strong>{{ menu2.name }}</strong>&nbsp;&nbsp;&nbsp;
-                                                        {% if menu2.url!="" and menu2.isAccess==0 %}<a href="{{ path(menu2.url) }}" class="dd-nodrag">{{ path(menu2.url) }}</a>{% endif %}
-                                                        <span class="font-weight-lighter"> {{ menu2.descr }}</span>
-                                                        {% if info['isLock'] ==0 %}
-                                                            <span class="pull-right dd-nodrag">
-                                                                    <input type="checkbox" name="access[]" value="{{ menu2.id }}"  {% if in_array(menu2.id, menuIds) %} checked {% endif %}  >
-                                                            </span>
-                                                        {% endif %}
-                                                    </div>
-                                                    {#第三级#}
-                                                    {% if allMenu[menu2.id] is defined %}
-                                                        <ol class="dd-list">
-                                                            {% for menu3 in allMenu[menu2.id] %}
-                                                                <li class="dd-item" data-id="{{ menu3.id }}">
-                                                                    <div class="dd-handle">
-                                                                        <i class="{{ menu3.style|default('far fa-circle') }}"></i>&nbsp;<strong>{{ menu3.name }}</strong>&nbsp;&nbsp;&nbsp;
-                                                                        {% if menu3.url!="" and menu3.isAccess==0 %}<a href="{{ path(menu3.url) }}" class="dd-nodrag">{{ path(menu3.url) }}</a>{% endif %}
-                                                                        <span class="font-weight-lighter"> {{ menu3.descr }}</span>
-                                                                        {% if info['isLock'] ==0 %}
-                                                                            <span class="pull-right dd-nodrag">
-                                                                                <input type="checkbox" name="access[]" value="{{ menu3.id }}"  {% if in_array(menu3.id, menuIds) %} checked {% endif %}  >
-                                                                            </span>
-                                                                        {% endif %}
-                                                                    </div>
-                                                                </li>
-                                                            {% endfor %}
-                                                        </ol>
-                                                    {% endif %}
-
-                                                </li>
-                                            {% endfor %}
-                                        </ol>
-                                    {% endif %}
-                                </li>
-                            {% endfor %}
-
-                        </ol>
+                        {{ macros.bind_menu(allMenu, 0, info, menuIds) }}
                     </div>
                 </div>
             </div>

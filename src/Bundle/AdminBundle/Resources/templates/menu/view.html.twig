@@ -1,0 +1,12 @@
+{% extends "@AdminBundle/layout/pop.html.twig" %}
+
+{% block page_title %}查看导航信息{% endblock %}
+{% block page %}
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            {{ viewData|raw }}
+        </div>
+    </div>
+</section>
+{% endblock %}

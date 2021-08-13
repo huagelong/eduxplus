@@ -1,7 +1,7 @@
 {% extends "@AdminBundle/layout/main.html.twig" %}
 {% import "@AdminBundle/macros/studyplan_tree.html.twig" as macros %}
 
-{% block page_title %}学习计划管理{% endblock %}
+{% block page_title %}开课计划管理{% endblock %}
 {% block breadcrumb %}
     <li class="breadcrumb-item"><a href="{{ path("admin_teach_product_index", {id:id}) }}">产品管理</a></li>
 {% endblock %}
@@ -28,11 +28,15 @@
                 if (action === 'collapse') {
                     $('.dd').nestable('collapseAll');
                 }
+
+              $('.tree-tools').removeClass("active");
+              $(this).addClass("active");
+
             });
 
             $("#sortSave").click(function(){
                 var serialize = $('#tree').nestable('serialize');
-                requestPost('{{ path('admin_api_teach_studyplan_updateSort', {"id":id}) }}', JSON.stringify(serialize));
+                requestPost('{{ path('admin_api_teach_studyplan_updateSort', {"id":id}) }}', serialize);
             });
         });
 
@@ -49,7 +53,7 @@
                         <button class="btn btn-primary btn-sm tree-tools" data-action="expand" title="展开">
                             <i class="fas fa-plus-square-o"></i>&nbsp;展开
                         </button>
-                        <button class="btn btn-primary btn-sm tree-tools" data-action="collapse"
+                        <button class="btn btn-primary btn-sm tree-tools active" data-action="collapse"
                            title="收起">
                             <i class="fas fa-minus-square-o"></i>&nbsp;收起
                         </button>
@@ -65,7 +69,7 @@
                     {% if is_authorized('admin_teach_studyplan_add') %}
                     <div class="btn-group">
                         <a href="{{ path("admin_teach_studyplan_add", {"id":id}) }}" data-width="1000px" class="btn btn-sm btn-success poppage" title="添加" style="margin-right: 10px;">
-                            <i class="fas fa-plus"></i><span class="hidden-sm">添加计划</span>
+                            <i class="fas fa-plus"></i><span class="hidden-sm">添加</span>
                         </a>
                     </div>
                     {% endif %}

@@ -1,2 +1,5 @@
 imper86_jobby:
-    jobs: []
+    jobs:
+      msg:
+        command: 'job:msg'
+        schedule: '* * * * *'

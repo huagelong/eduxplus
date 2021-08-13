@@ -10,6 +10,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * @ORM\Table(name="base_admin_log")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false, hardDelete=true)
  * @ORM\Entity(repositoryClass="App\Repository\BaseAdminLogRepository")
+ * @ORM\Cache(usage="READ_ONLY")
  */
 class BaseAdminLog
 {

@@ -15,7 +15,7 @@ class LoginExpiredException extends \Exception
 {
     public function __construct(
         string $message = "",
-        int $code = 0,
+        int $code = 408,
         Throwable $previous = null
     ) {
         parent::__construct('账号在其他地方登录，请重新登录!', $code, $previous);

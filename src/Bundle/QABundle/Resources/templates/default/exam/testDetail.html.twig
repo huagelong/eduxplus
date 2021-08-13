@@ -1,0 +1,44 @@
+{% extends '@AppBundle/layout/layout.html.twig' %}
+ {% block page %}
+     {{ parent() }}
+    <div id="main" class="commonMain">
+      <div class="layui-main">
+        <div class="newsBreadcrumb">
+          <span class="layui-breadcrumb">
+            <a href="/">首页</a>
+              <a href="{{ path('qa_exam_index') }}">试卷中心</a>
+              <a><cite>{{ testInfo["name"]}}</cite></a>
+          </span>
+        </div>
+      </div>
+      <div class="layui-main" style="margin-top: 10px;">
+          <div class="layui-row  layui-col-space20" >
+             <div class="layui-col-md9">
+                 <div class="layui-card">
+                  <div class="layui-card-body leftBody">
+                          <div class="layui-card">
+                            <div class="layui-card-header">一,单项选择</div>
+                            <div class="layui-card-body qa-choose">
+                                <div class="title">锚链的大小以直径表示，单位是（），每节链长度是（）</div>
+                                <div class="optionList">
+                                  <ul>
+                                    <li>A．cm，27m</li>
+                                    <li>B．cm，27m</li>
+                                    <li>C．cm，27m</li>
+                                    <li>D．cm，27m</li>
+                                  </ul>
+                                </div>
+                            </div>
+                          </div>
+                  </div>
+                 </div>
+             </div>
+              <div class="layui-col-md3">
+                <div class="layui-card">
+                      <div class="layui-card-body">11111</div>
+                </div>
+             </div>
+          </div>
+      </div>
+  </div>
+ {% endblock %}

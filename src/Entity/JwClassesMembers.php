@@ -40,7 +40,7 @@ class JwClassesMembers
     /**
      * @var bool|null
      *
-     * @ORM\Column(name="type", type="boolean", nullable=true, options={"comment"="1-在学学员，2-退学学员"})
+     * @ORM\Column(name="type", type="integer",length=1, nullable=true, options={"comment"="1-在学学员，2-退学学员"})
      */
     private $type;
 
@@ -92,12 +92,12 @@ class JwClassesMembers
         return $this;
     }
 
-    public function getType(): ?bool
+    public function getType(): ?int
     {
         return $this->type;
     }
 
-    public function setType(?bool $type): self
+    public function setType(?int $type): self
     {
         $this->type = $type;
 
@@ -139,6 +139,5 @@ class JwClassesMembers
 
         return $this;
     }
-
-
+    
 }

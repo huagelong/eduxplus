@@ -47,7 +47,7 @@ class JwTeacher
     /**
      * @var bool|null
      *
-     * @ORM\Column(name="type", type="boolean", nullable=true, options={"comment"="1-网课老师，2-分校老师，-1-全部"})
+     * @ORM\Column(name="type", type="integer",length=1, nullable=true, options={"comment"="1-网课老师，2-分校老师，-1-全部"})
      */
     private $type;
 
@@ -58,12 +58,20 @@ class JwTeacher
      */
     private $schoolId;
 
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="gravatar", type="string", length=250, nullable=true, options={"comment"="人物头像"})
+     */
+    private $gravatar;
+
     /**
      * @var bool|null
      *
      * @ORM\Column(name="status", type="boolean", nullable=true, options={"default"="1","comment"="是否有效"})
      */
-    private $status = true;
+    private $status = '1';
 
     /**
      * @var int|null
@@ -125,12 +133,12 @@ class JwTeacher
         return $this;
     }
 
-    public function getType(): ?bool
+    public function getType(): ?int
     {
         return $this->type;
     }
 
-    public function setType(?bool $type): self
+    public function setType(?int $type): self
     {
         $this->type = $type;
 
@@ -145,6 +153,18 @@ class JwTeacher
     public function setSchoolId(?int $schoolId): self
     {
         $this->schoolId = $schoolId;
+
+        return $this;
+    }
+
+    public function getGravatar(): ?string
+    {
+        return $this->gravatar;
+    }
+
+    public function setGravatar(?string $gravatar): self
+    {
+        $this->gravatar = $gravatar;
 
         return $this;
     }

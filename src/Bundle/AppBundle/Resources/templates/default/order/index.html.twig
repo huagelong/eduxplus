@@ -1,0 +1,46 @@
+{% extends '@AppBundle/layout/layout.html.twig' %}
+{% import "@AppBundle/macros/pagination.html.twig" as macros %}
+ {% block page %}
+   {{ parent() }}
+   <div id="main" class="myMain">
+     <div class="layui-main">
+       <div class="layui-row layui-col-space20">
+         <div class="layui-col-md2">
+           {{ render(controller('AppBundle:User:userNav', {route:route})) }}
+         </div>
+         <div class="layui-col-md10">
+             <div class="wrap">
+               <div class="content">
+                 {% if list is empty %}
+                   <div class="layui-center">
+                     <div><img src="/assets/app/default/images/null-i2.png" /></div>
+                     <div>没有数据～</div>
+                   </div>
+                 {% else %}
+                   {% for v in list %}
+                     <div class="layui-row">
+                       <div class="layui-col-md12 orderCard">
+                         <div class="title">{{ v['name'] }}</div>
+                         <div class="mainInfo">
+                           <span>订单编号:&nbsp;&nbsp;{{ v['orderNo'] }}</span>
+                           <span>下单时间:&nbsp;&nbsp;{{ date_time(v['createdAt']) }}</span>
+                         </div>
+                         <div class="subInfo">
+                           <span>实付金额:&nbsp;&nbsp;<span class="fontColorRed">¥{{ v['orderAmount'] }}</span></span>
+                           <span>状态:&nbsp;&nbsp;{{ v['orderStatusView'] }}</span>
+                           <span><a class="layui-btn  layui-btn-normal layui-btn-sm floatRigth" href="{{ path('app_order_detail', {orderNo:v['orderNo']}) }}">订单详情</a></span>
+                         </div>
+                       </div>
+                     </div>
+                   {% endfor %}
+                 {% endif %}
+                 <div>
+                   {{ macros.pagination(pagination) }}
+                 </div>
+               </div>
+             </div>
+         </div>
+       </div>
+     </div>
+   </div>
+ {% endblock %}

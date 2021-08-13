@@ -33,7 +33,7 @@ class MallCouponGroup
     /**
      * @var bool
      *
-     * @ORM\Column(name="coupon_type", type="boolean", nullable=false, options={"comment"="类型:1金额优惠,2折扣优惠"})
+     * @ORM\Column(name="coupon_type", type="integer",length=1, nullable=false, options={"comment"="类型:1金额优惠,2折扣优惠"})
      */
     private $couponType = '0';
 
@@ -43,6 +43,13 @@ class MallCouponGroup
      * @ORM\Column(name="discount", type="integer", nullable=false, options={"unsigned"=true,"comment"="优惠码折扣(百分数)/优惠码金额(乘以100)"})
      */
     private $discount = '0';
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="has_code", type="integer", nullable=false, options={"unsigned"=true,"comment"="是否生成优惠码"})
+     */
+    private $hasCode = '0';
 
     /**
      * @var int
@@ -85,7 +92,7 @@ class MallCouponGroup
      *
      * @ORM\Column(name="status", type="boolean", nullable=false, options={"default"="1","comment"="上架1，下架0"})
      */
-    private $status = true;
+    private $status = '1';
 
     /**
      * @var int
@@ -111,7 +118,7 @@ class MallCouponGroup
     /**
      * @var string|null
      *
-     * @ORM\Column(name="teaching_method", type="string", length=50, nullable=true, options={"comment"="授课方式 1.面授 2.直播 3.录播 4.面授+直播 5.直播+录播 6.录播+面授 7.直播+录播+面授"})
+     * @ORM\Column(name="teaching_method", type="string", length=50, nullable=true, options={"comment"="授课方式 1.面授 2.直播 3.点播 4.面授+直播 5.直播+点播 6.点播+面授 7.直播+点播+面授"})
      */
     private $teachingMethod;
 
@@ -146,12 +153,24 @@ class MallCouponGroup
         return $this->id;
     }
 
-    public function getCouponType(): ?bool
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): self
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    public function getCouponType(): ?int
     {
         return $this->couponType;
     }
 
-    public function setCouponType(bool $couponType): self
+    public function setCouponType(int $couponType): self
     {
         $this->couponType = $couponType;
 
@@ -170,6 +189,18 @@ class MallCouponGroup
         return $this;
     }
 
+    public function getHasCode(): ?int
+    {
+        return $this->hasCode;
+    }
+
+    public function setHasCode(int $hasCode): self
+    {
+        $this->hasCode = $hasCode;
+
+        return $this;
+    }
+
     public function getCountNum(): ?int
     {
         return $this->countNum;
@@ -178,6 +209,18 @@ class MallCouponGroup
     public function setCountNum(int $countNum): self
     {
         $this->countNum = $countNum;
+
+        return $this;
+    }
+
+    public function getCreatedNum(): ?int
+    {
+        return $this->createdNum;
+    }
+
+    public function setCreatedNum(int $createdNum): self
+    {
+        $this->createdNum = $createdNum;
 
         return $this;
     }
@@ -322,30 +365,6 @@ class MallCouponGroup
     public function setDeletedAt(?\DateTimeInterface $deletedAt): self
     {
         $this->deletedAt = $deletedAt;
-
-        return $this;
-    }
-
-    public function getCreatedNum(): ?int
-    {
-        return $this->createdNum;
-    }
-
-    public function setCreatedNum(int $createdNum): self
-    {
-        $this->createdNum = $createdNum;
-
-        return $this;
-    }
-
-    public function getName(): ?string
-    {
-        return $this->name;
-    }
-
-    public function setName(string $name): self
-    {
-        $this->name = $name;
 
         return $this;
     }

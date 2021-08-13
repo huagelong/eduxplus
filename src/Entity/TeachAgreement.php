@@ -42,7 +42,7 @@ class TeachAgreement
      *
      * @ORM\Column(name="is_show", type="boolean", nullable=true, options={"default"="1"})
      */
-    private $isShow = true;
+    private $isShow = '1';
 
     /**
      * @var int|null

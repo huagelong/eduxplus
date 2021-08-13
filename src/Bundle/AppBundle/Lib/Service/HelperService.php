@@ -15,11 +15,35 @@ use Symfony\Component\HttpFoundation\Request;
 class HelperService
 {
 
+    function isNotJson($str){
+        return is_null(json_decode($str));
+    }
+
     public function getUuid(){
         $uuid = Uuid::uuid4();
         return $uuid->toString();
     }
 
+    /**
+     *
+     * 检查手机号码格式
+     *
+     * @param $tel
+     */
+    public function isMobile($tel)
+    {
+        $validate = new ValidateService();
+       return $validate->mobileValidate($tel);
+    }
+
+    public function formatMobile($tel)
+    {
+        if($this->isMobile($tel)){
+            return substr_replace($tel, '****', 3, 4);
+        }else{
+            return $tel;
+        }
+    }
 
     public function isMobileClient(Request $request)
     {
@@ -61,5 +85,32 @@ class HelperService
 
         return false;
     }
+
+    public function qtime($time){
+        $limit = time() - $time;
+        if($limit<60)
+            $time="{$limit}秒前";
+        if($limit>=60 && $limit<3600){
+            $i = floor($limit/60);
+            $_i = $limit%60;
+            $s = $_i;
+            $time="{$i}分前";
+        }
+        if($limit>=3600 && $limit<3600*24){
+            $h = floor($limit/3600);
+            $_h = $limit%3600;
+            $i = ceil($_h/60);
+            $time="{$h}小时{$i}分前";
+        }
+        if($limit>=(3600*24) && $limit<(3600*24*30)){
+            $d = floor($limit/(3600*24));
+            $time= "{$d}天前";
+        }
+        if($limit>=(3600*24*30)){
+            $time=gmdate('Y-m-d H:i', $time);
+        }
+        return $time;
+    }
+
 
 }

@@ -24,7 +24,7 @@
                                 <input type="hidden" name="{{ v['types'] }}" value="{{ v['type'] }}">
                                 <input type="hidden" name="hidden-{{ v['field'] }}" value="{{ array_get(app.request.query.get("values"), v['field']) }}"/>
                                 <select class="form-control form-control-sm select" style="width: 100%;" name="{{ v['values'] }}" data-value="" >
-                                    {% set selectV = get_prop(v['initData'],"") %}
+                                    {% set selectV = get_prop(v['option'],"") %}
                                     {% if selectV %}
                                         {% for k,v in selectV %}
                                             <option value="{{ v }}">{{ k|raw }}</option>
@@ -39,7 +39,7 @@
                                 <input type="hidden"  name="{{ v['operates'] }}" value="=">
                                 <input type="hidden" name="{{ v['types'] }}" value="{{ v['type'] }}">
                                 <input type="hidden" name="hidden-{{ v['field'] }}" value="{{ array_get(app.request.query.get("values"), v['field']) }}"/>
-                                {% set selectV = get_prop(v['initData'],"") %}
+                                {% set selectV = get_prop(v['option'],"") %}
                                 <select class="form-control form-control-sm search_select" data-url="{{ selectV[0] }}" style="width: 100%;" name="{{ v['values'] }}" data-value="" >
                                     {% if selectV[1] %}
                                         {% for k,v in selectV[1] %}
@@ -66,7 +66,7 @@
                             </div>
                         {% endif %}
 
-                        {% if v['type'] == 'daterange' %}
+                        {% if v['type'] == 'daterange' or v['type'] == 'daterange2' %}
                             <div class="col-sm-9">
                                 <input type="hidden" name="{{ v['operates'] }}" value="BETWEEN">
                                 <input type="hidden" name="{{ v['types'] }}" value="{{ v['type'] }}">
@@ -81,7 +81,7 @@
                             </div>
                         {% endif %}
 
-                        {% if v['type'] == 'datetimerange' %}
+                        {% if v['type'] == 'datetimerange' or v['type'] == 'datetimerange2' %}
                             <div class="col-sm-9">
                                 <input type="hidden" name="{{ v['operates'] }}" value="BETWEEN">
                                 <input type="hidden" name="{{ v['types'] }}" value="{{ v['type'] }}">
@@ -103,7 +103,7 @@
                 <div class="form-group row float-right">
                     <input type="hidden" name="showSearch" value="1">
                     <button type="submit" class="btn btn-info submit btn-sm" style="margin-right: 10px;"><i class="fa fa-search"></i>&nbsp;&nbsp;搜索</button>
-                    <button type="reset" class="btn btn-default btn-sm reset"><i class="fa fa-undo"></i>&nbsp;&nbsp;重置</button>
+                    <a href="{{ pathinfo }}?showSearch=1" class="btn btn-default btn-sm reset"><i class="fa fa-undo"></i>&nbsp;&nbsp;重置</a>
                 </div>
             </div>
             <div class="col-sm-3"></div>

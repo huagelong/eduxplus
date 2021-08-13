@@ -1,0 +1,21 @@
+{% macro pagination2(route, pageCount, params,query) %}
+  {% set page = params.page %}
+  {% set next = ((page+1)>pageCount)?pageCount:(page+1) %}
+  {% set previous = ((page-1)<1)?1:(page-1) %}
+
+  {% if pageCount > 1 %}
+  <div class="layui-box layui-laypage layui-laypage-molv">
+  {% if previous >0 %}
+    <a href="{{ path(route, params|merge({("page"): previous})) }}{{ query }}" class="layui-laypage-prev" data-page="1">上一页</a>
+  {% else %}
+    <a href="javascript:;" class="layui-laypage-prev layui-disabled" data-page="0">上一页</a>
+  {% endif %}
+
+    {% if next >0 %}
+      <a href="{{ path(route, params|merge({("page"): next})) }}{{ query }}" data-page="{{ next }}">下一页</a>
+    {% else %}
+      <a href="javascript:;" class="layui-laypage-prev layui-disabled" data-page="0">下一页</a>
+    {% endif %}
+  </div>
+  {% endif %}
+{% endmacro %}

@@ -19,8 +19,7 @@ class ValidateService
     }
 
     public function mobileValidate($mobile){
-        if(mb_strlen($mobile, 'utf-8') != 11) return $this->error()->add("手机号码格式错误!");
-        return true;
+        return preg_match('/^1[3456789]\d{9}$/i', $mobile) ? true : false;
     }
 
     public  function emailValidate($email)

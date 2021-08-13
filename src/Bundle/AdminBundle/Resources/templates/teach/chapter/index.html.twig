@@ -32,7 +32,7 @@
 
             $("#sortSave").click(function(){
                 var serialize = $('#tree').nestable('serialize');
-                requestPost('{{ path('admin_api_teach_chapter_updateSort', {"id":id}) }}', JSON.stringify(serialize));
+                requestPost('{{ path('admin_api_teach_chapter_updateSort', {"id":id}) }}', serialize);
             });
         });
 

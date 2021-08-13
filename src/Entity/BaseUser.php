@@ -34,6 +34,12 @@ class BaseUser implements UserInterface
      */
     private $mobile;
 
+
+        /**
+     * @ORM\Column(name="mobile_mask", type="string", length=12, unique=false, nullable=false, options={"comment"="手机掩码"})
+     */
+    private $mobileMask;
+
     /**
      * @var string|null
      *
@@ -51,7 +57,7 @@ class BaseUser implements UserInterface
     /**
      * @var string|null
      *
-     * @ORM\Column(name="gravatar", type="string", length=250, nullable=true, options={"comment"="人物头像"})
+     * @ORM\Column(name="gravatar", type="string", length=400, nullable=true, options={"comment"="人物头像"})
      */
     private $gravatar;
 
@@ -75,6 +81,13 @@ class BaseUser implements UserInterface
      */
     private $reportUid = '1';
 
+    /**
+     * @var bool|null
+     *
+     * @ORM\Column(name="real_role", type="integer", length=1, nullable=true, options={"comment"="真实角色 1-管理员 ，2-讲师，3-助教，4-班主任,5-学生"})
+     */
+    private $realRole = '5';
+
 
     /**
      * @var bool|null
@@ -83,12 +96,20 @@ class BaseUser implements UserInterface
      */
     private $isLock = '0';
 
+
+    /**
+     * @var bool|null
+     *
+     * @ORM\Column(name="im_imported", type="boolean", nullable=true, options={"comment"="是否已经导入腾讯云im中,1-是，0-否"})
+     */
+    private $imImported = '0';
+
     /**
      * @var bool|null
      *
      * @ORM\Column(name="is_admin", type="boolean", nullable=true, options={"comment"="是否是管理员,1-是，0-否"})
      */
-    private $isAdmin= '0';
+    private $isAdmin = '0';
 
     /**
      * @var string|null
@@ -117,6 +138,11 @@ class BaseUser implements UserInterface
      * @ORM\Column(name="html_token",type="string",length=50,nullable=true,unique=true, options={"comment"="m站，pc站 token"})
      */
     private $htmlToken;
+
+    /**
+     * @ORM\Column(name="wxmini_token",type="string",length=50,nullable=true,unique=true, options={"comment"="微信小程序 token"})
+     */
+    private $wxminiToken;
 
     /**
      * @ORM\Column(type="json", options={"comment"="角色-占位"})
@@ -223,7 +249,19 @@ class BaseUser implements UserInterface
 
     public function setMobile(string $mobile): self
     {
+        $mobile = substr_replace($mobile, '****', 3, 4);
         $this->mobile = $mobile;
+        return $this;
+    }
+
+    public function getMobileMask(): ?string
+    {
+        return $this->mobileMask;
+    }
+
+    public function setMobileMask(string $mobileMask): self
+    {
+        $this->mobileMask = $mobileMask;
 
         return $this;
     }
@@ -276,12 +314,12 @@ class BaseUser implements UserInterface
         return $this;
     }
 
-    public function getSex(): ?bool
+    public function getSex(): ?int
     {
         return $this->sex;
     }
 
-    public function setSex(?bool $sex): self
+    public function setSex(?int $sex): self
     {
         $this->sex = $sex;
 
@@ -422,7 +460,7 @@ class BaseUser implements UserInterface
      *
      * @return (Role|string)[] The user roles
      */
-    public function getRoles() : ?array
+    public function getRoles(): ?array
     {
         return $this->roles;
     }
@@ -430,6 +468,42 @@ class BaseUser implements UserInterface
     public function setRoles(array $roles): self
     {
         $this->roles = $roles;
+
+        return $this;
+    }
+
+    public function getImImported(): ?bool
+    {
+        return $this->imImported;
+    }
+
+    public function setImImported(?bool $imImported): self
+    {
+        $this->imImported = $imImported;
+
+        return $this;
+    }
+
+    public function getRealRole(): ?int
+    {
+        return $this->realRole;
+    }
+
+    public function setRealRole(?int $realRole): self
+    {
+        $this->realRole = $realRole;
+
+        return $this;
+    }
+
+    public function getWxminiToken(): ?string
+    {
+        return $this->wxminiToken;
+    }
+
+    public function setWxminiToken(?string $wxminiToken): self
+    {
+        $this->wxminiToken = $wxminiToken;
 
         return $this;
     }

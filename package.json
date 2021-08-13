@@ -1,0 +1,24 @@
+{
+  "name": "eduxplus",
+  "version": "1.0.0",
+  "description": "js,css 压缩程序",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs",
+    "test": "tests"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "edux-gulp-css-assets-ref": "^0.1.1",
+    "gulp": "^4.0.2",
+    "gulp-concat": "^2.6.1",
+    "gulp-if": "^3.0.0",
+    "gulp-minify-css": "^1.2.4",
+    "gulp-uglify": "^3.0.2"
+  },
+  "scripts": {
+    "gulp": "gulp"
+  },
+  "author": "kaihui.wang",
+  "license": "MIT"
+}

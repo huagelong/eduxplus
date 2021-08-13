@@ -1,0 +1,487 @@
+{% extends "@AdminBundle/layout/main.html.twig" %}
+
+{% block page_title %}试题管理{% endblock %}
+{% block breadcrumb %}
+  <li class="breadcrumb-item"><a href="{{ path("qa_admin_test_sub_index", {id:id}) }}">[{{ testInfo['name'] }}]试题管理</a></li>
+{% endblock %}
+
+{% block page %}
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-header d-flex p-0">
+              <ul class="nav nav-pills p-2">
+                <li class="nav-item"><a class="nav-link {% if type==0 %}active {% endif %}" href="{{ path('qa_admin_test_sub_mg', {id:id,type:0,isFirst:0}) }}" >选择试题</a></li>
+                <li class="nav-item"><a id="chooseHref" class="nav-link  {% if type==1 %}active {% endif %}" href="javascript:;">已选择试题&nbsp;&nbsp;&nbsp;&nbsp;<span id="chooseCount" class="badge badge-danger right">0</span></a></li>
+              </ul>
+            </div><!-- /.card-header -->
+            <div class="card-body">
+              <div class="tab-content">
+                <div class="tab-pane active">
+                  {% if type == 0 %}
+{#                    搜索start#}
+                  <form role="form" name="listSearchForm" id="listSearchForm" class="grid-search" action="{{ pathinfo }}" method="get">
+                  <div class="row">
+
+                    <div class="col-sm-6">
+                      <div class="form-group row">
+                        <label class="col-sm-3 col-form-label" >题目 ：</label>
+                        <div class="col-sm-2">
+                          <select name="operates[a.topic]" class="form-control form-control-sm">
+                            <option value="=" {% if array_get(app.request.query.get("operates"), "a.topic") == '=' %} selected {% endif %}>=</option>
+                            <option value="like" {% if array_get(app.request.query.get("operates"), "a.topic") == 'like' %} selected {% endif %}>包含</option>
+                          </select>
+                        </div>
+                        <div class="col-sm-7">
+                          <input type="hidden" name="types[a.topic]" value="text">
+                          <input type="text" name="values[a.topic]" value="{{ array_get(app.request.query.get("values"), "a.topic") }}" class="form-control form-control-sm " placeholder="输入 ...">
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                      <div class="form-group row">
+                        <label class="col-sm-3 col-form-label" >类别 ：</label>
+                        <div class="col-sm-9">
+                          <input type="hidden"  name="operates[a.categoryId]" value="=">
+                          <input type="hidden" name="types[a.categoryId]" value="select">
+                          <input type="hidden" name="hidden-a.categoryId" value="{{ array_get(app.request.query.get("values"), 'a.categoryId') or testInfo['categoryId'] }}"/>
+                          <select id="category" class="form-control form-control-sm select" style="width: 100%;" name="values[a.categoryId]" data-value="" >
+                            {% if category %}
+                              {% for k,v in category %}
+                                <option value="{{ v }}" >{{ k|raw }}</option>
+                              {% endfor %}
+                            {% endif %}
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                      <div class="form-group row">
+                        <label class="col-sm-3 col-form-label" >试题难度 ：</label>
+                        <div class="col-sm-9">
+                          <input type="hidden"  name="operates[a.level]" value="=">
+                          <input type="hidden" name="types[a.level]" value="select">
+                          <input type="hidden" name="hidden-a.level" value="{{ array_get(app.request.query.get("values"), 'a.level') }}"/>
+                          <select class="form-control form-control-sm select" style="width: 100%;" name="values[a.level]" data-value="" >
+                            {% if level %}
+                              {% for k,v in level %}
+                                <option value="{{ v }}">{{ k|raw }}</option>
+                              {% endfor %}
+                            {% endif %}
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                      <div class="form-group row">
+                        <label class="col-sm-3 col-form-label" >试题类型 ：</label>
+                        <div class="col-sm-9">
+                          <input type="hidden"  name="operates[a.type]" value="=">
+                          <input type="hidden" name="types[a.type]" value="select">
+                          <input type="hidden" name="hidden-a.type" value="{{ array_get(app.request.query.get("values"), 'a.type') }}"/>
+                          <select class="form-control form-control-sm select" style="width: 100%;" name="values[a.type]" data-value="" >
+                            {% if nodeTypes %}
+                              {% for k,v in nodeTypes %}
+                                <option value="{{ v }}">{{ k|raw }}</option>
+                              {% endfor %}
+                            {% endif %}
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                      <div class="form-group row">
+                        <label class="col-sm-3 col-form-label" >试题节点类型 ：</label>
+                        <div class="col-sm-9">
+                          <input type="hidden"  name="operates[a.nodeType]" value="=">
+                          <input type="hidden" name="types[a.nodeType]" value="select">
+                          <input type="hidden" name="hidden-a.nodeType" value="{{ array_get(app.request.query.get("values"), 'a.nodeType') }}"/>
+                          <select class="form-control form-control-sm select" style="width: 100%;" name="values[a.nodeType]" data-value="" >
+                            {% if nodeType %}
+                              {% for k,v in nodeType %}
+                                <option value="{{ v }}">{{ k|raw }}</option>
+                              {% endfor %}
+                            {% endif %}
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                      <div class="form-group row">
+                        <label class="col-sm-3 col-form-label" >年份 ：</label>
+                        <div class="col-sm-9">
+                          <input type="hidden"  name="operates[a.year]" value="=">
+                          <input type="hidden" name="types[a.year]" value="select">
+                          <input type="hidden" name="hidden-a.year" value="{{ array_get(app.request.query.get("values"), 'a.year') }}"/>
+                          <select class="form-control form-control-sm select" style="width: 100%;" name="values[a.year]" data-value="" >
+                            {% if years %}
+                              {% for k,v in years %}
+                                <option value="{{ v }}">{{ k|raw }}</option>
+                              {% endfor %}
+                            {% endif %}
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                      <div class="form-group row">
+                        <label class="col-sm-3 col-form-label" >章节点集合 ：</label>
+                        <div class="col-sm-9">
+                          <input type="hidden"  name="operates[a.chapterId]" value="=">
+                          <input type="hidden" name="types[a.chapterId]" value="search_select">
+                          <input type="hidden" name="hidden-a.chapterId" value="{{ array_get(app.request.query.get("values"), 'a.chapterId') }}"/>
+                          <select id="collection" class="form-control form-control-sm search_select" data-url="{{ path('qa_admin_chapter_searchChapter') }}" style="width: 100%;" name="values[a.chapterId]" data-value="" >
+                            {% if chapter %}
+                              {% for k,v in chapter %}
+                                <option value="{{ v }}">{{ k|raw }}</option>
+                              {% endfor %}
+                            {% endif %}
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                      <div class="form-group row">
+                        <label class="col-sm-3 col-form-label" >章节点 ：</label>
+                        <div class="col-sm-9">
+                          <input type="hidden"  name="operates[a.chapterSubId]" value="=">
+                          <input type="hidden" name="types[a.chapterSubId]" value="select">
+                          <input type="hidden" name="hidden-a.chapterSubId" value="{{ array_get(app.request.query.get("values"), 'a.chapterSubId') }}"/>
+                          <select id="chapterSubId" class="form-control form-control-sm select" style="width: 100%;" name="values[a.chapterSubId]" data-value="" >
+                            {% if chapterSub %}
+                              {% for k,v in chapterSub %}
+                                <option value="{{ v }}">{{ k|raw }}</option>
+                              {% endfor %}
+                            {% endif %}
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                    <div class="row">
+                      <div class="col-sm-3"></div>
+                      <div class="col-sm-3">
+                        <div class="form-group row float-right">
+                          <button type="submit" class="btn btn-info submit btn-sm" style="margin-right: 10px;"><i class="fa fa-search"></i>&nbsp;&nbsp;搜索</button>
+                          <a href="{{ pathinfo }}" class="btn btn-default btn-sm reset"><i class="fa fa-undo"></i>&nbsp;&nbsp;重置</a>
+                        </div>
+                      </div>
+                      <div class="col-sm-3"></div>
+                    </div>
+                  </form>
+{#                    搜索end#}
+                    <div class="card-body table-responsive ">
+                      <table class="table table-hover text-nowrap table-head-fixed ">
+                        <thead>
+                        <tr>
+                          <th align="left">
+                            <input type="checkbox" id="choose-node-all" name="choose-node-all">
+                          </th>
+                          <th align="left">操作</th>
+                          <th align="left">#</th>
+                          <th align="left">试题类型</th>
+                          <th align="left">试题</th>
+                          <th align="left">章节点</th>
+                          <th align="left">试题难度</th>
+                          <th align="left">试题标签</th>
+                          <th align="left">年份</th>
+                          <th align="left">来源</th>
+                          <th align="left">创建人</th>
+                          <th align="left">创建时间</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% if nodeList %}
+                          {% for item in nodeList  %}
+                        <tr>
+                          <td align="left" >
+                            <input type="checkbox" class="ids" name="ids[]" value="{{ item['id'] }}">
+                          </td>
+                          <td align="left"  >
+                            {% if is_authorized("qa_admin_node_view") %}
+                            <a href="{{ path('qa_admin_node_view', {id:item['id']}) }}" data-title="查看" title="查看" class=" btn btn-default btn-xs poppage" one-link-mark="yes"><i class="fas fa-eye"></i></a>
+                            {% endif %}
+                          </td>
+                          <td align="left"  >{{ item['id'] }}</td>
+                          <td align="left"  >{{ item['typeName'] }}</td>
+                          <td align="left"  ><div class='text-wrap'>{{ item['topic']|raw }}</div></td>
+                          <td align="left"  >{{ item['chapterSubName'] }}</td>
+                          <td align="left"  >{{ item['level'] }}</td>
+                          <td align="left"  >{{ item['nType'] }}</td>
+                          <td align="left"  >{{ item['year'] }}</td>
+                          <td align="left"  >{{ item['source'] }}</td>
+                          <td align="left"  >{{ item['creater'] }}</td>
+                          <td align="left"  >{{ item['createdAt'] }}</td>
+                        </tr>
+                          {% endfor %}
+                        {% endif %}
+                        </tbody>
+                      </table>
+                    </div>
+                  {% else %}
+                  {#已选中#}
+                    <form method="post" class="ajaxform1" action="{{ path('qa_admin_test_sub_do_mg', {id:id}) }}" style="padding-top: 10px;">
+                      {% if list is defined %}
+                        {% for k,nodeList in list %}
+                          <div class="card">
+                            <div class="card-header">
+                              <h5 class="mb-0">
+  <a class="btn btn-link" href="javascript:;" data-toggle="collapse" data-target="#collapse{{ k }}" aria-expanded="true" aria-controls="collapse{{ k }}">{{ k }}&nbsp;&nbsp;&nbsp;&nbsp;<span id="chooseCount" class="badge badge-secondary right">{{ nodeList|length }}</span></a>
+                              </h5>
+                            </div>
+                            <div id="collapse{{ k }}" class="collapse" aria-labelledby="heading{{ k }}">
+                              <div class="card-body table-responsive ">
+                                <table class="table table-hover text-nowrap table-head-fixed ">
+                                  <thead>
+                                  <tr>
+                                    <th align="left">
+                                      <input type="checkbox" id="choose-node-all" name="choose-node-all">
+                                    </th>
+                                    <th align="left">操作</th>
+                                    <th align="left">排序</th>
+                                    <th align="left">#</th>
+                                    <th align="left">试题类型</th>
+                                    <th align="left">试题</th>
+                                    <th align="left">章节点</th>
+                                    <th align="left">试题难度</th>
+                                    <th align="left">试题标签</th>
+                                    <th align="left">年份</th>
+                                    <th align="left">来源</th>
+                                  </tr>
+                                  </thead>
+                                  <tbody>
+                                  {% if nodeList %}
+                                    {% for k,item in nodeList  %}
+                                      <tr>
+                                        <td align="left" >
+                                          <input type="checkbox" class="ids" name="ids[]" value="{{ item['id'] }}">
+                                        </td>
+                                        <td align="left"  >
+                                          {% if is_authorized("qa_admin_node_view") %}
+                                            <a href="{{ path('qa_admin_node_view', {id:item['id']}) }}" data-title="查看" title="查看" class=" btn btn-default btn-xs poppage" one-link-mark="yes"><i class="fas fa-eye"></i></a>
+                                          {% endif %}
+                                        </td>
+                                        <td align="left"  >
+                                          <input type="text"  name="sorts[]" value="{{ k }}" placeholder="请输入数字，数字越大越靠前">
+                                          <input type="hidden"  name="types[]" value="{{ item['type'] }}">
+                                        </td>
+                                        <td align="left"  >{{ item['id'] }}</td>
+                                        <td align="left"  >{{ item['typeName'] }}</td>
+                                        <td align="left"  ><div class='text-wrap'>{{ item['topic']|raw }}</div></td>
+                                        <td align="left"  >{{ item['chapterSubName'] }}</td>
+                                        <td align="left"  >{{ item['level'] }}</td>
+                                        <td align="left"  >{{ item['nType'] }}</td>
+                                        <td align="left"  >{{ item['year'] }}</td>
+                                        <td align="left"  >{{ item['source'] }}</td>
+                                      </tr>
+                                    {% endfor %}
+                                  {% endif %}
+                                  </tbody>
+                                </table>
+                              </div>
+                            </div>
+                          </div>
+                        {% endfor %}
+                        <div class="card-footer">
+                          <div class="col-md-2"></div>
+                          <div class="col-md-8">
+                            <div class="btn-group">
+                              <button type="submit" class="btn btn-sm btn-info " style="margin-right: 10px;">提交</button>
+                            </div>
+                          </div>
+                        </div>
+                        {% else %}
+                          暂无数据
+                      {% endif %}
+                    </form>
+                  {% endif %}
+                </div>
+                </div>
+              </div>
+            </div><!-- /.card-body -->
+          </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+{% block body_custom_javascript %}
+  <script>
+    $(function(){
+      var nodeChooseKey = "nodeChooseCookieKey{{ id }}";
+      var testNodeIdsStr = "{{ testNodeIdsStr }}";
+      var isFirst = {{ isFirst }};
+      var nodeIdsChooseStr = localStorage.getItem(nodeChooseKey);
+
+      if((testNodeIdsStr !="") && isFirst){
+        localStorage.removeItem(nodeChooseKey);
+        nodeIdsChooseStr = testNodeIdsStr;
+        localStorage.setItem(nodeChooseKey, nodeIdsChooseStr);
+      }
+
+      var nodeIdsChoose = [];
+      if(nodeIdsChooseStr){
+        nodeIdsChoose = nodeIdsChooseStr.split(",");
+      }
+
+      $('.ajaxform1').ajaxform({
+          "success":function(responseText){
+            console.log(responseText);
+            if (responseText.code == "200") {
+              localStorage.removeItem(nodeChooseKey);
+            }
+          }
+      });
+
+      $("#chooseHref").click(function(){
+          var postParams = nodeIdsChoose.toString();
+          var url = "{{ path('qa_admin_test_sub_mg', {id:id, type:1,isFirst:0}) }}?nodeIds="+postParams;
+          location.assign(url);
+      });
+
+      for (k in nodeIdsChoose){
+          var nodeIdChoose = nodeIdsChoose[k];
+          $("input[name='ids[]']:checkbox").each(function() {
+              var nodeId = $(this).val();
+              if(nodeId == nodeIdChoose){
+                $(this).prop("checked", true);
+              }
+          })
+        $("#chooseCount").text(nodeIdsChoose.length);
+      }
+
+      $("#choose-node-all").click(function() {
+        if (this.checked) {
+          $("input[name='ids[]']:checkbox").each(function() {
+            $(this).prop("checked", true);
+            var nodeId = $(this).val();
+            if(!_.contains(nodeIdsChoose, nodeId)){
+              nodeIdsChoose.push(nodeId);
+            }
+          })
+        } else {   //反之 取消全选
+          $("input[name='ids[]']:checkbox").each(function() {
+            $(this).prop("checked", false);
+            var nodeId = $(this).val();
+            if(_.contains(nodeIdsChoose, nodeId)){
+             var index= _.indexOf(nodeIdsChoose, nodeId);
+              if (index > -1) {
+                nodeIdsChoose.splice(index, 1);
+              }
+            }
+          })
+        }
+        $("#chooseCount").text(nodeIdsChoose.length);
+        var nodeIdsChooseNewStr = nodeIdsChoose.toString();
+        localStorage.setItem(nodeChooseKey, nodeIdsChooseNewStr);
+        $("#chooseHref").click(function(){
+          var postParams = nodeIdsChoose.toString();
+          var url = "{{ path('qa_admin_test_sub_mg', {id:id, type:1,isFirst:0}) }}?nodeIds="+postParams;
+          location.assign(url);
+        });
+      })
+
+      $("input[name='ids[]']:checkbox").click(function(){
+        if (!this.checked) {
+          $(this).prop("checked", false);
+          var nodeId = $(this).val();
+          if(_.contains(nodeIdsChoose, nodeId)){
+            var index= _.indexOf(nodeIdsChoose, nodeId);
+            if (index > -1) {
+              nodeIdsChoose.splice(index, 1);
+            }
+          }
+        }else{
+          $(this).prop("checked", true);
+          var nodeId = $(this).val();
+          if(!_.contains(nodeIdsChoose, nodeId)){
+            nodeIdsChoose.push(nodeId);
+          }
+        }
+
+        $("#chooseCount").text(nodeIdsChoose.length);
+        var nodeIdsChooseNewStr = nodeIdsChoose.toString();
+        localStorage.setItem(nodeChooseKey, nodeIdsChooseNewStr);
+        $("#chooseHref").click(function(){
+          var postParams = nodeIdsChoose.toString();
+          var url = "{{ path('qa_admin_test_sub_mg', {id:id, type:1,isFirst:0 }) }}?nodeIds="+postParams;
+          location.assign(url);
+        });
+      });
+
+      function categoryInit(){
+        var categoryId = $("#category").val();
+
+        $("#collection").each(function () {
+          var url = $(this).data("url");
+          var allowClear = true;
+
+          $(this).select2({
+            language: "zh-CN",
+            theme: "bootstrap4",
+            allowClear: allowClear,
+            placeholder: "",
+            ajax: {
+              url: url,
+              dataType: "json",
+              delay: 250,
+              data: function (params) {
+                return {
+                  kw: params.term,
+                  categoryId: categoryId,
+                };
+              },
+              processResults: function (data) {
+                return {
+                  results: data.data,
+                };
+              },
+              cache: true,
+            },
+            minimumInputLength: 2,
+          });
+        });
+      }
+
+      function collectionInit(){
+        var chapterId = $("#collection").val();
+        $("#chapterSubId").select2({
+          language: "zh-CN",
+          theme: "bootstrap4",
+          allowClear: false,
+          placeholder: "",
+          ajax: {
+            url:"{{ path('qa_admin_chaptersub_getChapterSub_do') }}",
+            dataType: "json",
+            delay: 10,
+            data:{id:chapterId},
+            processResults: function (data) {
+              return {
+                results: data.data,
+              };
+            },
+            cache: true,
+          }
+        });
+      }
+
+      collectionInit();
+
+      $("#category").change(function(){
+        categoryInit();
+      });
+
+      $("#collection").change(function(){
+        collectionInit();
+      });
+    });
+  </script>
+{% endblock %}

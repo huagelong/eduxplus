@@ -28,30 +28,29 @@ class OrderController extends BaseAdminController
      * @Rest\Get("/mall/order/index", name="admin_mall_order_index")
      */
     public function indexAction(Request $request, Grid $grid, OrderService $orderService, UserService $userService){
-        $pageSize = 20;
+        $pageSize = 40;
         $grid->setListService($orderService, "getList");
-        $grid->setTableColumn("#", "text", "id","a.id");
-        $grid->setTableColumn("订单名称", "text", "name");
-        $grid->setTableColumn("订单号", "text", "orderNo");
-        //0支付过期,1待支付,2支付成功,3已取消
-        $grid->setTableColumn("订单状态", "text", "orderStatus", "a.orderStatus", [0=>"支付过期",1=>"待支付", 2=>"已支付", 3=>"已取消"]);
-        $grid->setTableColumn("下单来源", "text", "referer");
-        $grid->setTableColumn("订单实际支付金额", "text", "orderAmount");
-        $grid->setTableColumn("优惠金额", "text", "discountAmount");
-        $grid->setTableColumn("优惠券", "text", "couponSn");
-        $grid->setTableColumn("商品", "tip", "goodName");
-        $grid->setTableColumn("组合商品", "text", "AllGoodNames");
-        $grid->setTableColumn("用户备注", "tip", "userNotes");
-        $grid->setTableColumn("下单人", "text", "creater", "a.uid");
-        $grid->setTableColumn("下单时间", "datetime", "createdAt", "a.createdAt");
+        $grid->text("#")->field("id")->sort("a.id");
+        $grid->text("订单名称")->field("name");
+        $grid->text("订单号")->field("orderNo");
+        $grid->text("订单状态")->field("orderStatus")->sort("a.orderStatus")->options([0=>"支付过期",1=>"待支付", 2=>"已支付", 3=>"已取消"]);
+        $grid->text("下单来源")->field("referer");
+        $grid->text("原价")->field("originalAmount");
+        $grid->text("订单实际支付金额")->field("orderAmount");
+        $grid->text("优惠金额")->field("discountAmount");
+        $grid->text("优惠券")->field("couponSn");
+        $grid->tip("商品")->field("goodName");
+        $grid->text("组合商品")->field("allGoodNames");
+        $grid->tip("用户备注")->field("userNotes");
+        $grid->text("下单人")->field("creater")->sort("a.uid");
+        $grid->datetime("下单时间")->field("createdAt")->sort("a.createdAt");
+
         //搜索
-        $grid->setSearchField("ID", "number", "a.id");
-        $grid->setSearchField("订单名称", "text", "a.name");
-        $grid->setSearchField("订单号", "text", "a.orderNo");
-        $grid->setSearchField("订单状态", "select", "a.orderStatus", function(){
-            return ["全部"=>-1,"待支付"=>0, "已支付"=>1, "已取消"=>2];
-        });
-        $grid->setSearchField("下单人", "search_select", "a.uid", function()use($request, $userService){
+        $grid->snumber("ID")->field("a.id");
+        $grid->stext("订单名称")->field("a.name");
+        $grid->stext("订单号")->field("a.orderNo");
+        $grid->sselect("订单状态")->field("a.orderStatus")->options(["全部"=>-1,"待支付"=>0, "已支付"=>1, "已取消"=>2]);
+        $grid->ssearchselect("下单人")->field("a.uid")->options(function()use($request, $userService){
             $values = $request->get("values");
             $createUid = ($values&&isset($values["a.uid"]))?$values["a.uid"]:0;
             if($createUid){
@@ -61,7 +60,7 @@ class OrderController extends BaseAdminController
             }
             return [$this->generateUrl("admin_api_glob_searchUserDo"),$users];
         });
-        $grid->setSearchField("下单时间", "daterange", "a.createdAt");
+        $grid->sdaterange("下单时间")->field("a.createdAt");
 
 
         $data = [];

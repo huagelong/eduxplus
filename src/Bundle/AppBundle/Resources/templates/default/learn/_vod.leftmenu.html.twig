@@ -1,0 +1,59 @@
+{% if chapterTree is empty %}
+{% else %}
+  <div class="courseWrap">
+  <div class="title">目录</div>
+<div class="courseList courseMenu">
+  {% if pathCount == 0 %}
+    <ul class="activeCourseList">
+      {% for item in chapterTree[0] %}
+        <li>
+          <div class="activeCourseMsgs">
+            {% if item['video'] %}
+              <a class="name layui-elip {% if item['video']['chapterId'] ==chapterId  %} active {% endif %}" href="{{ path('app_learn_detail', {chapterId:item['video']['chapterId']}) }}"> {{ loop.index }}、{{ item['name'] }}</a>
+            {% else %}
+              <span class="name layui-elip gray"> {{ loop.index }}、{{ item['name'] }}</span>
+            {% endif %}
+          </div>
+        </li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+
+  {% if pathCount > 0 %}
+    <div class="layui-collapse">
+      {% for key, item in chapterTree[0] %}
+        {% set topIndex=loop.index %}
+        {% if chapterTree[item['id']] is defined %}
+          <div class="layui-colla-item">
+            <h2 class="layui-colla-title layui-elip">{{ item['name'] }}</h2>
+            <div class="layui-colla-content  layui-show">
+              <ul class="activeCourseList">
+                {% for item2 in chapterTree[item['id']] %}
+                  <li>
+                    <div class="activeCourseMsgs">
+                      {% if item2['video'] %}
+                        <a class="name layui-elip  {% if item2['video']['chapterId'] ==chapterId  %} active {% endif %}" href="{{ path('app_learn_detail', {chapterId:item2['video']['chapterId']}) }}">{{ topIndex }}-{{ loop.index }}、{{ item2['name'] }}</a>
+                      {% else %}
+                        <span class="name layui-elip gray">{{ topIndex }}-{{ loop.index }}、{{ item2['name'] }}</span>
+                      {% endif %}
+                    </div>
+                  </li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+        {% else %}
+          <div class="activeCourseMsgs">
+            {% if item['video'] %}
+              <a class="name layui-elip  {% if item['video']['chapterId'] ==chapterId  %} active {% endif %}" href="{{ path('app_learn_detail', {chapterId:item['video']['chapterId']}) }}">{{ loop.index }}、{{ item['name'] }}</a>
+            {% else %}
+              <span class="name layui-elip gray">{{ loop.index }}、{{ item['name'] }}</span>
+            {% endif %}
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+  {% endif %}
+</div>
+  </div>
+{% endif %}

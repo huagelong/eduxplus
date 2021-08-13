@@ -33,9 +33,9 @@ class MallPay
     /**
      * @var int
      *
-     * @ORM\Column(name="order_no", type="string",length=200, nullable=false, options={"unsigned"=true,"comment"="订单号"})
+     * @ORM\Column(name="order_id", type="integer", nullable=false, options={"unsigned"=true,"comment"="订单id"})
      */
-    private $orderNo;
+    private $orderId;
 
     /**
      * @var int
@@ -50,20 +50,6 @@ class MallPay
      * @ORM\Column(name="pay_time", type="integer", nullable=true, options={"unsigned"=true,"comment"="支付完成时间"})
      */
     private $payTime;
-
-    /**
-     * @var bool
-     *
-     * @ORM\Column(name="payment_type", type="boolean", nullable=false, options={"comment"="支付方式:1支付宝,2微信支付"})
-     */
-    private $paymentType = '0';
-
-    /**
-     * @var bool
-     *
-     * @ORM\Column(name="pay_status", type="boolean", nullable=false, options={"comment"="付款状态:0支付过期,1待支付,2支付成功,3已取消"})
-     */
-    private $payStatus = '0';
 
     /**
      * @var int
@@ -108,14 +94,14 @@ class MallPay
         return $this;
     }
 
-    public function getOrderNo(): ?string
+    public function getOrderId(): ?int
     {
-        return $this->orderNo;
+        return $this->orderId;
     }
 
-    public function setOrderNo(string $orderNo): self
+    public function setOrderId(int $orderId): self
     {
-        $this->orderNo = $orderNo;
+        $this->orderId = $orderId;
 
         return $this;
     }
@@ -137,33 +123,9 @@ class MallPay
         return $this->payTime;
     }
 
-    public function setPayTime(int $payTime): self
+    public function setPayTime(?int $payTime): self
     {
         $this->payTime = $payTime;
-
-        return $this;
-    }
-
-    public function getPaymentType(): ?bool
-    {
-        return $this->paymentType;
-    }
-
-    public function setPaymentType(bool $paymentType): self
-    {
-        $this->paymentType = $paymentType;
-
-        return $this;
-    }
-
-    public function getPayStatus(): ?bool
-    {
-        return $this->payStatus;
-    }
-
-    public function setPayStatus(bool $payStatus): self
-    {
-        $this->payStatus = $payStatus;
 
         return $this;
     }

@@ -23,24 +23,29 @@ class OptionController extends BaseAdminController
      * @Rest\Get("/option/index", name="admin_option_index")
      */
     public function indexAction(Request $request, Grid $grid, OptionService $optionService){
-        $pageSize = 20;
+        $pageSize = 40;
         $grid->setListService($optionService, "optionList");
-        $grid->setTableColumn("#", "text", "id","a.id");
-        $grid->setTableColumn("描述", "textarea", "descr");
-        $grid->setTableColumn("健", "text", "optionKey","a.optionKey");
-        $grid->setTableColumn("值", "code", "optionValue");
-        $grid->setTableColumn("值类型", "text", "type", "", [1=>"文本", 2=>"文件链接"]);
-        $grid->setTableColumn("锁定？", "boole", "isLock");
-        $grid->setTableColumn("创建时间", "datetime", "createdAt", "a.createdAt");
+        $grid->text("#")->field("id")->sort("a.id");
+        $grid->textarea("配置说明")->field("descr");
+//        $grid->text("健")->field("optionKey")->sort("a.optionKey");
+        $grid->code("值")->field("optionValue");
+        $grid->text("组")->field("optionGroup")->sort("a.optionGroup");
+        $grid->text("值类型")->field("type")->options([1=>"文本", 2=>"文件链接"]);
+//        $grid->boole("锁定？")->field("isLock");
+        $grid->datetime("创建时间")->field("createdAt")->sort("a.createdAt");
 
-        $grid->setGridBar("admin_option_add","文本配置", $this->generateUrl("admin_option_add",["type"=>1]), "fas fa-plus", "btn-success");
-        $grid->setGridBar("admin_option_add","文件链接配置", $this->generateUrl("admin_option_add",["type"=>2]), "fas fa-plus", "btn-primary");
+        $grid->gbButton("文本配置")->route("admin_option_add")
+            ->url($this->generateUrl("admin_option_add",["type"=>1]))
+            ->styleClass("btn-success")->iconClass("fas fa-plus");
+
+        $grid->gbButton("上传文件配置")->route("admin_option_add")
+            ->url($this->generateUrl("admin_option_add",["type"=>2]))
+            ->styleClass("btn-primary")->iconClass("fas fa-plus");
 
         //搜索
-        $grid->setSearchField("健", "text", "a.optionKey");
-        $grid->setSearchField("值类型", "select", "a.type", function(){
-            return ["全部"=>"","文本"=>1, "文件链接"=>2];
-        });
+        $grid->sselect("配置分组")->field("a.optionGroup")->options($optionService->getAllOptionGroup());
+        $grid->stext("配置说明")->field("a.descr");
+        $grid->sselect("值类型")->field("a.type")->options(["全部"=>"","文本"=>1, "文件链接"=>2]);
 
         //编辑等
         $grid->setTableAction('admin_option_edit', function($obj){
@@ -57,6 +62,10 @@ class OptionController extends BaseAdminController
             return '<a href=' . $url . ' data-confirm="确认要删除吗?" title="删除"  class=" btn btn-danger btn-xs ajaxDelete"><i class="fas fa-trash"></i></a>';
         });
 
+        //批量删除
+        $bathDelUrl = $this->genUrl("admin_api_option_bathdelete");
+        $grid->setBathDelete("admin_api_option_bathdelete", $bathDelUrl);
+
         $data = [];
         $data['list'] = $grid->create($request, $pageSize);
         return $this->render("@AdminBundle/option/index.html.twig", $data);
@@ -65,27 +74,30 @@ class OptionController extends BaseAdminController
     /**
      * @Rest\Get("/option/add/{type}", name="admin_option_add")
      */
-    public function addAction($type=1, Form $form){
+    public function addAction($type=1, Form $form, OptionService $optionService){
+        $form->textarea("配置说明")->field("descr")->isRequire(1);
 
-        $form->setFormField("健", 'text', 'optionKey' ,1);
-        $valueType = $type==1?"textarea":"file";
+        $form->text("健")->field("optionKey")->isRequire(1)->placeholder("推荐用英文字母,英文逗点.");
 
         $options = [];
         if($type == 2){
             $options["data-upload-url"] = $this->generateUrl("admin_glob_upload", ["type"=>"img_option"]);
             $options["data-min-file-count"] = 1;
             $options['data-max-total-file-count'] = 100;
-            $options["data-max-file-size"] = 1024*50;//50m
+            $options["data-max-file-size"] = 1024*5;//5m
             $options["data-required"] = 1;
         }else{
             $options["data-required"] = 1;
         }
 
-        $form->setFormAdvanceField("值", $valueType, 'optionValue' , $options);
+        if($type == 1){
+            $form->textarea("值")->field('optionValue')->attr($options);
+        }else{
+            $form->file("值")->field('optionValue')->attr($options);
+        }
 
-        $form->setFormField("描述", 'textarea', 'descr' ,1);
-        $form->setFormField("锁定", 'boole', 'isLock', 1);
-//        $form->disableSubmit();
+        $form->select("配置分组")->field("optionGroup")->options($optionService->getAllOptionGroup());
+        $form->boole("锁定")->field("isLock")->isRequire(1);
         $formData = $form->create($this->generateUrl("admin_api_option_add",['type'=>$type]));
         $data = [];
         $data["formData"] = $formData;
@@ -93,22 +105,23 @@ class OptionController extends BaseAdminController
     }
 
     /**
-     * @Rest\Post("/api/option/addDo/{type}", name="admin_api_option_add")
+     * @Rest\Post("/option/add/do/{type}", name="admin_api_option_add")
      */
     public function addDoAction($type=1, Request $request, OptionService $optionService){
         $optionKey = $request->get("optionKey");
         $optionValue = $request->get("optionValue");
         $descr = $request->get('descr');
         $isLock = $request->get("isLock");
+        $optionGroup = $request->get("optionGroup");
         $isLock = $isLock=="on"?1:0;
 
         if(!$optionKey) return $this->responseError("健不能为空!");
         if(!$optionValue) return $this->responseError("值不能为空!");
         if($optionService->checkOptionKey($optionKey)) return $this->responseError("健已存在!");
 
-        $optionService->add($type, $optionKey, $optionValue, $descr, $isLock);
+        $optionService->add($type, $optionKey, $optionValue, $descr, $isLock, $optionGroup);
 
-        return $this->responseSuccess("添加成功!", $this->generateUrl("admin_option_index"));
+        return $this->responseMsgRedirect("添加成功!", $this->generateUrl("admin_option_index"));
     }
 
     /**
@@ -117,20 +130,21 @@ class OptionController extends BaseAdminController
     public function editAction($id, Form $form, OptionService $optionService){
         $info = $optionService->getById($id);
         $type = $info['type'];
-        if($info['isLock']){
-            $form->setFormField("健", 'string', 'optionKey' ,1, $info['optionKey']);
-        }else{
-            $form->setFormField("健", 'text', 'optionKey' ,1, $info['optionKey']);
-        }
 
-        $valueType = $type==1?"textarea":"file";
+        $form->textarea("配置说明")->field("descr")->isRequire(1)->defaultValue($info['descr']);
+
+        if($info['isLock']){
+            $form->string("健")->field("optionKey")->isRequire(1)->defaultValue($info['optionKey'])->placeholder("推荐用英文字母,英文逗点.");
+        }else{
+            $form->text("健")->field("optionKey")->isRequire(1)->defaultValue($info['optionKey'])->placeholder("推荐用英文字母,英文逗点.");
+        }
 
         $options = [];
         if($type == 2){
             $options["data-upload-url"] = $this->generateUrl("admin_glob_upload", ["type"=>"img_option"]);
             $options["data-min-file-count"] = 1;
             $options["data-max-total-file-count"] = 100;
-            $options["data-max-file-size"] = 1024*50;//50m
+            $options["data-max-file-size"] = 1024*5;//5m
             $options["data-required"] = 1;
             $options['data-initial-preview'] = $info['optionValue'];
             $options['data-initial-preview-config']= $optionService->getInitialPreviewConfig($info['optionValue']);
@@ -138,13 +152,16 @@ class OptionController extends BaseAdminController
             $options["data-required"] = 1;
         }
 
-        $form->setFormAdvanceField("值", $valueType, 'optionValue' , $options, $info['optionValue']);
-
-        $form->setFormField("描述", 'textarea', 'descr' ,1, $info['descr']);
-        if(!$info['isLock']) {
-            $form->setFormField("锁定", 'boole', 'isLock', 1, $info['isLock']);
+        if($type == 1){
+            $form->textarea("值")->field('optionValue')->attr($options)->defaultValue($info['optionValue']);
+        }else{
+            $form->file("值")->field('optionValue')->attr($options)->defaultValue($info['optionValue']);
         }
-//        $form->disableSubmit();
+
+
+        if(!$info['isLock']) {
+            $form->boole("锁定")->field("isLock")->isRequire(1)->defaultValue($info['isLock']);
+        }
         $formData = $form->create($this->generateUrl("admin_api_option_edit",['id'=>$id]));
         $data = [];
         $data["formData"] = $formData;
@@ -152,7 +169,7 @@ class OptionController extends BaseAdminController
     }
 
     /**
-     * @Rest\Post("/api/option/editDo/{id}", name="admin_api_option_edit")
+     * @Rest\Post("/option/edit/do/{id}", name="admin_api_option_edit")
      */
     public function editDoAction($id, Request $request, OptionService $optionService){
         $info = $optionService->getById($id);
@@ -168,15 +185,32 @@ class OptionController extends BaseAdminController
 
         $optionService->edit($id, $optionKey, $optionValue, $descr, $isLock);
 
-        return $this->responseSuccess("编辑成功!", $this->generateUrl("admin_option_index"));
+        return $this->responseMsgRedirect("编辑成功!", $this->generateUrl("admin_option_index"));
     }
 
     /**
-     * @Rest\Post("/api/option/deleteDO/{id}", name="admin_api_option_delete")
+     * @Rest\Post("/option/delete/do/{id}", name="admin_api_option_delete")
      */
     public function deleteDoAction($id, OptionService $optionService){
         $optionService->deleteOption($id);
-        return $this->responseSuccess("删除成功!", $this->generateUrl("admin_option_index"));
+        return $this->responseMsgRedirect("删除成功!", $this->generateUrl("admin_option_index"));
+    }
+
+    /**
+     * @Rest\Post("/option/bathdelete/do", name="admin_api_option_bathdelete")
+     */
+    public function bathdeleteDoAction(Request $request, OptionService $optionService){
+        $ids = $request->get("ids");
+        if($ids){
+            foreach ($ids as $id){
+                $optionService->deleteOption($id);
+            }
+        }
+        if($this->error()->has()){
+            return $this->responseError($this->error()->getLast());
+        }
+
+        return $this->responseMsgRedirect("删除成功!", $this->generateUrl("admin_option_index"));
     }
 
 }

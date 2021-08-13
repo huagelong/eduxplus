@@ -29,6 +29,7 @@
 
             $('#menu-tree').nestable({maxDepth:3, scroll:true});
 
+
             $('.menu-tree-tools').on('click', function(e){
                 var action = $(this).data('action');
                 if (action === 'expand') {
@@ -37,11 +38,15 @@
                 if (action === 'collapse') {
                     $('.dd').nestable('collapseAll');
                 }
+
+                $('.menu-tree-tools').removeClass("active");
+                $(this).addClass("active");
+
             });
 
             $("#menuSortSave").click(function(){
                 var serialize = $('#menu-tree').nestable('serialize');
-                requestPost('{{ path('admin_api_menu_updateSort') }}', JSON.stringify(serialize));
+                requestPost('{{ path('admin_api_menu_updateSort') }}', serialize);
             });
         });
 
@@ -58,7 +63,7 @@
                         <button class="btn btn-primary btn-sm menu-tree-tools" data-action="expand" title="展开">
                             <i class="fas fa-plus-square-o"></i>&nbsp;展开
                         </button>
-                        <button class="btn btn-primary btn-sm menu-tree-tools" data-action="collapse"
+                        <button class="btn btn-primary btn-sm menu-tree-tools active" data-action="collapse"
                            title="收起">
                             <i class="fas fa-minus-square-o"></i>&nbsp;收起
                         </button>

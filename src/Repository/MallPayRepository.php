@@ -2,25 +2,25 @@
 
 namespace App\Repository;
 
-use App\Entity\MallPay;
+use App\Entity\MallOrderStudyPlan;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @method MallPay|null find($id, $lockMode = null, $lockVersion = null)
- * @method MallPay|null findOneBy(array $criteria, array $orderBy = null)
- * @method MallPay[]    findAll()
- * @method MallPay[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method MallOrderStudyPlan|null find($id, $lockMode = null, $lockVersion = null)
+ * @method MallOrderStudyPlan|null findOneBy(array $criteria, array $orderBy = null)
+ * @method MallOrderStudyPlan[]    findAll()
+ * @method MallOrderStudyPlan[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
 class MallPayRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, MallPay::class);
+        parent::__construct($registry, MallOrderStudyPlan::class);
     }
 
     // /**
-    //  * @return MallPay[] Returns an array of MallPay objects
+    //  * @return MallOrderStudyPlan[] Returns an array of MallOrderStudyPlan objects
     //  */
     /*
     public function findByExampleField($value)
@@ -37,7 +37,7 @@ class MallPayRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?MallPay
+    public function findOneBySomeField($value): ?MallOrderStudyPlan
     {
         return $this->createQueryBuilder('m')
             ->andWhere('m.exampleField = :val')

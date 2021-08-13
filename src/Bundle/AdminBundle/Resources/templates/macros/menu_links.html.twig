@@ -3,7 +3,7 @@
         <ol class="dd-list">
             {% for menu in allMenu[pid] %}
                 {#dd-collapsed#}
-                <li class="dd-item " data-id="{{ menu.id }}">
+                <li class="dd-item dd-collapsed" data-id="{{ menu.id }}">
                     <div class="dd-handle">
                         <i class="{{ menu.style|default('far fa-circle') }}"></i>&nbsp;<strong>{{ menu.name }}</strong>&nbsp;&nbsp;&nbsp;
                         {% if menu.url!="" and menu.isAccess==0 %}<a href="{{ path(menu.url) }}" class="dd-nodrag">{{ path(menu.url) }}</a>{% endif %}
@@ -20,12 +20,17 @@
                         {% endif %}
                         {% if menu.isLock == 0 %}
                             <span class="pull-right dd-nodrag">
-    {% if is_authorized('admin_menu_edit') %}
-        <a href="{{ path("admin_menu_edit", {"id":menu.id}) }}" data-title="编辑"  class="mypoppage"><i class="fas fa-edit"></i></a>
-    {% endif %}
-                                {% if is_authorized('admin_api_menu_delete') %}
-                                    <a href="{{ path("admin_api_menu_delete", {"id":menu.id}) }}"  data-confirm="确认要删除吗?" class="tree_branch_delete ajaxDelete"><i class="fas fa-trash"></i></a>
-                                {% endif %}
+                              {% if is_authorized('admin_menu_view') %}
+                                <a href="{{ path("admin_menu_view", {"id":menu.id}) }}" data-title="查看"  class="mypoppage"><i class="fas fa-eye"></i></a>
+                              {% endif %}
+
+                              {% if is_authorized('admin_menu_edit') %}
+                                  <a href="{{ path("admin_menu_edit", {"id":menu.id}) }}" data-title="编辑"  class="mypoppage"><i class="fas fa-edit"></i></a>
+                              {% endif %}
+
+                              {% if is_authorized('admin_api_menu_delete') %}
+                                  <a href="{{ path("admin_api_menu_delete", {"id":menu.id}) }}"  data-confirm="确认要删除吗?" class="tree_branch_delete ajaxDelete"><i class="fas fa-trash"></i></a>
+                              {% endif %}
                             </span>
                         {% endif %}
                     </div>

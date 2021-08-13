@@ -24,21 +24,20 @@ class AdminLogController extends BaseAdminController
      * @Rest\Get("/adminlog/index", name="admin_adminlog_index")
      */
     public function indexAction(Request $request, AdminlogService $adminLogService, Grid $grid, UserService $userService){
-        $pageSize = 20;
+        $pageSize = 40;
         $grid->setListService($adminLogService, "getList");
-        $grid->setTableColumn("#", "text", "id","a.id");
-        $grid->setTableColumn("动作", "textarea", "descr");
-        $grid->setTableColumn("路由", "text", "route");
-        $grid->setTableColumn("操作人", "text", "fullName");
-        $grid->setTableColumn("Ip", "text", "ip");
-        $grid->setTableColumn("参数", "tip", "inputData");
-        $grid->setTableColumn("操作时间", "datetime", "createdAt", "a.createdAt");
-        
-        $grid->setSearchField("ID", "number", "a.id");
-        $grid->setSearchField("动作", "text", "a.descr");
-        $grid->setSearchField("路由", "text", "a.route");
-        
-        $grid->setSearchField("创建人", "search_select", "a.uid", function()use($request, $userService){
+        $grid->text("#")->field("id")->sort("a.id");
+        $grid->textarea("动作")->field("descr");
+//        $grid->text("路由")->field("route");
+        $grid->text("操作人")->field("fullName");
+        $grid->text("Ip")->field("ip");
+        $grid->tip("参数")->field("inputData");
+        $grid->datetime("操作时间")->field("createdAt")->sort("a.createdAt");
+
+        $grid->snumber("ID")->field("a.id");
+        $grid->stext("动作")->field("a.descr");
+        $grid->stext("路由")->field("a.route");
+        $grid->ssearchselect("创建人")->field("a.uid")->options(function()use($request, $userService){
             $values = $request->get("values");
             $uid = ($values&&isset($values["a.uid"]))?$values["a.uid"]:0;
             if($uid){
@@ -46,10 +45,10 @@ class AdminLogController extends BaseAdminController
             }else{
                 $users = [];
             }
-            return [$this->generateUrl("admin_api_glob_searchUserDo"),$users];
+            return [$this->generateUrl("admin_api_glob_searchAdminUserDo"),$users];
         });
 
-        $grid->setSearchField("创建时间", "datetimerange", "a.createdAt");
+        $grid->sdatetimerange("创建时间")->field("a.createdAt");
 
         $data = [];
         $data['list'] = $grid->create($request, $pageSize);

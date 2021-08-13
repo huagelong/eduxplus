@@ -1,0 +1,46 @@
+<div class="wrap">
+  <div class="header">
+    <span class="breadcrumb">
+      <span>{{ courseInfo['name'] }}</span>
+       <span>/</span>
+      <span>{{ info['name'] }}</span>
+    </span>
+  </div>
+  <div class="content margin-top20">
+    <div class="layui-row layui-col-space10">
+      <div class="layui-col-md9">
+        <!--视频播放区域-->
+            <div class="v404">
+              直播还没有开始,敬请期待..
+              <div class="timer" id="timer"></div>
+            </div>
+      </div>
+      <div class="layui-col-md3">
+        <!-- 列表区 -->
+        {% include '@AppBundle/learn/_live.leftmenu.html.twig' %}
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  $(function(){
+    var util = layui.util
+    //倒计时
+    var thisTimer, setCountdown = function(y, M, d, H, m, s){
+      var endTime = new Date(y, M||0, d||1, H||0, m||0, s||0) //结束日期
+        ,serverTime = new Date({{ nowTimeY }},{{ nowTimeM }},{{ nowTimeD }},{{ nowTimeH }},{{ nowTimeI }},{{ nowTimeS }}); //假设为当前服务器时间，这里采用的是本地时间，实际使用一般是取服务端的
+      clearTimeout(thisTimer);
+      util.countdown(endTime, serverTime, function(date, serverTime, timer){
+        var str = '倒计时:<span>'+date[0] + '</span>天<span>' + date[1] + '</span>时<span>' +  date[2] + '</span>分<span>' + date[3] + '</span>秒';
+        lay('#timer').html(str);
+        var difftime = date[0]+date[1]+date[2]+date[3];
+        if(!difftime){
+          location.reload();
+          return false;
+        }
+        thisTimer = timer;
+      });
+    };
+    setCountdown({{ openTimeY }},{{ openTimeM }},{{ openTimeD }},{{ openTimeH }},{{ openTimeI }},{{ openTimeS }});
+  });
+</script>

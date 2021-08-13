@@ -40,7 +40,7 @@ class JwClassesTeachers
     /**
      * @var bool|null
      *
-     * @ORM\Column(name="teacher_type", type="boolean", nullable=true, options={"comment"="1-班主任"})
+     * @ORM\Column(name="teacher_type", type="integer",length=1, nullable=true, options={"comment"="1-班主任"})
      */
     private $teacherType;
 
@@ -92,12 +92,12 @@ class JwClassesTeachers
         return $this;
     }
 
-    public function getTeacherType(): ?bool
+    public function getTeacherType(): ?int
     {
         return $this->teacherType;
     }
 
-    public function setTeacherType(?bool $teacherType): self
+    public function setTeacherType(?int $teacherType): self
     {
         $this->teacherType = $teacherType;
 
@@ -139,6 +139,4 @@ class JwClassesTeachers
 
         return $this;
     }
-
-
 }

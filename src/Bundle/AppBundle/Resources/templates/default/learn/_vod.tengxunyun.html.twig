@@ -1,0 +1,26 @@
+<div class="wrap">
+  <div class="header">
+    <span class="breadcrumb">
+      <span>{{ courseInfo['name'] }}</span>
+       <span>/</span>
+      <span>{{ info['name'] }}</span>
+    </span>
+  </div>
+  <div class="content margin-top20">
+    <div class="layui-row">
+      <div class="layui-col-md9">
+        <!--视频播放区域-->
+          <video id="playercontainer" class="playercontainer" width="800" height="600" preload="meta" playsinline webkit-playsinline></video>
+      </div>
+      <div class="layui-col-md3">
+        <!-- 列表区 -->
+        {% include '@AppBundle/learn/_vod.leftmenu.html.twig' %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  vodPlay('playercontainer', '{{ videoId }}', '{{ appId }}', '{{ token }}');
+</script>
+

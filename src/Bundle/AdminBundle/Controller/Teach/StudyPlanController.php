@@ -1,12 +1,15 @@
 <?php
+
 /**
  * @Author: kaihui.wang
  * @Contact  hpuwang@gmail.com
  * @Version: 1.0.0
  * @Date: 2020/4/19 19:53
  */
+
 namespace App\Bundle\AdminBundle\Controller\Teach;
 
+use App\Bundle\AdminBundle\Service\Teach\CourseService;
 use App\Bundle\AdminBundle\Service\Teach\StudyPlanService;
 use App\Bundle\AppBundle\Lib\Base\BaseAdminController;
 use FOS\RestBundle\Controller\Annotations as Rest;
@@ -21,18 +24,18 @@ class StudyPlanController extends BaseAdminController
      *
      * @Rest\Get("/teach/studyplan/index/{id}", name="admin_teach_studyplan_index")
      */
-    public function indexAction($id, Request $request,Grid $grid, StudyPlanService $studyPlanService)
+    public function indexAction($id, Request $request, Grid $grid, StudyPlanService $studyPlanService)
     {
         $pageSize = 30;
         $page = $request->get("page");
-        $page = $page?$page:1;
+        $page = $page ? $page : 1;
 
         $data = [];
         list($pagination, $all) = $studyPlanService->getList($id, $page, $pageSize);
         $data['planList'] = $all;
         $data['id'] = $id;
         $data['pagination'] = $pagination;
-//        print_r($all);exit;
+        //        print_r($all);exit;
         return $this->render("@AdminBundle/teach/studyplan/index.html.twig", $data);
     }
 
@@ -42,15 +45,12 @@ class StudyPlanController extends BaseAdminController
      */
     public function addAction($id, Form $form, Request $request, StudyPlanService $studyPlanService)
     {
-        $form->setFormField("名称", 'text', 'name', 1);
-        $form->setFormField("当前默认计划？", 'boole', 'isDefault', 1);
-        $form->setFormField("有挡板？", 'boole', 'isBlock', 1);
-        $form->setFormField("预计报名时间", 'datetime', 'applyedAt');
-        $form->setFormField("课程", 'search_multiple_select', 'courseId[]', 1, "", function (){
-            return [$this->generateUrl("admin_api_glob_searchCourseDo"),[]];
-        });
-
-        $form->setFormField("描述", 'textarea', 'descr');
+        $form->text("名称")->field("name")->isRequire(1)->placeholder("第x次开课")->defaultValue("第x次开课");
+        $form->boole("当前默认计划？")->field("isDefault")->isRequire(1);
+        $form->boole("有挡板？")->field("isBlock")->isRequire(1);
+        $form->boole("是否开启?")->field("status")->isRequire(1)->defaultValue(1);
+        $form->searchMultipleSelect("课程")->field("courseId[]")->isRequire(1)->options([$this->generateUrl("admin_api_glob_searchCourseDo"), []]);
+        $form->textarea("描述")->field("descr");
 
         $formData = $form->create($this->generateUrl("admin_api_teach_studyplan_add", [
             'id' => $id
@@ -63,7 +63,7 @@ class StudyPlanController extends BaseAdminController
 
     /**
      *
-     * @Rest\Post("/api/teach/studyplan/addDo/{id}", name="admin_api_teach_studyplan_add")
+     * @Rest\Post("/teach/studyplan/add/do/{id}", name="admin_api_teach_studyplan_add")
      */
     public function addDoAction($id, Request $request, StudyPlanService $studyPlanService)
     {
@@ -73,19 +73,21 @@ class StudyPlanController extends BaseAdminController
         $applyedAt = $request->get("applyedAt");
         $courseIds = $request->get("courseId");
         $descr = $request->get("descr");
+        $status = $request->get("status");
 
         $isDefault = $isDefault == "on" ? 1 : 0;
         $isBlock = $isBlock == "on" ? 1 : 0;
+        $status = $status == "on" ? 1 : 0;
 
-        if (! $name) return $this->responseError("课程计划名称不能为空!");
+        if (!$name) return $this->responseError("课程计划名称不能为空!");
         if (mb_strlen($name, 'utf-8') > 50) return $this->responseError("课程计划名称不能大于50字!");
 
-        if(!$courseIds) return $this->responseError("课程必须选择!");
+        if (!$courseIds) return $this->responseError("课程必须选择!");
 
         $uid = $this->getUid();
-        $studyPlanService->add($id, $name, $isDefault, $isBlock, $applyedAt, $courseIds, $uid, $descr);
+        $studyPlanService->add($id, $name, $isDefault, $isBlock, $applyedAt, $courseIds, $uid, $descr, $status);
 
-        return $this->responseSuccess("操作成功!", $this->generateUrl('admin_teach_studyplan_index', [
+        return $this->responseMsgRedirect("操作成功!", $this->generateUrl('admin_teach_studyplan_index', [
             'id' => $id
         ]));
     }
@@ -94,19 +96,22 @@ class StudyPlanController extends BaseAdminController
      *
      * @Rest\Get("/teach/studyplan/edit/{id}", name="admin_teach_studyplan_edit")
      */
-    public function editAction($id, Form $form, StudyPlanService $studyPlanService)
+    public function editAction($id, Form $form, StudyPlanService $studyPlanService, CourseService $courseService)
     {
         $info = $studyPlanService->getById($id);
 
-        $form->setFormField("名称", 'text', 'name', 1, $info['name']);
-        $form->setFormField("当前默认计划？", 'boole', 'isDefault', 1, $info['isDefault']);
-        $form->setFormField("有挡板？", 'boole', 'isBlock', 1, $info['isBlock']);
-        $form->setFormField("预计报名时间", 'datetime', 'applyedAt', 0, $info['applyedAt']?date('Y-m-d H:i:s',$info['applyedAt']):"");
-        $form->setFormField("课程", 'search_multiple_select', 'courseId[]', 1, $info['sub'], function ()use($studyPlanService,$info){
-            return [$this->generateUrl("admin_api_glob_searchCourseDo"), $studyPlanService->getCourseByIds($info['sub'])];
-        });
-
-        $form->setFormField("描述", 'textarea', 'descr',0, $info['descr']);
+        $form->text("名称")->field("name")->isRequire(1)->placeholder("第x次开课")->defaultValue("第x次开课")->defaultValue($info['name']);
+        $form->boole("当前默认计划？")->field("isDefault")->isRequire(1)->defaultValue($info['isDefault']);
+        $form->boole("有挡板？")->field("isBlock")->isRequire(1)->defaultValue($info['isBlock']);
+        $form->boole("是否开启?")->field("status")->isRequire(1)->defaultValue($info['status']);
+        $form->datetime("预计报名时间")->field("applyedAt")->defaultValue($info['applyedAt'] ? date('Y-m-d H:i:s', $info['applyedAt']) : "");
+        $form->searchMultipleSelect("课程")->field("courseId[]")->isRequire(1)
+            ->options(function ()use($info,$courseService){
+                $courses = !$info['sub']?[]:$courseService->getSelectByIds($info['sub']);
+                return [$this->generateUrl("admin_api_glob_searchCourseDo"),$courses];
+            })
+            ->defaultValue($info['sub']);
+        $form->textarea("描述")->field("descr")->defaultValue($info['descr']);
 
         $formData = $form->create($this->generateUrl("admin_api_teach_studyplan_edit", [
             'id' => $id
@@ -119,7 +124,7 @@ class StudyPlanController extends BaseAdminController
 
     /**
      *
-     * @Rest\Post("/api/teach/studyplan/editDo/{id}", name="admin_api_teach_studyplan_edit")
+     * @Rest\Post("/teach/studyplan/edit/do/{id}", name="admin_api_teach_studyplan_edit")
      */
     public function editDoAction($id, Request $request, StudyPlanService $studyPlanService)
     {
@@ -129,27 +134,29 @@ class StudyPlanController extends BaseAdminController
         $applyedAt = $request->get("applyedAt");
         $courseIds = $request->get("courseId");
         $descr = $request->get("descr");
+        $status = $request->get("status");
 
         $isDefault = $isDefault == "on" ? 1 : 0;
         $isBlock = $isBlock == "on" ? 1 : 0;
+        $status = $status == "on" ? 1 : 0;
 
-        if (! $name) return $this->responseError("课程计划名称不能为空!");
+        if (!$name) return $this->responseError("课程计划名称不能为空!");
         if (mb_strlen($name, 'utf-8') > 50) return $this->responseError("课程计划名称不能大于50字!");
 
-        if(!$courseIds) return $this->responseError("课程必须选择!");
+        if (!$courseIds) return $this->responseError("课程必须选择!");
 
-        $studyPlanService->edit($id, $name, $isDefault, $isBlock, $applyedAt, $courseIds, $descr);
+        $studyPlanService->edit($id, $name, $isDefault, $isBlock, $applyedAt, $courseIds, $descr, $status);
 
         $info = $studyPlanService->getById($id);
 
-        return $this->responseSuccess("操作成功!", $this->generateUrl('admin_teach_studyplan_index', [
+        return $this->responseMsgRedirect("操作成功!", $this->generateUrl('admin_teach_studyplan_index', [
             'id' => $info['productId']
         ]));
     }
 
     /**
      *
-     * @Rest\Post("/api/teach/studyplan/deleteDo/{id}", name="admin_api_teach_studyplan_delete")
+     * @Rest\Post("/teach/studyplan/delete/do/{id}", name="admin_api_teach_studyplan_delete")
      */
     public function deleteDoAction($id, StudyPlanService $studyPlanService)
     {
@@ -158,34 +165,46 @@ class StudyPlanController extends BaseAdminController
         $studyPlanService->del($id);
         $info = $studyPlanService->getById($id);
 
-        return $this->responseSuccess("删除成功!", $this->generateUrl("admin_teach_studyplan_index",['id' => $info['productId']]));
+        return $this->responseMsgRedirect("删除成功!", $this->generateUrl("admin_teach_studyplan_index", ['id' => $info['productId']]));
     }
 
     /**
      *
-     * @Rest\Post("/api/teach/studyplansub/deleteDo/{id}", name="admin_api_teach_studyplansub_delete")
+     * @Rest\Post("/teach/studyplansub/delete/do/{id}", name="admin_api_teach_studyplansub_delete")
      */
     public function deleteSubDoAction($id, StudyPlanService $studyPlanService)
     {
         $info = $studyPlanService->getSubById($id);
         $studyPlanService->delsub($id);
-        return $this->responseSuccess("删除成功!", $this->generateUrl("admin_teach_studyplan_index",[
+        return $this->responseMsgRedirect("删除成功!", $this->generateUrl("admin_teach_studyplan_index", [
             'id' => $info['study_plan']['productId']
         ]));
     }
 
     /**
      *
-     * @Rest\Post("/api/teach/studyplan/updateSort/{id}", name="admin_api_teach_studyplan_updateSort")
+     * @Rest\Post("/teach/studyplan/updateSort/do/{id}", name="admin_api_teach_studyplan_updateSort")
      */
     public function updateSortDoAction($id, Request $request, StudyPlanService $studyPlanService)
     {
         $data = $request->request->all();
         $studyPlanService->updateSort($id, $data);
         $info = $studyPlanService->getById($id);
-        return $this->responseSuccess("更新排序成功!", $this->generateUrl("admin_teach_studyplan_index", [
+        return $this->responseMsgRedirect("更新排序成功!", $this->generateUrl("admin_teach_studyplan_index", [
             "id" => $info['productId']
         ]));
     }
 
+    /**
+     * @Rest\Post("/teach/studyplan/switchStatus/do/{id}", name="admin_api_teach_studyplan_switchStatus")
+     */
+    public function switchStatusAction($id, StudyPlanService $studyPlanService, Request $request)
+    {
+        $info = $studyPlanService->getSimpleById($id);
+        $state = $info['status'] ? 0 : 1;
+        $studyPlanService->switchStatus($id, $state);
+        return $this->responseMsgRedirect("操作成功!", $this->generateUrl('admin_teach_studyplan_index', [
+            'id' => $info['productId']
+        ]));
+    }
 }

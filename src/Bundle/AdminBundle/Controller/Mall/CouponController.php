@@ -30,18 +30,18 @@ class CouponController extends BaseAdminController
      * @Rest\Get("/mall/coupon/index", name="admin_mall_coupon_index")
      */
     public function indexAction(Request $request,Grid $grid, CouponService $couponService, CategoryService $categoryService, UserService $userService){
-        $pageSize = 20;
+        $pageSize = 40;
         $grid->setListService($couponService, "getList");
-        $grid->setTableColumn("#", "text", "id","a.id");
-        $grid->setTableColumn("优惠券名称", "text", "name");
-        $grid->setTableColumn("优惠类型", "text", "couponType", "a.couponType", [0=>"未知", 1=>"金额优惠", 2=>"折扣优惠"]);
-        $grid->setTableColumn("折扣值", "text", "discount");
-        $grid->setTableColumn("发放数量", "text", "countNum");
-        $grid->setTableColumn("已使用数量", "text", "usedNum");
-        $grid->setTableColumn("开始有效时间", "text", "expirationStart");
-        $grid->setTableColumn("结束有效时间", "text", "expirationEnd");
-
-        $grid->setTableActionColumn("admin_api_mall_coupon_switchStatus", "上架？", "boole2", "status", "a.status",null,function($obj){
+        $grid->text("#")->field("id")->sort("a.id");
+        $grid->text("优惠券名称")->field("name");
+        $grid->text("优惠类型")->field("couponType")->sort("a.couponType")->options([0=>"未知", 1=>"金额优惠", 2=>"折扣优惠"]);
+        $grid->text("生成优惠码?")->field("hasCode")->sort("a.hasCode")->options([0=>"否", 1=>"是"]);
+        $grid->text("折扣值")->field("discount");
+        $grid->text("发放数量")->field("countNum");
+        $grid->text("已使用数量")->field("usedNum");
+        $grid->text("开始有效时间")->field("expirationStart");
+        $grid->text("结束有效时间")->field("expirationEnd");
+        $grid->boole2("上架？")->field("status")->sort("a.status")->actionCall("admin_api_mall_coupon_switchStatus",function($obj){
             $id = $this->getPro($obj, "id");
             $defaultValue = $this->getPro($obj, "status");
             $url = $this->generateUrl('admin_api_mall_coupon_switchStatus', ['id' => $id]);
@@ -50,21 +50,25 @@ class CouponController extends BaseAdminController
             $str = "<input type=\"checkbox\" data-bootstrap-switch-ajaxput href=\"{$url}\" data-confirm=\"{$confirmStr}\" {$checkStr} >";
             return $str;
         });
+        $grid->text("创建人")->field("creater")->sort("a.createUid");
+        $grid->text("分类")->field("category");
+        $grid->text("授课方式")->field("teachingMethod")->sort("a.teachingMethod")->options([0=>"全部", 1=>"面授",2=>"直播", 3=>"点播", 4=>"直播+面授", 5=>"直播+点播", 6=>"点播+面授", 7=>"直播+点播+面授"]);
 
-        $grid->setTableColumn("创建人", "text", "creater", "a.createUid");
-        $grid->setTableColumn("分类", "text", "category");
-        $grid->setTableColumn("授课方式", "text", "teachingMethod", "a.teachingMethod", [0=>"全部", 1=>"面授",2=>"直播", 3=>"录播", 4=>"直播+面授", 5=>"直播+录播", 6=>"录播+面授", 7=>"直播+录播+面授"]);
-        $grid->setTableColumn("商品id", "textarea", "goodsIds");
-        $grid->setTableColumn("创建时间", "datetime", "createdAt", "a.createdAt");
-
+        $grid->textarea("商品id")->field("goodsIds");
+        $grid->datetime("创建时间")->field("createdAt")->sort("a.createdAt");
 
         $grid->setTableAction('admin_mall_couponsub_index', function($obj){
             $id = $obj['id'];
-            $url = $this->generateUrl('admin_mall_couponsub_index',['id'=>$id]);
-            $str = '<a href='.$url.' data-width="1000px" data-title="优惠码管理" title="优惠码管理" class=" btn btn-info btn-xs"><i class="fas fa-database"></i></a>';
-            return  $str;
+            $hasCode = $obj['hasCode'];
+            if($hasCode){
+                $url = $this->generateUrl('admin_mall_couponsub_index',['id'=>$id]);
+                $str = '<a href='.$url.' data-width="1000px" data-title="优惠码管理" title="优惠码管理" class=" btn btn-info btn-xs"><i class="fas fa-database"></i></a>';
+                return  $str;
+            }else{
+                return "";
+            }
         });
-        
+
         $grid->setTableAction('admin_mall_coupon_edit', function($obj){
             $id = $obj['id'];
             $url = $this->generateUrl('admin_mall_coupon_edit',['id'=>$id]);
@@ -78,30 +82,22 @@ class CouponController extends BaseAdminController
             return '<a href=' . $url . ' data-confirm="确认要删除吗?" title="删除" class=" btn btn-danger btn-xs ajaxDelete"><i class="fas fa-trash"></i></a>';
         });
 
-        $grid->setGridBar("admin_mall_coupon_add","添加", $this->generateUrl("admin_mall_coupon_add"), "fas fa-plus", "btn-success");
+        //批量删除
+        $bathDelUrl = $this->genUrl("admin_api_mall_coupon_bathdelete");
+        $grid->setBathDelete("admin_api_mall_coupon_bathdelete", $bathDelUrl);
 
+        $grid->gbButton("添加")->route("admin_mall_coupon_add")
+            ->url($this->generateUrl("admin_mall_coupon_add"))
+            ->styleClass("btn-success")->iconClass("fas fa-plus");
         //搜索
         $select = $categoryService->categorySelect();
-        $grid->setSearchField("ID", "number", "a.id");
-        $grid->setSearchField("优惠券名称", "text", "a.name");
-        $grid->setSearchField("优惠券类型", "select", "a.couponType", function(){
-            return ["全部"=>-1,"金额优惠"=>1, "折扣优惠"=>2];
-        });
-
-        $grid->setSearchField("上架？", "select", "a.status", function(){
-            return ["全部"=>-1,"下架"=>0, "上架"=>1];
-        });
-
-        $grid->setSearchField("类别", 'select', 'a.categoryId' , function()use($select){
-            return $select;
-        });
-
-
-        $grid->setSearchField("授课方式", "select", "a.teachingMethod", function(){
-            return ["全部"=>-1,"面授"=>1, "直播"=>2, "录播"=>3, "直播+面授"=>4, "直播+录播"=>5, "录播+面授"=>6, "直播+录播+面授"=>7];
-        });
-
-        $grid->setSearchField("创建人", "search_select", "a.createUid", function()use($request, $userService){
+        $grid->snumber("ID")->field("a.id");
+        $grid->stext("优惠券名称")->field("a.name");
+        $grid->sselect("优惠券类型")->field("a.couponType")->options(["全部"=>-1,"金额优惠"=>1, "折扣优惠"=>2]);
+        $grid->sselect("上架？")->field("a.status")->options(["全部"=>-1,"下架"=>0, "上架"=>1]);
+        $grid->sselect("类别")->field("a.categoryId")->options($select);
+        $grid->sselect("授课方式")->field("a.teachingMethod")->options(["全部"=>-1,"面授"=>1, "直播"=>2, "点播"=>3, "直播+面授"=>4, "直播+点播"=>5, "点播+面授"=>6, "直播+点播+面授"=>7]);
+        $grid->ssearchselect("创建人")->field("a.createUid")->options(function()use($request, $userService){
             $values = $request->get("values");
             $createUid = ($values&&isset($values["a.createUid"]))?$values["a.createUid"]:0;
             if($createUid){
@@ -109,11 +105,9 @@ class CouponController extends BaseAdminController
             }else{
                 $users = [];
             }
-            return [$this->generateUrl("admin_api_glob_searchUserDo"),$users];
+            return [$this->generateUrl("admin_api_glob_searchAdminUserDo"),$users];
         });
-
-        $grid->setSearchField("创建时间", "daterange", "a.createdAt");
-
+        $grid->sdaterange("创建时间")->field("a.createdAt");
 
         $data = [];
 
@@ -129,28 +123,22 @@ class CouponController extends BaseAdminController
      */
 
     public function addAction(Form $form, CouponService $couponService, CategoryService $categoryService){
-        $form->setFormField("优惠券名称", 'text', 'name', 1);
-        $form->setFormField("优惠券类型", 'select', 'couponType' ,1, "", function(){
-            return ["请选择"=>0,"金额优惠"=>1, "折扣优惠"=>2];
-        });
-        $form->setFormField("折扣值", 'text', 'discount', 1);
-        $form->setFormField("发放数量", "text", "countNum", 1);
-        $form->setFormField("开始有效时间", 'datetime', 'expirationStart',1);
-        $form->setFormField("结束有效时间", 'datetime', 'expirationEnd',1);
-        $form->setFormField("上架？", 'boole', 'status', 1);
-        $form->setFormField("类目", 'select', 'categoryId', 0, "", function() use($categoryService){
+        $form->text("优惠券名称")->field("name")->isRequire();
+        $form->select("优惠券类型")->field("couponType")->isRequire()->options(["请选择"=>0,"金额优惠"=>1, "折扣优惠"=>2]);
+        $form->boole("生成优惠码?")->field("hasCode")->isRequire();
+        $form->text("折扣值")->field("discount")->isRequire();
+        $form->text("发放数量")->field("countNum")->isRequire();
+        $form->datetime("开始有效时间")->field("expirationStart")->isRequire();
+        $form->datetime("结束有效时间")->field("expirationEnd")->isRequire();
+        $form->boole("上架？")->field("status")->isRequire();
+        $form->select("类目")->field("categoryId")->isRequire(0)->options(function() use($categoryService){
             $rs = $categoryService->categorySelect();
             return $rs;
         });
-        $form->setFormField("授课方式", 'select', 'teachingMethod' ,1, "", function(){
-            return ["面授"=>1, "直播"=>2, "录播"=>3, "直播+面授"=>4, "直播+录播"=>5, "录播+面授"=>6, "直播+录播+面授"=>7];
-        });
 
-        $form->setFormField("优惠对应商品", 'search_multiple_select', 'goodsIds[]', 0, "", function (){
-            return [$this->generateUrl("admin_api_glob_searchGoodsDo"),[]];
-        });
-
-        $form->setFormField("描述", 'textarea', 'descr', 0);
+        $form->select("授课方式")->field("teachingMethod")->isRequire(1)->options(["全部"=>0,"面授"=>1, "直播"=>2, "点播"=>3, "直播+面授"=>4, "直播+点播"=>5, "点播+面授"=>6, "直播+点播+面授"=>7]);
+        $form->searchMultipleSelect("优惠对应商品")->field("goodsIds[]")->isRequire(0)->options([$this->generateUrl("admin_api_glob_searchGoodsDo"),[]]);
+        $form->textarea("描述")->field("descr")->isRequire(0);
 
         $formData = $form->create($this->generateUrl("admin_api_mall_coupon_add"));
         $data = [];
@@ -161,13 +149,13 @@ class CouponController extends BaseAdminController
 
     /**
      *
-     * @Rest\Post("/api/mall/coupon/addDo", name="admin_api_mall_coupon_add")
+     * @Rest\Post("/mall/coupon/add/do", name="admin_api_mall_coupon_add")
      */
     public function addDoAction(Request $request, CouponService $couponService)
     {
         $name = $request->get("name");
         $couponType = (int) $request->get("couponType");
-        $discount = (int) $request->get("discount");
+        $discount =  $request->get("discount");
         $countNum = (int) $request->get("countNum");
         $expirationStart = $request->get("expirationStart");
         $expirationEnd = $request->get("expirationEnd");
@@ -176,6 +164,9 @@ class CouponController extends BaseAdminController
         $teachingMethod = (int) $request->get("teachingMethod");
         $goodsIds = $request->get("goodsIds");
         $descr = $request->get("descr");
+        $hasCode = $request->get("hasCode");
+        $hasCode = $hasCode == "on" ? 1 : 0;
+
         $status = $status == "on" ? 1 : 0;
         $uid = $this->getUid();
         if (!$name) return $this->responseError("优惠券名称不能为空!");
@@ -183,14 +174,14 @@ class CouponController extends BaseAdminController
         if($couponService->getByName($name)) return $this->responseError("优惠券名称重复!");
         if(!$expirationStart) return $this->responseError("过期开始时间不能为空!");
         if(!$expirationEnd) return $this->responseError("过期结束时间不能为空!");
-        
+
         $expirationStartTime = strtotime($expirationStart);
         $expirationEndTime = strtotime($expirationEnd);
         if($expirationEndTime < $expirationStartTime) return $this->responseError("过期开始时间不能大于结束时间!");
-        
+
         $couponService->add($uid, $name, $couponType, $discount,$countNum, $expirationStartTime,
-                 $expirationEndTime, $status, $categoryId, $teachingMethod, $goodsIds, $descr);
-        return $this->responseSuccess("操作成功!", $this->generateUrl('admin_mall_coupon_index'));
+                 $expirationEndTime, $status, $categoryId, $teachingMethod, $goodsIds,$hasCode, $descr);
+        return $this->responseMsgRedirect("操作成功!", $this->generateUrl('admin_mall_coupon_index'));
     }
 
     /**
@@ -200,37 +191,37 @@ class CouponController extends BaseAdminController
     public function editAction($id, Form $form, CouponService $couponService, CategoryService $categoryService, GoodsService $goodsService){
 
         $info = $couponService->getById($id);
-        
-        $form->setFormField("优惠券名称", 'text', 'name', 1, $info['name']);
-        $form->setFormField("优惠券类型", 'select', 'couponType' ,1, $info['couponType'], function(){
-            return ["请选择"=>0,"金额优惠"=>1, "折扣优惠"=>2];
-        });
-        $form->setFormField("折扣值", 'text', 'discount', 1, $info['discount']/100);
-        $form->setFormField("发放数量", "text", "countNum", 1, $info['countNum']);
+
+        $form->text("优惠券名称")->field("name")->isRequire()->defaultValue($info['name']);
+        $form->select("优惠券类型")->field("couponType")->isRequire()->options(["请选择"=>0,"金额优惠"=>1, "折扣优惠"=>2])->defaultValue($info['couponType']);
+        $form->boole("生成优惠码?")->field("hasCode")->isRequire()->defaultValue($info['hasCode']);
+        $form->text("折扣值")->field("discount")->isRequire()->defaultValue($info['discount']/100);
+        $form->text("发放数量")->field("countNum")->isRequire()->defaultValue($info['countNum']);
+
         $expirationStart = date('Y-m-d H:i:s', $info["expirationStart"]);
         $expirationEnd = date('Y-m-d H:i:s', $info["expirationEnd"]);
-        $form->setFormField("开始有效时间", 'datetime', 'expirationStart',1, $expirationStart);
-        $form->setFormField("结束有效时间", 'datetime', 'expirationEnd',1, $expirationEnd);
-        $form->setFormField("上架？", 'boole', 'status', 1, $info['status']);
-        $form->setFormField("类目", 'select', 'categoryId', 0, $info["categoryId"], function() use($categoryService){
+
+        $form->datetime("开始有效时间")->field("expirationStart")->isRequire()->defaultValue($expirationStart);
+        $form->datetime("结束有效时间")->field("expirationEnd")->isRequire()->defaultValue($expirationEnd);
+        $form->boole("上架？")->field("status")->isRequire()->defaultValue($info['status']);
+        $form->select("类目")->field("categoryId")->isRequire(0)->defaultValue($info["categoryId"])->options(function() use($categoryService){
             $rs = $categoryService->categorySelect();
             return $rs;
         });
-        $form->setFormField("授课方式", 'select', 'teachingMethod' ,1, $info["teachingMethod"], function(){
-            return ["面授"=>1, "直播"=>2, "录播"=>3, "直播+面授"=>4, "直播+录播"=>5, "录播+面授"=>6, "直播+录播+面授"=>7];
-        });
+
+        $form->select("授课方式")->field("teachingMethod")->isRequire(1)->defaultValue($info["teachingMethod"])->options(["全部"=>0,"面授"=>1, "直播"=>2, "点播"=>3, "直播+面授"=>4, "直播+点播"=>5, "点播+面授"=>6, "直播+点播+面授"=>7]);
         $goodsIdArr = [];
         if($info["goodsIds"]){
             $goodsIdArr = explode(",", $info["goodsIds"]);
         }
-        $form->setFormField("优惠对应商品", 'search_multiple_select', 'goodsIds[]', 0, $goodsIdArr, function ()use($goodsIdArr, $goodsService){
-            $cate = $goodsIdArr?[]:$goodsService->getSelectByIds($goodsIdArr);
+
+        $form->searchMultipleSelect("优惠对应商品")->field("goodsIds[]")->isRequire(0)->defaultValue($goodsIdArr)->options(function ()use($goodsIdArr, $goodsService){
+            $cate = !$goodsIdArr?[]:$goodsService->getSelectByIds($goodsIdArr);
             return [$this->generateUrl("admin_api_glob_searchGoodsDo"),$cate];
         });
+        $form->textarea("描述")->field("descr")->isRequire(0)->defaultValue($info["descr"]);
 
-        $form->setFormField("描述", 'textarea', 'descr', 0, $info["descr"]);
-
-        $formData = $form->create($this->generateUrl("admin_api_mall_coupon_edit"));
+        $formData = $form->create($this->generateUrl("admin_api_mall_coupon_edit",["id"=>$id]));
         $data = [];
         $data["formData"] = $formData;
         return $this->render("@AdminBundle/mall/coupon/edit.html.twig", $data);
@@ -239,13 +230,13 @@ class CouponController extends BaseAdminController
 
     /**
      *
-     * @Rest\Post("/api/mall/coupon/editDo/{id}", name="admin_api_mall_coupon_edit")
+     * @Rest\Post("/mall/coupon/edit/do/{id}", name="admin_api_mall_coupon_edit")
      */
     public function editDoAction($id, Request $request, CouponService $couponService)
     {
         $name = $request->get("name");
         $couponType = (int) $request->get("couponType");
-        $discount = (int) $request->get("discount");
+        $discount = $request->get("discount");
         $countNum = (int) $request->get("countNum");
         $expirationStart = $request->get("expirationStart");
         $expirationEnd = $request->get("expirationEnd");
@@ -254,39 +245,68 @@ class CouponController extends BaseAdminController
         $teachingMethod = (int) $request->get("teachingMethod");
         $goodsIds = $request->get("goodsIds");
         $descr = $request->get("descr");
+        $hasCode = $request->get("hasCode");
+        $hasCode = $hasCode == "on" ? 1 : 0;
+
         $status = $status == "on" ? 1 : 0;
-    
+
         if (!$name) return $this->responseError("优惠券名称不能为空!");
         if (mb_strlen($name, 'utf-8') > 50) return $this->responseError("优惠券名称不能大于50字!");
         if(!$expirationStart) return $this->responseError("过期开始时间不能为空!");
         if(!$expirationEnd) return $this->responseError("过期结束时间不能为空!");
-        
+
+        if(!$hasCode){
+            //判断优惠券是否已经生成
+            if($couponService->getCouponCodeCountByGroupId($id) >0) return $this->responseError("优惠券码已生成，不能修改为不生成优惠券码!");
+        }
+
         $expirationStartTime = strtotime($expirationStart);
         $expirationEndTime = strtotime($expirationEnd);
         if($expirationEndTime < $expirationStartTime) return $this->responseError("过期开始时间不能大于结束时间!");
-        
         $couponService->edit($id, $name, $couponType, $discount,$countNum, $expirationStartTime,
-                 $expirationEndTime, $status, $categoryId, $teachingMethod, $goodsIds, $descr);
-        return $this->responseSuccess("操作成功!", $this->generateUrl('admin_mall_coupon_index'));
+                 $expirationEndTime, $status, $categoryId, $teachingMethod, $goodsIds, $hasCode, $descr);
+        return $this->responseMsgRedirect("操作成功!", $this->generateUrl('admin_mall_coupon_index'));
     }
 
     /**
      *
-     * @Rest\Post("/api/mall/coupon/deleteDo/{id}", name="admin_api_mall_coupon_delete")
+     * @Rest\Post("/mall/coupon/delete/do/{id}", name="admin_api_mall_coupon_delete")
      */
     public function deleteDoAction($id, CouponService $couponService)
     {
         $couponService->del($id);
-        return $this->responseSuccess("删除成功!", $this->generateUrl('admin_mall_coupon_index'));
+        return $this->responseMsgRedirect("删除成功!", $this->generateUrl('admin_mall_coupon_index'));
     }
 
     /**
-     * @Rest\Post("/api/mall/coupon/switchStatusDo/{id}", name="admin_api_mall_coupon_switchStatus")
+     *
+     * @Rest\Post("/mall/coupon/bathdelete/do", name="admin_api_mall_coupon_bathdelete")
+     */
+    public function bathdeleteDoAction(Request $request, CouponService $couponService)
+    {
+
+        $ids = $request->get("ids");
+        if($ids){
+            foreach ($ids as $id){
+                $couponService->del($id);
+            }
+        }
+
+        if($this->error()->has()){
+            return $this->responseError($this->error()->getLast());
+        }
+
+
+        return $this->responseMsgRedirect("删除成功!", $this->generateUrl('admin_mall_coupon_index'));
+    }
+
+    /**
+     * @Rest\Post("/mall/coupon/switchStatus/do/{id}", name="admin_api_mall_coupon_switchStatus")
      */
     public function switchStatusAction($id, CouponService $couponService, Request $request){
         $state = (int) $request->get("state");
         $couponService->switchStatus($id, $state);
-        return $this->responseSuccess("操作成功!");
+        return $this->responseMsgRedirect("操作成功!");
     }
 
     /**
@@ -295,30 +315,37 @@ class CouponController extends BaseAdminController
      */
     public function subAction($id, Request $request,Grid $grid, CouponService $couponService){
         $couponGroupInfo = $couponService->getById($id);
-        $pageSize = 20;
+        $pageSize = 40;
         $grid->setListService($couponService, "getSubList", $id);
-        $grid->setTableColumn("#", "text", "id","a.id");
-        $grid->setTableColumn("优惠券编码", "code", "couponSn");
-        $grid->setTableColumn("使用时间", "text", "usedTime");
-        $grid->setTableColumn("赠送时间", "text", "sendTime");
-        $grid->setTableColumn("使用状态", "text", "status", "a.status", [0=>"未使用", 1=>"已使用"]);
-        $grid->setTableColumn("创建时间", "datetime", "createdAt", "a.createdAt");
+        $grid->text("#")->field("id")->sort("a.id");
+        $grid->code("优惠券编码")->field("couponSn");
+        $grid->text("使用时间")->field("usedTime");
+        $grid->text("赠送时间")->field("sendTime");
+        $grid->text("使用状态")->field("status")->sort("a.status")->options([0=>"未使用", 1=>"已使用"]);
+        $grid->datetime("创建时间")->field("createdAt")->sort("a.createdAt");
+
         if($couponGroupInfo['countNum']>$couponGroupInfo['createdNum']){
             if($couponGroupInfo['countNum']!=$couponGroupInfo['createdNum']){
                 $str = "(已生成:{$couponGroupInfo['createdNum']})";
             }else{
                 $str = "";
             }
-           
-            $grid->setGridBar("admin_mall_couponsub_create","生成".$str, $this->generateUrl("admin_mall_couponsub_create", ["id"=>$id]), "fas fa-gavel", "btn-primary");
+            $grid->gbButton("生成")->route("admin_mall_couponsub_create")
+                ->url($this->generateUrl("admin_mall_couponsub_create"))
+                ->styleClass("btn-primary")->iconClass("fas fa-gavel");
         }
-        $grid->setGridBar("admin_mall_couponsub_export","导出", $this->generateUrl("admin_mall_couponsub_export", ["id"=>$id]), "fas fa-download", "btn-success", 1);
+
+        $grid->gbButton("导出")->route("admin_mall_couponsub_export")
+            ->url($this->generateUrl("admin_mall_couponsub_export", ["id"=>$id]))
+            ->styleClass("btn-success")->iconClass("fas fa-download")->isBlank(1);
+
         //搜索
-        $grid->setSearchField("ID", "number", "a.id");
-        $grid->setSearchField("优惠券编码", "text", "a.couponSn");
+        $grid->snumber("ID")->field("a.id");
+        $grid->stext("优惠券编码")->field("a.couponSn");
+
         $data = [];
         $data['list'] = $grid->create($request, $pageSize);
-       
+
         return $this->render("@AdminBundle/mall/coupon/subindex.html.twig", $data);
     }
 

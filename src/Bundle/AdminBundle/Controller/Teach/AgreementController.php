@@ -9,6 +9,7 @@
 namespace App\Bundle\AdminBundle\Controller\Teach;
 
 
+use App\Bundle\AdminBundle\Lib\View\View;
 use App\Bundle\AdminBundle\Service\Teach\AgreementService;
 use App\Bundle\AppBundle\Lib\Base\BaseAdminController;
 use FOS\RestBundle\Controller\Annotations as Rest;
@@ -23,19 +24,29 @@ class AgreementController extends BaseAdminController
      * @Rest\Get("/teach/agreement/index", name="admin_teach_agreement_index")
      */
     public function indexAction(Request $request, Grid $grid, AgreementService $agreementService){
-        $pageSize = 20;
+        $pageSize = 40;
         $grid->setListService($agreementService, "agreementList");
-        $grid->setTableColumn("#", "text", "id","a.id");
-        $grid->setTableColumn("名称", "text", "name");
-        $grid->setTableColumn("展示？", "boole", "isShow");
-        $grid->setTableColumn("创建时间", "datetime", "createdAt", "a.createdAt");
+        $grid->text("#")->field("id")->sort("a.id");
+        $grid->text("名称")->field("name");
+        $grid->boole("展示？")->field("isShow");
+        $grid->datetime("创建时间")->field("createdAt")->sort("a.createdAt");
 
-        $grid->setGridBar("admin_teach_agreement_add","添加", $this->generateUrl("admin_teach_agreement_add"), "fas fa-plus", "btn-success");
+        $grid->gbButton("添加")->route("admin_teach_agreement_add")
+            ->url($this->generateUrl("admin_teach_agreement_add"))
+            ->styleClass("btn-success")->iconClass("fas fa-plus");
 
-        $grid->setSearchField("名称", "text", "a.name");
-        $grid->setSearchField("创建时间", "daterange", "a.createdAt");
+        $grid->stext("名称")->field("a.name");
+        $grid->sdaterange("创建时间")->field("a.createdAt");
+
 
         //编辑等
+        $grid->setTableAction('admin_teach_agreement_view', function ($obj) {
+            $id = $obj->getId();
+            $url = $this->generateUrl('admin_teach_agreement_view', ['id' => $id]);
+            $str = '<a href=' . $url . ' data-title="查看" title="查看" class=" btn btn-default btn-xs poppage"><i class="fas fa-eye"></i></a>';
+            return  $str;
+        });
+
         $grid->setTableAction('admin_teach_agreement_edit', function($obj){
             $id = $obj->getId();
             $url = $this->generateUrl('admin_teach_agreement_edit',['id'=>$id]);
@@ -49,6 +60,10 @@ class AgreementController extends BaseAdminController
             return '<a href=' . $url . ' data-confirm="确认要删除吗?" title="删除" class=" btn btn-danger btn-xs ajaxDelete"><i class="fas fa-trash"></i></a>';
         });
 
+        //批量删除
+        $bathDelUrl = $this->genUrl("admin_api_teach_agreement_bathdelete");
+        $grid->setBathDelete("admin_api_teach_agreement_bathdelete", $bathDelUrl);
+
         $data = [];
         $data['list'] = $grid->create($request, $pageSize);
         return $this->render("@AdminBundle/teach/agreement/index.html.twig", $data);
@@ -56,12 +71,28 @@ class AgreementController extends BaseAdminController
     }
 
     /**
+     * @Rest\Get("/teach/agreement/view/{id}", name="admin_teach_agreement_view")
+     */
+    public function viewAction($id, View $view, AgreementService $agreementService){
+        $info = $agreementService->getById($id);
+
+        $view->text("名称")->field("name")->defaultValue($info['name']);
+        $view->richEditor("内容")->field("content")->attr(['data-width'=>800, 'data-height'=>400])->defaultValue($info['content']);
+        $view->boole("展示？")->field("isShow")->defaultValue($info['isShow']);
+
+        $formData = $view->create();
+        $data = [];
+        $data["formData"] = $formData;
+        return $this->render("@AdminBundle/teach/agreement/view.html.twig", $data);
+    }
+
+    /**
      * @Rest\Get("/teach/agreement/add", name="admin_teach_agreement_add")
      */
     public function addAction(Form $form, AgreementService $agreementService){
-        $form->setFormField("名称", 'text', 'name' ,1);
-        $form->setFormField("内容", 'rich_editor', 'content' ,1,'','','',['data-width'=>800, 'data-height'=>400]);
-        $form->setFormField("展示？", 'boole', 'isShow', 1);
+        $form->text("名称")->field("name")->isRequire();
+        $form->richEditor("内容")->field("content")->isRequire()->attr(['data-width'=>800, 'data-height'=>400]);
+        $form->boole("展示？")->field("isShow")->isRequire();
 
         $formData = $form->create($this->generateUrl("admin_api_teach_agreement_add"));
         $data = [];
@@ -70,7 +101,7 @@ class AgreementController extends BaseAdminController
     }
 
     /**
-     * @Rest\Post("/api/teach/agreement/addDo", name="admin_api_teach_agreement_add")
+     * @Rest\Post("/teach/agreement/add/do", name="admin_api_teach_agreement_add")
      */
     public function addDoAction(Request $request, AgreementService $agreementService){
         $name = $request->get("name");
@@ -85,7 +116,7 @@ class AgreementController extends BaseAdminController
 
         $agreementService->add($name, $content, $isShow);
 
-        return $this->responseSuccess("添加成功!", $this->generateUrl("admin_teach_agreement_index"));
+        return $this->responseMsgRedirect("添加成功!", $this->generateUrl("admin_teach_agreement_index"));
     }
 
     /**
@@ -93,9 +124,10 @@ class AgreementController extends BaseAdminController
      */
     public function editAction($id, Form $form, AgreementService $agreementService){
         $info = $agreementService->getById($id);
-        $form->setFormField("名称", 'text', 'name' ,1, $info['name']);
-        $form->setFormField("内容", 'rich_editor', 'content' ,1,$info['content'],'','',['data-width'=>800, 'data-height'=>400]);
-        $form->setFormField("展示？", 'boole', 'isShow', 1, $info['isShow']);
+
+        $form->text("名称")->field("name")->isRequire()->defaultValue($info['name']);
+        $form->richEditor("内容")->field("content")->isRequire()->attr(['data-width'=>800, 'data-height'=>400])->defaultValue($info['content']);
+        $form->boole("展示？")->field("isShow")->isRequire()->defaultValue($info['isShow']);
 
         $formData = $form->create($this->generateUrl("admin_api_teach_agreement_edit", ['id'=>$id]));
         $data = [];
@@ -104,7 +136,7 @@ class AgreementController extends BaseAdminController
     }
 
     /**
-     * @Rest\Post("/api/teach/agreement/editDo/{id}", name="admin_api_teach_agreement_edit")
+     * @Rest\Post("/teach/agreement/edit/do/{id}", name="admin_api_teach_agreement_edit")
      */
     public function editDoAction($id, Request $request, AgreementService $agreementService){
         $name = $request->get("name");
@@ -119,14 +151,35 @@ class AgreementController extends BaseAdminController
 
         $agreementService->edit($id, $name, $content, $isShow);
 
-        return $this->responseSuccess("编辑成功!", $this->generateUrl("admin_teach_agreement_index"));
+        return $this->responseMsgRedirect("编辑成功!", $this->generateUrl("admin_teach_agreement_index"));
     }
 
     /**
-     * @Rest\Post("/api/teach/agreement/deleteDO/{id}", name="admin_api_teach_agreement_delete")
+     * @Rest\Post("/teach/agreement/delete/do/{id}", name="admin_api_teach_agreement_delete")
      */
     public function deleteAction($id, AgreementService $agreementService){
         $agreementService->del($id);
-        return $this->responseSuccess("删除成功!", $this->generateUrl("admin_teach_agreement_index"));
+        return $this->responseMsgRedirect("删除成功!", $this->generateUrl("admin_teach_agreement_index"));
     }
+
+    /**
+     * @Rest\Post("/teach/agreement/bathdelete/do", name="admin_api_teach_agreement_bathdelete")
+     */
+    public function bathDeleteAction(Request $request, AgreementService $agreementService){
+
+        $ids = $request->get("ids");
+        if($ids){
+            foreach ($ids as $id){
+                $agreementService->del($id);
+            }
+        }
+
+        if($this->error()->has()){
+            return $this->responseError($this->error()->getLast());
+        }
+
+        return $this->responseMsgRedirect("删除成功!", $this->generateUrl("admin_teach_agreement_index"));
+    }
+
+
 }

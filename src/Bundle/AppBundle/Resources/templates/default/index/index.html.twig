@@ -1,0 +1,267 @@
+{% extends '@AppBundle/layout/baselayout.html.twig' %}
+{% block homeMenuActive %}active{% endblock %}
+{% block seo_descr %}{{ seoDescr }}{% endblock %}
+{% block seo_kw %}{{ seoKw }}{% endblock %}
+ {% block content %}
+     {{ parent() }}
+   {#导航 banner#}
+   <div class="layui-fluid">
+     <div class="layui-main bannerMenu">
+       <div class="layui-row">
+         <div class="layui-col-md2">
+           <ul class="layui-nav layui-nav-tree navCate">
+             {% if homeCategory %}
+               {% for item in homeCategory %}
+             <li class="layui-nav-item"><a href="javascript:;" data-id="{{ item['id'] }}">{{ item['name'] }}<span class="layui-icon layui-icon-right layui-nav-icon"></span></a></li>
+               {% endfor %}
+             {% endif %}
+           </ul>
+         </div>
+         <div class="layui-col-md10">
+           {% if homeCategory %}
+           {% for item in homeCategory %}
+             {% if item['subs'] %}
+               <div class="layui-hide navCateDiv layui-anim layui-anim-fadein" id="navCateDiv{{ item['id'] }}">
+                 <ul class="cateList">
+                     {% for itemsub in item['subs'] %}
+                        <li><a href="{{ path('app_detail_center', {categoryId:itemsub['id'], isFree:0}) }}">{{ itemsub['name'] }}</a></li>
+                      {% endfor %}
+                 </ul>
+               </div>
+             {% endif %}
+           {% endfor %}
+           {% endif %}
+           <div class="layui-carousel" id="menuBanner">
+             <div carousel-item>
+               {% if(banners) %}
+                 {% for b in banners %}
+               <div>
+                 {% if b['url'] %}
+                      <a href="{{ b['url'] }}" target="_blank">
+                        <img src="{{ json_get(b['bannerImg']) }}" height="405px" />
+                      </a>
+                 {% else %}
+                   <img src="{{ json_get(b['bannerImg']) }}" height="405px" />
+                 {% endif %}
+               </div>
+                 {% endfor %}
+               {% endif %}
+             </div>
+           </div>
+         </div>
+       </div>
+     </div>
+   </div>
+
+   {% if recommendValue %}
+   <div class="layui-fluid">
+     <div class="layui-main">
+       <div class="wrap margin-top20">
+         <div class="header">
+           精品推荐
+         </div>
+         <div class="content">
+           <div class="layui-row layui-col-space20">
+               {% for r in recommendValue %}
+               <div class="layui-col-md3">
+                 <a href="{{ path('app_detail_index', {uuid:r['uuid']}) }}" class="gooda">
+                   <div class="goodCard layui-anim">
+                     <div class="goodCover">
+                       <img src="{% if r['goodsSmallImg'] %} {{ json_get(r['goodsSmallImg']) }} {% else %} /assets/images/course.jpg {% endif %}">
+                     </div>
+                     <div class="goodInfo">
+                       <div class="goodTitle">{{ r['name'] }}</div>
+                       <div class="goodAttr">
+                         <span class="goodPrice">¥{{ r['shopPriceView'] }}</span>
+                         <span class="buyNum">{{ r['buyNumberFalse'] }}人购买</span>
+                       </div>
+                     </div>
+                   </div>
+                 </a>
+               </div>
+               {% endfor %}
+           </div>
+         </div>
+       </div>
+     </div>
+   </div>
+   {% endif %}
+  {% if live %}
+   <div class="layui-fluid">
+     <div class="layui-main ">
+       <div class="wrap ">
+         <div class="header ">
+           最近直播
+         </div>
+         <div class="content">
+           <div class="layui-row layui-col-space20">
+             {% for l in live %}
+             <div class="layui-col-md6">
+               <a href="" class="livea">
+                 <div class="liveCard layui-anim">
+                   <div class="layui-row">
+                     <div class="layui-col-md6">
+                       <div class="liveCover">
+                         <img src="{% if l['goodsSmallImg'] %} {{ json_get(l['goodsSmallImg']) }} {% else %} /assets/images/course.jpg {% endif %}">
+                       </div>
+                     </div>
+                     <div class="layui-col-md6">
+                       <div class="liveInfo">
+                         <div class="liveTitle">{{ l['name'] }}</div>
+                         <div class="liveTime">开播时间: {{ l['openTime'] }}</div>
+                         <div class="liveAttr">
+                           <span class="livePrice">¥{{ l['shopPriceView'] }}</span>
+                           <a target="_blank" href="{{ path('app_learn_detail', {chapterId:l['chapterId']}) }}" class="layui-btn  layui-btn-normal layui-btn-sm join">进入直播</a>
+                         </div>
+                       </div>
+                     </div>
+                   </div>
+                 </div>
+               </a>
+             </div>
+             {% endfor %}
+           </div>
+         </div>
+       </div>
+     </div>
+   </div>
+{% endif %}
+   {% if topValue %}
+   <div class="layui-fluid">
+     <div class="layui-main ">
+       <div class="wrap ">
+         <div class="header">
+           热门课程
+         </div>
+         <div class="content">
+           <div class="layui-row layui-col-space20">
+               {% for t in topValue %}
+               <div class="layui-col-md3">
+                 <a href="{{ path('app_detail_index', {uuid:t['uuid']}) }}" class="gooda">
+                   <div class="goodCard layui-anim">
+                     <div class="goodCover">
+                       <img src="{% if t['goodsSmallImg'] %} {{ json_get(t['goodsSmallImg']) }} {% else %} /assets/images/course.jpg {% endif %}">
+                     </div>
+                     <div class="goodInfo">
+                       <div class="goodTitle">{{ t['name'] }}</div>
+                       <div class="goodAttr">
+                         <span class="goodPrice">¥¥{{ t['shopPriceView'] }}</span>
+                         <span class="buyNum">{{ t['buyNumberFalse'] }}人购买</span>
+                       </div>
+                     </div>
+                   </div>
+                 </a>
+               </div>
+               {% endfor %}
+             </div>
+         </div>
+       </div>
+     </div>
+   </div>
+{% endif %}
+
+   {% if news %}
+   <div class="layui-fluid">
+     <div class="layui-main ">
+       <div class="wrap">
+         <div class="header">
+           新闻资讯
+         </div>
+         <div class="content">
+
+           <div class="layui-row layui-col-space20">
+             {% for n in news %}
+             <div class="layui-col-md4">
+               <a href="{{ path('app_news_detail', {id:n['id']}) }}" class="newsa">
+                 <div class="newsCard">
+                   <div class="newsTitle">{{ n['title'] }}</div>
+                   <div class="newsAttr">
+                     <span class="time">发布：<span class="moment" data-time="{{ n['createdAtTime'] }}"></span></span>
+{#                     <span class="view"><i class="fas fa-eye"></i> {{ n['viewNumber'] }}次</span>#}
+                   </div>
+                 </div>
+               </a>
+             </div>
+             {% endfor %}
+           </div>
+
+         </div>
+       </div>
+     </div>
+   </div>
+   {% endif %}
+
+   <div class="layui-fluid layui-bg-black">
+     <div class="layui-main">
+       <div class="layui-row  layui-col-space20">
+         <div class="layui-col-md2 footMsg">
+           <ul>
+             <li class="header">关于我们</li>
+             <li class="row"></li>
+             <li><a href="{{ path('app_index_page', {id:3}) }}" target="_blank">联系我们</a></li>
+             <li><a href="{{ path('app_index_page', {id:4}) }}" target="_blank">公司简介</a></li>
+           </ul>
+         </div>
+         <div class="layui-col-md2 footMsg">
+           <ul>
+             <li class="header">协议相关</li>
+             <li class="row"></li>
+             <li><a href="{{ path('app_index_page', {id:5}) }}" target="_blank">隐私协议</a></li>
+             <li><a href="{{ path('app_index_page', {id:6}) }}" target="_blank">用户协议</a></li>
+           </ul>
+         </div>
+         <div class="layui-col-md2 footMsg">
+           <ul>
+             <li class="header">商务合作</li>
+             <li class="row"></li>
+             <li><a href="#" target="_blank">项目合作</a></li>
+             <li><a href="#" target="_blank">课程合作</a></li>
+           </ul>
+         </div>
+         <div class="layui-col-md2 footMsg">
+           <ul>
+             <li class="header">商务合作</li>
+             <li class="row"></li>
+             <li><a href="#" target="_blank">项目合作</a></li>
+             <li><a href="#" target="_blank">课程合作</a></li>
+           </ul>
+         </div>
+         <div class="layui-col-md2 footMsg">
+           <ul>
+             <li class="header">官方微信</li>
+             <li>
+               <a href="javascript:;" class="qrcodea">
+                 <img src="assets/images/wx.jpeg" width="64px" class="layui-anim">
+               </a>
+             </li>
+           </ul>
+         </div>
+         <div class="layui-col-md2 footMsg">
+           <ul>
+             <li class="header">官方微博</li>
+             <li>
+               <a href="javascript:;" class="qrcodea">
+               <img src="assets/images/wx.jpeg"  width="64px" class="layui-anim">
+               </a>
+             </li>
+           </ul>
+         </div>
+       </div>
+       <hr class="layui-bg-bg1">
+       <div class="layui-row">
+         <div class="layui-col-md12 layui-center copyright" >
+           {{ copyright }}
+         </div>
+       </div>
+       <div class="layui-row">
+         <div class="layui-col-md12 layui-center copyright">
+           {{ beian }}
+         </div>
+       </div>
+     </div>
+   </div>
+ {% endblock %}
+{% block body_javascript %}
+  {{ parent() }}
+  <script src="{{ asset('assets/app/default/js/pages/index/index.js') }}"></script>
+{% endblock %}

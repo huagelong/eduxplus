@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @Author: kaihui.wang
  * @Contact  hpuwang@gmail.com
@@ -8,8 +9,10 @@
 
 namespace App\Bundle\ApiBundle\Security;
 
-use App\Bundle\ApiBundle\Service\ApiBaseService;
+use App\Bundle\AppBundle\Lib\Base\ApiBaseService;
+use App\Bundle\AppBundle\Lib\Service\JsonResponseService;
 use App\Exception\LoginExpiredException;
+use App\Exception\NeedLoginException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -29,32 +32,11 @@ class TokenAuthenticator extends AbstractGuardAuthenticator
         $this->apiBaseService = $apiBaseService;
     }
 
-    /**
-     * Returns a response that directs the user to authenticate.
-     *
-     * This is called when an anonymous request accesses a resource that
-     * requires authentication. The job of this method is to return some
-     * response that "helps" the user start into the authentication process.
-     *
-     * Examples:
-     *
-     * - For a form login, you might redirect to the login page
-     *
-     *     return new RedirectResponse('/login');
-     *
-     * - For an API token authentication system, you return a 401 response
-     *
-     *     return new Response('Auth header required', 401);
-     *
-     * @return Response
-     */
+
     public function start(Request $request, AuthenticationException $authException = null)
     {
-        $data = array(
-            'code'=>401,
-            'message' => 'Authentication Required'
-        );
-        return new JsonResponse($data, 401);
+        $data = JsonResponseService::genData([], 403, $authException->getMessage());
+        return new JsonResponse($data);
     }
 
     /**
@@ -66,7 +48,7 @@ class TokenAuthenticator extends AbstractGuardAuthenticator
      */
     public function supports(Request $request)
     {
-        return $request->headers->has('X-AUTH-TOKEN') && $request->headers->has('X-AUTH-CLIENT-ID');
+        return $request->headers->get('X-AUTH-TOKEN') && $request->headers->get('X-AUTH-CLIENT-ID');
     }
 
     /**
@@ -92,10 +74,9 @@ class TokenAuthenticator extends AbstractGuardAuthenticator
      */
     public function getCredentials(Request $request)
     {
-        //X-AUTH-CLIENT-ID
         $clientId = $request->headers->get('X-AUTH-CLIENT-ID');
         $token = $request->headers->get('X-AUTH-TOKEN');
-        return [$token, $clientId];
+        return [$clientId, $token];
     }
 
     /**
@@ -114,14 +95,15 @@ class TokenAuthenticator extends AbstractGuardAuthenticator
      */
     public function getUser($credentials, UserProviderInterface $userProvider)
     {
-        list($token, $clientId) = $credentials;
-        if ((null === $token) || (null === $clientId)) {
+        list($clientId, $token) = $credentials;
+        if ((null === $clientId) || (null === $token)) {
             return null;
         }
 
         $userModel = $this->apiBaseService->getUserByToken($token, $clientId);
+
         //账号在其他地方登录
-        if(!$userModel) throw new LoginExpiredException();
+        if (!$userModel) throw new LoginExpiredException();
 
         return $userModel;
     }
@@ -158,12 +140,7 @@ class TokenAuthenticator extends AbstractGuardAuthenticator
      */
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
     {
-        $data = array(
-            'code'=>401,
-            'message' => "Authentication Fail"
-        );
-
-        return new JsonResponse($data, 401);
+        throw  new AuthenticationException($exception->getMessage());
     }
 
     /**

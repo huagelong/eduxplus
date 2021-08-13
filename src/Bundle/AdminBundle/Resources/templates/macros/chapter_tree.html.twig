@@ -4,21 +4,26 @@
         {% for chapter in chapters %}
             <li class="dd-item" data-id="{{ chapter['id'] }}">
                 <div class="dd-handle">
-                    <i class="far fa-circle"></i>&nbsp;<strong>{{ chapter['name']|raw }}</strong>
+                    {{ loop.index }}. &nbsp;<strong>{{ chapter['name']|raw }}</strong>
                     {% if chapter['openTime'] %}
                     <span class='font-weight-lighter' style="margin-left: 20px; color: #999">开课时间：{{ chapter['openTime']|date('Y-m-d H:i') }}</span>
                     {% endif %}
+
                     <span class="pull-right dd-nodrag">
-                {% if is_authorized('admin_teach_chapter_add') %}
+                {% if is_authorized('admin_teach_chapter_add') and (chapter['parentId'] == 0) %}
                     <a href="{{ path("admin_teach_chapter_add", {"id":chapter['courseId']}) }}?pid={{ chapter['id'] }}" data-title="添加子章节"  title="添加子章节" class="poppage"><i class="fas fa-plus"></i></a>
                 {% endif %}
 
-                {% if is_authorized('admin_teach_chapter_video') %}
-                    <a href="{{ path("admin_teach_chapter_video", {"id":chapter['id']}) }}" data-title="管理视频"  title="管理视频" class="poppage"><i class="fa fa-play-circle-o"></i></a>
-                {% endif %}
+            {% if is_authorized('admin_teach_chapter_live') and (chapter['childs'] is empty) %}
+                    {% if (chapter['studyWay'] == 1) and ((chapter['video'] and chapter['video']['type']==1) or ( chapter['video'] is empty)) %}
+                    <a href="{{ path("admin_teach_chapter_live", {"id":chapter['id']}) }}" data-title="管理直播"  title="管理直播" class="poppage" {% if chapter['video'] and chapter['video']['liveData']!="" %} style="color:#75C82A"  {% endif %} ><i class="fas fa-video"></i></a>
+                    {% endif %}
+            {% endif %}
 
-                {% if is_authorized('admin_teach_chapter_materials') %}
-                    <a href="{{ path("admin_teach_chapter_materials", {"id":chapter['id']}) }}" data-width="800px" data-title="管理附件"  title="管理附件" class="poppage"><i class="fas fa-upload"></i></a>
+                {% if is_authorized('admin_teach_chapter_vod') and (chapter['childs'] is empty)%}
+                    {% if (chapter['studyWay'] != 3) %}
+            <a href="{{ path("admin_teach_chapter_vod", {"id":chapter['id']}) }}" data-title="管理点播"  title="管理点播" class="poppage"  {% if chapter['video'] and chapter['video']['status']==1 %} style="color:#75C82A"  {% endif %}   ><i class="fab fa-youtube"></i></a>
+                    {% endif %}
                 {% endif %}
 
                 {% if is_authorized('admin_teach_chapter_edit') %}

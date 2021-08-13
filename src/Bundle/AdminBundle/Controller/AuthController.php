@@ -19,6 +19,7 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
  * Class AuthController
  * @package App\Bundle\AdminBundle\Controller
  */
+
 class AuthController extends BaseAdminController
 {
 
@@ -26,13 +27,15 @@ class AuthController extends BaseAdminController
     /**
      * @Rest\Route("/login", name="admin_login")
      */
-    public function loginAction(AuthenticationUtils $authenticationUtils, UrlGeneratorInterface $urlGenerator){
+    public function loginAction(AuthenticationUtils $authenticationUtils, UrlGeneratorInterface $urlGenerator, Request $request){
          if ($this->getUser()) {
-             return $this->redirect($urlGenerator->generate('admin_dashboard'));
+             return $this->redirect($urlGenerator->generate('admin_index'));
          }
 
         $error = $authenticationUtils->getLastAuthenticationError();
         $lastUsername = $authenticationUtils->getLastUsername();
+        $cookieLastUserName = $request->cookies->get("last_username");
+        $lastUsername = $lastUsername?$lastUsername:$cookieLastUserName;
 
         return $this->render('@AdminBundle/auth/login.html.twig', [
             'error' => $error,

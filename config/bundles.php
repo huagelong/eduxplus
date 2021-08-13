@@ -15,6 +15,7 @@ return [
     App\Bundle\AdminBundle\AdminBundle::class => ['all' => true],
     App\Bundle\AppBundle\AppBundle::class => ['all' => true],
     App\Bundle\ApiBundle\ApiBundle::class => ['all' => true],
+    App\Bundle\QABundle\QABundle::class => ['all' => true],
     FOS\RestBundle\FOSRestBundle::class => ['all' => true],
     Nelmio\CorsBundle\NelmioCorsBundle::class => ['all' => true],
     JMS\SerializerBundle\JMSSerializerBundle::class => ['all' => true],

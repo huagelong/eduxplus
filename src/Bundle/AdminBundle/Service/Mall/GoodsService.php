@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @Author: kaihui.wang
  * @Contact  hpuwang@gmail.com
@@ -9,12 +10,14 @@
 namespace App\Bundle\AdminBundle\Service\Mall;
 
 
-use App\Bundle\AdminBundle\Service\AdminBaseService;
+use App\Bundle\AppBundle\Lib\Base\AdminBaseService;
 use App\Bundle\AdminBundle\Service\Teach\AgreementService;
 use App\Bundle\AdminBundle\Service\Teach\CategoryService;
 use App\Bundle\AdminBundle\Service\Teach\ProductService;
 use App\Bundle\AdminBundle\Service\UserService;
 use App\Bundle\AppBundle\Lib\Base\BaseService;
+use App\Bundle\AppBundle\Lib\Service\EsService;
+use App\Bundle\AppBundle\Lib\Service\HelperService;
 use App\Entity\MallGoods;
 use App\Entity\MallGoodsGroup;
 use App\Entity\MallGoodsIntroduce;
@@ -27,23 +30,44 @@ class GoodsService extends AdminBaseService
     protected $productService;
     protected $categoryService;
     protected $agreementService;
+    protected $helperService;
+    protected $esService;
 
-    public function __construct(PaginatorInterface $paginator,UserService $userService,
-                                ProductService $productService, CategoryService $categoryService,
-                                AgreementService $agreementService
-    )
-    {
+    public function __construct(
+        PaginatorInterface $paginator,
+        UserService $userService,
+        ProductService $productService,
+        CategoryService $categoryService,
+        AgreementService $agreementService,
+        HelperService $helperService,
+        EsService $esService
+    ) {
         $this->paginator = $paginator;
         $this->userService = $userService;
         $this->productService = $productService;
         $this->categoryService = $categoryService;
         $this->agreementService = $agreementService;
+        $this->helperService = $helperService;
+        $this->esService = $esService;
     }
 
+
     public function getList($request, $page, $pageSize){
+        return $this->_getList($request, $page, $pageSize,1);
+    }
+
+    public function _getList($request, $page, $pageSize, $goodType)
+    {
         $sql = $this->getFormatRequestSql($request);
 
-        $dql = "SELECT a FROM App:MallGoods a " . $sql;
+        if($sql){
+            $sql = $sql." AND a.goodType=". $goodType;
+        }else{
+            $sql = " WHERE a.goodType=". $goodType;
+        }
+
+        $dql = "SELECT a FROM App:MallGoods a " . $sql . " ORDER BY a.id DESC";
+
         $em = $this->getDoctrine()->getManager();
         $query = $em->createQuery($dql);
         $pagination = $this->paginator->paginate(
@@ -54,8 +78,8 @@ class GoodsService extends AdminBaseService
 
         $items = $pagination->getItems();
         $itemsArr = [];
-        if($items){
-            foreach ($items as $v){
+        if ($items) {
+            foreach ($items as $v) {
                 $vArr =  $this->toArray($v);
                 $createrUid = $vArr['createrUid'];
                 $createrUser = $this->userService->getById($createrUid);
@@ -68,18 +92,18 @@ class GoodsService extends AdminBaseService
                 $vArr['category'] = $cate["name"];
                 $brandInfo = $this->categoryService->getById($brandId);
                 $vArr['brand'] = $brandInfo["name"];
-                $vArr['marketPrice'] = $vArr['marketPrice']/100;
-                $vArr['shopPrice'] = $vArr['shopPrice']/100;
+                $vArr['marketPrice'] = $vArr['marketPrice'] / 100;
+                $vArr['shopPrice'] = $vArr['shopPrice'] / 100;
                 $agreementId = $vArr['agreementId'];
                 $agreement = $this->agreementService->getById($agreementId);
                 $vArr['agreement'] = $agreement['name'];
 
                 $goodsImg = $vArr['goodsImg'];
-                $goodsImgArr = $goodsImg?current(json_decode($goodsImg, true)):"";
+                $goodsImgArr = $goodsImg ? current(json_decode($goodsImg, true)) : "";
                 $vArr['goodsImg'] = $goodsImgArr;
 
                 $goodsSmallImg = $vArr['goodsSmallImg'];
-                $goodsSmallImgArr = $goodsSmallImg?current(json_decode($goodsSmallImg, true)):"";
+                $goodsSmallImgArr = $goodsSmallImg ? current(json_decode($goodsSmallImg, true)) : "";
                 $vArr['goodsSmallImg'] = $goodsSmallImgArr;
 
                 $itemsArr[] = $vArr;
@@ -88,60 +112,94 @@ class GoodsService extends AdminBaseService
         return [$pagination, $itemsArr];
     }
 
-    public function checkName($name, $id=0){
-        $sql = "SELECT a FROM App:MallGoods a where a.name =:name ";
+    public function checkName($name, $id = 0, $goodType=1)
+    {
+        $sql = "SELECT a FROM App:MallGoods a where a.name =:name AND a.goodType=".$goodType;
         $params = [];
         $params['name'] = $name;
-        if($id){
-            $sql = $sql." AND a.id !=:id ";
+        if ($id) {
+            $sql = $sql . " AND a.id !=:id ";
             $params['id'] = $id;
         }
         return $this->fetchOne($sql, $params);
     }
 
 
-    public function add($uid, $name, $productId, $goodsId, $categoryId, $subhead,
-                        $teachingMethod, $teachers, $courseHour, $courseCount,
-                        $marketPrice,$shopPrice,$buyNumberFalse, $goodsImg,
-                        $goodsSmallImg, $status, $sort, $agreementId, $groupType, $descr){
+    public function add(
+        $uid,
+        $name,
+        $productId,
+        $goodsId,
+        $categoryId,
+        $subhead,
+        $teachingMethod,
+        $teachers,
+        $courseHour,
+        $courseCount,
+        $marketPrice,
+        $shopPrice,
+        $buyNumberFalse,
+        $goodsImg,
+        $goodsSmallImg,
+        $status,
+        $sort,
+        $agreementId,
+        $groupType,
+        $descr,
+        $seoDescr,
+        $seoKeyWord,
+        $tags,
+        $aliasName,
+        $topValue,
+        $recommendValue,
+        $goodType=1
+    ) {
         $cate = $this->categoryService->getById($categoryId);
         $path = trim($cate['findPath'], ',');
         $pathArr = explode(",", $path);
         $brandId = end($pathArr);
-
+        $uuid = $this->helperService->getUuid();
         $model = new MallGoods();
         $model->setCreaterUid($uid);
+        $model->setUuid($uuid);
         $model->setName($name);
         $model->setSort($sort);
-        if($productId) $model->setProductId($productId);
+        $model->setTopValue($topValue);
+        $model->setRecommendValue($recommendValue);
+        $model->setGoodType($goodType);
+        if ($productId) $model->setProductId($productId);
         $model->setFirstCategoryId($brandId);
         $model->setCategoryId($categoryId);
         $model->setAgreementId($agreementId);
-        if($subhead) $model->setSubhead($subhead);
+        if ($subhead) $model->setSubhead($subhead);
         $model->setTeachingMethod($teachingMethod);
         $model->setTeachingTeacher(json_encode($teachers));
         $model->setCourseHour($courseHour);
         $model->setCourseCount($courseCount);
-        $model->setMarketPrice($marketPrice*100);
-        $model->setShopPrice($shopPrice*100);
+        $model->setMarketPrice($marketPrice * 100);
+        $model->setShopPrice($shopPrice * 100);
         $model->setBuyNumberFalse($buyNumberFalse);
         $model->setBuyNumber(0);
-        if($goodsImg) $model->setGoodsImg($goodsImg);
-        if($goodsSmallImg) $model->setGoodsSmallImg($goodsSmallImg);
+        if ($tags) $model->setTags($tags);
+        if ($seoDescr) $model->setSeoDescr($seoDescr);
+        if ($seoKeyWord) $model->setSeoKeyWord($seoKeyWord);
+
+        if ($goodsImg) $model->setGoodsImg($goodsImg);
+        if ($goodsSmallImg) $model->setGoodsSmallImg($goodsSmallImg);
         $model->setStatus($status);
         //
-        if($goodsId){
+        if ($aliasName) $model->setAliasName($aliasName);
+        if ($goodsId) {
             $model->setGroupType($groupType);
             $model->setIsGroup(1);
-        }else{
+        } else {
             $model->setGroupType(0);
             $model->setIsGroup(0);
-
         }
         $id = $this->save($model);
 
-        if($goodsId && $id){
-            foreach ($goodsId as $gid){
+        if ($goodsId && $id) {
+            foreach ($goodsId as $gid) {
                 $goodsModel = new MallGoodsGroup();
                 $goodsModel->setGoodsId($id);
                 $goodsModel->setGroupGoodsId($gid);
@@ -149,7 +207,7 @@ class GoodsService extends AdminBaseService
             }
         }
 
-        if($descr){
+        if ($descr) {
             $descrModel = new MallGoodsIntroduce();
             $descrModel->setGoodsId($id);
             $descrModel->setContent($descr);
@@ -157,118 +215,179 @@ class GoodsService extends AdminBaseService
             $this->save($descrModel);
         }
 
+        if($status){
+            $this->saveEs($id, $name);
+        }
+
         return $id;
     }
 
-    public function getById($id){
+    public function saveEs($id, $name){
+        $this->esService->esUpdate("goods", $id, ["name"=>$name]);
+    }
+
+    public function delEs($id){
+        $this->esService->esDel("goods", $id);
+    }
+
+    public function getYearRange(){
+        $n = 20;
+        $arr = [];
+        $year = (int) date('Y');
+        $i = 0;
+        while ($i<$n){
+            $arr[$year-$i]=$year-$i;
+            $i++;
+        }
+
+        return $arr;
+    }
+
+    public function getById($id)
+    {
         $sql = "SELECT a FROM App:MallGoods a WHERE a.id=:id";
-        $info = $this->fetchOne($sql, ['id'=>$id]);
-        if(!$info) return [];
+        $info = $this->fetchOne($sql, ['id' => $id]);
+        if (!$info) return [];
         $sql2 = "SELECT a FROM App:MallGoodsIntroduce a WHERE a.goodsId=:goodsId AND a.introduceType=1";
-        $introduce = $this->fetchOne($sql2, ['goodsId'=>$id]);
+        $introduce = $this->fetchOne($sql2, ['goodsId' => $id]);
         $info["introduce"] = $introduce;
         return $info;
     }
 
-    public function getByIds($ids){
+    public function getByIds($ids)
+    {
         $sql = "SELECT a FROM App:MallGoods a where a.id IN(:id) ";
         $params = [];
         $params['id'] = $ids;
         return $this->fetchAll($sql, $params);
     }
 
-    public function getSelectByIds($ids){
+    public function getSelectByIds($ids)
+    {
         $courses = $this->getByIds($ids);
-        if(!$courses) return [];
+        if (!$courses) return [];
         $rs = [];
-        foreach ($courses as $v){
+        foreach ($courses as $v) {
             $rs[$v['name']] = $v['id'];
         }
         return $rs;
     }
 
-    public function getByName($name, $id=0){
-        $sql = "SELECT a FROM App:MallGoods a WHERE a.name=:name";
+    public function getByName($name, $id = 0, $goodType=1)
+    {
+        $sql = "SELECT a FROM App:MallGoods a WHERE a.name=:name AND a.goodType=".$goodType;
         $params = [];
         $params['name'] = $name;
-        if($id){
-            $sql = $sql." AND a.id !=:id ";
+        if ($id) {
+            $sql = $sql . " AND a.id !=:id ";
             $params['id'] = $id;
         }
         return $this->fetchOne($sql, $params);
     }
 
-    public function getGroupGoods($id){
+    public function getGroupGoods($id)
+    {
         $sql = "SELECT a FROM App:MallGoodsGroup a WHERE a.goodsId=:goodsId";
         $params = [];
         $params['goodsId'] = $id;
         $allGoodIds = $this->fetchFields("groupGoodsId", $sql, $params);
-        if(!$allGoodIds) return [];
+        if (!$allGoodIds) return [];
         return $allGoodIds;
     }
 
-    public function getSelectGoods($id){
+    public function getSelectGoods($id)
+    {
         $sql = "SELECT a FROM App:MallGoodsGroup a WHERE a.goodsId=:goodsId";
         $params = [];
         $params['goodsId'] = $id;
         $allGoodIds = $this->fetchFields("groupGoodsId", $sql, $params);
-        if(!$allGoodIds) return [];
-        $sql2 = "SELECT a FROM App::MallGoods a WHERE a.id IN(:id)";
+        if (!$allGoodIds) return [];
+        $sql2 = "SELECT a FROM App:MallGoods a WHERE a.id IN(:id)";
         $params2 = [];
         $params2['id'] = $allGoodIds;
         $allGoods =  $this->fetchAll($sql2, $params2);
         $tmp = [];
-        foreach ($allGoods as $v){
+        foreach ($allGoods as $v) {
             $tmp[$v["name"]] = $v["id"];
         }
         return $tmp;
     }
 
-    public function edit($id, $name, $productId, $goodsId, $categoryId, $subhead,
-                         $teachingMethod, $teachers, $courseHour, $courseCount,
-                         $marketPrice,$shopPrice,$buyNumberFalse, $goodsImg,
-                         $goodsSmallImg, $status, $sort, $agreementId, $groupType, $descr){
+    public function edit(
+        $id,
+        $name,
+        $productId,
+        $goodsId,
+        $categoryId,
+        $subhead,
+        $teachingMethod,
+        $teachers,
+        $courseHour,
+        $courseCount,
+        $marketPrice,
+        $shopPrice,
+        $buyNumberFalse,
+        $goodsImg,
+        $goodsSmallImg,
+        $status,
+        $sort,
+        $agreementId,
+        $groupType,
+        $descr,
+        $seoDescr,
+        $seoKeyWord,
+        $tags,
+        $aliasName,
+        $topValue,
+        $recommendValue
+    ) {
         $cate = $this->categoryService->getById($categoryId);
         $path = trim($cate['findPath'], ',');
         $pathArr = explode(",", $path);
         $brandId = end($pathArr);
 
-        $sql= "SELECT a FROM App:MallGoods a WHERE a.id=:id";
-        $model = $this->fetchOne($sql, ['id'=>$id], 1);
+        $sql = "SELECT a FROM App:MallGoods a WHERE a.id=:id";
+        $model = $this->fetchOne($sql, ['id' => $id], 1);
 
         $model->setName($name);
         $model->setSort($sort);
-        if($productId) $model->setProductId($productId);
+        if ($productId) $model->setProductId($productId);
         $model->setFirstCategoryId($brandId);
         $model->setCategoryId($categoryId);
         $model->setAgreementId($agreementId);
-        if($subhead) $model->setSubhead($subhead);
+        if ($subhead) $model->setSubhead($subhead);
         $model->setTeachingMethod($teachingMethod);
         $model->setTeachingTeacher(json_encode($teachers));
         $model->setCourseHour($courseHour);
         $model->setCourseCount($courseCount);
-        $model->setMarketPrice($marketPrice*100);
-        $model->setShopPrice($shopPrice*100);
+        $model->setMarketPrice($marketPrice * 100);
+        $model->setShopPrice($shopPrice * 100);
         $model->setBuyNumberFalse($buyNumberFalse);
         $model->setBuyNumber(0);
-        if($goodsImg) $model->setGoodsImg($goodsImg);
-        if($goodsSmallImg) $model->setGoodsSmallImg($goodsSmallImg);
+        $model->setSeoDescr($seoDescr);
+        $model->setSeoKeyWord($seoKeyWord);
+        $model->setTags($tags);
+        $model->setTopValue($topValue);
+        $model->setRecommendValue($recommendValue);
+
+        if ($goodsImg) $model->setGoodsImg($goodsImg);
+        if ($goodsSmallImg) $model->setGoodsSmallImg($goodsSmallImg);
         $model->setStatus($status);
         //
-        if($goodsId){
+        if ($aliasName)  $model->setAliasName($aliasName);
+        if ($goodsId) {
             $model->setGroupType($groupType);
             $model->setIsGroup(1);
-        }else{
+        } else {
             $model->setGroupType(0);
             $model->setIsGroup(0);
-
         }
         $this->save($model);
 
-        if($goodsId && $id){
+        if ($goodsId && $id) {
             $dql = "DELETE FROM App:MallGoodsGroup a WHERE a.goodsId=:goodsId";
-            $this->hardExecute($dql, ["goodsId"=>$id]);
-            foreach ($goodsId as $gid){
+            $this->hardExecute($dql, ["goodsId" => $id]);
+            foreach ($goodsId as $gid) {
                 $goodsModel = new MallGoodsGroup();
                 $goodsModel->setGoodsId($id);
                 $goodsModel->setGroupGoodsId($gid);
@@ -276,36 +395,44 @@ class GoodsService extends AdminBaseService
             }
         }
 
-        if($descr){
+        if ($descr) {
             $dql = "SELECT a FROM App:MallGoodsIntroduce a WHERE a.goodsId=:goodsId AND a.introduceType=1";
-            $descrModel = $this->fetchOne($dql, ["goodsId"=>$id], 1);
-            if($descrModel){
+            $descrModel = $this->fetchOne($dql, ["goodsId" => $id], 1);
+            if ($descrModel) {
                 $descrModel->setContent($descr);
                 $this->save($descrModel);
-            }else{
+            } else {
                 $descrModel = new MallGoodsIntroduce();
                 $descrModel->setGoodsId($id);
                 $descrModel->setContent($descr);
                 $descrModel->setIntroduceType(1);
                 $this->save($descrModel);
             }
+        }
 
+
+        if($status){
+            $this->saveEs($id, $name);
+        }else{
+            $this->delEs($id);
         }
 
         return $id;
-
     }
 
-    public function del($id){
+    public function del($id)
+    {
         //先删除说明
         $sql = "DELETE FROM App:MallGoodsIntroduce a WHERE a.goodsId=:goodsId";
-        $this->execute($sql, ["goodsId"=>$id]);
+        $this->execute($sql, ["goodsId" => $id]);
         //删除group
         $sql = "DELETE FROM App:MallGoodsGroup a WHERE a.goodsId=:goodsId";
-        $this->execute($sql, ["goodsId"=>$id]);
+        $this->execute($sql, ["goodsId" => $id]);
 
         $sql = "DELETE FROM App:MallGoods a WHERE a.id=:id";
-        $this->execute($sql, ["id"=>$id]);
+        $this->execute($sql, ["id" => $id]);
+
+        $this->delEs($id);
 
         return true;
     }
@@ -316,32 +443,79 @@ class GoodsService extends AdminBaseService
      * @param $id
      * @return mixed
      */
-   public function hasGroup($id){
-       $sql = "SELECT a FROM App:MallGoodsGroup a WHERE a.groupGoodsId=:groupGoodsId";
-       return $this->fetchOne($sql, ['groupGoodsId'=>$id] );
-   }
+    public function hasGroup($id)
+    {
+        $sql = "SELECT a FROM App:MallGoodsGroup a WHERE a.groupGoodsId=:groupGoodsId";
+        return $this->fetchOne($sql, ['groupGoodsId' => $id]);
+    }
 
-   public function searchGoodsName($name){
-       $sql = "SELECT a FROM App:MallGoods a WHERE a.name like :name AND a.status=1 ";
-       $params = [];
-       $params['name'] = "%".$name."%";
-       $all = $this->fetchAll($sql, $params);
-       if(!$all) return [];
-       $rs = [];
-       foreach ($all as $v){
-           $tmp = [];
-           $tmp['id'] = $v['id'];
-           $tmp['text'] = $v['name'];
-           $rs[] = $tmp;
-       }
-       return $rs;
-   }
+    public function searchGoodsName($name, $goodType=1)
+    {
+        $sql = "SELECT a FROM App:MallGoods a WHERE a.name like :name AND a.status=1 AND a.goodType=".$goodType." ORDER BY a.id DESC";
+        $params = [];
+        $params['name'] = "%" . $name . "%";
+        $all = $this->fetchAll($sql, $params);
+        if (!$all) return [];
+        $rs = [];
+        foreach ($all as $v) {
+            $tmp = [];
+            $tmp['id'] = $v['id'];
+            $tmp['text'] = $v['name'];
+            $rs[] = $tmp;
+        }
+        return $rs;
+    }
 
-   public function switchStatus($id, $state){
-       $sql = "SELECT a FROM App:MallGoods a WHERE a.id=:id";
-       $model = $this->fetchOne($sql, ['id'=>$id], 1);
-       $model->setStatus($state);
-       return $this->save($model);
-   }
+    public function switchStatus($id, $state)
+    {
+        $sql = "SELECT a FROM App:MallGoods a WHERE a.id=:id";
+        $model = $this->fetchOne($sql, ['id' => $id], 1);
+        $model->setStatus($state);
+        $result = $this->save($model);
 
+        if($state){
+            $this->saveEs($id, $model->getName());
+        }else{
+            $this->delEs($id);
+        }
+
+        return $result;
+    }
+
+    public function getStudyPlan($id, &$studyPlans = [])
+    {
+        $sql = "SELECT a FROM App:MallGoods a WHERE a.id=:id AND a.goodType=1";
+        $info = $this->fetchOne($sql, ['id' => $id]);
+        if (!$info) return [];
+        //非组合商品
+        if ($info["productId"]) {
+            //判断产品是否存在
+            $sql = "SELECT a.id FROM App:TeachProducts a WHERE a.id=:id AND a.status=1";
+            $productInfo = $this->fetchOne($sql, ['id' => $info["productId"]]);
+            if (!$productInfo) return;
+            //获取默认的开课计划
+            $sql = "SELECT a FROM App:TeachStudyPlan a WHERE a.productId=:productId AND a.isDefault=1 AND a.status=1";
+            $studyPlan = $this->fetchOne($sql, ["productId" => $info["productId"]]);
+
+            if (!$studyPlan) {  //如果没有默认的开课计划,按照最新创建时间处理
+                $sql = "SELECT a FROM App:TeachStudyPlan a WHERE a.productId=:productId AND a.status=1 ORDER BY a.createdAt DESC";
+                $studyPlan = $this->fetchOne($sql, ["productId" => $info["productId"]]);
+            }
+            if ($studyPlan) {
+                $studyPlanId = $studyPlan["id"];
+                array_push($studyPlans, $studyPlanId);
+            }
+        } else {
+            //组合商品，获取所有相关商品
+            $sql3 = "SELECT a FROM App:MallGoodsGroup a WHERE a.goodsId=:goodsId ORDER BY a.createdAt ASC";
+            $params = [];
+            $params['goodsId'] = $id;
+            $allGoodIds = $this->fetchFields("groupGoodsId", $sql3, $params);
+            if ($allGoodIds) {
+                foreach ($allGoodIds as $av) {
+                    $this->getStudyPlan($av['groupGoodsId'], $studyPlans);
+                }
+            }
+        }
+    }
 }

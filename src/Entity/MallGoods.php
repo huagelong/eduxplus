@@ -24,6 +24,11 @@ class MallGoods
     private $id;
 
     /**
+     * @ORM\Column(name="uuid", type="guid", unique=true,nullable=false, options={"comment"="唯一码"})
+     */
+    private $uuid;
+
+    /**
      * @var string|null
      *
      * @ORM\Column(name="name", type="string", length=120, nullable=true, options={"comment"="课程名称"})
@@ -35,7 +40,14 @@ class MallGoods
      *
      * @ORM\Column(name="subhead", type="string", length=250, nullable=true, options={"comment"="副标题"})
      */
-    private $subhead;
+    private $subhead = '';
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="alias_name", type="string", length=250, nullable=true, options={"comment"="别名"})
+     */
+    private $aliasName;
 
     /**
      * @var int|null
@@ -59,18 +71,55 @@ class MallGoods
     private $productId;
 
     /**
-     * @var bool|null
+     * @var int|null
      *
-     * @ORM\Column(name="teaching_method", type="boolean", nullable=true, options={"comment"="授课方式 1.面授 2.直播 3.录播 4.面授+直播 5.直播+录播 6.录播+面授 7.直播+录播+面授"})
+     * @ORM\Column(name="top_value", type="integer", nullable=true, options={"comment"="热门课程"})
+     */
+    private $topValue;
+
+    /**
+     * @var int|null
+     *
+     * @ORM\Column(name="recommend_value", type="integer", nullable=true, options={"comment"="推荐课程"})
+     */
+    private $recommendValue;
+
+    /**
+     * @var int|null
+     *
+     * @ORM\Column(name="teaching_method", type="integer", nullable=true, options={"comment"="授课方式 1.面授 2.直播 3.点播 4.面授+直播 5.直播+点播 6.点播+面授 7.直播+点播+面授"})
      */
     private $teachingMethod;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="teaching_teacher", type="string", length=250, nullable=true, options={"comment"="授课教师,多个"})
+     * @ORM\Column(name="teaching_teacher", type="string", length=250, nullable=true, options={"comment"="授课教师,多个,json格式"})
      */
     private $teachingTeacher;
+
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="tags", type="string", length=250, nullable=true, options={"comment"="标签，用,隔开"})
+     */
+    private $tags;
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="seo_descr", type="string", length=250, nullable=true, options={"comment"="seo描述"})
+     */
+    private $seoDescr;
+
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="seo_keyword", type="string", length=250, nullable=true, options={"comment"="seo关键字"})
+     */
+    private $seoKeyWord;
 
     /**
      * @var int|null
@@ -157,9 +206,9 @@ class MallGoods
     private $isGroup = '0';
 
     /**
-     * @var bool|null
+     * @var int|null
      *
-     * @ORM\Column(name="group_type", type="boolean", nullable=true, options={"comment"="1-可选,2-全部"})
+     * @ORM\Column(name="group_type", type="integer", nullable=true, options={"comment"="0-未知，1-可选,2-全部"})
      */
     private $groupType = '0';
 
@@ -169,6 +218,37 @@ class MallGoods
      * @ORM\Column(name="agreement_id", type="integer", nullable=false, options={"unsigned"=true,"comment"="协议id"})
      */
     private $agreementId = '0';
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="good_type", type="integer", nullable=false, options={"unsigned"=true,"comment"="产品类型,1-视频课程,2-试卷"})
+     */
+    private $goodType = '1';
+
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="parameter1", type="string", length=250, nullable=true, options={"comment"="扩展参数1"})
+     */
+    private $parameter1;
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="parameter2", type="string", length=250, nullable=true, options={"comment"="扩展参数2"})
+     */
+    private $parameter2;
+
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="parameter3", type="string", length=250, nullable=true, options={"comment"="扩展参数3"})
+     */
+    private $parameter3;
+
 
     /**
      * @var int|null
@@ -194,6 +274,18 @@ class MallGoods
         return $this->id;
     }
 
+    public function getUuid(): ?string
+    {
+        return $this->uuid;
+    }
+
+    public function setUuid(string $uuid): self
+    {
+        $this->uuid = $uuid;
+
+        return $this;
+    }
+
     public function getName(): ?string
     {
         return $this->name;
@@ -214,6 +306,18 @@ class MallGoods
     public function setSubhead(?string $subhead): self
     {
         $this->subhead = $subhead;
+
+        return $this;
+    }
+
+    public function getAliasName(): ?string
+    {
+        return $this->aliasName;
+    }
+
+    public function setAliasName(?string $aliasName): self
+    {
+        $this->aliasName = $aliasName;
 
         return $this;
     }
@@ -254,12 +358,36 @@ class MallGoods
         return $this;
     }
 
-    public function getTeachingMethod(): ?bool
+    public function getTopValue(): ?int
+    {
+        return $this->topValue;
+    }
+
+    public function setTopValue(?int $topValue): self
+    {
+        $this->topValue = $topValue;
+
+        return $this;
+    }
+
+    public function getRecommendValue(): ?int
+    {
+        return $this->recommendValue;
+    }
+
+    public function setRecommendValue(?int $recommendValue): self
+    {
+        $this->recommendValue = $recommendValue;
+
+        return $this;
+    }
+
+    public function getTeachingMethod(): ?int
     {
         return $this->teachingMethod;
     }
 
-    public function setTeachingMethod(?bool $teachingMethod): self
+    public function setTeachingMethod(?int $teachingMethod): self
     {
         $this->teachingMethod = $teachingMethod;
 
@@ -274,6 +402,42 @@ class MallGoods
     public function setTeachingTeacher(?string $teachingTeacher): self
     {
         $this->teachingTeacher = $teachingTeacher;
+
+        return $this;
+    }
+
+    public function getTags(): ?string
+    {
+        return $this->tags;
+    }
+
+    public function setTags(?string $tags): self
+    {
+        $this->tags = $tags;
+
+        return $this;
+    }
+
+    public function getSeoDescr(): ?string
+    {
+        return $this->seoDescr;
+    }
+
+    public function setSeoDescr(?string $seoDescr): self
+    {
+        $this->seoDescr = $seoDescr;
+
+        return $this;
+    }
+
+    public function getSeoKeyWord(): ?string
+    {
+        return $this->seoKeyWord;
+    }
+
+    public function setSeoKeyWord(?string $seoKeyWord): self
+    {
+        $this->seoKeyWord = $seoKeyWord;
 
         return $this;
     }
@@ -422,12 +586,12 @@ class MallGoods
         return $this;
     }
 
-    public function getGroupType(): ?bool
+    public function getGroupType(): ?int
     {
         return $this->groupType;
     }
 
-    public function setGroupType(?bool $groupType): self
+    public function setGroupType(?int $groupType): self
     {
         $this->groupType = $groupType;
 
@@ -442,6 +606,54 @@ class MallGoods
     public function setAgreementId(int $agreementId): self
     {
         $this->agreementId = $agreementId;
+
+        return $this;
+    }
+
+    public function getGoodType(): ?int
+    {
+        return $this->goodType;
+    }
+
+    public function setGoodType(int $goodType): self
+    {
+        $this->goodType = $goodType;
+
+        return $this;
+    }
+
+    public function getParameter1(): ?string
+    {
+        return $this->parameter1;
+    }
+
+    public function setParameter1(?string $parameter1): self
+    {
+        $this->parameter1 = $parameter1;
+
+        return $this;
+    }
+
+    public function getParameter2(): ?string
+    {
+        return $this->parameter2;
+    }
+
+    public function setParameter2(?string $parameter2): self
+    {
+        $this->parameter2 = $parameter2;
+
+        return $this;
+    }
+
+    public function getParameter3(): ?string
+    {
+        return $this->parameter3;
+    }
+
+    public function setParameter3(?string $parameter3): self
+    {
+        $this->parameter3 = $parameter3;
 
         return $this;
     }
@@ -481,5 +693,6 @@ class MallGoods
 
         return $this;
     }
+
 
 }

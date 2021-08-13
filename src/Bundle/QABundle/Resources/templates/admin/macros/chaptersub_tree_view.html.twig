@@ -1,0 +1,16 @@
+{% macro chaptersub_tree_view(list, chapterSubId) %}
+  {% if list is not empty %}
+    <ol class="dd-list">
+      {% for l in list %}
+        <li class="dd-item" data-id="{{ l['id'] }}">
+          <div class="dd-handle">
+           <a class="nodehref" {% if chapterSubId == l['id'] %} style="color: #999" {% endif %} href="{{ path('qa_admin_node_index', {chapterId:l['chapterId'], chapterSubId:l['id']}) }}">
+             <strong>{{ l['name']|raw }}</strong>
+           </a>
+          </div>
+          {{ _self.chaptersub_tree_view(l['childs'], chapterSubId) }}
+        </li>
+      {% endfor %}
+    </ol>
+  {% endif %}
+{% endmacro %}

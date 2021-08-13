@@ -17,8 +17,7 @@ use FOS\RestBundle\Controller\Annotations as Rest;
 use Symfony\Component\HttpFoundation\Request;
 use App\Bundle\AdminBundle\Lib\Form\Form;
 use App\Bundle\AdminBundle\Lib\Grid\Grid;
-use App\Bundle\AdminBundle\Service\Mall\GoodsService;
-use App\Bundle\AdminBundle\Service\Mall\OrderService;
+use App\Bundle\AdminBundle\Service\Mall\PayService;
 
 class PayController extends BaseAdminController
 {
@@ -27,29 +26,24 @@ class PayController extends BaseAdminController
      *
      * @Rest\Get("/mall/pay/index", name="admin_mall_pay_index")
      */
-    public function indexAction(Request $request, Grid $grid, OrderService $orderService, UserService $userService){
-        $pageSize = 20;
-        $grid->setListService($orderService, "getList");
-        $grid->setTableColumn("#", "text", "id","a.id");
-        $grid->setTableColumn("订单号", "text", "orderNo");
-        $grid->setTableColumn("支付流水号", "text", "transactionId");
-        $grid->setTableColumn("支付状态", "text", "payStatus", "a.payStatus", [0=>"支付过期",1=>"待支付", 2=>"已支付", 3=>"已取消"]);
-        $grid->setTableColumn("支付方式", "text", "paymentType", "a.paymentType", [1=>"支付宝", 2=>"微信"]);
-        $grid->setTableColumn("支付人", "text", "creater", "a.uid");
-        $grid->setTableColumn("支付金额", "text", "amount");
-        $grid->setTableColumn("支付完成时间", "text", "payTime");
-        $grid->setTableColumn("支付生成时间", "datetime", "createdAt", "a.createdAt");
-        //搜索
-        $grid->setSearchField("ID", "number", "a.id");
-        $grid->setSearchField("订单号", "text", "a.orderNo");
-        $grid->setSearchField("支付流水号", "text", "a.transactionId");
-        $grid->setSearchField("支付状态", "select", "a.payStatus", function(){
-            return ["全部"=>-1,"支付失败"=>0, "待支付"=>1, "已支付"=>2];
-        });
-        $grid->setSearchField("支付方式", "select", "a.paymentType", function(){
-            return ["全部"=>-1, "支付宝"=>1, "微信"=>2];
-        });
-        $grid->setSearchField("支付人", "search_select", "a.uid", function()use($request, $userService){
+    public function indexAction(Request $request, Grid $grid, PayService $payService, UserService $userService){
+        $pageSize = 40;
+        $grid->setListService($payService, "getList");
+        $grid->text("#")->field("id")->sort("a.id");
+        $grid->text("订单号")->field("orderNo");
+        $grid->text("支付流水号")->field("transactionId");
+        $grid->text("支付状态")->field("orderStatus")->options([0=>"支付过期",1=>"待支付", 2=>"已支付", 3=>"已取消"]);
+        $grid->text("支付方式")->field("paymentType")->options( [1=>"支付宝", 2=>"微信"]);
+        $grid->text("支付人")->field("creater")->sort("a.uid");
+        $grid->text("支付金额")->field("amount");
+        $grid->text("支付完成时间")->field("payTime");
+        $grid->datetime("支付生成时间")->field("createdAt")->sort("a.createdAt");
+        $grid->snumber("ID")->field("a.id");
+        $grid->stext("订单号")->field("a.orderNo");
+        $grid->stext("支付流水号")->field("a.transactionId");
+        $grid->sselect("支付状态")->field("a.payStatus")->options(["全部"=>-1,"支付失败"=>0, "待支付"=>1, "已支付"=>2]);
+        $grid->sselect("支付方式")->field("a.paymentType")->options(["全部"=>-1, "支付宝"=>1, "微信"=>2]);
+        $grid->ssearchselect("支付人")->field("a.uid")->options(function()use($request, $userService){
             $values = $request->get("values");
             $createUid = ($values&&isset($values["a.uid"]))?$values["a.uid"]:0;
             if($createUid){
@@ -59,8 +53,8 @@ class PayController extends BaseAdminController
             }
             return [$this->generateUrl("admin_api_glob_searchUserDo"),$users];
         });
-        $grid->setSearchField("支付完成时间", "daterange2", "a.payTime");
-        $grid->setSearchField("支付生成时间", "daterange", "a.createdAt");
+        $grid->sdaterange("支付生成时间")->field("a.createdAt");
+        $grid->sdaterange2("支付完成时间")->field("a.payTime");
 
         $data = [];
 
