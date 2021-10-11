@@ -36,7 +36,7 @@ class BaseUser implements UserInterface
 
 
         /**
-     * @ORM\Column(name="mobile_mask", type="string", length=12, unique=false, nullable=false, options={"comment"="手机掩码"})
+     * @ORM\Column(name="mobile_mask", type="string", length=100, unique=false, nullable=false, options={"comment"="手机掩码"})
      */
     private $mobileMask;
 

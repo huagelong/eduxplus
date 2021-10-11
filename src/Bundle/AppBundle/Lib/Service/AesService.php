@@ -15,10 +15,10 @@ class AesService extends BaseService
      * @param    [type]                   $input [要加密的数据]
      * @return   [type]                          [加密后的数据]
      */
-    public static function encrypt($input)
+    public function encrypt($input)
     {
         $key = $this->getConfig("secret");
-        $key = self::_sha1prng($key);
+        $key = $this->_sha1prng($key);
         $iv = '';
         $data = openssl_encrypt($input, 'AES-128-ECB', $key, OPENSSL_RAW_DATA, $iv);
         $data = base64_encode($data);
@@ -30,10 +30,10 @@ class AesService extends BaseService
      * @param    [type]                   $sStr [要解密的数据]
      * @return   [type]                         [解密后的数据]
      */
-    public static function decrypt($sStr)
+    public function decrypt($sStr)
     {
         $sKey = $this->getConfig("secret");
-        $sKey = self::_sha1prng($sKey);
+        $sKey = $this->_sha1prng($sKey);
         $iv = '';
         $decrypted = openssl_decrypt(base64_decode($sStr), 'AES-128-ECB', $sKey, OPENSSL_RAW_DATA, $iv);
         return $decrypted;
@@ -44,7 +44,7 @@ class AesService extends BaseService
      * @param  [type] $key [description]
      * @return [type]      [description]
      */
-    private static function _sha1prng($key)
+    private function _sha1prng($key)
     {
         return substr(openssl_digest(openssl_digest($key, 'sha1', true), 'sha1', true), 0, 16);
     }

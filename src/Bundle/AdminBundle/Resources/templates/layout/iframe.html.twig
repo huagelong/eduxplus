@@ -4,7 +4,7 @@
     {{ parent() }}
 {% endblock %}
 
-{% block body_class %} sidebar-mini control-sidebar-slide-open text-sm {% endblock %}
+{% block body_class %} sidebar-mini control-sidebar-slide-open text-sm sidebar-collapse {% endblock %}
 {% block body_javascript %}
     {{ parent() }}
     <script src="{{ asset('assets/admin/js/admin.js') }}"></script>
@@ -31,11 +31,11 @@
         <!-- Main Sidebar Container -->
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
-            <a href="{{ path("admin_dashboard") }}" class="brand-link">
+            {# <a href="javascript:;" class="brand-link">
                 <img src="{{ asset(option("app.logo", 1, 0)) }}" alt="Logo" class="brand-image img-circle elevation-3"
                      style="opacity: .8">
                 <span class="brand-text font-weight-light">&nbsp;</span>
-            </a>
+            </a> #}
 
             <!-- Sidebar -->
             <div class="sidebar">
@@ -71,13 +71,13 @@
           <a class="nav-link bg-light" href="javascript:;" data-widget="iframe-fullscreen"><i class="fas fa-expand"></i></a>
         </div>
         <div class="tab-content">
-          <div class="tab-pane fade active show" id="panel-index" role="tabpanel" aria-labelledby="tab-index"><iframe style="height: 671px;" src="{{ path('admin_dashboard') }}"></iframe></div>
+          <div class="tab-pane fade active show" id="panel-index" role="tabpanel" aria-labelledby="tab-index"><iframe name="main" style="height: 670px;" src="{{ path('admin_dashboard') }}"></iframe></div>
           <div class="tab-empty" style="height: 87px;">
-            <h2 class="display-4">错误，没有选择页面！</h2>
+            <h4 class="display-4">错误，没有选择页面！</h4>
           </div>
           <div class="tab-loading" style="height: 87px;">
             <div>
-              <h2 class="display-4">页面加载中 <i class="fa fa-sync fa-spin"></i></h2>
+              <h4 class="display-4"><i class="fa fa-sync fa-spin"></i></h4>
             </div>
           </div>
         </div>

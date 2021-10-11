@@ -1,0 +1,27 @@
+{% extends '@AppBundle/layout/baseblank.html.twig' %}
+ {% block content %}
+     {{ parent() }}
+    <div id="main" class="commonMain">
+      <div class="layui-main" style="margin-top: 10px;margin-bottom:40px;">
+      <div class="layui-card" style="padding-bottom:30px;margin-top: 30px;">
+            <div class="layui-card-header">期末考试</div>
+                <div class="layui-card-body">
+                    <div class="cell">及格分数:60分</div>
+                    <div class="cell">试卷总分:100分</div>
+                    <div class="cell">考试时长:90分钟</div>
+                    <hr class="layui-border-black">
+                    <div>考试须知</div>
+                      <ul>
+                        <li>1、考试时间为90分钟。</li>
+                        <li>2、交卷后，可查看答卷和解析。</li>
+                      </ul>
+                       <div class="layui-card-footer">
+                    <a href="{{ path('qa_test_todo', {id:testInfo['id']})}}" type="button" class="layui-btn layui-btn-fluid layui-btn-sm layui-btn-normal ">开始做题</a>
+                      </div>
+                </div>
+
+           </div>
+      </div>
+    </div>
+  </div>
+ {% endblock %}

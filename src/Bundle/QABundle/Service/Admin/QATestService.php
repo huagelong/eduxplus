@@ -55,23 +55,25 @@ class QATestService  extends AdminBaseService
         return [$pagination, $itemsArr];
     }
 
-    public function add($uid, $name, $categoryId, $sort,$status){
+    public function add($uid, $name, $categoryId, $sort,$status, $expireTime){
         $model = new TeachTest();
         $model->setCreateUid($uid);
         $model->setStatus($status);
         $model->setCategoryId($categoryId);
         $model->setName($name);
         $model->setSort($sort);
+        $model->setExpireTime($expireTime);
         return $this->save($model);
     }
 
-    public function edit($id, $name, $categoryId, $sort,$status){
+    public function edit($id, $name, $categoryId, $sort,$status, $expireTime){
         $sql = "SELECT a FROM QA:TeachTest a WHERE a.id=:id ";
         $model = $this->fetchOne($sql, ['id'=>$id], 1);
         $model->setStatus($status);
         $model->setCategoryId($categoryId);
         $model->setName($name);
         $model->setSort($sort);
+        $model->setExpireTime($expireTime);
         return $this->save($model);
     }
 

@@ -85,7 +85,8 @@ class QANodeService extends AdminBaseService
                 $createrUid = $vArr['createUid'];
                 $createrUser = $this->userService->getById($createrUid);
                 $vArr['creater'] = $createrUser['fullName'];
-
+                //分数
+                $vArr['score'] = $nodeSub['score'];
                 $itemsArr[] = $vArr;
             }
         }
@@ -93,7 +94,12 @@ class QANodeService extends AdminBaseService
         return [$pagination, $itemsArr];
     }
 
-    public function add($choose,$answer,$uid,$chapterId, $chapterSubId,$type, $status, $level, $nodeType, $year, $knowledge, $source,$topic,$analysis){
+    public function add($choose,$answer,$uid,$chapterId, $chapterSubId,$type, $status, $level, $nodeType, $year, $knowledge, $source,$topic,$analysis,$score){
+            //类选择题，答案都小写
+            if(in_array($type, [0,1,2])){
+                    $answer = strtolower($answer);
+            }
+
             $model = new TeachQANode();
             $model->setCreateUid($uid);
             $model->setChapterId($chapterId);
@@ -114,11 +120,17 @@ class QANodeService extends AdminBaseService
             $subModel->setKnowledge($knowledge);
             $subModel->setQaNodeId($nodeId);
             $subModel->setOptions($options);
+            $subModel->setScore($score);
             $this->save($subModel);
             return $nodeId;
     }
 
-    public function edit($id, $choose,$answer,$chapterId, $chapterSubId,$type, $status, $level, $nodeType, $year, $knowledge, $source,$topic,$analysis){
+    public function edit($id, $choose,$answer,$chapterId, $chapterSubId,$type, $status, $level, $nodeType, $year, $knowledge, $source,$topic,$analysis,$score){
+        //类选择题，答案都小写
+         if(in_array($type, [0,1,2])){
+            $answer = strtolower($answer);
+        }
+
         $sql = "SELECT a FROM QA:TeachQANode a WHERE a.id=:id ";
         $model= $this->fetchOne($sql, ["id"=>$id], 1);
         $model->setChapterId($chapterId);
@@ -138,6 +150,7 @@ class QANodeService extends AdminBaseService
         $subModel->setAnswer($answer);
         $subModel->setKnowledge($knowledge);
         $subModel->setOptions($options);
+        $subModel->setScore($score);
         return $this->save($subModel);
     }
 

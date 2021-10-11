@@ -46,7 +46,7 @@ class RedisClearer implements CacheClearerInterface
             if ($client instanceof \Redis || $client instanceof \Predis\ClientInterface) {
                 $rs = $client->flushDb();
                 if($rs){
-                    echo "redis:".$client->getHost()." flush success!\r\n";
+                    echo "redis flush success!\r\n";
                 }
             }
         }

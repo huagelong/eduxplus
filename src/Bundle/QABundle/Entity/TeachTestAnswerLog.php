@@ -6,13 +6,13 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
- * TeachQANodeSub
+ * TeachTestAnswer 试卷回答日志
  *
- * @ORM\Table(name="teach_qa_node_sub")
+ * @ORM\Table(name="teach_test_answer_log")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false, hardDelete=true)
- * @ORM\Entity(repositoryClass="App\Bundle\QABundle\Repository\TeachQANodeSubRepository")
+ * @ORM\Entity(repositoryClass="App\Bundle\QABundle\Repository\TeachTestAnswerRepository")
  */
-class TeachQANodeSub
+class TeachTestAnswerLog
 {
     /**
      * @var int
@@ -26,44 +26,31 @@ class TeachQANodeSub
     /**
      * @var int|null
      *
+     * @ORM\Column(name="test_id", type="integer", nullable=true, options={"comment"="试卷id"})
+     */
+    private $testId;
+
+    /**
+     * @var int|null
+     *
      * @ORM\Column(name="qa_node_id", type="integer", nullable=true, options={"comment"="试题节点id"})
      */
     private $qaNodeId;
 
     /**
-     * @var string 知识点
+     * @var int|null
      *
-     * @ORM\Column(name="knowledge", type="text", length=16777215, nullable=true, options={"comment"="知识点"})
+     * @ORM\Column(name="uid", type="integer", nullable=true, options={"comment"="用户uid"})
      */
-    private $knowledge = '';
+    private $uid;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="options", type="text", length=16777215, nullable=true, options={"comment"="选择项json"})
-     */
-    private $options='';
-
-    /**
-     * @var string|null
-     *
-     * @ORM\Column(name="analysis", type="text", length=16777215, nullable=true, options={"comment"="解析"})
-     */
-    private $analysis='';
-
-    /**
-     * @var string|null
-     *
-     * @ORM\Column(name="answer", type="text", length=16777215, nullable=true, options={"comment"="答案"})
+     * @ORM\Column(name="answer", type="text", length=16777215, nullable=true, options={"comment"="回答快照"})
      */
     private $answer;
 
-    /**
-     * @var int|null
-     *
-     * @ORM\Column(name="score", type="integer", nullable=true, options={"comment"="得分，少选取50%分数的四舍五入值"})
-     */
-    private $score;
 
     /**
      * @var int|null
@@ -89,6 +76,18 @@ class TeachQANodeSub
         return $this->id;
     }
 
+    public function getTestId(): ?int
+    {
+        return $this->testId;
+    }
+
+    public function setTestId(?int $testId): self
+    {
+        $this->testId = $testId;
+
+        return $this;
+    }
+
     public function getQaNodeId(): ?int
     {
         return $this->qaNodeId;
@@ -101,38 +100,14 @@ class TeachQANodeSub
         return $this;
     }
 
-    public function getKnowledge(): ?string
+    public function getUid(): ?int
     {
-        return $this->knowledge;
+        return $this->uid;
     }
 
-    public function setKnowledge(?string $knowledge): self
+    public function setUid(?int $uid): self
     {
-        $this->knowledge = $knowledge;
-
-        return $this;
-    }
-
-    public function getOptions(): ?string
-    {
-        return $this->options;
-    }
-
-    public function setOptions(?string $options): self
-    {
-        $this->options = $options;
-
-        return $this;
-    }
-
-    public function getAnalysis(): ?string
-    {
-        return $this->analysis;
-    }
-
-    public function setAnalysis(?string $analysis): self
-    {
-        $this->analysis = $analysis;
+        $this->uid = $uid;
 
         return $this;
     }
@@ -145,18 +120,6 @@ class TeachQANodeSub
     public function setAnswer(?string $answer): self
     {
         $this->answer = $answer;
-
-        return $this;
-    }
-
-    public function getScore(): ?int
-    {
-        return $this->score;
-    }
-
-    public function setScore(?int $score): self
-    {
-        $this->score = $score;
 
         return $this;
     }
@@ -196,7 +159,4 @@ class TeachQANodeSub
 
         return $this;
     }
-
-   
-
 }

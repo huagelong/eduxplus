@@ -39,6 +39,8 @@ class TestController extends BaseAdminController
             return $str;
         });
         $grid->text("类别")->field("category")->sort("a.categoryId");
+        $grid->text("考试时长")->field("expireTime");
+        $grid->text("总分数")->field("score");
         $grid->text("排序")->field("sort")->sort("a.sort");
         $grid->text("创建人")->field("creater");
         $grid->datetime("创建时间")->field("createdAt")->sort("a.createdAt");
@@ -121,6 +123,7 @@ class TestController extends BaseAdminController
         $form->text("试卷名称")->field("name")->isRequire();
         $form->select("类目")->field("categoryId")->isRequire()->options($categoryService->categorySelect());
         $form->boole("上架？")->field("status")->isRequire(1);
+        $form->text("考试时长")->field("expireTime")->isRequire(1)->placeholder("单位分钟")->defaultValue(60);
         $form->text("排序")->field("sort")->isRequire(1)->defaultValue(0);
 
         $formData = $form->create($this->generateUrl("qa_admin_test_do_add"));
@@ -138,17 +141,18 @@ class TestController extends BaseAdminController
         $categoryId = $request->get("categoryId");
         $status = $request->get("status");
         $sort = (int) $request->get("sort");
+        $expireTime = (int) $request->get("expireTime");
         $status = $status == "on" ? 1 : 0;
 
         if (!$name) return $this->responseError("试卷名称不能为空!");
         if (mb_strlen($name, 'utf-8') > 50) return $this->responseError("试卷名称不能大于50字!");
         if ($testService->checkName($name)) return $this->responseError("试卷名称已存在!");
-
+        if($expireTime<=0) return  $this->responseError("考试时长不能不小0分钟!");
         if(!$categoryId){
             return $this->responseError("类目必须选择!");
         }
         $uid= $this->getUid();
-        $testService->add($uid, $name, $categoryId, $sort,$status);
+        $testService->add($uid, $name, $categoryId, $sort,$status, $expireTime);
         return $this->responseMsgRedirect("操作成功!", $this->generateUrl('qa_admin_test_index'));
     }
 
@@ -162,6 +166,7 @@ class TestController extends BaseAdminController
         $form->select("类目")->field("categoryId")->isRequire()->options($categoryService->categorySelect())->defaultValue($info['categoryId']);
         $form->boole("上架？")->field("status")->isRequire(1)->defaultValue($info['status']);
         $form->text("排序")->field("sort")->isRequire(1)->defaultValue($info['sort']);
+        $form->text("考试时长")->field("expireTime")->isRequire(1)->defaultValue($info['expireTime'])->placeholder("单位分钟");
         $formData = $form->create($this->generateUrl("qa_admin_test_do_edit", [
             'id' => $id
         ]));
@@ -179,17 +184,18 @@ class TestController extends BaseAdminController
         $categoryId = $request->get("categoryId");
         $status = $request->get("status");
         $sort = (int) $request->get("sort");
+        $expireTime = (int) $request->get("expireTime");
         $status = $status == "on" ? 1 : 0;
 
         if (!$name) return $this->responseError("试卷名称不能为空!");
         if (mb_strlen($name, 'utf-8') > 50) return $this->responseError("试卷名称不能大于50字!");
         if ($testService->checkName($name, $id)) return $this->responseError("试卷名称已存在!");
-
+        if($expireTime<=0) return  $this->responseError("考试时长不能不小0分钟!");
         if(!$categoryId){
             return $this->responseError("类目必须选择!");
         }
 
-        $testService->edit($id, $name, $categoryId, $sort,$status);
+        $testService->edit($id, $name, $categoryId, $sort,$status, $expireTime);
         return $this->responseMsgRedirect("操作成功!", $this->generateUrl('qa_admin_test_index'));
     }
 

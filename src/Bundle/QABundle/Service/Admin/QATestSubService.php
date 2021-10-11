@@ -245,6 +245,13 @@ class QATestSubService  extends AdminBaseService
                 $model->setTestId($testId);
                 $this->save($model);
             }
+
+            //更新试卷分数
+            $totalScoreSql = "SELECT SUM(a.score) as cnt FROM QA:TeachQANodeSub a WHERE a.qaNodeId IN(:qaNodeId) ";
+            $totalScore = $this->fetchField("cnt", $totalScoreSql, ["qaNodeId"=>$nodeIds]);
+            $testModel = $this->fetchOne("SELECT a FROM QA:TeachTest a WHERE a.id=:id", ["id"=>$testId], 1);
+            $testModel->setScore($totalScore);
+            $this->update($testModel);
             $this->commit();
             return true;
         }catch (\Exception $e){

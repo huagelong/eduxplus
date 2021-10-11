@@ -38,6 +38,28 @@ class TeachTest
     private $createUid = '0';
 
     /**
+     * @var int|null
+     *
+     * @ORM\Column(name="score", type="integer", nullable=true, options={"comment"="分数"})
+     */
+    private $score = '0';
+
+        /**
+     * @var int|null
+     *
+     * @ORM\Column(name="view_number", type="integer", nullable=true, options={"comment"="浏览数"})
+     */
+    private $viewNumber = '0';
+
+    /**
+     * @var int|null
+     *
+     * @ORM\Column(name="expire_time", type="integer", nullable=true, options={"comment"="考试时长"})
+     */
+    private $expireTime = '0';
+
+
+    /**
      * @var bool|null
      *
      * @ORM\Column(name="status", type="boolean", nullable=true, options={"default"="0", "comment"="0-发布，1-未发布"})
@@ -102,6 +124,42 @@ class TeachTest
     public function setCreateUid(?int $createUid): self
     {
         $this->createUid = $createUid;
+
+        return $this;
+    }
+
+    public function getScore(): ?int
+    {
+        return $this->score;
+    }
+
+    public function setScore(?int $score): self
+    {
+        $this->score = $score;
+
+        return $this;
+    }
+
+    public function getViewNumber(): ?int
+    {
+        return $this->viewNumber;
+    }
+
+    public function setViewNumber(?int $viewNumber): self
+    {
+        $this->viewNumber = $viewNumber;
+
+        return $this;
+    }
+
+    public function getExpireTime(): ?int
+    {
+        return $this->expireTime;
+    }
+
+    public function setExpireTime(?int $expireTime): self
+    {
+        $this->expireTime = $expireTime;
 
         return $this;
     }

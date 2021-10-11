@@ -28,6 +28,7 @@ class FuncExtension extends AbstractExtension
             new TwigFunction('if_get', [$this, 'doIfGet']),
             new TwigFunction('if_set', [$this, 'doIfSet']),
             new TwigFunction('diff', [$this, 'doDiff']),
+            new TwigFunction('inArrayDiff', [$this, 'doInArrayDiff']),
             new TwigFunction('dump', [$this, 'doDump']),
             new TwigFunction('sum', [$this, 'doSum']),
         ];
@@ -73,10 +74,12 @@ class FuncExtension extends AbstractExtension
     }
 
 
-    public function doIfSet($arr, $key, $default){
+    public function doIfSet($arr, $key, $default=""){
         return isset($arr[$key]) ?$arr[$key]:$default;
     }
-    public function doIfGet($arr, $default){
+
+
+    public function doIfGet($arr, $default=""){
         return (isset($arr) && $arr) ?$arr:$default;
     }
 
@@ -86,8 +89,18 @@ class FuncExtension extends AbstractExtension
     }
 
     public function doDiff($v1, $v2, $tag="checked"){
-        return $v1==$v2?"checked":"";
+        if(!$this->doIfGet($v1)) return "";
+        return $v1==$v2?$tag:"";
     }
+
+    public function doInArrayDiff($arr, $v2, $tag="checked"){
+        if(!$this->doIfGet($arr)) return "";
+        if(!is_array($arr)){
+            $arr = explode(",", $arr);
+        }
+        return in_array($v2, $arr)?$tag:"";
+    }
+    
 
     public function doDump($value){
         if(is_array($value) || is_object($value)){

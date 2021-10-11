@@ -48,9 +48,9 @@ class InstallFixtures extends Fixture
         $this->addOption("app.copyright", '@2008-2019 上海xxxx有限公司版权所有', "网站copyright", 1, 1, "网站配置");
         $this->addOption("app.sms.times", '5', "当天准许同一手机发送短信的最大次数", 1, 1, "网站配置");
         $this->addOption("app.secret", "#2saasf#@$22", "网站私钥", 1, 1, "网站配置");//$secret
-        $this->addOption("app.logo", '["http://dev.eduxplus.com/assets/images/logo.png"]', "网站logo", 2, 1, "网站配置");
-        $this->addOption("app.user.default.gravatar", '["http://dev.eduxplus.com/assets/images/gravatar.jpeg"]', "用户默认头像", 2, 1, "网站配置");
-        $this->addOption("app.icon", '["http://dev.eduxplus.com/assets/images/fav.png"]', "网站icon", 2, 1, "网站配置");
+        $this->addOption("app.logo", '["/assets/images/logo.png"]', "网站logo", 2, 1, "网站配置");
+        $this->addOption("app.user.default.gravatar", '["/assets/images/gravatar.jpeg"]', "用户默认头像", 2, 1, "网站配置");
+        $this->addOption("app.icon", '["/assets/images/fav.png"]', "网站icon", 2, 1, "网站配置");
         $this->addOption("app.domain", 'http://dev.eduxplus.com/', "网站域名网址", 1, 1, "网站配置");
         //adapter
         $this->addOption("app.upload.adapter", '3', "文件上传方式,1-本地，2-阿里云oss，3-腾讯云cos", 1, 1, "网站配置");
@@ -151,7 +151,7 @@ class InstallFixtures extends Fixture
         $userModel->setIsAdmin(1);
         $userModel->setPassword($pwd);
         $userModel->setRealRole(1);
-        $userModel->setGravatar("http://dev.eduxplus.com/assets/images/gravatar.jpeg");
+        $userModel->setGravatar("/assets/images/gravatar.jpeg");
         $userModel->setAppToken("111111");
         $manager->persist($userModel);
         $manager->flush();

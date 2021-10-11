@@ -12,6 +12,9 @@ namespace App\Bundle\QABundle\Service\App;
 use App\Bundle\AppBundle\Lib\Base\AppBaseService;
 use App\Bundle\AppBundle\Service\CategoryService;
 use App\Bundle\AppBundle\Service\TeacherService;
+use App\Bundle\QABundle\Entity\TeachTestAnswerLog;
+use Elasticsearch\Endpoints\Indices\Split;
+use Error;
 use Knp\Component\Pager\PaginatorInterface;
 
 class QATestService extends AppBaseService
@@ -97,7 +100,7 @@ class QATestService extends AppBaseService
                 $sql = "SELECT a FROM QA:TeachTest a WHERE a.id=:id";
                 $testInfo =  $this->fetchOne($sql, ['id' => $testId]);
                 $vArr['testInfo'] = $testInfo;
-                $itemsArr[] = $vArr; 
+                $itemsArr[] = $vArr;
             }
         }
         return [$pagination, $itemsArr];
@@ -118,24 +121,47 @@ class QATestService extends AppBaseService
         $sql = "SELECT a.qaNodeId FROM QA:TeachTestSub a WHERE a.testId=:testId ORDER BY a.type ASC, a.sort ASC ";
         $qaNodeIds = $this->fetchFields("qaNodeId", $sql, ["testId"=>$testId]);
         if(!$qaNodeIds) return [];
-        $sqlNodes = "SELECT a FROM QA:TeachQANode a WHERE a.id IN (:id) AND a.status=1 ";
+        $qaNodeIdsStr = implode(",", $qaNodeIds);
+        $sqlNodes = "SELECT a FROM QA:TeachQANode a WHERE a.id IN (:id) AND a.status=1 ORDER BY FIELD(a.id,".$qaNodeIdsStr.")";
         $nodesInfo = $this->fetchAll($sqlNodes, ["id"=>$qaNodeIds]);
         if(!$nodesInfo) return [];
         $realNodes = [];
         foreach($nodesInfo as $info){
             $realNodes[] = $info["id"];
         }
-        $sqlNodes = "SELECT a FROM QA:TeachQANodeSub a WHERE a.qaNodeId IN (:qaNodeId)";
+        $realNodesStr = implode(",", $realNodes);
+        $sqlNodes = "SELECT a FROM QA:TeachQANodeSub a WHERE a.qaNodeId IN (:qaNodeId) ORDER BY FIELD(a.qaNodeId,".$realNodesStr.")";
+
         $nodesSubInfo = $this->fetchAll($sqlNodes, ["qaNodeId"=>$realNodes]);
         if(!$nodesSubInfo) return [];
+
+        //做题记录
+        $sqlAnswerLog = "SELECT a FROM QA:TeachTestAnswerLog a WHERE a.testId=:testId ";
+        $answerLogList = $this->fetchAll($sqlAnswerLog, ["testId"=>$testId]);
+
         $result = [];
-        foreach($nodesInfo as $info){
+        foreach($nodesInfo as &$info){
             foreach($nodesSubInfo as $sub){
                     if($info["id"] == $sub["qaNodeId"]){
                         $info["sub"] = $sub;
-                        $result[$info["type"]][] = $info;
+                        break;
                     }
             }
+            
+            //回答日志库
+            if($answerLogList){
+                foreach($answerLogList as $answerLog){
+                    if($info["id"] == $answerLog["qaNodeId"]){
+                        $info["log"] = $answerLog;
+                        break;
+                    }
+                }
+            }
+
+        }
+        
+        foreach($nodesInfo as $info){
+            $result[$info["type"]][] = $info;
         }
        return $result;
     }
@@ -144,7 +170,76 @@ class QATestService extends AppBaseService
      * 收藏的试题
      */
     public function myNodeFav($uid, $page, $pageSize){
-        
+
+    }
+
+    /**
+     * 保存做题记录
+     */
+    public function saveAnswerLog($testId, $nodeId, $uid, $answer){
+        $sql = "SELECT a FROM QA:TeachTestAnswerLog a WHERE a.testId=:testId AND a.qaNodeId=:qaNodeId AND a.uid=:uid";
+        $info = $this->fetchOne($sql, ["testId"=>$testId, "qaNodeId"=>$nodeId, "uid"=>$uid],1);
+        if($info){
+            $info->setAnswer($answer);
+            $this->save($info);
+        }else{
+            $model = new TeachTestAnswerLog();
+            $model->setTestId($testId);
+            $model->setQaNodeId($nodeId);
+            $model->setUid($uid);
+            $model->setAnswer($answer);
+            $this->save($model);
+        }
+    }
+
+    /**
+     * 提交答案
+     */
+    public function submitAnswer($id, $params){
+        //循环test题目获取题目内容
+        $sql = "SELECT a.qaNodeId FROM QA:TeachTestSub a WHERE a.testId=:testId ORDER BY a.type ASC, a.sort ASC ";
+        $qaNodeIds = $this->fetchFields("qaNodeId", $sql, ["testId"=>$testId]);
+        if(!$qaNodeIds) return [];
+        $qaNodeIdsStr = implode(",", $qaNodeIds);
+        $sqlNodes = "SELECT a FROM QA:TeachQANode a WHERE a.id IN (:id) AND a.status=1 ORDER BY FIELD(a.id,".$qaNodeIdsStr.")";
+        $nodesInfo = $this->fetchAll($sqlNodes, ["id"=>$qaNodeIds]);
+        if(!$nodesInfo) return [];
+        $realNodes = [];
+        foreach($nodesInfo as $info){
+            $realNodes[] = $info["id"];
+        }
+        $realNodesStr = implode(",", $realNodes);
+        $sqlNodes = "SELECT a FROM QA:TeachQANodeSub a WHERE a.qaNodeId IN (:qaNodeId) ORDER BY FIELD(a.qaNodeId,".$realNodesStr.")";
+
+        $nodesSubInfo = $this->fetchAll($sqlNodes, ["qaNodeId"=>$realNodes]);
+        if(!$nodesSubInfo) return [];
+        $result = [];
+        //循环获取答案
+        foreach($nodesInfo as &$info){
+            foreach($nodesSubInfo as $sub){
+                    if($info["id"] == $sub["qaNodeId"]){
+                        $type = $info["type"];
+                        $requestKey = "tk_".$type."_".$info["id"];
+                        $requestAnswer = isset($params[$requestKey])?$params[$requestKey]:"";
+                        $answer = $sub["answer"];
+                        if($type == 0){ //单选题
+                            
+                        }else if($type == 1){//多项选择
+
+                        }else if($type == 2){//不定项选择题
+
+                        }else if($type == 3){//判断题
+
+                        }else if($type == 4){//多项选择
+
+                        }
+
+
+                        break;
+                    }
+            }
+        }
+       
     }
 
 }

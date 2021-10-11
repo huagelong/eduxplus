@@ -1,5 +1,5 @@
 <nav class="mt-2">
-    <ul class="nav nav-pills nav-sidebar flex-column nav-child-indent" data-widget="treeview" role="menu" data-accordion="false">
+    <ul class="nav nav-pills nav-sidebar  flex-column nav-child-indent" data-widget="treeview" role="menu" data-accordion="false">
         {% if menus %}
             {% set menuroot = menus[0] %}
             {% for menu in menuroot %}
@@ -51,9 +51,8 @@
         {% endif %}
         <li class="nav-header">其他</li>
         <li class="nav-item">
-            <a data-url="{{ path("admin_logout") }}" href="javascript:;"  class="logouthref nav-link nav-linktag">
-                <i class="nav-icon fas fa-power-off"></i>
-                退出
+            <a title='退出' data-url="{{ path("admin_logout") }}" href="javascript:;"  class="logouthref nav-link nav-linktag">
+                <i class="nav-icon fas fa-power-off"></i> <p>退出</p>
             </a>
         </li>
     </ul>

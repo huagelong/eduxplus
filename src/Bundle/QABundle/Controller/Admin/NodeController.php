@@ -46,6 +46,7 @@ class NodeController extends BaseAdminController
         $grid->text("章节点")->field("chapterSubName");
         $grid->text("试题难度")->field("level")->options([0=>"容易",1=>"一般",2=>"困难"]);
         $grid->text("试题标签")->field("nodeType")->options([0=>"常考题",1=>"易错题",2=>"好题",3=>"压轴题"]);
+        $grid->text("分数")->field("score");
         $grid->text("年份")->field("year");
         $grid->text("来源")->field("source");
         $grid->text("创建人")->field("creater");
@@ -129,6 +130,7 @@ class NodeController extends BaseAdminController
         $form->select("章节点")->field("chapterSubId")->isRequire(1)->options($select)->defaultValue($chapterSubId);
         $form->select("试题难度")->field("level")->options(["容易"=>0,"一般"=>1,"困难"=>2]);
         $form->select("试题标签")->field("nType")->options(["常考题"=>0,"易错题"=>1,"好题"=>2,"压轴题"=>3]);
+        $form->text("分数")->field("score")->defaultValue(10);
         $form->select("年份")->field("year")->options($years);
 //
         $form->text("知识点")->isRequire(1)->field("knowledge");
@@ -165,6 +167,7 @@ class NodeController extends BaseAdminController
         $chapterSubId = $request->get("chapterSubId");
         $choose = $request->get("choose");
         $answer = $request->get("answer");
+        $score = (int) $request->get("score");
         $status = $status == "on" ? 1 : 0;
         $topic = strip_tags($topic, "<img> <p>");
         $analysis = strip_tags($analysis, "<img> <p>");
@@ -173,7 +176,7 @@ class NodeController extends BaseAdminController
         if (!$analysis) return $this->responseError("解析不能为空!");
         if(!$answer) return $this->responseError("答案不能为空!");
         if(!$knowledge) return $this->responseError("知识点不能为空!");
-
+        if($score<=0) return $this->responseError("分数不能小于或者等于0!");
         if(mb_strlen($topic, "utf-8") > 500) return $this->responseError("试题不能大于500!");
         if(mb_strlen($analysis, "utf-8") > 500) return $this->responseError("解析不能大于500!");
         if(mb_strlen($knowledge, "utf-8") > 500) return $this->responseError("知识点不能大于500!");
@@ -187,7 +190,7 @@ class NodeController extends BaseAdminController
         $chapterSubInfo = $chapterSubService->getById($chapterSubId);
         $chapterId = $chapterSubInfo['chapterId'];
         $uid = $this->getUid();
-        $nodeService->add($choose,$answer,$uid,$chapterId, $chapterSubId,$type, $status, $level, $nodeType, $year, $knowledge, $source,$topic,$analysis);
+        $nodeService->add($choose,$answer,$uid,$chapterId, $chapterSubId,$type, $status, $level, $nodeType, $year, $knowledge, $source,$topic,$analysis,$score);
         return $this->responseMsgRedirect("添加成功!", $this->generateUrl("qa_admin_node_index",["chapterId"=>$chapterId, "chapterSubId"=>$chapterSubId]));
     }
 
@@ -216,6 +219,7 @@ class NodeController extends BaseAdminController
         $form->select("章节点")->field("chapterSubId")->defaultValue($info['chapterSubId'])->isRequire(1)->options($select)->defaultValue($chapterSubId);
         $form->select("试题难度")->field("level")->defaultValue($info['level'])->options(["容易"=>0,"一般"=>1,"困难"=>2]);
         $form->select("试题标签")->field("nType")->defaultValue($info['nodeType'])->options(["常考题"=>0,"易错题"=>1,"好题"=>2,"压轴题"=>3]);
+        $form->text("分数")->field("score")->defaultValue($info["sub"]['score']);
         $form->select("年份")->field("year")->defaultValue($info['year'])->options($years);
 
         $form->text("知识点")->isRequire(1)->defaultValue($info['sub']['knowledge'])->field("knowledge");
@@ -260,6 +264,7 @@ class NodeController extends BaseAdminController
         $view->select("章节点")->field("chapterSubId")->defaultValue($info['chapterSubId'])->options($select)->defaultValue($chapterSubId);
         $view->select("试题难度")->field("level")->defaultValue($info['level'])->options(["容易"=>0,"一般"=>1,"困难"=>2]);
         $view->select("试题标签")->field("nType")->defaultValue($info['nodeType'])->options(["常考题"=>0,"易错题"=>1,"好题"=>2,"压轴题"=>3]);
+        $view->text("分数")->field("score")->defaultValue($info["sub"]['score']);
         $view->select("年份")->field("year")->defaultValue($info['year'])->options($years);
 
         $view->text("知识点")->defaultValue($info['sub']['knowledge'])->field("knowledge");
@@ -298,6 +303,7 @@ class NodeController extends BaseAdminController
         $chapterSubId = $request->get("chapterSubId");
         $choose = $request->get("choose");
         $answer = $request->get("answer");
+        $score = $request->get("score");
         $status = $status == "on" ? 1 : 0;
         $topic = strip_tags($topic, "<img> <p>");
         $analysis = strip_tags($analysis, "<img> <p>");
@@ -310,7 +316,7 @@ class NodeController extends BaseAdminController
         if(mb_strlen($topic, "utf-8") > 500) return $this->responseError("试题不能大于500!");
         if(mb_strlen($analysis, "utf-8") > 500) return $this->responseError("解析不能大于500!");
         if(mb_strlen($knowledge, "utf-8") > 500) return $this->responseError("知识点不能大于500!");
-
+        if($score<=0) return $this->responseError("分数不能小于或者等于0!");
         if(!$chapterSubId)  return $this->responseError("章节点不能为空!");
 
         if($type < 3){
@@ -320,7 +326,8 @@ class NodeController extends BaseAdminController
         $chapterSubInfo = $chapterSubService->getById($chapterSubId);
         $chapterId = $chapterSubInfo['chapterId'];
 
-        $nodeService->edit($id, $choose,$answer,$chapterId, $chapterSubId,$type, $status, $level, $nodeType, $year, $knowledge, $source,$topic,$analysis);
+        $nodeService->edit($id, $choose,$answer,$chapterId, $chapterSubId,$type, $status, $level, $nodeType, $year, $knowledge, $source,$topic,$analysis,$score);
+        // return $this->responseSuccess("编辑成功!");
         return $this->responseMsgRedirect("编辑成功!", $this->generateUrl("qa_admin_node_index",["chapterId"=>$chapterId, "chapterSubId"=>$chapterSubId]));
     }
 

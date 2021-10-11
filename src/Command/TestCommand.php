@@ -12,6 +12,7 @@ use App\Bundle\AppBundle\Lib\Service\Vod\TengxunyunVodService;
 use App\Bundle\AppBundle\Service\MsgService;
 use App\Entity\BaseMenu;
 use App\Entity\BaseRoleMenu;
+use App\Bundle\AppBundle\Lib\Service\HelperService;
 use Doctrine\Persistence\ObjectManager;
 use EasyWeChat\Kernel\Support\XML;
 use Symfony\Component\Console\Command\Command;
@@ -25,8 +26,12 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Bundle\AdminBundle\Service\Mall\OrderService;
 use App\Bundle\AdminBundle\Service\Mall\PayService;
 use App\Bundle\AdminBundle\Service\Mall\CouponService;
+use App\Entity\BaseRole;
+use App\Entity\BaseRoleUser;
+use App\Bundle\AppBundle\Lib\Service\MobileMaskService;
+use App\Entity\BaseUser;
 use App\Entity\BaseOption;
-
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class TestCommand extends Command
 {
     protected static $defaultName = 'app:test';
@@ -36,23 +41,28 @@ class TestCommand extends Command
     protected $tengxunyunVodService;
     protected $smsService;
     protected $alipayService;
+    protected $helperService;
     protected $esService;
     protected $msgService;
-
+    protected $passwordEncoder;
+    protected $mobileMaskService;
     /**
      * TestCommand constructor.
      */
     public function __construct(
+        UserPasswordEncoderInterface $passwordEncoder,
         AliyunOssService $aliyunOssService,
         UploadService $uploadService,
         CouponService $couponService,
         OrderService $orderService,
+        HelperService $helperService,
         PayService $payService,
         TengxunyunVodService $tengxunyunVodService,
         SmsService $smsService,
         AlipayService $alipayService,
         EsService $esService,
         MsgService $msgService,
+        MobileMaskService $mobileMaskService,
         WxpayService $wxpayService
     ) {
         $this->aliyunOssService = $aliyunOssService;
@@ -67,6 +77,9 @@ class TestCommand extends Command
         $this->esService = $esService;
         $this->msgService = $msgService;
         $this->wxpayService = $wxpayService;
+        $this->helperService = $helperService;
+        $this->passwordEncoder = $passwordEncoder;
+        $this->mobileMaskService = $mobileMaskService;
         parent::__construct();
     }
 
@@ -78,6 +91,37 @@ class TestCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        $this->manager();
+
+        $userModel = new BaseUser();
+        $uuid = $this->helperService->getUuid();
+        $pwd = $this->passwordEncoder->encodePassword($userModel, "111111");
+        $userModel->setSex(1);
+        $userModel->setBirthday('1988-10-01');
+        $userModel->setRegSource("pc");
+        $userModel->setMobile("17621487000");
+        $mobileMask =  $this->mobileMaskService->encrypt("17621487000");
+        $userModel->setMobileMask($mobileMask);
+        $userModel->setReportUid(0);
+        $userModel->setUuid($uuid);
+        $userModel->setDisplayName("超级管理员");
+        $userModel->setFullName("管理员大大");
+        $userModel->setIsAdmin(1);
+        $userModel->setPassword($pwd);
+        $userModel->setRealRole(1);
+        $userModel->setGravatar("http://dev.eduxplus.com/assets/images/gravatar.jpeg");
+        $userModel->setAppToken("sdasdasda");
+        $this->manager->persist($userModel);
+        $this->manager->flush();
+        $uid = $userModel->getId();
+
+        //绑定用户角色
+        $roleUserModel = new BaseRoleUser();
+        $roleUserModel->setUid($uid);
+        $roleUserModel->setRoleId(1);
+        $this->manager->persist($roleUserModel);
+        $this->manager->flush();
+
         //帮助中心
         $roleId = 1;
         $mallMenuId = 108;

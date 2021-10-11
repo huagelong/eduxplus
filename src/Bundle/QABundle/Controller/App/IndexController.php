@@ -83,9 +83,9 @@ class IndexController extends BaseHtmlController
     }
 
     /**
-     * @Rest\Get("/mall/detail/{uuid}", name="qa_mall_detail_index")
+     * @Rest\Get("/mall/buy/{uuid}", name="qa_mall_buy")
      */
-    public function detailAction($uuid, GoodsService $goodsService){
+    public function buyAction($uuid, GoodsService $goodsService){
         $detail = $goodsService->getByUuId($uuid);
         $id = $detail['id'];
 
@@ -95,7 +95,7 @@ class IndexController extends BaseHtmlController
         $data['studyPlan'] = $goodsService->getStudyPlan($id);
         $uid = $this->getUid();
         $data['fav'] = [];
-        return $this->render("@QABundle/exam/detail.html.twig", $data);
+        return $this->render("@QABundle/exam/buy.html.twig", $data);
     }
 
     /**
@@ -121,15 +121,77 @@ class IndexController extends BaseHtmlController
 
 
      /**
-     * 做试卷
+     * 试卷详情
      *
      * @Rest\Get("/test/detail-{id}", name="qa_test_detail")
      */
-    public function dotestAction($id, QATestService $qaTestService){
+    public function testDetailAction($id, QATestService $qaTestService){
         $data = [];
         $data["testInfo"] = $qaTestService->getTestById($id);
         $data["testNode"] = $qaTestService->getTest($id);
+
         return $this->render("@QABundle/exam/testDetail.html.twig", $data);
     }
+
+
+    /**
+     * 做试卷入口页面
+     *
+     * @Rest\Get("/test/my/testinit-{id}", name="qa_test_init")
+     */
+    public function testInitAction($id, QATestService $qaTestService){
+        $data = [];
+        $data["testInfo"] = $qaTestService->getTestById($id);
+        return $this->render("@QABundle/exam/testInit.html.twig", $data);
+    }
+
+
+    /**
+     * 做试卷页面
+     *
+     * @Rest\Get("/test/my/todo-{id}", name="qa_test_todo")
+     */
+    public function testToDoAction($id, QATestService $qaTestService){
+        $data = [];
+        $data["testInfo"] = $qaTestService->getTestById($id);
+        $data["testNode"] = $qaTestService->getTest($id);
+        return $this->render("@QABundle/exam/testTodo.html.twig", $data);
+    }
+
+    /**
+     *  提交答案
+     * 
+     * @Rest\Post("/test/my/submit-{id}", name="qa_test_submit_answer")
+     */
+    public function submitAnswerAction($id, QATestService $qaTestService){
+        $request = $this->request()->request->all();
+        //todo 返回分数等
+        $result = $qaTestService->submitAnswer($id, $request);
+        if(!$this->error()->has()){
+            return $this->responseError($this->error()->getLast());
+        }
+        
+        return $this->responseSuccess($result);
+    }
+
+    /**
+     * 保存答案日志
+     * 
+     * @Rest\Post("/test/my/submitAnswerLog", name="qa_test_submit_answer_log")
+     */
+    public function submitAnswerLogAction(QATestService $qaTestService){
+        $testId = $this->request()->request->get("testId");
+        $nodeId = $this->request()->request->get("nodeId");
+        $uid = $this->getUid();
+        $answer = $this->request()->request->get("answer");
+        if(!$testId) return $this->responseError("参数有误testId!");
+        if(!$nodeId) return $this->responseError("参数有误nodeId!");
+        if(!$answer) return $this->responseError("参数有误answer!");
+
+        $qaTestService->saveAnswerLog($testId, $nodeId, $uid, $answer);
+
+        return $this->responseSuccess("");
+    }
+
 
 }

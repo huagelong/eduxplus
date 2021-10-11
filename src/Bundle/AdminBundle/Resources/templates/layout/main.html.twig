@@ -11,16 +11,16 @@
     $(function(){
     function setWatermark (str1, str2){
     var id = '1.23452384164.123412415'
-  
+
     if (document.getElementById(id) !== null) {
       document.body.removeChild(document.getElementById(id))
     }
-  
+
     var can = document.createElement('canvas')
     // 设置canvas画布大小
     can.width = 150
     can.height = 80
-  
+
     var cans = can.getContext('2d')
     cans.rotate(-20 * Math.PI / 180) // 水印旋转角度
     cans.font = '15px Vedana'
@@ -29,7 +29,7 @@
     cans.textBaseline = 'Middle'
     cans.fillText(str1, can.width / 2, can.height) // 水印在画布的位置x，y轴
     cans.fillText(str2, can.width / 2, can.height + 22)
-  
+
     var div = document.createElement('div')
     div.id = id
     div.style.pointerEvents = 'none'

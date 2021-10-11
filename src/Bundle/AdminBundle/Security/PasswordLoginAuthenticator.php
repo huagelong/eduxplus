@@ -120,9 +120,9 @@ class PasswordLoginAuthenticator extends AbstractFormLoginAuthenticator implemen
     {
 
         $mobileMask =  $this->mobileMaskService->encrypt($credentials['mobile']);
-        
-        $user = $this->entityManager->getRepository(BaseUser::class)->findOneBy(['mobile_mask' => $mobileMask]);
-        
+
+        $user = $this->entityManager->getRepository(BaseUser::class)->findOneBy(['mobileMask' => $mobileMask]);
+
         if (!$user) {
             // fail authentication with a custom error
             throw new CustomUserMessageAuthenticationException('手机号码或者密码错误！');

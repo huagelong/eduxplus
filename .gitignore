@@ -3,6 +3,7 @@
 /.env.local.php
 /.env.*.local
 /.settings
+/composer.lock
 /config/secrets/prod/prod.decrypt.private.php
 /public/bundles/
 /public/upload/

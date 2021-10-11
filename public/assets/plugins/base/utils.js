@@ -180,10 +180,11 @@ function requestPost(url, data) {
         setTimeout(function () {
           // if (window.frames.length != parent.frames.length){
           // if (self.frameElement && self.frameElement.tagName == "IFRAME") {
-          //   parent.location.assign(responseText._url);
-          // } else {
+          if((self != top) && (self.frameElement.getAttribute("name")) && (self.frameElement.getAttribute("name").indexOf("layui-layer") > -1)){
+            parent.location.assign(responseText._url);
+          } else {
             location.assign(responseText._url);
-          // }
+          }
         }, 1000);
       } else {
         if (responseText.message) {
@@ -213,10 +214,11 @@ function requestGet(url, data) {
         setTimeout(function () {
           // if (window.frames.length != parent.frames.length){
           // if (self.frameElement && self.frameElement.tagName == "IFRAME") {
-          //   parent.location.assign(responseText._url);
-          // } else {
-            location.assign(responseText._url);
-          // }
+            if((self != top) && (self.frameElement.getAttribute("name")) && (self.frameElement.getAttribute("name").indexOf("layui-layer") > -1)){
+              parent.location.assign(responseText._url);
+            } else {
+              location.assign(responseText._url);
+            }
         }, 1000);
       } else {
         if (responseText.message) {

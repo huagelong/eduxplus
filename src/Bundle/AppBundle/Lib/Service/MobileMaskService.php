@@ -17,7 +17,7 @@ class MobileMaskService extends BaseService
         return $this->aesService->encrypt($mobile);
     }
 
-    public function encrypt($decrypt){
+    public function decrypt($decrypt){
         return $this->aesService->decrypt($decrypt);
     }
 }

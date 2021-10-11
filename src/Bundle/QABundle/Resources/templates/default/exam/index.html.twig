@@ -48,7 +48,7 @@
            <ul class="layui-row layui-col-space10">
              {% for v in  list %}
                <div class="layui-col-md3">
-                 <a href="{{ path('qa_mall_detail_index', {uuid:v['uuid']}) }}" class="gooda">
+                 <a href="{{ path('qa_mall_buy', {uuid:v['uuid']}) }}" class="gooda">
                    <div class="goodCard layui-anim">
                      <div class="goodInfo">
                        <div class="goodTitle">{{ v['name'] }}</div>
