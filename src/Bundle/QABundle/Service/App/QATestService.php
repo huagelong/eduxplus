@@ -238,7 +238,39 @@ class QATestService extends AppBaseService
                             }
                         }else if($type == 1){//多项选择
                             
+                            if($requestAnswer){  //数组
+                                sort($requestAnswer);
+                                $requestAnswerStr = implode("", $requestAnswer);
+                                $answer = explode(",", $answer);
+                                sort($answer);
+                                $answerStr = implode("", $answer);
+                                if(strtolower($answerStr) == strtolower($requestAnswerStr)){
+                                    $totalRightNum = $totalRightNum+1;
+                                    $result[$info["id"]] = ["correct"=>1,"answer"=>$requestAnswer];
+                                    $totalScore=$totalScore+$sub["score"];
+                                }else{
+                                    $totalErrorNum = $totalErrorNum+1;
+                                    $result[$info["id"]] = ["correct"=>0,"answer"=>$requestAnswer];
+                                }
+                            }
+
                         }else if($type == 2){//不定项选择题
+
+                            if($requestAnswer){  //数组
+                                sort($requestAnswer);
+                                $requestAnswerStr = implode("", $requestAnswer);
+                                $answer = explode(",", $answer);
+                                sort($answer);
+                                $answerStr = implode("", $answer);
+                                if(strtolower($answerStr) == strtolower($requestAnswerStr)){
+                                    $totalRightNum = $totalRightNum+1;
+                                    $result[$info["id"]] = ["correct"=>1,"answer"=>$requestAnswer];
+                                    $totalScore=$totalScore+$sub["score"];
+                                }else{
+                                    $totalErrorNum = $totalErrorNum+1;
+                                    $result[$info["id"]] = ["correct"=>0,"answer"=>$requestAnswer];
+                                }
+                            }
 
                         }else if($type == 3){//判断题
                                 //答案正确
@@ -251,7 +283,7 @@ class QATestService extends AppBaseService
                                     $result[$info["id"]] = ["correct"=>0,"answer"=>$requestAnswer];
                                 }
                         }else if($type == 4){//填空题
-
+                            
                         }else if($type == 5){//问答
 
                         }else if($type == 6){//理解
