@@ -3,6 +3,7 @@ ARG VARIANT=8-bullseye
 FROM mcr.microsoft.com/vscode/devcontainers/php:0-${VARIANT}
 RUN apt-get update && apt-get -y install libzip-dev
 RUN apt-get update && apt-get -y install redis
+RUN service start redis-server
 # Install MariaDB client
 RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
     && apt-get install -y mariadb-client \ 
