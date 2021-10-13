@@ -41,5 +41,7 @@ docker images|grep none|awk '{print $3 }'|xargs docker rmi
 -----------------------------------------------------------
 php .\bin\console app:upDbStruct App\Bundle\QABundle\Entity
 
+mariadb -h localhost -P 3306 --protocol=tcp -u root --password=root
+
 ```
 
