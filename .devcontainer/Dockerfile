@@ -2,7 +2,7 @@
 ARG VARIANT=7-bullseye
 FROM mcr.microsoft.com/vscode/devcontainers/php:0-${VARIANT}
 RUN apt-get update && apt-get -y install libzip-dev
-RUN apt-get update && apt-get -y install redis
+RUN apt-get update && apt-get -y install redis && apt-get -y install vim
 RUN service redis-server start
 # Install MariaDB client
 RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
@@ -11,7 +11,6 @@ RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
 
 # Install php-mysql driver
 RUN docker-php-ext-install mysqli pdo pdo_mysql zip
-
 # [Choice] Node.js version: none, lts/*, 16, 14, 12, 10
 ARG NODE_VERSION="none"
 RUN if [ "${NODE_VERSION}" != "none" ]; then su vscode -c "umask 0002 && . /usr/local/share/nvm/nvm.sh && nvm install ${NODE_VERSION} 2>&1"; fi
