@@ -195,7 +195,7 @@ class QATestService extends AppBaseService
     /**
      * 提交答案
      */
-    public function submitAnswer($id, $params){
+    public function submitAnswer($testId, $params){
         //循环test题目获取题目内容
         $sql = "SELECT a.qaNodeId FROM QA:TeachTestSub a WHERE a.testId=:testId ORDER BY a.type ASC, a.sort ASC ";
         $qaNodeIds = $this->fetchFields("qaNodeId", $sql, ["testId"=>$testId]);
@@ -216,6 +216,7 @@ class QATestService extends AppBaseService
         $result = [];
         $totalErrorNum=0;
         $totalRightNum=0;
+        $totalScore = 0;
         //循环处理答案
         foreach($nodesInfo as &$info){
             $result[$info["id"]] = ["correct"=>0,"answer"=>""];
@@ -230,17 +231,30 @@ class QATestService extends AppBaseService
                             if(strtolower($answer) == strtolower($requestAnswer)){
                                 $totalRightNum = $totalRightNum+1;
                                 $result[$info["id"]] = ["correct"=>1,"answer"=>$requestAnswer];
+                                $totalScore=$totalScore+$sub["score"];
                             }else{
                                 $totalErrorNum = $totalErrorNum+1;
                                 $result[$info["id"]] = ["correct"=>0,"answer"=>$requestAnswer];
                             }
                         }else if($type == 1){//多项选择
-
+                            
                         }else if($type == 2){//不定项选择题
 
                         }else if($type == 3){//判断题
+                                //答案正确
+                                if(strtolower($answer) == strtolower($requestAnswer)){
+                                    $totalRightNum = $totalRightNum+1;
+                                    $result[$info["id"]] = ["correct"=>1,"answer"=>$requestAnswer];
+                                    $totalScore=$totalScore+$sub["score"];
+                                }else{
+                                    $totalErrorNum = $totalErrorNum+1;
+                                    $result[$info["id"]] = ["correct"=>0,"answer"=>$requestAnswer];
+                                }
+                        }else if($type == 4){//填空题
 
-                        }else if($type == 4){//多项选择
+                        }else if($type == 5){//问答
+
+                        }else if($type == 6){//理解
 
                         }
 
