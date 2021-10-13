@@ -214,8 +214,11 @@ class QATestService extends AppBaseService
         $nodesSubInfo = $this->fetchAll($sqlNodes, ["qaNodeId"=>$realNodes]);
         if(!$nodesSubInfo) return [];
         $result = [];
-        //循环获取答案
+        $totalErrorNum=0;
+        $totalRightNum=0;
+        //循环处理答案
         foreach($nodesInfo as &$info){
+            $result[$info["id"]] = ["correct"=>0,"answer"=>""];
             foreach($nodesSubInfo as $sub){
                     if($info["id"] == $sub["qaNodeId"]){
                         $type = $info["type"];
@@ -223,7 +226,14 @@ class QATestService extends AppBaseService
                         $requestAnswer = isset($params[$requestKey])?$params[$requestKey]:"";
                         $answer = $sub["answer"];
                         if($type == 0){ //单选题
-                            
+                            //答案正确
+                            if(strtolower($answer) == strtolower($requestAnswer)){
+                                $totalRightNum = $totalRightNum+1;
+                                $result[$info["id"]] = ["correct"=>1,"answer"=>$requestAnswer];
+                            }else{
+                                $totalErrorNum = $totalErrorNum+1;
+                                $result[$info["id"]] = ["correct"=>0,"answer"=>$requestAnswer];
+                            }
                         }else if($type == 1){//多项选择
 
                         }else if($type == 2){//不定项选择题

@@ -33,13 +33,6 @@ class TeachTestAnswer
     /**
      * @var int|null
      *
-     * @ORM\Column(name="last_qa_node_id", type="integer", nullable=true, options={"comment"="最后的试题节点id"})
-     */
-    private $lastQaNodeId;
-
-    /**
-     * @var int|null
-     *
      * @ORM\Column(name="uid", type="integer", nullable=true, options={"comment"="用户uid"})
      */
     private $uid;
@@ -104,18 +97,6 @@ class TeachTestAnswer
     public function setTestId(?int $testId): self
     {
         $this->testId = $testId;
-
-        return $this;
-    }
-
-    public function getLastQaNodeId(): ?int
-    {
-        return $this->lastQaNodeId;
-    }
-
-    public function setLastQaNodeId(?int $lastQaNodeId): self
-    {
-        $this->lastQaNodeId = $lastQaNodeId;
 
         return $this;
     }
