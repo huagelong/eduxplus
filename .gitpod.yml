@@ -1,3 +1,20 @@
 image:
   file: .gitpod.Dockerfile
-  
+
+ports:
+  # Laravel server
+  - port: 8000
+    onOpen: open-preview
+  # MySQL server
+  - port: 3306
+    onOpen: ignore
+
+tasks:
+  - init: >
+      mysql -u root -e "create database eduxplus" &&
+      composer install &&
+      npm i &&
+      php bin/console app:install
+    command: >
+      php -S 0.0.0.0:8000 -t public
+    
