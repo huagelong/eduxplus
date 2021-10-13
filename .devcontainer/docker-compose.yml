@@ -38,8 +38,8 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: eduxplus
-      MYSQL_USER: mariadb
-      MYSQL_PASSWORD: mariadb
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
 
     # Add "forwardPorts": ["3306"] to **devcontainer.json** to forward MariaDB locally.
     # (Adding the "ports" property to this file will not forward from a Codespace.)
