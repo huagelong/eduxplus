@@ -1,0 +1,17 @@
+{
+    "sqltools.connections": [
+        {
+            "mysqlOptions": {
+                "authProtocol": "default"
+            },
+            "previewLimit": 50,
+            "server": "localhost2",
+            "port": 3306,
+            "driver": "MySQL",
+            "name": "hugelong",
+            "database": "eduxplus",
+            "username": "root",
+            "password": "168wang"
+        }
+    ]
+}
