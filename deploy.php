@@ -7,7 +7,7 @@ require 'recipe/common.php';
 set('application', 'eduxplus');
 
 // Project repository
-set('repository', 'git@codeup.teambition.com:trensy/eduxplus.git');
+set('repository', 'git@github.com:trensy/eduxplus.git');
 
 // [Optional] Allocate tty for git clone. Default value is false.
 set('git_tty', true);
