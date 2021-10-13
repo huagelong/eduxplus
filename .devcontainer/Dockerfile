@@ -3,7 +3,7 @@
 ARG VARIANT=7-bullseye
 FROM mcr.microsoft.com/vscode/devcontainers/php:0-${VARIANT}
 
-RUN apt-get -y install libzip-dev
+RUN apt-get update && apt-get -y install libzip-dev
 RUN pecl install zip
 RUN echo "extension=zip.so" > /usr/local/etc/php/conf.d/zip.ini
 
