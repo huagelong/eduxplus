@@ -231,7 +231,7 @@ class QATestService extends AppBaseService
                         if(!isset($params[$requestKey])){
                             $totalErrorNum = $totalErrorNum+1;
                             $result[$info["id"]] = ["status"=>0,"answer"=>$requestAnswer];
-                            $undoNum = $undoNum+1;
+                            $undoNum = $undoNum;
                         }else{
                             $requestAnswer = $params[$requestKey];
                             if($type == 0){ //单选题
@@ -317,7 +317,7 @@ class QATestService extends AppBaseService
                     }
             }
         }
-
+        //保存到回答数据库
         $teachTestAnswer = new TeachTestAnswer();
         $teachTestAnswer->setErrorNum($totalErrorNum);
         $teachTestAnswer->setAnswerSnapshot(json_encode([$result, $totalScore]));
