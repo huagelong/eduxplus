@@ -166,7 +166,8 @@ class IndexController extends BaseHtmlController
     public function submitAnswerAction($id, QATestService $qaTestService){
         $request = $this->request()->request->all();
         //todo 返回分数等
-        $result = $qaTestService->submitAnswer($id, $request);
+        $uid = $this->getUid();
+        $result = $qaTestService->submitAnswer($id, $request, $uid);
         if(!$this->error()->has()){
             return $this->responseError($this->error()->getLast());
         }

@@ -12,6 +12,7 @@ namespace App\Bundle\QABundle\Service\App;
 use App\Bundle\AppBundle\Lib\Base\AppBaseService;
 use App\Bundle\AppBundle\Service\CategoryService;
 use App\Bundle\AppBundle\Service\TeacherService;
+use App\Bundle\QABundle\Entity\TeachTestAnswer;
 use App\Bundle\QABundle\Entity\TeachTestAnswerLog;
 use Elasticsearch\Endpoints\Indices\Split;
 use Error;
@@ -195,7 +196,7 @@ class QATestService extends AppBaseService
     /**
      * 提交答案
      */
-    public function submitAnswer($testId, $params){
+    public function submitAnswer($testId, $params, $uid){
         //循环test题目获取题目内容
         $sql = "SELECT a.qaNodeId FROM QA:TeachTestSub a WHERE a.testId=:testId ORDER BY a.type ASC, a.sort ASC ";
         $qaNodeIds = $this->fetchFields("qaNodeId", $sql, ["testId"=>$testId]);
@@ -216,52 +217,24 @@ class QATestService extends AppBaseService
         $result = [];
         $totalErrorNum=0;
         $totalRightNum=0;
+        $undoNum=0;
         $totalScore = 0;
         //循环处理答案
         foreach($nodesInfo as &$info){
-            $result[$info["id"]] = ["correct"=>0,"answer"=>""];
+            $result[$info["id"]] = ["status"=>0,"answer"=>""];
             foreach($nodesSubInfo as $sub){
                     if($info["id"] == $sub["qaNodeId"]){
                         $type = $info["type"];
                         $requestKey = "tk_".$type."_".$info["id"];
                         $requestAnswer = isset($params[$requestKey])?$params[$requestKey]:"";
                         $answer = $sub["answer"];
-                        if($type == 0){ //单选题
-                            //答案正确
-                            if($this->eqCheck($requestAnswer, $answer)){
-                                $totalRightNum = $totalRightNum+1;
-                                $result[$info["id"]] = ["status"=>1,"answer"=>$requestAnswer];
-                                $totalScore=$totalScore+$sub["score"];
-                            }else{
-                                $totalErrorNum = $totalErrorNum+1;
-                                $result[$info["id"]] = ["status"=>0,"answer"=>$requestAnswer];
-                            }
-                        }else if($type == 1){//多项选择
-                            
-                            if($requestAnswer){  //数组
-                                if($this->eqCheck($requestAnswer, $answer)){
-                                    $totalRightNum = $totalRightNum+1;
-                                    $result[$info["id"]] = ["status"=>1,"answer"=>$requestAnswer];
-                                    $totalScore=$totalScore+$sub["score"];
-                                }else{
-                                    $totalErrorNum = $totalErrorNum+1;
-                                    $result[$info["id"]] = ["status"=>0,"answer"=>$requestAnswer];
-                                }
-                            }
-
-                        }else if($type == 2){//不定项选择题
-                            if($requestAnswer){  //数组
-                                if($this->eqCheck($requestAnswer, $answer)){
-                                    $totalRightNum = $totalRightNum+1;
-                                    $result[$info["id"]] = ["status"=>1,"answer"=>$requestAnswer];
-                                    $totalScore=$totalScore+$sub["score"];
-                                }else{
-                                    $totalErrorNum = $totalErrorNum+1;
-                                    $result[$info["id"]] = ["status"=>0,"answer"=>$requestAnswer];
-                                }
-                            }
-
-                        }else if($type == 3){//判断题
+                        if(!isset($params[$requestKey])){
+                            $totalErrorNum = $totalErrorNum+1;
+                            $result[$info["id"]] = ["status"=>0,"answer"=>$requestAnswer];
+                            $undoNum = $undoNum+1;
+                        }else{
+                            $requestAnswer = $params[$requestKey];
+                            if($type == 0){ //单选题
                                 //答案正确
                                 if($this->eqCheck($requestAnswer, $answer)){
                                     $totalRightNum = $totalRightNum+1;
@@ -271,41 +244,89 @@ class QATestService extends AppBaseService
                                     $totalErrorNum = $totalErrorNum+1;
                                     $result[$info["id"]] = ["status"=>0,"answer"=>$requestAnswer];
                                 }
-                        }else if($type == 4){//填空题
-                            //todo 需要单独处理
+                            }else if($type == 1){//多项选择
+                                
+                                if($requestAnswer){  //数组
+                                    if($this->eqCheck($requestAnswer, $answer)){
+                                        $totalRightNum = $totalRightNum+1;
+                                        $result[$info["id"]] = ["status"=>1,"answer"=>$requestAnswer];
+                                        $totalScore=$totalScore+$sub["score"];
+                                    }else{
+                                        $totalErrorNum = $totalErrorNum+1;
+                                        $result[$info["id"]] = ["status"=>0,"answer"=>$requestAnswer];
+                                    }
+                                }
+    
+                            }else if($type == 2){//不定项选择题
+                                if($requestAnswer){  //数组
+                                    if($this->eqCheck($requestAnswer, $answer)){
+                                        $totalRightNum = $totalRightNum+1;
+                                        $result[$info["id"]] = ["status"=>1,"answer"=>$requestAnswer];
+                                        $totalScore=$totalScore+$sub["score"];
+                                    }else{
+                                        $totalErrorNum = $totalErrorNum+1;
+                                        $result[$info["id"]] = ["status"=>0,"answer"=>$requestAnswer];
+                                    }
+                                }
+    
+                            }else if($type == 3){//判断题
+                                    //答案正确
+                                    if($this->eqCheck($requestAnswer, $answer)){
+                                        $totalRightNum = $totalRightNum+1;
+                                        $result[$info["id"]] = ["status"=>1,"answer"=>$requestAnswer];
+                                        $totalScore=$totalScore+$sub["score"];
+                                    }else{
+                                        $totalErrorNum = $totalErrorNum+1;
+                                        $result[$info["id"]] = ["status"=>0,"answer"=>$requestAnswer];
+                                    }
+                            }else if($type == 4){//填空题
+                                //todo 需要单独处理
+    
+                            }else if($type == 5){//问答
+                                list($status, $subScore) = $this->kwCheck($requestAnswer, $answer, $sub["score"]);
+                                if($status == 1){
+                                    $totalRightNum = $totalRightNum+1;
+                                    $result[$info["id"]] = ["status"=>1,"answer"=>$requestAnswer];
+                                    $totalScore=$totalScore+$subScore;
+                                }else if($status ==2){
+                                    $result[$info["id"]] = ["status"=>2,"answer"=>$requestAnswer];
+                                    $totalScore=$totalScore+$subScore;
+                                }else{
+                                    $totalErrorNum = $totalErrorNum+1;
+                                    $result[$info["id"]] = ["status"=>0,"answer"=>$requestAnswer];
+                                }
+                            }else if($type == 6){//理解
+                                list($status, $subScore) = $this->kwCheck($requestAnswer, $answer, $sub["score"]);
+                                if($status == 1){
+                                    $totalRightNum = $totalRightNum+1;
+                                    $result[$info["id"]] = ["status"=>1,"answer"=>$requestAnswer];
+                                    $totalScore=$totalScore+$subScore;
+                                }else if($status ==2){
+                                    $result[$info["id"]] = ["status"=>2,"answer"=>$requestAnswer];
+                                    $totalScore=$totalScore+$subScore;
+                                }else{
+                                    $totalErrorNum = $totalErrorNum+1;
+                                    $result[$info["id"]] = ["status"=>0,"answer"=>$requestAnswer];
+                                }
+                            }
 
-                        }else if($type == 5){//问答
-                            list($status, $subScore) = $this->kwCheck($requestAnswer, $answer, $sub["score"]);
-                            if($status == 1){
-                                $totalRightNum = $totalRightNum+1;
-                                $result[$info["id"]] = ["status"=>1,"answer"=>$requestAnswer];
-                                $totalScore=$totalScore+$subScore;
-                            }else if($status ==2){
-                                $result[$info["id"]] = ["status"=>2,"answer"=>$requestAnswer];
-                                $totalScore=$totalScore+$subScore;
-                            }else{
-                                $totalErrorNum = $totalErrorNum+1;
-                                $result[$info["id"]] = ["status"=>0,"answer"=>$requestAnswer];
-                            }
-                        }else if($type == 6){//理解
-                            list($status, $subScore) = $this->kwCheck($requestAnswer, $answer, $sub["score"]);
-                            if($status == 1){
-                                $totalRightNum = $totalRightNum+1;
-                                $result[$info["id"]] = ["status"=>1,"answer"=>$requestAnswer];
-                                $totalScore=$totalScore+$subScore;
-                            }else if($status ==2){
-                                $result[$info["id"]] = ["status"=>2,"answer"=>$requestAnswer];
-                                $totalScore=$totalScore+$subScore;
-                            }else{
-                                $totalErrorNum = $totalErrorNum+1;
-                                $result[$info["id"]] = ["status"=>0,"answer"=>$requestAnswer];
-                            }
                         }
+                        
+                        
                         break;
                     }
             }
         }
-       
+
+        $teachTestAnswer = new TeachTestAnswer();
+        $teachTestAnswer->setErrorNum($totalErrorNum);
+        $teachTestAnswer->setAnswerSnapshot(json_encode([$result, $totalScore]));
+        $teachTestAnswer->setRightNum($totalRightNum);
+        $teachTestAnswer->setUid($uid);
+        $teachTestAnswer->setUndoNum($undoNum);
+        $teachTestAnswer->setTestId($testId);
+        $answerId = $this->save($teachTestAnswer);
+       return [$answerId, $totalErrorNum, $totalRightNum, $undoNum, $totalScore];
     }
 
     /**
