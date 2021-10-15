@@ -230,22 +230,22 @@ class QATestService extends AppBaseService
                             //答案正确
                             if($this->eqCheck($requestAnswer, $answer)){
                                 $totalRightNum = $totalRightNum+1;
-                                $result[$info["id"]] = ["correct"=>1,"answer"=>$requestAnswer];
+                                $result[$info["id"]] = ["status"=>1,"answer"=>$requestAnswer];
                                 $totalScore=$totalScore+$sub["score"];
                             }else{
                                 $totalErrorNum = $totalErrorNum+1;
-                                $result[$info["id"]] = ["correct"=>0,"answer"=>$requestAnswer];
+                                $result[$info["id"]] = ["status"=>0,"answer"=>$requestAnswer];
                             }
                         }else if($type == 1){//多项选择
                             
                             if($requestAnswer){  //数组
                                 if($this->eqCheck($requestAnswer, $answer)){
                                     $totalRightNum = $totalRightNum+1;
-                                    $result[$info["id"]] = ["correct"=>1,"answer"=>$requestAnswer];
+                                    $result[$info["id"]] = ["status"=>1,"answer"=>$requestAnswer];
                                     $totalScore=$totalScore+$sub["score"];
                                 }else{
                                     $totalErrorNum = $totalErrorNum+1;
-                                    $result[$info["id"]] = ["correct"=>0,"answer"=>$requestAnswer];
+                                    $result[$info["id"]] = ["status"=>0,"answer"=>$requestAnswer];
                                 }
                             }
 
@@ -253,11 +253,11 @@ class QATestService extends AppBaseService
                             if($requestAnswer){  //数组
                                 if($this->eqCheck($requestAnswer, $answer)){
                                     $totalRightNum = $totalRightNum+1;
-                                    $result[$info["id"]] = ["correct"=>1,"answer"=>$requestAnswer];
+                                    $result[$info["id"]] = ["status"=>1,"answer"=>$requestAnswer];
                                     $totalScore=$totalScore+$sub["score"];
                                 }else{
                                     $totalErrorNum = $totalErrorNum+1;
-                                    $result[$info["id"]] = ["correct"=>0,"answer"=>$requestAnswer];
+                                    $result[$info["id"]] = ["status"=>0,"answer"=>$requestAnswer];
                                 }
                             }
 
@@ -265,21 +265,42 @@ class QATestService extends AppBaseService
                                 //答案正确
                                 if($this->eqCheck($requestAnswer, $answer)){
                                     $totalRightNum = $totalRightNum+1;
-                                    $result[$info["id"]] = ["correct"=>1,"answer"=>$requestAnswer];
+                                    $result[$info["id"]] = ["status"=>1,"answer"=>$requestAnswer];
                                     $totalScore=$totalScore+$sub["score"];
                                 }else{
                                     $totalErrorNum = $totalErrorNum+1;
-                                    $result[$info["id"]] = ["correct"=>0,"answer"=>$requestAnswer];
+                                    $result[$info["id"]] = ["status"=>0,"answer"=>$requestAnswer];
                                 }
                         }else if($type == 4){//填空题
-                            
+                            //todo 需要单独处理
+
                         }else if($type == 5){//问答
-
+                            list($status, $subScore) = $this->kwCheck($requestAnswer, $answer, $sub["score"]);
+                            if($status == 1){
+                                $totalRightNum = $totalRightNum+1;
+                                $result[$info["id"]] = ["status"=>1,"answer"=>$requestAnswer];
+                                $totalScore=$totalScore+$subScore;
+                            }else if($status ==2){
+                                $result[$info["id"]] = ["status"=>2,"answer"=>$requestAnswer];
+                                $totalScore=$totalScore+$subScore;
+                            }else{
+                                $totalErrorNum = $totalErrorNum+1;
+                                $result[$info["id"]] = ["status"=>0,"answer"=>$requestAnswer];
+                            }
                         }else if($type == 6){//理解
-
+                            list($status, $subScore) = $this->kwCheck($requestAnswer, $answer, $sub["score"]);
+                            if($status == 1){
+                                $totalRightNum = $totalRightNum+1;
+                                $result[$info["id"]] = ["status"=>1,"answer"=>$requestAnswer];
+                                $totalScore=$totalScore+$subScore;
+                            }else if($status ==2){
+                                $result[$info["id"]] = ["status"=>2,"answer"=>$requestAnswer];
+                                $totalScore=$totalScore+$subScore;
+                            }else{
+                                $totalErrorNum = $totalErrorNum+1;
+                                $result[$info["id"]] = ["status"=>0,"answer"=>$requestAnswer];
+                            }
                         }
-
-
                         break;
                     }
             }
@@ -310,16 +331,33 @@ class QATestService extends AppBaseService
     /**
      * 关键字检查
      */
-    private function kwCheck($requestAnswer, $answer, $score, $isOrder=0){
-        if($isOrder){
+    private function kwCheck($requestAnswer, $answer, $score){
             $answer = str_replace("\|", chr(0), $answer);
             $answer = str_replace("\:", chr(1), $answer);
             $answer = explode("|", $answer);
+            $totalScore = 0;
+            $correct = 0;
             foreach($answer as $v){
-                $answerParse = explode(":", $v);
-                
+                $answerParseArr = explode(":", $v);
+                $answerStr = isset($answerParseArr[0])?$answerParseArr[0]:"";
+                $subScore = isset($answerParseArr[1])?$answerParseArr[1]:0;
+                $answerStr = str_replace("\|", chr(0), $answerStr);
+                $answerStr = str_replace("\:", chr(1), $answerStr);
+                if(stristr($requestAnswer, $answerStr)){
+                    $correct=$correct+1;
+                    $totalScore = $totalScore+$subScore;
+                }
             }
-        }
+            $status = 0;
+            if($correct > 0){
+                if(count($answer)>$correct){
+                    $status = 2; //部分正确
+                }else{
+                    $status = 1; //全部正确
+                }
+            }
+            $totalScore = $totalScore>$score?$score:$totalScore;
+           return [$status, $totalScore];
     }
 
 }

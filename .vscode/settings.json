@@ -13,5 +13,13 @@
             "username": "root",
             "password": "168wang"
         }
+    ],
+    "sshfs.configs": [
+        {
+            "name": "eduxplus",
+            "password": "Qxw4bQB24m",
+            "username": "root",
+            "host": "localhost2"
+        }
     ]
 }
