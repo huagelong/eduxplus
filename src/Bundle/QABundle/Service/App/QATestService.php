@@ -139,9 +139,8 @@ class QATestService extends AppBaseService
         //做题记录
         $sqlAnswerLog = "SELECT a FROM QA:TeachTestAnswerLog a WHERE a.testId=:testId ";
         $answerLogList = $this->fetchAll($sqlAnswerLog, ["testId"=>$testId]);
-
-        $result = [];
-        foreach($nodesInfo as &$info){
+       
+        foreach($nodesInfo as $k=>$info){
             foreach($nodesSubInfo as &$sub){
                     if($info["id"] == $sub["qaNodeId"]){
                         if($info["type"] == 4){
@@ -150,7 +149,7 @@ class QATestService extends AppBaseService
                             $answer = explode("|", $answer);
                             $sub["count"] = count($answer)-1;
                         }
-                        $info["sub"] = $sub;
+                        $nodesInfo[$k]["sub"] = $sub;
                         break;
                     }
             }
@@ -159,7 +158,7 @@ class QATestService extends AppBaseService
             if($answerLogList){
                 foreach($answerLogList as $answerLog){
                     if($info["id"] == $answerLog["qaNodeId"]){
-                        $info["log"] = $answerLog;
+                        $nodesInfo[$k]["log"] = $answerLog;
                         break;
                     }
                 }
@@ -167,9 +166,11 @@ class QATestService extends AppBaseService
 
         }
         
+        $result = [];
         foreach($nodesInfo as $info){
             $result[$info["type"]][] = $info;
         }
+ 
        return $result;
     }
 

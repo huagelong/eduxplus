@@ -155,6 +155,7 @@ class IndexController extends BaseHtmlController
         $data = [];
         $data["testInfo"] = $qaTestService->getTestById($id);
         $data["testNode"] = $qaTestService->getTest($id);
+       
         return $this->render("@QABundle/exam/testTodo.html.twig", $data);
     }
 
