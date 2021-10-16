@@ -328,7 +328,8 @@ class QATestService extends AppBaseService
         //保存到回答数据库
         $teachTestAnswer = new TeachTestAnswer();
         $teachTestAnswer->setErrorNum($totalErrorNum);
-        $teachTestAnswer->setAnswerSnapshot(json_encode([$result, $totalScore]));
+        $teachTestAnswer->setScore($totalScore);
+        $teachTestAnswer->setAnswerSnapshot(json_encode($result));
         $teachTestAnswer->setRightNum($totalRightNum);
         $teachTestAnswer->setUid($uid);
         $teachTestAnswer->setUndoNum($undoNum);
