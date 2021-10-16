@@ -22,18 +22,18 @@
                                 <div class="optionList">
                                   <ul>
                                   {% if json_get(item["sub"]["options"], 0) != "" %}
-                                    <li><input type="radio" class="ch0" {% if item["log"]["answer"] is defined %} {{ diff(item["log"]["answer"], "a") }} {% endif %} data-id="{{ item["id"] }}" name="tk_0_{{ item["id"] }}" value="a" >&nbsp;&nbsp;&nbsp;&nbsp;A、{{ json_get(item["sub"]["options"], 0) }}</li> {% endif %}
+                                    <li><input type="radio" class="ch0" {% if item["log"]["answer"] is defined %} {{ diff(item["log"]["answer"], "a") }} {% endif %} data-id="{{ item["id"] }}" name="tk-0-{{ item["id"] }}" value="a" >&nbsp;&nbsp;&nbsp;&nbsp;A、{{ json_get(item["sub"]["options"], 0) }}</li> {% endif %}
                                    {% if json_get(item["sub"]["options"], 1) != "" %}
-                                    <li><input type="radio" class="ch0" {% if item["log"]["answer"] is defined %} {{ diff(item["log"]["answer"], "b") }} {% endif %} data-id="{{ item["id"] }}" name="tk_0_{{ item["id"] }}" value="b" >&nbsp;&nbsp;&nbsp;&nbsp;B、{{ json_get(item["sub"]["options"], 1) }}</li>
+                                    <li><input type="radio" class="ch0" {% if item["log"]["answer"] is defined %} {{ diff(item["log"]["answer"], "b") }} {% endif %} data-id="{{ item["id"] }}" name="tk-0-{{ item["id"] }}" value="b" >&nbsp;&nbsp;&nbsp;&nbsp;B、{{ json_get(item["sub"]["options"], 1) }}</li>
                                   {% endif %}
                                    {% if json_get(item["sub"]["options"], 2) != "" %}
-                                    <li><input type="radio"  class="ch0" {% if item["log"]["answer"] is defined %} {{ diff(item["log"]["answer"], "c") }} {% endif %} data-id="{{ item["id"] }}" name="tk_0_{{ item["id"] }}" value="c" >&nbsp;&nbsp;&nbsp;&nbsp;C、{{ json_get(item["sub"]["options"], 2) }}</li>
+                                    <li><input type="radio"  class="ch0" {% if item["log"]["answer"] is defined %} {{ diff(item["log"]["answer"], "c") }} {% endif %} data-id="{{ item["id"] }}" name="tk-0-{{ item["id"] }}" value="c" >&nbsp;&nbsp;&nbsp;&nbsp;C、{{ json_get(item["sub"]["options"], 2) }}</li>
                                   {% endif %}
                                    {% if json_get(item["sub"]["options"], 3) != "" %}
-                                    <li><input type="radio"  class="ch0" {% if item["log"]["answer"] is defined %} {{ diff(item["log"]["answer"], "d") }}  {% endif %}  data-id="{{ item["id"] }}" name="tk_0_{{ item["id"] }}" value="d" >&nbsp;&nbsp;&nbsp;&nbsp;D、{{ json_get(item["sub"]["options"], 3) }}</li>
+                                    <li><input type="radio"  class="ch0" {% if item["log"]["answer"] is defined %} {{ diff(item["log"]["answer"], "d") }}  {% endif %}  data-id="{{ item["id"] }}" name="tk-0-{{ item["id"] }}" value="d" >&nbsp;&nbsp;&nbsp;&nbsp;D、{{ json_get(item["sub"]["options"], 3) }}</li>
                                   {% endif %}
                                    {% if json_get(item["sub"]["options"], 4) != "" %}
-                                    <li><input type="radio"  class="ch0" {% if item["log"]["answer"] is defined %} {{ diff(item["log"]["answer"], "e") }}  {% endif %} data-id="{{ item["id"] }}" name="tk_0_{{ item["id"] }}" value="e" >&nbsp;&nbsp;&nbsp;&nbsp;E、{{ json_get(item["sub"]["options"], 4) }}</li>
+                                    <li><input type="radio"  class="ch0" {% if item["log"]["answer"] is defined %} {{ diff(item["log"]["answer"], "e") }}  {% endif %} data-id="{{ item["id"] }}" name="tk-0-{{ item["id"] }}" value="e" >&nbsp;&nbsp;&nbsp;&nbsp;E、{{ json_get(item["sub"]["options"], 4) }}</li>
                                   {% endif %}
                                   </ul>
                                 </div>
@@ -52,19 +52,19 @@
                                 <div class="optionList">
                                   <ul>
                                   {% if json_get(item["sub"]["options"], 0) != "" %}
-                                    <li><input type="checkbox" class="ch" {% if item["log"]["answer"] is defined %} {{ inArrayDiff(item["log"]["answer"], "a") }} {% endif %} data-id="{{ item["id"] }}"  name="tk_1_{{ item["id"] }}[]" value="a" >&nbsp;&nbsp;&nbsp;&nbsp;A、{{ json_get(item["sub"]["options"], 0) }}</li>
+                                    <li><input type="checkbox" class="ch" {% if item["log"]["answer"] is defined %} {{ inArrayDiff(item["log"]["answer"], "a") }} {% endif %} data-id="{{ item["id"] }}"  name="tk-1-{{ item["id"] }}[]" value="a" >&nbsp;&nbsp;&nbsp;&nbsp;A、{{ json_get(item["sub"]["options"], 0) }}</li>
                                   {% endif %}
                                    {% if json_get(item["sub"]["options"], 1) != "" %}
-                                    <li><input type="checkbox" class="ch" {% if item["log"]["answer"] is defined %} {{ inArrayDiff(item["log"]["answer"], "b") }}  {% endif %}  data-id="{{ item["id"] }}" name="tk_1_{{ item["id"] }}[]" value="b" >&nbsp;&nbsp;&nbsp;&nbsp;B、{{ json_get(item["sub"]["options"], 1) }}</li>
+                                    <li><input type="checkbox" class="ch" {% if item["log"]["answer"] is defined %} {{ inArrayDiff(item["log"]["answer"], "b") }}  {% endif %}  data-id="{{ item["id"] }}" name="tk-1-{{ item["id"] }}[]" value="b" >&nbsp;&nbsp;&nbsp;&nbsp;B、{{ json_get(item["sub"]["options"], 1) }}</li>
                                   {% endif %}
                                    {% if json_get(item["sub"]["options"], 2) != "" %}
-                                    <li><input type="checkbox" class="ch" {% if item["log"]["answer"] is defined %} {{ inArrayDiff(item["log"]["answer"], "c") }}  {% endif %}  data-id="{{ item["id"] }}"  name="tk_1_{{ item["id"] }}[]" value="c" >&nbsp;&nbsp;&nbsp;&nbsp;C、{{ json_get(item["sub"]["options"], 2) }}</li>
+                                    <li><input type="checkbox" class="ch" {% if item["log"]["answer"] is defined %} {{ inArrayDiff(item["log"]["answer"], "c") }}  {% endif %}  data-id="{{ item["id"] }}"  name="tk-1-{{ item["id"] }}[]" value="c" >&nbsp;&nbsp;&nbsp;&nbsp;C、{{ json_get(item["sub"]["options"], 2) }}</li>
                                   {% endif %}
                                    {% if json_get(item["sub"]["options"], 3) != "" %}
-                                    <li><input type="checkbox" class="ch" {% if item["log"]["answer"] is defined %} {{ inArrayDiff(item["log"]["answer"], "d") }}  {% endif %}  data-id="{{ item["id"] }}"  name="tk_1_{{ item["id"] }}[]" value="d" >&nbsp;&nbsp;&nbsp;&nbsp;D、{{ json_get(item["sub"]["options"], 3) }}</li>
+                                    <li><input type="checkbox" class="ch" {% if item["log"]["answer"] is defined %} {{ inArrayDiff(item["log"]["answer"], "d") }}  {% endif %}  data-id="{{ item["id"] }}"  name="tk-1-{{ item["id"] }}[]" value="d" >&nbsp;&nbsp;&nbsp;&nbsp;D、{{ json_get(item["sub"]["options"], 3) }}</li>
                                   {% endif %}
                                    {% if json_get(item["sub"]["options"], 4) != "" %}
-                                    <li><input type="checkbox" class="ch" {% if item["log"]["answer"] is defined %} {{ inArrayDiff(item["log"]["answer"], "e") }}  {% endif %}  data-id="{{ item["id"] }}"  name="tk_1_{{ item["id"] }}[]" value="e" >&nbsp;&nbsp;&nbsp;&nbsp;E、{{ json_get(item["sub"]["options"], 4) }}</li>
+                                    <li><input type="checkbox" class="ch" {% if item["log"]["answer"] is defined %} {{ inArrayDiff(item["log"]["answer"], "e") }}  {% endif %}  data-id="{{ item["id"] }}"  name="tk-1-{{ item["id"] }}[]" value="e" >&nbsp;&nbsp;&nbsp;&nbsp;E、{{ json_get(item["sub"]["options"], 4) }}</li>
                                   {% endif %}
                                   </ul>
                                 </div>
@@ -82,19 +82,19 @@
                                 <div class="optionList">
                                   <ul>
                                   {% if json_get(item["sub"]["options"], 0) != "" %}
-                                    <li><input type="checkbox" class="ch"  {% if item["log"]["answer"] is defined %} {{ inArrayDiff(item["log"]["answer"], "a") }}  {% endif %} data-id="{{ item["id"] }}" name="tk_2_{{ item["id"] }}[]" value="a" >&nbsp;&nbsp;&nbsp;&nbsp;A、{{ json_get(item["sub"]["options"], 0) }}</li>
+                                    <li><input type="checkbox" class="ch"  {% if item["log"]["answer"] is defined %} {{ inArrayDiff(item["log"]["answer"], "a") }}  {% endif %} data-id="{{ item["id"] }}" name="tk-2-{{ item["id"] }}[]" value="a" >&nbsp;&nbsp;&nbsp;&nbsp;A、{{ json_get(item["sub"]["options"], 0) }}</li>
                                   {% endif %}
                                    {% if json_get(item["sub"]["options"], 1) != "" %}
-                                    <li><input type="checkbox"  class="ch"  {% if item["log"]["answer"] is defined %} {{ inArrayDiff(item["log"]["answer"], "b") }}  {% endif %} data-id="{{ item["id"] }}" name="tk_2_{{ item["id"] }}[]"  value="b" >&nbsp;&nbsp;&nbsp;&nbsp;B、{{ json_get(item["sub"]["options"], 1) }}</li>
+                                    <li><input type="checkbox"  class="ch"  {% if item["log"]["answer"] is defined %} {{ inArrayDiff(item["log"]["answer"], "b") }}  {% endif %} data-id="{{ item["id"] }}" name="tk-2-{{ item["id"] }}[]"  value="b" >&nbsp;&nbsp;&nbsp;&nbsp;B、{{ json_get(item["sub"]["options"], 1) }}</li>
                                   {% endif %}
                                    {% if json_get(item["sub"]["options"], 2) != "" %}
-                                    <li><input type="checkbox"  class="ch"  {% if item["log"]["answer"] is defined %} {{ inArrayDiff(item["log"]["answer"], "c") }}  {% endif %} data-id="{{ item["id"] }}" name="tk_2_{{ item["id"] }}[]"  value="c" >&nbsp;&nbsp;&nbsp;&nbsp;C、{{ json_get(item["sub"]["options"], 2) }}</li>
+                                    <li><input type="checkbox"  class="ch"  {% if item["log"]["answer"] is defined %} {{ inArrayDiff(item["log"]["answer"], "c") }}  {% endif %} data-id="{{ item["id"] }}" name="tk-2-{{ item["id"] }}[]"  value="c" >&nbsp;&nbsp;&nbsp;&nbsp;C、{{ json_get(item["sub"]["options"], 2) }}</li>
                                   {% endif %}
                                    {% if json_get(item["sub"]["options"], 3) != "" %}
-                                    <li><input type="checkbox"  class="ch"  {% if item["log"]["answer"] is defined %} {{ inArrayDiff(item["log"]["answer"], "d") }}  {% endif %} data-id="{{ item["id"] }}" name="tk_2_{{ item["id"] }}[]"  value="d" >&nbsp;&nbsp;&nbsp;&nbsp;D、{{ json_get(item["sub"]["options"], 3) }}</li>
+                                    <li><input type="checkbox"  class="ch"  {% if item["log"]["answer"] is defined %} {{ inArrayDiff(item["log"]["answer"], "d") }}  {% endif %} data-id="{{ item["id"] }}" name="tk-2-{{ item["id"] }}[]"  value="d" >&nbsp;&nbsp;&nbsp;&nbsp;D、{{ json_get(item["sub"]["options"], 3) }}</li>
                                   {% endif %}
                                    {% if json_get(item["sub"]["options"], 4) != "" %}
-                                    <li><input type="checkbox"  class="ch"  {% if item["log"]["answer"] is defined %} {{ inArrayDiff(item["log"]["answer"], "e") }}  {% endif %} data-id="{{ item["id"] }}" name="tk_2_{{ item["id"] }}[]"  value="e" >&nbsp;&nbsp;&nbsp;&nbsp;E、{{ json_get(item["sub"]["options"], 4) }}</li>
+                                    <li><input type="checkbox"  class="ch"  {% if item["log"]["answer"] is defined %} {{ inArrayDiff(item["log"]["answer"], "e") }}  {% endif %} data-id="{{ item["id"] }}" name="tk-2-{{ item["id"] }}[]"  value="e" >&nbsp;&nbsp;&nbsp;&nbsp;E、{{ json_get(item["sub"]["options"], 4) }}</li>
                                   {% endif %}
                                   </ul>
                                 </div>
@@ -110,8 +110,8 @@
                              <div class="title"  id="point_3_{{ itemk+1 }}"><p style="float:left">{{ itemk+1 }}、</p>{{ item["topic"]|raw }}</div>
                               <div class="optionList">
                                   <ul>
-                                    <li><input type="radio"  class="ch0"  {% if item["log"]["answer"] is defined %} {{ diff(item["log"]["answer"], "1") }}  {% endif %} data-id="{{ item["id"] }}" name="tk_3_{{ item["id"] }}" value="1" >&nbsp;&nbsp;&nbsp;&nbsp;√</li>
-                                    <li><input type="radio"  class="ch0"  {% if item["log"]["answer"] is defined %} {{ diff(item["log"]["answer"], "0") }}  {% endif %} data-id="{{ item["id"] }}" name="tk_3_{{ item["id"] }}" value="0" >&nbsp;&nbsp;&nbsp;&nbsp;×</li>
+                                    <li><input type="radio"  class="ch0"  {% if item["log"]["answer"] is defined %} {{ diff(item["log"]["answer"], "1") }}  {% endif %} data-id="{{ item["id"] }}" name="tk-3-{{ item["id"] }}" value="1" >&nbsp;&nbsp;&nbsp;&nbsp;√</li>
+                                    <li><input type="radio"  class="ch0"  {% if item["log"]["answer"] is defined %} {{ diff(item["log"]["answer"], "0") }}  {% endif %} data-id="{{ item["id"] }}" name="tk-3-{{ item["id"] }}" value="0" >&nbsp;&nbsp;&nbsp;&nbsp;×</li>
                                   </ul>
                                 </div>
                               {% endfor %}
@@ -126,7 +126,7 @@
                               <div class="optionList">
                                   <ul>
                                    {% for i in 0..item["sub"]["count"] %}
-                                    <li><input type="text"  data-id="{{ item["id"] }}" name="tk_4_{{ item["id"] }}[]" value="{% if item["log"]["answer"] is defined %} {{ if_get(item["log"]["answer"]) }}  {% endif %} " class="layui-input chkey" ></li>
+                                    <li><input type="text"  data-id="{{ item["id"] }}" name="tk-4-{{ item["id"] }}[]" value="{% if item["log"]["answer"] is defined %} {{ if_get(item["log"]["answer"]) }}  {% endif %} " class="layui-input chkey" ></li>
                                     {% endfor %}
                                   </ul>
                                 </div>
@@ -143,7 +143,7 @@
                              <div class="title"  id="point_5_{{ itemk+1 }}"><p style="float:left">{{ itemk+1 }}、</p>{{ item["topic"]|raw }}</div>
                              <div class="optionList">
                                   <ul>
-                                    <li><textarea  data-id="{{ item["id"] }}" name="tk_5_{{ item["id"] }}" class="layui-textarea chkey" >{% if item["log"]["answer"] is defined %} {{ if_get(item["log"]["answer"]) }}  {% endif %} </textarea></li>
+                                    <li><textarea  data-id="{{ item["id"] }}" name="tk-5-{{ item["id"] }}" class="layui-textarea chkey" >{% if item["log"]["answer"] is defined %} {{ if_get(item["log"]["answer"]) }}  {% endif %} </textarea></li>
                                   </ul>
                                 </div>
                               {% endfor %}
@@ -159,7 +159,7 @@
                              <div class="title"  id="point_6_{{ itemk+1 }}"><p style="float:left">{{ itemk+1 }}、</p>{{ item["topic"]|raw }}</div>
                               <div class="optionList">
                                   <ul>
-                                    <li><textarea data-id="{{ item["id"] }}" name="tk_6_{{ item["id"] }}" class="layui-textarea chkey" >{% if item["log"]["answer"] is defined %} {{ if_get(item["log"]["answer"]) }}  {% endif %} </textarea></li>
+                                    <li><textarea data-id="{{ item["id"] }}" name="tk-6-{{ item["id"] }}" class="layui-textarea chkey" >{% if item["log"]["answer"] is defined %} {{ if_get(item["log"]["answer"]) }}  {% endif %} </textarea></li>
                                   </ul>
                                 </div>
                               {% endfor %}
