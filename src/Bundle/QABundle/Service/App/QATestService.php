@@ -342,14 +342,19 @@ class QATestService extends AppBaseService
      * 相等检查
      */
     private function eqCheck($requestAnswer, $answer){
-        sort($requestAnswer);
-        $requestAnswerStr = implode("", $requestAnswer);
-        $answer = str_replace("\|", chr(0), $answer);
-        $answer = explode("|", $answer);
-        sort($answer);
-        $answerStr = "";
-        foreach($answer as $v){
-            $answerStr=$answerStr+str_replace(chr(0), "|", $answer);
+        if(is_array($requestAnswer)){
+            sort($requestAnswer);
+            $requestAnswerStr = implode("", $requestAnswer);
+            $answer = str_replace("\|", chr(0), $answer);
+            $answer = explode("|", $answer);
+            sort($answer);
+            $answerStr = "";
+            foreach($answer as $v){
+                $answerStr=$answerStr+str_replace(chr(0), "|", $answer);
+            }
+        }else{
+            $answerStr = $answer = str_replace("\|", "|", $answer);
+            $requestAnswerStr = $requestAnswer;
         }
         if(strtolower($answerStr) == strtolower($requestAnswerStr)){
             return true;
