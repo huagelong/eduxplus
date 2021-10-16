@@ -125,7 +125,9 @@
                              <div class="title"  id="point_4_{{ itemk+1 }}"><p style="float:left">{{ itemk+1 }}、</p>{{ item["topic"]|raw }}</div>
                               <div class="optionList">
                                   <ul>
-                                    <li><input type="text"  data-id="{{ item["id"] }}" name="tk_4_{{ item["id"] }}" value="{% if item["log"]["answer"] is defined %} {{ if_get(item["log"]["answer"]) }}  {% endif %} " class="layui-input chkey" ></li>
+                                   {% for i in 0..item["sub"]["count"] %}
+                                    <li><input type="text"  data-id="{{ item["id"] }}" name="tk_4_{{ item["id"] }}[]" value="{% if item["log"]["answer"] is defined %} {{ if_get(item["log"]["answer"]) }}  {% endif %} " class="layui-input chkey" ></li>
+                                    {% endfor %}
                                   </ul>
                                 </div>
                               {% endfor %}

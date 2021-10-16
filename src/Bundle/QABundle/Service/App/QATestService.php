@@ -142,8 +142,14 @@ class QATestService extends AppBaseService
 
         $result = [];
         foreach($nodesInfo as &$info){
-            foreach($nodesSubInfo as $sub){
+            foreach($nodesSubInfo as &$sub){
                     if($info["id"] == $sub["qaNodeId"]){
+                        if($info["type"] == 4){
+                            $answer = $sub["answer"];
+                            $answer = str_replace("\|", chr(0), $answer);
+                            $answer = explode("|", $answer);
+                            $sub["count"] = count($answer)-1;
+                        }
                         $info["sub"] = $sub;
                         break;
                     }
@@ -197,6 +203,7 @@ class QATestService extends AppBaseService
      * 提交答案
      */
     public function submitAnswer($testId, $params, $uid){
+        // print_r($params);exit;
         //循环test题目获取题目内容
         $sql = "SELECT a.qaNodeId FROM QA:TeachTestSub a WHERE a.testId=:testId ORDER BY a.type ASC, a.sort ASC ";
         $qaNodeIds = $this->fetchFields("qaNodeId", $sql, ["testId"=>$testId]);

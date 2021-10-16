@@ -138,4 +138,6 @@
 .navigation{
   padding: 10px;
 }
-
+.table td, .table th{
+    vertical-align:middle !important;
+}
