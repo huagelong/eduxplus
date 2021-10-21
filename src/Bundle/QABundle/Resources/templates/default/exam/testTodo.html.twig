@@ -126,7 +126,7 @@
                               <div class="optionList">
                                   <ul>
                                    {% for i in 0..item["sub"]["count"] %}
-                                    <li><input type="text" data-type="{{ item["type"] }}" data-id="{{ item["id"] }}" name="tk-4-{{ item["id"] }}[]" value="{% if item["log"]["answer"] is defined %} {{ if_get(item["log"]["answer"]) }}  {% endif %} " class="layui-input chkey" ></li>
+                                    <li><input type="text" data-type="{{ item["type"] }}" data-id="{{ item["id"] }}" name="tk-4-{{ item["id"] }}[]" value="{% if item["log"]["answer"] is defined %} {{ json_get(item["log"]["answer"], i) }}  {% endif %} " class="layui-input chkey" ></li>
                                     {% endfor %}
                                   </ul>
                                 </div>
