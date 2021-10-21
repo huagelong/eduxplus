@@ -58,6 +58,13 @@ class TeachTestAnswer
      */
     private $rightNum;
 
+        /**
+     * @var int|null
+     *
+     * @ORM\Column(name="score", type="integer", nullable=true, options={"comment"="得分"})
+     */
+    private $score;
+
     /**
      * @var int|null
      *
@@ -149,6 +156,18 @@ class TeachTestAnswer
         return $this;
     }
 
+    public function getScore(): ?int
+    {
+        return $this->score;
+    }
+
+    public function setScore(?int $score): self
+    {
+        $this->score = $score;
+
+        return $this;
+    }
+
     public function getUndoNum(): ?int
     {
         return $this->undoNum;
@@ -196,4 +215,6 @@ class TeachTestAnswer
 
         return $this;
     }
+
+    
 }

@@ -155,6 +155,7 @@ class IndexController extends BaseHtmlController
         $data = [];
         $data["testInfo"] = $qaTestService->getTestById($id);
         $data["testNode"] = $qaTestService->getTest($id);
+       
         return $this->render("@QABundle/exam/testTodo.html.twig", $data);
     }
 
@@ -189,9 +190,9 @@ class IndexController extends BaseHtmlController
         if(!$nodeId) return $this->responseError("参数有误nodeId!");
         if(!$answer) return $this->responseError("参数有误answer!");
 
-        $qaTestService->saveAnswerLog($testId, $nodeId, $uid, $answer);
+        $answerInfo = $qaTestService->saveAnswerLog($testId, $nodeId, $uid, $answer);
 
-        return $this->responseSuccess("");
+        return $this->responseSuccess($answerInfo);
     }
 
 

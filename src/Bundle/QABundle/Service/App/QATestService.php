@@ -139,12 +139,17 @@ class QATestService extends AppBaseService
         //做题记录
         $sqlAnswerLog = "SELECT a FROM QA:TeachTestAnswerLog a WHERE a.testId=:testId ";
         $answerLogList = $this->fetchAll($sqlAnswerLog, ["testId"=>$testId]);
-
-        $result = [];
-        foreach($nodesInfo as &$info){
-            foreach($nodesSubInfo as $sub){
+       
+        foreach($nodesInfo as $k=>$info){
+            foreach($nodesSubInfo as &$sub){
                     if($info["id"] == $sub["qaNodeId"]){
-                        $info["sub"] = $sub;
+                        if($info["type"] == 4){
+                            $answer = $sub["answer"];
+                            $answer = str_replace("\|", chr(0), $answer);
+                            $answer = explode("|", $answer);
+                            $sub["count"] = count($answer)-1;
+                        }
+                        $nodesInfo[$k]["sub"] = $sub;
                         break;
                     }
             }
@@ -153,7 +158,7 @@ class QATestService extends AppBaseService
             if($answerLogList){
                 foreach($answerLogList as $answerLog){
                     if($info["id"] == $answerLog["qaNodeId"]){
-                        $info["log"] = $answerLog;
+                        $nodesInfo[$k]["log"] = $answerLog;
                         break;
                     }
                 }
@@ -161,9 +166,11 @@ class QATestService extends AppBaseService
 
         }
         
+        $result = [];
         foreach($nodesInfo as $info){
             $result[$info["type"]][] = $info;
         }
+ 
        return $result;
     }
 
@@ -197,6 +204,7 @@ class QATestService extends AppBaseService
      * 提交答案
      */
     public function submitAnswer($testId, $params, $uid){
+        // print_r($params);exit;
         //循环test题目获取题目内容
         $sql = "SELECT a.qaNodeId FROM QA:TeachTestSub a WHERE a.testId=:testId ORDER BY a.type ASC, a.sort ASC ";
         $qaNodeIds = $this->fetchFields("qaNodeId", $sql, ["testId"=>$testId]);
@@ -225,7 +233,7 @@ class QATestService extends AppBaseService
             foreach($nodesSubInfo as $sub){
                     if($info["id"] == $sub["qaNodeId"]){
                         $type = $info["type"];
-                        $requestKey = "tk_".$type."_".$info["id"];
+                        $requestKey = "tk-".$type."-".$info["id"];
                         $requestAnswer = isset($params[$requestKey])?$params[$requestKey]:"";
                         $answer = $sub["answer"];
                         if(!isset($params[$requestKey])){
@@ -320,7 +328,8 @@ class QATestService extends AppBaseService
         //保存到回答数据库
         $teachTestAnswer = new TeachTestAnswer();
         $teachTestAnswer->setErrorNum($totalErrorNum);
-        $teachTestAnswer->setAnswerSnapshot(json_encode([$result, $totalScore]));
+        $teachTestAnswer->setScore($totalScore);
+        $teachTestAnswer->setAnswerSnapshot(json_encode($result));
         $teachTestAnswer->setRightNum($totalRightNum);
         $teachTestAnswer->setUid($uid);
         $teachTestAnswer->setUndoNum($undoNum);
@@ -333,14 +342,19 @@ class QATestService extends AppBaseService
      * 相等检查
      */
     private function eqCheck($requestAnswer, $answer){
-        sort($requestAnswer);
-        $requestAnswerStr = implode("", $requestAnswer);
-        $answer = str_replace("\|", chr(0), $answer);
-        $answer = explode("|", $answer);
-        sort($answer);
-        $answerStr = "";
-        foreach($answer as $v){
-            $answerStr=$answerStr+str_replace(chr(0), "|", $answer);
+        if(is_array($requestAnswer)){
+            sort($requestAnswer);
+            $requestAnswerStr = implode("", $requestAnswer);
+            $answer = str_replace("\|", chr(0), $answer);
+            $answer = explode("|", $answer);
+            sort($answer);
+            $answerStr = "";
+            foreach($answer as $v){
+                $answerStr=$answerStr+str_replace(chr(0), "|", $answer);
+            }
+        }else{
+            $answerStr = $answer = str_replace("\|", "|", $answer);
+            $requestAnswerStr = $requestAnswer;
         }
         if(strtolower($answerStr) == strtolower($requestAnswerStr)){
             return true;
