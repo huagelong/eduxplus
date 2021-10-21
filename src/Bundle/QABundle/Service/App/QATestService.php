@@ -289,7 +289,7 @@ class QATestService extends AppBaseService
                                     }
                             }else if($type == 4){//填空题
                                 //todo 需要单独处理
-    
+                                
                             }else if($type == 5){//问答
                                 list($status, $subScore) = $this->kwCheck($requestAnswer, $answer, $sub["score"]);
                                 if($status == 1){

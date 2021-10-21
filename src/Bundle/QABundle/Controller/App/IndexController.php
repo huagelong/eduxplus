@@ -162,7 +162,7 @@ class IndexController extends BaseHtmlController
     /**
      *  提交答案
      * 
-     * @Rest\Post("/test/my/submit-{id}", name="qa_test_submit_answer")
+     * @Rest\Post("/test/my/dosubmit-{id}", name="qa_test_submit_answer")
      */
     public function submitAnswerAction($id, QATestService $qaTestService){
         $request = $this->request()->request->all();
@@ -179,7 +179,7 @@ class IndexController extends BaseHtmlController
     /**
      * 保存答案日志
      * 
-     * @Rest\Post("/test/my/submitAnswerLog", name="qa_test_submit_answer_log")
+     * @Rest\Post("/test/my/dosubmitAnswerLog", name="qa_test_submit_answer_log")
      */
     public function submitAnswerLogAction(QATestService $qaTestService){
         $testId = $this->request()->request->get("testId");
@@ -189,9 +189,9 @@ class IndexController extends BaseHtmlController
         if(!$testId) return $this->responseError("参数有误testId!");
         if(!$nodeId) return $this->responseError("参数有误nodeId!");
         if(!$answer) return $this->responseError("参数有误answer!");
-
+        
         $answerInfo = $qaTestService->saveAnswerLog($testId, $nodeId, $uid, $answer);
-
+        
         return $this->responseSuccess($answerInfo);
     }
 

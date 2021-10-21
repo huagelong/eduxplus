@@ -126,7 +126,7 @@
                               <div class="optionList">
                                   <ul>
                                    {% for i in 0..item["sub"]["count"] %}
-                                    <li><input type="text"  data-id="{{ item["id"] }}" name="tk-4-{{ item["id"] }}[]" value="{% if item["log"]["answer"] is defined %} {{ if_get(item["log"]["answer"]) }}  {% endif %} " class="layui-input chkey" ></li>
+                                    <li><input type="text" data-type="{{ item["type"] }}" data-id="{{ item["id"] }}" name="tk-4-{{ item["id"] }}[]" value="{% if item["log"]["answer"] is defined %} {{ if_get(item["log"]["answer"]) }}  {% endif %} " class="layui-input chkey" ></li>
                                     {% endfor %}
                                   </ul>
                                 </div>
@@ -143,7 +143,7 @@
                              <div class="title"  id="point_5_{{ itemk+1 }}"><p style="float:left">{{ itemk+1 }}、</p>{{ item["topic"]|raw }}</div>
                              <div class="optionList">
                                   <ul>
-                                    <li><textarea  data-id="{{ item["id"] }}" name="tk-5-{{ item["id"] }}" class="layui-textarea chkey" >{% if item["log"]["answer"] is defined %} {{ if_get(item["log"]["answer"]) }}  {% endif %} </textarea></li>
+                                    <li><textarea  data-id="{{ item["id"] }}"  data-type="{{ item["type"] }}"  name="tk-5-{{ item["id"] }}" class="layui-textarea chkey" >{% if item["log"]["answer"] is defined %} {{ if_get(item["log"]["answer"]) }}  {% endif %} </textarea></li>
                                   </ul>
                                 </div>
                               {% endfor %}
@@ -159,7 +159,7 @@
                              <div class="title"  id="point_6_{{ itemk+1 }}"><p style="float:left">{{ itemk+1 }}、</p>{{ item["topic"]|raw }}</div>
                               <div class="optionList">
                                   <ul>
-                                    <li><textarea data-id="{{ item["id"] }}" name="tk-6-{{ item["id"] }}" class="layui-textarea chkey" >{% if item["log"]["answer"] is defined %} {{ if_get(item["log"]["answer"]) }}  {% endif %} </textarea></li>
+                                    <li><textarea data-id="{{ item["id"] }}"  data-type="{{ item["type"] }}"  name="tk-6-{{ item["id"] }}" class="layui-textarea chkey" >{% if item["log"]["answer"] is defined %} {{ if_get(item["log"]["answer"]) }}  {% endif %} </textarea></li>
                                   </ul>
                                 </div>
                               {% endfor %}
@@ -309,6 +309,7 @@ $(function(){
   function saveAnswerLog(nodeId,answer){
       var data = {"testId":testId, "nodeId":nodeId, "answer":answer};
       var dataStr = JSON.stringify(data);
+      var url = "{{ path('qa_test_submit_answer_log') }}"
       $.postJSON(
         url,
         dataStr,
@@ -332,7 +333,6 @@ $(function(){
             }
           }
         },
-        "json"
       );
   }
 
@@ -379,12 +379,20 @@ $(function(){
       that.keyup(function(){
           var vl = that.val();
           var id = that.data("id");
+          var type = that.data("type");
          if(vl){
             $("#li_"+id).addClass("hasChoose");
          }else{
             $("#li_"+id).removeClass("hasChoose");
          }
-          var answer = that.val();
+         var answer = that.val();
+          if(type == 4){
+              answer = {};
+              $("input[data-id='"+id+"']").each(function(i){
+                    answer[i] = $(this).val();
+              });
+              answer = JSON.stringify(answer);
+          }
           if(answer){
             saveAnswerLog(id,answer)
           }
