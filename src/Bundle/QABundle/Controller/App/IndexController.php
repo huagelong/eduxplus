@@ -15,7 +15,7 @@ use App\Bundle\AppBundle\Service\GoodsService;
 use App\Bundle\QABundle\Service\App\QATestService;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use Symfony\Component\HttpFoundation\Request;
-
+use Psr\Log\LoggerInterface;
 class IndexController extends BaseHtmlController
 {
 
@@ -151,11 +151,13 @@ class IndexController extends BaseHtmlController
      *
      * @Rest\Get("/test/my/todo-{id}", name="qa_test_todo")
      */
-    public function testToDoAction($id, QATestService $qaTestService){
+    public function testToDoAction($id, QATestService $qaTestService, LoggerInterface $logger){
         $data = [];
         $data["testInfo"] = $qaTestService->getTestById($id);
         $data["testNode"] = $qaTestService->getTest($id);
-       
+        // $this->logger()->info("test-testToDoAction");
+        // $logger = $this->get('logger');
+        $logger->info("test-submitAnswerAction");
         return $this->render("@QABundle/exam/testTodo.html.twig", $data);
     }
 
@@ -165,7 +167,6 @@ class IndexController extends BaseHtmlController
      * @Rest\Post("/test/my/dosubmit-{id}", name="qa_test_submit_answer")
      */
     public function submitAnswerAction($id, QATestService $qaTestService){
-        // dump("121");exit;
         $request = $this->request()->request->all();
         //todo 返回分数等
         $uid = $this->getUid();

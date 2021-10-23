@@ -28,7 +28,16 @@ class BaseService extends AbstractFOSRestController
     {
         return new Error();
     }
-    
+
+    /**
+    * Undocumented function
+    *
+    * @return \Psr\Log\LoggerInterface
+    */
+    public function logger(){
+        $logger = $this->get('logger');
+        return $logger;
+    }
 
     public function setFlash(string $type, string $message)
     {

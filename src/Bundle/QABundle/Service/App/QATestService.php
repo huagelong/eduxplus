@@ -24,13 +24,11 @@ class QATestService extends AppBaseService
 
     protected $categoryService;
     protected $paginator;
-    private $logger;
 
-    public function __construct(CategoryService $categoryService, PaginatorInterface $paginator, LoggerInterface $logger)
+    public function __construct(CategoryService $categoryService, PaginatorInterface $paginator)
     {
         $this->categoryService = $categoryService;
         $this->paginator = $paginator;
-        $this->logger = $logger;
     }
 
     public function getCategoryGoods($categoryId, $level, $isFree, $page=1,$pageSize=20)
