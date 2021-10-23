@@ -17,17 +17,20 @@ use App\Bundle\QABundle\Entity\TeachTestAnswerLog;
 use Elasticsearch\Endpoints\Indices\Split;
 use Error;
 use Knp\Component\Pager\PaginatorInterface;
+use Psr\Log\LoggerInterface;
 
 class QATestService extends AppBaseService
 {
 
     protected $categoryService;
     protected $paginator;
+    private $logger;
 
-    public function __construct(CategoryService $categoryService, PaginatorInterface $paginator)
+    public function __construct(CategoryService $categoryService, PaginatorInterface $paginator, LoggerInterface $logger)
     {
         $this->categoryService = $categoryService;
         $this->paginator = $paginator;
+        
     }
 
     public function getCategoryGoods($categoryId, $level, $isFree, $page=1,$pageSize=20)
@@ -204,7 +207,8 @@ class QATestService extends AppBaseService
      * 提交答案
      */
     public function submitAnswer($testId, $params, $uid){
-        // print_r($params);exit;
+        //  print_r($params);exit;
+        $this->log()->info($params);
         //循环test题目获取题目内容
         $sql = "SELECT a.qaNodeId FROM QA:TeachTestSub a WHERE a.testId=:testId ORDER BY a.type ASC, a.sort ASC ";
         $qaNodeIds = $this->fetchFields("qaNodeId", $sql, ["testId"=>$testId]);
@@ -288,8 +292,8 @@ class QATestService extends AppBaseService
                                         $result[$info["id"]] = ["status"=>0,"answer"=>$requestAnswer];
                                     }
                             }else if($type == 4){//填空题
-                                //todo 需要单独处理
-                                
+                                //需要单独处理
+                                $this->kwMutiCheck($requestAnswer, $answer, $sub["score"]);
                             }else if($type == 5){//问答
                                 list($status, $subScore) = $this->kwCheck($requestAnswer, $answer, $sub["score"]);
                                 if($status == 1){
@@ -393,6 +397,45 @@ class QATestService extends AppBaseService
             }
             $totalScore = $totalScore>$score?$score:$totalScore;
            return [$status, $totalScore];
+    }
+
+    
+    /**
+     *  填空题检查 需要按照顺序检查答案
+     */
+    private function kwMutiCheck($requestAnswer, $answer, $score){
+        $answer = str_replace("\|", chr(0), $answer);
+        $answer = str_replace("\:", chr(1), $answer);
+        $answer = explode("|", $answer);
+        $totalScore = 0;
+        $correct = 0;
+        foreach($answer as $k=>$v){
+            if(isset($requestAnswer[$k]) && $requestAnswer[$k]){
+                $requestAnswerStr = $requestAnswer[$k];
+            }else{
+                continue;
+            }
+            $answerParseArr = explode(":", $v);
+            $answerStr = isset($answerParseArr[0])?$answerParseArr[0]:"";
+            $subScore = isset($answerParseArr[1])?$answerParseArr[1]:0;
+            $answerStr = str_replace("\|", chr(0), $answerStr);
+            $answerStr = str_replace("\:", chr(1), $answerStr);
+            if(stristr($requestAnswerStr, $answerStr)){
+                $correct=$correct+1;
+                $totalScore = $totalScore+$subScore;
+            }
+        }
+
+        $status = 0;
+        if($correct > 0){
+            if(count($answer)>$correct){
+                $status = 2; //部分正确
+            }else{
+                $status = 1; //全部正确
+            }
+        }
+        $totalScore = $totalScore>$score?$score:$totalScore;
+       return [$status, $totalScore];
     }
 
 }

@@ -165,6 +165,7 @@ class IndexController extends BaseHtmlController
      * @Rest\Post("/test/my/dosubmit-{id}", name="qa_test_submit_answer")
      */
     public function submitAnswerAction($id, QATestService $qaTestService){
+        // dump("121");exit;
         $request = $this->request()->request->all();
         //todo 返回分数等
         $uid = $this->getUid();
