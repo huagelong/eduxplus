@@ -151,13 +151,13 @@ class IndexController extends BaseHtmlController
      *
      * @Rest\Get("/test/my/todo-{id}", name="qa_test_todo")
      */
-    public function testToDoAction($id, QATestService $qaTestService, LoggerInterface $logger){
+    public function testToDoAction($id, QATestService $qaTestService){
         $data = [];
         $data["testInfo"] = $qaTestService->getTestById($id);
         $data["testNode"] = $qaTestService->getTest($id);
         // $this->logger()->info("test-testToDoAction");
         // $logger = $this->get('logger');
-        $logger->info("test-submitAnswerAction");
+        dump("test-submitAnswerAction");
         return $this->render("@QABundle/exam/testTodo.html.twig", $data);
     }
 
