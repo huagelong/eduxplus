@@ -170,7 +170,7 @@ class IndexController extends BaseHtmlController
         //todo 返回分数等
         $uid = $this->getUid();
         $result = $qaTestService->submitAnswer($id, $request, $uid);
-        if(!$this->error()->has()){
+        if($this->error()->has()){
             return $this->responseError($this->error()->getLast());
         }
         

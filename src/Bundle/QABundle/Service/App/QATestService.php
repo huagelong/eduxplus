@@ -30,7 +30,7 @@ class QATestService extends AppBaseService
     {
         $this->categoryService = $categoryService;
         $this->paginator = $paginator;
-        
+        $this->logger = $logger;
     }
 
     public function getCategoryGoods($categoryId, $level, $isFree, $page=1,$pageSize=20)
@@ -207,8 +207,6 @@ class QATestService extends AppBaseService
      * 提交答案
      */
     public function submitAnswer($testId, $params, $uid){
-        //  print_r($params);exit;
-        $this->log()->info($params);
         //循环test题目获取题目内容
         $sql = "SELECT a.qaNodeId FROM QA:TeachTestSub a WHERE a.testId=:testId ORDER BY a.type ASC, a.sort ASC ";
         $qaNodeIds = $this->fetchFields("qaNodeId", $sql, ["testId"=>$testId]);
@@ -240,12 +238,11 @@ class QATestService extends AppBaseService
                         $requestKey = "tk-".$type."-".$info["id"];
                         $requestAnswer = isset($params[$requestKey])?$params[$requestKey]:"";
                         $answer = $sub["answer"];
-                        if(!isset($params[$requestKey])){
+                        if(!$requestAnswer){
                             $totalErrorNum = $totalErrorNum+1;
                             $result[$info["id"]] = ["status"=>0,"answer"=>$requestAnswer];
-                            $undoNum = $undoNum;
+                            $undoNum = $undoNum+1;
                         }else{
-                            $requestAnswer = $params[$requestKey];
                             if($type == 0){ //单选题
                                 //答案正确
                                 if($this->eqCheck($requestAnswer, $answer)){
@@ -293,7 +290,18 @@ class QATestService extends AppBaseService
                                     }
                             }else if($type == 4){//填空题
                                 //需要单独处理
-                                $this->kwMutiCheck($requestAnswer, $answer, $sub["score"]);
+                                list($status, $subScore) = $this->kwMutiCheck($requestAnswer, $answer, $sub["score"]);
+                                if($status == 1){
+                                    $totalRightNum = $totalRightNum+1;
+                                    $result[$info["id"]] = ["status"=>1,"answer"=>$requestAnswer];
+                                    $totalScore=$totalScore+$subScore;
+                                }else if($status ==2){
+                                    $result[$info["id"]] = ["status"=>2,"answer"=>$requestAnswer];
+                                    $totalScore=$totalScore+$subScore;
+                                }else{
+                                    $totalErrorNum = $totalErrorNum+1;
+                                    $result[$info["id"]] = ["status"=>0,"answer"=>$requestAnswer];
+                                }
                             }else if($type == 5){//问答
                                 list($status, $subScore) = $this->kwCheck($requestAnswer, $answer, $sub["score"]);
                                 if($status == 1){
@@ -323,8 +331,7 @@ class QATestService extends AppBaseService
                             }
 
                         }
-                        
-                        
+                    
                         break;
                     }
             }
@@ -339,13 +346,15 @@ class QATestService extends AppBaseService
         $teachTestAnswer->setUndoNum($undoNum);
         $teachTestAnswer->setTestId($testId);
         $answerId = $this->save($teachTestAnswer);
-       return [$answerId, $totalErrorNum, $totalRightNum, $undoNum, $totalScore];
+        // dump([$answerId, $totalErrorNum, $totalRightNum, $undoNum, $totalScore]);exit;
+       return ["answerId"=>$answerId, "totalErrorNum"=>$totalErrorNum, "totalRightNum"=>$totalRightNum, "undoNum"=>$undoNum, "totalScore"=>$totalScore];
     }
 
     /**
      * 相等检查
      */
     private function eqCheck($requestAnswer, $answer){
+
         if(is_array($requestAnswer)){
             sort($requestAnswer);
             $requestAnswerStr = implode("", $requestAnswer);
@@ -354,10 +363,10 @@ class QATestService extends AppBaseService
             sort($answer);
             $answerStr = "";
             foreach($answer as $v){
-                $answerStr=$answerStr+str_replace(chr(0), "|", $answer);
+                $answerStr=$answerStr.str_replace(chr(0), "|", $v);
             }
         }else{
-            $answerStr = $answer = str_replace("\|", "|", $answer);
+            $answerStr = str_replace("\|", "|", $answer);
             $requestAnswerStr = $requestAnswer;
         }
         if(strtolower($answerStr) == strtolower($requestAnswerStr)){

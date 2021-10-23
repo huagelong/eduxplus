@@ -36,8 +36,6 @@ class ExceptionListener
         $exception = $event->getThrowable();
         $msg = $exception->getMessage();
         $statusCode = $exception instanceof HttpExceptionInterface ? $exception->getStatusCode() : $exception->getCode();
-        //        print_r($exception->getTraceAsString());
-        //        if (in_array('application/json', $request->getAcceptableContentTypes())) {
         if (($event->getRequest()->getRequestFormat() == 'json') || (in_array("application/json", $event->getRequest()->getAcceptableContentTypes()))) {
             $this->logger->error($exception->getTraceAsString());
             $responseData = JsonResponseService::genData([], $statusCode, $msg);
