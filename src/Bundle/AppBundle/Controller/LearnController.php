@@ -33,6 +33,7 @@ class LearnController extends BaseHtmlController
         $page = $page?$page:1;
         $pageSize = 40;
         $uid = $this->getUid();
+
         $data = [];
         list($pagination, $list) = $learnService->getList($uid, $page, $pageSize);
         $count = $learnService->getCourseCount($uid);

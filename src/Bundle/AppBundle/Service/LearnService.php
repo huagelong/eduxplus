@@ -40,7 +40,6 @@ class LearnService extends AppBaseService
             $page,
             $pageSize
         );
-
         $items = $pagination->getItems();
         $itemsArr = [];
         if ($items) {
@@ -56,7 +55,7 @@ class LearnService extends AppBaseService
 
     public function getCourseCount($uid)
     {
-        $dql = "SELECT count(a.id) as cnt FROM App:MallOrderStudyPlan a WHERE a.uid=:uid ";
+        $dql = "SELECT count(a.id) as cnt FROM App:MallOrderStudyPlan a WHERE a.uid=:uid AND a.orderStatus=2 ";
         return $this->fetchField("cnt", $dql, ['uid' => $uid]);
     }
 
