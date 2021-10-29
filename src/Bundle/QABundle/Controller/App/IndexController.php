@@ -192,18 +192,17 @@ class IndexController extends BaseHtmlController
         if($this->error()->has()){
             return $this->responseError($this->error()->getLast());
         }
-
         return $this->responseMsgRedirect("提交成功!", $this->generateUrl("qa_test_answer_view", ["id"=>$answerId]));
     }
 
     /**
      *  答案展示
      *
-     * @Rest\Post("/test/my/answerView-{id}", name="qa_test_answer_view")
+     * @Rest\Get("/test/my/answerView-{id}", name="qa_test_answer_view")
      */
     public function answerViewAction($id, QATestService $qaTestService){
         $data = [];
-
+        $data['info'] = $qaTestService->getAnswerById($id);
         return $this->render("@QABundle/exam/answerView.html.twig", $data);
     }
 

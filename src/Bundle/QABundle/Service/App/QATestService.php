@@ -345,8 +345,18 @@ class QATestService extends AppBaseService
         $teachTestAnswer->setUndoNum($undoNum);
         $teachTestAnswer->setTestId($testId);
         $answerId = $this->save($teachTestAnswer);
+
+        //删除做题记录
+        $delSql = "DELETE FROM QA:TeachTestAnswerLog a WHERE a.testId=:testId AND a.uid=:uid";
+        $this->execute($delSql, ["testId"=>$testId, "uid"=>$uid]);
         // dump([$answerId, $totalErrorNum, $totalRightNum, $undoNum, $totalScore]);exit;
        return $answerId;
+    }
+
+
+    public function getAnswerById($id){
+        $sql = "SELECT a FROM QA:TeachTestAnswer a WHERE a.id=:id";
+        return $this->fetchOne($sql,["id"=>$id]);
     }
 
     /**
