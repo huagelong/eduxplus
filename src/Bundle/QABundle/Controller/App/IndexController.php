@@ -142,6 +142,7 @@ class IndexController extends BaseHtmlController
     public function testInitAction($id, QATestService $qaTestService){
         $data = [];
         $data["testInfo"] = $qaTestService->getTestById($id);
+//        dump($data);exit;
         return $this->render("@QABundle/exam/testInit.html.twig", $data);
     }
 
@@ -157,30 +158,12 @@ class IndexController extends BaseHtmlController
         $data["testNode"] = $qaTestService->getTest($id);
         // $this->logger()->info("test-testToDoAction");
         // $logger = $this->get('logger');
-        dump("test-submitAnswerAction");
         return $this->render("@QABundle/exam/testTodo.html.twig", $data);
     }
 
     /**
-     *  提交答案
-     * 
-     * @Rest\Post("/test/my/dosubmit-{id}", name="qa_test_submit_answer")
-     */
-    public function submitAnswerAction($id, QATestService $qaTestService){
-        $request = $this->request()->request->all();
-        //todo 返回分数等
-        $uid = $this->getUid();
-        $result = $qaTestService->submitAnswer($id, $request, $uid);
-        if($this->error()->has()){
-            return $this->responseError($this->error()->getLast());
-        }
-        
-        return $this->responseSuccess($result);
-    }
-
-    /**
      * 保存答案日志
-     * 
+     *
      * @Rest\Post("/test/my/dosubmitAnswerLog", name="qa_test_submit_answer_log")
      */
     public function submitAnswerLogAction(QATestService $qaTestService){
@@ -191,10 +174,37 @@ class IndexController extends BaseHtmlController
         if(!$testId) return $this->responseError("参数有误testId!");
         if(!$nodeId) return $this->responseError("参数有误nodeId!");
         if(!$answer) return $this->responseError("参数有误answer!");
-        
+
         $answerInfo = $qaTestService->saveAnswerLog($testId, $nodeId, $uid, $answer);
-        
+
         return $this->responseSuccess($answerInfo);
+    }
+
+    /**
+     *  提交答案
+     * 
+     * @Rest\Post("/test/my/dosubmit-{id}", name="qa_test_submit_answer")
+     */
+    public function submitAnswerAction($id, QATestService $qaTestService){
+        $request = $this->request()->request->all();
+        $uid = $this->getUid();
+        $answerId = $qaTestService->submitAnswer($id, $request, $uid);
+        if($this->error()->has()){
+            return $this->responseError($this->error()->getLast());
+        }
+
+        return $this->responseMsgRedirect("提交成功!", $this->generateUrl("qa_test_answer_view", ["id"=>$answerId]));
+    }
+
+    /**
+     *  答案展示
+     *
+     * @Rest\Post("/test/my/answerView-{id}", name="qa_test_answer_view")
+     */
+    public function answerViewAction($id, QATestService $qaTestService){
+        $data = [];
+
+        return $this->render("@QABundle/exam/answerView.html.twig", $data);
     }
 
 

@@ -112,6 +112,7 @@ class QATestService extends AppBaseService
     public function getTestById($testId){
         $testSql = "SELECT a FROM QA:TeachTest a WHERE a.id=:id ";
         $testInfo = $this->fetchOne($testSql, ["id"=>$testId]);
+
         return $testInfo;
     }
 
@@ -345,7 +346,7 @@ class QATestService extends AppBaseService
         $teachTestAnswer->setTestId($testId);
         $answerId = $this->save($teachTestAnswer);
         // dump([$answerId, $totalErrorNum, $totalRightNum, $undoNum, $totalScore]);exit;
-       return ["answerId"=>$answerId, "totalErrorNum"=>$totalErrorNum, "totalRightNum"=>$totalRightNum, "undoNum"=>$undoNum, "totalScore"=>$totalScore];
+       return $answerId;
     }
 
     /**
