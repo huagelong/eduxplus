@@ -1,5 +1,6 @@
 {% if searchField %}
-<form role="form" name="listSearchForm" id="listSearchForm" class="grid-search {% if app.request.query.get('showSearch') != 1 %} display-hide {% endif %}" action="{{ pathinfo }}" method="get">
+{#    {% if app.request.query.get('showSearch') != 1 %} display-hide {% endif %}#}
+<form role="form" name="listSearchForm" id="listSearchForm" class="grid-search " action="{{ pathinfo }}" method="get">
         <div class="row">
             {% for k,v in searchField %}
                 <div class="col-sm-6">
