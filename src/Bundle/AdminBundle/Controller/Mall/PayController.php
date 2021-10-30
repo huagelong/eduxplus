@@ -33,7 +33,7 @@ class PayController extends BaseAdminController
         $grid->text("订单号")->field("orderNo");
         $grid->text("支付流水号")->field("transactionId");
         $grid->text("支付状态")->field("orderStatus")->options([0=>"支付过期",1=>"待支付", 2=>"已支付", 3=>"已取消"]);
-        $grid->text("支付方式")->field("paymentType")->options( [1=>"支付宝", 2=>"微信"]);
+        $grid->text("支付方式")->field("paymentType")->options( [0=>"免费",1=>"支付宝", 2=>"微信"]);
         $grid->text("支付人")->field("creater")->sort("a.uid");
         $grid->text("支付金额")->field("amount");
         $grid->text("支付完成时间")->field("payTime");
@@ -42,7 +42,7 @@ class PayController extends BaseAdminController
         $grid->stext("订单号")->field("a.orderNo");
         $grid->stext("支付流水号")->field("a.transactionId");
         $grid->sselect("支付状态")->field("a.payStatus")->options(["全部"=>-1,"支付失败"=>0, "待支付"=>1, "已支付"=>2]);
-        $grid->sselect("支付方式")->field("a.paymentType")->options(["全部"=>-1, "支付宝"=>1, "微信"=>2]);
+        $grid->sselect("支付方式")->field("a.paymentType")->options(["全部"=>-1,0=>"免费", "支付宝"=>1, "微信"=>2]);
         $grid->ssearchselect("支付人")->field("a.uid")->options(function()use($request, $userService){
             $values = $request->get("values");
             $createUid = ($values&&isset($values["a.uid"]))?$values["a.uid"]:0;

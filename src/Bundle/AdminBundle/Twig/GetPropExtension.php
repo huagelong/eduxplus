@@ -79,7 +79,12 @@ class GetPropExtension extends AbstractExtension
                         }
                         return "-";
                     }
-                    return $options ? $options[$rs] : $rs;
+                    if($options){
+                        return isset($options[$rs])?$options[$rs]:$rs;
+                    }else{
+                        return $rs;
+                    }
+//                    return $options ? $options[$rs] : $rs;
                 }
             }
         }
