@@ -161,9 +161,9 @@
                       <div class="layui-card-header">试卷信息</div>
                       <div class="layui-card-body">
                             <ui>
-                               <li>总分: {{ testInfo["score"] }}分</li>
-                               <li>浏览数: {{ testInfo["viewNumber"] or 0 }}</li>
-                               <li>
+                               <li  style="padding:10px;">总分: {{ testInfo["score"] }}分</li>
+                               <li  style="padding:10px;">浏览数: {{ testInfo["viewNumber"] or 0 }}</li>
+                               <li  style="padding:10px;">
                                <a href="{{ path('qa_test_init', {id:testInfo['id']})}}" type="button" class="layui-btn layui-btn-fluid layui-btn-sm layui-btn-normal ">开始做题</a>
                                </li>
                             </ui>

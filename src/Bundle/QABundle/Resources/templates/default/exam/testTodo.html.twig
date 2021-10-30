@@ -4,7 +4,7 @@
     <div id="main" class="commonMain">
       <div class="layui-main" style="margin-top: 10px;margin-bottom:40px;">
       <div class="layui-card" style="padding-bottom:30px;margin-top: 30px;">
-            <div class="layui-card-header">期末考试</div>
+            <div class="layui-card-header" style="border-bottom:none!important;font-weight: bold;font-size: 22px;">{{  testInfo['name'] }}</div>
                 <div class="layui-card-body">
                   <form action="{{ path("qa_test_submit_answer", {"id":testInfo['id']}) }}" method="post" class="ajaxform" >
                       <div class="layui-row layui-col-space10" style="background-color:#f6f6f8">
@@ -14,7 +14,7 @@
                          {% for tk, tv in testNode %}
                             {# 单项选择 #}
                             {% if tk == 0 %}
-                            <div class="layui-card-header">一、单项选择</div>
+                            <div class="layui-card-header" style="font-weight: bold;font-size: 18px;">一、单项选择</div>
 
                              {% for itemk, item in tv %}
                             <div class="layui-card-body qa-choose">
@@ -44,7 +44,7 @@
 
                             {# 多选选择 #}
                               {% if tk == 1 %}
-                             <div class="layui-card-header">二、多项选择</div>
+                             <div class="layui-card-header" style="font-weight: bold;font-size: 18px;">二、多项选择</div>
 
                              {% for itemk, item in tv %}
                             <div class="layui-card-body qa-choose">
@@ -74,7 +74,7 @@
 
                             {# 不定项选择 #}
                              {% if tk == 2 %}
-                             <div class="layui-card-header">三、不定项选择</div>
+                             <div class="layui-card-header" style="font-weight: bold;font-size: 18px;">三、不定项选择</div>
 
                              {% for itemk, item in tv %}
                             <div class="layui-card-body qa-choose">
@@ -104,7 +104,7 @@
 
                             {# 判断题 #}
                               {% if tk == 3 %}
-                          <div class="layui-card-header">四、判断题</div>
+                          <div class="layui-card-header" style="font-weight: bold;font-size: 18px;">四、判断题</div>
                             <div class="layui-card-body qa-choose">
                               {% for itemk, item in tv %}
                              <div class="title"  id="point_3_{{ itemk+1 }}"><p style="float:left">{{ itemk+1 }}、</p>{{ item["topic"]|raw }}</div>
@@ -119,14 +119,14 @@
                             {% endif %}
                           {# 填空题 #}
                              {% if tk == 4 %}
-                          <div class="layui-card-header">五、填空题</div>
+                          <div class="layui-card-header" style="font-weight: bold;font-size: 18px;">五、填空题</div>
                           <div class="layui-card-body qa-choose">
                               {% for itemk, item in tv %}
                              <div class="title"  id="point_4_{{ itemk+1 }}"><p style="float:left">{{ itemk+1 }}、</p>{{ item["topic"]|raw }}</div>
                               <div class="optionList">
                                   <ul>
                                    {% for i in 0..item["sub"]["count"] %}
-                                    <li><input type="text" data-type="{{ item["type"] }}" data-id="{{ item["id"] }}" name="tk-4-{{ item["id"] }}[]" value="{% if item["log"]["answer"] is defined %} {{ json_get(item["log"]["answer"], i) }}  {% endif %} " class="layui-input chkey" ></li>
+                                    <li style="padding: 5px 10px;"><input type="text" data-type="{{ item["type"] }}" data-id="{{ item["id"] }}" name="tk-4-{{ item["id"] }}[]" value="{% if item["log"]["answer"] is defined %} {{ json_get(item["log"]["answer"], i) }}  {% endif %} " class="layui-input chkey" ></li>
                                     {% endfor %}
                                   </ul>
                                 </div>
@@ -137,7 +137,7 @@
 
                           {# 问答题 #}
                            {% if tk == 5 %}
-                          <div class="layui-card-header">六、问答题</div>
+                          <div class="layui-card-header" style="font-weight: bold;font-size: 18px;">六、问答题</div>
                             <div class="layui-card-body qa-choose">
                               {% for itemk, item in tv %}
                              <div class="title"  id="point_5_{{ itemk+1 }}"><p style="float:left">{{ itemk+1 }}、</p>{{ item["topic"]|raw }}</div>
@@ -153,7 +153,7 @@
 
                           {# 理解题 #}
                             {% if tk == 6 %}
-                          <div class="layui-card-header">七、理解题</div>
+                          <div class="layui-card-header" style="font-weight: bold;font-size: 18px;">七、理解题</div>
                              <div class="layui-card-body qa-choose">
                               {% for itemk, item in tv %}
                              <div class="title"  id="point_6_{{ itemk+1 }}"><p style="float:left">{{ itemk+1 }}、</p>{{ item["topic"]|raw }}</div>
