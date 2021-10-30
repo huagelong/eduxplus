@@ -1,7 +1,7 @@
 web_profiler:
-    toolbar: true
+    toolbar: false
     intercept_redirects: false
 
 framework:
     profiler: 
-        { enabled: true, only_exceptions: false, collect: true}
+        { enabled: false, only_exceptions: false, collect: false}

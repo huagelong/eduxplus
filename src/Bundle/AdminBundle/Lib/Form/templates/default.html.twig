@@ -197,7 +197,11 @@
                             <select
                                     {% if v['attributes'] %}
                                         {% for ok,ov in v['attributes'] %}
-                                            {{ ok }}="{{ ov }}"
+                                                {% if ok=='placeholder' %}
+                                                    data-placeholder="{{ ov }}"
+                                                {% else %}
+                                                    {{ ok }}="{{ ov }}"
+                                                {% endif %}
                                         {% endfor %}
                                     {% endif %}
 
@@ -224,7 +228,11 @@
 
                                 {% if v['attributes'] %}
                                     {% for ok,ov in v['attributes'] %}
-                                        {{ ok }}="{{ ov }}"
+                                        {% if ok=='placeholder' %}
+                                            data-placeholder="{{ ov }}"
+                                        {% else %}
+                                            {{ ok }}="{{ ov }}"
+                                        {% endif %}
                                     {% endfor %}
                                 {% endif %}
 
