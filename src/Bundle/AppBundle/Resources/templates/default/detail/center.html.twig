@@ -65,7 +65,7 @@
                           </div>
                           {% endif %}
                           <div class="goodAttr">
-                            <span class="goodPrice">¥{{ v['shopPriceView'] }}</span>
+                            <span class="goodPrice">{% if v['shopPrice'] >0 %}¥{{ v['shopPriceView'] }} {% else %} 免费 {% endif %}</span>
                             <span class="buyNum">{{ v['buyNumberFalse'] }}人购买</span>
                           </div>
                         </div>

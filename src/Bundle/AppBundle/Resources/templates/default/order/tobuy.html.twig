@@ -31,7 +31,7 @@
   </div>
 
 {#  优惠券#}
-
+{% if shopPrice>0 %}
   <div class="layui-main buyCoupon buyCard">
     <div class="layui-card">
       <div class="layui-card-header">优惠码</div>
@@ -96,6 +96,24 @@
       </div>
     </div>
   </div>
-
+  {% else %}
+    <div class="layui-main buyChoosePay buyCard">
+      <div class="layui-card">
+        <div class="layui-card-body">
+          <form action="{{ path("app_order_addbuy", {'uuid':uuid}) }}" method="POST" class="layui-form">
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                  <input type="hidden" name="_csrf_token" value="{{ csrf_token('dobuy') }}" />
+                  <input type="hidden" name="paymentType" value="0">
+                  <input type="hidden" name="couponSn" value="{{ couponSn }}" />
+                  <input type="hidden" name="goodsIdstr" value="{{ goodsIdstr|raw }}">
+                  <button class="layui-btn layui-btn-normal  layui-btn-lg" >阅读协议并支付</button>
+                </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+{% endif %}
 </div>
 {% endblock %}

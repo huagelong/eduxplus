@@ -141,7 +141,10 @@ class OrderController extends BaseHtmlController
         }
         $referer = "webpc";
         //生成订单
-        list($orderId, $orderNo) = $orderService->add($uid, $paymentType, $name, $goodsId, $goodsAll, $orderAmount, $originalAmount, $discountAmount, $couponSn, $groupCouponId, $orderStatus, $referer, $userNotes);
+        dump([$uid, $paymentType, $name, $goodsId, $goodsAll, $orderAmount,
+            $originalAmount, $discountAmount, $couponSn, $groupCouponId, $orderStatus, $referer, $userNotes]);
+        list($orderId, $orderNo) = $orderService->add($uid, $paymentType, $name, $goodsId, $goodsAll, $orderAmount,
+            $originalAmount, $discountAmount, $couponSn, $groupCouponId, $orderStatus, $referer, $userNotes);
 
         if($this->error()->has()){
             $error = $this->error()->getLast();
@@ -154,15 +157,19 @@ class OrderController extends BaseHtmlController
             return $this->showMsg($error);
         }
 
-        //测试代码需要去掉
-//        $orderService->orderSuccessTest($orderNo);
         $data = [];
         $data['body'] = $body;
         $data['orderNo'] = $orderNo;
         if($paymentType == 1){//支付宝
             return $this->render('@AppBundle/order/payRedirect.html.twig', $data);
-        }else{//微信
+        }else if($paymentType == 2){//微信
             return $this->render('@AppBundle/order/wxpaycode.html.twig', $data);
+        }else{
+            //免费
+            if($orderAmount == 0){
+                $orderService->orderSuccessFreeOrder($orderNo);
+            }
+            return $this->render('@AppBundle/order/payFreesuccess.html.twig', $data);
         }
     }
 

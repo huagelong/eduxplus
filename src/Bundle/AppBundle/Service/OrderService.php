@@ -277,11 +277,15 @@ class OrderService extends AppBaseService
     {
         try {
             $this->beginTransaction();
+            $userNotes = $userNotes?$userNotes:"";
             $sql = "SELECT a FROM App:MallGoods a WHERE a.id=:id";
+
             $goodInfo = $this->fetchOne($sql, ['id' => $goodsId]);
+
             $agreementId = $goodInfo["agreementId"];
             $goodType = $goodInfo["goodType"];
             $orderNo = date('Ymd') . "o" . $paymentType.substr(md5(session_create_id("")),   8,   16);
+
             $model = new MallOrder();
             $model->setOrderNo($orderNo);
             $model->setUid($uid);
@@ -293,6 +297,7 @@ class OrderService extends AppBaseService
                 $goodsAllStr = implode(",", $goodsAll);
                 $model->setGoodsAll($goodsAllStr);
             }
+
             $model->setOrderAmount($orderAmount);
             $model->setDiscountAmount($discountAmount );
             $model->setOriginalAmount($originalAmount);
@@ -595,7 +600,7 @@ class OrderService extends AppBaseService
         $planSql = "UPDATE App:MallOrderStudyPlan a SET a.orderStatus =:orderStatus WHERE a.orderId =:orderId";
         $this->execute($planSql, ["orderStatus"=>$status, "orderId"=>$orderId]);
         
-        $testSql = "UPDATE Qa:TeachTestOrder a SET a.orderStatus =:orderStatus WHERE a.orderId =:orderId";
+        $testSql = "UPDATE QA:TeachTestOrder a SET a.orderStatus =:orderStatus WHERE a.orderId =:orderId";
         $this->execute($testSql, ["orderStatus"=>$status, "orderId"=>$orderId]);
 
     }
@@ -650,7 +655,7 @@ class OrderService extends AppBaseService
         return $this->save($model);
     }
 
-    public function orderSuccessTest($orderNo){
+    public function orderSuccessFreeOrder($orderNo){
         $orderInfo = $this->getSimpleByOrderNo($orderNo);
         if(!$orderInfo) return $this->error()->add("订单不存在!");
         if($orderInfo['orderStatus'] == 2){
@@ -661,7 +666,7 @@ class OrderService extends AppBaseService
         $amount = $orderInfo['orderAmount'];
         //支付成功，更新订单状态，更新优惠码状态
         $this->updateOrderStatus($orderInfo["id"],2);
-        $this->useCoupon($uid, $orderInfo['couponSn'], 1);
+//        $this->useCoupon($uid, $orderInfo['couponSn'], 1);
         //自动分班
         $this->autoClasses($orderInfo["id"], $uid);
         //生成支付信息
