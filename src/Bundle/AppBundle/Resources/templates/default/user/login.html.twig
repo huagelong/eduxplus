@@ -11,7 +11,7 @@
               <div class="layui-box loginBox">
                 <div class="layui-card">
                   <div class="layui-card-header">登录&注册</div>
-                  <div class="layui-card-body">
+                  <div class="layui-card-body" style="padding: 10px!important;">
                     <form class="layui-form ajaxform" action="{{ path('app_logindo') }}" method="post">
                       <div class="layui-form-item">
                         <input type="text" name="mobile" id="smsmobile" value="{{ mobile }}" placeholder="请输入手机号码" autocomplete="off" class="layui-input">
@@ -27,7 +27,7 @@
                       </div>
 
                       <div class="layui-form-item">
-                        <div class="layui-main" style="margin-top: 10px;">
+                        <div class="layui-main" style="margin: 10px 0px;">
                           提交表示同意 <a href="#">《用户协议》</a>
                         </div>
                         <input type="hidden" name="_csrf_token"
@@ -35,7 +35,7 @@
                         >
                         <input type="hidden" name="goto" value="{{ goto }}">
                         <input type="hidden" id="remember" name="_remember_me" value="1">
-                        <button class="layui-btn  layui-btn-normal layui-btn-fluid" type="submit">提交</button>
+                        <button class="layui-btn  layui-btn-normal layui-btn-fluid" type="submit" >提交</button>
                         <div class="layui-main" style="margin-top: 10px;color: red">
                           未注册手机号码提交后将自动注册
                         </div>
