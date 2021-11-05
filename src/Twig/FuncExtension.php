@@ -32,6 +32,7 @@ class FuncExtension extends AbstractExtension
             new TwigFunction('dump', [$this, 'doDump']),
             new TwigFunction('sum', [$this, 'doSum']),
         ];
+
     }
 
 
@@ -57,6 +58,7 @@ class FuncExtension extends AbstractExtension
 
     public function doArrGet($arr, $name)
     {
+        if(!$arr) return $arr;
         $method = "get" . ucfirst($name);
         if (is_array($arr)) {
             return isset($arr[$name]) ? $arr[$name] : null;
@@ -84,6 +86,7 @@ class FuncExtension extends AbstractExtension
     }
 
     public function doJsonGet($json, $key=0){
+        if(!$json) return "";
         $arr = json_decode($json, true);
         return isset($arr[$key])?$arr[$key]:"";
     }
@@ -103,6 +106,7 @@ class FuncExtension extends AbstractExtension
     
 
     public function doDump($value){
+        if(!$value) return $value;
         if(is_array($value) || is_object($value)){
             return json_encode($value, JSON_UNESCAPED_UNICODE);
         }else{

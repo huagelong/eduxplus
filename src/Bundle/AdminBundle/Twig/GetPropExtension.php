@@ -18,6 +18,7 @@ class GetPropExtension extends AbstractExtension
 
     public function doSomething($obj, $name = "", $type = null, $options = null)
     {
+        if(!$obj) return $obj;
         if ($type == null) {
             if (is_callable($obj)) {
                 return call_user_func($obj, $name);
@@ -29,26 +30,26 @@ class GetPropExtension extends AbstractExtension
 
         $method = "get" . ucfirst($name);
         if ($type == 'datetime') {
-            if (method_exists($obj, $method)) {
-                $classObj = call_user_func([$obj, $method]);
-                $datetime = date('Y-m-d H:i:s', $classObj->getTimestamp());
-                return $datetime;
-            } else {
-                if (is_array($obj)) {
-                    if (isset($obj[$name])) {
-                        return date('Y-m-d H:i:s', $obj[$name]['timestamp']);
-                    } else {
-                        return "-";
-                    }
+            if (is_array($obj)) {
+                if (isset($obj[$name])) {
+                    return date('Y-m-d H:i:s', $obj[$name]['timestamp']);
+                } else {
+                    return "-";
+                }
+            }else {
+                if (method_exists($obj, $method)) {
+                    $classObj = call_user_func([$obj, $method]);
+                    $datetime = date('Y-m-d H:i:s', $classObj->getTimestamp());
+                    return $datetime;
                 }
             }
         } elseif ($type == 'textarea') {
-            if (method_exists($obj, $method)) {
-                return "<div class='text-wrap'>" . call_user_func([$obj, $method]) . "</div>";
-            } else {
-                if (is_array($obj)) {
-                    $value = isset($obj[$name]) ? $obj[$name] : "";
-                    return "<div class='text-wrap'>" . $value . "</div>";
+            if (is_array($obj)) {
+                $value = isset($obj[$name]) ? $obj[$name] : "";
+                return "<div class='text-wrap'>" . $value . "</div>";
+            }else {
+                if (method_exists($obj, $method)) {
+                    return "<div class='text-wrap'>" . call_user_func([$obj, $method]) . "</div>";
                 }
             }
         } elseif ($type == 'image') {
@@ -67,24 +68,24 @@ class GetPropExtension extends AbstractExtension
                 return current($arr);
             }
         } else {
-            if (method_exists($obj, $method)) {
-                $rs = call_user_func([$obj, $method]);
-                return $options ? $options[$rs] : $rs;
-            } else {
-                if (is_array($obj)) {
-                    $rs = isset($obj[$name]) ? $obj[$name] : "";
-                    if ($rs === "") {
-                        if($type == 'boole'){
-                            return "";
-                        }
-                        return "-";
+            if (is_array($obj)) {
+                $rs = isset($obj[$name]) ? $obj[$name] : "";
+                if ($rs === "") {
+                    if($type == 'boole'){
+                        return "";
                     }
-                    if($options){
-                        return isset($options[$rs])?$options[$rs]:$rs;
-                    }else{
-                        return $rs;
-                    }
+                    return "-";
+                }
+                if($options){
+                    return isset($options[$rs])?$options[$rs]:$rs;
+                }else{
+                    return $rs;
+                }
 //                    return $options ? $options[$rs] : $rs;
+            }else {
+                if (method_exists($obj, $method)) {
+                    $rs = call_user_func([$obj, $method]);
+                    return $options ? $options[$rs] : $rs;
                 }
             }
         }

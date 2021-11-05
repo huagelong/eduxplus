@@ -3,8 +3,8 @@
 {% block style %}
     {{ parent() }}
 {% endblock %}
-
-{% block body_class %} sidebar-mini control-sidebar-slide-open text-sm sidebar-collapse {% endblock %}
+{#sidebar-collapse#}
+{% block body_class %} sidebar-mini control-sidebar-slide-open text-sm  {% endblock %}
 {% block body_javascript %}
     {{ parent() }}
     <script src="{{ asset('assets/admin/js/admin.js') }}"></script>
