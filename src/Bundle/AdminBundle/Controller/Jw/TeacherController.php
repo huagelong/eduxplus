@@ -34,7 +34,7 @@ class TeacherController extends BaseAdminController
         $grid->image("头像")->field("gravatar");
         $grid->text("类型")->field("type")->options([-1 => "全部", 1 => "网课老师", 2 => "分校老师"]);
         $grid->text("分校")->field("school");
-        $grid->boole2("是否显示？")->field("status")->actionCall("admin_api_jw_teacher_switchStatus", function ($obj) {
+        $grid->boole2("是否锁定？")->field("status")->actionCall("admin_api_jw_teacher_switchStatus", function ($obj) {
             $id = $this->getPro($obj, "id");
             $defaultValue = $this->getPro($obj, "status");
             $url = $this->generateUrl('admin_api_jw_teacher_switchStatus', ['id' => $id]);

@@ -45,7 +45,7 @@ class UserController extends BaseAdminController
             $str = "<input type=\"checkbox\" data-bootstrap-switch-ajaxput href=\"{$url}\" data-confirm=\"确认更改锁定状态吗?\" {$checkStr} >";
             return $str;
         });
-        $grid->boole("管理员？")->field("isAdmin");
+        $grid->boole("可以登陆后台？")->field("isAdmin");
         $grid->text("注册来源")->field("regSource");
         $grid->datetime("创建时间")->field("createdAt")->sort("a.createdAt");
 
@@ -59,7 +59,7 @@ class UserController extends BaseAdminController
         $grid->stext("手机号码")->field("a.mobile");
         $grid->stext("昵称")->field("a.displayName");
         $grid->stext("姓名")->field("a.fullName");
-        $grid->sselect("管理员？")->field("a.isAdmin")->options(function () {
+        $grid->sselect("可以登陆后台？")->field("a.isAdmin")->options(function () {
             return ["全部" => -1, "是" => 1, "否" => 0];
         });
         $grid->sdaterange("创建时间")->field("a.createdAt");
@@ -114,7 +114,7 @@ class UserController extends BaseAdminController
                 $rs[$v['name']] = $v['id'];
             }
             return $rs;
-        })->placeholder("选择角色");
+        })->placeholder("选择角色，设置有角色则可以登陆后台.");
 
 
         $formData = $form->create($this->generateUrl("admin_api_user_add"));
@@ -172,7 +172,7 @@ class UserController extends BaseAdminController
         $view->text("昵称")->field("displayName")->defaultValue($info['displayName']);
         $view->text("姓名")->field("fullName")->defaultValue($info['fullName']);
         $view->select("性别")->field("sex")->options(["男" => 1, "女" => 2])->defaultValue($info['sex']);
-        $view->boole("是否管理员")->field("isAdmin")->defaultValue($info['isAdmin']);
+        $view->boole("是否可以登陆后台")->field("isAdmin")->defaultValue($info['isAdmin']);
         $view->boole("是否锁定")->field("isLock")->defaultValue($info['isLock']);
 
         $myRoleUsers = $userService->getMyRoleIds($id);

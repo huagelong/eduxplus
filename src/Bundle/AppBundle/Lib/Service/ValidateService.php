@@ -19,7 +19,11 @@ class ValidateService
     }
 
     public function mobileValidate($mobile){
-        return preg_match('/^1[3456789]\d{9}$/i', $mobile) ? true : false;
+        if(preg_match('/^1[3456789]\d{9}$/i', $mobile)){
+            return true;
+        }else{
+            return $this->error()->add("手机号码格式错误!");
+        }
     }
 
     public  function emailValidate($email)
