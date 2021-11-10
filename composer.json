@@ -104,19 +104,28 @@
             "assets:install %PUBLIC_DIR%": "symfony-cmd"
         },
         "post-install-cmd": [
-            "@auto-scripts"
+            "@auto-scripts",
+            "@composer dump-autoload"
         ],
         "post-update-cmd": [
+            "@auto-scripts",
+            "@composer dump-autoload"
+        ],
+        "clear-dbcache": [
+            "php bin/console doctrine:cache:clear-metadata --ansi",
+            "php bin/console doctrine:cache:clear-collection-region --ansi --all",
+            "php bin/console doctrine:cache:clear-entity-region --ansi --all",
+            "php bin/console doctrine:cache:clear-query --ansi",
+            "php bin/console doctrine:cache:clear-query-region --ansi",
+            "php bin/console doctrine:cache:clear-result --ansi --no-interaction",
             "@auto-scripts"
         ],
-        "build-database-script": {
-            "doctrine:database:create --if-not-exists": "symfony-cmd",
-            "doctrine:schema:drop --ansi --force --full-database --no-interaction": "symfony-cmd",
-            "doctrine:schema:update --ansi --force --no-interaction": "symfony-cmd",
-            "doctrine:fixtures:load --ansi --no-interaction": "symfony-cmd"
-        },
-        "build-database": [
-            "@build-database-script"
+        "gen": [
+            "php bin/console doctrine:database:create --if-not-exists",
+            "php bin/console doctrine:schema:drop --ansi --force --full-database --no-interaction",
+            "php bin/console doctrine:schema:update --ansi --force --no-interaction",
+            "php bin/console doctrine:fixtures:load --ansi --no-interaction",
+            "@clear-dbcache"
         ]
     },
     "conflict": {
