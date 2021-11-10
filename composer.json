@@ -108,6 +108,15 @@
         ],
         "post-update-cmd": [
             "@auto-scripts"
+        ],
+        "build-database-script": {
+            "doctrine:database:create --if-not-exists": "symfony-cmd",
+            "doctrine:schema:drop --ansi --force --full-database --no-interaction": "symfony-cmd",
+            "doctrine:schema:update --ansi --force --no-interaction": "symfony-cmd",
+            "doctrine:fixtures:load --ansi --no-interaction": "symfony-cmd"
+        },
+        "build-database": [
+            "@build-database-script"
         ]
     },
     "conflict": {
