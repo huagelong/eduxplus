@@ -24,15 +24,21 @@ class InstallFixtures extends Fixture
     protected $manager;
     protected $helperService;
     protected $mobileMaskService;
+    protected $adminUserMobile;
+    protected $adminUserPwd;
 
     public function __construct(
         UserPasswordEncoderInterface $passwordEncoder,
         HelperService $helperService,
-        MobileMaskService $mobileMaskService
+        MobileMaskService $mobileMaskService,
+        string $adminUserMobile,
+        string $adminUserPwd
     ) {
         $this->passwordEncoder = $passwordEncoder;
         $this->helperService = $helperService;
         $this->mobileMaskService = $mobileMaskService;
+        $this->adminUserMobile = $adminUserMobile;
+        $this->adminUserPwd = $adminUserPwd;
     }
 
     public function load(ObjectManager $manager)
@@ -47,7 +53,6 @@ class InstallFixtures extends Fixture
         $this->addOption("app.beian.number", '沪ICP备18036000号', "网站备案号", 1, 1, "网站配置");
         $this->addOption("app.copyright", '@2008-2019 上海xxxx有限公司版权所有', "网站copyright", 1, 1, "网站配置");
         $this->addOption("app.sms.times", '5', "当天准许同一手机发送短信的最大次数", 1, 1, "网站配置");
-        $this->addOption("app.secret", "#2saasf#@$22", "网站私钥", 1, 1, "网站配置");//$secret
         $this->addOption("app.logo", '["/assets/images/logo.png"]', "网站logo", 2, 1, "网站配置");
         $this->addOption("app.user.default.gravatar", '["/assets/images/gravatar.jpeg"]', "用户默认头像", 2, 1, "网站配置");
         $this->addOption("app.icon", '["/assets/images/fav.png"]', "网站icon", 2, 1, "网站配置");
@@ -60,74 +65,74 @@ class InstallFixtures extends Fixture
         $this->addOption("app.search.adapter", '1', "搜索方式，1-本地数据库，2-elasticsearch", 1, 1, "网站配置");
         //        -------云服务基础配置---
         //腾讯云
-        $this->addOption("app.tengxunyun.appId", '1255310685', "腾讯云 appId", 1, 1, "腾讯云基础配置");
-        $this->addOption("app.tengxunyun.secretId", 'AKIDGEzUishQt747uRdFUSAbw0qQmsit8b9R', "腾讯云 accesskeyId", 1, 1, "腾讯云基础配置");
-        $this->addOption("app.tengxunyun.secretKey", 'KRJwKRTFmBMIyavHNCpCKB2d9QRIq78K', "腾讯云 accesskeySecret ", 1, 1, "腾讯云基础配置");
+        $this->addOption("app.tengxunyun.appId", '', "腾讯云 appId", 1, 1, "腾讯云基础配置");
+        $this->addOption("app.tengxunyun.secretId", '', "腾讯云 accesskeyId", 1, 1, "腾讯云基础配置");
+        $this->addOption("app.tengxunyun.secretKey", '', "腾讯云 accesskeySecret ", 1, 1, "腾讯云基础配置");
         $this->addOption("app.tengxunyun.region", 'ap-shanghai', "腾讯云地域接入域名", 1, 1, "腾讯云基础配置");
 
         //阿里云
         $this->addOption("app.aliyun.userId", '37030', "阿里云 账号id", 1, 1, "阿里云基础配置");
-        $this->addOption("app.aliyun.accesskeyId", 'LTAI4G81aC1zgpkUsDXHdmVG', "阿里云 accesskeyId", 1, 1, "阿里云基础配置");
-        $this->addOption("app.aliyun.accesskeySecret", 'ljeQEmQgXGo0oKfwZIMrn9r3rkN74o', "阿里云 accesskeySecret", 1, 1, "阿里云基础配置");
+        $this->addOption("app.aliyun.accesskeyId", '', "阿里云 accesskeyId", 1, 1, "阿里云基础配置");
+        $this->addOption("app.aliyun.accesskeySecret", '', "阿里云 accesskeySecret", 1, 1, "阿里云基础配置");
         //https://help.aliyun.com/document_detail/98194.html?spm=a2c4g.11186623.6.612.1fb73ecbvK52qE 点播中心和访问域名, 直播，点播都要在同一个地域
         $this->addOption("app.aliyun.region", 'cn-shenzhen', "阿里云地域接入域名", 1, 1, "阿里云基础配置");
 //        ------短信配置---
         //腾讯云短信
-        $this->addOption("app.tengxunyun.sms.appid", '1400296901', "腾讯云 短信应用id ", 1, 1, "腾讯云短信配置");
-        $this->addOption("app.tengxunyun.sms.appkey", '67bab7d4569a274b97199432ddfe4df5', "腾讯云 短信应用key ", 1, 1, "腾讯云短信配置");
+        $this->addOption("app.tengxunyun.sms.appid", '', "腾讯云 短信应用id ", 1, 1, "腾讯云短信配置");
+        $this->addOption("app.tengxunyun.sms.appkey", '', "腾讯云 短信应用key ", 1, 1, "腾讯云短信配置");
         $this->addOption("app.tengxunyun.sms.recaptcha.templateId", '516278', "腾讯云 验证码短信模板id ", 1, 1, "腾讯云短信配置");
         //腾讯云cos
-        $this->addOption("app.tengxunyun.bucket", 'eduxplus-1255310685', "腾讯云cos桶名称", 1, 1, "腾讯云COS存储配置");
+        $this->addOption("app.tengxunyun.bucket", '', "腾讯云cos桶名称", 1, 1, "腾讯云COS存储配置");
         //腾讯云点播
-        $this->addOption("app.tengxunyun.vod.encryptionkey", 'JPBEi7tKKiooHvbzAty2', "腾讯云点播Key防盗链密钥", 1, 1, "腾讯云点播配置");
-        $this->addOption("app.tengxunyun.vod.procedure", 'SimpleAesEncryptPreset', "腾讯云点播任务流模板名字", 1, 1, "腾讯云点播配置");
+        $this->addOption("app.tengxunyun.vod.encryptionkey", '', "腾讯云点播Key防盗链密钥", 1, 1, "腾讯云点播配置");
+        $this->addOption("app.tengxunyun.vod.procedure", '', "腾讯云点播任务流模板名字", 1, 1, "腾讯云点播配置");
         //腾讯云直播
-        $this->addOption("app.tengxunyun.live.pushDomain", '103478.livepush.myqcloud.com', "腾讯云直播推流域名", 1, 1, "腾讯云直播配置");
-        $this->addOption("app.tengxunyun.live.playDomain", 'tlive.2tag.cn', "腾讯云直播播放域名", 1, 1, "腾讯云直播配置");
-        $this->addOption("app.tengxunyun.live.pushDomainKey", '760510d9ad8ddbf7dfb2e0d6424b293b', "腾讯云直播推流鉴权签名KEy", 1, 1, "腾讯云直播配置");
-        $this->addOption("app.tengxunyun.live.playDomainKey", 'Y4VyDoBQ2b', "腾讯云直播播流鉴权签名KEy", 1, 1, "腾讯云直播配置");
+        $this->addOption("app.tengxunyun.live.pushDomain", '', "腾讯云直播推流域名", 1, 1, "腾讯云直播配置");
+        $this->addOption("app.tengxunyun.live.playDomain", '', "腾讯云直播播放域名", 1, 1, "腾讯云直播配置");
+        $this->addOption("app.tengxunyun.live.pushDomainKey", '', "腾讯云直播推流鉴权签名KEy", 1, 1, "腾讯云直播配置");
+        $this->addOption("app.tengxunyun.live.playDomainKey", '', "腾讯云直播播流鉴权签名KEy", 1, 1, "腾讯云直播配置");
         $this->addOption("app.tengxunyun.live.transcodeTemplateId", '["default", "sd", "hd"]', "腾讯云直播转码模板名称", 1, 1, "腾讯云直播配置");
         //腾讯云im
-        $this->addOption("app.tengxunyun.im.sdkAppid", '1400399479', "腾讯云IM SdkAppid", 1, 1, "腾讯云IM配置");
-        $this->addOption("app.tengxunyun.im.key", 'f102d412644704beb6b004b1c2f45ebf3724cdbb21e0db1aa2e2405888cea26a', "腾讯云IM密钥", 1, 1, "腾讯云IM配置");
-        $this->addOption("app.tengxunyun.im.identifier", 'administrator', "腾讯云IM账号管理员，默认’administrator‘", 1, 1, "腾讯云IM配置");
+        $this->addOption("app.tengxunyun.im.sdkAppid", '', "腾讯云IM SdkAppid", 1, 1, "腾讯云IM配置");
+        $this->addOption("app.tengxunyun.im.key", '', "腾讯云IM密钥", 1, 1, "腾讯云IM配置");
+        $this->addOption("app.tengxunyun.im.identifier", '', "腾讯云IM账号管理员，默认’administrator‘", 1, 1, "腾讯云IM配置");
 
         //阿里云点播
-        $this->addOption("app.aliyun.vod.kms.keyId", '5c26ddb9-3139-47b9-898e-2d463e23fa04', "阿里云kms vod 加密主密钥，可以用别名", 1, 1, "阿里云点播配置");
-        $this->addOption("app.aliyun.vod.templateGroupId", 'b3ec4985076d1b01ee13006d70fc2db2', "阿里云点播转码模板组ID", 1, 1, "阿里云点播配置");
-        $this->addOption("app.aliyun.vod.callbackSignPrivateKey", '2020Hello12qqq', "阿里云点播回调鉴权私有key", 1, 1, "阿里云点播配置");
+        $this->addOption("app.aliyun.vod.kms.keyId", '', "阿里云kms vod 加密主密钥，可以用别名", 1, 1, "阿里云点播配置");
+        $this->addOption("app.aliyun.vod.templateGroupId", '', "阿里云点播转码模板组ID", 1, 1, "阿里云点播配置");
+        $this->addOption("app.aliyun.vod.callbackSignPrivateKey", '', "阿里云点播回调鉴权私有key", 1, 1, "阿里云点播配置");
         //阿里云直播
-        $this->addOption("app.aliyun.live.pushDomain", 'aliyunlivepush.2tag.cn', "阿里云直播推流域名", 1, 1, "阿里云直播配置");
-        $this->addOption("app.aliyun.live.playDomain", 'aliyunliveplay.2tag.cn', "阿里云直播播流域名", 1, 1, "阿里云直播配置");
-        $this->addOption("app.aliyun.live.pushDomainKey", 'ZGKkmJynDY', "阿里云直播推流签名KEy", 1, 1, "阿里云直播配置");
-        $this->addOption("app.aliyun.live.playDomainKey", 'Y4VyDoBQ2b', "阿里云直播播放签名KEy", 1, 1, "阿里云直播配置");
+        $this->addOption("app.aliyun.live.pushDomain", '', "阿里云直播推流域名", 1, 1, "阿里云直播配置");
+        $this->addOption("app.aliyun.live.playDomain", '', "阿里云直播播流域名", 1, 1, "阿里云直播配置");
+        $this->addOption("app.aliyun.live.pushDomainKey", '', "阿里云直播推流签名KEy", 1, 1, "阿里云直播配置");
+        $this->addOption("app.aliyun.live.playDomainKey", '', "阿里云直播播放签名KEy", 1, 1, "阿里云直播配置");
         $this->addOption("app.aliyun.live.transcodeTemplateId", '{"FD":"lld","LD":"lsd","SD":"lhd","HD":"lud"}', "阿里云直播转码模板id OD:原画,FD:流畅,LD:标清,SD:高清,HD:超清,2K:2K,4K:4K", 1, 1, "阿里云直播配置");
         //阿里云短信
         $this->addOption("app.aliyun.smsSign", '学多多', "阿里云 短信签名名称 ", 1, 1,"阿里云短信配置");
-        $this->addOption("app.aliyun.sms.captcha.code", 'SMS_186613853', "阿里云 验证码短信模板Code ", 1, 1,"阿里云短信配置");
+        $this->addOption("app.aliyun.sms.captcha.code", '', "阿里云 验证码短信模板Code ", 1, 1,"阿里云短信配置");
         //阿里云oss
-        $this->addOption("app.aliyun.oss.bucket", 'eduxplus2', "阿里云oss Bucket ", 1, 1,"阿里云OSS存储配置");
-        $this->addOption("app.aliyun.oss.endpoint", 'oss-cn-shenzhen.aliyuncs.com', "阿里云oss endpoint ", 1, 1,"阿里云OSS存储配置");
+        $this->addOption("app.aliyun.oss.bucket", '', "阿里云oss Bucket ", 1, 1,"阿里云OSS存储配置");
+        $this->addOption("app.aliyun.oss.endpoint", '', "阿里云oss endpoint ", 1, 1,"阿里云OSS存储配置");
 
         //微信小程序
         $this->addOption("app.wxmini.appid", '', "微信小程序app id", 1, 1, "微信小程序配置");
         $this->addOption("app.wxmini.secret", '', "微信小程序secret key", 1, 1, "微信小程序配置");
         //支付宝
-        $this->addOption("app.alipay.appid", '2016102700768653', "支付宝app id", 1, 1, "支付宝支付配置");
+        $this->addOption("app.alipay.appid", '', "支付宝app id", 1, 1, "支付宝支付配置");
         $this->addOption("app.alipay.isSandbox", '0', "是否支付宝沙箱模式, 1-是，0-否", 1, 1, "支付宝支付配置");
         $this->addOption("app.alipay.notifyUrl", 'http://dev.eduxplus.com/pay/alipayCallback', "授权回调地址", 1, 1, "支付宝支付配置");
-        $this->addOption("app.alipay.merchantPrivateKey", 'MIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQC3bsPdkvb0rKRS6gk51ekCi4MyzgYqdBr6l+70ipC4P1UK9vP33U9BabjiZXuAgJNf4l0Z86lwpl7GghFGq/Yf04cYtuo/JJV0lGo2qW2uPTAq1dBSXBUlYdD33Ewx4uGD0gKKNKW+I3E/67pDqS75lzn4wP57VIa+yKRcCtEKzwrf/78KQvaJ87GUIlt+yW4IYJhIYSAsbkxGeIfFm5Rydz/2N3mADBZCb/gQzdMJjpcsX8x9U4Be1CjJgJsMufUh2h068avVwSi4LVqwPU5AApXwMXaqo8WsJTbzSU5hQOTGheAuQVLIVtYQ3PgfUKCGEn338yyKVSwpPGIEzdb5AgMBAAECggEAad57G2pUMFloKha7pm7IolhlK7BvLJeAbru8BdXnuv+KlN59ZsSLlsRvGfPaeQs8g+3BMFZKqCLNtqKhV/mt/yZ15ZTE1BbIT9XNC6l0DUlxgHeRWcedyMqQ8k1qiKxa3lsabiv+sSQBnBPwmFaQLyvSILk653Gcp4ZkHl970VE90X0dCEtFnvm9F2amWTGHZIJQV4GU8VwlsC4coqjeJ2Qj3bbYuq7hX/hX0AsdU7bodqwqRWa8UHtFwcbX0g75i3u3NWL0fLsrnXHAIDNBCWKsnGrFWxhQLLvHJTCUUoHg5cjtCZo2BcxEY8i1sQYvuSIolzM/XeJgBGisNFjo9QKBgQDdYejSKhWLV5k/HPe7y3WkoD4OP97PLl0KZnMPYwJaz0H31j6sbQdrbm4JMVCUeCfQXpHwK3W58MMG3rcw8QkEbaPl0YZ4I+OGmqtJk8HF5UdwyKCmMuZoY4dt76/BEPtXd2B+wd06Uq4IPzsDsqkgN6y5d2T+KHwRnzzQnKSWBwKBgQDUHbMzr8b+A3LU8iSb2AK/1+PqcdxEV+s9t6GYkY7wZHJF94V8Fa5CfJt8uJuFoGCjBHxEEBMOCLZFNIiiQZmlvsEsLRuf4HWEw9fOkYob/MsCZnOSQBTyiBEXtnP/5vQMgmo2Yc3cneZnt2D8RTYOuSujlj96mkgPITDlV/bq/wKBgCary7eqkkjc7HAR51RungY715s1nP4j4yzF6KNvcCHcwnFAg4IrKXiiuaXxb1oAAzRq0KNbdB0e6XJxxR5PfHvBizfB+fNSkZQZwIIBxX+EJY6V/ToK+iSR/j49+D2Jcd49hCWgR7zAZJYcNXrX4qM2Fn3vVTzwZXvOjRkDw9xRAoGAH+CKwtTCyf/IrRnqyITw/NW8CcqsuJSh5LeJEH2nhpcB2WP2aoxzkMhbMaYosS9F9pnA9xWXV3+VrNbVRdUn+xGsxC/PO/qmjppD/2Y95DDcbXLqIWuB+mTadL7VtfqGaK7cuWl/X41XR/T2HVNlaVcIqN/2kD1JYQSy7XSHxg8CgYBYPSSjoWKWRRSUSaKnxMUxf3nPx+GkjpjxXKHvzrxNZ99oAjydAQWtjpZ5F0smJeq4zwxyV5k4iBYZ9c122jhL+UEkuBHOaR8/ppIER0rFWZF0ndceIJEFeUn2BsNVsbAk2eUoi3CMrsVcovqvAOaUDNUzvk2oJsyY5Pelm9D2ww==', "应用私钥", 1, 1, "支付宝支付配置");
-        $this->addOption("app.alipay.encryptKey", 'NX7+0dczHmjydmd9uxX8yA==', "接口内容加密方式AES密钥", 1, 1, "支付宝支付配置");
+        $this->addOption("app.alipay.merchantPrivateKey", '', "应用私钥", 1, 1, "支付宝支付配置");
+        $this->addOption("app.alipay.encryptKey", '', "接口内容加密方式AES密钥", 1, 1, "支付宝支付配置");
         $this->addOption("app.alipay.alipayPublicKey", '', "支付宝公钥字符串，如果采用非证书模式，则无需赋值三个证书路径，改为赋值如下的支付宝公钥字符串即可", 1, 1, "支付宝支付配置");
         //微信支付
-        $this->addOption("app.wxpay.appid", 'wxde0c292600278a0d', "微信支付app id", 1, 1, "微信支付配置");
-        $this->addOption("app.wxpay.mchid", '1605226225', "微信支付商户 id", 1, 1, "微信支付配置");
-        $this->addOption("app.wxpay.key", 'sads1312423WWWWsss4433eerrggffff', "微信支付api 密钥", 1, 1, "微信支付配置");
+        $this->addOption("app.wxpay.appid", '', "微信支付app id", 1, 1, "微信支付配置");
+        $this->addOption("app.wxpay.mchid", '', "微信支付商户 id", 1, 1, "微信支付配置");
+        $this->addOption("app.wxpay.key", '', "微信支付api 密钥", 1, 1, "微信支付配置");
         $this->addOption("app.wxpay.notifyrl", 'http://dev.eduxplus.com/pay/wxpayCallback', "微信支付默认的订单回调地址", 1, 1, "微信支付配置");
         $this->addOption("app.wxpay.sandbox", '', "是否沙盒模式,0-否，1-是", 1, 1, "微信支付配置");
 
         //elasticsearch搜索配置
-        $this->addOption("app.es.host", 'v2.eduxplus.com:9288', "elasticsearch 服务器host配置，例如https://username:password!#$?*abc@foo.com:9200/", 1, 1, "elasticsearch搜索配置");
+        $this->addOption("app.es.host", '', "elasticsearch 服务器host配置，例如https://username:password!#$?*abc@foo.com:9200/", 1, 1, "elasticsearch搜索配置");
         $this->addOption("app.es.index.pre", 'eduxplus_', "elasticsearch 索引前缀", 1, 1, "elasticsearch搜索配置");
         $this->addOption("app.es.index.shardsNumber", '1', "elasticsearch 索引分片数目", 1, 1, "elasticsearch搜索配置");
         $this->addOption("app.es.index.replicasNumber", '0', "elasticsearch 索引副本数目", 1, 1, "elasticsearch搜索配置");
@@ -137,17 +142,17 @@ class InstallFixtures extends Fixture
         //初始化用户
         $userModel = new BaseUser();
         $uuid = $this->helperService->getUuid();
-        $pwd = $this->passwordEncoder->encodePassword($userModel, "eduxplus");
+        $pwd = $this->passwordEncoder->encodePassword($userModel, $this->adminUserPwd);
         $userModel->setSex(1);
-        $userModel->setBirthday('1988-10-01');
+        $userModel->setBirthday('1949-10-01');
         $userModel->setRegSource("pc");
-        $userModel->setMobile("10000000000");
-        $mobileMask =  $this->mobileMaskService->encrypt("10000000000");
+        $userModel->setMobile($this->adminUserMobile);
+        $mobileMask =  $this->mobileMaskService->encrypt($this->adminUserMobile);
         $userModel->setMobileMask($mobileMask);
         $userModel->setReportUid(0);
         $userModel->setUuid($uuid);
         $userModel->setDisplayName("超级管理员");
-        $userModel->setFullName("管理员大大");
+        $userModel->setFullName("超级管理员");
         $userModel->setIsAdmin(1);
         $userModel->setPassword($pwd);
         $userModel->setRealRole(1);
