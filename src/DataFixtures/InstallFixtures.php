@@ -45,9 +45,9 @@ class InstallFixtures extends Fixture
     {
         $this->manager = $manager;
         //        -----网站基础配置---
-        $this->addOption("app.name", "edu++课堂", "网站名称", 1, 1, "网站配置");
+        $this->addOption("app.name", "EduxPlus课堂", "网站名称", 1, 1, "网站配置");
         $this->addOption("app.cdn.domain", '', "cdn域名", 1, 1, "网站配置");
-        $this->addOption("app.seo.title", '【edu++课堂官方网站】职业教育在线_移动学习、职达未来！', "全站seo标题", 1, 1, "网站配置");
+        $this->addOption("app.seo.title", '【EduxPlus课堂官方网站】职业教育在线_移动学习、职达未来！', "全站seo标题", 1, 1, "网站配置");
         $this->addOption("app.seo.homepage.descr", '', "全站首页seo描述", 1, 1, "网站配置");
         $this->addOption("app.seo.homepage.keyword", '网校,职业教育在线,职业教育,职业教育在线', "首页seo关键字", 1, 1, "网站配置");
         $this->addOption("app.beian.number", '沪ICP备18036000号', "网站备案号", 1, 1, "网站配置");
