@@ -2,6 +2,7 @@
 
 use EasyCorp\Bundle\EasyDeployBundle\Deployer\DefaultDeployer;
 
+use EasyCorp\Bundle\EasyDeployBundle\Configuration\Option;
 return new class extends DefaultDeployer
 {
     public function configure()
@@ -16,7 +17,8 @@ return new class extends DefaultDeployer
             // the repository branch to deploy
             ->repositoryBranch('master')
             ->symfonyEnvironment("prod")
-            ->sharedFilesAndDirs([".env.local"])
+            ->sharedFilesAndDirs(['.env', '.env.local', 'var/log', 'public'])
+            ->writableDirs(['var/cache/', 'var/log/', 'public'])
             ->installWebAssets(false)
             ->keepReleases(2);
         ;
@@ -25,16 +27,22 @@ return new class extends DefaultDeployer
     // run some local or remote commands before the deployment is started
     public function beforeStartingDeploy()
     {
-        $this->log ( '准备应用' );
+//        $this->log ( '准备应用' );
+    }
 
+    public function beforePublishing()
+    {
+        $this->runRemote(" cp /www/wwwroot/dev.eduxplus.com/.env.local ./.env.local");
+        $this->runRemote(sprintf('%s dump-env prod', $this->getConfig(Option::remoteComposerBinaryPath)));
+        $this->runRemote( 'SYMFONY_ENV=dev composer deploy' );
     }
 
     // run some local or remote commands after the deployment is finished
     public function beforeFinishingDeploy()
     {
-//        $this->runRemote('{{ console_bin }} app:my-task-name');
-        $this->runRemote(" cp /www/wwwroot/dev.eduxplus.com/.env.local ./.env.local");
-        $this->runRemote( 'SYMFONY_ENV=dev composer deploy' );
+        $this->log('Remote Restarting servers');
+        $this->runRemote('/etc/init.d/nginx restart');
+        $this->runRemote('/etc/init.d/php-fpm-80 restart');
          $this->runLocal('say "The deployment has finished."');
     }
 };
