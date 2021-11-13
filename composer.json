@@ -124,8 +124,7 @@
             "php bin/console doctrine:database:create --if-not-exists",
             "php bin/console doctrine:schema:update --ansi --force --no-interaction",
             "php bin/console doctrine:fixtures:load --ansi --no-interaction",
-            "@clear-dbcache",
-            "@composer dump-autoload"
+            "@clear-dbcache"
         ],
         "gen": [
             "php bin/console app:genDir",

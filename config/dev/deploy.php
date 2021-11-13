@@ -26,13 +26,14 @@ return new class extends DefaultDeployer
     public function beforeStartingDeploy()
     {
         $this->log ( '准备应用' );
-        $this->runLocal ( 'SYMFONY_ENV=dev composer deploy' );
+        $this->runLocal(" cp /www/wwwroot/dev.eduxplus.com/.env.local ./.env.local");
     }
 
     // run some local or remote commands after the deployment is finished
     public function beforeFinishingDeploy()
     {
 //        $this->runRemote('{{ console_bin }} app:my-task-name');
+        $this->runLocal ( 'SYMFONY_ENV=dev composer deploy' );
          $this->runLocal('say "The deployment has finished."');
     }
 };
