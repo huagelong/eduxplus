@@ -3,7 +3,7 @@ echo '切换git地址'
 git remote rm origin
 
 git remote add origin git@github.com:trensy/eduxplus.git
-echo '设置上传代码分支，推送gitee'
+echo '设置上传代码分支，推送github'
 git push --set-upstream origin master --force
 echo '推送github完成'
 git remote rm origin
