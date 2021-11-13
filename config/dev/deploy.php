@@ -29,6 +29,10 @@ return new class extends DefaultDeployer
     {
     }
 
+    public function beforeUpdating(){
+//        $this->runRemote('chattr -i /www/wwwroot/dev.eduxplus.com/current/public/.user.ini');
+    }
+
     public function beforePreparing(){
         $this->runRemote('cp {{ deploy_dir }}/repo/.env {{ project_dir }}');
     }
