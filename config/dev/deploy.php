@@ -15,7 +15,7 @@ return new class extends DefaultDeployer
             ->repositoryUrl('git@gitee.com:wangkaihui/eduxplus.git')
             // the repository branch to deploy
             ->repositoryBranch('master')
-            ->symfonyEnvironment("dev")
+            ->symfonyEnvironment("prod")
             ->sharedFilesAndDirs([".env.local"])
             ->installWebAssets(false)
             ->keepReleases(2);
@@ -26,14 +26,14 @@ return new class extends DefaultDeployer
     public function beforeStartingDeploy()
     {
         $this->log ( '准备应用' );
-        $this->runLocal(" cp /www/wwwroot/dev.eduxplus.com/.env.local ./.env.local");
+        $this->runRemote(" cp /www/wwwroot/dev.eduxplus.com/.env.local ./.env.local");
     }
 
     // run some local or remote commands after the deployment is finished
     public function beforeFinishingDeploy()
     {
 //        $this->runRemote('{{ console_bin }} app:my-task-name');
-        $this->runLocal ( 'SYMFONY_ENV=dev composer deploy' );
+        $this->runRemote( 'SYMFONY_ENV=dev composer deploy' );
          $this->runLocal('say "The deployment has finished."');
     }
 };
