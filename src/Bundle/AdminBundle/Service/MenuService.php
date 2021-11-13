@@ -52,7 +52,7 @@ class MenuService extends AdminBaseService
         return $rs;
     }
 
-    protected function _menuSelect($menuArr, $pre="", &$rs){
+    protected function _menuSelect($menuArr, $pre, &$rs){
         if($menuArr){
             foreach ($menuArr as $v){
                 $id= $v['id'];

@@ -17,8 +17,8 @@ return new class extends DefaultDeployer
             // the repository branch to deploy
             ->repositoryBranch('master')
             ->symfonyEnvironment("prod")
-            ->sharedFilesAndDirs(['.env', '.env.local', 'var/log','var/tmp'])
-            ->writableDirs(['var/cache/', 'var/log/','var/tmp'])
+            ->sharedFilesAndDirs(['.env', '.env.local','var/log/','var/cache/'])
+            ->writableDirs(['var/cache/', 'var/log/'])
             ->installWebAssets(false)
             ->keepReleases(2);
         ;
