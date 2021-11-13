@@ -114,7 +114,7 @@ class ChapterService extends AdminBaseService
         return $rs;
     }
 
-    protected function _Select($all, $id, $pre = "", &$rs)
+    protected function _Select($all, $id, $pre, &$rs)
     {
         if ($all[$id]) {
             foreach ($all[$id] as $v) {

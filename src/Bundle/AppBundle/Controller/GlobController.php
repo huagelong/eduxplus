@@ -74,9 +74,9 @@ class GlobController extends BaseHtmlController
     }
 
     /**
-     * @Rest\Post("/glob/upload/do/{type}", name="app_glob_upload")
+     * @Rest\Post("/glob/upload/do/{type}", name="app_glob_upload", defaults={"type":"img"})
      */
-    public function uploadAction($type = "img", Request $request, UploadService $uploadService)
+    public function uploadAction($type, Request $request, UploadService $uploadService)
     {
         $file = $request->files->all();
 
@@ -163,10 +163,10 @@ class GlobController extends BaseHtmlController
     /**
      * 点播转码完成回调网址
      * 腾讯云 tengxunyun 阿里云 aliyun
-     * @Rest\Route("/vodCallback/do/{type}", name="app_glob_vodCallback")
+     * @Rest\Route("/vodCallback/do/{type}", name="app_glob_vodCallback", defaults={"type":"aliyun"})
      */
     public function vodCallbackAction(
-        $type = 'aliyun',
+        $type,
         Request $request,
         AliyunVodService $aliyunVodService,
         LearnService $learnService,

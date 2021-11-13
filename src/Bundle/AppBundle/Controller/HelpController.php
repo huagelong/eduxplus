@@ -17,9 +17,9 @@ class HelpController extends BaseHtmlController
 {
 
     /**
-     * @Rest\Get("/help/{type}/{id}", name="app_help")
+     * @Rest\Get("/help/{type}/{id}", name="app_help", defaults={"type":0, "id":0})
      */
-    public function indexAction($type=0, $id=0, HelpService $helpService){
+    public function indexAction($type, $id, HelpService $helpService){
         $data = [];
         $data['id'] = $id;
         $data['type'] = $type;

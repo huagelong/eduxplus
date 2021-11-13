@@ -22,7 +22,7 @@ class IndexController extends BaseHtmlController
     /**
      * @Rest\Get("/exam/{categoryId<\d+>?0}/{isFree<\d+>?0}", name="qa_exam_index")
      */
-    public function indexAction($categoryId=0,$isFree=0,Request $request, CategoryService $categoryService, QATestService $QATestService){
+    public function indexAction($categoryId=0,$isFree=0,Request $request, CategoryService $categoryService, QATestService $qaTestService){
         $data = [];
 
         $page = $request->get("page");
@@ -64,7 +64,7 @@ class IndexController extends BaseHtmlController
         if (!$secondSubCategorys) $secondSubCategorys = $categoryService->getSubCategory($firstId);
         if (!$threeSubCategory) $threeSubCategory = $categoryService->getSubCategory($secondId);
 
-        list($pagination, $list) = $QATestService->getCategoryGoods($categoryId, $level, $isFree, $page, $pageSize);
+        list($pagination, $list) = $qaTestService->getCategoryGoods($categoryId, $level, $isFree, $page, $pageSize);
         $data = [];
         $data['categoryId'] = $categoryId;
         $data['firstId'] = $firstId;

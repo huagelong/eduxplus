@@ -38,9 +38,9 @@ class DetailController extends BaseHtmlController
     }
 
     /**
-     * @Rest\Get("/center/{categoryId<\d+>?0}/{isFree<\d+>?0}", name="app_detail_center")
+     * @Rest\Get("/center/{categoryId<\d+>?0}/{isFree<\d+>?0}", name="app_detail_center", defaults={"categoryId":"0", "isFree":"0"})
      */
-    public function centerAction($categoryId=0,$isFree=0,Request $request, CategoryService $categoryService, GoodsService $goodsService){
+    public function centerAction($categoryId,$isFree,Request $request, CategoryService $categoryService, GoodsService $goodsService){
         $page = $request->get("page");
         $page = $page?$page:1;
         $pageSize = 40;

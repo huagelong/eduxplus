@@ -60,7 +60,7 @@ class NewsService extends AppBaseService
         return $result;
     }
 
-    public function getNewsList($category=0, $page, $pageSize){
+    public function getNewsList($category, $page, $pageSize){
         if($category){
             $dql = "SELECT a FROM App:MallNews a WHERE a.categoryId = :categoryId ORDER BY a.createdAt DESC";
         }else{

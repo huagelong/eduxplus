@@ -175,7 +175,7 @@ class QAChapterSubService extends AdminBaseService
         return $rs;
     }
 
-    protected function _select($all, $id, $pre = "", &$rs)
+    protected function _select($all, $id, $pre, &$rs)
     {
         if ($all[$id]) {
             foreach ($all[$id] as $v) {

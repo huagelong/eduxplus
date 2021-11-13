@@ -24,9 +24,9 @@ class NodeController extends BaseAdminController
 {
 
     /**
-     * @Rest\Get("/node/index/{chapterId}/{chapterSubId}", name="qa_admin_node_index")
+     * @Rest\Get("/node/index/{chapterId}/{chapterSubId}", name="qa_admin_node_index", defaults={"chapterSubId":0})
      */
-    public function indexAction($chapterId, $chapterSubId=0, Request $request, Grid $grid, QAChapterSubService $chapterSubService,
+    public function indexAction($chapterId, $chapterSubId, Request $request, Grid $grid, QAChapterSubService $chapterSubService,
                                 QANodeService $nodeService, QAChapterService $chapterService, UserService $userService){
 
         $pageSize = 40;
@@ -112,9 +112,9 @@ class NodeController extends BaseAdminController
 
 
     /**
-     * @Rest\Get("/node/add/{chapterId}/{chapterSubId}", name="qa_admin_node_add")
+     * @Rest\Get("/node/add/{chapterId}/{chapterSubId}", name="qa_admin_node_add", defaults={"chapterSubId":0})
      */
-    public function addAction($chapterId, $chapterSubId=0, Form $form, QAChapterSubService $chapterSubService){
+    public function addAction($chapterId, $chapterSubId, Form $form, QAChapterSubService $chapterSubService){
 
         $select = $chapterSubService->chapterSelect($chapterId);
 

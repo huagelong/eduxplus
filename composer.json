@@ -69,7 +69,6 @@
     },
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "^3.4",
-        "easycorp/easy-deploy-bundle": "^1.0",
         "phpunit/phpunit": "^9.5",
         "symfony/browser-kit": "4.4.*",
         "symfony/css-selector": "4.4.*",
@@ -121,6 +120,13 @@
             "php bin/console doctrine:cache:clear-query-region --ansi",
             "php bin/console doctrine:cache:clear-result --ansi --no-interaction",
             "@auto-scripts"
+        ],
+        "deploy": [
+            "php bin/console doctrine:database:create --if-not-exists",
+            "php bin/console doctrine:schema:update --ansi --no-interaction",
+            "php bin/console doctrine:fixtures:load --ansi --no-interaction",
+            "@clear-dbcache",
+            "@composer dump-autoload"
         ],
         "gen": [
             "php bin/console app:genDir",

@@ -72,9 +72,9 @@ class OptionController extends BaseAdminController
     }
 
     /**
-     * @Rest\Get("/option/add/{type}", name="admin_option_add")
+     * @Rest\Get("/option/add/{type}", name="admin_option_add", defaults={"type":"1"})
      */
-    public function addAction($type=1, Form $form, OptionService $optionService){
+    public function addAction($type, Form $form, OptionService $optionService){
         $form->textarea("配置说明")->field("descr")->isRequire(1);
 
         $form->text("健")->field("optionKey")->isRequire(1)->placeholder("推荐用英文字母,英文逗点.");
@@ -105,9 +105,9 @@ class OptionController extends BaseAdminController
     }
 
     /**
-     * @Rest\Post("/option/add/do/{type}", name="admin_api_option_add")
+     * @Rest\Post("/option/add/do/{type}", name="admin_api_option_add", defaults={"type":"1"})
      */
-    public function addDoAction($type=1, Request $request, OptionService $optionService){
+    public function addDoAction($type, Request $request, OptionService $optionService){
         $optionKey = $request->get("optionKey");
         $optionValue = $request->get("optionValue");
         $descr = $request->get('descr');

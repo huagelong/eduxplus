@@ -62,9 +62,9 @@ class TestSubController extends BaseAdminController
     }
 
     /**
-     * @Rest\Get("/test/sub/mg/{id}/{type}/{isFirst}", name="qa_admin_test_sub_mg")
+     * @Rest\Get("/test/sub/mg/{id}/{type}/{isFirst}", name="qa_admin_test_sub_mg", defaults={"type":0, "isFirst":1})
      */
-    public function mgAction($id,$type=0,$isFirst=1, Request $request,QATestService $testService, QATestSubService $testSubService,  CategoryService $categoryService, QAChapterSubService $chapterSubService, QAChapterService $chapterService){
+    public function mgAction($id,$type,$isFirst, Request $request,QATestService $testService, QATestSubService $testSubService,  CategoryService $categoryService, QAChapterSubService $chapterSubService, QAChapterService $chapterService){
 
 
         $testNodeIds = $testSubService->getAllNodeIds($id);

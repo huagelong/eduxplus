@@ -23,9 +23,9 @@ use Symfony\Component\HttpFoundation\Request;
 class GlobController extends BaseAdminController
 {
     /**
-     * @Rest\Post("/glob/upload/{type}", name="admin_glob_upload")
+     * @Rest\Post("/glob/upload/{type}", name="admin_glob_upload", defaults={"type":"img"})
      */
-    public function uploadAction($type = "img", Request $request, UploadService $uploadService){
+    public function uploadAction($type, Request $request, UploadService $uploadService){
 //        $exists = $request->get("exists");
 //        dump($exists);exit;
         $file = $request->files->all();

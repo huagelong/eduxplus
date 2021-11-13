@@ -136,7 +136,7 @@ class UserController extends BaseHtmlController
     }
 
     /**
-     * @Rest\Post("/my/uploadimg/do/{type}", name="app_my_uploadimg")
+     * @Rest\Post("/my/uploadimg/do/{type}", name="app_my_uploadimg", defaults={"type":"img"})
      */
     public function uploadavatarAction($type = "img", Request $request, UploadService $uploadService)
     {
