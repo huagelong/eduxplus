@@ -17,8 +17,8 @@ return new class extends DefaultDeployer
             // the repository branch to deploy
             ->repositoryBranch('master')
             ->symfonyEnvironment("prod")
-            ->sharedFilesAndDirs(['.env', '.env.local', 'var/log', 'public'])
-            ->writableDirs(['var/cache/', 'var/log/', 'public'])
+            ->sharedFilesAndDirs(['.env', '.env.local', 'var/log','var/tmp'])
+            ->writableDirs(['var/cache/', 'var/log/','var/tmp'])
             ->installWebAssets(false)
             ->keepReleases(2);
         ;
@@ -27,7 +27,10 @@ return new class extends DefaultDeployer
     // run some local or remote commands before the deployment is started
     public function beforeStartingDeploy()
     {
-//        $this->log ( '准备应用' );
+    }
+
+    public function beforePreparing(){
+        $this->runRemote('cp {{ deploy_dir }}/repo/.env {{ project_dir }}');
     }
 
     public function beforePublishing()
