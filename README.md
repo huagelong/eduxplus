@@ -53,7 +53,7 @@ eduxplus 是一款服务于教育机构、个人、小型团队的在线教育�
 
 ```$shell
 cp .env .env.local
-//打开.env.local 配置数据库，redis等
+//打开.env.local 配置数据库，redis等配置
 ```
 
 4. 执行

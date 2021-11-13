@@ -59,11 +59,5 @@ services:
     App\Twig\FiltersExtension:
         tags: ['twig.extension']
 
-    App\EventSubscriber\RedisClearer:
-        arguments:
-          - ["@snc_redis.cache","@snc_redis.secondlevelcache"]
-        tags:
-          - { name: kernel.cache_clearer }
-
     App\Bundle\RoutingLoader:
       tags: [routing.loader]
