@@ -12,10 +12,11 @@ return new class extends DefaultDeployer
             // the absolute path of the remote server directory where the project is deployed
             ->deployDir('/www/wwwroot/dev.eduxplus.com')
             // the URL of the Git repository where the project code is hosted
-            ->repositoryUrl('git@github.com:trensy/eduxplus.git')
+            ->repositoryUrl('git@gitee.com:wangkaihui/eduxplus.git')
             // the repository branch to deploy
             ->repositoryBranch('master')
             ->symfonyEnvironment("dev")
+            ->sharedFilesAndDirs([".env.local"])
             ->installWebAssets(false)
             ->keepReleases(2);
         ;

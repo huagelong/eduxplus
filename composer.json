@@ -118,8 +118,7 @@
             "php bin/console doctrine:cache:clear-entity-region --ansi --all",
             "php bin/console doctrine:cache:clear-query --ansi",
             "php bin/console doctrine:cache:clear-query-region --ansi",
-            "php bin/console doctrine:cache:clear-result --ansi --no-interaction",
-            "@auto-scripts"
+            "php bin/console doctrine:cache:clear-result --ansi --no-interaction"
         ],
         "deploy": [
             "php bin/console doctrine:database:create --if-not-exists",
