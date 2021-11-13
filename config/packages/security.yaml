@@ -4,7 +4,7 @@ security:
       algorithm: bcrypt
 
   providers:
-    api_token:
+    app_user_provider:
       entity:
         class: App\Entity\BaseUser
         property: uuid
@@ -16,7 +16,7 @@ security:
     admin:
       pattern: ^/admin
       anonymous: lazy
-      provider: api_token
+      provider: app_user_provider
       guard:
         authenticators:
           - App\Bundle\AdminBundle\Security\PasswordLoginAuthenticator
@@ -33,7 +33,7 @@ security:
       pattern: ^/api
       stateless: true
       anonymous: lazy
-      provider: api_token
+      provider: app_user_provider
       guard:
         authenticators:
           - App\Bundle\ApiBundle\Security\TokenAuthenticator

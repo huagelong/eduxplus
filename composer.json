@@ -1,6 +1,8 @@
 {
+    "name": "trensy/eduxplus",
+    "description": "Online education system",
+    "license": "Apache-2.0",
     "type": "project",
-    "license": "proprietary",
     "require": {
         "php": ">=7.1.3",
         "ext-ctype": "*",
@@ -121,6 +123,7 @@
             "@auto-scripts"
         ],
         "gen": [
+            "php bin/console app:genDir",
             "php bin/console doctrine:database:create --if-not-exists",
             "php bin/console doctrine:schema:drop --ansi --force --full-database --no-interaction",
             "php bin/console doctrine:schema:update --ansi --force --no-interaction",
