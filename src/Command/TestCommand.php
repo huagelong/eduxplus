@@ -109,7 +109,7 @@ class TestCommand extends Command
         $userModel->setIsAdmin(1);
         $userModel->setPassword($pwd);
         $userModel->setRealRole(1);
-        $userModel->setGravatar("http://dev.eduxplus.com/assets/images/gravatar.jpeg");
+        $userModel->setGravatar("http://demo.eduxplus.com/assets/images/gravatar.jpeg");
         $userModel->setAppToken("sdasdasda");
         $this->manager->persist($userModel);
         $this->manager->flush();
