@@ -41,7 +41,7 @@ eduxplus 是一款服务于教育机构、个人、小型团队的在线教育�
 - PDO PHP Extension;
 - GD PHP extension
 - MySQL >= 5.7;
-- And the [usual Symfony application requirements][2].
+- And the [https://symfony.com/doc/current/reference/requirements.html](https://symfony.com/doc/current/reference/requirements.html).
 
 #### 安装步骤
 
@@ -77,7 +77,8 @@ docker run -d --restart=always trensy/eduxplus /bin/sh
 ```
 
 ## 相关文档
-[1]: https://symfony.com/
-[2]: https://symfony.com/doc/current/reference/requirements.html
-[3]: https://getcomposer.org/doc/03-cli.md#create-project
+
+ - [https://symfony.com/](https://symfony.com/)
+ - [https://symfony.com/doc/current/reference/requirements.html](https://symfony.com/doc/current/reference/requirements.html)
+ - [https://getcomposer.org/doc/03-cli.md#create-project](https://getcomposer.org/doc/03-cli.md#create-project)
 
