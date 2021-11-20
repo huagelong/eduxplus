@@ -4,7 +4,7 @@ eduxplus 是一款服务于教育机构、个人、小型团队的在线教育�
 >注意： 当前beta版本，不建议生产使用
 
 ## demo地址
-- 前台地址: https://demo.eduxplus.com/admin  账号:17621487000 密码:Eduxplus@1
+- 前台地址: https://demo.eduxplus.com  账号:17621487000 密码:Eduxplus@1
 - 后台地址: https://demo.eduxplus.com/admin  账号:17621487000 密码:Eduxplus@1
 
 
@@ -39,9 +39,10 @@ eduxplus 是一款服务于教育机构、个人、小型团队的在线教育�
 
 #### 必要条件
 
-- PHP >= 7.3;
+- PHP >= 7.1.3;
 - PDO PHP Extension;
 - GD PHP extension
+- ZIP PHP extension
 - MySQL >= 5.7;
 - And the [https://symfony.com/doc/current/reference/requirements.html](https://symfony.com/doc/current/reference/requirements.html).
 
@@ -71,6 +72,14 @@ composer gen
 crontab -e
 
 * * * * * cd /path/to/project && php bin/console i86:jobby:execute 1>> /dev/null 2>&1
+```
+6.nginx配置
+> ./docs/nginx.conf 是配置例子，可以参考
+
+7.or 安装 [symfony cli](https://symfony.com/download) 直接运行下面命令
+```$shell
+symfony serve
+//打开 http://127.0.0.1:8000 进行预览
 ```
 
 ## docker 相关
