@@ -41,8 +41,8 @@ eduxplus 是一款服务于教育机构、个人、小型团队的在线教育�
 
 - PHP >= 7.1.3;
 - PDO PHP Extension;
-- GD PHP extension
-- ZIP PHP extension
+- GD PHP extension;
+- ZIP PHP extension;
 - MySQL >= 5.7;
 - And the [https://symfony.com/doc/current/reference/requirements.html](https://symfony.com/doc/current/reference/requirements.html).
 
