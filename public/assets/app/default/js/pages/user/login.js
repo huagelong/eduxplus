@@ -23,7 +23,7 @@ $(function(){
       type: 1,
       content: $('#sms_model')
     });
-    $('#sms_model').removeClass("layui-hide").
+    $('#sms_model').removeClass("layui-hide");
       //图片模拟点击
       $("#recaptcha_sms_login").trigger("click");
   });

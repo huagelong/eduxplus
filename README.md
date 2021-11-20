@@ -4,7 +4,7 @@ eduxplus 是一款服务于教育机构、个人、小型团队的在线教育�
 >注意： 当前beta版本，不建议生产使用
 
 ## demo地址
-- 前台地址: https://demo.eduxplus.com/admin  
+- 前台地址: https://demo.eduxplus.com/admin  账号:17621487000 密码:Eduxplus@1
 - 后台地址: https://demo.eduxplus.com/admin  账号:17621487000 密码:Eduxplus@1
 
 

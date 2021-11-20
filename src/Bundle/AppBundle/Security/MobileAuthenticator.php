@@ -45,9 +45,13 @@ class MobileAuthenticator extends AbstractFormLoginAuthenticator
     public function start(Request $request, AuthenticationException $authException = null)
     {
         if(($request->getRequestFormat() == 'json') || (in_array("application/json", $request->getAcceptableContentTypes()))){
-            throw new AuthenticationException("请先登录!");
+            if($authException->getCode()=="401"){
+                throw new AuthenticationException($authException->getMessage());
+            }else{
+                throw new AuthenticationException("请先登录!");
+            }
         }else{
-            $url = $this->getLoginUrl($request);
+            $url = $this->getLoginUrl();
             return new RedirectResponse($url);
         }
     }
@@ -93,7 +97,7 @@ class MobileAuthenticator extends AbstractFormLoginAuthenticator
 
         if(!$mobile) throw new AuthenticationException("手机号码不能为空！");
         if(!$code) throw new AuthenticationException("短信验证码不能为空！");
-        if(!$this->validateService->mobileValidate($mobile)) throw new AuthenticationException("手机号码格式错误！");
+        if(!$this->validateService->mobileValidate($mobile)) throw new AuthenticationException("手机号码格式错误！", 401);
 
         $request->cookies->set("site_login_mobile", $mobile);
         $request->cookies->set("site_login_goto", $goto);
@@ -126,10 +130,10 @@ class MobileAuthenticator extends AbstractFormLoginAuthenticator
         list($token, $uid) = $this->userService->checkLogin($mobile, "html", "pc");
 
         if($this->userService->error()->has()){
-            throw new AuthenticationException($this->userService->error()->getLast());
+            throw new AuthenticationException($this->userService->error()->getLast(), 401);
         }
 
-        if(!$token) throw new AuthenticationException("登录失败!");
+        if(!$token) throw new AuthenticationException("登录失败!",401);
 
         $userInfo = $this->userService->getUserObj($uid);
         $time = 60 * 60 * 24 * 30;
@@ -173,7 +177,7 @@ class MobileAuthenticator extends AbstractFormLoginAuthenticator
      */
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
     {
-        throw  new AuthenticationException($exception->getMessage());
+        throw  new AuthenticationException($exception->getMessage(), 401);
 //        throw  new AuthenticationException("请先登录!");
     }
 
