@@ -39,7 +39,6 @@ class UserService extends AdminBaseService
     {
         $sql = $this->getFormatRequestSql($request);
         $dql = "SELECT a FROM App:BaseUser a " . $sql  . " ORDER BY a.id DESC";
-        dump($dql);
         $em = $this->getDoctrine()->getManager();
         $query = $em->createQuery($dql);
         $pagination = $this->paginator->paginate(
