@@ -122,10 +122,14 @@
             "php bin/console doctrine:cache:clear-result --ansi --no-interaction"
         ],
         "deploy": [
-            "php bin/console app:genDir",
+            "php bin/console app:gen:dir",
             "php bin/console doctrine:database:create --if-not-exists",
             "php bin/console doctrine:schema:update --ansi --force --no-interaction",
             "@clear-dbcache"
+        ],
+        "up-entity":[
+            "symfony console make:entity --regenerate Wechance\\CoreBundle\\Entity",
+            "@deploy"
         ],
         "gen": [
             "php bin/console app:genDir",
