@@ -32,10 +32,6 @@ services:
         tags:
             - { name: kernel.event_listener, event: kernel.exception }
 
-    App\EventSubscriber\DatabaseActivitySubscriber:
-        tags:
-          - { name: 'doctrine.event_subscriber'}
-
     App\Bundle\AppBundle\Lib\Service\RedisService:
         lazy: true
         arguments:
