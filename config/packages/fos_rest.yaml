@@ -47,6 +47,3 @@ fos_rest:
         guessing_order: [query, custom_header]  # X-Accept-Version header
 
     unauthorized_challenge: "Basic realm=\"Restricted Area\""
-
-    access_denied_listener:
-        json: true
