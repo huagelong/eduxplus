@@ -2,13 +2,13 @@
 
 namespace App\Bundle\QABundle\DataFixtures;
 
-use App\Bundle\AppBundle\Lib\Service\HelperService;
-use App\Entity\BaseMenu;
-use App\Entity\BaseOption;
-use App\Entity\BaseRole;
-use App\Entity\BaseRoleMenu;
-use App\Entity\BaseRoleUser;
-use App\Entity\BaseUser;
+use Eduxplus\CoreBundle\Lib\Service\HelperService;
+use Eduxplus\CoreBundle\Entity\BaseMenu;
+use Eduxplus\CoreBundle\Entity\BaseOption;
+use Eduxplus\CoreBundle\Entity\BaseRole;
+use Eduxplus\CoreBundle\Entity\BaseRoleMenu;
+use Eduxplus\CoreBundle\Entity\BaseRoleUser;
+use Eduxplus\CoreBundle\Entity\BaseUser;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 

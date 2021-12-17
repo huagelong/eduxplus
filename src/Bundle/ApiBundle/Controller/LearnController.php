@@ -8,13 +8,13 @@
 
 namespace App\Bundle\ApiBundle\Controller;
 
-use App\Bundle\AppBundle\Lib\Service\Vod\AliyunVodService;
-use App\Bundle\AppBundle\Lib\Service\Vod\TengxunyunVodService;
+use Eduxplus\CoreBundle\Lib\Service\Vod\AliyunVodService;
+use Eduxplus\CoreBundle\Lib\Service\Vod\TengxunyunVodService;
 use App\Bundle\AppBundle\Service\ImService;
 use App\Bundle\AppBundle\Service\LearnService;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\Annotations\View as ViewAnnotations;
-use App\Bundle\AppBundle\Lib\Base\BaseApiController;
+use Eduxplus\CoreBundle\Lib\Base\BaseApiController;
 use Symfony\Component\HttpFoundation\Request;
 
 class LearnController extends BaseApiController

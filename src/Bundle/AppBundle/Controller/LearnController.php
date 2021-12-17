@@ -10,9 +10,9 @@
 namespace App\Bundle\AppBundle\Controller;
 
 
-use App\Bundle\AppBundle\Lib\Base\BaseHtmlController;
-use App\Bundle\AppBundle\Lib\Service\Vod\AliyunVodService;
-use App\Bundle\AppBundle\Lib\Service\Vod\TengxunyunVodService;
+use Eduxplus\CoreBundle\Lib\Base\BaseHtmlController;
+use Eduxplus\CoreBundle\Lib\Service\Vod\AliyunVodService;
+use Eduxplus\CoreBundle\Lib\Service\Vod\TengxunyunVodService;
 use App\Bundle\AppBundle\Service\ImService;
 use App\Bundle\AppBundle\Service\LearnService;
 use FOS\RestBundle\Controller\Annotations as Rest;

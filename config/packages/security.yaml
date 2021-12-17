@@ -1,12 +1,12 @@
 security:
   encoders:
-    App\Entity\BaseUser:
+    Eduxplus\CoreBundle\Entity\BaseUser:
       algorithm: bcrypt
 
   providers:
     app_user_provider:
       entity:
-        class: App\Entity\BaseUser
+        class: Eduxplus\CoreBundle\Entity\BaseUser
         property: uuid
   firewalls:
     dev:
@@ -19,8 +19,8 @@ security:
       provider: app_user_provider
       guard:
         authenticators:
-          - App\Bundle\AdminBundle\Security\PasswordLoginAuthenticator
-        entry_point: App\Bundle\AdminBundle\Security\PasswordLoginAuthenticator
+          - Eduxplus\CoreBundle\Security\PasswordLoginAuthenticator
+        entry_point: Eduxplus\CoreBundle\Security\PasswordLoginAuthenticator
       logout:
         path: admin_logout
         target: /admin/login

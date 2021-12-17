@@ -9,15 +9,15 @@
 namespace App\Bundle\AppBundle\Controller;
 
 
-use App\Bundle\AppBundle\Lib\Base\BaseHtmlController;
-use App\Bundle\AppBundle\Lib\Service\HelperService;
-use App\Bundle\AppBundle\Lib\Service\UploadService;
-use App\Bundle\AppBundle\Lib\Service\ValidateService;
+use Eduxplus\CoreBundle\Lib\Base\BaseHtmlController;
+use Eduxplus\CoreBundle\Lib\Service\HelperService;
+use Eduxplus\CoreBundle\Lib\Service\UploadService;
+use Eduxplus\CoreBundle\Lib\Service\ValidateService;
 use App\Bundle\AppBundle\Service\GlobService;
 use App\Bundle\AppBundle\Service\GoodsService;
 use App\Bundle\AppBundle\Service\MsgService;
 use App\Bundle\AppBundle\Service\UserService;
-use App\Exception\NeedLoginException;
+use Eduxplus\CoreBundle\Exception\NeedLoginException;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

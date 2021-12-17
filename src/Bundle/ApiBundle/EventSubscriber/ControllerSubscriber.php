@@ -10,9 +10,9 @@
 namespace App\Bundle\ApiBundle\EventSubscriber;
 
 
-use App\Bundle\AppBundle\Lib\Base\ApiBaseService;
-use App\Bundle\AppBundle\Lib\Base\BaseApiController;
-use App\Bundle\AppBundle\Lib\Base\BaseService;
+use Eduxplus\CoreBundle\Lib\Base\ApiBaseService;
+use Eduxplus\CoreBundle\Lib\Base\BaseApiController;
+use Eduxplus\CoreBundle\Lib\Base\BaseService;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\HttpKernel\Event\ControllerEvent;

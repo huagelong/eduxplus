@@ -9,7 +9,7 @@
 namespace App\Bundle\AppBundle\Controller;
 
 
-use App\Bundle\AppBundle\Lib\Base\BaseHtmlController;
+use Eduxplus\CoreBundle\Lib\Base\BaseHtmlController;
 use App\Bundle\AppBundle\Service\BannerService;
 use App\Bundle\AppBundle\Service\NewsService;
 use Symfony\Component\HttpFoundation\Request;

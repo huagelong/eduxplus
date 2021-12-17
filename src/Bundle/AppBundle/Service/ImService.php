@@ -9,10 +9,10 @@
 namespace App\Bundle\AppBundle\Service;
 
 
-use App\Bundle\AppBundle\Lib\Base\AppBaseService;
-use App\Bundle\AppBundle\Lib\Service\CacheService;
-use App\Bundle\AppBundle\Lib\Service\Im\TengxunyunImService;
-use App\Entity\TeachLiveChatLog;
+use Eduxplus\CoreBundle\Lib\Base\AppBaseService;
+use Eduxplus\CoreBundle\Lib\Service\CacheService;
+use Eduxplus\CoreBundle\Lib\Service\Im\TengxunyunImService;
+use Eduxplus\CoreBundle\Entity\TeachLiveChatLog;
 
 class ImService extends AppBaseService
 {

@@ -10,17 +10,17 @@
 namespace App\Bundle\AppBundle\Service;
 
 
-use App\Bundle\AppBundle\Lib\Service\HelperService;
-use App\Entity\BaseLoginLog;
-use App\Entity\BaseUser;
+use Eduxplus\CoreBundle\Lib\Service\HelperService;
+use Eduxplus\CoreBundle\Entity\BaseLoginLog;
+use Eduxplus\CoreBundle\Entity\BaseUser;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
-use \App\Bundle\AppBundle\Lib\Base\AppBaseService;
-use App\Bundle\AppBundle\Lib\Service\MobileMaskService;
+use \Eduxplus\CoreBundle\Lib\Base\AppBaseService;
+use Eduxplus\CoreBundle\Lib\Service\MobileMaskService;
 
 class UserService extends AppBaseService
 {

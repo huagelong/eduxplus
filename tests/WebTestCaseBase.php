@@ -10,8 +10,8 @@
 namespace App\Tests;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use App\Bundle\AppBundle\Lib\Base\BaseService;
-use App\Entity\BaseUser;
+use Eduxplus\CoreBundle\Lib\Base\BaseService;
+use Eduxplus\CoreBundle\Entity\BaseUser;
 use Symfony\Component\BrowserKit\Cookie;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
@@ -32,7 +32,7 @@ class WebTestCaseBase extends WebTestCase
     {
         // $session = $this->sfcontainer->get('session');
         // $sql = "SELECT a FROM App:BaseUser a WHERE a.mobile = :mobile";
-        // $service = $this->sfcontainer->get(\App\Bundle\AppBundle\Lib\Base\BaseService::class);
+        // $service = $this->sfcontainer->get(\Eduxplus\CoreBundle\Lib\Base\BaseService::class);
         // $user = $service->fetchOne($sql, ["mobile"=>"17621487000"], 1);
         // $firewallName = 'admin';
         // $firewallContext = 'admin';

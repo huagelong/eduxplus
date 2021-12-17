@@ -9,7 +9,7 @@
 namespace App\Bundle\QABundle\Controller\App;
 
 
-use App\Bundle\AppBundle\Lib\Base\BaseHtmlController;
+use Eduxplus\CoreBundle\Lib\Base\BaseHtmlController;
 use App\Bundle\AppBundle\Service\CategoryService;
 use App\Bundle\AppBundle\Service\GoodsService;
 use App\Bundle\QABundle\Service\App\QATestService;

@@ -10,7 +10,7 @@
 namespace App\Bundle\ApiBundle\Controller;
 
 use App\Bundle\ApiBundle\Service\GoodService;
-use App\Bundle\AppBundle\Lib\Base\BaseApiController;
+use Eduxplus\CoreBundle\Lib\Base\BaseApiController;
 use App\Bundle\AppBundle\Service\LearnService;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\Annotations\View as ViewAnnotations;

@@ -8,8 +8,8 @@
 
 namespace App\Tests\Controller;
 
-use App\Bundle\AppBundle\Lib\Base\BaseService;
-use App\Entity\BaseUser;
+use Eduxplus\CoreBundle\Lib\Base\BaseService;
+use Eduxplus\CoreBundle\Entity\BaseUser;
 use App\Tests\WebTestCaseBase;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\BrowserKit\Cookie;
@@ -23,7 +23,7 @@ class AliyunOssControllerTest extends WebTestCaseBase
     public function testShowPost()
     {
         $this->loginIn();
-        $service = $this->sfcontainer->get(\App\Bundle\AppBundle\Lib\Base\BaseService::class);
+        $service = $this->sfcontainer->get(\Eduxplus\CoreBundle\Lib\Base\BaseService::class);
 
         $imgContent = "https://www.baidu.com/img/flexible/logo/pc/result@2.png";
         $filePath = $service->getBasePath()."/var/tmp/upload/result@2.png";

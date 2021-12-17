@@ -9,7 +9,7 @@
 namespace App\Bundle\QABundle\Service\App;
 
 
-use App\Bundle\AppBundle\Lib\Base\AppBaseService;
+use Eduxplus\CoreBundle\Lib\Base\AppBaseService;
 use App\Bundle\AppBundle\Service\CategoryService;
 use App\Bundle\AppBundle\Service\TeacherService;
 use App\Bundle\QABundle\Entity\TeachTestAnswer;

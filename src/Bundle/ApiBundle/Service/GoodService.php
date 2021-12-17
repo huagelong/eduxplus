@@ -9,7 +9,7 @@
 
 namespace App\Bundle\ApiBundle\Service;
 
-use App\Bundle\AppBundle\Lib\Base\ApiBaseService;
+use Eduxplus\CoreBundle\Lib\Base\ApiBaseService;
 
 class GoodService extends ApiBaseService
 {

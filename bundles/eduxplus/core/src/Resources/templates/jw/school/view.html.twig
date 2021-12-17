@@ -1,0 +1,47 @@
+{% extends "@CoreBundle/layout/pop.html.twig" %}
+
+{% block page_title %}查看学校{% endblock %}
+
+{% block body_javascript %}
+    {{ parent() }}
+    <script src="{{ asset('assets/plugins/jquery-distpicker/distpicker.js') }}"></script>
+    <script>
+        $(function(){
+            $('#distpicker').distpicker();
+        });
+    </script>
+{% endblock %}
+
+{% block head_javascript %}
+  {{ parent() }}
+  <script src="{{ asset('assets/plugins/tinymce/tinymce.min.js') }}"></script>
+  <script src="{{ asset('assets/plugins/tinymce/langs/zh_CN.js') }}"></script>
+{% endblock %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item"><a href="{{ path("admin_jw_school_index") }}">学校管理</a></li>
+{% endblock %}
+{% block page %}
+    <section class="content">
+      <div class="card card-default">
+        <div class="card-body" style="display: block;">
+        <div class="row">
+            <div class="col-md-12">
+                            {{ formData|raw }}
+                            <div class="form-group  row">
+                                <label for="title" class="col-sm-2 col-form-label">省市:</label>
+                                <div class="btn-group">
+                                    <div data-toggle="distpicker" id="distpicker">
+                                        <select name="state" data-province="{{ info['state'] }}" disabled></select>
+                                        <select name="city" data-city="{{ info['city'] }}" disabled></select>
+                                        <select name="region" data-district="{{ info['region'] }}" disabled></select>
+                                    </div>
+                                </div>
+                            </div>
+                </div>
+            </div>
+        </div>
+      </div>
+        </div>
+    </section>
+{% endblock %}

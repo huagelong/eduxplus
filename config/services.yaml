@@ -32,28 +32,11 @@ services:
         tags:
             - { name: kernel.event_listener, event: kernel.exception }
 
-    App\Bundle\AppBundle\Lib\Service\RedisService:
-        lazy: true
-        arguments:
-            $redisCLient: '@snc_redis.default'
-
-    App\Bundle\AppBundle\Lib\Service\CacheService:
-        public: true
-        lazy: true
-        arguments:
-            $cacheCLient: '@snc_redis.cache'
-
     snc_second_level_cache:
         class: '%snc_redis.doctrine_cache_phpredis.class%'
 #        lazy: true
         arguments:
             - '@snc_redis.secondlevelcache'
-
-    App\Twig\FuncExtension:
-        tags: ['twig.extension']
-
-    App\Twig\FiltersExtension:
-        tags: ['twig.extension']
 
     App\Bundle\RoutingLoader:
       tags: [routing.loader]

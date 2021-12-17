@@ -10,7 +10,7 @@
 namespace App\Bundle\AppBundle\Service;
 
 
-use App\Bundle\AppBundle\Lib\Base\AppBaseService;
+use Eduxplus\CoreBundle\Lib\Base\AppBaseService;
 
 class CategoryService extends AppBaseService
 {

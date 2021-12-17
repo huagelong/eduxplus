@@ -9,8 +9,8 @@
 namespace App\Bundle\AppBundle\Service;
 
 
-use App\Bundle\AppBundle\Lib\Base\AppBaseService;
-use App\Bundle\AppBundle\Lib\Service\HelperService;
+use Eduxplus\CoreBundle\Lib\Base\AppBaseService;
+use Eduxplus\CoreBundle\Lib\Service\HelperService;
 use Knp\Component\Pager\PaginatorInterface;
 
 class NewsService extends AppBaseService

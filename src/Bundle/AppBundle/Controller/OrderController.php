@@ -10,9 +10,9 @@
 namespace App\Bundle\AppBundle\Controller;
 
 
-use App\Bundle\AppBundle\Lib\Base\BaseHtmlController;
-use App\Bundle\AppBundle\Lib\Service\Pay\AlipayService;
-use App\Bundle\AppBundle\Lib\Service\Pay\WxpayService;
+use Eduxplus\CoreBundle\Lib\Base\BaseHtmlController;
+use Eduxplus\CoreBundle\Lib\Service\Pay\AlipayService;
+use Eduxplus\CoreBundle\Lib\Service\Pay\WxpayService;
 use App\Bundle\AppBundle\Service\GoodsService;
 use App\Bundle\AppBundle\Service\OrderService;
 use FOS\RestBundle\Controller\Annotations as Rest;

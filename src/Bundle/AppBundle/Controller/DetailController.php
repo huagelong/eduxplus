@@ -9,7 +9,7 @@
 namespace App\Bundle\AppBundle\Controller;
 
 
-use App\Bundle\AppBundle\Lib\Base\BaseHtmlController;
+use Eduxplus\CoreBundle\Lib\Base\BaseHtmlController;
 use App\Bundle\AppBundle\Service\CategoryService;
 use App\Bundle\AppBundle\Service\GoodsService;
 use FOS\RestBundle\Controller\Annotations as Rest;

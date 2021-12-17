@@ -9,8 +9,8 @@
 namespace App\Bundle\QABundle\Service\Admin;
 
 
-use App\Bundle\AdminBundle\Service\Teach\CategoryService;
-use App\Bundle\AppBundle\Lib\Base\AdminBaseService;
+use Eduxplus\CoreBundle\Service\Teach\CategoryService;
+use Eduxplus\CoreBundle\Lib\Base\AdminBaseService;
 use App\Bundle\QABundle\Entity\TeachQAChapter;
 use Knp\Component\Pager\PaginatorInterface;
 

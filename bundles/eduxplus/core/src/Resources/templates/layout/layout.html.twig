@@ -1,0 +1,32 @@
+{% extends '@CoreBundle/layout/base.html.twig' %}
+{% block head_stylesheets %}
+    {{ parent() }}
+    {% block style %}{% endblock %}
+    <link rel="stylesheet" href="{{ asset('assets/dist/base/base.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/dist/baseAdmin/base.min.css') }}">
+{% endblock %}
+
+{% block head_stylesheets_end %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('assets/admin/css/admin.css') }}">
+{% endblock %}
+
+{% block head_javascript %}
+    {{ parent() }}
+    <script>
+        var globOption = {
+            appDomain:"{{ option("app.domain") }}"
+        }
+    </script>
+  <script src="{{ asset('assets/dist/base/base.min.js') }}"></script>
+    <script src="{{ asset('assets/dist/baseAdmin/base.min.js') }}"></script>
+{% endblock %}
+
+{% block head_favicon %}
+    {{ parent() }}
+    <link rel="icon" type="image/png" href="{{ asset(option("app.icon", 1, 0)) }}">
+{% endblock %}
+
+{% block body_javascript %}
+    {{ parent() }}
+{% endblock %}

@@ -8,9 +8,9 @@
 
 namespace App\Bundle\AppBundle\Security;
 
-use App\Bundle\AppBundle\Lib\Service\ValidateService;
+use Eduxplus\CoreBundle\Lib\Service\ValidateService;
 use App\Bundle\AppBundle\Service\UserService;
-use App\Exception\NeedLoginException;
+use Eduxplus\CoreBundle\Exception\NeedLoginException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;

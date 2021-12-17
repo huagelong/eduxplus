@@ -9,15 +9,15 @@
 namespace App\Bundle\AppBundle\Service;
 
 
-use App\Bundle\AppBundle\Lib\Base\AppBaseService;
-use App\Bundle\AppBundle\Lib\Service\Pay\AlipayService;
-use App\Bundle\AppBundle\Lib\Service\Pay\WxpayService;
+use Eduxplus\CoreBundle\Lib\Base\AppBaseService;
+use Eduxplus\CoreBundle\Lib\Service\Pay\AlipayService;
+use Eduxplus\CoreBundle\Lib\Service\Pay\WxpayService;
 use App\Bundle\QABundle\Entity\TeachTestOrder;
-use App\Entity\JwClasses;
-use App\Entity\JwClassesMembers;
-use App\Entity\MallOrder;
-use App\Entity\MallOrderStudyPlan;
-use App\Entity\MallPay;
+use Eduxplus\CoreBundle\Entity\JwClasses;
+use Eduxplus\CoreBundle\Entity\JwClassesMembers;
+use Eduxplus\CoreBundle\Entity\MallOrder;
+use Eduxplus\CoreBundle\Entity\MallOrderStudyPlan;
+use Eduxplus\CoreBundle\Entity\MallPay;
 use Knp\Component\Pager\PaginatorInterface;
 
 class OrderService extends AppBaseService

@@ -9,8 +9,8 @@
 namespace App\Bundle\QABundle\Controller\Admin;
 
 
-use App\Bundle\AdminBundle\Service\Mall\GoodsService;
-use App\Bundle\AppBundle\Lib\Base\BaseAdminController;
+use Eduxplus\CoreBundle\Service\Mall\GoodsService;
+use Eduxplus\CoreBundle\Lib\Base\BaseAdminController;
 use App\Bundle\QABundle\Service\Admin\QATestService;
 use Symfony\Component\HttpFoundation\Request;
 use FOS\RestBundle\Controller\Annotations as Rest;

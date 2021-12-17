@@ -1,0 +1,29 @@
+parameters:
+services:
+    admin.getProp.twig.extension:
+        class: Eduxplus\CoreBundle\Twig\GetPropExtension
+        tags:
+            - { name: twig.extension }
+
+    admin.isAuthorized.twig.extension:
+        class: Eduxplus\CoreBundle\Twig\IsAuthorizedExtension
+        arguments: ['@Eduxplus\CoreBundle\Service\RoleService']
+        tags:
+            - { name: twig.extension }
+
+    Eduxplus\CoreBundle\Lib\Service\RedisService:
+        lazy: true
+        arguments:
+            $redisCLient: '@snc_redis.default'
+
+    Eduxplus\CoreBundle\Lib\Service\CacheService:
+        public: true
+        lazy: true
+        arguments:
+            $cacheCLient: '@snc_redis.cache'
+
+    Eduxplus\CoreBundle\Twig\FuncExtension:
+        tags: [ 'twig.extension' ]
+
+    Eduxplus\CoreBundle\Twig\FiltersExtension:
+        tags: [ 'twig.extension' ]

@@ -10,12 +10,12 @@
 namespace App\Bundle\AppBundle\Controller;
 
 use AlibabaCloud\Imm\Imm;
-use App\Bundle\AppBundle\Lib\Base\BaseHtmlController;
-use App\Bundle\AppBundle\Lib\Service\CaptchaService;
-use App\Bundle\AppBundle\Lib\Service\Live\TengxunyunLiveService;
-use App\Bundle\AppBundle\Lib\Service\ValidateService;
-use App\Bundle\AppBundle\Lib\Service\Vod\AliyunVodService;
-use App\Bundle\AppBundle\Lib\Service\Vod\TengxunyunVodService;
+use Eduxplus\CoreBundle\Lib\Base\BaseHtmlController;
+use Eduxplus\CoreBundle\Lib\Service\CaptchaService;
+use Eduxplus\CoreBundle\Lib\Service\Live\TengxunyunLiveService;
+use Eduxplus\CoreBundle\Lib\Service\ValidateService;
+use Eduxplus\CoreBundle\Lib\Service\Vod\AliyunVodService;
+use Eduxplus\CoreBundle\Lib\Service\Vod\TengxunyunVodService;
 use App\Bundle\AppBundle\Service\GlobService;
 use App\Bundle\AppBundle\Service\LearnService;
 use App\Bundle\AppBundle\Service\OrderService;
@@ -23,7 +23,7 @@ use Firebase\JWT\JWT;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use App\Bundle\AppBundle\Lib\Service\UploadService;
+use Eduxplus\CoreBundle\Lib\Service\UploadService;
 use App\Bundle\AppBundle\Service\ImService;
 use Psr\Log\LoggerInterface;
 use EasyWeChat\Kernel\Support\XML;

@@ -9,10 +9,10 @@
 
 namespace App\Bundle\ApiBundle\Security;
 
-use App\Bundle\AppBundle\Lib\Base\ApiBaseService;
-use App\Bundle\AppBundle\Lib\Service\JsonResponseService;
-use App\Exception\LoginExpiredException;
-use App\Exception\NeedLoginException;
+use Eduxplus\CoreBundle\Lib\Base\ApiBaseService;
+use Eduxplus\CoreBundle\Lib\Service\JsonResponseService;
+use Eduxplus\CoreBundle\Exception\LoginExpiredException;
+use Eduxplus\CoreBundle\Exception\NeedLoginException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;

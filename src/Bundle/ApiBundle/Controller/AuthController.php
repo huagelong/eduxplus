@@ -9,17 +9,17 @@
 
 namespace App\Bundle\ApiBundle\Controller;
 
-use App\Entity\BaseUser;
-use App\Bundle\AppBundle\Lib\Base\BaseApiController;
-use App\Bundle\AppBundle\Lib\Service\HelperService;
+use Eduxplus\CoreBundle\Entity\BaseUser;
+use Eduxplus\CoreBundle\Lib\Base\BaseApiController;
+use Eduxplus\CoreBundle\Lib\Service\HelperService;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\Annotations\View as ViewAnnotations;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-use App\Bundle\AppBundle\Lib\Service\Auth\WxMiniService;
+use Eduxplus\CoreBundle\Lib\Service\Auth\WxMiniService;
 use App\Bundle\AppBundle\Service\UserService;
-use App\Bundle\AppBundle\Lib\Service\ValidateService;
+use Eduxplus\CoreBundle\Lib\Service\ValidateService;
 use App\Bundle\AppBundle\Service\GlobService;
 
 /**

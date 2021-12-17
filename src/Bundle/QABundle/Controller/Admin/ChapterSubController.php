@@ -9,11 +9,11 @@
 namespace App\Bundle\QABundle\Controller\Admin;
 
 
-use App\Bundle\AppBundle\Lib\Base\BaseAdminController;
+use Eduxplus\CoreBundle\Lib\Base\BaseAdminController;
 use App\Bundle\QABundle\Service\Admin\QAChapterService;
 use App\Bundle\QABundle\Service\Admin\QAChapterSubService;
 use FOS\RestBundle\Controller\Annotations as Rest;
-use App\Bundle\AdminBundle\Lib\Form\Form;
+use Eduxplus\CoreBundle\Lib\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 
 class ChapterSubController extends BaseAdminController

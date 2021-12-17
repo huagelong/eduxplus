@@ -9,11 +9,11 @@
 namespace App\Bundle\QABundle\Controller\Admin;
 
 
-use App\Bundle\AdminBundle\Lib\Form\Form;
-use App\Bundle\AdminBundle\Lib\Grid\Grid;
-use App\Bundle\AdminBundle\Service\Mall\NewsService;
-use App\Bundle\AdminBundle\Service\Teach\CategoryService;
-use App\Bundle\AppBundle\Lib\Base\BaseAdminController;
+use Eduxplus\CoreBundle\Lib\Form\Form;
+use Eduxplus\CoreBundle\Lib\Grid\Grid;
+use Eduxplus\CoreBundle\Service\Mall\NewsService;
+use Eduxplus\CoreBundle\Service\Teach\CategoryService;
+use Eduxplus\CoreBundle\Lib\Base\BaseAdminController;
 use App\Bundle\QABundle\Service\Admin\QAChapterService;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use Symfony\Component\HttpFoundation\Request;

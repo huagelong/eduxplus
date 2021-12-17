@@ -9,11 +9,11 @@
 namespace App\Bundle\AppBundle\Service;
 
 
-use App\Bundle\AppBundle\Lib\Base\AppBaseService;
-use App\Bundle\AppBundle\Lib\Service\SmsService;
-use App\Bundle\AppBundle\Lib\Service\CacheService;
-use App\Bundle\AppBundle\Lib\Service\CaptchaService;
-use App\Entity\MallMobileSmsCode;
+use Eduxplus\CoreBundle\Lib\Base\AppBaseService;
+use Eduxplus\CoreBundle\Lib\Service\SmsService;
+use Eduxplus\CoreBundle\Lib\Service\CacheService;
+use Eduxplus\CoreBundle\Lib\Service\CaptchaService;
+use Eduxplus\CoreBundle\Entity\MallMobileSmsCode;
 
 class GlobService extends AppBaseService
 {

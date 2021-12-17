@@ -9,9 +9,9 @@
 namespace App\Bundle\AppBundle\EventSubscriber;
 
 
-use App\Bundle\AppBundle\Lib\Base\BaseHtmlController;
+use Eduxplus\CoreBundle\Lib\Base\BaseHtmlController;
 use App\Bundle\AppBundle\Service\UserService;
-use App\Exception\LoginExpiredException;
+use Eduxplus\CoreBundle\Exception\LoginExpiredException;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\KernelEvents;

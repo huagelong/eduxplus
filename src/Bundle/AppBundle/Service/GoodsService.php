@@ -10,8 +10,8 @@
 namespace App\Bundle\AppBundle\Service;
 
 
-use App\Bundle\AppBundle\Lib\Base\AppBaseService;
-use App\Entity\MallGoodsFav;
+use Eduxplus\CoreBundle\Lib\Base\AppBaseService;
+use Eduxplus\CoreBundle\Entity\MallGoodsFav;
 use Knp\Component\Pager\PaginatorInterface;
 
 class GoodsService extends AppBaseService

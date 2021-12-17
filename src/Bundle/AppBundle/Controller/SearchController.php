@@ -9,7 +9,7 @@
 namespace App\Bundle\AppBundle\Controller;
 
 
-use App\Bundle\AppBundle\Lib\Base\BaseHtmlController;
+use Eduxplus\CoreBundle\Lib\Base\BaseHtmlController;
 use App\Bundle\AppBundle\Service\SearchService;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use Symfony\Component\HttpFoundation\Request;

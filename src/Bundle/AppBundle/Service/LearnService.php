@@ -10,9 +10,9 @@
 namespace App\Bundle\AppBundle\Service;
 
 
-use App\Bundle\AppBundle\Lib\Base\AppBaseService;
-use App\Entity\MallStudyLog;
-use App\Entity\TeachCourseVideos;
+use Eduxplus\CoreBundle\Lib\Base\AppBaseService;
+use Eduxplus\CoreBundle\Entity\MallStudyLog;
+use Eduxplus\CoreBundle\Entity\TeachCourseVideos;
 use Knp\Component\Pager\PaginatorInterface;
 
 class LearnService extends AppBaseService

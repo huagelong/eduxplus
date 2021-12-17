@@ -9,11 +9,11 @@
 namespace App\Bundle\QABundle\Controller\Admin;
 
 
-use App\Bundle\AdminBundle\Lib\Form\Form;
-use App\Bundle\AdminBundle\Lib\Grid\Grid;
-use App\Bundle\AdminBundle\Lib\View\View;
-use App\Bundle\AdminBundle\Service\UserService;
-use App\Bundle\AppBundle\Lib\Base\BaseAdminController;
+use Eduxplus\CoreBundle\Lib\Form\Form;
+use Eduxplus\CoreBundle\Lib\Grid\Grid;
+use Eduxplus\CoreBundle\Lib\View\View;
+use Eduxplus\CoreBundle\Service\UserService;
+use Eduxplus\CoreBundle\Lib\Base\BaseAdminController;
 use App\Bundle\QABundle\Service\Admin\QAChapterService;
 use App\Bundle\QABundle\Service\Admin\QAChapterSubService;
 use App\Bundle\QABundle\Service\Admin\QANodeService;
