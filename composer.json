@@ -153,6 +153,13 @@
         "packagist": {
             "type": "composer",
             "url": "https://mirrors.aliyun.com/composer/"
+        },
+        "bundles":{
+            "type": "path",
+            "url": "./bundles/eduxplus/*",
+            "options": {
+                "symlink": true
+            }
         }
     }
 }
