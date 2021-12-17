@@ -31,7 +31,6 @@
         "nelmio/cors-bundle": "^2.1",
         "overtrue/pinyin": "^4.0",
         "overtrue/wechat": "~4.4",
-        "predis/predis": "^1.1",
         "qcloud/cos-sdk-v5": "^2.4",
         "qcloudsms/qcloudsms_php": "^0.1.4",
         "ramsey/uuid": "^4.0@dev",

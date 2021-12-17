@@ -291,4 +291,11 @@ class UserController extends BaseAdminController
         $userService->switchLock($id, $state);
         return $this->responseMsgRedirect("操作成功!");
     }
+
+    /**
+     * @Rest\Get("/user/changePwd", name="admin_user_changePwd")
+     */
+    public function changePwdAction(Form $form){
+        
+    }
 }
