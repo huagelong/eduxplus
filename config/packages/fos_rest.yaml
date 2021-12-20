@@ -12,27 +12,10 @@ fos_rest:
         empty_content: 200
 
     exception:
-#        exception_controller: 'fos_rest.exception.controller:showAction'
         codes:
             Eduxplus\CoreBundle\Exception\LoginExpiredException: 408 #登录过期
             Eduxplus\CoreBundle\Exception\NeedLoginException: 409 #需要登录
-            Symfony\Component\HttpKernel\Exception\NotAcceptableHttpException: 500
-            Doctrine\ORM\EntityNotFoundException: 404
-            \LogicException: 400
-            \DomainException: 400
-            \InvalidArgumentException: 400
-            Symfony\Component\Security\Core\Exception\AuthenticationException: 403
-            Symfony\Component\Security\Core\Exception\AccessDeniedException: 403
         messages:
-            Eduxplus\CoreBundle\Exception\LoginExpiredException: true
-            Eduxplus\CoreBundle\Exception\NeedLoginException: true
-            Symfony\Component\HttpKernel\Exception\NotAcceptableHttpException: true
-            Doctrine\ORM\EntityNotFoundException: true
-            \LogicException: true
-            \DomainException: true
-            \InvalidArgumentException: true
-            Symfony\Component\Security\Core\Exception\AuthenticationException: true
-            Symfony\Component\Security\Core\Exception\AccessDeniedException: true
 
     format_listener:
         enabled: true

@@ -14,4 +14,5 @@ git pull origin master
 
 echo '切回gitee资源'
 git branch --set-upstream-to=origin/master master
+git push
 echo '设置git跟踪资源'

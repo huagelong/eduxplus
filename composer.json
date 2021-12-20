@@ -7,7 +7,7 @@
        "eduxplus/core-bundle":"dev-master"
     },
     "require-dev": {
-        
+        "symfony/flex": "^1.17"
     },
     "config": {
         "optimize-autoloader": true,
