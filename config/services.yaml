@@ -1,7 +1,6 @@
 imports:
     - { resource: '../src/Bundle/AppBundle/Resources/config/services.yaml' }
     - { resource: '../src/Bundle/ApiBundle/Resources/config/services.yaml' }
-    - { resource: '../src/Bundle/AdminBundle/Resources/config/services.yaml' }
 
 parameters:
     redis_host: '%env(REDIS_HOST)%'
