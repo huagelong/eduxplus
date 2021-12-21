@@ -1,4 +1,10 @@
 {
+    "bundles/eduxplus-core-bundle": {
+        "version": "master"
+    },
+    "nikic/php-parser": {
+        "version": "v4.13.2"
+    },
     "psr/event-dispatcher": {
         "version": "1.0.0"
     },
@@ -7,6 +13,15 @@
     },
     "symfony/doctrine-messenger": {
         "version": "v5.4.0"
+    },
+    "symfony/maker-bundle": {
+        "version": "1.36",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "1.0",
+            "ref": "fadbfe33303a76e25cb63401050439aa9b1a9c7f"
+        }
     },
     "symfony/password-hasher": {
         "version": "v5.4.0"
