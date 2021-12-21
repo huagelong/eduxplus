@@ -26,7 +26,7 @@ class OptionService extends AdminBaseService
 
 
     public function getOptionGroup(){
-        $sql = "SELECT distinct a.optionGroup FROM App:BaseOption a GROUP BY a.optionGroup ";
+        $sql = "SELECT distinct a.optionGroup FROM Core:BaseOption a GROUP BY a.optionGroup ";
         $groups = $this->fetchFields("optionGroup", $sql);
         return $groups;
     }
@@ -34,7 +34,7 @@ class OptionService extends AdminBaseService
     public function optionList($request, $page, $pageSize)
     {
         $sql = $this->getFormatRequestSql($request);
-        $dql = "SELECT a FROM App:BaseOption a " . $sql  . " ORDER BY a.id ASC";
+        $dql = "SELECT a FROM Core:BaseOption a " . $sql  . " ORDER BY a.id ASC";
         $em = $this->getDoctrine()->getManager();
         $query = $em->createQuery($dql);
         $pagination = $this->paginator->paginate(
@@ -58,7 +58,7 @@ class OptionService extends AdminBaseService
 
     public function checkOptionKey($key, $id = 0)
     {
-        $sql = "SELECT a FROM App:BaseOption a where a.optionKey =:optionKey ";
+        $sql = "SELECT a FROM Core:BaseOption a where a.optionKey =:optionKey ";
         $params = [];
         $params['optionKey'] = $key;
         if ($id) {
@@ -70,7 +70,7 @@ class OptionService extends AdminBaseService
 
     public function getById($id)
     {
-        $sql = "SELECT a FROM App:BaseOption a where a.id =:id ";
+        $sql = "SELECT a FROM Core:BaseOption a where a.id =:id ";
         return $this->fetchOne($sql, ["id" => $id]);
     }
 
@@ -88,7 +88,7 @@ class OptionService extends AdminBaseService
 
     public function edit($id, $optionKey, $optionValue, $descr, $isLock)
     {
-        $sql = "SELECT a FROM App:BaseOption a where a.id =:id ";
+        $sql = "SELECT a FROM Core:BaseOption a where a.id =:id ";
         $model =  $this->fetchOne($sql, ["id" => $id], 1);
         $isLock = $model->getIsLock();
         $model->setDescr($descr);
@@ -100,7 +100,7 @@ class OptionService extends AdminBaseService
 
     public function deleteOption($id)
     {
-        $sql = "SELECT a FROM App:BaseOption a where a.id =:id ";
+        $sql = "SELECT a FROM Core:BaseOption a where a.id =:id ";
         $model =  $this->fetchOne($sql, ["id" => $id], 1);
         $this->hardDelete($model);
         return true;

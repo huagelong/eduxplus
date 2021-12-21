@@ -36,7 +36,7 @@ class ProductService extends AdminBaseService
     public function getList($request, $page, $pageSize)
     {
         $sql = $this->getFormatRequestSql($request);
-        $dql = "SELECT a FROM App:TeachProducts a " . $sql . " ORDER BY a.id DESC";
+        $dql = "SELECT a FROM Core:TeachProducts a " . $sql . " ORDER BY a.id DESC";
         $em = $this->getDoctrine()->getManager();
         $query = $em->createQuery($dql);
         $pagination = $this->paginator->paginate(
@@ -96,7 +96,7 @@ class ProductService extends AdminBaseService
 
     public function searchProductName($name)
     {
-        $sql = "SELECT a FROM App:TeachProducts a WHERE a.name like :name AND a.status=1 ";
+        $sql = "SELECT a FROM Core:TeachProducts a WHERE a.name like :name AND a.status=1 ";
         $params = [];
         $params['name'] = "%" . $name . "%";
         $all = $this->fetchAll($sql, $params);
@@ -143,13 +143,13 @@ class ProductService extends AdminBaseService
 
     public function getById($id)
     {
-        $sql = "SELECT a FROM App:TeachProducts a WHERE a.id=:id";
+        $sql = "SELECT a FROM Core:TeachProducts a WHERE a.id=:id";
         return $this->fetchOne($sql, ['id' => $id]);
     }
 
     public function getByName($name, $id = 0)
     {
-        $sql = "SELECT a FROM App:TeachProducts a WHERE a.name=:name";
+        $sql = "SELECT a FROM Core:TeachProducts a WHERE a.name=:name";
         $params = [];
         $params['name'] = $name;
         if ($id) {
@@ -166,7 +166,7 @@ class ProductService extends AdminBaseService
         $pathArr = explode(",", $path);
         $brandId = end($pathArr);
 
-        $courceSql = "SELECT a FROM App:TeachProducts a WHERE a.id=:id";
+        $courceSql = "SELECT a FROM Core:TeachProducts a WHERE a.id=:id";
         $model = $this->fetchOne($courceSql, ['id' => $id], 1);
         $model->setName($name);
         $model->setDescr($descr);
@@ -180,14 +180,14 @@ class ProductService extends AdminBaseService
 
     public function del($id)
     {
-        $sql = "SELECT a FROM App:TeachProducts a WHERE a.id=:id";
+        $sql = "SELECT a FROM Core:TeachProducts a WHERE a.id=:id";
         $model = $this->fetchOne($sql, ['id' => $id], 1);
         return $this->delete($model);
     }
 
     public function switchStatus($id, $state)
     {
-        $sql = "SELECT a FROM App:TeachProducts a WHERE a.id=:id";
+        $sql = "SELECT a FROM Core:TeachProducts a WHERE a.id=:id";
         $model = $this->fetchOne($sql, ['id' => $id], 1);
         $model->setStatus($state);
         return $this->save($model);

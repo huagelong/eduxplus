@@ -33,7 +33,7 @@ class StudyPlanService extends AdminBaseService
 
     public function getList($id, $page, $pageSize)
     {
-        $dql = "SELECT a FROM App:TeachStudyPlan a WHERE a.productId=:productId ORDER BY a.id DESC";
+        $dql = "SELECT a FROM Core:TeachStudyPlan a WHERE a.productId=:productId ORDER BY a.id DESC";
         $em = $this->getDoctrine()->getManager();
         $query = $em->createQuery($dql);
         $query = $query->setParameters(['productId' => $id]);
@@ -52,7 +52,7 @@ class StudyPlanService extends AdminBaseService
                 $createrUser = $this->userService->getById($createrUid);
                 $vArr['creater'] = $createrUser['fullName'];
                 $studyPlanId = $vArr['id'];
-                $sql2 = "SELECT a FROM App:TeachStudyPlanSub a WHERE a.studyPlanId=:studyPlanId ORDER BY a.sort ASC";
+                $sql2 = "SELECT a FROM Core:TeachStudyPlanSub a WHERE a.studyPlanId=:studyPlanId ORDER BY a.sort ASC";
                 $subArr = $this->fetchAll($sql2, ["studyPlanId" => $studyPlanId]);
 
                 if ($subArr) {
@@ -113,7 +113,7 @@ class StudyPlanService extends AdminBaseService
 
     public function getSimpleById($id)
     {
-        $sql = "SELECT a FROM App:TeachStudyPlan a WHERE a.id=:id";
+        $sql = "SELECT a FROM Core:TeachStudyPlan a WHERE a.id=:id";
         $info = $this->fetchOne($sql, ['id' => $id]);
         return $info;
     }
@@ -121,9 +121,9 @@ class StudyPlanService extends AdminBaseService
 
     public function getById($id)
     {
-        $sql = "SELECT a FROM App:TeachStudyPlan a WHERE a.id=:id";
+        $sql = "SELECT a FROM Core:TeachStudyPlan a WHERE a.id=:id";
         $info = $this->fetchOne($sql, ['id' => $id]);
-        $sqlSub = "SELECT a.courseId FROM App:TeachStudyPlanSub a WHERE a.studyPlanId=:studyPlanId ORDER BY a.sort";
+        $sqlSub = "SELECT a.courseId FROM Core:TeachStudyPlanSub a WHERE a.studyPlanId=:studyPlanId ORDER BY a.sort";
         $sub = $this->fetchFields("courseId", $sqlSub, ['studyPlanId' => $id]);
         if (!$sub) {
             $info['sub'] = [];
@@ -135,11 +135,11 @@ class StudyPlanService extends AdminBaseService
 
     public function getSubById($subId)
     {
-        $sqlSub = "SELECT a FROM App:TeachStudyPlanSub a WHERE a.id=:id ORDER BY a.sort";
+        $sqlSub = "SELECT a FROM Core:TeachStudyPlanSub a WHERE a.id=:id ORDER BY a.sort";
         $sub = $this->fetchOne($sqlSub, ['id' => $subId]);
         if ($sub) {
             $studyPlanId = $sub['studyPlanId'];
-            $sql = "SELECT a FROM App:TeachStudyPlan a WHERE a.id=:id";
+            $sql = "SELECT a FROM Core:TeachStudyPlan a WHERE a.id=:id";
             $info = $this->fetchOne($sql, ['id' => $studyPlanId]);
             $sub['study_plan'] = $info;
             return $sub;
@@ -150,7 +150,7 @@ class StudyPlanService extends AdminBaseService
 
     public function getByName($name, $id = 0)
     {
-        $sql = "SELECT a FROM App:TeachStudyPlan a WHERE a.name=:name";
+        $sql = "SELECT a FROM Core:TeachStudyPlan a WHERE a.name=:name";
         $params = [];
         $params['name'] = $name;
         if ($id) {
@@ -162,7 +162,7 @@ class StudyPlanService extends AdminBaseService
 
     public function edit($id, $name, $isDefault, $isBlock, $applyedAt, $courseIds, $descr, $status = 0)
     {
-        $sql = "SELECT a FROM App:TeachStudyPlan a WHERE a.id=:id";
+        $sql = "SELECT a FROM Core:TeachStudyPlan a WHERE a.id=:id";
         $model = $this->fetchOne($sql, ['id' => $id], 1);
         $model->setName($name);
         $model->setDescr($descr);
@@ -173,7 +173,7 @@ class StudyPlanService extends AdminBaseService
         $model->setApplyedAt($applyedAt);
         $this->save($model);
         if ($courseIds) {
-            $sqlSub = "SELECT a FROM App:TeachStudyPlanSub a WHERE a.studyPlanId=:studyPlanId";
+            $sqlSub = "SELECT a FROM Core:TeachStudyPlanSub a WHERE a.studyPlanId=:studyPlanId";
             $models = $this->fetchAll($sqlSub, ["studyPlanId" => $id], 1);
             if ($models) $this->hardDelete($models);
             $sort = 0;
@@ -190,14 +190,14 @@ class StudyPlanService extends AdminBaseService
 
     public function delsub($id)
     {
-        $sql = "SELECT a FROM App:TeachStudyPlanSub a WHERE a.id=:id";
+        $sql = "SELECT a FROM Core:TeachStudyPlanSub a WHERE a.id=:id";
         $model = $this->fetchOne($sql, ['id' => $id], 1);
         return $model ? $this->hardDelete($model) : false;
     }
 
     public function del($id)
     {
-        $sql = "SELECT a FROM App:TeachStudyPlan a WHERE a.id=:id";
+        $sql = "SELECT a FROM Core:TeachStudyPlan a WHERE a.id=:id";
         $model = $this->fetchOne($sql, ['id' => $id], 1);
         return $model ? $this->delete($model) : false;
     }
@@ -211,7 +211,7 @@ class StudyPlanService extends AdminBaseService
                 $i = 0;
                 foreach ($childrens as $cv) {
                     $childId = $cv["id"];
-                    $sql = "SELECT a FROM App:TeachStudyPlanSub a WHERE a.id=:id";
+                    $sql = "SELECT a FROM Core:TeachStudyPlanSub a WHERE a.id=:id";
                     $model = $this->fetchOne($sql, ['id' => $childId], 1);
                     $model->setSort($i);
                     $this->save($model);
@@ -223,7 +223,7 @@ class StudyPlanService extends AdminBaseService
 
     public function hasSub($id)
     {
-        $sql = "SELECT a FROM App:TeachStudyPlanSub a WHERE a.studyPlanId=:studyPlanId";
+        $sql = "SELECT a FROM Core:TeachStudyPlanSub a WHERE a.studyPlanId=:studyPlanId";
         return $this->fetchOne($sql, ['studyPlanId' => $id]);
     }
 
@@ -254,7 +254,7 @@ class StudyPlanService extends AdminBaseService
 
     public function switchStatus($id, $state)
     {
-        $sql = "SELECT a FROM App:TeachStudyPlan a WHERE a.id=:id";
+        $sql = "SELECT a FROM Core:TeachStudyPlan a WHERE a.id=:id";
         $model = $this->fetchOne($sql, ['id' => $id], 1);
         $model->setStatus($state);
         return $this->save($model);

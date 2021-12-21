@@ -47,7 +47,7 @@ class CourseService extends AdminBaseService
     public function getList($request, $page, $pageSize)
     {
         $sql = $this->getFormatRequestSql($request);
-        $dql = "SELECT a FROM App:TeachCourse a " . $sql . " ORDER BY a.id DESC";
+        $dql = "SELECT a FROM Core:TeachCourse a " . $sql . " ORDER BY a.id DESC";
         $em = $this->getDoctrine()->getManager();
         $query = $em->createQuery($dql);
         $pagination = $this->paginator->paginate(
@@ -138,13 +138,13 @@ class CourseService extends AdminBaseService
 
     public function getById($id)
     {
-        $sql = "SELECT a FROM App:TeachCourse a WHERE a.id=:id";
+        $sql = "SELECT a FROM Core:TeachCourse a WHERE a.id=:id";
         return $this->fetchOne($sql, ['id' => $id]);
     }
 
     public function getByName($name, $id = 0)
     {
-        $sql = "SELECT a FROM App:TeachCourse a WHERE a.name=:name";
+        $sql = "SELECT a FROM Core:TeachCourse a WHERE a.name=:name";
         $params = [];
         $params['name'] = $name;
         if ($id) {
@@ -160,7 +160,7 @@ class CourseService extends AdminBaseService
         $path = trim($cate['findPath'], ',');
         $pathArr = explode(",", $path);
         $brandId = end($pathArr);
-        $courceSql = "SELECT a FROM App:TeachCourse a WHERE a.id=:id";
+        $courceSql = "SELECT a FROM Core:TeachCourse a WHERE a.id=:id";
         $model = $this->fetchOne($courceSql, ['id' => $id], 1);
         $model->setName($name);
         $model->setDescr($descr);
@@ -178,14 +178,14 @@ class CourseService extends AdminBaseService
 
     public function del($id)
     {
-        $sql = "SELECT a FROM App:TeachCourse a WHERE a.id=:id";
+        $sql = "SELECT a FROM Core:TeachCourse a WHERE a.id=:id";
         $model = $this->fetchOne($sql, ['id' => $id], 1);
         return $this->delete($model);
     }
 
     public function switchStatus($id, $state)
     {
-        $sql = "SELECT a FROM App:TeachCourse a WHERE a.id=:id";
+        $sql = "SELECT a FROM Core:TeachCourse a WHERE a.id=:id";
         $model = $this->fetchOne($sql, ['id' => $id], 1);
         $model->setStatus($state);
         return $this->save($model);
@@ -193,20 +193,20 @@ class CourseService extends AdminBaseService
 
     public function hasChapter($id)
     {
-        $sql = "SELECT a FROM App:TeachCourseChapter a WHERE a.courseId=:courseId";
+        $sql = "SELECT a FROM Core:TeachCourseChapter a WHERE a.courseId=:courseId";
         return $this->fetchOne($sql, ["courseId" => $id]);
     }
 
     public function getByIds($ids)
     {
-        $sql = "SELECT a FROM App:TeachCourse a where a.id IN(:id) ";
+        $sql = "SELECT a FROM Core:TeachCourse a where a.id IN(:id) ";
         $params = [];
         $params['id'] = $ids;
         return $this->fetchAll($sql, $params);
     }
 
     public function getSelectByIds($ids){
-        $sql = "SELECT a FROM App:TeachCourse a where a.id IN(:id) ";
+        $sql = "SELECT a FROM Core:TeachCourse a where a.id IN(:id) ";
         $params = [];
         $params['id'] = $ids;
         $list = $this->fetchAll($sql, $params);
@@ -220,7 +220,7 @@ class CourseService extends AdminBaseService
 
     public function searchName($name)
     {
-        $sql = "SELECT a FROM App:TeachCourse a where a.name like :name AND a.status=1 ORDER BY a.id DESC";
+        $sql = "SELECT a FROM Core:TeachCourse a where a.name like :name AND a.status=1 ORDER BY a.id DESC";
         $params = [];
         $params['name'] = "%" . $name . "%";
         return $this->fetchAll($sql, $params);

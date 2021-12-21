@@ -42,7 +42,7 @@ class OrderService extends AdminBaseService
     {
         $sql = $this->getFormatRequestSql($request);
 
-        $dql = "SELECT a FROM App:MallOrder a " . $sql . " ORDER BY a.id DESC";
+        $dql = "SELECT a FROM Core:MallOrder a " . $sql . " ORDER BY a.id DESC";
         $em = $this->getDoctrine()->getManager();
         $query = $em->createQuery($dql);
         $pagination = $this->paginator->paginate(
@@ -93,7 +93,7 @@ class OrderService extends AdminBaseService
     {
         try {
             $this->beginTransaction();
-            $sql = "SELECT a FROM App:MallGoods a WHERE a.id=:id";
+            $sql = "SELECT a FROM Core:MallGoods a WHERE a.id=:id";
             $agreementId = $this->fetchField("agreementId", $sql, ['id' => $goodsId]);
 
             $orderNo = date('Ymd') . "o" . session_create_id("");
@@ -125,13 +125,13 @@ class OrderService extends AdminBaseService
                     $this->goodsService->getStudyPlan($goodsId, $studyPlanIds);
                 }
                 if ($studyPlanIds) {
-                    $sql = "SELECT a FROM App:TeachStudyPlanSub a WHERE a.studyPlanId IN(:studyPlanId)";
+                    $sql = "SELECT a FROM Core:TeachStudyPlanSub a WHERE a.studyPlanId IN(:studyPlanId)";
                     $studyPlanSubs = $this->fetchAll($sql, ["studyPlanId" => $studyPlanIds]);
                     if ($studyPlanSubs) {
                         foreach ($studyPlanSubs as $sv) {
                             $sid = $sv['studyPlanId'];
                             $courseId = $sv['courseId'];
-                            $sql = "SELECT a FROM App:TeachCourse a WHERE a.id=:id AND a.status=1 ";
+                            $sql = "SELECT a FROM Core:TeachCourse a WHERE a.id=:id AND a.status=1 ";
                             $courseInfos = $this->fetchAll($sql, ["id" => $courseId]);
                             if ($courseInfos) {
                                 foreach ($courseInfos as $course) {
@@ -159,7 +159,7 @@ class OrderService extends AdminBaseService
     }
 
     public function getById($id){
-        $sql = "SELECT a FROM App:MallOrder a WHERE a.id=:id";
+        $sql = "SELECT a FROM Core:MallOrder a WHERE a.id=:id";
         $model = $this->fetchOne($sql, ["id" => $id]);
         return $model;
     }
@@ -173,7 +173,7 @@ class OrderService extends AdminBaseService
 
     public function setOrderStatus($orderId, $orderStatus)
     {
-        $sql = "SELECT a FROM App:MallOrder a WHERE a.id=:id";
+        $sql = "SELECT a FROM Core:MallOrder a WHERE a.id=:id";
         $model = $this->fetchOne($sql, ["id" => $orderId], 1);
         if (!$model) return false;
         $model->setOrderStatus($orderStatus);

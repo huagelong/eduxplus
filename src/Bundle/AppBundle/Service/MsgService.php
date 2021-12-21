@@ -52,13 +52,13 @@ class MsgService extends AppBaseService
      * @return mixed
      */
     public function doRead($uid, $msgId){
-        $sql = "SELECT a FROM App:MallMsg a WHERE a.id=:id";
+        $sql = "SELECT a FROM Core:MallMsg a WHERE a.id=:id";
         $msgInfo = $this->fetchOne($sql, ["id"=>$msgId], 1);
         if($msgInfo->getUid()){
             $msgInfo->setStatus(1);
             return $this->save($msgInfo);
         }else{
-            $sql = "SELECT a FROM App:MallMsgStatus a WHERE a.uid=:uid AND a.msgId=:msgId ";
+            $sql = "SELECT a FROM Core:MallMsgStatus a WHERE a.uid=:uid AND a.msgId=:msgId ";
             $msgStatusInfo = $this->fetchOne($sql, ["uid"=>$uid, "msgId"=>$msgId]);
             if(!$msgStatusInfo){
                 $model = new MallMsgStatus();
@@ -75,15 +75,15 @@ class MsgService extends AppBaseService
      * @param $uid
      */
     public function doAllMsgRead($uid){
-        $updateSql = "UPDATE App:MallMsg a SET a.status=1 WHERE a.uid =:uid AND a.status =0";
+        $updateSql = "UPDATE Core:MallMsg a SET a.status=1 WHERE a.uid =:uid AND a.status =0";
         $this->execute($updateSql, ["uid"=>$uid]);
 
-        $dql = "SELECT a FROM App:MallMsg a WHERE a.uid =0";
+        $dql = "SELECT a FROM Core:MallMsg a WHERE a.uid =0";
         $row = $this->fetchAll($dql);
         if($row){
             foreach ($row as $v){
                 $msgId = $v["id"];
-                $sql = "SELECT a FROM App:MallMsgStatus a WHERE a.uid=:uid AND a.msgId=:msgId ";
+                $sql = "SELECT a FROM Core:MallMsgStatus a WHERE a.uid=:uid AND a.msgId=:msgId ";
                 $msgStatusInfo = $this->fetchOne($sql, ["uid"=>$uid, "msgId"=>$msgId]);
                 if(!$msgStatusInfo){
                     $model = new MallMsgStatus();
@@ -102,13 +102,13 @@ class MsgService extends AppBaseService
      * @param $uid
      */
     public function msgUnReadCount($uid){
-        $countSql = "SELECT count(a.id) as cnt FROM  App:MallMsg a WHERE a.uid =:uid AND a.status =0";
+        $countSql = "SELECT count(a.id) as cnt FROM  Core:MallMsg a WHERE a.uid =:uid AND a.status =0";
         $count = $this->fetchField("cnt", $countSql, ["uid"=>$uid]);
 
-        $sysTotalCountSql = "SELECT count(a.id) as cnt FROM  App:MallMsg a WHERE a.uid =0 AND a.status =0";
+        $sysTotalCountSql = "SELECT count(a.id) as cnt FROM  Core:MallMsg a WHERE a.uid =0 AND a.status =0";
         $sysTotalcount = $this->fetchField("cnt", $sysTotalCountSql);
 
-        $sysTotalReadCountSql = "SELECT count(a.id) as cnt FROM  App:MallMsgStatus a WHERE a.uid =:uid AND a.status=1";
+        $sysTotalReadCountSql = "SELECT count(a.id) as cnt FROM  Core:MallMsgStatus a WHERE a.uid =:uid AND a.status=1";
         $sysReadTotalcount = $this->fetchField("cnt", $sysTotalReadCountSql, ["uid"=>$uid]);
 
         return $count+$sysTotalcount-$sysReadTotalcount;
@@ -168,7 +168,7 @@ class MsgService extends AppBaseService
      * @return array
      */
     public function msgList($uid, $page, $pageSize){
-        $dql = "SELECT a FROM App:MallMsg a WHERE a.uid IN(:uid) ORDER BY a.createdAt DESC";
+        $dql = "SELECT a FROM Core:MallMsg a WHERE a.uid IN(:uid) ORDER BY a.createdAt DESC";
         $em = $this->getDoctrine()->getManager();
         $query = $em->createQuery($dql);
         $query= $query->setParameters(["uid"=>[$uid, 0]]);
@@ -185,7 +185,7 @@ class MsgService extends AppBaseService
                 $vArr = $this->toArray($v);
 
                 if(!$vArr['uid']){
-                    $sql = "SELECT a FROM App:MallMsgStatus a WHERE a.uid=:uid AND a.msgId=:msgId ";
+                    $sql = "SELECT a FROM Core:MallMsgStatus a WHERE a.uid=:uid AND a.msgId=:msgId ";
                     $msgStatusInfo = $this->fetchOne($sql, ["uid"=>$uid, "msgId"=>$vArr["id"]]);
                     if(!$msgStatusInfo){
                         $status = 0;

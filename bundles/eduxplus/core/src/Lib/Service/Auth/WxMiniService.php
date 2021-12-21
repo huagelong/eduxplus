@@ -66,7 +66,7 @@ class WxMiniService extends BaseService
         $data['token'] = "";
 
         if ($openId) {
-            $sql = "SELECT a FROM App:BaseOpenAuth a WHERE a.openId =:openId AND a.type=:type";
+            $sql = "SELECT a FROM Core:BaseOpenAuth a WHERE a.openId =:openId AND a.type=:type";
             $openAuth = $this->fetchOne($sql, ["openId" => $openId, "type" => $source]);
             if ($openAuth) {
                 $uid = $openAuth["uid"];
@@ -101,7 +101,7 @@ class WxMiniService extends BaseService
         $uid = $this->userService->add($mobile, $fullName, $nickname, $sex, $gravatar, $source);
         if (!$uid) return $this->error()->add("添加新用户失败!");
         //更新openid
-        $sql = "SELECT a FROM App:BaseOpenAuth a WHERE a.openId =:openId AND a.type=:type";
+        $sql = "SELECT a FROM Core:BaseOpenAuth a WHERE a.openId =:openId AND a.type=:type";
         $openAuth = $this->fetchOne($sql, ["openId" => $openId, "type" => $source]);
         if (!$openAuth) {
             $openAuthModel = new BaseOpenAuth();

@@ -31,7 +31,7 @@ class WebTestCaseBase extends WebTestCase
     protected function loginIn()
     {
         // $session = $this->sfcontainer->get('session');
-        // $sql = "SELECT a FROM App:BaseUser a WHERE a.mobile = :mobile";
+        // $sql = "SELECT a FROM Core:BaseUser a WHERE a.mobile = :mobile";
         // $service = $this->sfcontainer->get(\Eduxplus\CoreBundle\Lib\Base\BaseService::class);
         // $user = $service->fetchOne($sql, ["mobile"=>"17621487000"], 1);
         // $firewallName = 'admin';

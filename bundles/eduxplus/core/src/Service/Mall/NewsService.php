@@ -35,7 +35,7 @@ class NewsService extends AdminBaseService
     {
         $sql = $this->getFormatRequestSql($request);
 
-        $dql = "SELECT a FROM App:MallNews a " . $sql . " ORDER BY a.id DESC";
+        $dql = "SELECT a FROM Core:MallNews a " . $sql . " ORDER BY a.id DESC";
         $em = $this->getDoctrine()->getManager();
         $query = $em->createQuery($dql);
         $pagination = $this->paginator->paginate(
@@ -72,7 +72,7 @@ class NewsService extends AdminBaseService
 
     public function switchStatus($id, $state)
     {
-        $sql = "SELECT a FROM App:MallNews a WHERE a.id=:id";
+        $sql = "SELECT a FROM Core:MallNews a WHERE a.id=:id";
         $model = $this->fetchOne($sql, ['id' => $id], 1);
         $model->setStatus($state);
 
@@ -86,7 +86,7 @@ class NewsService extends AdminBaseService
     }
 
     public function edit($id, $name, $content, $status, $categoryId, $uid, $topValue, $sort, $img){
-        $sql = "SELECT a FROM App:MallNews a WHERE a.id=:id";
+        $sql = "SELECT a FROM Core:MallNews a WHERE a.id=:id";
         $model = $this->fetchOne($sql, ['id' => $id], 1);
         $model->setTitle($name);
         $model->setStatus($status);
@@ -97,7 +97,7 @@ class NewsService extends AdminBaseService
         $model->setTopValue($topValue);
         $this->save($model);
 
-        $sql = "SELECT a FROM App:MallNewsMain a WHERE a.newsId=:newsId";
+        $sql = "SELECT a FROM Core:MallNewsMain a WHERE a.newsId=:newsId";
         $mainModel = $this->fetchOne($sql, ['newsId' => $id], 1);
         $mainModel->setContent($content);
         $this->save($mainModel);
@@ -134,11 +134,11 @@ class NewsService extends AdminBaseService
     }
 
     public function getById($id){
-        $sql = "SELECT a FROM App:MallNews a WHERE a.id=:id";
+        $sql = "SELECT a FROM Core:MallNews a WHERE a.id=:id";
         $info = $this->fetchOne($sql, ['id' => $id]);
         $info["main"] = [];
         if($info){
-            $sql = "SELECT a FROM App:MallNewsMain a WHERE a.newsId=:newsId";
+            $sql = "SELECT a FROM Core:MallNewsMain a WHERE a.newsId=:newsId";
             $main = $this->fetchOne($sql, ['newsId' => $info['id']]);
             $info["main"] = $main;
         }
@@ -146,7 +146,7 @@ class NewsService extends AdminBaseService
     }
 
     public function del($id){
-        $sql = "SELECT a FROM App:MallNews a WHERE a.id=:id";
+        $sql = "SELECT a FROM Core:MallNews a WHERE a.id=:id";
         $model = $this->fetchOne($sql, ["id" => $id], 1);
         $result = $this->delete($model);
         $this->delEs($id);

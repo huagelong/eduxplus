@@ -27,7 +27,7 @@ class SchoolService extends AdminBaseService
     public function getList($request, $page, $pageSize)
     {
         $sql = $this->getFormatRequestSql($request);
-        $dql = "SELECT a FROM App:JwSchool a " . $sql . " ORDER BY a.id DESC";
+        $dql = "SELECT a FROM Core:JwSchool a " . $sql . " ORDER BY a.id DESC";
         $em = $this->getDoctrine()->getManager();
         $query = $em->createQuery($dql);
         $pagination = $this->paginator->paginate(
@@ -50,7 +50,7 @@ class SchoolService extends AdminBaseService
 
     public function getAll()
     {
-        $dql = "SELECT a FROM App:JwSchool a ";
+        $dql = "SELECT a FROM Core:JwSchool a ";
         return $this->fetchAll($dql);
     }
 
@@ -69,13 +69,13 @@ class SchoolService extends AdminBaseService
 
     public function getById($id)
     {
-        $sql = "SELECT a FROM App:JwSchool a WHERE a.id=:id";
+        $sql = "SELECT a FROM Core:JwSchool a WHERE a.id=:id";
         return $this->fetchOne($sql, ['id' => $id]);
     }
 
     public function getByName($name, $id = 0)
     {
-        $sql = "SELECT a FROM App:JwSchool a WHERE a.name=:name";
+        $sql = "SELECT a FROM Core:JwSchool a WHERE a.name=:name";
         $params = [];
         $params['name'] = $name;
         if ($id) {
@@ -87,7 +87,7 @@ class SchoolService extends AdminBaseService
 
     public function edit($id, $name, $descr, $address, $linkin, $state, $city, $region)
     {
-        $sql = "SELECT a FROM App:JwSchool a WHERE a.id=:id";
+        $sql = "SELECT a FROM Core:JwSchool a WHERE a.id=:id";
         $model = $this->fetchOne($sql, ['id' => $id], 1);
         $model->setName($name);
         $model->setDescr($descr);
@@ -101,7 +101,7 @@ class SchoolService extends AdminBaseService
 
     public function del($id)
     {
-        $sql = "SELECT a FROM App:JwSchool a WHERE a.id=:id";
+        $sql = "SELECT a FROM Core:JwSchool a WHERE a.id=:id";
         $model = $this->fetchOne($sql, ['id' => $id], 1);
         return $this->delete($model);
     }

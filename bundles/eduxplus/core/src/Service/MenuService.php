@@ -21,7 +21,7 @@ use function GuzzleHttp\json_decode;
 class MenuService extends AdminBaseService
 {
     public function getAllMenu(){
-        $menuListDql = "SELECT a FROM App:BaseMenu a ORDER BY a.sort ASC";
+        $menuListDql = "SELECT a FROM Core:BaseMenu a ORDER BY a.sort ASC";
         $menulist = $this->fetchAll($menuListDql);
         if(!$menulist) return [];
 
@@ -68,20 +68,20 @@ class MenuService extends AdminBaseService
     }
 
     public function getMyMenuDefault($uid, $onlyShow=0){
-        $dqlRole = "SELECT a.roleId FROM App:BaseRoleUser a WHERE a.uid=:uid";
+        $dqlRole = "SELECT a.roleId FROM Core:BaseRoleUser a WHERE a.uid=:uid";
         $roleIds = $this->fetchFields("roleId", $dqlRole, ["uid"=>$uid]);
         if(!$roleIds) return [];
 //        dump($roleIds);
         $roleIds = array_unique($roleIds);
-        $dqlMenu = "SELECT a.menuId FROM App:BaseRoleMenu a WHERE a.roleId in(:roleId)";
+        $dqlMenu = "SELECT a.menuId FROM Core:BaseRoleMenu a WHERE a.roleId in(:roleId)";
         $menuIds = $this->fetchFields("menuId", $dqlMenu, ["roleId"=>$roleIds]);
         if(!$menuIds) return [];
 //        dump($menuIds);
         $menuIds = array_unique($menuIds);
         if($onlyShow){
-            $menuListDql = "SELECT a FROM App:BaseMenu a WHERE a.id in(:id) AND a.isAccess=0 ORDER BY a.sort ASC";
+            $menuListDql = "SELECT a FROM Core:BaseMenu a WHERE a.id in(:id) AND a.isAccess=0 ORDER BY a.sort ASC";
         }else{
-            $menuListDql = "SELECT a FROM App:BaseMenu a WHERE a.id in(:id) ORDER BY a.sort ASC";
+            $menuListDql = "SELECT a FROM Core:BaseMenu a WHERE a.id in(:id) ORDER BY a.sort ASC";
         }
 
         $menulist = $this->fetchAll($menuListDql, ["id"=>$menuIds]);
@@ -117,18 +117,18 @@ class MenuService extends AdminBaseService
     }
 
     public function getMenuByRoute($routeName){
-        $sql = "SELECT a FROM App:BaseMenu a WHERE a.url=:url";
+        $sql = "SELECT a FROM Core:BaseMenu a WHERE a.url=:url";
         return $this->fetchOne($sql, ['url'=>$routeName]);
     }
 
     public function addActionLog($uid, $route, $pathinfo, $inputdata, $ip){
         //通过route获取动作消息
-        $menuDql = "SELECT a FROM App:BaseMenu a WHERE a.url =:url";
+        $menuDql = "SELECT a FROM Core:BaseMenu a WHERE a.url =:url";
         $menuInfo = $this->fetchOne($menuDql, ["url"=>$route]);
         if($menuInfo){
             $name = $menuInfo["name"];
             $pid = $menuInfo["pid"];
-            $sql = "SELECT a FROM App:BaseMenu a WHERE a.id =:id";
+            $sql = "SELECT a FROM Core:BaseMenu a WHERE a.id =:id";
             $pidInfo = $this->fetchOne($sql, ["id"=>$pid]);
             $descr = "";
             if($pidInfo){
@@ -150,7 +150,7 @@ class MenuService extends AdminBaseService
      * 获取父类导航
      */
     public function getParentMenuId($route){
-        $menuDql = "SELECT a.pid FROM App:BaseMenu a WHERE a.url =:url";
+        $menuDql = "SELECT a.pid FROM Core:BaseMenu a WHERE a.url =:url";
         return $this->fetchField("pid", $menuDql, ["url"=>$route]);
     }
 
@@ -171,7 +171,7 @@ class MenuService extends AdminBaseService
         }
 
         if(!$noAccess){
-            $sql = "SELECT a.url FROM App:BaseMenu a WHERE a.url in(:url) ORDER BY a.id DESC";
+            $sql = "SELECT a.url FROM Core:BaseMenu a WHERE a.url in(:url) ORDER BY a.id DESC";
             $rsExist = $this->fetchFields("url", $sql, ["url"=>$rstmp]);
             $rs  = array_diff($rstmp, $rsExist);
         }else{
@@ -182,7 +182,7 @@ class MenuService extends AdminBaseService
 
 
     public function checkMenuName($name,  $id=0){
-        $sql = "SELECT a FROM App:BaseMenu a WHERE a.name =:name ";
+        $sql = "SELECT a FROM Core:BaseMenu a WHERE a.name =:name ";
         $params = [];
         $params['name'] = $name;
         if($id){
@@ -194,7 +194,7 @@ class MenuService extends AdminBaseService
 
 
     public function editMenu($id, $name, $descr, $pid, $uri, $style,$sort, $isLock, $isAccess, $isShow){
-        $sql = "SELECT a FROM App:BaseMenu a WHERE a.id=:id";
+        $sql = "SELECT a FROM Core:BaseMenu a WHERE a.id=:id";
         $menuModel = $this->fetchOne($sql, ['id'=>$id], 1);
         if(!$menuModel) return $this->error()->add("菜单不存在!");
         $menuModel->setName($name);
@@ -226,7 +226,7 @@ class MenuService extends AdminBaseService
     }
 
     public function getMenuById($id){
-        $sql = "SELECT a FROM App:BaseMenu a WHERE a.id=:id";
+        $sql = "SELECT a FROM Core:BaseMenu a WHERE a.id=:id";
         return $this->fetchOne($sql, ['id'=>$id]);
     }
 
@@ -244,12 +244,12 @@ class MenuService extends AdminBaseService
     }
 
     public function getChild($id){
-        $sql = "SELECT a FROM App:BaseMenu a WHERE a.pid=:pid";
+        $sql = "SELECT a FROM Core:BaseMenu a WHERE a.pid=:pid";
         return $this->fetchOne($sql, ['pid'=>$id]);
     }
 
     public function deleteMenuById($id){
-        $sql = "SELECT a FROM App:BaseMenu a WHERE a.id=:id";
+        $sql = "SELECT a FROM Core:BaseMenu a WHERE a.id=:id";
         $model= $this->fetchOne($sql, ['id'=>$id], 1);
         return $this->delete($model);
     }
@@ -263,7 +263,7 @@ class MenuService extends AdminBaseService
             $sort = 0;
             foreach ($data as $k=>$v){
                 $id = $v['id'];
-                $sql = "SELECT a FROM App:BaseMenu a WHERE a.id=:id";
+                $sql = "SELECT a FROM Core:BaseMenu a WHERE a.id=:id";
                 $model = $this->fetchOne($sql, ['id'=>$id], 1);
                 $model->setSort($sort);
                 $model->setPid($pid);

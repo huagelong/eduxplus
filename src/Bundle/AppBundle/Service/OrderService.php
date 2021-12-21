@@ -37,7 +37,7 @@ class OrderService extends AppBaseService
     }
 
     public function getList($uid, $page, $pageSize){
-        $dql = "SELECT a FROM App:MallOrder a WHERE a.uid = :uid";
+        $dql = "SELECT a FROM Core:MallOrder a WHERE a.uid = :uid";
         $em = $this->getDoctrine()->getManager();
         $query = $em->createQuery($dql);
         $query= $query->setParameters(["uid"=>$uid]);
@@ -85,7 +85,7 @@ class OrderService extends AppBaseService
     }
 
     public function getSimpleByOrderNo($orderNo){
-        $dql = "SELECT a FROM App:MallOrder a WHERE a.orderNo = :orderNo";
+        $dql = "SELECT a FROM Core:MallOrder a WHERE a.orderNo = :orderNo";
         $detail = $this->fetchOne($dql, ["orderNo"=>$orderNo]);
         return $detail;
     }
@@ -95,19 +95,19 @@ class OrderService extends AppBaseService
      * @param $orderNo
      */
     public function getByOrderNo($orderNo){
-        $dql = "SELECT a FROM App:MallOrder a WHERE a.orderNo = :orderNo";
+        $dql = "SELECT a FROM Core:MallOrder a WHERE a.orderNo = :orderNo";
         $detail = $this->fetchOne($dql, ["orderNo"=>$orderNo]);
         if(!$detail) return [];
 
         if($detail['goodsAll']){
             $goodsAllIds = explode(",", $detail['goodsAll']);
-            $sql4 = "SELECT a FROM App:MallGoods a where a.id IN(:id) ";
+            $sql4 = "SELECT a FROM Core:MallGoods a where a.id IN(:id) ";
             $params = [];
             $params['id'] = $goodsAllIds;
             $goodsAllInfos =  $this->fetchAll($sql4, $params);
             $detail['goods'] = $goodsAllInfos;
         }else{
-            $sql4 = "SELECT a FROM App:MallGoods a where a.id=:id ";
+            $sql4 = "SELECT a FROM Core:MallGoods a where a.id=:id ";
             $goodsInfo = $this->fetchOne($sql4, ['id'=>$detail['goodsId']]);
             $detail['goods'] = [$goodsInfo];
         }
@@ -118,7 +118,7 @@ class OrderService extends AppBaseService
         $detail['orderStatusView'] = $this->getOrderStatusView($detail['orderStatus']);
         $detail['paywayView'] = $this->getPayWayView($detail['paymentType']);
 
-        $dql = "SELECT a FROM App:MallPay a WHERE a.orderId = :orderId";
+        $dql = "SELECT a FROM Core:MallPay a WHERE a.orderId = :orderId";
         $payDetail = $this->fetchOne($dql, ["orderId"=>$detail['id']]);
         $detail['pay']=[];
         if($payDetail){
@@ -129,7 +129,7 @@ class OrderService extends AppBaseService
 
     public function useCoupon($uid, $couponSn, $status=0)
     {
-        $sql = "SELECT a FROM App:MallCoupon a WHERE a.couponSn=:couponSn";
+        $sql = "SELECT a FROM Core:MallCoupon a WHERE a.couponSn=:couponSn";
         $detail = $this->fetchOne($sql, ["couponSn" => $couponSn], 1);
         if (!$detail) return false;
         if($detail->getUid()){
@@ -154,7 +154,7 @@ class OrderService extends AppBaseService
      */
     public function checkCoupon($couponSn, $uid){
         //检查优惠券
-        $sql = "SELECT a FROM App:MallCoupon a WHERE a.couponSn=:couponSn";
+        $sql = "SELECT a FROM Core:MallCoupon a WHERE a.couponSn=:couponSn";
         $detail = $this->fetchOne($sql, ["couponSn" => $couponSn]);
         if (!$detail) return $this->error()->add("优惠券不存在!");
         if ($detail['status'] != 0) return $this->error()->add("优惠券已被使用!");
@@ -164,7 +164,7 @@ class OrderService extends AppBaseService
         }
         $couponGroupId = $detail['couponGroupId'];
 
-        $sqlGroup = "SELECT a FROM App:MallCouponGroup a WHERE a.id=:id ";
+        $sqlGroup = "SELECT a FROM Core:MallCouponGroup a WHERE a.id=:id ";
         $groupInfo = $this->fetchOne($sqlGroup, ["id"=>$couponGroupId]);
         //判断
         if($groupInfo['status'] == 0) return $this->error()->add("优惠券不存在");
@@ -190,7 +190,7 @@ class OrderService extends AppBaseService
         $teachingMethod  = $groupCouponInfo["teachingMethod"];
         $goodsIdstr  = $groupCouponInfo["goodsIds"];
         if(!$shopPrice){
-            $sql = "SELECT a FROM App:MallGoods a where a.id=:id ";
+            $sql = "SELECT a FROM Core:MallGoods a where a.id=:id ";
             $goodsInfo = $this->fetchOne($sql, ['id'=>$goodId]);
             $shopPrice = $goodsInfo['shopPrice'];
         }
@@ -223,7 +223,7 @@ class OrderService extends AppBaseService
             $goodsIdsCheck = 1;
         }
 
-        $sql = "SELECT a FROM App:MallGoods a where a.id=:id ";
+        $sql = "SELECT a FROM Core:MallGoods a where a.id=:id ";
         $goodsInfo = $this->fetchOne($sql, ['id'=>$checkGoodId]);
         $teachingMethodTmp = $goodsInfo['teachingMethod'];
         if($teachingMethod){
@@ -236,7 +236,7 @@ class OrderService extends AppBaseService
 
         if($categoryId){
             $categoryIdTmp = $goodsInfo['categoryId'];
-            $sql = "SELECT a.findPath FROM App:TeachCategory a where a.id=:id ";
+            $sql = "SELECT a.findPath FROM Core:TeachCategory a where a.id=:id ";
             $findPath = $this->fetchField("findPath", $sql, ["id"=>$categoryIdTmp]);
             $findPath = trim( $findPath, ',');
             if($findPath){
@@ -278,7 +278,7 @@ class OrderService extends AppBaseService
         try {
             $this->beginTransaction();
             $userNotes = $userNotes?$userNotes:"";
-            $sql = "SELECT a FROM App:MallGoods a WHERE a.id=:id";
+            $sql = "SELECT a FROM Core:MallGoods a WHERE a.id=:id";
 
             $goodInfo = $this->fetchOne($sql, ['id' => $goodsId]);
 
@@ -329,13 +329,13 @@ class OrderService extends AppBaseService
                     //去重
                     if ($studyPlanIds) {
                         $studyPlanIds = array_unique($studyPlanIds);
-                        $sql = "SELECT a FROM App:TeachStudyPlanSub a WHERE a.studyPlanId IN(:studyPlanId)";
+                        $sql = "SELECT a FROM Core:TeachStudyPlanSub a WHERE a.studyPlanId IN(:studyPlanId)";
                         $studyPlanSubs = $this->fetchAll($sql, ["studyPlanId" => $studyPlanIds]);
                         if ($studyPlanSubs) {
                             foreach ($studyPlanSubs as $sv) {
                                 $sid = $sv['studyPlanId'];
                                 $courseId = $sv['courseId'];
-                                $sql = "SELECT a FROM App:TeachCourse a WHERE a.id=:id AND a.status=1 ";
+                                $sql = "SELECT a FROM Core:TeachCourse a WHERE a.id=:id AND a.status=1 ";
                                 $courseInfos = $this->fetchAll($sql, ["id" => $courseId]);
                                 if ($courseInfos) {
                                     foreach ($courseInfos as $course) {
@@ -359,7 +359,7 @@ class OrderService extends AppBaseService
                     if (!$goodsAll) {
                         array_push($goodsAll, $goodsId);
                     }
-                    $sql = "SELECT a FROM App:MallGoods a WHERE a.id in(:id)";
+                    $sql = "SELECT a FROM Core:MallGoods a WHERE a.id in(:id)";
                     $productIds = $this->fetchFields("productId", $sql, ["id"=>$goodsAll]);
                     if($productIds){
                         foreach ($productIds as $testId){
@@ -386,7 +386,7 @@ class OrderService extends AppBaseService
      * 自动分班
      */
     public function autoClasses($orderId, $uid){
-        $dql = "SELECT a FROM App:MallOrder a WHERE a.id = :id";
+        $dql = "SELECT a FROM Core:MallOrder a WHERE a.id = :id";
         $detail = $this->fetchOne($dql, ["id"=>$orderId]);
         if(!$detail) return [];
         $goodsAll = $detail['goodsAll'];
@@ -403,18 +403,18 @@ class OrderService extends AppBaseService
         if($studyPlanIds){
             $studyPlanIds = array_unique($studyPlanIds);
             foreach ($studyPlanIds as $studyPlanId){
-                $sql = "SELECT a FROM App:TeachStudyPlan a WHERE a.id=:id";
+                $sql = "SELECT a FROM Core:TeachStudyPlan a WHERE a.id=:id";
                 $planInfo = $this->fetchOne($sql, ["id"=>$studyPlanId]);
                 if(!$planInfo) return $planInfo;
                 $productId = $planInfo["productId"];
 
-                $productSql = "SELECT a FROM App:TeachProducts a WHERE a.id=:id";
+                $productSql = "SELECT a FROM Core:TeachProducts a WHERE a.id=:id";
                 $productInfo = $this->fetchOne($productSql, ["id"=>$productId]);
                 if(!$productInfo) return $productInfo;
                 $productName = $productInfo["name"];
                 $maxMemberNumber = $productInfo["maxMemberNumber"];//最大分班人数
                 //判断人数
-                $classSql = "SELECT a FROM App:JwClasses a WHERE a.studyPlanId = :studyPlanId ORDER BY a.createdAt DESC";
+                $classSql = "SELECT a FROM Core:JwClasses a WHERE a.studyPlanId = :studyPlanId ORDER BY a.createdAt DESC";
                 $classInfo = $this->fetchOne($classSql, ["studyPlanId"=>$studyPlanId]);
                 if($classInfo){
                     $classesId = $classInfo["id"];
@@ -426,7 +426,7 @@ class OrderService extends AppBaseService
                         $this->save($classMemberModel);
                     }else{
                         //判断人数
-                        $memberSql = "SELECT count(a.id) as cnt FROM App:JwClassesMembers a WHERE a.classesId = :classesId";
+                        $memberSql = "SELECT count(a.id) as cnt FROM Core:JwClassesMembers a WHERE a.classesId = :classesId";
                         $memberCount = $this->fetchField("cnt", $memberSql, ["classesId"=>$classesId]);
                         if($memberCount >= $maxMemberNumber){//大于等于限制人数,新增班级
                             //获取产品现有班级
@@ -451,7 +451,7 @@ class OrderService extends AppBaseService
 
 
     public function newClassAndMember($productId, $productName, $studyPlanId, $uid){
-        $classProductSql = "SELECT a FROM App:JwClasses a WHERE a.productId = :productId ORDER BY a.createdAt DESC";
+        $classProductSql = "SELECT a FROM Core:JwClasses a WHERE a.productId = :productId ORDER BY a.createdAt DESC";
         $classProductInfo = $this->fetchOne($classProductSql, ["productId"=>$productId]);
         if($classProductInfo){
             $classesNo = $classProductInfo["classesNo"]+1;
@@ -483,21 +483,21 @@ class OrderService extends AppBaseService
      */
     public function getStudyPlan($id, &$studyPlans = [])
     {
-        $sql = "SELECT a FROM App:MallGoods a WHERE a.id=:id";
+        $sql = "SELECT a FROM Core:MallGoods a WHERE a.id=:id";
         $info = $this->fetchOne($sql, ['id' => $id]);
         if (!$info) return [];
         //非组合商品
         if ($info["productId"]) {
             //判断产品是否存在
-            $sql = "SELECT a.id FROM App:TeachProducts a WHERE a.id=:id AND a.status=1";
+            $sql = "SELECT a.id FROM Core:TeachProducts a WHERE a.id=:id AND a.status=1";
             $productInfo = $this->fetchOne($sql, ['id' => $info["productId"]]);
             if (!$productInfo) return;
             //获取默认的开课计划
-            $sql = "SELECT a FROM App:TeachStudyPlan a WHERE a.productId=:productId AND a.isDefault=1 AND a.status=1";
+            $sql = "SELECT a FROM Core:TeachStudyPlan a WHERE a.productId=:productId AND a.isDefault=1 AND a.status=1";
             $studyPlan = $this->fetchOne($sql, ["productId" => $info["productId"]]);
 
             if (!$studyPlan) {  //如果没有默认的开课计划,按照最新创建时间处理
-                $sql = "SELECT a FROM App:TeachStudyPlan a WHERE a.productId=:productId AND a.status=1 ORDER BY a.createdAt DESC";
+                $sql = "SELECT a FROM Core:TeachStudyPlan a WHERE a.productId=:productId AND a.status=1 ORDER BY a.createdAt DESC";
                 $studyPlan = $this->fetchOne($sql, ["productId" => $info["productId"]]);
             }
             if ($studyPlan) {
@@ -506,7 +506,7 @@ class OrderService extends AppBaseService
             }
         } else {
             //组合商品，获取所有相关商品
-            $sql3 = "SELECT a FROM App:MallGoodsGroup a WHERE a.goodsId=:goodsId ORDER BY a.createdAt ASC";
+            $sql3 = "SELECT a FROM Core:MallGoodsGroup a WHERE a.goodsId=:goodsId ORDER BY a.createdAt ASC";
             $params = [];
             $params['goodsId'] = $id;
             $allGoodIds = $this->fetchFields("groupGoodsId", $sql3, $params);
@@ -567,7 +567,7 @@ class OrderService extends AppBaseService
      */
     public function formatGoodCouponNoCode($goodId, $shopPrice){
         $now = time();
-        $sql = "SELECT a FROM App:MallCouponGroup a WHERE a.status=1 AND a.hasCode=0 AND a.expirationStart<{$now} AND a.expirationEnd >{$now}";
+        $sql = "SELECT a FROM Core:MallCouponGroup a WHERE a.status=1 AND a.hasCode=0 AND a.expirationStart<{$now} AND a.expirationEnd >{$now}";
         $all = $this->fetchAll($sql);
         if(!$all) return [0,0];
         //寻找最优惠模式
@@ -590,14 +590,14 @@ class OrderService extends AppBaseService
      * @return array
      */
     public function updateOrderStatus($orderId, $status=2){
-        $dql = "SELECT a FROM App:MallOrder a WHERE a.id = :id";
+        $dql = "SELECT a FROM Core:MallOrder a WHERE a.id = :id";
         $detail = $this->fetchOne($dql, ["id"=>$orderId], 1);
         if(!$detail) return [];
         $detail->setOrderStatus($status);
         $this->save($detail);
         
         //更新课程或者试卷状态
-        $planSql = "UPDATE App:MallOrderStudyPlan a SET a.orderStatus =:orderStatus WHERE a.orderId =:orderId";
+        $planSql = "UPDATE Core:MallOrderStudyPlan a SET a.orderStatus =:orderStatus WHERE a.orderId =:orderId";
         $this->execute($planSql, ["orderStatus"=>$status, "orderId"=>$orderId]);
         
         $testSql = "UPDATE QA:TeachTestOrder a SET a.orderStatus =:orderStatus WHERE a.orderId =:orderId";

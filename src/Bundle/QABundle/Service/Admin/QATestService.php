@@ -46,7 +46,7 @@ class QATestService  extends AdminBaseService
                 $createrUid = $vArr['createUid'];
                 $createrUser = $this->userService->getById($createrUid);
                 $vArr['creater'] = $createrUser['fullName'];
-                $cateSql = "SELECT a FROM App:TeachCategory a WHERE a.id=:id ";
+                $cateSql = "SELECT a FROM Core:TeachCategory a WHERE a.id=:id ";
                 $cateInfo = $this->fetchOne($cateSql, ["id"=>$vArr['categoryId']]);
                 $vArr['category'] = $cateInfo['name'];
                 $itemsArr[] = $vArr;

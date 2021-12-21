@@ -28,7 +28,7 @@ class PageService extends AdminBaseService
     {
         $sql = $this->getFormatRequestSql($request);
 
-        $dql = "SELECT a FROM App:MallPage a " . $sql . " ORDER BY a.id DESC";
+        $dql = "SELECT a FROM Core:MallPage a " . $sql . " ORDER BY a.id DESC";
         $em = $this->getDoctrine()->getManager();
         $query = $em->createQuery($dql);
         $pagination = $this->paginator->paginate(
@@ -51,20 +51,20 @@ class PageService extends AdminBaseService
 
     public function switchStatus($id, $state)
     {
-        $sql = "SELECT a FROM App:MallPage a WHERE a.id=:id";
+        $sql = "SELECT a FROM Core:MallPage a WHERE a.id=:id";
         $model = $this->fetchOne($sql, ['id' => $id], 1);
         $model->setStatus($state);
         return $this->save($model);
     }
 
     public function edit($id, $name, $content, $status){
-        $sql = "SELECT a FROM App:MallPage a WHERE a.id=:id";
+        $sql = "SELECT a FROM Core:MallPage a WHERE a.id=:id";
         $model = $this->fetchOne($sql, ['id' => $id], 1);
         $model->setName($name);
         $model->setStatus($status);
         $this->save($model);
 
-        $sql = "SELECT a FROM App:MallPageMain a WHERE a.pageId=:pageId";
+        $sql = "SELECT a FROM Core:MallPageMain a WHERE a.pageId=:pageId";
         $mainModel = $this->fetchOne($sql, ['pageId' => $id], 1);
         $mainModel->setContent($content);
         $this->save($mainModel);
@@ -85,11 +85,11 @@ class PageService extends AdminBaseService
     }
 
     public function getById($id){
-        $sql = "SELECT a FROM App:MallPage a WHERE a.id=:id";
+        $sql = "SELECT a FROM Core:MallPage a WHERE a.id=:id";
         $info = $this->fetchOne($sql, ['id' => $id]);
         $info["main"] = [];
         if($info){
-            $sql = "SELECT a FROM App:MallPageMain a WHERE a.pageId=:pageId";
+            $sql = "SELECT a FROM Core:MallPageMain a WHERE a.pageId=:pageId";
             $main = $this->fetchOne($sql, ['pageId' => $info['id']]);
             $info["main"] = $main;
         }
@@ -97,7 +97,7 @@ class PageService extends AdminBaseService
     }
 
     public function del($id){
-        $sql = "SELECT a FROM App:MallPage a WHERE a.id=:id";
+        $sql = "SELECT a FROM Core:MallPage a WHERE a.id=:id";
         $model = $this->fetchOne($sql, ["id" => $id], 1);
         return $this->delete($model);
     }

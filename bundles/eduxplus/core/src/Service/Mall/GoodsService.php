@@ -66,7 +66,7 @@ class GoodsService extends AdminBaseService
             $sql = " WHERE a.goodType=". $goodType;
         }
 
-        $dql = "SELECT a FROM App:MallGoods a " . $sql . " ORDER BY a.id DESC";
+        $dql = "SELECT a FROM Core:MallGoods a " . $sql . " ORDER BY a.id DESC";
 
         $em = $this->getDoctrine()->getManager();
         $query = $em->createQuery($dql);
@@ -114,7 +114,7 @@ class GoodsService extends AdminBaseService
 
     public function checkName($name, $id = 0, $goodType=1)
     {
-        $sql = "SELECT a FROM App:MallGoods a where a.name =:name AND a.goodType=".$goodType;
+        $sql = "SELECT a FROM Core:MallGoods a where a.name =:name AND a.goodType=".$goodType;
         $params = [];
         $params['name'] = $name;
         if ($id) {
@@ -245,10 +245,10 @@ class GoodsService extends AdminBaseService
 
     public function getById($id)
     {
-        $sql = "SELECT a FROM App:MallGoods a WHERE a.id=:id";
+        $sql = "SELECT a FROM Core:MallGoods a WHERE a.id=:id";
         $info = $this->fetchOne($sql, ['id' => $id]);
         if (!$info) return [];
-        $sql2 = "SELECT a FROM App:MallGoodsIntroduce a WHERE a.goodsId=:goodsId AND a.introduceType=1";
+        $sql2 = "SELECT a FROM Core:MallGoodsIntroduce a WHERE a.goodsId=:goodsId AND a.introduceType=1";
         $introduce = $this->fetchOne($sql2, ['goodsId' => $id]);
         $info["introduce"] = $introduce;
         return $info;
@@ -256,7 +256,7 @@ class GoodsService extends AdminBaseService
 
     public function getByIds($ids)
     {
-        $sql = "SELECT a FROM App:MallGoods a where a.id IN(:id) ";
+        $sql = "SELECT a FROM Core:MallGoods a where a.id IN(:id) ";
         $params = [];
         $params['id'] = $ids;
         return $this->fetchAll($sql, $params);
@@ -275,7 +275,7 @@ class GoodsService extends AdminBaseService
 
     public function getByName($name, $id = 0, $goodType=1)
     {
-        $sql = "SELECT a FROM App:MallGoods a WHERE a.name=:name AND a.goodType=".$goodType;
+        $sql = "SELECT a FROM Core:MallGoods a WHERE a.name=:name AND a.goodType=".$goodType;
         $params = [];
         $params['name'] = $name;
         if ($id) {
@@ -287,7 +287,7 @@ class GoodsService extends AdminBaseService
 
     public function getGroupGoods($id)
     {
-        $sql = "SELECT a FROM App:MallGoodsGroup a WHERE a.goodsId=:goodsId";
+        $sql = "SELECT a FROM Core:MallGoodsGroup a WHERE a.goodsId=:goodsId";
         $params = [];
         $params['goodsId'] = $id;
         $allGoodIds = $this->fetchFields("groupGoodsId", $sql, $params);
@@ -297,12 +297,12 @@ class GoodsService extends AdminBaseService
 
     public function getSelectGoods($id)
     {
-        $sql = "SELECT a FROM App:MallGoodsGroup a WHERE a.goodsId=:goodsId";
+        $sql = "SELECT a FROM Core:MallGoodsGroup a WHERE a.goodsId=:goodsId";
         $params = [];
         $params['goodsId'] = $id;
         $allGoodIds = $this->fetchFields("groupGoodsId", $sql, $params);
         if (!$allGoodIds) return [];
-        $sql2 = "SELECT a FROM App:MallGoods a WHERE a.id IN(:id)";
+        $sql2 = "SELECT a FROM Core:MallGoods a WHERE a.id IN(:id)";
         $params2 = [];
         $params2['id'] = $allGoodIds;
         $allGoods =  $this->fetchAll($sql2, $params2);
@@ -346,7 +346,7 @@ class GoodsService extends AdminBaseService
         $pathArr = explode(",", $path);
         $brandId = end($pathArr);
 
-        $sql = "SELECT a FROM App:MallGoods a WHERE a.id=:id";
+        $sql = "SELECT a FROM Core:MallGoods a WHERE a.id=:id";
         $model = $this->fetchOne($sql, ['id' => $id], 1);
 
         $model->setName($name);
@@ -385,7 +385,7 @@ class GoodsService extends AdminBaseService
         $this->save($model);
 
         if ($goodsId && $id) {
-            $dql = "DELETE FROM App:MallGoodsGroup a WHERE a.goodsId=:goodsId";
+            $dql = "DELETE FROM Core:MallGoodsGroup a WHERE a.goodsId=:goodsId";
             $this->hardExecute($dql, ["goodsId" => $id]);
             foreach ($goodsId as $gid) {
                 $goodsModel = new MallGoodsGroup();
@@ -396,7 +396,7 @@ class GoodsService extends AdminBaseService
         }
 
         if ($descr) {
-            $dql = "SELECT a FROM App:MallGoodsIntroduce a WHERE a.goodsId=:goodsId AND a.introduceType=1";
+            $dql = "SELECT a FROM Core:MallGoodsIntroduce a WHERE a.goodsId=:goodsId AND a.introduceType=1";
             $descrModel = $this->fetchOne($dql, ["goodsId" => $id], 1);
             if ($descrModel) {
                 $descrModel->setContent($descr);
@@ -423,13 +423,13 @@ class GoodsService extends AdminBaseService
     public function del($id)
     {
         //先删除说明
-        $sql = "DELETE FROM App:MallGoodsIntroduce a WHERE a.goodsId=:goodsId";
+        $sql = "DELETE FROM Core:MallGoodsIntroduce a WHERE a.goodsId=:goodsId";
         $this->execute($sql, ["goodsId" => $id]);
         //删除group
-        $sql = "DELETE FROM App:MallGoodsGroup a WHERE a.goodsId=:goodsId";
+        $sql = "DELETE FROM Core:MallGoodsGroup a WHERE a.goodsId=:goodsId";
         $this->execute($sql, ["goodsId" => $id]);
 
-        $sql = "DELETE FROM App:MallGoods a WHERE a.id=:id";
+        $sql = "DELETE FROM Core:MallGoods a WHERE a.id=:id";
         $this->execute($sql, ["id" => $id]);
 
         $this->delEs($id);
@@ -445,13 +445,13 @@ class GoodsService extends AdminBaseService
      */
     public function hasGroup($id)
     {
-        $sql = "SELECT a FROM App:MallGoodsGroup a WHERE a.groupGoodsId=:groupGoodsId";
+        $sql = "SELECT a FROM Core:MallGoodsGroup a WHERE a.groupGoodsId=:groupGoodsId";
         return $this->fetchOne($sql, ['groupGoodsId' => $id]);
     }
 
     public function searchGoodsName($name, $goodType=1)
     {
-        $sql = "SELECT a FROM App:MallGoods a WHERE a.name like :name AND a.status=1 AND a.goodType=".$goodType." ORDER BY a.id DESC";
+        $sql = "SELECT a FROM Core:MallGoods a WHERE a.name like :name AND a.status=1 AND a.goodType=".$goodType." ORDER BY a.id DESC";
         $params = [];
         $params['name'] = "%" . $name . "%";
         $all = $this->fetchAll($sql, $params);
@@ -468,7 +468,7 @@ class GoodsService extends AdminBaseService
 
     public function switchStatus($id, $state)
     {
-        $sql = "SELECT a FROM App:MallGoods a WHERE a.id=:id";
+        $sql = "SELECT a FROM Core:MallGoods a WHERE a.id=:id";
         $model = $this->fetchOne($sql, ['id' => $id], 1);
         $model->setStatus($state);
         $result = $this->save($model);
@@ -484,21 +484,21 @@ class GoodsService extends AdminBaseService
 
     public function getStudyPlan($id, &$studyPlans = [])
     {
-        $sql = "SELECT a FROM App:MallGoods a WHERE a.id=:id AND a.goodType=1";
+        $sql = "SELECT a FROM Core:MallGoods a WHERE a.id=:id AND a.goodType=1";
         $info = $this->fetchOne($sql, ['id' => $id]);
         if (!$info) return [];
         //非组合商品
         if ($info["productId"]) {
             //判断产品是否存在
-            $sql = "SELECT a.id FROM App:TeachProducts a WHERE a.id=:id AND a.status=1";
+            $sql = "SELECT a.id FROM Core:TeachProducts a WHERE a.id=:id AND a.status=1";
             $productInfo = $this->fetchOne($sql, ['id' => $info["productId"]]);
             if (!$productInfo) return;
             //获取默认的开课计划
-            $sql = "SELECT a FROM App:TeachStudyPlan a WHERE a.productId=:productId AND a.isDefault=1 AND a.status=1";
+            $sql = "SELECT a FROM Core:TeachStudyPlan a WHERE a.productId=:productId AND a.isDefault=1 AND a.status=1";
             $studyPlan = $this->fetchOne($sql, ["productId" => $info["productId"]]);
 
             if (!$studyPlan) {  //如果没有默认的开课计划,按照最新创建时间处理
-                $sql = "SELECT a FROM App:TeachStudyPlan a WHERE a.productId=:productId AND a.status=1 ORDER BY a.createdAt DESC";
+                $sql = "SELECT a FROM Core:TeachStudyPlan a WHERE a.productId=:productId AND a.status=1 ORDER BY a.createdAt DESC";
                 $studyPlan = $this->fetchOne($sql, ["productId" => $info["productId"]]);
             }
             if ($studyPlan) {
@@ -507,7 +507,7 @@ class GoodsService extends AdminBaseService
             }
         } else {
             //组合商品，获取所有相关商品
-            $sql3 = "SELECT a FROM App:MallGoodsGroup a WHERE a.goodsId=:goodsId ORDER BY a.createdAt ASC";
+            $sql3 = "SELECT a FROM Core:MallGoodsGroup a WHERE a.goodsId=:goodsId ORDER BY a.createdAt ASC";
             $params = [];
             $params['goodsId'] = $id;
             $allGoodIds = $this->fetchFields("groupGoodsId", $sql3, $params);

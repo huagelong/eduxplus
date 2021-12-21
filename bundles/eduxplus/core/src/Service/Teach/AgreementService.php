@@ -27,7 +27,7 @@ class AgreementService extends AdminBaseService
     public function agreementList($request, $page, $pageSize)
     {
         $sql = $this->getFormatRequestSql($request);
-        $dql = "SELECT a FROM App:TeachAgreement a " . $sql . " ORDER BY a.id DESC";
+        $dql = "SELECT a FROM Core:TeachAgreement a " . $sql . " ORDER BY a.id DESC";
         $em = $this->getDoctrine()->getManager();
         $query = $em->createQuery($dql);
         $pagination = $this->paginator->paginate(
@@ -40,7 +40,7 @@ class AgreementService extends AdminBaseService
 
     public function getAll()
     {
-        $dql = "SELECT a FROM App:TeachAgreement a WHERE a.isShow=1";
+        $dql = "SELECT a FROM Core:TeachAgreement a WHERE a.isShow=1";
         return $this->fetchAll($dql);
     }
 
@@ -55,13 +55,13 @@ class AgreementService extends AdminBaseService
 
     public function getById($id)
     {
-        $sql = "SELECT a FROM App:TeachAgreement a WHERE a.id=:id";
+        $sql = "SELECT a FROM Core:TeachAgreement a WHERE a.id=:id";
         return $this->fetchOne($sql, ['id' => $id]);
     }
 
     public function getByName($name, $id = 0)
     {
-        $sql = "SELECT a FROM App:TeachAgreement a WHERE a.name=:name";
+        $sql = "SELECT a FROM Core:TeachAgreement a WHERE a.name=:name";
         $params = [];
         $params['name'] = $name;
         if ($id) {
@@ -73,7 +73,7 @@ class AgreementService extends AdminBaseService
 
     public function edit($id, $name, $content, $isShow)
     {
-        $sql = "SELECT a FROM App:TeachAgreement a WHERE a.id=:id";
+        $sql = "SELECT a FROM Core:TeachAgreement a WHERE a.id=:id";
         $model = $this->fetchOne($sql, ['id' => $id], 1);
         $model->setName($name);
         $model->setIsShow($isShow);
@@ -83,7 +83,7 @@ class AgreementService extends AdminBaseService
 
     public function del($id)
     {
-        $sql = "SELECT a FROM App:TeachAgreement a WHERE a.id=:id";
+        $sql = "SELECT a FROM Core:TeachAgreement a WHERE a.id=:id";
         $model = $this->fetchOne($sql, ['id' => $id], 1);
         return $this->delete($model);
     }

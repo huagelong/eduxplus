@@ -59,7 +59,7 @@ class UserService extends AppBaseService
         //"sitelogin"
         //查询用户信息
         $mobileMask =  $this->mobileMaskService->encrypt($mobile);
-        $sql = "SELECT a FROM App:BaseUser a WHERE a.mobileMask = :mobileMask";
+        $sql = "SELECT a FROM Core:BaseUser a WHERE a.mobileMask = :mobileMask";
         $userInfo = $this->fetchOneHard($sql, ["mobileMask" => $mobileMask]);
         if (!$userInfo) {
             //没有用户信息则注册
@@ -102,14 +102,14 @@ class UserService extends AppBaseService
      */
     public function getUserObj($uid)
     {
-        $sql = "SELECT a FROM App:BaseUser a WHERE a.id = :id";
+        $sql = "SELECT a FROM Core:BaseUser a WHERE a.id = :id";
         $user = $this->fetchOne($sql, ["id" => $uid], 1);
         return $user;
     }
 
     public function getUserByUUid($uuid)
     {
-        $sql = "SELECT a FROM App:BaseUser a WHERE a.uuid = :uuid";
+        $sql = "SELECT a FROM Core:BaseUser a WHERE a.uuid = :uuid";
         $user = $this->fetchOne($sql, ["uuid" => $uuid]);
         return $user;
     }
@@ -117,7 +117,7 @@ class UserService extends AppBaseService
 
     public function getUserById($uid)
     {
-        $sql = "SELECT a FROM App:BaseUser a WHERE a.id = :id";
+        $sql = "SELECT a FROM Core:BaseUser a WHERE a.id = :id";
         $model = $this->fetchOne($sql, ["id" => $uid]);
         if ($model) {
             $model["mobileView"] = $this->helperService->formatMobile($model["mobile"]);
@@ -163,7 +163,7 @@ class UserService extends AppBaseService
      */
     public function setLogin($uid, $source = 'html')
     {
-        $sql = "SELECT a FROM App:BaseUser a WHERE a.id = :id";
+        $sql = "SELECT a FROM Core:BaseUser a WHERE a.id = :id";
         $model = $this->fetchOneHard($sql, ["id" => $uid], 1);
 
         $token = session_create_id("");
@@ -191,7 +191,7 @@ class UserService extends AppBaseService
 
     public function edit($uid, $displayName, $fullName, $birthday, $sex, $avatar)
     {
-        $sql = "SELECT a FROM App:BaseUser a WHERE a.id = :id";
+        $sql = "SELECT a FROM Core:BaseUser a WHERE a.id = :id";
         $user = $this->fetchOne($sql, ["id" => $uid], 1);
         if (!$user) return false;
         $user->setDisplayName($displayName);
@@ -206,14 +206,14 @@ class UserService extends AppBaseService
     public function checkMobileExist($mobile)
     {
         $mobileMask =  $this->mobileMaskService->encrypt($mobile);
-        $sql = "SELECT a FROM App:BaseUser a WHERE  a.mobileMask=:mobileMask";
+        $sql = "SELECT a FROM Core:BaseUser a WHERE  a.mobileMask=:mobileMask";
         $user = $this->fetchOne($sql, ["mobileMask" => $mobileMask]);
         return $user;
     }
 
     public function updateMobile($uid, $mobile)
     {
-        $sql = "SELECT a FROM App:BaseUser a WHERE a.id = :id";
+        $sql = "SELECT a FROM Core:BaseUser a WHERE a.id = :id";
         $user = $this->fetchOne($sql, ["id" => $uid], 1);
         $user->setMobile($mobile);
         $mobileMask =  $this->mobileMaskService->encrypt($mobile);

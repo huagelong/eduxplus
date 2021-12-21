@@ -34,7 +34,7 @@ abstract class BaseController extends BaseService
 
     public function getUserInfo(){
         $uid = $this->getUid();
-        $sql = "SELECT a FROM App:BaseUser a WHERE a.id = :id";
+        $sql = "SELECT a FROM Core:BaseUser a WHERE a.id = :id";
         $model = $this->fetchOne($sql, ["id"=>$uid]);
         return $model;
     }

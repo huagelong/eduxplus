@@ -30,7 +30,7 @@ class TeacherService extends AdminBaseService
     public function getList($request, $page, $pageSize)
     {
         $sql = $this->getFormatRequestSql($request);
-        $dql = "SELECT a FROM App:JwTeacher a " . $sql . " ORDER BY a.id DESC";
+        $dql = "SELECT a FROM Core:JwTeacher a " . $sql . " ORDER BY a.id DESC";
         $em = $this->getDoctrine()->getManager();
         $query = $em->createQuery($dql);
         $pagination = $this->paginator->paginate(
@@ -66,7 +66,7 @@ class TeacherService extends AdminBaseService
 
     public function getAll()
     {
-        $dql = "SELECT a FROM App:JwTeacher a ";
+        $dql = "SELECT a FROM Core:JwTeacher a ";
         return $this->fetchAll($dql);
     }
 
@@ -89,13 +89,13 @@ class TeacherService extends AdminBaseService
 
     public function getById($id)
     {
-        $sql = "SELECT a FROM App:JwTeacher a WHERE a.id=:id";
+        $sql = "SELECT a FROM Core:JwTeacher a WHERE a.id=:id";
         return $this->fetchOne($sql, ['id' => $id]);
     }
 
     public function getByName($name, $id = 0)
     {
-        $sql = "SELECT a FROM App:JwTeacher a WHERE a.name=:name";
+        $sql = "SELECT a FROM Core:JwTeacher a WHERE a.name=:name";
         $params = [];
         $params['name'] = $name;
         if ($id) {
@@ -111,7 +111,7 @@ class TeacherService extends AdminBaseService
         $pinyinArr = $pinyin->convert($name);
         $pinyinStr = implode('', $pinyinArr);
 
-        $sql = "SELECT a FROM App:JwTeacher a WHERE a.id=:id";
+        $sql = "SELECT a FROM Core:JwTeacher a WHERE a.id=:id";
         $model = $this->fetchOne($sql, ['id' => $id], 1);
         $model->setName($name);
         if ($descr) $model->setDescr($descr);
@@ -125,14 +125,14 @@ class TeacherService extends AdminBaseService
 
     public function del($id)
     {
-        $sql = "SELECT a FROM App:JwTeacher a WHERE a.id=:id";
+        $sql = "SELECT a FROM Core:JwTeacher a WHERE a.id=:id";
         $model = $this->fetchOne($sql, ['id' => $id], 1);
         return $this->delete($model);
     }
 
     public function switchStatus($id, $state)
     {
-        $sql = "SELECT a FROM App:JwTeacher a WHERE a.id=:id";
+        $sql = "SELECT a FROM Core:JwTeacher a WHERE a.id=:id";
         $model = $this->fetchOne($sql, ['id' => $id], 1);
         $model->setStatus($state);
         return $this->save($model);

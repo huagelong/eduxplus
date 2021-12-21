@@ -25,19 +25,19 @@ class DashboardService extends BaseService
     public function dashboardStat(){
         //今日收入
         $todayDate = date('Y-m-d');
-        $sql = "SELECT SUM(a.orderAmount) as sum FROM App:MallOrder a WHERE a.orderStatus=2 AND a.createdAt LIKE '".$todayDate."%'";
+        $sql = "SELECT SUM(a.orderAmount) as sum FROM Core:MallOrder a WHERE a.orderStatus=2 AND a.createdAt LIKE '".$todayDate."%'";
         $todayIncome =$this->fetchField("sum", $sql);
         $todayIncome = $todayIncome?$todayIncome/100:0;
         //今日注册用户
-        $sql = "SELECT COUNT(a.id) as cnt FROM App:BaseUser a WHERE a.createdAt LIKE '".$todayDate."%'";
+        $sql = "SELECT COUNT(a.id) as cnt FROM Core:BaseUser a WHERE a.createdAt LIKE '".$todayDate."%'";
         $todayRegUserCount =$this->fetchField("cnt", $sql);
         $todayRegUserCount = $todayRegUserCount?$todayRegUserCount:0;
         //今日订单数
-        $sql = "SELECT COUNT(a.id) as cnt FROM App:MallOrder a WHERE a.createdAt LIKE '".$todayDate."%'";
+        $sql = "SELECT COUNT(a.id) as cnt FROM Core:MallOrder a WHERE a.createdAt LIKE '".$todayDate."%'";
         $todayOrderCount =$this->fetchField("cnt", $sql);
         $todayOrderCount = $todayOrderCount?$todayOrderCount:0;
         //总注册用户数
-        $sql = "SELECT COUNT(a.id) as cnt FROM App:BaseUser a ";
+        $sql = "SELECT COUNT(a.id) as cnt FROM Core:BaseUser a ";
         $totalRegUserCount =$this->fetchField("cnt", $sql);
         $totalRegUserCount = $totalRegUserCount?$totalRegUserCount:0;
 
@@ -46,7 +46,7 @@ class DashboardService extends BaseService
 
     public function lastOrder(){
         $pageSize = 10;
-        $sql = "SELECT a FROM App:MallOrder a ORDER BY a.createdAt DESC";
+        $sql = "SELECT a FROM Core:MallOrder a ORDER BY a.createdAt DESC";
         $items =$this->fetchAll($sql, [], 0, $pageSize);
         $itemsArr = [];
         if ($items) {

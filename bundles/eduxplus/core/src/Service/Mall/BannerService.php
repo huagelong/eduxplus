@@ -29,7 +29,7 @@ class BannerService extends AdminBaseService
     public function getList($request, $page, $pageSize)
     {
         $sql = $this->getFormatRequestSql($request);
-        $dql = "SELECT a FROM App:MallBanner a  ". $sql . "  ORDER BY a.id DESC";
+        $dql = "SELECT a FROM Core:MallBanner a  ". $sql . "  ORDER BY a.id DESC";
         $em = $this->getDoctrine()->getManager();
         $query = $em->createQuery($dql);
         $pagination = $this->paginator->paginate(
@@ -51,7 +51,7 @@ class BannerService extends AdminBaseService
     }
 
     public function edit($id, $name, $position){
-        $sql = "SELECT a FROM App:MallBanner a WHERE a.id=:id";
+        $sql = "SELECT a FROM Core:MallBanner a WHERE a.id=:id";
         $model = $this->fetchOne($sql, ['id' => $id], 1);
         $model->setName($name);
         $model->setPosition($position);
@@ -68,24 +68,24 @@ class BannerService extends AdminBaseService
 
     public function getByPosition($position, $id=0){
         if(!$id){
-            $sql = "SELECT a FROM App:MallBanner a WHERE a.position=:position";
+            $sql = "SELECT a FROM Core:MallBanner a WHERE a.position=:position";
             $info = $this->fetchOne($sql, ['position' => $position]);
             return $info;
         }else{
-            $sql = "SELECT a FROM App:MallBanner a WHERE a.position=:position AND a.id !=id";
+            $sql = "SELECT a FROM Core:MallBanner a WHERE a.position=:position AND a.id !=id";
             $info = $this->fetchOne($sql, ['position' => $position, "id"=>$id]);
             return $info;
         }
     }
 
     public function getById($id){
-        $sql = "SELECT a FROM App:MallBanner a WHERE a.id=:id";
+        $sql = "SELECT a FROM Core:MallBanner a WHERE a.id=:id";
         $info = $this->fetchOne($sql, ['id' => $id]);
         return $info;
     }
 
     public function del($id){
-        $sql = "SELECT a FROM App:MallBanner a WHERE a.id=:id";
+        $sql = "SELECT a FROM Core:MallBanner a WHERE a.id=:id";
         $model = $this->fetchOne($sql, ["id" => $id], 1);
         return $this->delete($model);
     }
@@ -102,7 +102,7 @@ class BannerService extends AdminBaseService
             }
         }
 
-        $dql = "SELECT a FROM App:MallBannerMain a ".$strSql."  " . $sql . " ORDER BY a.id DESC";
+        $dql = "SELECT a FROM Core:MallBannerMain a ".$strSql."  " . $sql . " ORDER BY a.id DESC";
         $em = $this->getDoctrine()->getManager();
         $query = $em->createQuery($dql);
 
@@ -132,14 +132,14 @@ class BannerService extends AdminBaseService
 
     public function switchMainStatus($id, $state)
     {
-        $sql = "SELECT a FROM App:MallBannerMain a WHERE a.id=:id";
+        $sql = "SELECT a FROM Core:MallBannerMain a WHERE a.id=:id";
         $model = $this->fetchOne($sql, ['id' => $id], 1);
         $model->setStatus($state);
         return $this->save($model);
     }
 
     public function editMain($id,$uid, $bannerImg,$url,$sort, $status){
-        $sql = "SELECT a FROM App:MallBannerMain a WHERE a.id=:id";
+        $sql = "SELECT a FROM Core:MallBannerMain a WHERE a.id=:id";
         $model = $this->fetchOne($sql, ['id' => $id], 1);
         $model->setUid($uid);
         $model->setBannerImg($bannerImg);
@@ -162,13 +162,13 @@ class BannerService extends AdminBaseService
     }
 
     public function getMainById($id){
-        $sql = "SELECT a FROM App:MallBannerMain a WHERE a.id=:id";
+        $sql = "SELECT a FROM Core:MallBannerMain a WHERE a.id=:id";
         $info = $this->fetchOne($sql, ['id' => $id]);
         return $info;
     }
 
     public function delMain($id){
-        $sql = "SELECT a FROM App:MallBannerMain a WHERE a.id=:id";
+        $sql = "SELECT a FROM Core:MallBannerMain a WHERE a.id=:id";
         $model = $this->fetchOne($sql, ["id" => $id], 1);
         return $this->delete($model);
     }

@@ -32,7 +32,7 @@ class AdminlogService extends AdminBaseService
     {
         $sql = $this->getFormatRequestSql($request);
 
-        $dql = "SELECT a FROM App:BaseAdminLog a " . $sql . " ORDER BY a.id DESC";
+        $dql = "SELECT a FROM Core:BaseAdminLog a " . $sql . " ORDER BY a.id DESC";
         $em = $this->getDoctrine()->getManager();
         $query = $em->createQuery($dql);
         $pagination = $this->paginator->paginate(

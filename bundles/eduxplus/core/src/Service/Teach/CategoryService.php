@@ -20,7 +20,7 @@ class CategoryService extends AdminBaseService
 
     public function getCategoryTree($parentId)
     {
-        $sql = "SELECT a FROM App:TeachCategory a WHERE a.parentId = :parentId ORDER BY a.sort ASC";
+        $sql = "SELECT a FROM Core:TeachCategory a WHERE a.parentId = :parentId ORDER BY a.sort ASC";
         $items = $this->fetchAll($sql, ['parentId' => $parentId]);
         if (!$items) return [];
         $result = [];
@@ -46,7 +46,7 @@ class CategoryService extends AdminBaseService
     public function findPath($id)
     {
         if (!$id) return "";
-        $sql = "SELECT a.parentId FROM App:TeachCategory a WHERE a.id = :id";
+        $sql = "SELECT a.parentId FROM Core:TeachCategory a WHERE a.id = :id";
         $pid = $this->fetchField("parentId", $sql, ['id' => $id]);
         if (!$pid) return ",{$id},";
         $str = ",{$id},";
@@ -56,7 +56,7 @@ class CategoryService extends AdminBaseService
 
     public function hasChild($id)
     {
-        $sql = "SELECT a FROM App:TeachCategory a WHERE a.parentId=:parentId";
+        $sql = "SELECT a FROM Core:TeachCategory a WHERE a.parentId=:parentId";
         return $this->fetchOne($sql, ['parentId' => $id]);
     }
 
@@ -81,13 +81,13 @@ class CategoryService extends AdminBaseService
 
     public function getById($id)
     {
-        $sql = "SELECT a FROM App:TeachCategory a WHERE a.id=:id";
+        $sql = "SELECT a FROM Core:TeachCategory a WHERE a.id=:id";
         return $this->fetchOne($sql, ['id' => $id]);
     }
 
     public function edit($id, $parentId, $name, $sort, $isShow, $mobileIcon)
     {
-        $sql = "SELECT a FROM App:TeachCategory a WHERE a.id=:id";
+        $sql = "SELECT a FROM Core:TeachCategory a WHERE a.id=:id";
         $findPath = $this->findPath($parentId);
         $model = $this->fetchOne($sql, ['id' => $id], 1);
         $model->setName($name);
@@ -104,7 +104,7 @@ class CategoryService extends AdminBaseService
 
     public function del($id)
     {
-        $sql = "SELECT a FROM App:TeachCategory a WHERE a.id=:id";
+        $sql = "SELECT a FROM Core:TeachCategory a WHERE a.id=:id";
         $model = $this->fetchOne($sql, ['id' => $id], 1);
         return $this->delete($model);
     }
@@ -115,7 +115,7 @@ class CategoryService extends AdminBaseService
             $sort = 0;
             foreach ($data as $k => $v) {
                 $id = $v['id'];
-                $sql = "SELECT a FROM App:TeachCategory a WHERE a.id=:id";
+                $sql = "SELECT a FROM Core:TeachCategory a WHERE a.id=:id";
                 $model = $this->fetchOne($sql, ['id' => $id], 1);
                 $model->setSort($sort);
                 $model->setParentId($pid);
@@ -130,7 +130,7 @@ class CategoryService extends AdminBaseService
 
     public function getAllCategory()
     {
-        $sql = "SELECT a FROM App:TeachCategory a ORDER BY a.sort ASC";
+        $sql = "SELECT a FROM Core:TeachCategory a ORDER BY a.sort ASC";
         $list = $this->fetchAll($sql);
         if (!$list) return [];
 
@@ -181,7 +181,7 @@ class CategoryService extends AdminBaseService
 
     public function getSubCategoryIds($id)
     {
-        $sql = "SELECT a FROM App:TeachCategory a WHERE a.findPath like :findPath AND a.isShow=1 ORDER BY a.sort ASC";
+        $sql = "SELECT a FROM Core:TeachCategory a WHERE a.findPath like :findPath AND a.isShow=1 ORDER BY a.sort ASC";
         return $this->fetchFields("id", $sql, ["findPath" => '%,'.$id.',%']);
     }
 

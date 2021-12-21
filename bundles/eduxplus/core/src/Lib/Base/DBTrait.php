@@ -262,8 +262,8 @@ trait DBTrait
 
     /**
      * 原生sql，第一行，单个字段值
-     * @param $sql  eg "SELECT * FROM App:MallMsg WHERE uid =?";
-     * @param array $params eg ["App:MallMsg"]
+     * @param $sql  eg "SELECT * FROM Core:MallMsg WHERE uid =?";
+     * @param array $params eg ["Core:MallMsg"]
      * @param array $types
      * @param null $name
      * @return mixed
@@ -293,7 +293,7 @@ trait DBTrait
     }
 
     /**
-     * @param $dbTableClassName eg 'App:BaseUser'
+     * @param $dbTableClassName eg 'Core:BaseUser'
      * @param null $name
      */
     public function getTableName($dbTableClassName, $name=null){
@@ -355,7 +355,7 @@ trait DBTrait
 
     public function getOption($k, $isJson = 0, $index = null, $default = null)
     {
-        $sql = "SELECT a.optionValue FROM App:BaseOption a WHERE a.optionKey =:optionKey";
+        $sql = "SELECT a.optionValue FROM Core:BaseOption a WHERE a.optionKey =:optionKey";
         $rs = $this->fetchField("optionValue", $sql, ['optionKey' => $k]);
 
         if ($rs) {
@@ -390,13 +390,13 @@ trait DBTrait
     public function getUserByToken($token, $clientId)
     {
         if ($clientId == 'ios' || $clientId == 'android') {
-            $sql = "SELECT a FROM App:BaseUser a WHERE a.appToken=:appToken";
+            $sql = "SELECT a FROM Core:BaseUser a WHERE a.appToken=:appToken";
             return $this->fetchOne($sql, ["appToken" => $token], 1);
         } elseif ($clientId == 'html') {
-            $sql = "SELECT a FROM App:BaseUser a WHERE a.htmlToken=:htmlToken";
+            $sql = "SELECT a FROM Core:BaseUser a WHERE a.htmlToken=:htmlToken";
             return $this->fetchOne($sql, ["htmlToken" => $token], 1);
         } elseif ($clientId == 'wxmini') {
-            $sql = "SELECT a FROM App:BaseUser a WHERE a.wxminiToken=:wxminiToken";
+            $sql = "SELECT a FROM Core:BaseUser a WHERE a.wxminiToken=:wxminiToken";
             return $this->fetchOne($sql, ["wxminiToken" => $token], 1);
         }
     }

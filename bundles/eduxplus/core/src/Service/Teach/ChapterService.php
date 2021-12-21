@@ -47,7 +47,7 @@ class ChapterService extends AdminBaseService
 
     public function getChapterTree($parentId, $courseId)
     {
-        $sql = "SELECT a FROM App:TeachCourseChapter a WHERE a.parentId = :parentId AND a.courseId = :courseId ORDER BY a.sort ASC";
+        $sql = "SELECT a FROM Core:TeachCourseChapter a WHERE a.parentId = :parentId AND a.courseId = :courseId ORDER BY a.sort ASC";
         $items = $this->fetchAll($sql, ['parentId' => $parentId, "courseId" => $courseId]);
         if (!$items) return [];
         $result = [];
@@ -68,7 +68,7 @@ class ChapterService extends AdminBaseService
             $sort = 0;
             foreach ($data as $k => $v) {
                 $id = $v['id'];
-                $sql = "SELECT a FROM App:TeachCourseChapter a WHERE a.id=:id";
+                $sql = "SELECT a FROM Core:TeachCourseChapter a WHERE a.id=:id";
                 $model = $this->fetchOne($sql, ['id' => $id], 1);
                 $model->setSort($sort);
                 $model->setParentId($pid);
@@ -83,7 +83,7 @@ class ChapterService extends AdminBaseService
 
     public function getAllChapter($courseId)
     {
-        $sql = "SELECT a FROM App:TeachCourseChapter a WHERE a.courseId=:courseId ORDER BY a.sort ASC";
+        $sql = "SELECT a FROM Core:TeachCourseChapter a WHERE a.courseId=:courseId ORDER BY a.sort ASC";
         $list = $this->fetchAll($sql, ["courseId" => $courseId]);
         if (!$list) return [];
 
@@ -175,7 +175,7 @@ class ChapterService extends AdminBaseService
     public function findPath($id)
     {
         if (!$id) return ",";
-        $sql = "SELECT a.parentId FROM App:TeachCourseChapter a WHERE a.id = :id";
+        $sql = "SELECT a.parentId FROM Core:TeachCourseChapter a WHERE a.id = :id";
         $pid = $this->fetchField("parentId", $sql, ['id' => $id]);
         if (!$pid) return ",{$id},";
         $str = ",{$id},";
@@ -186,7 +186,7 @@ class ChapterService extends AdminBaseService
 
     protected function updateCourseOpenTime($courseId, $openTime)
     {
-        $sql = "SELECT a FROM App:TeachCourse a WHERE a.id=:id";
+        $sql = "SELECT a FROM Core:TeachCourse a WHERE a.id=:id";
         $courseModel =  $this->fetchOne($sql, ['id' => $courseId], 1);
         if ($courseModel) {
             $currentOpenTime = (int) $courseModel->getOpenTime();
@@ -199,7 +199,7 @@ class ChapterService extends AdminBaseService
 
     public function edit($id, $name, $teachers, $parentId, $openTime, $studyWay, $isFree, $sort)
     {
-        $sql = "SELECT a FROM App:TeachCourseChapter a WHERE a.id=:id";
+        $sql = "SELECT a FROM Core:TeachCourseChapter a WHERE a.id=:id";
         $model = $this->fetchOne($sql, ['id' => $id], 1);
         $courseId = $model->getCourseId();
 
@@ -214,7 +214,7 @@ class ChapterService extends AdminBaseService
         $model->setSort($sort);
         $this->save($model);
         if ($teachers) {
-            $sql2 = "SELECT a FROM App:TeachCourseTeachers a WHERE a.chapterId=:chapterId";
+            $sql2 = "SELECT a FROM Core:TeachCourseTeachers a WHERE a.chapterId=:chapterId";
             $tmodels = $this->fetchAll($sql2, ["chapterId" => $id], 1);
             $this->delete($tmodels);
             foreach ($teachers as $teacherId) {
@@ -234,44 +234,44 @@ class ChapterService extends AdminBaseService
 
     public function getById($id)
     {
-        $sql = "SELECT a FROM App:TeachCourseChapter a WHERE a.id=:id";
+        $sql = "SELECT a FROM Core:TeachCourseChapter a WHERE a.id=:id";
         return $this->fetchOne($sql, ['id' => $id]);
     }
 
     public function getTeacherIds($chapterId)
     {
-        $sql = "SELECT a FROM App:TeachCourseTeachers a WHERE a.chapterId=:chapterId";
+        $sql = "SELECT a FROM Core:TeachCourseTeachers a WHERE a.chapterId=:chapterId";
         return $this->fetchFields('teacherId', $sql, ['chapterId' => $chapterId]);
     }
 
     public function del($id)
     {
-        $sql = "SELECT a FROM App:TeachCourseChapter a WHERE a.id=:id";
+        $sql = "SELECT a FROM Core:TeachCourseChapter a WHERE a.id=:id";
         $model = $this->fetchOne($sql, ['id' => $id], 1);
         return $this->delete($model);
     }
 
     public function hasChild($id)
     {
-        $sql = "SELECT a FROM App:TeachCourseChapter a WHERE a.parentId=:parentId";
+        $sql = "SELECT a FROM Core:TeachCourseChapter a WHERE a.parentId=:parentId";
         return $this->fetchOne($sql, ['parentId' => $id]);
     }
 
     public function getVideoById($id)
     {
-        $sql = "SELECT a FROM App:TeachCourseVideos a WHERE a.chapterId=:chapterId";
+        $sql = "SELECT a FROM Core:TeachCourseVideos a WHERE a.chapterId=:chapterId";
         return $this->fetchOne($sql, ['chapterId' => $id]);
     }
 
     public function getVideoByVideoId($videoId)
     {
-        $sql = "SELECT a FROM App:TeachCourseVideos a WHERE a.videoId=:videoId";
+        $sql = "SELECT a FROM Core:TeachCourseVideos a WHERE a.videoId=:videoId";
         return $this->fetchOne($sql, ['videoId' => $videoId]);
     }
 
     public function getMaterialsById($id)
     {
-        $sql = "SELECT a FROM App:TeachCourseMaterials a WHERE a.chapterId=:chapterId";
+        $sql = "SELECT a FROM Core:TeachCourseMaterials a WHERE a.chapterId=:chapterId";
         return $this->fetchOne($sql, ['chapterId' => $id]);
     }
 
@@ -282,7 +282,7 @@ class ChapterService extends AdminBaseService
         $path = trim($chapterInfo['path'], ',');
         $pathIds = $path ? "-" . str_replace(",", "-", $path) : "";
         $courseId = $chapterInfo['courseId'];
-        $sql = "SELECT a FROM App:TeachCourse a WHERE a.id=:id";
+        $sql = "SELECT a FROM Core:TeachCourse a WHERE a.id=:id";
         $courseInfo = $this->fetchOne($sql, ["id" => $courseId]);
         $courseName = $courseInfo['name'];
         $nameStr = $courseName . "@{$courseId}" . $pathIds . "-" . $chapterName . "@{$chapterId}";
@@ -299,7 +299,7 @@ class ChapterService extends AdminBaseService
             $this->beginTransaction();
             $chapterInfo = $this->getById($chapterId);
             $courseId = $chapterInfo['courseId'];
-            $sql = "SELECT a FROM App:TeachCourseVideos a WHERE a.chapterId=:chapterId";
+            $sql = "SELECT a FROM Core:TeachCourseVideos a WHERE a.chapterId=:chapterId";
             $model = $this->fetchOne($sql, ["chapterId" => $chapterId], 1);
             if (!$model) {
                 $model = new TeachCourseVideos();
@@ -342,7 +342,7 @@ class ChapterService extends AdminBaseService
     {
         $chapterInfo = $this->getById($chapterId);
         $courseId = $chapterInfo['courseId'];
-        $sql = "SELECT a FROM App:TeachCourseMaterials a WHERE a.chapterId=:chapterId";
+        $sql = "SELECT a FROM Core:TeachCourseMaterials a WHERE a.chapterId=:chapterId";
         $model = $this->fetchOne($sql, ["chapterId" => $chapterId], 1);
         if (!$model) {
             $model = new TeachCourseMaterials();
@@ -442,7 +442,7 @@ class ChapterService extends AdminBaseService
             $playUrl = $this->aliyunLiveService->createPlayUrl($streamName, $expireTime);
             $parseSetLiveData = $this->parseSetLiveData($pushUrl,  $playUrl, $oldLiveData, $liveAdapter);
         }
-        $sql = "SELECT a FROM App:TeachCourseVideos a WHERE a.chapterId=:chapterId";
+        $sql = "SELECT a FROM Core:TeachCourseVideos a WHERE a.chapterId=:chapterId";
         $model = $this->fetchOne($sql, ["chapterId" => $chapterId], 1);
         if (!$model) {
             $model = new TeachCourseVideos();

@@ -29,7 +29,7 @@ class HelpService extends AdminBaseService
     {
         $sql = $this->getFormatRequestSql($request);
 
-        $dql = "SELECT a FROM App:MallHelp a " . $sql . " ORDER BY a.id DESC";
+        $dql = "SELECT a FROM Core:MallHelp a " . $sql . " ORDER BY a.id DESC";
         $em = $this->getDoctrine()->getManager();
         $query = $em->createQuery($dql);
         $pagination = $this->paginator->paginate(
@@ -55,14 +55,14 @@ class HelpService extends AdminBaseService
 
     public function switchStatus($id, $state)
     {
-        $sql = "SELECT a FROM App:MallHelp a WHERE a.id=:id";
+        $sql = "SELECT a FROM Core:MallHelp a WHERE a.id=:id";
         $model = $this->fetchOne($sql, ['id' => $id], 1);
         $model->setStatus($state);
         return $this->save($model);
     }
 
     public function edit($id, $name, $content, $status, $categoryId, $sort, $topValue){
-        $sql = "SELECT a FROM App:MallHelp a WHERE a.id=:id";
+        $sql = "SELECT a FROM Core:MallHelp a WHERE a.id=:id";
         $model = $this->fetchOne($sql, ['id' => $id], 1);
         $model->setName($name);
         $model->setStatus($status);
@@ -71,7 +71,7 @@ class HelpService extends AdminBaseService
         $model->setTopValue($topValue);
         $this->save($model);
 
-        $sql = "SELECT a FROM App:MallHelpMain a WHERE a.helpId=:helpId";
+        $sql = "SELECT a FROM Core:MallHelpMain a WHERE a.helpId=:helpId";
         $mainModel = $this->fetchOne($sql, ['helpId' => $id], 1);
         $mainModel->setContent($content);
         $this->save($mainModel);
@@ -95,11 +95,11 @@ class HelpService extends AdminBaseService
     }
 
     public function getById($id){
-        $sql = "SELECT a FROM App:MallHelp a WHERE a.id=:id";
+        $sql = "SELECT a FROM Core:MallHelp a WHERE a.id=:id";
         $info = $this->fetchOne($sql, ['id' => $id]);
         $info["main"] = [];
         if($info){
-            $sql = "SELECT a FROM App:MallHelpMain a WHERE a.helpId=:helpId";
+            $sql = "SELECT a FROM Core:MallHelpMain a WHERE a.helpId=:helpId";
             $main = $this->fetchOne($sql, ['helpId' => $info['id']]);
             $info["main"] = $main;
         }
@@ -107,7 +107,7 @@ class HelpService extends AdminBaseService
     }
 
     public function del($id){
-        $sql = "SELECT a FROM App:MallHelp a WHERE a.id=:id";
+        $sql = "SELECT a FROM Core:MallHelp a WHERE a.id=:id";
         $model = $this->fetchOne($sql, ["id" => $id], 1);
         return $this->delete($model);
     }

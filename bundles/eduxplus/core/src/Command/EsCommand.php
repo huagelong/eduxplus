@@ -14,7 +14,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class EsCommand extends Command
 {
-    protected static $defaultName = 'app:es';
+    protected static $defaultName = 'Core:es';
     protected $esService;
     protected $redisService;
 
@@ -54,7 +54,7 @@ class EsCommand extends Command
         $lastId= (int) $this->redisService->get($redisKey);
 //        $lastId = 0;
         while(1) {
-            $sql = "SELECT a FROM App:MallGoods a WHERE a.status=1 AND a.id >:id";
+            $sql = "SELECT a FROM Core:MallGoods a WHERE a.status=1 AND a.id >:id";
             $data = $this->esService->fetchAll($sql, ["id"=>$lastId]);
             if (!$data) break;
             foreach ($data as $v){
@@ -69,7 +69,7 @@ class EsCommand extends Command
         $lastId= (int) $this->redisService->get($redisKey);
 //        $lastId = 0;
         while(1) {
-            $sql = "SELECT a FROM App:MallNews a WHERE a.status=1 AND a.id >:id";
+            $sql = "SELECT a FROM Core:MallNews a WHERE a.status=1 AND a.id >:id";
             $data = $this->esService->fetchAll($sql, ["id"=>$lastId]);
             if (!$data) break;
             foreach ($data as $v){

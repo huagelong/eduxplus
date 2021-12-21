@@ -24,7 +24,7 @@ class ClassService extends AdminBaseService
     public function getClassList($request, $page, $pageSize)
     {
         $sql = $this->getFormatRequestSql($request);
-        $dql = "SELECT a FROM App:JwClasses a " . $sql . " ORDER BY a.id DESC";
+        $dql = "SELECT a FROM Core:JwClasses a " . $sql . " ORDER BY a.id DESC";
         $em = $this->getDoctrine()->getManager();
         $query = $em->createQuery($dql);
         $pagination = $this->paginator->paginate(
@@ -40,11 +40,11 @@ class ClassService extends AdminBaseService
                 $vArr =  $this->toArray($v);
                 //学习计划
                 $studyPlanId = $vArr["studyPlanId"];
-                $sql = "SELECT a FROM App:TeachStudyPlan a WHERE a.id=:id";
+                $sql = "SELECT a FROM Core:TeachStudyPlan a WHERE a.id=:id";
                 $studyPlanInfo = $this->fetchOne($sql, ['id' => $studyPlanId]);
                 //产品
                 $productId = $vArr["productId"];
-                $sql = "SELECT a FROM App:TeachProducts a WHERE a.id=:id";
+                $sql = "SELECT a FROM Core:TeachProducts a WHERE a.id=:id";
                 $productInfo = $this->fetchOne($sql, ['id' => $productId]);
 
                 $vArr["studyPlan"] = $studyPlanInfo?$studyPlanInfo['name']:"";
@@ -64,7 +64,7 @@ class ClassService extends AdminBaseService
         }else{
             $sql .= " AND a.classesId =:classesId ";
         }
-        $dql = "SELECT a FROM App:JwClassesMembers a " . $sql . " ORDER BY a.id DESC";
+        $dql = "SELECT a FROM Core:JwClassesMembers a " . $sql . " ORDER BY a.id DESC";
         $em = $this->getDoctrine()->getManager();
         $query = $em->createQuery($dql);
 
@@ -83,7 +83,7 @@ class ClassService extends AdminBaseService
                 $vArr =  $this->toArray($v);
                 //学习计划
                 $uid = $vArr["uid"];
-                $sql = "SELECT a FROM App:BaseUser a WHERE a.id=:id";
+                $sql = "SELECT a FROM Core:BaseUser a WHERE a.id=:id";
                 $userInfo = $this->fetchOne($sql, ['id' => $uid]);
                 $vArr["user"] = $userInfo?($userInfo['fullName']."/".$userInfo['displayName']):"";
                 $itemsArr[] = $vArr;
@@ -94,7 +94,7 @@ class ClassService extends AdminBaseService
 
     public function getById($id)
     {
-        $sql = "SELECT a FROM App:JwClasses a WHERE a.id=:id";
+        $sql = "SELECT a FROM Core:JwClasses a WHERE a.id=:id";
         return $this->fetchOne($sql, ['id' => $id]);
     }
 

@@ -41,7 +41,7 @@ class PayService extends AdminBaseService
     {
         $sql = $this->getFormatRequestSql($request);
 
-        $dql = "SELECT a FROM App:MallPay a " . $sql . " ORDER BY a.id DESC";
+        $dql = "SELECT a FROM Core:MallPay a " . $sql . " ORDER BY a.id DESC";
         $em = $this->getDoctrine()->getManager();
         $query = $em->createQuery($dql);
         $pagination = $this->paginator->paginate(
@@ -86,7 +86,7 @@ class PayService extends AdminBaseService
 
     public function completedPay($payId)
     {
-        $sql = "SELECT a FROM App:MallPay a WHERE a.id=:id";
+        $sql = "SELECT a FROM Core:MallPay a WHERE a.id=:id";
         $detail = $this->fetchOne($sql, ["id" => $payId], 1);
         if (!$detail) return false;
         $detail->setPayTime(time());

@@ -33,7 +33,7 @@ use Eduxplus\CoreBundle\Entity\BaseOption;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class TestCommand extends Command
 {
-    protected static $defaultName = 'app:test';
+    protected static $defaultName = 'Core:test';
     protected $aliyunOssService;
     protected $uploadService;
     protected $manager;
@@ -146,7 +146,7 @@ class TestCommand extends Command
 
 //        $this->esService->esCreateIndex("goods", "name", 1);
 
-//        $sql = "SELECT a FROM App:MallGoods a WHERE a.status=1";
+//        $sql = "SELECT a FROM Core:MallGoods a WHERE a.status=1";
 //        $list = $this->esService->fetchAll($sql);
 //        if($list){
 //            foreach ($list as $v){
@@ -171,10 +171,10 @@ class TestCommand extends Command
 //        $sql = "SELECT * FROM mall_msg WHERE uid =?";
 //        $rs = $this->msgService->fetchAssocBySql($sql, [0]);
 //        var_dump($rs);
-//        $sql = "SELECT * FROM App:MallMsg WHERE uid =?";
-//        $rs =  $this->msgService->formatTableClass($sql, ["App:MallMsg"]);
+//        $sql = "SELECT * FROM Core:MallMsg WHERE uid =?";
+//        $rs =  $this->msgService->formatTableClass($sql, ["Core:MallMsg"]);
 //        var_dump($rs);
-//        $sql = "SELECT a FROM App:BaseLoginLog a WHERE a.id=1";
+//        $sql = "SELECT a FROM Core:BaseLoginLog a WHERE a.id=1";
 //        $model = $this->msgService->fetchOne($sql,[], 1);
 //        $this->msgService->hardDelete($model);
 

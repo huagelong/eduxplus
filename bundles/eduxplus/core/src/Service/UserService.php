@@ -38,7 +38,7 @@ class UserService extends AdminBaseService
     public function userList($request, $page, $pageSize)
     {
         $sql = $this->getFormatRequestSql($request);
-        $dql = "SELECT a FROM App:BaseUser a " . $sql  . " ORDER BY a.id DESC";
+        $dql = "SELECT a FROM Core:BaseUser a " . $sql  . " ORDER BY a.id DESC";
         $em = $this->getDoctrine()->getManager();
         $query = $em->createQuery($dql);
         $pagination = $this->paginator->paginate(
@@ -52,7 +52,7 @@ class UserService extends AdminBaseService
 
     public function checkDisplayName($name, $id = 0)
     {
-        $sql = "SELECT a FROM App:BaseUser a where a.displayName =:displayName ";
+        $sql = "SELECT a FROM Core:BaseUser a where a.displayName =:displayName ";
         $params = [];
         $params['displayName'] = $name;
         if ($id) {
@@ -64,7 +64,7 @@ class UserService extends AdminBaseService
 
     public function checkFullName($name, $id = 0)
     {
-        $sql = "SELECT a FROM App:BaseUser a where a.fullName =:fullName ";
+        $sql = "SELECT a FROM Core:BaseUser a where a.fullName =:fullName ";
         $params = [];
         $params['fullName'] = $name;
         if ($id) {
@@ -76,7 +76,7 @@ class UserService extends AdminBaseService
 
     public function searchAdminFullName($name)
     {
-        $sql = "SELECT a FROM App:BaseUser a where a.fullName like :fullName AND a.isAdmin=1 ";
+        $sql = "SELECT a FROM Core:BaseUser a where a.fullName like :fullName AND a.isAdmin=1 ";
         $params = [];
         $params['fullName'] = "%" . $name . "%";
         return $this->fetchAll($sql, $params);
@@ -84,7 +84,7 @@ class UserService extends AdminBaseService
 
     public function searchFullName($name)
     {
-        $sql = "SELECT a FROM App:BaseUser a where a.fullName like :fullName";
+        $sql = "SELECT a FROM Core:BaseUser a where a.fullName like :fullName";
         $params = [];
         $params['fullName'] = "%" . $name . "%";
         return $this->fetchAll($sql, $params);
@@ -94,7 +94,7 @@ class UserService extends AdminBaseService
     {
         $mobileMask =  $this->mobileMaskService->encrypt($name);
 
-        $sql = "SELECT a FROM App:BaseUser a where a.mobileMask =:mobileMask ";
+        $sql = "SELECT a FROM Core:BaseUser a where a.mobileMask =:mobileMask ";
         $params = [];
         $params['mobileMask'] = $mobileMask;
         if ($id) {
@@ -138,7 +138,7 @@ class UserService extends AdminBaseService
 
     public function getById($id)
     {
-        $sql = "SELECT a FROM App:BaseUser a WHERE a.id=:id";
+        $sql = "SELECT a FROM Core:BaseUser a WHERE a.id=:id";
         return $this->fetchOne($sql, ['id' => $id]);
     }
 
@@ -150,13 +150,13 @@ class UserService extends AdminBaseService
 
     public function getMyRoleIds($uid)
     {
-        $sql = "SELECT a FROM App:BaseRoleUser a WHERE a.uid=:uid";
+        $sql = "SELECT a FROM Core:BaseRoleUser a WHERE a.uid=:uid";
         return $this->fetchFields('roleId', $sql, ['uid' => $uid]);
     }
 
     public function edit($id, $mobile, $displayName, $fullName, $sex, $roles)
     {
-        $sql = "SELECT a FROM App:BaseUser a WHERE a.id=:id";
+        $sql = "SELECT a FROM Core:BaseUser a WHERE a.id=:id";
         $model = $this->fetchOne($sql, ['id' => $id], 1);
         $model->setMobile($mobile);
         $mobileMask =  $this->mobileMaskService->encrypt($mobile);
@@ -173,7 +173,7 @@ class UserService extends AdminBaseService
 
         if ($roles) {
             //先删除
-            $sql = "SELECT a FROM App:BaseRoleUser a WHERE a.uid=:uid";
+            $sql = "SELECT a FROM Core:BaseRoleUser a WHERE a.uid=:uid";
             $models = $this->fetchAll($sql, ['uid' => $id], 1);
             $this->hardDelete($models);
             //后添加
@@ -189,14 +189,14 @@ class UserService extends AdminBaseService
 
     public function delUser($id)
     {
-        $sql = "SELECT a FROM App:BaseUser a WHERE a.id=:id";
+        $sql = "SELECT a FROM Core:BaseUser a WHERE a.id=:id";
         $model = $this->fetchOne($sql, ["id" => $id], 1);
         $this->delete($model);
     }
 
     public function switchLock($id, $state)
     {
-        $sql = "SELECT a FROM App:BaseUser a WHERE a.id=:id";
+        $sql = "SELECT a FROM Core:BaseUser a WHERE a.id=:id";
         $model = $this->fetchOne($sql, ['id' => $id], 1);
         $model->setIsLock($state);
         return $this->save($model);

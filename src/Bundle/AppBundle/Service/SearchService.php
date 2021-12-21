@@ -38,7 +38,7 @@ class SearchService extends AppBaseService
         $totalPage = ceil($total/$pageSize);
         $idsTmp = implode(",", $ids);
         if($ids){
-            $sql = "SELECT a FROM App:MallGoods a WHERE a.id IN(:id) AND a.status=1 ORDER BY FIELD(a.id,".$idsTmp.")";
+            $sql = "SELECT a FROM Core:MallGoods a WHERE a.id IN(:id) AND a.status=1 ORDER BY FIELD(a.id,".$idsTmp.")";
             $items = $this->fetchAll($sql, ["id"=>$ids]);
             if ($items) {
                 foreach ($items as &$vArr) {
@@ -57,7 +57,7 @@ class SearchService extends AppBaseService
         $totalPage = ceil($total/$pageSize);
         $idsTmp = implode(",", $ids);
         if($ids){
-            $sql = "SELECT a FROM App:MallNews a WHERE a.id IN(:id) AND a.status=1 ORDER BY FIELD(a.id,".$idsTmp.")";
+            $sql = "SELECT a FROM Core:MallNews a WHERE a.id IN(:id) AND a.status=1 ORDER BY FIELD(a.id,".$idsTmp.")";
             $items = $this->fetchAll($sql, ["id"=>$ids]);
             if ($items) {
                 foreach ($items as &$vArr) {
@@ -80,13 +80,13 @@ class SearchService extends AppBaseService
 
     public function goodsList($kw, $page, $pageSize){
         if($kw){
-            $sql = "SELECT a FROM App:MallGoods a WHERE a.name LIKE :name AND a.status=1  AND  a.goodType=1  ORDER BY a.createdAt DESC";
+            $sql = "SELECT a FROM Core:MallGoods a WHERE a.name LIKE :name AND a.status=1  AND  a.goodType=1  ORDER BY a.createdAt DESC";
             $em = $this->getDoctrine()->getManager();
             $em = $this->enableSoftDeleteable($em);
             $query = $em->createQuery($sql);
             $query = $query->setParameters(["name"=>"%".$kw."%"]);
         }else{
-            $sql = "SELECT a FROM App:MallGoods a WHERE a.status=1  AND  a.goodType=1 ORDER BY a.createdAt DESC";
+            $sql = "SELECT a FROM Core:MallGoods a WHERE a.status=1  AND  a.goodType=1 ORDER BY a.createdAt DESC";
             $em = $this->getDoctrine()->getManager();
             $em = $this->enableSoftDeleteable($em);
             $query = $em->createQuery($sql);
@@ -113,13 +113,13 @@ class SearchService extends AppBaseService
 
     public function newsList($kw, $page, $pageSize){
         if($kw) {
-            $sql = "SELECT a FROM App:MallNews a WHERE a.title LIKE :title AND a.status=1 ORDER BY a.createdAt DESC";
+            $sql = "SELECT a FROM Core:MallNews a WHERE a.title LIKE :title AND a.status=1 ORDER BY a.createdAt DESC";
             $em = $this->getDoctrine()->getManager();
             $em = $this->enableSoftDeleteable($em);
             $query = $em->createQuery($sql);
             $query = $query->setParameters(["title" => "%" . $kw . "%"]);
         }else{
-            $sql = "SELECT a FROM App:MallNews a WHERE a.status=1 ORDER BY a.createdAt DESC";
+            $sql = "SELECT a FROM Core:MallNews a WHERE a.status=1 ORDER BY a.createdAt DESC";
             $em = $this->getDoctrine()->getManager();
             $em = $this->enableSoftDeleteable($em);
             $query = $em->createQuery($sql);

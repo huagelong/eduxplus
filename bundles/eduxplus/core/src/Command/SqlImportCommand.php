@@ -12,7 +12,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class SqlImportCommand extends Command
 {
-    protected static $defaultName = 'app:sqlImport';
+    protected static $defaultName = 'Core:sqlImport';
 
     protected function configure()
     {

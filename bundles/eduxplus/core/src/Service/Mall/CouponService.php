@@ -42,7 +42,7 @@ class CouponService extends AdminBaseService
     {
         $sql = $this->getFormatRequestSql($request);
 
-        $dql = "SELECT a FROM App:MallCouponGroup a " . $sql . " ORDER BY a.id DESC";
+        $dql = "SELECT a FROM Core:MallCouponGroup a " . $sql . " ORDER BY a.id DESC";
         $em = $this->getDoctrine()->getManager();
         $query = $em->createQuery($dql);
         $pagination = $this->paginator->paginate(
@@ -112,7 +112,7 @@ class CouponService extends AdminBaseService
 
     public function switchStatus($id, $state)
     {
-        $sql = "SELECT a FROM App:MallCouponGroup a WHERE a.id=:id";
+        $sql = "SELECT a FROM Core:MallCouponGroup a WHERE a.id=:id";
         $model = $this->fetchOne($sql, ['id' => $id], 1);
         $model->setStatus($state);
         return $this->save($model);
@@ -120,7 +120,7 @@ class CouponService extends AdminBaseService
 
     public function getById($id)
     {
-        $sql = "SELECT a FROM App:MallCouponGroup a WHERE a.id=:id";
+        $sql = "SELECT a FROM Core:MallCouponGroup a WHERE a.id=:id";
         $info = $this->fetchOne($sql, ['id' => $id]);
         if (!$info) return [];
         return $info;
@@ -128,7 +128,7 @@ class CouponService extends AdminBaseService
 
     public function getByName($name, $id = 0)
     {
-        $sql = "SELECT a FROM App:MallCouponGroup a WHERE a.name=:name";
+        $sql = "SELECT a FROM Core:MallCouponGroup a WHERE a.name=:name";
         $params = [];
         $params['name'] = $name;
         if ($id) {
@@ -156,7 +156,7 @@ class CouponService extends AdminBaseService
         $descr
     ) {
         $discount = $discount*100;
-        $sql = "SELECT a FROM App:MallCouponGroup a WHERE a.id=:id";
+        $sql = "SELECT a FROM Core:MallCouponGroup a WHERE a.id=:id";
         $model = $this->fetchOne($sql, ['id' => $id], 1);
         $model->setName($name);
         $model->setCouponType($couponType);
@@ -181,10 +181,10 @@ class CouponService extends AdminBaseService
 
     public function del($id)
     {
-        $sql = "DELETE FROM App:MallCoupon a WHERE a.couponGroupId=:couponGroupId";
+        $sql = "DELETE FROM Core:MallCoupon a WHERE a.couponGroupId=:couponGroupId";
         $this->execute($sql, ["couponGroupId" => $id]);
 
-        $sql = "DELETE FROM App:MallCouponGroup a WHERE a.id=:id";
+        $sql = "DELETE FROM Core:MallCouponGroup a WHERE a.id=:id";
         $this->execute($sql, ["id" => $id]);
         return true;
     }
@@ -199,7 +199,7 @@ class CouponService extends AdminBaseService
         } else {
             $sqlStr = " WHERE " . $sqlStr;
         }
-        $dql = "SELECT a FROM App:MallCoupon a " . $sql . $sqlStr;
+        $dql = "SELECT a FROM Core:MallCoupon a " . $sql . $sqlStr;
 
         $em = $this->getDoctrine()->getManager();
         $query = $em->createQuery($dql);
@@ -225,7 +225,7 @@ class CouponService extends AdminBaseService
 
     public function sendCoupon($uid, $id)
     {
-        $sql = "SELECT a FROM App:MallCoupon a WHERE a.couponGroupId=:couponGroupId AND a.status=:status";
+        $sql = "SELECT a FROM Core:MallCoupon a WHERE a.couponGroupId=:couponGroupId AND a.status=:status";
         $detail = $this->fetchOne($sql, ["couponGroupId" => $id, "status" => 0], 1);
         if ($detail) {
             $detail->setUid($uid);
@@ -238,14 +238,14 @@ class CouponService extends AdminBaseService
     }
 
     public function getCouponCodeCountByGroupId($groupId){
-        $sql = "SELECT count(a.id) as cnt FROM App:MallCoupon a WHERE a.couponGroupId=:couponGroupId ";
+        $sql = "SELECT count(a.id) as cnt FROM Core:MallCoupon a WHERE a.couponGroupId=:couponGroupId ";
         $count = $this->fetchField("cnt", $sql, ["couponGroupId"=>$groupId]);
         return $count;
     }
 
     public function useCoupon($uid, $couponSn)
     {
-        $sql = "SELECT a FROM App:MallCoupon a WHERE a.couponSn=:couponSn";
+        $sql = "SELECT a FROM Core:MallCoupon a WHERE a.couponSn=:couponSn";
         $detail = $this->fetchOne($sql, ["couponSn" => $couponSn], 1);
         if (!$detail) return false;
         if ($detail->getUid() != $uid) return false;
@@ -258,7 +258,7 @@ class CouponService extends AdminBaseService
 
     public function createCoupon($id)
     {
-        $sql = "SELECT a FROM App:MallCouponGroup a WHERE a.id=:id";
+        $sql = "SELECT a FROM Core:MallCouponGroup a WHERE a.id=:id";
         $couponGroup = $this->fetchOne($sql, ["id" => $id]);
         $countNum = (int) $couponGroup["countNum"];
         $createdNum =  (int) $couponGroup["createdNum"];
@@ -277,13 +277,13 @@ class CouponService extends AdminBaseService
             if (($i % $batchSize) === 0) {
                 $em->flush();
                 //更新生成数量
-                $sql = "UPDATE App:MallCouponGroup a SET a.createdNum=:createdNum WHERE a.id=:id";
+                $sql = "UPDATE Core:MallCouponGroup a SET a.createdNum=:createdNum WHERE a.id=:id";
                 $this->execute($sql, ["id" => $id, "createdNum" => $i]);
                 $em->clear();
             }
         }
         $em->flush();
-        $sql = "UPDATE App:MallCouponGroup a SET a.createdNum=:createdNum WHERE a.id=:id";
+        $sql = "UPDATE Core:MallCouponGroup a SET a.createdNum=:createdNum WHERE a.id=:id";
         $n = $i - 1;
         $this->execute($sql, ["id" => $id, "createdNum" => $n]);
         $em->clear();
@@ -293,7 +293,7 @@ class CouponService extends AdminBaseService
     public function export($id)
     {
         $info = $this->getById($id);
-        $sql = "SELECT a FROM App:MallCoupon a WHERE a.couponGroupId=:couponGroupId";
+        $sql = "SELECT a FROM Core:MallCoupon a WHERE a.couponGroupId=:couponGroupId";
         $list = $this->fetchAll($sql, ["couponGroupId" => $id]);
         $headers = [
             "优惠券" => "string",
