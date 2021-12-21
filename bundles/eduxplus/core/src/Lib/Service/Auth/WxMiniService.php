@@ -13,7 +13,7 @@ use Eduxplus\CoreBundle\Lib\Base\BaseService;
 
 use Eduxplus\CoreBundle\Lib\Service\UploadService;
 use EasyWeChat\Factory;
-use Eduxplus\CoreBundle\Bundle\AppBundle\Service\UserService;
+use Eduxplus\CoreBundle\Service\UserService;
 use Eduxplus\CoreBundle\Lib\Service\File\AliyunOssService;
 use Eduxplus\CoreBundle\Entity\BaseOpenAuth;
 

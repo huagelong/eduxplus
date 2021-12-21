@@ -9,7 +9,6 @@ use Eduxplus\CoreBundle\Lib\Service\Pay\WxpayService;
 use Eduxplus\CoreBundle\Lib\Service\SmsService;
 use Eduxplus\CoreBundle\Lib\Service\UploadService;
 use Eduxplus\CoreBundle\Lib\Service\Vod\TengxunyunVodService;
-use Eduxplus\CoreBundle\Bundle\AppBundle\Service\MsgService;
 use Eduxplus\CoreBundle\Entity\BaseMenu;
 use Eduxplus\CoreBundle\Entity\BaseRoleMenu;
 use Eduxplus\CoreBundle\Lib\Service\HelperService;
@@ -23,9 +22,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
-use Eduxplus\CoreBundle\Bundle\AdminBundle\Service\Mall\OrderService;
-use Eduxplus\CoreBundle\Bundle\AdminBundle\Service\Mall\PayService;
-use Eduxplus\CoreBundle\Bundle\AdminBundle\Service\Mall\CouponService;
+use Eduxplus\CoreBundle\Service\Mall\OrderService;
+use Eduxplus\CoreBundle\Service\Mall\PayService;
+use Eduxplus\CoreBundle\Service\Mall\CouponService;
 use Eduxplus\CoreBundle\Entity\BaseRole;
 use Eduxplus\CoreBundle\Entity\BaseRoleUser;
 use Eduxplus\CoreBundle\Lib\Service\MobileMaskService;
@@ -43,7 +42,6 @@ class TestCommand extends Command
     protected $alipayService;
     protected $helperService;
     protected $esService;
-    protected $msgService;
     protected $passwordEncoder;
     protected $mobileMaskService;
     /**
@@ -61,7 +59,6 @@ class TestCommand extends Command
         SmsService $smsService,
         AlipayService $alipayService,
         EsService $esService,
-        MsgService $msgService,
         MobileMaskService $mobileMaskService,
         WxpayService $wxpayService
     ) {
@@ -75,7 +72,6 @@ class TestCommand extends Command
         $this->smsService = $smsService;
         $this->alipayService = $alipayService;
         $this->esService = $esService;
-        $this->msgService = $msgService;
         $this->wxpayService = $wxpayService;
         $this->helperService = $helperService;
         $this->passwordEncoder = $passwordEncoder;

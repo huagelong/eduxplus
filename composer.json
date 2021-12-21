@@ -101,7 +101,7 @@
         },
         "bundles":{
             "type": "path",
-            "url": "./bundles/eduxplus/*",
+            "url": "./bundles/*/*",
             "symlink": true
         }
     }

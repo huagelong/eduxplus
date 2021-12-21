@@ -2,7 +2,7 @@
 
 namespace Eduxplus\CoreBundle\Command\Job;
 
-use Eduxplus\CoreBundle\Bundle\AppBundle\Service\MsgService;
+use App\Bundle\AppBundle\Service\MsgService;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
