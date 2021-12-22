@@ -1,0 +1,41 @@
+{% import "@WebsiteBundle/macros/pagination.html.twig" as macros %}
+<div class="mainBox">
+  <div class="header">
+    一共<span class="fontColorRed">{{count}}</span>个课程
+  </div>
+  <div class="content">
+    {% if list %}
+        {% for item in list %}
+            <a href="{{ path('app_learn_courseList', {courseId:item['id']}) }}">
+                <div class="mygoodCard">
+                  <div class="layui-row">
+                    <div class="layui-col-md4">
+                      <div class="cover">
+                        <img src="{{ json_get(item['bigImg']) }}">
+                      </div>
+                    </div>
+                    <div class="layui-col-md8">
+                      <div class="info">
+                        <div class="title">{{ item['name'] }}</div>
+                        <div class="descr layui-elip">{{item['descr']|raw }}</div>
+                        <div class="attr">
+                          <span class="meta1">已学习<span>11</span>课时 / 共<span>{{ item['courseHour'] }}</span>课时</span>
+                          <span class="layui-btn  layui-btn-normal layui-btn-sm floatRigth">立即学习</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            </a>
+        {% endfor %}
+    {% else %}
+      <div class="layui-center">
+        <div><img src="/assets/app/default/images/null-i2.png" /></div>
+        <div>没有数据～</div>
+      </div>
+    {% endif %}
+    <div>
+      {{ macros.pagination(pagination) }}
+    </div>
+  </div>
+</div>

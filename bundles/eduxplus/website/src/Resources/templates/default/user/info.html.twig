@@ -1,0 +1,106 @@
+{% extends '@WebsiteBundle/layout/layout.html.twig' %}
+
+{% block body_javascript %}
+  {{ parent() }}
+  <script>
+    var upyunurl = "{{ path('app_my_uploadimg',{type:'gravatar'}) }}";
+  </script>
+  <script>
+    //日历运行调用
+    !function () {
+        var laydate = layui.laydate;
+        var upload = layui.upload;
+        laydate.render({
+          elem: '#birthday'
+        });
+
+      var uploadInst = upload.render({
+        elem: '#change-avatar' //绑定元素
+        ,url: upyunurl //上传接口
+        ,accept: 'images' //允许上传的文件类型
+        ,size:2048
+        ,done: function(responseText){
+          //上传完毕回调
+          if (typeof responseText == "string") var responseText = $.parseJSON(responseText);
+          if(responseText.code){
+            showMsg(200, "上传成功!");
+            var newavatar = responseText.data[0];
+            $("#fileImg").attr("src", newavatar);
+            $("#avatar").val(newavatar);
+
+          }else{
+            showMsg(responseText.code, responseText.message);
+          }
+
+        }
+        ,error: function(){
+          showMsg(400, "上传失败!");
+        }
+      });
+
+    }();
+  </script>
+{% endblock %}
+
+ {% block page %}
+   {{ parent() }}
+<div id="main" class="myMain">
+  <div class="layui-main">
+    <div class="layui-row layui-col-space20">
+      <div class="layui-col-md2">
+        {{ render(controller('WebsiteBundle:User:userNav', {route:route})) }}
+      </div>
+      <div class="layui-col-md10">
+        <div class="wrap">
+          <div class="content">
+            <form class="layui-form ajaxform" action="{{ path('app_user_info_do') }}" method="post">
+              <div class="layui-form-item">
+                <label class="layui-form-label">头像：</label>
+                <div class="layui-input-inline" style="width: 100px;">
+                  <img id="fileImg" class="layui-circle"  style="width: 64px;"  src="{{ if_get(userInfo['gravatar'], '/assets/app/default/images/defaultuser.png')}}"/>
+                  <input type="hidden" name="avatar" id="avatar" value="{{ if_get(userInfo['gravatar'], '/assets/app/default/images/defaultuser.png')}}">
+                </div>
+                <div class="layui-input-inline">
+                  <div style="font-size: 12px;">请选择一张本地图片大小不超过2M</div>
+                  <div><button id="change-avatar" class="layui-btn layui-btn-sm layui-btn-normal" type="button" style="margin-top: 20px;"><i class="layui-icon">&#xe67c;</i>更换</button></div>
+                </div>
+              </div>
+              <div class="layui-form-item">
+                <label class="layui-form-label">昵称：</label>
+                <div class="layui-input-block">
+                  <input type="text" name="displayName" autocomplete="off" placeholder="请输入昵称" class="layui-input" value="{{ userInfo['displayName'] }}">
+                </div>
+              </div>
+              <div class="layui-form-item">
+                <label class="layui-form-label">姓名：</label>
+                <div class="layui-input-block">
+                  <input type="text" name="fullName" autocomplete="off" placeholder="请输入姓名" class="layui-input" value="{{ userInfo['fullName'] }}">
+                </div>
+              </div>
+              <div class="layui-form-item">
+                <label class="layui-form-label">生日：</label>
+                <div class="layui-input-block">
+                  <input type="text" name="birthday" id="birthday" placeholder="请输入生日" value="{{ userInfo['birthday'] }}" autocomplete="off" class="layui-input">
+                </div>
+              </div>
+              <div class="layui-form-item">
+                <label class="layui-form-label">性别：</label>
+                <div class="layui-input-block">
+                  <input type="radio" name="sex" value="1" title="男" {{ diff(1, userInfo['sex'],'checked') }}>
+                  <input type="radio" name="sex" value="2" title="女" {{ diff(2, userInfo['sex'],'checked') }}>
+                  <input type="radio" name="sex" value="0" title="保密" {{ diff(0, userInfo['sex'],'checked') }}>
+                </div>
+              </div>
+              <div class="layui-form-item">
+                <div class="layui-input-block">
+                  <button type="submit" class="layui-btn layui-btn-normal layui-btn-sm">提交</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

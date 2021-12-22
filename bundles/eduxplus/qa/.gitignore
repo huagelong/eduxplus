@@ -1,0 +1,27 @@
+###> symfony/framework-bundle ###
+.env.local
+.env.local.php
+.env.*.local
+.settings
+.user.ini
+/composer.lock
+/config/secrets/prod/prod.decrypt.private.php
+/public/bundles/
+/public/upload/
+/.buildpath
+/.project
+/.idea
+/node_modules
+/var/
+/logs/
+/vendor/
+/config/prod
+/config/test
+/config/demo
+###< symfony/framework-bundle ###
+
+###> symfony/phpunit-bridge ###
+.phpunit
+.phpunit.result.cache
+/phpunit.xml
+###< symfony/phpunit-bridge ###

@@ -1,0 +1,28 @@
+{
+    "name": "bundles/eduxplus-website-bundle",
+    "description": "eduxplus website bundle",
+    "type": "symfony-bundle",
+    "require": {
+    },
+    "require-dev": {
+    },
+    "autoload": {
+        "psr-4": {
+            "Eduxplus\\WebsiteBundle\\": "src/"
+        }
+    },
+    "license": "Apache-2.0",
+    "authors": [
+        {
+            "name": "kaihui.wang",
+            "email": "hpuwang@gmail.com"
+        }
+    ],
+    "extra": {
+        "branch-alias": {
+            "dev-master": "master"
+        }
+    },
+    "scripts": {
+    }
+}

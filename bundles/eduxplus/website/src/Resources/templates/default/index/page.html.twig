@@ -1,0 +1,26 @@
+{% extends "@WebsiteBundle/layout/baselayout.html.twig" %}
+{% block page_title %}{{ page['name'] }}{% endblock %}
+{% block body_main %}
+  {#  顶部导航#}
+  <div class="layui-fluid topheader layui-bg-black">
+    <div class="layui-main">
+      <div class="layui-row">
+        <div class="layui-col-md9">&nbsp</div>
+        <div class="layui-col-md3">
+          <div include="{{ path('app_user_userMenu') }}"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {#  头部导航#}
+<div id="main"  class="pageMain">
+  <div class="layui-main">
+    <div class="wrap">
+      <div class="content">
+        {{ page['main']['content']|raw }}
+      </div>
+    </div>
+  </div>
+</div>
+  {{ render(controller('WebsiteBundle:Index:footer')) }}
+{% endblock %}

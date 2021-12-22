@@ -1,0 +1,34 @@
+{% extends '@WebsiteBundle/layout/layout.html.twig' %}
+ {% block page %}
+   {{ parent() }}
+<div id="main" class="commonMain">
+  <div class="layui-main helpCard">
+    <div class="layui-row layui-col-space20">
+      <div class="layui-col-md2">
+        {{ render(controller('WebsiteBundle:Help:helpNav', {id:id,type:type})) }}
+      </div>
+      <div class="layui-col-md10">
+        <div class="layui-card helpHeader">
+          <div class="layui-card-header layui-center">{{ category['name'] }}</div>
+          <div class="layui-card-body helpBody">
+            <ul>
+              {% if details %}
+                {% for dv in details %}
+              <li>
+                <a href="{{ path('app_help', {"type":0, "id":dv['id']}) }}"> {{ loop.index }}、{{ dv['name'] }}</a>
+              </li>
+                {% endfor %}
+              {% else %}
+                  <div class="layui-center">
+                    <div><img src="/assets/app/default/images/null-i3.png" /></div>
+                    <div>没有数据～</div>
+                  </div>
+              {% endif %}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,176 @@
+{% extends '@WebsiteBundle/layout/layout.html.twig' %}
+ {% block page %}
+     {{ parent() }}
+    <div id="main" class="commonMain">
+      <div class="layui-main">
+        <div class="newsBreadcrumb">
+          <span class="layui-breadcrumb">
+            <a href="/">首页</a>
+              <a href="{{ path('qa_exam_index') }}">试卷中心</a>
+              <a><cite>{{ testInfo["name"]}}</cite></a>
+          </span>
+        </div>
+      </div>
+      <div class="layui-main" style="margin-top: 10px;">
+          <div class="layui-row  layui-col-space20" >
+             <div class="layui-col-md9">
+                 <div class="layui-card">
+                  <div class="layui-card-body leftBody">
+                          <div class="layui-card">
+                          {% if testNode %}
+                         {% for tk, tv in testNode %}
+                            {# 单项选择 #}
+                            {% if tk == 0 %}
+                            <div class="layui-card-header">一、单项选择</div>
+
+                             {% for itemk, item in tv %}
+                            <div class="layui-card-body qa-choose">
+                                <div class="title"><p style="float:left">{{ itemk+1 }}、</p>{{ item["topic"]|raw }}</div>
+                                <div class="optionList">
+                                  <ul>
+                                  {% if json_get(item["sub"]["options"], 0) != "" %}
+                                    <li>A、{{ json_get(item["sub"]["options"], 0) }}</li>
+                                  {% endif %}
+                                   {% if json_get(item["sub"]["options"], 1) != "" %}
+                                    <li>B、{{ json_get(item["sub"]["options"], 1) }}</li>
+                                  {% endif %}
+                                   {% if json_get(item["sub"]["options"], 2) != "" %}
+                                    <li>C、{{ json_get(item["sub"]["options"], 2) }}</li>
+                                  {% endif %}
+                                   {% if json_get(item["sub"]["options"], 3) != "" %}
+                                    <li>D、{{ json_get(item["sub"]["options"], 3) }}</li>
+                                  {% endif %}
+                                   {% if json_get(item["sub"]["options"], 4) != "" %}
+                                    <li>E、{{ json_get(item["sub"]["options"], 4) }}</li>
+                                  {% endif %}
+                                  </ul>
+                                </div>
+                            </div>
+                              {% endfor %}
+                            {% endif %}
+
+
+                            {# 多选选择 #}
+                              {% if tk == 1 %}
+                             <div class="layui-card-header">二、多项选择</div>
+
+                             {% for itemk, item in tv %}
+                            <div class="layui-card-body qa-choose">
+                                <div class="title"><p style="float:left">{{ itemk+1 }}、</p>{{ item["topic"]|raw }}</div>
+                                <div class="optionList">
+                                  <ul>
+                                  {% if json_get(item["sub"]["options"], 0) != "" %}
+                                    <li>A、{{ json_get(item["sub"]["options"], 0) }}</li>
+                                  {% endif %}
+                                   {% if json_get(item["sub"]["options"], 1) != "" %}
+                                    <li>B、{{ json_get(item["sub"]["options"], 1) }}</li>
+                                  {% endif %}
+                                   {% if json_get(item["sub"]["options"], 2) != "" %}
+                                    <li>C、{{ json_get(item["sub"]["options"], 2) }}</li>
+                                  {% endif %}
+                                   {% if json_get(item["sub"]["options"], 3) != "" %}
+                                    <li>D、{{ json_get(item["sub"]["options"], 3) }}</li>
+                                  {% endif %}
+                                   {% if json_get(item["sub"]["options"], 4) != "" %}
+                                    <li>E、{{ json_get(item["sub"]["options"], 4) }}</li>
+                                  {% endif %}
+                                  </ul>
+                                </div>
+                            </div>
+                              {% endfor %}
+                            {% endif %}
+
+                            {# 不定项选择 #}
+                             {% if tk == 2 %}
+                             <div class="layui-card-header">三、不定项选择</div>
+
+                             {% for itemk, item in tv %}
+                            <div class="layui-card-body qa-choose">
+                                <div class="title"><p style="float:left">{{ itemk+1 }}、</p>{{ item["topic"]|raw }}</div>
+                                <div class="optionList">
+                                  <ul>
+                                  {% if json_get(item["sub"]["options"], 0) != "" %}
+                                    <li>A、{{ json_get(item["sub"]["options"], 0) }}</li>
+                                  {% endif %}
+                                   {% if json_get(item["sub"]["options"], 1) != "" %}
+                                    <li>B、{{ json_get(item["sub"]["options"], 1) }}</li>
+                                  {% endif %}
+                                   {% if json_get(item["sub"]["options"], 2) != "" %}
+                                    <li>C、{{ json_get(item["sub"]["options"], 2) }}</li>
+                                  {% endif %}
+                                   {% if json_get(item["sub"]["options"], 3) != "" %}
+                                    <li>D、{{ json_get(item["sub"]["options"], 3) }}</li>
+                                  {% endif %}
+                                   {% if json_get(item["sub"]["options"], 4) != "" %}
+                                    <li>E、{{ json_get(item["sub"]["options"], 4) }}</li>
+                                  {% endif %}
+                                  </ul>
+                                </div>
+                            </div>
+                              {% endfor %}
+                            {% endif %}
+
+                            {# 判断题 #}
+                              {% if tk == 3 %}
+                          <div class="layui-card-header">四、判断题</div>
+                            <div class="layui-card-body qa-choose">
+                              {% for itemk, item in tv %}
+                             <div class="title"><p style="float:left">{{ itemk+1 }}、</p>{{ item["topic"]|raw }}</div>
+                              {% endfor %}
+                            </div>
+                            {% endif %}
+                          {# 填空题 #}
+                             {% if tk == 4 %}
+                          <div class="layui-card-header">五、填空题</div>
+                          <div class="layui-card-body qa-choose">
+                              {% for itemk, item in tv %}
+                             <div class="title"><p style="float:left">{{ itemk+1 }}、</p>{{ item["topic"]|raw }}</div>
+                              {% endfor %}
+                            </div>
+                            {% endif %}
+
+
+                          {# 问答题 #}
+                           {% if tk == 5 %}
+                          <div class="layui-card-header">六、问答题</div>
+                            <div class="layui-card-body qa-choose">
+                              {% for itemk, item in tv %}
+                             <div class="title"><p style="float:left">{{ itemk+1 }}、</p>{{ item["topic"]|raw }}</div>
+                              {% endfor %}
+                            </div>
+                            {% endif %}
+
+
+                          {# 理解题 #}
+                            {% if tk == 6 %}
+                          <div class="layui-card-header">七、理解题</div>
+                             <div class="layui-card-body qa-choose">
+                              {% for itemk, item in tv %}
+                             <div class="title"><p style="float:left">{{ itemk+1 }}、</p>{{ item["topic"]|raw }}</div>
+                              {% endfor %}
+                            </div>
+                            {% endif %}
+                          {% endfor %}
+                          {% endif %}
+                          </div>
+                  </div>
+                 </div>
+             </div>
+              <div class="layui-col-md3">
+                <div class="layui-card">
+                      <div class="layui-card-header">试卷信息</div>
+                      <div class="layui-card-body">
+                            <ui>
+                               <li  style="padding:10px;">总分: {{ testInfo["score"] }}分</li>
+                               <li  style="padding:10px;">浏览数: {{ testInfo["viewNumber"] or 0 }}</li>
+                               <li  style="padding:10px;">
+                               <a href="{{ path('qa_test_init', {id:testInfo['id']})}}" type="button" class="layui-btn layui-btn-fluid layui-btn-sm layui-btn-normal ">开始做题</a>
+                               </li>
+                            </ui>
+                      </div>
+                </div>
+             </div>
+          </div>
+      </div>
+  </div>
+ {% endblock %}

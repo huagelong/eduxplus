@@ -4,7 +4,10 @@
     "license": "Apache-2.0",
     "type": "project",
     "require": {
-       "bundles/eduxplus-core-bundle":"@dev"
+       "bundles/eduxplus-core-bundle":"@dev",
+        "bundles/eduxplus-website-bundle":"@dev",
+        "bundles/eduxplus-qa-bundle":"@dev",
+        "bundles/eduxplus-api-bundle":"@dev"
     },
     "require-dev": {
         "symfony/flex": "^1.17",

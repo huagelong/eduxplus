@@ -1,0 +1,48 @@
+{% extends '@WebsiteBundle/layout/layout.html.twig' %}
+{% import "@WebsiteBundle/macros/pagination.html.twig" as macros %}
+{% block page %}
+     {{ parent() }}
+  <div id="main"  class="myMain">
+      <div class="layui-main">
+        <div class="layui-row layui-col-space20">
+          <div class="layui-col-md2">
+            {{ render(controller('WebsiteBundle:User:userNav', {route:route})) }}
+          </div>
+          <div class="layui-col-md10">
+            <div class="mainBox">
+              {% if list %}
+              <div class="header">
+                <a href="{{ path('app_user_allmsg_read_do') }}" class="layui-btn layui-btn-normal layui-btn-sm ajaxGet">全部标记为已读</a>
+              </div>
+              {% endif %}
+              <div class="content">
+              <div class="layui-row">
+                {% if list %}
+                  {% for l in list %}
+                    <div class="layui-col-md12">
+                        <div class="msg">
+                            <div class="content layui-text {% if l['status']==1 %} read {% endif %}">{% if l['uid']==0 %}<span class="layui-badge layui-bg-gray ">系统消息</span>&nbsp;&nbsp;&nbsp;&nbsp;{% endif %}{% if l['status']==0 %}<span class="layui-badge-dot"></span>{% endif %}  {{ l['content']|raw }}</div>
+                            <div class="other">
+                              <span class="item"><i class="layui-icon layui-icon-time"></i> <span class="moment" data-time="{{ l['createdAtTime'] }}"></span></span>
+                              {% if l['status']==0 %}<span class="item"><a href="{{ path('app_user_msg_read_do', {id:l['id']}) }}" class="layui-btn layui-btn-primary layui-btn-sm ajaxGet">标记为已读</a></span>{% endif %}
+                            </div>
+                        </div>
+                    </div>
+                  {% endfor %}
+                {% else %}
+                  <div class="layui-center">
+                    <div><img src="/assets/app/default/images/null-i2.png" /></div>
+                    <div>没有数据～</div>
+                  </div>
+                {% endif %}
+                <div>
+                  {{ macros.pagination(pagination) }}
+                </div>
+              </div>
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  </div>
+ {% endblock %}

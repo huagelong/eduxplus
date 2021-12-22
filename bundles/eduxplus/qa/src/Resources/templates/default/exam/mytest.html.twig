@@ -1,0 +1,39 @@
+{% extends '@WebsiteBundle/layout/layout.html.twig' %}
+{% import "@WebsiteBundle/macros/pagination.html.twig" as macros %}
+ {% block page %}
+     {{ parent() }}
+  <div id="main"  class="myMain">
+      <div class="layui-main">
+        <div class="layui-row layui-col-space20">
+          <div class="layui-col-md2">
+            {{ render(controller('AppBundle:User:userNav', {route:route})) }}
+          </div>
+          <div class="layui-col-md10">
+       <div class="centerBody">
+         {% if list is empty %}
+           <div class="layui-center">
+             <img src="/assets/app/default/images/null-i2.png" alt="">
+             <div>还没有试卷哦～</div>
+           </div>
+         {% else %}
+           <ul class="layui-row layui-col-space10">
+             {% for v in  list %}
+               <div class="layui-col-md3">
+                 <a href="{{ path('qa_test_detail', {id:v['testId']}) }}" class="gooda">
+                   <div class="goodCard">
+                     <div class="goodInfo">
+                       <div class="goodTitle">{{ v['testInfo']['name'] }}</div>
+                     </div>
+                   </div>
+                 </a>
+               </div>
+             {% endfor %}
+           </ul>
+         {% endif %}
+         {{ macros.pagination(pagination) }}
+       </div>
+          </div>
+        </div>
+      </div>
+  </div>
+ {% endblock %}

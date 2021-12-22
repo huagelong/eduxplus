@@ -1,0 +1,94 @@
+{% extends '@WebsiteBundle/layout/layout.html.twig' %}
+ {% block page %}
+   {{ parent() }}
+   <div id="main" class="myMain">
+     <div class="layui-main">
+       <div class="layui-row layui-col-space20">
+         <div class="layui-col-md2">
+           {{ render(controller('WebsiteBundle:User:userNav', {route:route})) }}
+         </div>
+         <div class="layui-col-md10">
+           <div class="wrap">
+             <div class="header">
+               <a href="javascript:window.history.back();" class="blue"><span class="layui-icon layui-icon-return"></span></a>
+               <span style="margin-left: 10px;">{{ courseInfo['name'] }}</span>
+             </div>
+             <div class="content">
+               {% if chapterTree is empty %}
+                 <div class="layui-center">
+                   <div><img src="/assets/app/default/images/null-i2.png" /></div>
+                   <div>没有数据～</div>
+                 </div>
+               {% else %}
+                 <div class="courseList">
+                  {% if pathCount == 0 %}
+                    <ul class="activeCourseList">
+                      {% for item in chapterTree[0] %}
+                        <li>
+                          <div class="activeCourseMsgs">
+                            {% if item['video'] %}
+                              <a class="name" href="{{ path('app_learn_detail', {chapterId:item['video']['chapterId']}) }}" target="_blank"><span class="layui-icon layui-icon-play" style="margin-right: 5px;"></span> {{ loop.index }}、{{ item['name'] }}</a>
+                              <a class="layui-btn  layui-btn-normal layui-btn-sm floatRigth" href="{{ path('app_learn_detail', {chapterId:item['video']['chapterId']}) }}" target="_blank"> {% if item['studyWay'] == 2 %}播  放{% else %}进入直播{% endif %}</a>
+                            {% else %}
+                              {% if item['studyWay'] == 2 %}
+                                <span class="name"><span class="layui-icon layui-icon-play"  style="margin-right: 5px;"></span> {{ loop.index }}、{{ item['name'] }}</span>
+                              {% else %}
+                                <a class="name" href="{{ path('app_learn_detail', {chapterId:item['id']}) }}" target="_blank"><span class="layui-icon layui-icon-play" style="margin-right: 5px;"></span> {{ loop.index }}、{{ item['name'] }}</a>
+                              {% endif %}
+                              <a class="layui-btn  layui-btn-disabled layui-btn-sm floatRigth" href="javascript:void(0);">暂无视频</a>
+                            {% endif %}
+                          </div>
+                        </li>
+                      {% endfor %}
+                    </ul>
+                  {% endif %}
+
+                   {% if pathCount > 0 %}
+                   <div class="layui-collapse">
+                   {% for key, item in chapterTree[0] %}
+                     {% set topIndex=loop.index %}
+                      {% if chapterTree[item['id']] is defined %}
+                        <div class="layui-colla-item">
+                          <h2 class="layui-colla-title">{{ item['name'] }}</h2>
+                          <div class="layui-colla-content  layui-show">
+                            <ul class="activeCourseList">
+                              {% for item2 in chapterTree[item['id']] %}
+                                <li>
+                                  <div class="activeCourseMsgs">
+                                    {% if item2['video'] %}
+                                      <a class="name" href="{{ path('app_learn_detail', {chapterId:item2['video']['chapterId']}) }}" target="_blank"><span class="layui-icon layui-icon-play"  style="margin-right: 5px;"></span>{{ topIndex }}-{{ loop.index }}、{{ item2['name'] }}</a>
+                                      <a class="layui-btn  layui-btn-normal layui-btn-sm floatRigth" href="{{ path('app_learn_detail', {chapterId:item2['video']['chapterId']}) }}" target="_blank">{% if item['studyWay'] == 2 %}播  放{% else %}进入直播{% endif %}</a>
+                                    {% else %}
+                                      <span class="name"><span class="layui-icon layui-icon-play"  style="margin-right: 5px;"></span>{{ topIndex }}-{{ loop.index }}、{{ item2['name'] }}</span>
+                                      <a class="layui-btn  layui-btn-disabled layui-btn-sm floatRigth" href="javascript:void(0);">暂无视频</a>
+                                    {% endif %}
+                                  </div>
+                                </li>
+                              {% endfor %}
+                            </ul>
+                          </div>
+                        </div>
+                      {% else %}
+                        <div class="activeCourseMsgs">
+                          {% if item['video'] %}
+                            <a class="name" href="{{ path('app_learn_detail', {chapterId:item['video']['chapterId']}) }}" target="_blank"><span class="layui-icon layui-icon-play"  style="margin-right: 5px;"></span>{{ loop.index }}、{{ item['name'] }}</a>
+                            <a class="layui-btn  layui-btn-normal layui-btn-sm floatRigth" href="{{ path('app_learn_detail', {chapterId:item['video']['chapterId']}) }}" target="_blank">{% if item['studyWay'] == 2 %}播  放{% else %}进入直播{% endif %}</a>
+                          {% else %}
+                            <span class="name"><span class="layui-icon layui-icon-play"  style="margin-right: 5px;"></span>{{ loop.index }}、{{ item['name'] }}</span>
+                            <a class="layui-btn  layui-btn-disabled layui-btn-sm floatRigth" href="javascript:void(0);">暂无视频</a>
+                          {% endif %}
+                        </div>
+                      {% endif %}
+                   {% endfor %}
+                   </div>
+                   {% endif %}
+                 </div>
+               {% endif %}
+             </div>
+           </div>
+         </div>
+       </div>
+     </div>
+   </div>
+ {% endblock %}
+

@@ -1,0 +1,19 @@
+{% extends '@WebsiteBundle/layout/layout.html.twig' %}
+{% block page %}
+  {{ parent() }}
+
+<div id="main" class="commonMain">
+  <div class="layui-main">
+      <div class="layui-body">
+        <div class="layadmin-tabsbody-item layui-show"><div class="layui-fluid">
+            <div class="laymsg-tips">
+              <i class="layui-icon" face></i>
+              <div class="layui-text" style="font-size: 20px;">
+                {% if msg %} {{ msg }}  {% endif %}
+              </div>
+            </div>
+          </div></div>
+      </div>
+  </div>
+</div>
+{% endblock %}

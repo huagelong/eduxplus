@@ -1,0 +1,26 @@
+{% extends '@WebsiteBundle/layout/baseblank.html.twig' %}
+ {% block content %}
+     {{ parent() }}
+    <div id="main" class="commonMain">
+      <div class="layui-main" style="margin-top: 100px;margin-bottom:40px;">
+      <div class="layui-card" style="padding-bottom:30px;margin-top: 30px;">
+            <div class="layui-card-header">{{ testInfo['name'] }}</div>
+                <div class="layui-card-body" style="padding: 20px!important;">
+                    <div class="cell">及格分数:{{ testInfo['score']*0.6 }}分</div>
+                    <div class="cell">试卷总分:{{ testInfo['score'] }}分</div>
+                    <div class="cell">考试时长:{{ testInfo['expireTime'] }}分钟</div>
+                    <hr class="layui-border-black">
+                    <div>考试须知</div>
+                      <ul>
+                        <li>1、考试时间为{{ testInfo['expireTime'] }}分钟。</li>
+                        <li>2、交卷后，可查看答卷和解析。</li>
+                      </ul>
+                       <div class="layui-card-footer"  style="padding: 20px!important;">
+                    <a href="{{ path('qa_test_todo', {id:testInfo['id']})}}" type="button" class="layui-btn layui-btn-fluid layui-btn-sm layui-btn-normal ">开始做题</a>
+                      </div>
+                </div>
+           </div>
+      </div>
+    </div>
+  </div>
+ {% endblock %}

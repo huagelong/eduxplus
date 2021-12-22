@@ -32,6 +32,6 @@ class BaseHtmlController extends BaseController
         $data = [];
         $data['msg'] = $msg;
         $data['redirect'] = $redirect;
-        return $this->render('@AppBundle/layout/msg.html.twig', $data);
+        return $this->render('@WebsiteBundle/layout/msg.html.twig', $data);
     }
 }

@@ -1,0 +1,79 @@
+{% extends '@WebsiteBundle/layout/layout.html.twig' %}
+{% import "@WebsiteBundle/macros/pagination.html.twig" as macros %}
+ {% block page %}
+   {{ parent() }}
+   <div id="main" class="commonMain">
+     <div class="layui-main">
+       <div class="centerHeader">
+         {%  if brands %}
+           <div class="centerCard">
+             <a href="{{ path('qa_exam_index',{categoryId:0, isFree:isFree}) }}" class="{% if firstId == 0   %} layui-btn layui-btn-normal layui-btn-xs {% endif %}">全部</a>
+             {% for v in brands %}
+               <a href="{{ path('qa_exam_index', {categoryId:v['id'], isFree:isFree}) }}" class="{% if firstId == v['id']   %} layui-btn layui-btn-normal layui-btn-xs {% endif %}">{{ v['name'] }}</a>
+             {% endfor %}
+           </div>
+         {% endif %}
+
+         {% if secondSubCategorys %}
+           <div class="centerCard">
+             <a href="{{ path('qa_exam_index', {categoryId:firstId, isFree:isFree}) }}" class="{% if secondId == 0 %} layui-btn layui-btn-normal layui-btn-xs {% endif %}">全部</a>
+             {% for sv in secondSubCategorys %}
+               <a class="{% if secondId == sv['id']   %} layui-btn layui-btn-normal layui-btn-xs {% endif %}" href="{{ path('qa_exam_index', {categoryId:sv['id'],isFree:isFree}) }}">{{ sv['name'] }}</a>
+             {% endfor %}
+           </div>
+         {% endif %}
+
+         {% if threeSubCategory %}
+           <div class="centerCard">
+             <a href="{{ path('qa_exam_index', {categoryId:secondId, isFree:isFree}) }}" class="{% if threeId == 0   %} layui-btn layui-btn-normal layui-btn-xs {% endif %}">全部</a>
+             {% for thv in threeSubCategory %}
+               <a class="{% if threeId == thv['id']   %} layui-btn layui-btn-normal layui-btn-xs {% endif %}" href="{{ path('qa_exam_index', {categoryId:thv['id'], isFree:isFree}) }}">{{ thv['name'] }}</a>
+             {% endfor %}
+           </div>
+         {% endif %}
+
+         <div class="centerCard">
+           <a href="{{ path('qa_exam_index', {categoryId:categoryId, isFree:0}) }}" class="{% if isFree == 0 %} layui-btn layui-btn-normal layui-btn-xs {% endif %}">全部</a>
+           <a href="{{ path('qa_exam_index', {categoryId:categoryId, isFree:1}) }}" class="{% if isFree == 1 %} layui-btn layui-btn-normal layui-btn-xs {% endif %}">免费</a>
+           <a href="{{ path('qa_exam_index', {categoryId:categoryId, isFree:2}) }}" class="{% if isFree == 2 %} layui-btn layui-btn-normal layui-btn-xs {% endif %}">收费</a>
+         </div>
+       </div>
+         <div class="content">
+         {% if list is empty %}
+           <div class="layui-center">
+             <img src="/assets/app/default/images/null-i2.png" alt="">
+             <div>还没有当前专业的试卷哦～</div>
+           </div>
+         {% else %}
+           <ul class="layui-row layui-col-space10">
+             {% for v in  list %}
+               <div class="layui-col-md3">
+                 <a href="{{ path('qa_mall_buy', {uuid:v['uuid']}) }}" class="gooda">
+                   <div class="goodCard layui-anim">
+                     <div class="goodInfo">
+                       <div class="goodTitle">{{ v['name'] }}</div>
+                       {% if v['tagsArr'] %}
+                         <div class="goodTags">
+                           {% for tv in  v['tagsArr'] %}
+                             {% if tv %}
+                               <span class="layui-badge layui-bg-gray">{{ tv }}</span>
+                             {% endif %}
+                           {% endfor %}
+                         </div>
+                       {% endif %}
+                       <div class="goodAttr">
+                         <span class="goodPrice">¥{{ v['shopPriceView'] }}</span>
+                         <span class="buyNum">{{ v['buyNumberFalse'] }}人购买</span>
+                       </div>
+                     </div>
+                   </div>
+                 </a>
+               </div>
+             {% endfor %}
+           </ul>
+         {% endif %}
+         {{ macros.pagination(pagination) }}
+       </div>
+     </div>
+   </div>
+ {% endblock %}

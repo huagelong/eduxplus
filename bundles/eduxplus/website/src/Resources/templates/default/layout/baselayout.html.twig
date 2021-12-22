@@ -1,0 +1,101 @@
+{% extends '@WebsiteBundle/layout/base.html.twig' %}
+{% block page_title %}{{ option("app.seo.title") }}{% endblock %}
+{% block seo_kw %}{{ option("app.homepage.descr") }}{% endblock %}
+{% block seo_descr %}{{ option("app.homepage.keyword") }}{% endblock %}
+
+{% block head_stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('assets/plugins/fontawesome-free/css/all.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/plugins/fontawesome-free/css/v4-shims.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/admin/iconfont/iconfont.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/plugins/admlte/googlefonts/fonts.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/plugins/glyphicons/css/glyphicons.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/plugins/layui/css/layui.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/app/default/css/common/base.css') }}">
+    {% block style %}{% endblock %}
+{% endblock %}
+
+{% block head_javascript %}
+    {{ parent() }}
+    <script>
+        var globOption = {
+            appDomain:"{{ option("app.domain") }}",
+            appName: "{{ option("app.name") }}",
+            appSendCaptchaUrl: "{{ path('app_glob_sendCaptcha') }}"
+        }
+    </script>
+    <script src="{{ asset('assets/plugins/base/jquery.js') }}"></script>
+    <script src="{{ asset('assets/plugins/base/utils.js') }}"></script>
+    <script src="{{ asset('assets/plugins/base/plugins/jquery-form/jquery.form.js') }}"></script>
+    <script src="{{ asset('assets/plugins/base/plugins/jquery-cookie/jquerycookie.js') }}"></script>
+    <script src="{{ asset('assets/plugins/base/plugins/layer/layer.js') }}"></script>
+    <script src="{{ asset('assets/plugins/base/plugins/underscore/underscore-min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/base/modules/include.js') }}"></script>
+    <script src="{{ asset('assets/plugins/base/modules/ajaxform.js') }}"></script>
+    <script src="{{ asset('assets/plugins/base/modules/ajaxaction.js') }}"></script>
+    <script src="{{ asset('assets/plugins/base/modules/captcha.js') }}"></script>
+    <script src="{{ asset('assets/plugins/base/modules/widgets.js') }}"></script>
+    <script src="{{ asset('assets/plugins/base/base.js') }}"></script>
+{% endblock %}
+
+{% block head_favicon %}
+    {{ parent() }}
+    <link rel="icon" type="image/png" href="{{ asset(option("app.icon", 1, 0)) }}">
+     <link rel="shortcut icon" type="image/x-icon" href="{{ asset(option("app.icon", 1, 0)) }}" />
+{% endblock %}
+
+{% block body_javascript %}
+    {{ parent() }}
+    <script src="{{ asset('assets/plugins/layui/layui.all.js') }}"></script>
+    <script src="{{ asset('assets/app/default/js/common/base.js') }}"></script>
+    <script>
+        $(function(){
+            $('body').uiInclude();
+        });
+    </script>
+{% endblock %}
+
+{% block body_main %}
+    {{ parent() }}
+{#  顶部导航#}
+    <div class="layui-fluid topheader layui-bg-black">
+      <div class="layui-main ">
+        <div class="layui-row">
+          <div class="layui-col-md9">&nbsp</div>
+          <div class="layui-col-md3">
+            <div include="{{ path('app_user_userMenu') }}"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+{#  头部导航#}
+    <div class="layui-fluid  layui-bg-bg0">
+      <div class="layui-main navheader">
+        <div class="layui-row">
+          <div class="layui-col-md2">
+            <div class="logo">
+              <a href="/"><img src="/assets/images/logo.png" /></a>
+            </div>
+          </div>
+          <div class="layui-col-md7">
+             <ui class="mainNav">
+               <li class="navItem {% if route is defined and route == 'app_index' %} active {% endif %}"><a href="/">首页</a></li>
+               <li class="navItem  {% if route is defined and route == 'app_detail_center' %} active {% endif %}" ><a href="{{ path('app_detail_center') }}">课程中心</a></li>
+               <li  class="navItem  {% if route is defined and route == 'app_news' %} active {% endif %}" ><a href="{{ path('app_news') }}">资讯中心</a></li>
+               <li  class="navItem  {% if route is defined and route == 'qa_exam_index' %} active {% endif %}" ><a href="{{ path('qa_exam_index') }}">试卷中心</a></li>
+               <li  class="navItem  {% if route is defined and route == 'app_help' %} active {% endif %}" ><a href="{{ path('app_help') }}">帮助中心</a></li>
+             </ui>
+          </div>
+          <div class="layui-col-md3">
+            <form method="get" action="{{ path('app_search') }}" class="layui-form caller-seach">
+              <i class="layui-icon layui-icon-search caller-seach-icon caller-icon"></i>
+              <input type="text" name="kw" autocomplete="off" placeholder="请输入关键字搜索" class="layui-input caller-pl32" value="{{ app.request.query.get('kw') }}" />
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  {% block content %}{% endblock %}
+{% endblock %}
+
+

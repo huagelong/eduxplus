@@ -1,0 +1,137 @@
+{% extends '@WebsiteBundle/layout/layout.html.twig' %}
+{% block head_stylesheets_end %}
+  {{ parent() }}
+  {% if videoInfo %}
+    {#    点播#}
+    {% if info['video']['type'] == 2 %}
+      {% if info['video']['videoChannel'] == 1 %}
+        <link href="//imgcache.qq.com/open/qcloud/video/tcplayer/tcplayer.css" rel="stylesheet">
+      {% endif %}
+      {% if info['video']['videoChannel'] == 2 %}
+        <link rel="stylesheet" href="//g.alicdn.com/de/prismplayer/2.8.8/skins/default/aliplayer-min.css" />
+      {% endif %}
+    {% else %}
+      {% if info['video']['videoChannel'] == 1 %}
+        <link href="//imgcache.qq.com/open/qcloud/video/tcplayer/tcplayer.css" rel="stylesheet">
+      {% endif %}
+      {% if info['video']['videoChannel'] == 2 %}
+        <link rel="stylesheet" href="https://g.alicdn.com/de/prismplayer/2.8.8/skins/default/aliplayer-min.css" />
+      {% endif %}
+    {% endif %}
+
+  {% endif %}
+{% endblock %}
+
+{% block head_javascript %}
+  {{ parent() }}
+  {% if videoInfo %}
+    {#    点播#}
+    {% if info['video']['type'] == 2 %}
+      {% if info['video']['videoChannel'] == 1 %}
+        <script src="//imgcache.qq.com/open/qcloud/video/tcplayer/libs/hls.min.0.13.2m.js"></script>
+        <script src="//imgcache.qq.com/open/qcloud/video/tcplayer/tcplayer.v4.1.min.js"></script>
+        <script src="{{ asset('assets/plugins/tengxunyun/vod.js') }}"></script>
+      {% endif %}
+
+      {% if info['video']['videoChannel'] == 2 %}
+        <script type="text/javascript" charset="utf-8" src="//g.alicdn.com/de/prismplayer/2.8.2/aliplayer-h5-min.js"></script>
+        {# 防调试 #}
+        {# <script src="https://g.alicdn.com/de/prismplayer/2.8.2/hls/aliplayer-vod-anti-min.js"></script> #}
+        <script src="{{ asset('assets/plugins/aliyun/aliplayercomponents-1.0.5.min.js') }}"></script>
+        <script src="{{ asset('assets/plugins/aliyun/vod.js') }}"></script>
+      {% endif %}
+
+    {% else %}
+      <script src="{{ asset('assets/plugins/tengxunyun/tim-js.js') }}"></script>
+      <script src="{{ asset('assets/plugins/tengxunyun/cos-js-sdk-v5.min.js') }}"></script>
+      <script src="{{ asset('assets/plugins/tengxunyun/im.js') }}"></script>
+      <script src="{{ asset('assets/plugins/jquery-storage-api/jquery.storageapi.min.js') }}"></script>
+      <script src="{{ asset('assets/plugins/moment/moment.min.js') }}"></script>
+      <script src="{{ asset('assets/plugins/moment/moment-with-locales.js') }}"></script>
+
+      <script src="{{ asset('assets/plugins/face.js') }}"></script>
+      {% if info['video']['videoChannel'] == 1 %}
+        <!--[if lt IE 9]>
+        <script src="//imgcache.qq.com/open/qcloud/video/tcplayer/ie8/videojs-ie8.js"></script>
+        <![endif]-->
+        <!--如果需要在 Chrome 和 Firefox 等现代浏览器中通过 H5 播放 HLS 格式的视频，需要在 tcplayer.v4.1.min.js 之前引入 hls.min.0.13.2m.js。-->
+        <script src="//imgcache.qq.com/open/qcloud/video/tcplayer/libs/hls.min.0.13.2m.js"></script>
+        <!--播放器脚本文件-->
+        <script src="//imgcache.qq.com/open/qcloud/video/vcplayer/TcPlayer-2.3.3.js" charset="utf-8"></script>
+        <script src="{{ asset('assets/plugins/tengxunyun/live.js') }}"></script>
+      {% endif %}
+{#    阿里云直播#}
+      {% if info['video']['videoChannel'] == 2 %}
+        <script src="{{ asset('assets/plugins/es6-promise/es6-promise.auto.min.js') }}"></script>
+        <script src="{{ asset('assets/plugins/vue2.6/vue.min.js') }}"></script>
+        <script type="text/javascript" charset="utf-8" src="https://g.alicdn.com/de/prismplayer/2.8.2/aliplayer-h5-min.js"></script>
+        {# <script src="https://g.alicdn.com/de/prismplayer/2.8.2/hls/aliplayer-vod-anti-min.js"></script> #}
+        <script src="{{ asset('assets/plugins/aliyun/live.js') }}"></script>
+      {% endif %}
+
+    {% endif %}
+
+  {% endif %}
+{% endblock %}
+
+
+ {% block page %}
+   {{ parent() }}
+<div id="main" class="myMain">
+  <div class="layui-main">
+                {% if videoInfo %}
+                  {#      点播#}
+                  {% if info['video']['type'] == 2 %}
+                    {# 视频是否已经转码完成#}
+                    {% if info['video']['status'] == 1 %}
+                      {% if info['video']['videoChannel'] == 1 %}
+                        {#腾讯云点播#}
+                        {% include '@WebsiteBundle/learn/_vod.tengxunyun.html.twig' %}
+                      {% endif %}
+
+                      {% if info['video']['videoChannel'] == 2 %}
+                        {#阿里云点播#}
+                        {% include '@WebsiteBundle/learn/_vod.aliyun.html.twig' %}
+                      {% endif %}
+
+                    {% else %}
+                      {% include '@WebsiteBundle/learn/v404.html.twig' %}
+                    {% endif %}
+                  {% else %}
+                    {% if info['isOpen'] == 1 %}
+                          {#直播#}
+                          {% if info['video']['videoChannel'] == 1 %}
+                            {#腾讯云直播#}
+                            {% include '@WebsiteBundle/learn/_live.tengxunyun.html.twig' %}
+                          {% endif %}
+                            {#阿里云直播#}
+                          {% if info['video']['videoChannel'] == 2 %}
+                            {% include '@WebsiteBundle/learn/_live.aliyun.html.twig' %}
+                          {% endif %}
+                    {% else %}
+{#                      直播404#}
+                        {% include '@WebsiteBundle/learn/live404.html.twig' %}
+                    {% endif %}
+                  {% endif %}
+                {% else %}
+                  {#无视频#}
+                  {% include '@WebsiteBundle/learn/v404.html.twig' %}
+                {% endif %}
+  </div>
+</div>
+{% endblock %}
+
+{% block body_custom_javascript %}
+  {% if videoInfo %}
+  {#    直播#}
+    {% if info['video']['type'] == 1 %}
+    <script>
+      var chatsdkAppID = {{ sdkAppID }};
+      var chatuuid = '{{ uuid }}';
+      var chatsign = '{{ sign }}';
+      var chatgroupId = '{{ groupId }}';
+    </script>
+    <script src="{{ asset('assets/app/default/js/common/liveChat.js') }}"></script>
+    {% endif %}
+  {% endif %}
+{% endblock %}

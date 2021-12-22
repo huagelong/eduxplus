@@ -1,0 +1,21 @@
+<div class="wrap">
+  <div class="header">
+    <span class="breadcrumb">
+      <span>{{ courseInfo['name'] }}</span>
+       <span>/</span>
+      <span>{{ info['name'] }}</span>
+    </span>
+  </div>
+  <div class="content margin-top20">
+    <div class="layui-row layui-col-space10">
+      <div class="layui-col-md9">
+        <!--视频播放区域-->
+            <div class="v404">视频还在准备中,敬请期待..</div>
+      </div>
+      <div class="layui-col-md3">
+        <!-- 列表区 -->
+        {% include '@WebsiteBundle/learn/_vod.leftmenu.html.twig' %}
+      </div>
+    </div>
+  </div>
+</div>

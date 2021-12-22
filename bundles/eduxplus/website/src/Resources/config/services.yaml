@@ -1,0 +1,22 @@
+parameters:
+   app.path: "%kernel.project_dir%" #项目路径
+   app.clientId:
+      ios: "%env(APP_CLIENTID_IOS)%"
+      android: "%env(APP_CLIENTID_ANDROID)%"
+      html: "%env(APP_CLIENTID_HTML)%"
+      wxmini: "%env(APP_CLIENTID_WXMINI)%"
+services:
+   _defaults:
+      autowire: true      # Automatically injects dependencies in your services.
+      autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+      public: false
+
+   Eduxplus\WebsiteBundle\:
+      resource: '../../../src/'
+      exclude: '../../../src/**/{DependencyInjection,Migrations,Resources,Twig,Entity,Tests,Kernel.php}'
+
+   # controllers are imported separately to make sure services can be injected
+   # as action arguments even if you don't extend any base controller class
+   Eduxplus\WebsiteBundle\Controller\:
+      resource: '../../../src/Controller/'
+      tags: [ 'controller.service_arguments' ]
