@@ -43,3 +43,9 @@ services:
         lazy: true
         arguments:
             $cacheCLient: '@snc_redis.cache'
+
+    Eduxplus\CoreBundle\Twig\FuncExtension:
+        tags: [ 'twig.extension' ]
+
+    Eduxplus\CoreBundle\Twig\FiltersExtension:
+        tags: [ 'twig.extension' ]
