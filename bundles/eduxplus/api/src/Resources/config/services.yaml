@@ -14,3 +14,6 @@ services:
   Eduxplus\ApiBundle\Controller\:
     resource: '../../../src/Controller/'
     tags: [ 'controller.service_arguments' ]
+
+  Eduxplus\ApiBundle\RoutingLoader:
+    tags: [routing.loader]

@@ -1,3 +1,3 @@
-eduxplus_core:
-  resource: "@EduxplusApiBundle/Resources/config/routes.yaml"
-
+#eduxplus_core:
+#  resource: "@EduxplusApiBundle/Resources/config/routes.yaml"
+#

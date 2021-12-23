@@ -74,7 +74,55 @@ class EduxplusCoreExtension extends Extension implements PrependExtensionInterfa
             ]
         ]);
 
-
+        //security
+        $namespace = $container->getExtension("security")->getAlias();
+        $container->prependExtensionConfig($namespace, [
+            "encoders"=>[
+                "Eduxplus\CoreBundle\Entity\BaseUser"=>[
+                    "algorithm"=>"bcrypt"
+                ]
+            ],
+            "providers"=>[
+                "app_user_provider"=>[
+                    "entity"=>[
+                        "class"=>"Eduxplus\CoreBundle\Entity\BaseUser",
+                        "property"=>"uuid"
+                    ]
+                ]
+            ],
+            "access_control"=>[
+                [
+              "path"=>"^/admin/login$",
+              "roles"=>"IS_AUTHENTICATED_ANONYMOUSLY"
+                ],
+                [
+            "path"=>"^/admin",
+            "roles"=>"ROLE_USER"
+                ]
+            ],
+            "firewalls"=>[
+                "admin"=>[
+                    "pattern"=>"^/admin",
+                    "anonymous"=>"lazy",
+                    "provider"=>"app_user_provider",
+                    "guard"=>[
+                        "authenticators"=>[
+                            "Eduxplus\CoreBundle\Security\PasswordLoginAuthenticator"
+                        ],
+                        "entry_point"=>"Eduxplus\CoreBundle\Security\PasswordLoginAuthenticator"
+                    ],
+                    "logout"=>[
+                        "path"=>"admin_logout",
+                        "target"=>"/admin/login"
+                    ],
+                    "remember_me"=>[
+                        "secret"=>"%kernel.secret%",
+                        "lifetime"=>604800,
+                        "path"=>"/"
+                    ]
+                ]
+            ]
+        ]);
 
     }
 }

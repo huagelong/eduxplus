@@ -10,10 +10,6 @@ services:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
         public: false
-        bind:
-            $adminUserMobile: '%env(ADMIN_USER_MOBILE)%'
-            $adminUserPwd: '%env(ADMIN_USER_PWD)%'
-            $secret: '%env(APP_SECRET)%'
 
     App\:
        resource: '%kernel.project_dir%/src/*'
@@ -28,6 +24,3 @@ services:
 #        lazy: true
         arguments:
             - '@snc_redis.secondlevelcache'
-
-    App\Bundle\RoutingLoader:
-      tags: [routing.loader]
