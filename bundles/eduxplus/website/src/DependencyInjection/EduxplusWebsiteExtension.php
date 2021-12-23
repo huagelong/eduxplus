@@ -33,37 +33,5 @@ class EduxplusWebsiteExtension extends Extension implements PrependExtensionInte
                 __DIR__."/../Resources/templates"=>"WebsiteBundle",
             ]
         ]);
-
-        //security
-        $namespace = $container->getExtension("security")->getAlias();
-        $container->prependExtensionConfig($namespace, [
-            "access_control"=>[
-                [
-                    "path"=>"/my[/]?",
-                    "roles"=>"ROLE_USER"
-                ]
-            ],
-            "firewalls"=>[
-                "app"=>[
-                    "pattern"=>"^/",
-                    "anonymous"=>"lazy",
-                    "provider"=>"app_user_provider",
-                    "guard"=>[
-                        "authenticators"=>[
-                            "Eduxplus\WebsiteBundle\Security\MobileAuthenticator"
-                        ]
-                    ],
-                    "remember_me"=>[
-                        "secret"=>"%kernel.secret%",
-                        "lifetime"=>604800,
-                        "path"=>"/"
-                    ],
-                    "logout"=>[
-                        "path"=>"app_logout",
-                        "success_handler"=>"Eduxplus\WebsiteBundle\Security\LogoutSuccessHandle"
-                    ],
-                ]
-            ]
-        ]);
     }
 }

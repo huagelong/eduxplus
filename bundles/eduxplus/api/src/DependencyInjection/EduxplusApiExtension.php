@@ -21,24 +21,6 @@ class EduxplusApiExtension extends Extension implements PrependExtensionInterfac
 
     public function prepend(ContainerBuilder $container)
     {
-        //security
-        $namespace = $container->getExtension("security")->getAlias();
-        $container->prependExtensionConfig($namespace, [
-            "firewalls"=>[
-                "api"=>[
-                    "pattern"=>"^/api",
-                    "stateless"=>true,
-                    "anonymous"=>"lazy",
-                    "provider"=>"app_user_provider",
-                    "guard"=>[
-                        "authenticators"=>[
-                            "Eduxplus\ApiBundle\Security\TokenAuthenticator",
-                            "Eduxplus\ApiBundle\Security\MobileAuthenticator"
-                        ],
-                        "entry_point"=>"Eduxplus\ApiBundle\Security\TokenAuthenticator"
-                    ]
-                ]
-            ]
-        ]);
+
     }
 }
