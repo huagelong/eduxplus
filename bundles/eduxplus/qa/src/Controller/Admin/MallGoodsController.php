@@ -6,19 +6,19 @@
  * @Date: 2021/1/16 10:40
  */
 
-namespace Eduxplus\QABundle\Controller\Admin;
+namespace Eduxplus\QaBundle\Controller\Admin;
 
 
 use Eduxplus\CoreBundle\Lib\Form\Form;
 use Eduxplus\CoreBundle\Lib\Grid\Grid;
 use Eduxplus\CoreBundle\Lib\View\View;
-use Eduxplus\QABundle\Service\Admin\QAGoodsService;
+use Eduxplus\QaBundle\Service\Admin\QAGoodsService;
 use Eduxplus\CoreBundle\Service\Teach\CategoryService;
 use Eduxplus\CoreBundle\Service\Teach\ChapterService;
 use Eduxplus\CoreBundle\Service\Teach\ProductService;
 use Eduxplus\CoreBundle\Service\UserService;
 use Eduxplus\CoreBundle\Lib\Base\BaseAdminController;
-use Eduxplus\QABundle\Service\Admin\QATestService;
+use Eduxplus\QaBundle\Service\Admin\QATestService;
 use Symfony\Component\HttpFoundation\Request;
 use FOS\RestBundle\Controller\Annotations as Rest;
 
@@ -130,7 +130,7 @@ class MallGoodsController extends BaseAdminController
 
         $data['list'] = $grid->create($request, $pageSize);
 
-        return $this->render("@QABundleAdmin/mall/goods/index.html.twig", $data);
+        return $this->render("@QaBundleAdmin/mall/goods/index.html.twig", $data);
     }
 
     /**
@@ -169,7 +169,7 @@ class MallGoodsController extends BaseAdminController
         $formData = $form->create($this->generateUrl("admin_qa_api_mall_goods_add"));
         $data = [];
         $data["formData"] = $formData;
-        return $this->render("@QABundleAdmin/mall/goods/add.html.twig", $data);
+        return $this->render("@QaBundleAdmin/mall/goods/add.html.twig", $data);
     }
 
 
@@ -211,7 +211,7 @@ class MallGoodsController extends BaseAdminController
         $formData = $form->create($this->generateUrl("admin_qa_api_mall_goods_add"));
         $data = [];
         $data["formData"] = $formData;
-        return $this->render("@QABundleAdmin/mall/goods/addgroup.html.twig", $data);
+        return $this->render("@QaBundleAdmin/mall/goods/addgroup.html.twig", $data);
     }
 
     /**
@@ -366,7 +366,7 @@ class MallGoodsController extends BaseAdminController
         ]));
         $data = [];
         $data["formData"] = $formData;
-        return $this->render("@QABundleAdmin/mall/goods/edit.html.twig", $data);
+        return $this->render("@QaBundleAdmin/mall/goods/edit.html.twig", $data);
     }
 
     /**
@@ -420,7 +420,7 @@ class MallGoodsController extends BaseAdminController
         ]));
         $data = [];
         $data["formData"] = $formData;
-        return $this->render("@QABundleAdmin/mall/goods/editgroup.html.twig", $data);
+        return $this->render("@QaBundleAdmin/mall/goods/editgroup.html.twig", $data);
     }
 
     /**
@@ -473,7 +473,7 @@ class MallGoodsController extends BaseAdminController
         $formData = $view->create();
         $data = [];
         $data["formData"] = $formData;
-        return $this->render("@QABundleAdmin/mall/goods/view.html.twig", $data);
+        return $this->render("@QaBundleAdmin/mall/goods/view.html.twig", $data);
     }
 
     /**
@@ -525,7 +525,7 @@ class MallGoodsController extends BaseAdminController
         $formData = $view->create();
         $data = [];
         $data["formData"] = $formData;
-        return $this->render("@QABundleAdmin/mall/goods/viewgroup.html.twig", $data);
+        return $this->render("@QaBundleAdmin/mall/goods/viewgroup.html.twig", $data);
     }
 
     /**

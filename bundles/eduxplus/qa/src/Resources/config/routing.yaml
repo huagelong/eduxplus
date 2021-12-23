@@ -1,9 +1,9 @@
-QABundle.Admin.Controllers:
+QaBundle.Admin.Controllers:
     resource: ../../Controller/Admin/
     type: annotation
     prefix: /admin/qa
 
-QABundle.App.Controllers:
+QaBundle.App.Controllers:
   resource: ../../Controller/App/
   type: annotation
   prefix: /qa

@@ -6,12 +6,12 @@
  * @Date: 2020/11/29 18:41
  */
 
-namespace Eduxplus\QABundle\Service\Admin;
+namespace Eduxplus\QaBundle\Service\Admin;
 
 
 use Eduxplus\CoreBundle\Service\Teach\CategoryService;
 use Eduxplus\CoreBundle\Lib\Base\AdminBaseService;
-use Eduxplus\QABundle\Entity\TeachQAChapter;
+use Eduxplus\QaBundle\Entity\TeachQAChapter;
 use Knp\Component\Pager\PaginatorInterface;
 
 class QAChapterService extends AdminBaseService
@@ -28,7 +28,7 @@ class QAChapterService extends AdminBaseService
 
     public function getCollectionList($request, $page, $pageSize){
         $sql = $this->getFormatRequestSql($request);
-        $dql = "SELECT a FROM QA:TeachQAChapter a " . $sql . " ORDER BY a.id DESC";
+        $dql = "SELECT a FROM Qa:TeachQAChapter a " . $sql . " ORDER BY a.id DESC";
         $em = $this->getDoctrine()->getManager();
         $query = $em->createQuery($dql);
         $pagination = $this->paginator->paginate(
@@ -53,7 +53,7 @@ class QAChapterService extends AdminBaseService
     }
 
     public function checkName($name, $id =0){
-        $sql = "SELECT a FROM QA:TeachQAChapter a where a.name =:name ";
+        $sql = "SELECT a FROM Qa:TeachQAChapter a where a.name =:name ";
         $params = [];
         $params['name'] = $name;
         if ($id) {
@@ -73,7 +73,7 @@ class QAChapterService extends AdminBaseService
     }
 
     public function edit($id, $name, $categoryId, $status){
-        $sql = "SELECT a FROM QA:TeachQAChapter a WHERE a.id=:id";
+        $sql = "SELECT a FROM Qa:TeachQAChapter a WHERE a.id=:id";
         $model = $this->fetchOne($sql, ['id' => $id], 1);
         if($model){
             $model->setName($name);
@@ -84,7 +84,7 @@ class QAChapterService extends AdminBaseService
     }
 
     public function getById($id){
-        $sql = "SELECT a FROM QA:TeachQAChapter a WHERE a.id=:id";
+        $sql = "SELECT a FROM Qa:TeachQAChapter a WHERE a.id=:id";
         return $this->fetchOne($sql, ['id' => $id]);
     }
 
@@ -95,10 +95,10 @@ class QAChapterService extends AdminBaseService
     }
 
     public function del($id){
-        $sql = "SELECT count(a.id) as cnt FROM QA:TeachQAChapterSub a WHERE a.chapterId = :chapterId";
+        $sql = "SELECT count(a.id) as cnt FROM Qa:TeachQAChapterSub a WHERE a.chapterId = :chapterId";
         $sub = $this->fetchField("cnt", $sql, ["chapterId"=>$id]);
         if($sub>0) return $this->error()->add("请先删除章节点数据");
-        $sql = "DELETE FROM QA:TeachQAChapter a WHERE a.id=:id";
+        $sql = "DELETE FROM Qa:TeachQAChapter a WHERE a.id=:id";
         $this->execute($sql, ["id" => $id]);
         return true;
     }
@@ -111,7 +111,7 @@ class QAChapterService extends AdminBaseService
      * @return mixed
      */
     public function switchStatus($id, $state){
-        $sql = "SELECT a FROM QA:TeachQAChapter a WHERE a.id=:id";
+        $sql = "SELECT a FROM Qa:TeachQAChapter a WHERE a.id=:id";
         $model = $this->fetchOne($sql, ['id' => $id], 1);
         $model->setStatus($state);
 
@@ -123,11 +123,11 @@ class QAChapterService extends AdminBaseService
         $params['name'] = "%" . $name . "%";
 
         if(!$categoryId){
-            $sql = "SELECT a FROM QA:TeachQAChapter a where a.name like :name AND a.status=1 ";
+            $sql = "SELECT a FROM Qa:TeachQAChapter a where a.name like :name AND a.status=1 ";
         }else{
             $categoryIds = $this->categoryService->getSubCategoryIds($categoryId);
             array_push($categoryIds, $categoryId);
-            $sql = "SELECT a FROM QA:TeachQAChapter a where a.name like :name AND a.status=1 AND a.categoryId IN(:categoryId) ";
+            $sql = "SELECT a FROM Qa:TeachQAChapter a where a.name like :name AND a.status=1 AND a.categoryId IN(:categoryId) ";
             $params['categoryId'] = $categoryIds;
         }
 

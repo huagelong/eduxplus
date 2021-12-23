@@ -1,6 +1,6 @@
 <?php
 
-namespace Eduxplus\QABundle\Entity;
+namespace Eduxplus\QaBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -10,7 +10,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  *
  * @ORM\Table(name="teach_test_sub")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false, hardDelete=true)
- * @ORM\Entity(repositoryClass="Eduxplus\QABundle\Repository\TeachTestSubRepository")
+ * @ORM\Entity(repositoryClass="Eduxplus\QaBundle\Repository\TeachTestSubRepository")
  */
 class TeachTestSub
 {

@@ -6,11 +6,11 @@
  * @Date: 2020/11/30 19:22
  */
 
-namespace Eduxplus\QABundle\Service\Admin;
+namespace Eduxplus\QaBundle\Service\Admin;
 
 
 use Eduxplus\CoreBundle\Lib\Base\AdminBaseService;
-use Eduxplus\QABundle\Entity\TeachQAChapterSub;
+use Eduxplus\QaBundle\Entity\TeachQAChapterSub;
 use Knp\Component\Pager\PaginatorInterface;
 
 class QAChapterSubService extends AdminBaseService
@@ -28,7 +28,7 @@ class QAChapterSubService extends AdminBaseService
             $sort = 0;
             foreach ($data as $k => $v) {
                 $id = $v['id'];
-                $sql = "SELECT a FROM QA:TeachQAChapterSub a WHERE a.id=:id";
+                $sql = "SELECT a FROM Qa:TeachQAChapterSub a WHERE a.id=:id";
                 $model = $this->fetchOne($sql, ['id' => $id], 1);
                 $model->setSort($sort);
                 $model->setParentId($pid);
@@ -43,14 +43,14 @@ class QAChapterSubService extends AdminBaseService
 
     public function del($id)
     {
-        $sql = "SELECT a FROM QA:TeachQAChapterSub a WHERE a.id=:id";
+        $sql = "SELECT a FROM Qa:TeachQAChapterSub a WHERE a.id=:id";
         $model = $this->fetchOne($sql, ['id' => $id], 1);
         return $this->delete($model);
     }
 
     public function getById($id)
     {
-        $sql = "SELECT a FROM QA:TeachQAChapterSub a WHERE a.id=:id";
+        $sql = "SELECT a FROM Qa:TeachQAChapterSub a WHERE a.id=:id";
         return $this->fetchOne($sql, ['id' => $id]);
     }
 
@@ -61,7 +61,7 @@ class QAChapterSubService extends AdminBaseService
     }
 
     public function hasChild($id){
-        $sql = "SELECT a FROM QA:TeachQAChapterSub a WHERE a.parentId=:parentId";
+        $sql = "SELECT a FROM Qa:TeachQAChapterSub a WHERE a.parentId=:parentId";
         return $this->fetchOne($sql, ['parentId' => $id]);
     }
 
@@ -80,7 +80,7 @@ class QAChapterSubService extends AdminBaseService
     public function findPath($id)
     {
         if (!$id) return "";
-        $sql = "SELECT a.parentId FROM QA:TeachQAChapterSub a WHERE a.id = :id";
+        $sql = "SELECT a.parentId FROM Qa:TeachQAChapterSub a WHERE a.id = :id";
         $pid = $this->fetchField("parentId", $sql, ['id' => $id]);
         if (!$pid) return ",{$id},";
         $str = ",{$id},";
@@ -89,7 +89,7 @@ class QAChapterSubService extends AdminBaseService
     }
 
     public function edit($name, $parentId, $sort, $status, $id){
-        $sql = "SELECT a FROM QA:TeachQAChapterSub a WHERE a.id=:id";
+        $sql = "SELECT a FROM Qa:TeachQAChapterSub a WHERE a.id=:id";
         $model =  $this->fetchOne($sql, ['id' => $id], 1);
         $findPath = $this->findPath($parentId);
         $model->setName($name);
@@ -112,7 +112,7 @@ class QAChapterSubService extends AdminBaseService
 
     public function getChapterTree($parentId, $chapterId)
     {
-        $sql = "SELECT a FROM QA:TeachQAChapterSub a WHERE a.parentId = :parentId AND a.chapterId =:chapterId ORDER BY a.sort ASC";
+        $sql = "SELECT a FROM Qa:TeachQAChapterSub a WHERE a.parentId = :parentId AND a.chapterId =:chapterId ORDER BY a.sort ASC";
         $items = $this->fetchAll($sql, ['parentId' => $parentId, "chapterId"=>$chapterId]);
         if (!$items) return [];
         $result = [];
@@ -163,7 +163,7 @@ class QAChapterSubService extends AdminBaseService
 
     public function getAllChapter($chapterId)
     {
-        $sql = "SELECT a FROM QA:TeachQAChapterSub a WHERE a.chapterId =:chapterId ORDER BY a.sort ASC";
+        $sql = "SELECT a FROM Qa:TeachQAChapterSub a WHERE a.chapterId =:chapterId ORDER BY a.sort ASC";
         $list = $this->fetchAll($sql, ["chapterId"=>$chapterId]);
         if (!$list) return [];
 
@@ -192,7 +192,7 @@ class QAChapterSubService extends AdminBaseService
 
     public function getChapterSubIds($id)
     {
-        $sql = "SELECT a FROM QA:TeachQAChapterSub a WHERE a.findPath like :findPath AND a.status=1 ORDER BY a.sort ASC";
+        $sql = "SELECT a FROM Qa:TeachQAChapterSub a WHERE a.findPath like :findPath AND a.status=1 ORDER BY a.sort ASC";
         return $this->fetchFields("id", $sql, ["findPath" => '%,'.$id.',%']);
     }
 

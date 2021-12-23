@@ -1,18 +1,3 @@
-CoreBundle.Controllers:
-    resource: ../../bundles/eduxplus/core/src/Controller/
-    type: annotation
-    prefix: /admin
-
-ApiBundle.Controllers:
-    resource: ../../src/Bundle/ApiBundle/Controller/
-    type: annotation
-    prefix: /api
-
-AppBundle.Controllers:
-    resource: ../../src/Bundle/AppBundle/Controller/
-    type: annotation
-    prefix: /
-
 kernel:
     resource: ../../src/Kernel.php
     type: annotation

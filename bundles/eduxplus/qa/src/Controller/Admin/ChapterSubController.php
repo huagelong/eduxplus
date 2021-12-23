@@ -6,12 +6,12 @@
  * @Date: 2020/11/30 19:14
  */
 
-namespace Eduxplus\QABundle\Controller\Admin;
+namespace Eduxplus\QaBundle\Controller\Admin;
 
 
 use Eduxplus\CoreBundle\Lib\Base\BaseAdminController;
-use Eduxplus\QABundle\Service\Admin\QAChapterService;
-use Eduxplus\QABundle\Service\Admin\QAChapterSubService;
+use Eduxplus\QaBundle\Service\Admin\QAChapterService;
+use Eduxplus\QaBundle\Service\Admin\QAChapterSubService;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use Eduxplus\CoreBundle\Lib\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
@@ -37,7 +37,7 @@ class ChapterSubController extends BaseAdminController
         $data['chapter'] = $chapterService->getById($chapterId);
         $data['chapterId'] = $chapterId;
 
-        return $this->render("@QABundleAdmin/chaptersub/index.html.twig", $data);
+        return $this->render("@QaBundleAdmin/chaptersub/index.html.twig", $data);
     }
 
     /**
@@ -76,7 +76,7 @@ class ChapterSubController extends BaseAdminController
         $formData = $form->create($this->generateUrl("qa_admin_chaptersub_edit_do", ['id' => $id]));
         $data = [];
         $data["formData"] = $formData;
-        return $this->render("@QABundleAdmin/chaptersub/edit.html.twig", $data);
+        return $this->render("@QaBundleAdmin/chaptersub/edit.html.twig", $data);
 
     }
 

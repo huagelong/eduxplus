@@ -1,0 +1,4 @@
+WebsiteBundle.Controllers:
+  resource: ../../Controller/
+  type: annotation
+  prefix: /

@@ -6,7 +6,7 @@
  * @Date: 2020/11/28 19:51
  */
 
-namespace Eduxplus\QABundle\DependencyInjection;
+namespace Eduxplus\QaBundle\DependencyInjection;
 
 
 use Symfony\Component\Config\FileLocator;
@@ -15,7 +15,7 @@ use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
-class EduxplusQAExtension extends Extension implements PrependExtensionInterface
+class EduxplusQaExtension extends Extension implements PrependExtensionInterface
 {
 
     public function load(array $configs, ContainerBuilder $container)
@@ -31,8 +31,8 @@ class EduxplusQAExtension extends Extension implements PrependExtensionInterface
         $namespace = $container->getExtension("twig")->getAlias();
         $container->prependExtensionConfig($namespace, [
             "paths" => [
-                __DIR__ . "/../Resources/templates" => "QABundle",
-                __DIR__ . "/../Resources/templates/admin" => "QABundleAdmin",
+                __DIR__ . "/../Resources/templates" => "QaBundle",
+                __DIR__ . "/../Resources/templates/admin" => "QaBundleAdmin",
             ]
         ]);
 
@@ -40,12 +40,12 @@ class EduxplusQAExtension extends Extension implements PrependExtensionInterface
         $container->loadFromExtension("doctrine", [
             "orm"=>[
                 "mappings"=>[
-                    'QA' => [
+                    'EduxplusQaBundle' => [
                         'type'      => 'annotation',
-                        'dir'       => '%kernel.project_dir%/src/Bundle/QABundle/Entity',
-                        'is_bundle' => false,
-                        'prefix'    => 'Eduxplus\QABundle\Entity',
-                        'alias'     => 'QA',
+                        'dir'       => 'Entity',
+                        'is_bundle' => true,
+                        'prefix'    => 'Eduxplus\QaBundle\Entity',
+                        'alias'     => 'Qa',
                     ],
                 ]
             ]

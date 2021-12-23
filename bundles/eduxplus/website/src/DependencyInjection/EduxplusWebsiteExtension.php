@@ -33,21 +33,5 @@ class EduxplusWebsiteExtension extends Extension implements PrependExtensionInte
                 __DIR__."/../Resources/templates"=>"WebsiteBundle",
             ]
         ]);
-
-        //doctrine
-        $namespace = $container->getExtension("doctrine")->getAlias();
-        $container->prependExtensionConfig($namespace, [
-            "orm" => [
-                "mappings" => [
-                    'EduxplusWebsiteBundle' => [
-                        'type' => 'annotation',
-                        'dir' => 'Entity',
-                        'is_bundle' => true,
-                        'prefix' => 'Eduxplus\WebsiteBundle\Entity',
-                        'alias' => 'Website',
-                    ],
-                ]
-            ]
-        ]);
     }
 }

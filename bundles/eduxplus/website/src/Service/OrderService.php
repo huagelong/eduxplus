@@ -12,7 +12,7 @@ namespace Eduxplus\WebsiteBundle\Service;
 use Eduxplus\CoreBundle\Lib\Base\AppBaseService;
 use Eduxplus\CoreBundle\Lib\Service\Pay\AlipayService;
 use Eduxplus\CoreBundle\Lib\Service\Pay\WxpayService;
-use Eduxplus\QABundle\Entity\TeachTestOrder;
+use Eduxplus\QaBundle\Entity\TeachTestOrder;
 use Eduxplus\CoreBundle\Entity\JwClasses;
 use Eduxplus\CoreBundle\Entity\JwClassesMembers;
 use Eduxplus\CoreBundle\Entity\MallOrder;
@@ -600,7 +600,7 @@ class OrderService extends AppBaseService
         $planSql = "UPDATE Core:MallOrderStudyPlan a SET a.orderStatus =:orderStatus WHERE a.orderId =:orderId";
         $this->execute($planSql, ["orderStatus"=>$status, "orderId"=>$orderId]);
         
-        $testSql = "UPDATE QA:TeachTestOrder a SET a.orderStatus =:orderStatus WHERE a.orderId =:orderId";
+        $testSql = "UPDATE Qa:TeachTestOrder a SET a.orderStatus =:orderStatus WHERE a.orderId =:orderId";
         $this->execute($testSql, ["orderStatus"=>$status, "orderId"=>$orderId]);
 
     }

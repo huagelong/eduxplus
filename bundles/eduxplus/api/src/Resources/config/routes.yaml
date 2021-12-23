@@ -1,0 +1,4 @@
+ApiBundle.Controllers:
+  resource: ../../Controller/
+  type: annotation
+  prefix: /api

@@ -6,7 +6,7 @@
  * @Date: 2020/11/28 19:41
  */
 
-namespace Eduxplus\QABundle\Controller\Admin;
+namespace Eduxplus\QaBundle\Controller\Admin;
 
 
 use Eduxplus\CoreBundle\Lib\Form\Form;
@@ -14,9 +14,9 @@ use Eduxplus\CoreBundle\Lib\Grid\Grid;
 use Eduxplus\CoreBundle\Lib\View\View;
 use Eduxplus\CoreBundle\Service\UserService;
 use Eduxplus\CoreBundle\Lib\Base\BaseAdminController;
-use Eduxplus\QABundle\Service\Admin\QAChapterService;
-use Eduxplus\QABundle\Service\Admin\QAChapterSubService;
-use Eduxplus\QABundle\Service\Admin\QANodeService;
+use Eduxplus\QaBundle\Service\Admin\QAChapterService;
+use Eduxplus\QaBundle\Service\Admin\QAChapterSubService;
+use Eduxplus\QaBundle\Service\Admin\QANodeService;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -107,7 +107,7 @@ class NodeController extends BaseAdminController
         $data['chapterSubId'] = $chapterSubId;
         $data['list'] = $grid->create($request, $pageSize);
 
-        return $this->render("@QABundleAdmin/node/index.html.twig", $data);
+        return $this->render("@QaBundleAdmin/node/index.html.twig", $data);
     }
 
 
@@ -146,7 +146,7 @@ class NodeController extends BaseAdminController
         $data["chapterId"] = $chapterId;
         $data["chapterSubId"] = $chapterSubId;
 
-        return $this->render("@QABundleAdmin/node/add.html.twig", $data);
+        return $this->render("@QaBundleAdmin/node/add.html.twig", $data);
     }
 
     /**
@@ -237,7 +237,7 @@ class NodeController extends BaseAdminController
         $data["id"] = $id;
         $data["info"] = $info;
 
-        return $this->render("@QABundleAdmin/node/edit.html.twig", $data);
+        return $this->render("@QaBundleAdmin/node/edit.html.twig", $data);
     }
 
     /**
@@ -282,7 +282,7 @@ class NodeController extends BaseAdminController
         $data["id"] = $id;
         $data["info"] = $info;
 
-        return $this->render("@QABundleAdmin/node/view.html.twig", $data);
+        return $this->render("@QaBundleAdmin/node/view.html.twig", $data);
     }
 
     /**

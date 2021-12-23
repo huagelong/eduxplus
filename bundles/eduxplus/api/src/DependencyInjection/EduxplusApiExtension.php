@@ -1,5 +1,5 @@
 <?php
-namespace Eduxplus\CoreBundle\DependencyInjection;
+namespace Eduxplus\ApiBundle\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -10,7 +10,7 @@ use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 /**
  * SecurityHeadersExtension
  */
-class EduxplusCoreExtension extends Extension implements PrependExtensionInterface
+class EduxplusApiExtension extends Extension implements PrependExtensionInterface
 {
     public function load(array $configs, ContainerBuilder $container)
     {

@@ -14,7 +14,7 @@ return [
     Eduxplus\CoreBundle\EduxplusCoreBundle::class => ['all' => true],
     Eduxplus\WebsiteBundle\EduxplusWebsiteBundle::class => ['all' => true],
     Eduxplus\ApiBundle\EduxplusApiBundle::class => ['all' => true],
-    Eduxplus\QABundle\EduxplusQABundle::class => ['all' => true],
+    Eduxplus\QaBundle\EduxplusQaBundle::class => ['all' => true],
     FOS\RestBundle\FOSRestBundle::class => ['all' => true],
     Nelmio\CorsBundle\NelmioCorsBundle::class => ['all' => true],
     Snc\RedisBundle\SncRedisBundle::class => ['all' => true],
@@ -23,4 +23,5 @@ return [
     Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle::class => ['all' => true],
     Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle::class => ['all' => true],
     Knp\Bundle\PaginatorBundle\KnpPaginatorBundle::class => ['all' => true],
+    Symfony\Bundle\DebugBundle\DebugBundle::class => ['dev' => true],
 ];

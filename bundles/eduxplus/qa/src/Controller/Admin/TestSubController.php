@@ -6,17 +6,17 @@
  * @Date: 2020/12/6 20:24
  */
 
-namespace Eduxplus\QABundle\Controller\Admin;
+namespace Eduxplus\QaBundle\Controller\Admin;
 
 
 use Eduxplus\CoreBundle\Lib\Form\Form;
 use Eduxplus\CoreBundle\Lib\Grid\Grid;
 use Eduxplus\CoreBundle\Service\Teach\CategoryService;
 use Eduxplus\CoreBundle\Lib\Base\BaseAdminController;
-use Eduxplus\QABundle\Service\Admin\QAChapterService;
-use Eduxplus\QABundle\Service\Admin\QAChapterSubService;
-use Eduxplus\QABundle\Service\Admin\QATestService;
-use Eduxplus\QABundle\Service\Admin\QATestSubService;
+use Eduxplus\QaBundle\Service\Admin\QAChapterService;
+use Eduxplus\QaBundle\Service\Admin\QAChapterSubService;
+use Eduxplus\QaBundle\Service\Admin\QATestService;
+use Eduxplus\QaBundle\Service\Admin\QATestSubService;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -58,7 +58,7 @@ class TestSubController extends BaseAdminController
         $data = [];
         $data['testInfo'] = $testInfo;
         $data['list'] = $grid->create($request, $pageSize);
-        return $this->render("@QABundleAdmin/test/subindex.html.twig", $data);
+        return $this->render("@QaBundleAdmin/test/subindex.html.twig", $data);
     }
 
     /**
@@ -123,7 +123,7 @@ class TestSubController extends BaseAdminController
         $data['testNodeIdsStr'] = $testNodeIdsStr;
         $data["isFirst"] = $isFirst;
         $data["testInfo"] = $testInfo;
-        return $this->render("@QABundleAdmin/test/submg.html.twig", $data);
+        return $this->render("@QaBundleAdmin/test/submg.html.twig", $data);
     }
 
     /**

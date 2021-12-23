@@ -1,6 +1,6 @@
 <?php
 
-namespace Eduxplus\QABundle\DataFixtures;
+namespace Eduxplus\QaBundle\DataFixtures;
 
 use Eduxplus\CoreBundle\Lib\Service\HelperService;
 use Eduxplus\CoreBundle\Entity\BaseMenu;

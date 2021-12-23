@@ -6,7 +6,7 @@
  * @Date: 2020/12/6 19:21
  */
 
-namespace Eduxplus\QABundle\Controller\Admin;
+namespace Eduxplus\QaBundle\Controller\Admin;
 
 
 use Eduxplus\CoreBundle\Lib\Form\Form;
@@ -14,7 +14,7 @@ use Eduxplus\CoreBundle\Lib\Grid\Grid;
 use Eduxplus\CoreBundle\Service\Teach\CategoryService;
 use Eduxplus\CoreBundle\Service\UserService;
 use Eduxplus\CoreBundle\Lib\Base\BaseAdminController;
-use Eduxplus\QABundle\Service\Admin\QATestService;
+use Eduxplus\QaBundle\Service\Admin\QATestService;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -105,7 +105,7 @@ class TestController extends BaseAdminController
 
         $data = [];
         $data['list'] = $grid->create($request, $pageSize);
-        return $this->render("@QABundleAdmin/test/index.html.twig", $data);
+        return $this->render("@QaBundleAdmin/test/index.html.twig", $data);
     }
 
     /**
@@ -129,7 +129,7 @@ class TestController extends BaseAdminController
         $formData = $form->create($this->generateUrl("qa_admin_test_do_add"));
         $data = [];
         $data["formData"] = $formData;
-        return $this->render("@QABundleAdmin/test/add.html.twig", $data);
+        return $this->render("@QaBundleAdmin/test/add.html.twig", $data);
     }
 
     /**
@@ -172,7 +172,7 @@ class TestController extends BaseAdminController
         ]));
         $data = [];
         $data["formData"] = $formData;
-        return $this->render("@QABundleAdmin/test/edit.html.twig", $data);
+        return $this->render("@QaBundleAdmin/test/edit.html.twig", $data);
     }
 
     /**

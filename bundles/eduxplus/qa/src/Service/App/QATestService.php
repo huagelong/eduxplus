@@ -6,14 +6,14 @@
  * @Date: 2021/5/12 21:36
  */
 
-namespace Eduxplus\QABundle\Service\App;
+namespace Eduxplus\QaBundle\Service\App;
 
 
 use Eduxplus\CoreBundle\Lib\Base\AppBaseService;
 use Eduxplus\WebsiteBundle\Service\CategoryService;
 use Eduxplus\WebsiteBundle\Service\TeacherService;
-use Eduxplus\QABundle\Entity\TeachTestAnswer;
-use Eduxplus\QABundle\Entity\TeachTestAnswerLog;
+use Eduxplus\QaBundle\Entity\TeachTestAnswer;
+use Eduxplus\QaBundle\Entity\TeachTestAnswerLog;
 use Elasticsearch\Endpoints\Indices\Split;
 use Error;
 use Knp\Component\Pager\PaginatorInterface;
@@ -82,7 +82,7 @@ class QATestService extends AppBaseService
      */
     public function getList($uid, $page, $pageSize){
         $time = time();
-        $dql = "SELECT a FROM QA:TeachTestOrder a WHERE a.uid=:uid AND a.orderStatus=2 ORDER BY a.createdAt ASC";
+        $dql = "SELECT a FROM Qa:TeachTestOrder a WHERE a.uid=:uid AND a.orderStatus=2 ORDER BY a.createdAt ASC";
         $em = $this->getDoctrine()->getManager();
         $em = $this->enableSoftDeleteable($em);
         $query = $em->createQuery($dql);
@@ -99,7 +99,7 @@ class QATestService extends AppBaseService
             foreach ($items as $v) {
                 $vArr =  $this->toArray($v);
                 $testId = $vArr['testId'];
-                $sql = "SELECT a FROM QA:TeachTest a WHERE a.id=:id";
+                $sql = "SELECT a FROM Qa:TeachTest a WHERE a.id=:id";
                 $testInfo =  $this->fetchOne($sql, ['id' => $testId]);
                 $vArr['testInfo'] = $testInfo;
                 $itemsArr[] = $vArr;
@@ -110,7 +110,7 @@ class QATestService extends AppBaseService
 
 
     public function getTestById($testId){
-        $testSql = "SELECT a FROM QA:TeachTest a WHERE a.id=:id ";
+        $testSql = "SELECT a FROM Qa:TeachTest a WHERE a.id=:id ";
         $testInfo = $this->fetchOne($testSql, ["id"=>$testId]);
 
         return $testInfo;
@@ -121,11 +121,11 @@ class QATestService extends AppBaseService
      * 试题
      */
     public function getTest($testId){
-        $sql = "SELECT a.qaNodeId FROM QA:TeachTestSub a WHERE a.testId=:testId ORDER BY a.type ASC, a.sort ASC ";
+        $sql = "SELECT a.qaNodeId FROM Qa:TeachTestSub a WHERE a.testId=:testId ORDER BY a.type ASC, a.sort ASC ";
         $qaNodeIds = $this->fetchFields("qaNodeId", $sql, ["testId"=>$testId]);
         if(!$qaNodeIds) return [];
         $qaNodeIdsStr = implode(",", $qaNodeIds);
-        $sqlNodes = "SELECT a FROM QA:TeachQANode a WHERE a.id IN (:id) AND a.status=1 ORDER BY FIELD(a.id,".$qaNodeIdsStr.")";
+        $sqlNodes = "SELECT a FROM Qa:TeachQANode a WHERE a.id IN (:id) AND a.status=1 ORDER BY FIELD(a.id,".$qaNodeIdsStr.")";
         $nodesInfo = $this->fetchAll($sqlNodes, ["id"=>$qaNodeIds]);
         if(!$nodesInfo) return [];
         $realNodes = [];
@@ -133,13 +133,13 @@ class QATestService extends AppBaseService
             $realNodes[] = $info["id"];
         }
         $realNodesStr = implode(",", $realNodes);
-        $sqlNodes = "SELECT a FROM QA:TeachQANodeSub a WHERE a.qaNodeId IN (:qaNodeId) ORDER BY FIELD(a.qaNodeId,".$realNodesStr.")";
+        $sqlNodes = "SELECT a FROM Qa:TeachQANodeSub a WHERE a.qaNodeId IN (:qaNodeId) ORDER BY FIELD(a.qaNodeId,".$realNodesStr.")";
 
         $nodesSubInfo = $this->fetchAll($sqlNodes, ["qaNodeId"=>$realNodes]);
         if(!$nodesSubInfo) return [];
 
         //做题记录
-        $sqlAnswerLog = "SELECT a FROM QA:TeachTestAnswerLog a WHERE a.testId=:testId ";
+        $sqlAnswerLog = "SELECT a FROM Qa:TeachTestAnswerLog a WHERE a.testId=:testId ";
         $answerLogList = $this->fetchAll($sqlAnswerLog, ["testId"=>$testId]);
        
         foreach($nodesInfo as $k=>$info){
@@ -187,7 +187,7 @@ class QATestService extends AppBaseService
      * 保存做题记录
      */
     public function saveAnswerLog($testId, $nodeId, $uid, $answer){
-        $sql = "SELECT a FROM QA:TeachTestAnswerLog a WHERE a.testId=:testId AND a.qaNodeId=:qaNodeId AND a.uid=:uid";
+        $sql = "SELECT a FROM Qa:TeachTestAnswerLog a WHERE a.testId=:testId AND a.qaNodeId=:qaNodeId AND a.uid=:uid";
         $info = $this->fetchOne($sql, ["testId"=>$testId, "qaNodeId"=>$nodeId, "uid"=>$uid],1);
         if($info){
             $info->setAnswer($answer);
@@ -207,11 +207,11 @@ class QATestService extends AppBaseService
      */
     public function submitAnswer($testId, $params, $uid){
         //循环test题目获取题目内容
-        $sql = "SELECT a.qaNodeId FROM QA:TeachTestSub a WHERE a.testId=:testId ORDER BY a.type ASC, a.sort ASC ";
+        $sql = "SELECT a.qaNodeId FROM Qa:TeachTestSub a WHERE a.testId=:testId ORDER BY a.type ASC, a.sort ASC ";
         $qaNodeIds = $this->fetchFields("qaNodeId", $sql, ["testId"=>$testId]);
         if(!$qaNodeIds) return [];
         $qaNodeIdsStr = implode(",", $qaNodeIds);
-        $sqlNodes = "SELECT a FROM QA:TeachQANode a WHERE a.id IN (:id) AND a.status=1 ORDER BY FIELD(a.id,".$qaNodeIdsStr.")";
+        $sqlNodes = "SELECT a FROM Qa:TeachQANode a WHERE a.id IN (:id) AND a.status=1 ORDER BY FIELD(a.id,".$qaNodeIdsStr.")";
         $nodesInfo = $this->fetchAll($sqlNodes, ["id"=>$qaNodeIds]);
         if(!$nodesInfo) return [];
         $realNodes = [];
@@ -219,7 +219,7 @@ class QATestService extends AppBaseService
             $realNodes[] = $info["id"];
         }
         $realNodesStr = implode(",", $realNodes);
-        $sqlNodes = "SELECT a FROM QA:TeachQANodeSub a WHERE a.qaNodeId IN (:qaNodeId) ORDER BY FIELD(a.qaNodeId,".$realNodesStr.")";
+        $sqlNodes = "SELECT a FROM Qa:TeachQANodeSub a WHERE a.qaNodeId IN (:qaNodeId) ORDER BY FIELD(a.qaNodeId,".$realNodesStr.")";
 
         $nodesSubInfo = $this->fetchAll($sqlNodes, ["qaNodeId"=>$realNodes]);
         if(!$nodesSubInfo) return [];
@@ -347,7 +347,7 @@ class QATestService extends AppBaseService
         $answerId = $this->save($teachTestAnswer);
 
         //删除做题记录
-        $delSql = "DELETE FROM QA:TeachTestAnswerLog a WHERE a.testId=:testId AND a.uid=:uid";
+        $delSql = "DELETE FROM Qa:TeachTestAnswerLog a WHERE a.testId=:testId AND a.uid=:uid";
         $this->execute($delSql, ["testId"=>$testId, "uid"=>$uid]);
         // dump([$answerId, $totalErrorNum, $totalRightNum, $undoNum, $totalScore]);exit;
        return $answerId;
@@ -355,7 +355,7 @@ class QATestService extends AppBaseService
 
 
     public function getAnswerById($id){
-        $sql = "SELECT a FROM QA:TeachTestAnswer a WHERE a.id=:id";
+        $sql = "SELECT a FROM Qa:TeachTestAnswer a WHERE a.id=:id";
         return $this->fetchOne($sql,["id"=>$id]);
     }
 

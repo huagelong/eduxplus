@@ -1,0 +1,4 @@
+CoreBundle.Controllers:
+  resource: ../../Controller/
+  type: annotation
+  prefix: /admin

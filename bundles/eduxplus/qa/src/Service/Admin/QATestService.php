@@ -6,12 +6,12 @@
  * @Date: 2020/12/6 19:24
  */
 
-namespace Eduxplus\QABundle\Service\Admin;
+namespace Eduxplus\QaBundle\Service\Admin;
 
 
 use Eduxplus\CoreBundle\Service\UserService;
 use Eduxplus\CoreBundle\Lib\Base\AdminBaseService;
-use Eduxplus\QABundle\Entity\TeachTest;
+use Eduxplus\QaBundle\Entity\TeachTest;
 use Knp\Component\Pager\PaginatorInterface;
 
 class QATestService  extends AdminBaseService
@@ -28,7 +28,7 @@ class QATestService  extends AdminBaseService
     public function getList($request, $page, $pageSize){
         $sql = $this->getFormatRequestSql($request);
 
-        $dql = "SELECT a FROM QA:TeachTest a " . $sql . " ORDER BY a.id DESC";
+        $dql = "SELECT a FROM Qa:TeachTest a " . $sql . " ORDER BY a.id DESC";
         $em = $this->getDoctrine()->getManager();
         $query = $em->createQuery($dql);
 
@@ -67,7 +67,7 @@ class QATestService  extends AdminBaseService
     }
 
     public function edit($id, $name, $categoryId, $sort,$status, $expireTime){
-        $sql = "SELECT a FROM QA:TeachTest a WHERE a.id=:id ";
+        $sql = "SELECT a FROM Qa:TeachTest a WHERE a.id=:id ";
         $model = $this->fetchOne($sql, ['id'=>$id], 1);
         $model->setStatus($status);
         $model->setCategoryId($categoryId);
@@ -79,17 +79,17 @@ class QATestService  extends AdminBaseService
 
 
     public function del($id){
-        $sql = "SELECT count(a.id) as cnt FROM QA:TeachTestSub a WHERE a.testId = :testId";
+        $sql = "SELECT count(a.id) as cnt FROM Qa:TeachTestSub a WHERE a.testId = :testId";
         $sub = $this->fetchField("cnt", $sql, ["testId"=>$id]);
         if($sub>0) return $this->error()->add("请先删除试题数据");
-        $sql = "SELECT a FROM QA:TeachTest a WHERE a.id=:id ";
+        $sql = "SELECT a FROM Qa:TeachTest a WHERE a.id=:id ";
         $model = $this->fetchOne($sql, ['id'=>$id], 1);
         $this->delete($model);
         return true;
     }
 
     public function checkName($name, $id=0){
-        $sql = "SELECT a FROM QA:TeachTest a where a.name =:name ";
+        $sql = "SELECT a FROM Qa:TeachTest a where a.name =:name ";
         $params = [];
         $params['name'] = $name;
         if ($id) {
@@ -102,7 +102,7 @@ class QATestService  extends AdminBaseService
 
     public function searchProductName($name)
     {
-        $sql = "SELECT a FROM QA:TeachTest a WHERE a.name like :name AND a.status=1 ";
+        $sql = "SELECT a FROM Qa:TeachTest a WHERE a.name like :name AND a.status=1 ";
         $params = [];
         $params['name'] = "%" . $name . "%";
         $all = $this->fetchAll($sql, $params);
@@ -119,12 +119,12 @@ class QATestService  extends AdminBaseService
 
 
     public function getById($id){
-        $sql = "SELECT a FROM QA:TeachTest a WHERE a.id=:id";
+        $sql = "SELECT a FROM Qa:TeachTest a WHERE a.id=:id";
         return $this->fetchOne($sql, ['id' => $id]);
     }
 
     public function switchStatus($id, $state){
-        $sql = "SELECT a FROM QA:TeachTest a WHERE a.id=:id";
+        $sql = "SELECT a FROM Qa:TeachTest a WHERE a.id=:id";
         $model = $this->fetchOne($sql, ['id' => $id], 1);
         $model->setStatus($state);
         return $this->save($model);

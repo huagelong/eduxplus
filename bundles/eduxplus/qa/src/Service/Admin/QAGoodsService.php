@@ -6,7 +6,7 @@
  * @Date: 2021/4/13 10:30
  */
 
-namespace Eduxplus\QABundle\Service\Admin;
+namespace Eduxplus\QaBundle\Service\Admin;
 
 
 use Eduxplus\CoreBundle\Service\Mall\GoodsService;

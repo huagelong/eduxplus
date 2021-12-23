@@ -6,7 +6,7 @@
  * @Date: 2020/11/28 19:41
  */
 
-namespace Eduxplus\QABundle\Controller\Admin;
+namespace Eduxplus\QaBundle\Controller\Admin;
 
 
 use Eduxplus\CoreBundle\Lib\Form\Form;
@@ -14,7 +14,7 @@ use Eduxplus\CoreBundle\Lib\Grid\Grid;
 use Eduxplus\CoreBundle\Service\Mall\NewsService;
 use Eduxplus\CoreBundle\Service\Teach\CategoryService;
 use Eduxplus\CoreBundle\Lib\Base\BaseAdminController;
-use Eduxplus\QABundle\Service\Admin\QAChapterService;
+use Eduxplus\QaBundle\Service\Admin\QAChapterService;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -91,7 +91,7 @@ class ChapterController extends BaseAdminController
 
         $data = [];
         $data['list'] = $grid->create($request, $pageSize);
-        return $this->render("@QABundleAdmin/chapter/index.html.twig", $data);
+        return $this->render("@QaBundleAdmin/chapter/index.html.twig", $data);
     }
 
 
@@ -106,7 +106,7 @@ class ChapterController extends BaseAdminController
         $formData = $form->create($this->generateUrl("qa_admin_chapter_do_add"));
         $data = [];
         $data["formData"] = $formData;
-        return $this->render("@QABundleAdmin/chapter/add.html.twig", $data);
+        return $this->render("@QaBundleAdmin/chapter/add.html.twig", $data);
     }
 
     /**
@@ -146,7 +146,7 @@ class ChapterController extends BaseAdminController
         ]));
         $data = [];
         $data["formData"] = $formData;
-        return $this->render("@QABundleAdmin/chapter/edit.html.twig", $data);
+        return $this->render("@QaBundleAdmin/chapter/edit.html.twig", $data);
     }
 
     /**

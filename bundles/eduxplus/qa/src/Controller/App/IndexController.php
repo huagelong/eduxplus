@@ -6,13 +6,13 @@
  * @Date: 2021/1/16 09:17
  */
 
-namespace Eduxplus\QABundle\Controller\App;
+namespace Eduxplus\QaBundle\Controller\App;
 
 
 use Eduxplus\CoreBundle\Lib\Base\BaseHtmlController;
 use Eduxplus\WebsiteBundle\Service\CategoryService;
 use Eduxplus\WebsiteBundle\Service\GoodsService;
-use Eduxplus\QABundle\Service\App\QATestService;
+use Eduxplus\QaBundle\Service\App\QATestService;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use Symfony\Component\HttpFoundation\Request;
 use Psr\Log\LoggerInterface;
@@ -79,7 +79,7 @@ class IndexController extends BaseHtmlController
         $data['route'] = "qa_exam_index";
         $data['pagination'] = $pagination;
 
-        return $this->render("@QABundle/exam/index.html.twig", $data);
+        return $this->render("@QaBundle/exam/index.html.twig", $data);
     }
 
     /**
@@ -95,7 +95,7 @@ class IndexController extends BaseHtmlController
         $data['studyPlan'] = $goodsService->getStudyPlan($id);
         $uid = $this->getUid();
         $data['fav'] = [];
-        return $this->render("@QABundle/exam/buy.html.twig", $data);
+        return $this->render("@QaBundle/exam/buy.html.twig", $data);
     }
 
     /**
@@ -116,7 +116,7 @@ class IndexController extends BaseHtmlController
         $data['list'] = $list;
         $data['route'] = "qa_mytest";
         $data['pagination'] = $pagination;
-        return $this->render("@QABundle/exam/mytest.html.twig", $data);
+        return $this->render("@QaBundle/exam/mytest.html.twig", $data);
     }
 
 
@@ -130,7 +130,7 @@ class IndexController extends BaseHtmlController
         $data["testInfo"] = $qaTestService->getTestById($id);
         $data["testNode"] = $qaTestService->getTest($id);
 
-        return $this->render("@QABundle/exam/testDetail.html.twig", $data);
+        return $this->render("@QaBundle/exam/testDetail.html.twig", $data);
     }
 
 
@@ -143,7 +143,7 @@ class IndexController extends BaseHtmlController
         $data = [];
         $data["testInfo"] = $qaTestService->getTestById($id);
 //        dump($data);exit;
-        return $this->render("@QABundle/exam/testInit.html.twig", $data);
+        return $this->render("@QaBundle/exam/testInit.html.twig", $data);
     }
 
 
@@ -158,7 +158,7 @@ class IndexController extends BaseHtmlController
         $data["testNode"] = $qaTestService->getTest($id);
         // $this->logger()->info("test-testToDoAction");
         // $logger = $this->get('logger');
-        return $this->render("@QABundle/exam/testTodo.html.twig", $data);
+        return $this->render("@QaBundle/exam/testTodo.html.twig", $data);
     }
 
     /**
@@ -203,7 +203,7 @@ class IndexController extends BaseHtmlController
     public function answerViewAction($id, QATestService $qaTestService){
         $data = [];
         $data['info'] = $qaTestService->getAnswerById($id);
-        return $this->render("@QABundle/exam/answerView.html.twig", $data);
+        return $this->render("@QaBundle/exam/answerView.html.twig", $data);
     }
 
 

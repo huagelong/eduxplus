@@ -6,7 +6,7 @@
  * @Date: 2020/11/28 17:16
  */
 
-namespace Eduxplus\QABundle;
+namespace Eduxplus\QaBundle;
 
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
@@ -15,9 +15,9 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 /**
  * 题库
  * Class QuestionBundle
- * @package Eduxplus\QABundle
+ * @package Eduxplus\QaBundle
  */
-class EduxplusQABundle extends Bundle
+class EduxplusQaBundle extends Bundle
 {
 
 }

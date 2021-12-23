@@ -1,8 +1,8 @@
 <?php
 
-namespace Eduxplus\QABundle\Repository;
+namespace Eduxplus\QaBundle\Repository;
 
-use Eduxplus\QABundle\Entity\TeachQAChapterSub;
+use Eduxplus\QaBundle\Entity\TeachQAChapterSub;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
