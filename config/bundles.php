@@ -15,7 +15,6 @@ return [
     Eduxplus\WebsiteBundle\EduxplusWebsiteBundle::class => ['all' => true],
     Eduxplus\ApiBundle\EduxplusApiBundle::class => ['all' => true],
     Eduxplus\QaBundle\EduxplusQaBundle::class => ['all' => true],
-    FOS\RestBundle\FOSRestBundle::class => ['all' => true],
     Nelmio\CorsBundle\NelmioCorsBundle::class => ['all' => true],
     Snc\RedisBundle\SncRedisBundle::class => ['all' => true],
     Imper86\JobbyBundle\Imper86JobbyBundle::class => ['all' => true],

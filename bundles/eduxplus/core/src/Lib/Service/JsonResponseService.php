@@ -9,6 +9,8 @@
 namespace Eduxplus\CoreBundle\Lib\Service;
 
 
+use Symfony\Component\HttpFoundation\JsonResponse;
+
 class JsonResponseService
 {
 
@@ -19,7 +21,8 @@ class JsonResponseService
         $data['_message']= $msg;
         $data['_url']= $url;
         $data['_data']= $rsData;
-        return $data;
+        $jsonResponse = new JsonResponse($data);
+        return $jsonResponse;
     }
 
     public static function format($statusCode, $content, $stopwatch){

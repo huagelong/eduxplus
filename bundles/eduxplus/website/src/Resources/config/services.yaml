@@ -20,6 +20,3 @@ services:
    Eduxplus\WebsiteBundle\Controller\:
       resource: '../../../src/Controller/'
       tags: [ 'controller.service_arguments' ]
-
-   Eduxplus\WebsiteBundle\RoutingLoader:
-      tags: [routing.loader]

@@ -15,7 +15,7 @@ use Eduxplus\CoreBundle\Lib\Service\Vod\AliyunVodService;
 use Eduxplus\CoreBundle\Lib\Service\Vod\TengxunyunVodService;
 use Eduxplus\WebsiteBundle\Service\ImService;
 use Eduxplus\WebsiteBundle\Service\LearnService;
-use FOS\RestBundle\Controller\Annotations as Rest;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 
 class LearnController extends BaseHtmlController
@@ -46,7 +46,7 @@ class LearnController extends BaseHtmlController
     /**
      * 课程列表
      *
-     * @Rest\Get("/my/courseList/{courseId}", name="app_learn_courseList")
+     * @Route("/my/courseList/{courseId}", name="app_learn_courseList")
      */
     public function courseListAction($courseId, LearnService $learnService)
     {
@@ -62,7 +62,7 @@ class LearnController extends BaseHtmlController
     /**
      * 章节详情
      *
-     * @Rest\Get("/learn/{chapterId}", name="app_learn_detail")
+     * @Route("/learn/{chapterId}", name="app_learn_detail")
      */
     public function detailAction($chapterId,
                                  LearnService $learnService,

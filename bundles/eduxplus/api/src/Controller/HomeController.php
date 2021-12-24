@@ -11,7 +11,7 @@ namespace Eduxplus\ApiBundle\Controller;
 
 use Eduxplus\ApiBundle\Service\GoodService;
 use Eduxplus\CoreBundle\Lib\Base\BaseApiController;
-use FOS\RestBundle\Controller\Annotations as Rest;
+use Symfony\Component\Routing\Annotation\Route;
 use FOS\RestBundle\Controller\Annotations\View as ViewAnnotations;
 use Symfony\Component\HttpFoundation\Request;
 

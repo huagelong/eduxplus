@@ -15,14 +15,14 @@ use Eduxplus\CoreBundle\Service\Teach\CategoryService;
 use Eduxplus\CoreBundle\Service\UserService;
 use Eduxplus\CoreBundle\Lib\Base\BaseAdminController;
 use Eduxplus\QaBundle\Service\Admin\QATestService;
-use FOS\RestBundle\Controller\Annotations as Rest;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 
 class TestController extends BaseAdminController
 {
 
     /**
-     * @Rest\Get("/test/index", name="qa_admin_test_index")
+     * @Route("/test/index", name="qa_admin_test_index")
      */
     public function indexAction(Request $request, Grid $grid, QATestService $testService, UserService $userService, CategoryService $categoryService){
         $pageSize = 40;
@@ -110,14 +110,14 @@ class TestController extends BaseAdminController
 
     /**
      * 试卷预览 todo
-     * @Rest\Get("/test/preview/{id}", name="qa_admin_test_preview")
+     * @Route("/test/preview/{id}", name="qa_admin_test_preview")
      */
     public function previewAction(Form $form, QATestService $testService){
 
     }
 
     /**
-     * @Rest\Get("/test/add", name="qa_admin_test_add")
+     * @Route("/test/add", name="qa_admin_test_add")
      */
     public function addAction(Form $form, CategoryService $categoryService){
         $form->text("试卷名称")->field("name")->isRequire();
@@ -157,7 +157,7 @@ class TestController extends BaseAdminController
     }
 
     /**
-     * @Rest\Get("/test/edit/{id}", name="qa_admin_test_edit")
+     * @Route("/test/edit/{id}", name="qa_admin_test_edit")
      */
     public function editAction($id, Form $form, QATestService $testService, CategoryService $categoryService){
         $info = $testService->getById($id);

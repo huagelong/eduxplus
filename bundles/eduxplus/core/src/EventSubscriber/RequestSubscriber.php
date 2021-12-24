@@ -10,7 +10,6 @@
 namespace Eduxplus\CoreBundle\EventSubscriber;
 
 
-use Eduxplus\CoreBundle\Bundle\AdminBundle\Service\MenuService;
 use Eduxplus\CoreBundle\Lib\Service\JsonResponseService;
 use Eduxplus\CoreBundle\Lib\Service\ProjectService;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -37,6 +36,7 @@ class RequestSubscriber implements EventSubscriberInterface
     }
 
 
+
     public function onKernelRequest(RequestEvent $event)
     {
         $this->stopwatch->start('event:elapsedTime');
@@ -50,10 +50,6 @@ class RequestSubscriber implements EventSubscriberInterface
         $statusCode = $response->getStatusCode();
         $content = $response->getContent();
         //判断是否是json
-        //multipart/form-data; boundary=----WebKitFormBoundarycbLP7rBjKmGgXOKK
-        // $contentType = $event->getRequest()->headers->get("Content-Type");
-        // var_dump($contentType);
-        // $multipartCheck = strpos($contentType, 'multipart/form-data') === false;
         $route = $event->getRequest()->get("_route");
         $check = $route != "admin_glob_upload";
         // var_dump($multipartCheck);
@@ -62,8 +58,7 @@ class RequestSubscriber implements EventSubscriberInterface
             $event = $this->stopwatch->stop('event:elapsedTime');
             $stopwatch = (string) $event;
             $responseData = JsonResponseService::format($statusCode, $content, $stopwatch);
-            $response->headers->set('Content-Type', "application/json");
-            $response->setContent(json_encode($responseData, true));
+            $response->setContent(json_encode($responseData, JSON_UNESCAPED_UNICODE));
             $response->setStatusCode(200); //强制转为200
         }
     }

@@ -12,7 +12,7 @@ namespace Eduxplus\ApiBundle\Controller;
 use Eduxplus\CoreBundle\Entity\BaseUser;
 use Eduxplus\CoreBundle\Lib\Base\BaseApiController;
 use Eduxplus\CoreBundle\Lib\Service\HelperService;
-use FOS\RestBundle\Controller\Annotations as Rest;
+use Symfony\Component\Routing\Annotation\Route;
 use FOS\RestBundle\Controller\Annotations\View as ViewAnnotations;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -38,7 +38,7 @@ class AuthController extends BaseApiController
 
     /**
      * 退出
-     * @Rest\Get("/logout", name="api_auth_logout")
+     * @Route("/logout", name="api_auth_logout")
      */
     public function logout()
     {

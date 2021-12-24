@@ -11,7 +11,7 @@ namespace Eduxplus\CoreBundle\Controller\Teach;
 
 use Eduxplus\CoreBundle\Service\Teach\CategoryService;
 use Eduxplus\CoreBundle\Lib\Base\BaseAdminController;
-use FOS\RestBundle\Controller\Annotations as Rest;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Eduxplus\CoreBundle\Lib\Form\Form;
 
@@ -19,7 +19,7 @@ class CategoryController extends BaseAdminController
 {
 
     /**
-     * @Rest\Get("/teach/category/index", name="admin_teach_category_index")
+     * @Route("/teach/category/index", name="admin_teach_category_index")
      */
     public function indexAction(Form $form, CategoryService $categoryService)
     {
@@ -72,7 +72,7 @@ class CategoryController extends BaseAdminController
     }
 
     /**
-     * @Rest\Get("/teach/category/edit/{id}", name="admin_teach_category_edit")
+     * @Route("/teach/category/edit/{id}", name="admin_teach_category_edit")
      */
     public function editAction($id, Form $form, CategoryService $categoryService)
     {

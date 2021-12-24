@@ -14,7 +14,7 @@ use Eduxplus\CoreBundle\Lib\Grid\Grid;
 use Eduxplus\CoreBundle\Service\MenuService;
 use Eduxplus\CoreBundle\Service\RoleService;
 use Eduxplus\CoreBundle\Lib\Base\BaseAdminController;
-use FOS\RestBundle\Controller\Annotations as Rest;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 
 class RoleController extends BaseAdminController
@@ -22,7 +22,7 @@ class RoleController extends BaseAdminController
 
 
     /**
-     * @Rest\Get("/role/index", name="admin_role_index")
+     * @Route("/role/index", name="admin_role_index")
      */
     public function indexAction(Request $request, RoleService $roleService, Grid $grid){
         $pageSize = 40;
@@ -73,7 +73,7 @@ class RoleController extends BaseAdminController
     }
 
     /**
-     * @Rest\Get("/role/add", name="admin_role_add")
+     * @Route("/role/add", name="admin_role_add")
      */
     public function addAction(Form $form){
 
@@ -107,7 +107,7 @@ class RoleController extends BaseAdminController
     }
 
     /**
-     * @Rest\Get("/role/edit/{id}", name="admin_role_edit")
+     * @Route("/role/edit/{id}", name="admin_role_edit")
      */
     public function editAction($id, RoleService $roleService, Form $form){
         $info = $roleService->getById($id);
@@ -165,7 +165,7 @@ class RoleController extends BaseAdminController
     }
 
     /**
-     * @Rest\Get("/role/bindmenu/{id}", name="admin_role_bindmenu")
+     * @Route("/role/bindmenu/{id}", name="admin_role_bindmenu")
      */
     public function bindMenuAction($id,  MenuService $menuService, RoleService $roleService){
         $info = $roleService->getById($id);

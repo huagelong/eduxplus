@@ -15,14 +15,14 @@ use Eduxplus\CoreBundle\Service\Mall\NewsService;
 use Eduxplus\CoreBundle\Service\Teach\CategoryService;
 use Eduxplus\CoreBundle\Lib\Base\BaseAdminController;
 use Eduxplus\QaBundle\Service\Admin\QAChapterService;
-use FOS\RestBundle\Controller\Annotations as Rest;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 
 class ChapterController extends BaseAdminController
 {
 
     /**
-     * @Rest\Get("/chapter/index", name="qa_admin_chapter_index")
+     * @Route("/chapter/index", name="qa_admin_chapter_index")
      */
     public function indexAction(Request $request, Grid $grid,QAChapterService $chapterService, CategoryService $categoryService){
 
@@ -96,7 +96,7 @@ class ChapterController extends BaseAdminController
 
 
     /**
-     * @Rest\Get("/chapter/add", name="qa_admin_chapter_add")
+     * @Route("/chapter/add", name="qa_admin_chapter_add")
      */
     public function addAction(Form $form, CategoryService $categoryService){
         $form->text("集合名称")->field("name")->isRequire();
@@ -134,7 +134,7 @@ class ChapterController extends BaseAdminController
 
 
     /**
-     * @Rest\Get("/chapter/edit/{id}", name="qa_admin_chapter_edit")
+     * @Route("/chapter/edit/{id}", name="qa_admin_chapter_edit")
      */
     public function editAction($id, Form $form,CategoryService $categoryService, QAChapterService $chapterService){
         $info = $chapterService->getById($id);
@@ -216,7 +216,7 @@ class ChapterController extends BaseAdminController
     }
 
     /**
-     * @Rest\Get("/chapter/searchChapter/do", name="qa_admin_chapter_searchChapter")
+     * @Route("/chapter/searchChapter/do", name="qa_admin_chapter_searchChapter")
      */
     public function searchChapterAction(Request $request, QAChapterService $chapterService){
         $kw = $request->get("kw");

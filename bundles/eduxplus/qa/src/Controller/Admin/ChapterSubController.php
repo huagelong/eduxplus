@@ -12,14 +12,14 @@ namespace Eduxplus\QaBundle\Controller\Admin;
 use Eduxplus\CoreBundle\Lib\Base\BaseAdminController;
 use Eduxplus\QaBundle\Service\Admin\QAChapterService;
 use Eduxplus\QaBundle\Service\Admin\QAChapterSubService;
-use FOS\RestBundle\Controller\Annotations as Rest;
+use Symfony\Component\Routing\Annotation\Route;
 use Eduxplus\CoreBundle\Lib\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 
 class ChapterSubController extends BaseAdminController
 {
     /**
-     * @Rest\Get("/chaptersub/index/{chapterId}", name="qa_admin_chaptersub_index")
+     * @Route("/chaptersub/index/{chapterId}", name="qa_admin_chaptersub_index")
      */
     public function indexAction($chapterId, Form $form, QAChapterSubService $chapterSubService, QAChapterService $chapterService){
 
@@ -61,7 +61,7 @@ class ChapterSubController extends BaseAdminController
     }
 
     /**
-     * @Rest\Get("/chaptersub/edit/{id}", name="qa_admin_chaptersub_edit")
+     * @Route("/chaptersub/edit/{id}", name="qa_admin_chaptersub_edit")
      */
     public function editAction($id, Form $form, QAChapterSubService $chapterSubService)
     {
@@ -124,7 +124,7 @@ class ChapterSubController extends BaseAdminController
     }
 
     /**
-     * @Rest\Get("/chaptersub/getChapterSub/do", name="qa_admin_chaptersub_getChapterSub_do")
+     * @Route("/chaptersub/getChapterSub/do", name="qa_admin_chaptersub_getChapterSub_do")
      */
     public function getChapterSubAction(Request $request, QAChapterSubService $chapterService)
     {

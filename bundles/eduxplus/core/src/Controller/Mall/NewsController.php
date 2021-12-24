@@ -12,7 +12,7 @@ use Eduxplus\CoreBundle\Lib\View\View;
 use Eduxplus\CoreBundle\Service\Mall\NewsCategoryService;
 use Eduxplus\CoreBundle\Service\Mall\NewsService;
 use Eduxplus\CoreBundle\Lib\Base\BaseAdminController;
-use FOS\RestBundle\Controller\Annotations as Rest;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Eduxplus\CoreBundle\Lib\Form\Form;
 use Eduxplus\CoreBundle\Lib\Grid\Grid;
@@ -22,7 +22,7 @@ class NewsController extends BaseAdminController
 
     /**
      *
-     * @Rest\Get("/mall/news/index", name="admin_mall_news_index")
+     * @Route("/mall/news/index", name="admin_mall_news_index")
      */
     public function indexAction(Request $request, Grid $grid, NewsService $newsService){
         $pageSize = 40;
@@ -88,7 +88,7 @@ class NewsController extends BaseAdminController
 
     /**
      *
-     * @Rest\Get("/mall/news/view/{id}", name="admin_mall_news_view")
+     * @Route("/mall/news/view/{id}", name="admin_mall_news_view")
      */
     public function viewAction($id, View $view, NewsService $newsService, NewsCategoryService $helpCategoryService){
         $info = $newsService->getById($id);
@@ -119,7 +119,7 @@ class NewsController extends BaseAdminController
 
 
     /**
-     * @Rest\Get("/mall/news/add", name="admin_mall_news_add")
+     * @Route("/mall/news/add", name="admin_mall_news_add")
      */
     public function addAction(Form $form, NewsCategoryService $helpCategoryService)
     {
@@ -178,7 +178,7 @@ class NewsController extends BaseAdminController
     }
 
     /**
-     * @Rest\Get("/mall/news/edit/{id}", name="admin_mall_news_edit")
+     * @Route("/mall/news/edit/{id}", name="admin_mall_news_edit")
      */
     public function editAction($id, Form $form, NewsService $newsService, NewsCategoryService $newsCategoryService)
     {

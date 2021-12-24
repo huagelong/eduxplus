@@ -13,7 +13,7 @@ use Eduxplus\CoreBundle\Lib\Grid\Grid;
 use Eduxplus\CoreBundle\Service\AdminlogService;
 use Eduxplus\CoreBundle\Service\UserService;
 use Eduxplus\CoreBundle\Lib\Base\BaseAdminController;
-use FOS\RestBundle\Controller\Annotations as Rest;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 
 class AdminLogController extends BaseAdminController
@@ -21,7 +21,7 @@ class AdminLogController extends BaseAdminController
 
 
     /**
-     * @Rest\Get("/adminlog/index", name="admin_adminlog_index")
+     * @Route("/adminlog/index", name="admin_adminlog_index")
      */
     public function indexAction(Request $request, AdminlogService $adminLogService, Grid $grid, UserService $userService){
         $pageSize = 40;

@@ -13,14 +13,14 @@ use Eduxplus\CoreBundle\Lib\Base\BaseHtmlController;
 use Eduxplus\WebsiteBundle\Service\CategoryService;
 use Eduxplus\WebsiteBundle\Service\GoodsService;
 use Eduxplus\QaBundle\Service\App\QATestService;
-use FOS\RestBundle\Controller\Annotations as Rest;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Psr\Log\LoggerInterface;
 class IndexController extends BaseHtmlController
 {
 
     /**
-     * @Rest\Get("/exam/{categoryId<\d+>?0}/{isFree<\d+>?0}", name="qa_exam_index")
+     * @Route("/exam/{categoryId<\d+>?0}/{isFree<\d+>?0}", name="qa_exam_index")
      */
     public function indexAction($categoryId=0,$isFree=0,Request $request, CategoryService $categoryService, QATestService $qaTestService){
         $data = [];
@@ -83,7 +83,7 @@ class IndexController extends BaseHtmlController
     }
 
     /**
-     * @Rest\Get("/mall/buy/{uuid}", name="qa_mall_buy")
+     * @Route("/mall/buy/{uuid}", name="qa_mall_buy")
      */
     public function buyAction($uuid, GoodsService $goodsService){
         $detail = $goodsService->getByUuId($uuid);
@@ -101,7 +101,7 @@ class IndexController extends BaseHtmlController
     /**
      * 我的试卷
      *
-     * @Rest\Get("/my/test", name="qa_mytest")
+     * @Route("/my/test", name="qa_mytest")
      */
     public function mytestAction(Request $request, QATestService $qaTestService){
         $route = $request->get("_route");
@@ -123,7 +123,7 @@ class IndexController extends BaseHtmlController
      /**
      * 试卷详情
      *
-     * @Rest\Get("/test/detail-{id}", name="qa_test_detail")
+     * @Route("/test/detail-{id}", name="qa_test_detail")
      */
     public function testDetailAction($id, QATestService $qaTestService){
         $data = [];
@@ -137,7 +137,7 @@ class IndexController extends BaseHtmlController
     /**
      * 做试卷入口页面
      *
-     * @Rest\Get("/test/my/testinit-{id}", name="qa_test_init")
+     * @Route("/test/my/testinit-{id}", name="qa_test_init")
      */
     public function testInitAction($id, QATestService $qaTestService){
         $data = [];
@@ -150,7 +150,7 @@ class IndexController extends BaseHtmlController
     /**
      * 做试卷页面
      *
-     * @Rest\Get("/test/my/todo-{id}", name="qa_test_todo")
+     * @Route("/test/my/todo-{id}", name="qa_test_todo")
      */
     public function testToDoAction($id, QATestService $qaTestService){
         $data = [];
@@ -198,7 +198,7 @@ class IndexController extends BaseHtmlController
     /**
      *  答案展示
      *
-     * @Rest\Get("/test/my/answerView-{id}", name="qa_test_answer_view")
+     * @Route("/test/my/answerView-{id}", name="qa_test_answer_view")
      */
     public function answerViewAction($id, QATestService $qaTestService){
         $data = [];

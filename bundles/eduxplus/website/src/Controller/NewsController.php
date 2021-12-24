@@ -13,13 +13,13 @@ use Eduxplus\CoreBundle\Lib\Base\BaseHtmlController;
 use Eduxplus\WebsiteBundle\Service\BannerService;
 use Eduxplus\WebsiteBundle\Service\NewsService;
 use Symfony\Component\HttpFoundation\Request;
-use FOS\RestBundle\Controller\Annotations as Rest;
+use Symfony\Component\Routing\Annotation\Route;
 
 class NewsController extends BaseHtmlController
 {
 
     /**
-     * @Rest\Get("/news/{category}/{page}", name="app_news")
+     * @Route("/news/{category}/{page}", name="app_news")
      */
     public function indexAction($category=0, $page=1,BannerService $bannerService, NewsService $newsService){
         $page = $page?$page:1;
@@ -45,7 +45,7 @@ class NewsController extends BaseHtmlController
 
     /**
      * 新闻详情
-     * @Rest\Get("/news_detail/{id}", name="app_news_detail")
+     * @Route("/news_detail/{id}", name="app_news_detail")
      */
     public function detailAction($id, NewsService $newsService){
         $newsService->viewNumIncre($id);

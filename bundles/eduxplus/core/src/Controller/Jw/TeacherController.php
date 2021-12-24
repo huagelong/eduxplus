@@ -15,7 +15,7 @@ use Eduxplus\CoreBundle\Service\Jw\SchoolService;
 use Eduxplus\CoreBundle\Service\Jw\TeacherService;
 use Eduxplus\CoreBundle\Lib\Base\BaseAdminController;
 use Eduxplus\CoreBundle\Entity\JwTeacher;
-use FOS\RestBundle\Controller\Annotations as Rest;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Eduxplus\CoreBundle\Lib\Form\Form;
 use Eduxplus\CoreBundle\Lib\Grid\Grid;
@@ -23,7 +23,7 @@ use Eduxplus\CoreBundle\Lib\Grid\Grid;
 class TeacherController extends BaseAdminController
 {
     /**
-     * @Rest\Get("/jw/teacher/index", name="admin_jw_teacher_index")
+     * @Route("/jw/teacher/index", name="admin_jw_teacher_index")
      */
     public function indexAction(Request $request, Grid $grid, TeacherService $teacherService)
     {
@@ -79,7 +79,7 @@ class TeacherController extends BaseAdminController
     }
 
     /**
-     * @Rest\Get("/jw/teacher/add", name="admin_jw_teacher_add")
+     * @Route("/jw/teacher/add", name="admin_jw_teacher_add")
      */
     public function addAction(Form $form, TeacherService $teacherService)
     {
@@ -134,7 +134,7 @@ class TeacherController extends BaseAdminController
     }
 
     /**
-     * @Rest\Get("/jw/teacher/view/{id}", name="admin_jw_teacher_view")
+     * @Route("/jw/teacher/view/{id}", name="admin_jw_teacher_view")
      */
     public function viewAction($id, View $view, TeacherService $teacherService)
     {
@@ -167,7 +167,7 @@ class TeacherController extends BaseAdminController
     }
 
     /**
-     * @Rest\Get("/jw/teacher/edit/{id}", name="admin_jw_teacher_edit")
+     * @Route("/jw/teacher/edit/{id}", name="admin_jw_teacher_edit")
      */
     public function editAction($id, Form $form, TeacherService $teacherService)
     {

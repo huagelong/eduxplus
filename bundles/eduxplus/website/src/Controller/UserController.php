@@ -18,7 +18,7 @@ use Eduxplus\WebsiteBundle\Service\GoodsService;
 use Eduxplus\WebsiteBundle\Service\MsgService;
 use Eduxplus\WebsiteBundle\Service\UserService;
 use Eduxplus\CoreBundle\Exception\NeedLoginException;
-use FOS\RestBundle\Controller\Annotations as Rest;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
@@ -28,7 +28,7 @@ class UserController extends BaseHtmlController
 {
 
     /**
-     * @Rest\Get("/login", name="app_login")
+     * @Route("/login", name="app_login")
      */
     public function loginAction(Request $request){
         $mobile = $request->cookies->get("site_login_mobile");
@@ -48,12 +48,12 @@ class UserController extends BaseHtmlController
 
 
     /**
-     * @Rest\Get("/logout", name="app_logout")
+     * @Route("/logout", name="app_logout")
      */
     public function logoutAction(){}
 
     /**
-     * @Rest\Get("/userMenu", name="app_user_userMenu")
+     * @Route("/userMenu", name="app_user_userMenu")
      */
     public function userMenuAction(MsgService $msgService){
         $user = $this->getUser();
@@ -83,7 +83,7 @@ class UserController extends BaseHtmlController
 
     /**
      * 个人主页
-     * @Rest\Get("/my", name="app_user_home")
+     * @Route("/my", name="app_user_home")
      */
     public function indexAction(Request $request){
         $page = $request->get("page");
@@ -98,7 +98,7 @@ class UserController extends BaseHtmlController
 
 
     /**
-     * @Rest\Get("/my/info", name="app_user_info")
+     * @Route("/my/info", name="app_user_info")
      */
     public function infoAction(UserService $userService){
         $uid = $this->getUid();
@@ -168,7 +168,7 @@ class UserController extends BaseHtmlController
     }
 
     /**
-     * @Rest\Get("/my/secure", name="app_user_secure")
+     * @Route("/my/secure", name="app_user_secure")
      */
     public function secureAction(UserService $userService){
         $uid = $this->getUid();
@@ -180,7 +180,7 @@ class UserController extends BaseHtmlController
     }
 
     /**
-     * @Rest\Get("/my/fav", name="app_user_fav")
+     * @Route("/my/fav", name="app_user_fav")
      */
     public function favAction(Request $request, GoodsService $goodsService){
         $uid = $this->getUid();
@@ -195,7 +195,7 @@ class UserController extends BaseHtmlController
     }
 
     /**
-     * @Rest\Get("/my/msg", name="app_user_msg")
+     * @Route("/my/msg", name="app_user_msg")
      */
     public function msgAction(Request $request , MsgService $msgService){
         $uid = $this->getUid();
@@ -211,7 +211,7 @@ class UserController extends BaseHtmlController
 
     /**
      * 标记为已读
-     * @Rest\Get("/my/do/msgread/{id}", name="app_user_msg_read_do")
+     * @Route("/my/do/msgread/{id}", name="app_user_msg_read_do")
      */
     public function msgReadAction($id, MsgService $msgService){
         $uid = $this->getUid();
@@ -221,7 +221,7 @@ class UserController extends BaseHtmlController
 
     /**
      * 全部标记为已读
-     * @Rest\Get("/my/do/allmsgread", name="app_user_allmsg_read_do")
+     * @Route("/my/do/allmsgread", name="app_user_allmsg_read_do")
      */
     public function allmsgReadAction(MsgService $msgService){
         $uid = $this->getUid();
@@ -231,7 +231,7 @@ class UserController extends BaseHtmlController
 
     /**
      * 未读消息数量
-     * @Rest\Get("/my/do/msgUnreadCount", name="app_user_msg_unread_count")
+     * @Route("/my/do/msgUnreadCount", name="app_user_msg_unread_count")
      */
     public function unreadMsgCountAction(MsgService $msgService){
         $uid = $this->getUid();
@@ -240,7 +240,7 @@ class UserController extends BaseHtmlController
     }
 
     /**
-     * @Rest\Get("/my/changeMobile/first", name="app_user_changeMobile_first")
+     * @Route("/my/changeMobile/first", name="app_user_changeMobile_first")
      */
     public function changeMobileFirstAction(HelperService $helperService){
         $data = [];
@@ -272,7 +272,7 @@ class UserController extends BaseHtmlController
     }
 
     /**
-     * @Rest\Get("/my/changeMobile/second", name="app_user_changeMobile_second")
+     * @Route("/my/changeMobile/second", name="app_user_changeMobile_second")
      */
     public function changeMobileSecondAction(){
         $mobileChecked = $this->session()->get("mobileChecked");

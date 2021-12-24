@@ -34,4 +34,9 @@ class EduxplusWebsiteExtension extends Extension implements PrependExtensionInte
             ]
         ]);
     }
+
+    public function getAlias()
+    {
+        return 'eduxplus_website';
+    }
 }

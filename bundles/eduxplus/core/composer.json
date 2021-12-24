@@ -21,7 +21,6 @@
         "doctrine/orm": "^2.10",
         "elasticsearch/elasticsearch": "^7.15",
         "firebase/php-jwt": "^5.5",
-        "friendsofsymfony/rest-bundle": "^3.1",
         "guzzlehttp/guzzle": "^6.5",
         "imper86/jobby-cron-bundle": "^1.0",
         "knplabs/knp-paginator-bundle": "^5.7",

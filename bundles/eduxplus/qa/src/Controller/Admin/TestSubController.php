@@ -17,14 +17,14 @@ use Eduxplus\QaBundle\Service\Admin\QAChapterService;
 use Eduxplus\QaBundle\Service\Admin\QAChapterSubService;
 use Eduxplus\QaBundle\Service\Admin\QATestService;
 use Eduxplus\QaBundle\Service\Admin\QATestSubService;
-use FOS\RestBundle\Controller\Annotations as Rest;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 
 class TestSubController extends BaseAdminController
 {
 
     /**
-     * @Rest\Get("/test/sub/index/{id}", name="qa_admin_test_sub_index")
+     * @Route("/test/sub/index/{id}", name="qa_admin_test_sub_index")
      */
     public function indexAction($id, Request $request, Grid $grid, QATestSubService $testSubService, QATestService $testService){
         $pageSize = 40;
@@ -62,7 +62,7 @@ class TestSubController extends BaseAdminController
     }
 
     /**
-     * @Rest\Get("/test/sub/mg/{id}/{type}/{isFirst}", name="qa_admin_test_sub_mg", defaults={"type":0, "isFirst":1})
+     * @Route("/test/sub/mg/{id}/{type}/{isFirst}", name="qa_admin_test_sub_mg", defaults={"type":0, "isFirst":1})
      */
     public function mgAction($id,$type,$isFirst, Request $request,QATestService $testService, QATestSubService $testSubService,  CategoryService $categoryService, QAChapterSubService $chapterSubService, QAChapterService $chapterService){
 
@@ -147,7 +147,7 @@ class TestSubController extends BaseAdminController
 
 
     /**
-     * @Rest\Get("/test/sub/edit/{id}", name="qa_admin_test_sub_edit")
+     * @Route("/test/sub/edit/{id}", name="qa_admin_test_sub_edit")
      */
     public function editAction(Form $form){
 

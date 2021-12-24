@@ -13,7 +13,7 @@ use Eduxplus\CoreBundle\Service\Teach\CategoryService;
 use Eduxplus\CoreBundle\Service\Teach\CourseService;
 use Eduxplus\CoreBundle\Service\UserService;
 use Eduxplus\CoreBundle\Lib\Base\BaseAdminController;
-use FOS\RestBundle\Controller\Annotations as Rest;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Eduxplus\CoreBundle\Lib\Form\Form;
 use Eduxplus\CoreBundle\Lib\Grid\Grid;
@@ -22,7 +22,7 @@ class CourseController extends BaseAdminController
 {
 
     /**
-     * @Rest\Get("/teach/course/index", name="admin_teach_course_index")
+     * @Route("/teach/course/index", name="admin_teach_course_index")
      */
     public function indexAction(Request $request, Grid $grid, CourseService $courseService, UserService  $userService, CategoryService $categoryService)
     {
@@ -105,7 +105,7 @@ class CourseController extends BaseAdminController
     }
 
     /**
-     * @Rest\Get("/teach/course/add", name="admin_teach_course_add")
+     * @Route("/teach/course/add", name="admin_teach_course_add")
      */
     public function addAction(Form $form, CourseService $courseService, CategoryService $categoryService)
     {
@@ -160,7 +160,7 @@ class CourseController extends BaseAdminController
     }
 
     /**
-     * @Rest\Get("/teach/course/edit/{id}", name="admin_teach_course_edit")
+     * @Route("/teach/course/edit/{id}", name="admin_teach_course_edit")
      */
     public function editAction($id, Form $form, CourseService $courseService,  CategoryService $categoryService)
     {

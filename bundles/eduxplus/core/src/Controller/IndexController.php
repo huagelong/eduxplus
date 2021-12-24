@@ -12,7 +12,7 @@ namespace Eduxplus\CoreBundle\Controller;
 use Eduxplus\CoreBundle\Service\DashboardService;
 use Eduxplus\CoreBundle\Service\MenuService;
 use Eduxplus\CoreBundle\Lib\Base\BaseAdminController;
-use FOS\RestBundle\Controller\Annotations as Rest;
+use Symfony\Component\Routing\Annotation\Route;
 use Psr\Log\LoggerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
@@ -27,14 +27,14 @@ class IndexController extends BaseAdminController
 
 
     /**
-     * @Rest\Get("/", name="admin_index")
+     * @Route("/", name="admin_index")
      */
     public function indexAction(){
         return $this->render('@CoreBundle/index/index.html.twig');
     }
 
     /**
-     * @Rest\Get("/dashboard", name="admin_dashboard")
+     * @Route("/dashboard", name="admin_dashboard")
      */
     public function dashboardAction(DashboardService $dashboardService){
         list($todayIncome, $todayRegUserCount, $todayOrderCount, $totalRegUserCount) = $dashboardService->dashboardStat();

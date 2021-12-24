@@ -93,4 +93,10 @@ class EduxplusCoreExtension extends Extension implements PrependExtensionInterfa
         ]);
 
     }
+
+    
+    public function getAlias()
+    {
+        return 'eduxplus_core';
+    }
 }

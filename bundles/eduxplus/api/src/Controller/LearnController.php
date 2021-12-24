@@ -12,7 +12,7 @@ use Eduxplus\CoreBundle\Lib\Service\Vod\AliyunVodService;
 use Eduxplus\CoreBundle\Lib\Service\Vod\TengxunyunVodService;
 use Eduxplus\WebsiteBundle\Service\ImService;
 use Eduxplus\WebsiteBundle\Service\LearnService;
-use FOS\RestBundle\Controller\Annotations as Rest;
+use Symfony\Component\Routing\Annotation\Route;
 use FOS\RestBundle\Controller\Annotations\View as ViewAnnotations;
 use Eduxplus\CoreBundle\Lib\Base\BaseApiController;
 use Symfony\Component\HttpFoundation\Request;

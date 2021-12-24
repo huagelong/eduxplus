@@ -16,7 +16,7 @@ use Eduxplus\CoreBundle\Lib\Service\Live\AliyunLiveService;
 use Eduxplus\CoreBundle\Lib\Service\Live\TengxunyunLiveService;
 use Eduxplus\CoreBundle\Lib\Service\Vod\AliyunVodService;
 use Eduxplus\CoreBundle\Lib\Service\Vod\TengxunyunVodService;
-use FOS\RestBundle\Controller\Annotations as Rest;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Eduxplus\CoreBundle\Lib\Form\Form;
 use Eduxplus\CoreBundle\Lib\Grid\Grid;
@@ -26,7 +26,7 @@ class ChapterController extends BaseAdminController
 
     /**
      *
-     * @Rest\Get("/teach/chapter/index/{id}", name="admin_teach_chapter_index")
+     * @Route("/teach/chapter/index/{id}", name="admin_teach_chapter_index")
      */
     public function indexAction($id, ChapterService $chapterService)
     {
@@ -38,7 +38,7 @@ class ChapterController extends BaseAdminController
 
     /**
      *
-     * @Rest\Get("/teach/chapter/add/{id}", name="admin_teach_chapter_add")
+     * @Route("/teach/chapter/add/{id}", name="admin_teach_chapter_add")
      */
     public function addAction($id, Form $form, Request $request, ChapterService $chapterService, CourseService $courseService)
     {
@@ -130,7 +130,7 @@ class ChapterController extends BaseAdminController
 
     /**
      *
-     * @Rest\Get("/teach/chapter/edit/{id}", name="admin_teach_chapter_edit")
+     * @Route("/teach/chapter/edit/{id}", name="admin_teach_chapter_edit")
      */
     public function editAction($id, Form $form, ChapterService $chapterService, CourseService $courseService)
     {
@@ -257,7 +257,7 @@ class ChapterController extends BaseAdminController
 
     /**
      * 直播
-     * @Rest\Get("/teach/chapter/live/{id}", name="admin_teach_chapter_live")
+     * @Route("/teach/chapter/live/{id}", name="admin_teach_chapter_live")
      */
     public function liveAction($id, ChapterService $chapterService)
     {
@@ -303,7 +303,7 @@ class ChapterController extends BaseAdminController
 
     /**
      * 点播
-     * @Rest\Get("/teach/chapter/vod/{id}", name="admin_teach_chapter_vod")
+     * @Route("/teach/chapter/vod/{id}", name="admin_teach_chapter_vod")
      */
     public function vodAction($id, Form $form, ChapterService $chapterService, TengxunyunVodService $tengxunyunVodService, AliyunVodService $aliyunVodService)
     {
@@ -369,7 +369,7 @@ class ChapterController extends BaseAdminController
 
     /**
      *
-     * @Rest\Get("/teach/chapter/materials/{id}", name="admin_teach_chapter_materials")
+     * @Route("/teach/chapter/materials/{id}", name="admin_teach_chapter_materials")
      */
     public function materialsAction($id, Form $form, ChapterService $chapterService)
     {

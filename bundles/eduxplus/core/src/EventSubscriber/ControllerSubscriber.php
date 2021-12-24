@@ -43,7 +43,7 @@ class ControllerSubscriber implements EventSubscriberInterface
 
     public function onKernelController(ControllerEvent $event)
     {
-        if (!$event->isMasterRequest()) {
+        if (!$event->isMainRequest()) {
             return true;
         }
         $request = $event->getRequest();

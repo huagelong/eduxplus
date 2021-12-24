@@ -13,7 +13,7 @@ use Eduxplus\CoreBundle\Lib\Grid\Grid;
 use Eduxplus\CoreBundle\Service\Jw\ClassService;
 use Eduxplus\CoreBundle\Service\UserService;
 use Eduxplus\CoreBundle\Lib\Base\BaseAdminController;
-use FOS\RestBundle\Controller\Annotations as Rest;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 
 
@@ -21,7 +21,7 @@ class ClassController extends BaseAdminController
 {
 
     /**
-     * @Rest\Get("/jw/class/index", name="admin_jw_class_index")
+     * @Route("/jw/class/index", name="admin_jw_class_index")
      */
     public function indexAction(Request $request, Grid $grid, ClassService $classService){
         $pageSize = 40;
@@ -48,7 +48,7 @@ class ClassController extends BaseAdminController
     }
 
     /**
-     * @Rest\Get("/jw/class/members/{classesId}", name="admin_jw_class_members")
+     * @Route("/jw/class/members/{classesId}", name="admin_jw_class_members")
      */
     public function membersAction($classesId, Request $request, Grid $grid, ClassService $classService, UserService $userService){
         $pageSize = 40;

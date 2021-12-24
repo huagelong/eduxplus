@@ -8,18 +8,18 @@
 
 namespace Eduxplus\WebsiteBundle\Controller;
 
-
 use Eduxplus\CoreBundle\Lib\Base\BaseHtmlController;
 use Eduxplus\WebsiteBundle\Service\CategoryService;
 use Eduxplus\WebsiteBundle\Service\GoodsService;
-use FOS\RestBundle\Controller\Annotations as Rest;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 
 class DetailController extends BaseHtmlController
 {
 
     /**
-     * @Rest\Get("/detail/{uuid}", name="app_detail_index")
+     * @Route("/detail/{uuid}", name="app_detail_index")
      */
     public function indexAction($uuid, GoodsService $goodsService){
         $detail = $goodsService->getByUuId($uuid);
@@ -38,7 +38,7 @@ class DetailController extends BaseHtmlController
     }
 
     /**
-     * @Rest\Get("/center/{categoryId<\d+>?0}/{isFree<\d+>?0}", name="app_detail_center", defaults={"categoryId":"0", "isFree":"0"})
+     * @Route("/center/{categoryId<\d+>?0}/{isFree<\d+>?0}", name="app_detail_center", defaults={"categoryId":"0", "isFree":"0"})
      */
     public function centerAction($categoryId,$isFree,Request $request, CategoryService $categoryService, GoodsService $goodsService){
         $page = $request->get("page");
@@ -98,7 +98,7 @@ class DetailController extends BaseHtmlController
     }
 
     /**
-     * @Rest\Get("/detail/my/do/doFav/{uuid}", name="app_detail_doFav")
+     * @Route("/detail/my/do/doFav/{uuid}", name="app_detail_doFav")
      */
     public function doFavAction($uuid, GoodsService $goodsService){
         $uid = $this->getUid();

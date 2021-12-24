@@ -12,7 +12,7 @@ use Eduxplus\CoreBundle\Lib\View\View;
 use Eduxplus\CoreBundle\Service\Mall\HelpCategoryService;
 use Eduxplus\CoreBundle\Service\Mall\HelpService;
 use Eduxplus\CoreBundle\Lib\Base\BaseAdminController;
-use FOS\RestBundle\Controller\Annotations as Rest;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Eduxplus\CoreBundle\Lib\Form\Form;
 use Eduxplus\CoreBundle\Lib\Grid\Grid;
@@ -22,7 +22,7 @@ class HelpController extends BaseAdminController
 
     /**
      *
-     * @Rest\Get("/mall/help/index", name="admin_mall_help_index")
+     * @Route("/mall/help/index", name="admin_mall_help_index")
      */
     public function indexAction(Request $request, Grid $grid, HelpService $helpService){
         $pageSize = 40;
@@ -85,7 +85,7 @@ class HelpController extends BaseAdminController
 
     /**
      *
-     * @Rest\Get("/mall/help/view/{id}", name="admin_mall_help_view")
+     * @Route("/mall/help/view/{id}", name="admin_mall_help_view")
      */
     public function viewAction($id, View $view, HelpService $helpService, HelpCategoryService $helpCategoryService){
         $info = $helpService->getById($id);
@@ -106,7 +106,7 @@ class HelpController extends BaseAdminController
 
 
     /**
-     * @Rest\Get("/mall/help/add", name="admin_mall_help_add")
+     * @Route("/mall/help/add", name="admin_mall_help_add")
      */
     public function addAction(Form $form, HelpCategoryService $helpCategoryService)
     {
@@ -152,7 +152,7 @@ class HelpController extends BaseAdminController
     }
 
     /**
-     * @Rest\Get("/mall/help/edit/{id}", name="admin_mall_help_edit")
+     * @Route("/mall/help/edit/{id}", name="admin_mall_help_edit")
      */
     public function editAction($id, Form $form, HelpService $helpService, HelpCategoryService $helpCategoryService)
     {

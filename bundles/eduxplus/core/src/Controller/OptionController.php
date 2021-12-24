@@ -11,7 +11,7 @@ namespace Eduxplus\CoreBundle\Controller;
 
 use Eduxplus\CoreBundle\Service\OptionService;
 use Eduxplus\CoreBundle\Lib\Base\BaseAdminController;
-use FOS\RestBundle\Controller\Annotations as Rest;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Eduxplus\CoreBundle\Lib\Form\Form;
 use Eduxplus\CoreBundle\Lib\Grid\Grid;
@@ -20,7 +20,7 @@ class OptionController extends BaseAdminController
 {
 
     /**
-     * @Rest\Get("/option/index", name="admin_option_index")
+     * @Route("/option/index", name="admin_option_index")
      */
     public function indexAction(Request $request, Grid $grid, OptionService $optionService){
         $pageSize = 40;
@@ -72,7 +72,7 @@ class OptionController extends BaseAdminController
     }
 
     /**
-     * @Rest\Get("/option/add/{type}", name="admin_option_add", defaults={"type":"1"})
+     * @Route("/option/add/{type}", name="admin_option_add", defaults={"type":"1"})
      */
     public function addAction($type, Form $form, OptionService $optionService){
         $form->textarea("配置说明")->field("descr")->isRequire(1);
@@ -125,7 +125,7 @@ class OptionController extends BaseAdminController
     }
 
     /**
-     * @Rest\Get("/option/edit/{id}", name="admin_option_edit")
+     * @Route("/option/edit/{id}", name="admin_option_edit")
      */
     public function editAction($id, Form $form, OptionService $optionService){
         $info = $optionService->getById($id);

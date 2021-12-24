@@ -11,7 +11,7 @@ namespace Eduxplus\WebsiteBundle\Controller;
 
 use Eduxplus\CoreBundle\Lib\Base\BaseHtmlController;
 use Eduxplus\WebsiteBundle\Service\SearchService;
-use FOS\RestBundle\Controller\Annotations as Rest;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 
 class SearchController extends BaseHtmlController
@@ -19,7 +19,7 @@ class SearchController extends BaseHtmlController
 
     /**
      * type 1 课程，2-资讯
-     * @Rest\Get("/search/{type}/{page}", name="app_search", defaults={"type":0, "page":1})
+     * @Route("/search/{type}/{page}", name="app_search", defaults={"type":0, "page":1})
      */
     public function indexAction($type=1, $page=1, Request $request, SearchService $searchService){
         $kw = $request->get("kw");
