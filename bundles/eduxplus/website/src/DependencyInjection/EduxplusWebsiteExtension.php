@@ -30,7 +30,7 @@ class EduxplusWebsiteExtension extends Extension implements PrependExtensionInte
         $namespace = $container->getExtension("twig")->getAlias();
         $container->prependExtensionConfig($namespace, [
             "paths"=>[
-                __DIR__."/../Resources/templates"=>"WebsiteBundle",
+                __DIR__."/../Resources/templates/default"=>"WebsiteBundle",
             ]
         ]);
     }

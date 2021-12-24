@@ -5,12 +5,11 @@ security:
       security: false
     admin:
       pattern: ^/admin
-      anonymous: lazy
+      lazy: true
       provider: app_user_provider
-      guard:
-        authenticators:
+      custom_authenticators:
           - Eduxplus\CoreBundle\Security\PasswordLoginAuthenticator
-        entry_point: Eduxplus\CoreBundle\Security\PasswordLoginAuthenticator
+      entry_point: Eduxplus\CoreBundle\Security\PasswordLoginAuthenticator
       logout:
         path: admin_logout
         target: /admin/login
@@ -22,19 +21,17 @@ security:
     api:
       pattern: ^/api
       stateless: true
-      anonymous: lazy
+      lazy: true
       provider: app_user_provider
-      guard:
-        authenticators:
+      custom_authenticators:
           - Eduxplus\ApiBundle\Security\TokenAuthenticator
           - Eduxplus\ApiBundle\Security\MobileAuthenticator
-        entry_point: Eduxplus\ApiBundle\Security\TokenAuthenticator
+      entry_point: Eduxplus\ApiBundle\Security\TokenAuthenticator
 
     app:
       pattern: ^/
-      anonymous: lazy
-      guard:
-        authenticators:
+      lazy: true
+      custom_authenticators:
           - Eduxplus\WebsiteBundle\Security\MobileAuthenticator
       remember_me:
         secret: "%kernel.secret%"
