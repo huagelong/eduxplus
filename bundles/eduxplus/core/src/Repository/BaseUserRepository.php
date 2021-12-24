@@ -5,6 +5,12 @@ namespace Eduxplus\CoreBundle\Repository;
 use Eduxplus\CoreBundle\Entity\BaseUser;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @method BaseUser|null find($id, $lockMode = null, $lockVersion = null)
@@ -12,11 +18,14 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method BaseUser[]    findAll()
  * @method BaseUser[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class BaseUserRepository extends ServiceEntityRepository
+class BaseUserRepository extends ServiceEntityRepository implements PasswordUpgraderInterface, UserLoaderInterface
 {
-    public function __construct(ManagerRegistry $registry)
+
+    protected $passwordEncoder;
+    public function __construct(ManagerRegistry $registry,  UserPasswordHasherInterface $passwordEncoder,)
     {
         parent::__construct($registry, BaseUser::class);
+        $this->passwordEncoder = $passwordEncoder;
     }
 
     // /**
@@ -47,4 +56,30 @@ class BaseUserRepository extends ServiceEntityRepository
         ;
     }
     */
+    public function upgradePassword(PasswordAuthenticatedUserInterface $user, string $newHashedPassword): void
+    {
+
+        if (!$user instanceof BaseUser) {
+            throw new UnsupportedUserException(sprintf('Instances of "%s" are not supported.', get_class($user)));
+        }
+
+        $user->setPassword($newHashedPassword);
+        $this->_em->persist($user);
+        $this->_em->flush();
+    }
+
+    public function loadUserByUsername(string $username):BaseUser
+    {
+        return $this->createQueryBuilder('u')
+            ->andWhere('u.uuid = :uuid')
+            ->setParameter('uuid', $username)
+            ->setParameter('is_lock', 0)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
+    public function loadUserByIdentifier(string $identifier):BaseUser
+    {
+        return $this->loadUserByUsername($identifier);
+    }
 }

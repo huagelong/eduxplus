@@ -77,7 +77,8 @@ class EduxplusCoreExtension extends Extension implements PrependExtensionInterfa
         //security
         $namespace = $container->getExtension("security")->getAlias();
         $container->prependExtensionConfig($namespace, [
-            "encoders"=>[
+            "enable_authenticator_manager"=>true,
+            "password_hashers"=>[
                 "Eduxplus\CoreBundle\Entity\BaseUser"=>[
                     "algorithm"=>"bcrypt"
                 ]

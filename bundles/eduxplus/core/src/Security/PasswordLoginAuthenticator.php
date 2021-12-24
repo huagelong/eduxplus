@@ -15,8 +15,10 @@ use Eduxplus\CoreBundle\Lib\Service\CaptchaService;
 use Eduxplus\CoreBundle\Entity\BaseUser;
 use Eduxplus\CoreBundle\Exception\NeedLoginException;
 use Doctrine\ORM\EntityManagerInterface;
+use Eduxplus\CoreBundle\Repository\BaseUserRepository;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
@@ -24,17 +26,20 @@ use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationException;
 use Symfony\Component\Security\Core\Exception\InvalidCsrfTokenException;
 use Symfony\Component\Security\Core\Security;
+use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Csrf\CsrfToken;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
-use Symfony\Component\Security\Guard\Authenticator\AbstractFormLoginAuthenticator;
-use Symfony\Component\Security\Guard\PasswordAuthenticatedInterface;
+use Symfony\Component\Security\Http\Authenticator\AbstractLoginFormAuthenticator;
+use Symfony\Component\Security\Http\Authenticator\Passport\Badge\PasswordUpgradeBadge;
+use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
+use Symfony\Component\Security\Http\Authenticator\Passport\Credentials\PasswordCredentials;
+use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
 use Symfony\Component\Security\Http\Util\TargetPathTrait;
-use Symfony\Component\HttpFoundation\Cookie;
 use Eduxplus\CoreBundle\Lib\Service\MobileMaskService;
 
-class PasswordLoginAuthenticator extends AbstractFormLoginAuthenticator implements PasswordAuthenticatedInterface
+class PasswordLoginAuthenticator extends AbstractLoginFormAuthenticator
 {
     use TargetPathTrait;
 
@@ -45,6 +50,7 @@ class PasswordLoginAuthenticator extends AbstractFormLoginAuthenticator implemen
     private $captchaService;
     private $baseService;
     private $mobileMaskService;
+    protected $userRepository;
 
     public function __construct(EntityManagerInterface $entityManager,
                                 UrlGeneratorInterface $urlGenerator,
@@ -52,7 +58,8 @@ class PasswordLoginAuthenticator extends AbstractFormLoginAuthenticator implemen
                                 UserPasswordHasherInterface $passwordEncoder,
                                 CaptchaService $captchaService,
                                 MobileMaskService $mobileMaskService,
-                                BaseService $baseService
+                                BaseService $baseService,
+                                BaseUserRepository $userRepository
     )
     {
         $this->entityManager = $entityManager;
@@ -62,20 +69,20 @@ class PasswordLoginAuthenticator extends AbstractFormLoginAuthenticator implemen
         $this->captchaService = $captchaService;
         $this->baseService = $baseService;
         $this->mobileMaskService = $mobileMaskService;
+        $this->userRepository = $userRepository;
     }
 
-    public function start(Request $request, AuthenticationException $authException = null)
+    public function start(Request $request, AuthenticationException $authException = null): Response
     {
         if(($request->getRequestFormat() == 'json') || (in_array("application/json", $request->getAcceptableContentTypes()))){
                 throw new NeedLoginException();
         }else{
-            $url = $this->getLoginUrl();
-
+            $url = $this->getLoginUrl($request);
             return new RedirectResponse($url);
         }
     }
 
-    public function supports(Request $request)
+    public function supports(Request $request): bool
     {
         return 'admin_login' === $request->attributes->get('_route') && $request->isMethod('POST');
     }
@@ -116,8 +123,26 @@ class PasswordLoginAuthenticator extends AbstractFormLoginAuthenticator implemen
         }
     }
 
-    public function getUser($credentials, UserProviderInterface $userProvider)
+
+    public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey): Response
     {
+        if ($targetPath = $request->request->get('TargetPath')) {
+            return new RedirectResponse($targetPath);
+        }
+        $response = new RedirectResponse($this->urlGenerator->generate('admin_index'));
+        return $response;
+    }
+
+    protected function getLoginUrl(Request $request):string
+    {
+        $goto = $request->getRequestUri();
+        $gotoStr = $goto?"?goto=".$goto:"";
+        return $this->urlGenerator->generate('admin_login').$gotoStr;
+    }
+
+    public function authenticate(Request $request): Passport
+    {
+        $credentials = $this->getCredentials($request);
 
         $mobileMask =  $this->mobileMaskService->encrypt($credentials['mobile']);
 
@@ -136,35 +161,15 @@ class PasswordLoginAuthenticator extends AbstractFormLoginAuthenticator implemen
             throw new CustomUserMessageAuthenticationException('该用户已被锁定，没有权限登入！');
         }
 
-        return $user;
-    }
-
-    public function checkCredentials($credentials, UserInterface $user)
-    {
-        return $this->passwordEncoder->isPasswordValid($user, $credentials['password']);
-    }
-
-    /**
-     * Used to upgrade (rehash) the user's password automatically over time.
-     */
-    public function getPassword($credentials): ?string
-    {
-        return $credentials['password'];
-    }
-
-    public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
-    {
-        if ($targetPath = $request->request->get('TargetPath')) {
-            return new RedirectResponse($targetPath);
+        $passport = new Passport(
+            new UserBadge($user->getUuid(), [$this->userRepository, "loadUserByIdentifier"]),
+            new PasswordCredentials($credentials['password'])
+        );
+        if ($this->userRepository instanceof PasswordUpgraderInterface) {
+            $passport->addBadge(new PasswordUpgradeBadge($credentials['password'], $this->userRepository));
         }
-        $response = new RedirectResponse($this->urlGenerator->generate('admin_index'));
-        return $response;
-    }
 
-    protected function getLoginUrl()
-    {
-        $goto = $this->baseService->request()->getRequestUri();
-        $gotoStr = $goto?"?goto=".$goto:"";
-        return $this->urlGenerator->generate('admin_login').$gotoStr;
+        return $passport;
+
     }
 }
