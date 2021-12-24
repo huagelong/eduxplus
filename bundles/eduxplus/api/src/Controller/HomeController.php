@@ -12,8 +12,6 @@ namespace Eduxplus\ApiBundle\Controller;
 use Eduxplus\ApiBundle\Service\GoodService;
 use Eduxplus\CoreBundle\Lib\Base\BaseApiController;
 use Symfony\Component\Routing\Annotation\Route;
-use FOS\RestBundle\Controller\Annotations\View as ViewAnnotations;
-use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @package Eduxplus\ApiBundle\Controller
@@ -21,7 +19,7 @@ use Symfony\Component\HttpFoundation\Request;
 class HomeController extends BaseApiController
 {
     /**
-     * @Rest\Post("/homePage",name="api_home_homePage")
+     * @Route("/homePage",name="api_home_homePage")
      */
     public function homePageAction(GoodService $goodService)
     {

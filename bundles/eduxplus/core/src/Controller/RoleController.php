@@ -88,7 +88,7 @@ class RoleController extends BaseAdminController
 
 
     /**
-     * @Rest\Post("/role/add/do", name="admin_api_role_add")
+     * @Route("/role/add/do", name="admin_api_role_add")
      */
     public function addDoAction(Request $request, RoleService $roleService){
         $name = $request->get("name");
@@ -121,7 +121,7 @@ class RoleController extends BaseAdminController
     }
 
     /**
-     * @Rest\Post("/role/edit/do/{id}", name="admin_api_role_edit")
+     * @Route("/role/edit/do/{id}", name="admin_api_role_edit")
      */
     public function editDoAction($id, Request $request, RoleService $roleService){
         $name = $request->get("name");
@@ -140,7 +140,7 @@ class RoleController extends BaseAdminController
     }
 
     /**
-     * @Rest\Post("/role/delete/do/{id}", name="admin_api_role_delete")
+     * @Route("/role/delete/do/{id}", name="admin_api_role_delete")
      */
     public function deleteAction($id, RoleService $roleService){
         $roleService->deleteRole($id);
@@ -148,7 +148,7 @@ class RoleController extends BaseAdminController
     }
 
     /**
-     * @Rest\Post("/role/batchdelete/do", name="admin_api_role_batchdelete")
+     * @Route("/role/batchdelete/do", name="admin_api_role_batchdelete")
      */
     public function bathDeleteAction(RoleService $roleService, Request $request){
 
@@ -179,7 +179,7 @@ class RoleController extends BaseAdminController
 
 
     /**
-     * @Rest\Post("/role/bindmenu/do/{id}", name="admin_api_role_bindmenu")
+     * @Route("/role/bindmenu/do/{id}", name="admin_api_role_bindmenu")
      */
     public function bindMenuDoAction($id, Request $request, RoleService $roleService){
         $idstr = $request->request->get("data");

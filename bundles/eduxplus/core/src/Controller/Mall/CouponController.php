@@ -149,7 +149,7 @@ class CouponController extends BaseAdminController
 
     /**
      *
-     * @Rest\Post("/mall/coupon/add/do", name="admin_api_mall_coupon_add")
+     * @Route("/mall/coupon/add/do", name="admin_api_mall_coupon_add")
      */
     public function addDoAction(Request $request, CouponService $couponService)
     {
@@ -230,7 +230,7 @@ class CouponController extends BaseAdminController
 
     /**
      *
-     * @Rest\Post("/mall/coupon/edit/do/{id}", name="admin_api_mall_coupon_edit")
+     * @Route("/mall/coupon/edit/do/{id}", name="admin_api_mall_coupon_edit")
      */
     public function editDoAction($id, Request $request, CouponService $couponService)
     {
@@ -270,7 +270,7 @@ class CouponController extends BaseAdminController
 
     /**
      *
-     * @Rest\Post("/mall/coupon/delete/do/{id}", name="admin_api_mall_coupon_delete")
+     * @Route("/mall/coupon/delete/do/{id}", name="admin_api_mall_coupon_delete")
      */
     public function deleteDoAction($id, CouponService $couponService)
     {
@@ -280,7 +280,7 @@ class CouponController extends BaseAdminController
 
     /**
      *
-     * @Rest\Post("/mall/coupon/bathdelete/do", name="admin_api_mall_coupon_bathdelete")
+     * @Route("/mall/coupon/bathdelete/do", name="admin_api_mall_coupon_bathdelete")
      */
     public function bathdeleteDoAction(Request $request, CouponService $couponService)
     {
@@ -301,7 +301,7 @@ class CouponController extends BaseAdminController
     }
 
     /**
-     * @Rest\Post("/mall/coupon/switchStatus/do/{id}", name="admin_api_mall_coupon_switchStatus")
+     * @Route("/mall/coupon/switchStatus/do/{id}", name="admin_api_mall_coupon_switchStatus")
      */
     public function switchStatusAction($id, CouponService $couponService, Request $request){
         $state = (int) $request->get("state");

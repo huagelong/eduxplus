@@ -124,7 +124,7 @@ class UserController extends BaseAdminController
     }
 
     /**
-     * @Rest\Post("/user/add/do", name="admin_api_user_add")
+     * @Route("/user/add/do", name="admin_api_user_add")
      */
     public function addDoAction(
         Request $request,
@@ -222,7 +222,7 @@ class UserController extends BaseAdminController
     }
 
     /**
-     * @Rest\Post("/user/edit/do/{id}", name="admin_api_user_edit")
+     * @Route("/user/edit/do/{id}", name="admin_api_user_edit")
      */
     public function editDoAction(
         $id,
@@ -255,7 +255,7 @@ class UserController extends BaseAdminController
     }
 
     /**
-     * @Rest\Post("/user/delete/do/{id}", name="admin_api_user_delete")
+     * @Route("/user/delete/do/{id}", name="admin_api_user_delete")
      */
     public function deleteAction($id, UserService $userService)
     {
@@ -264,7 +264,7 @@ class UserController extends BaseAdminController
     }
 
     /**
-     * @Rest\Post("/user/bathdelete/do", name="admin_api_user_bathdelete")
+     * @Route("/user/bathdelete/do", name="admin_api_user_bathdelete")
      */
     public function bathdeleteAction(Request $request, UserService $userService)
     {
@@ -283,7 +283,7 @@ class UserController extends BaseAdminController
     }
 
     /**
-     * @Rest\Post("/user/switchLock/do/{id}", name="admin_api_user_switchLock")
+     * @Route("/user/switchLock/do/{id}", name="admin_api_user_switchLock")
      */
     public function switchLockAction($id, UserService $userService, Request $request)
     {

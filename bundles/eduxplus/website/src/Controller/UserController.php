@@ -42,7 +42,7 @@ class UserController extends BaseHtmlController
     }
 
     /**
-     * @Rest\Post("/login", name="app_logindo")
+     * @Route("/login", name="app_logindo")
      */
     public function logininAction(){}
 
@@ -110,7 +110,7 @@ class UserController extends BaseHtmlController
     }
 
     /**
-     * @Rest\Post("/my/info/do", name="app_user_info_do")
+     * @Route("/my/info/do", name="app_user_info_do")
      */
     public function doinfoAction(Request $request, ValidateService $validateService, UserService $userService){
         $avatar = $request->get("avatar");
@@ -136,7 +136,7 @@ class UserController extends BaseHtmlController
     }
 
     /**
-     * @Rest\Post("/my/uploadimg/do/{type}", name="app_my_uploadimg", defaults={"type":"img"})
+     * @Route("/my/uploadimg/do/{type}", name="app_my_uploadimg", defaults={"type":"img"})
      */
     public function uploadavatarAction($type = "img", Request $request, UploadService $uploadService)
     {
@@ -256,7 +256,7 @@ class UserController extends BaseHtmlController
     /**
      * 检查手机验证码
      *
-     * @Rest\Post("/my/checkMobileCode/do", name="app_user_checkMobileCode_do")
+     * @Route("/my/checkMobileCode/do", name="app_user_checkMobileCode_do")
      */
     public function doCheckMobileCode(Request $request, GlobService $globService){
         $user = $this->getUserInfo();
@@ -285,7 +285,7 @@ class UserController extends BaseHtmlController
     /**
      * 检查手机验证码
      *
-     * @Rest\Post("/my/changeMobile/do", name="app_user_changeMobile_do")
+     * @Route("/my/changeMobile/do", name="app_user_changeMobile_do")
      */
     public function doChangeMobileCode(Request $request,UserService $userService, GlobService $globService, ValidateService $validateService){
         $mobile = $request->get("mobile");

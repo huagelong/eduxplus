@@ -216,7 +216,7 @@ class MallGoodsController extends BaseAdminController
 
     /**
      *
-     * @Rest\Post("/mall/goods/add/do", name="admin_qa_api_mall_goods_add")
+     * @Route("/mall/goods/add/do", name="admin_qa_api_mall_goods_add")
      */
     public function addDoAction(Request $request, QAGoodsService $goodsService, CategoryService $categoryService)
     {
@@ -530,7 +530,7 @@ class MallGoodsController extends BaseAdminController
 
     /**
      *
-     * @Rest\Post("/mall/goods/edit/do/{id}", name="admin_qa_api_mall_goods_edit")
+     * @Route("/mall/goods/edit/do/{id}", name="admin_qa_api_mall_goods_edit")
      */
     public function editDoAction($id, Request $request, QAGoodsService $goodsService)
     {
@@ -632,7 +632,7 @@ class MallGoodsController extends BaseAdminController
 
     /**
      *
-     * @Rest\Post("/mall/goods/delete/do/{id}", name="admin_qa_api_mall_goods_delete")
+     * @Route("/mall/goods/delete/do/{id}", name="admin_qa_api_mall_goods_delete")
      */
     public function deleteDoAction($id, QAGoodsService $goodsService)
     {
@@ -642,7 +642,7 @@ class MallGoodsController extends BaseAdminController
 
     /**
      *
-     * @Rest\Post("/mall/goods/bathdelete/do", name="admin_qa_api_mall_goods_bathdelete")
+     * @Route("/mall/goods/bathdelete/do", name="admin_qa_api_mall_goods_bathdelete")
      */
     public function bathdeleteDoAction(Request $request, QAGoodsService $goodsService)
     {
@@ -661,7 +661,7 @@ class MallGoodsController extends BaseAdminController
     }
 
     /**
-     * @Rest\Post("/mall/goods/switchStatus/do/{id}", name="admin_qa_api_mall_goods_switchStatus")
+     * @Route("/mall/goods/switchStatus/do/{id}", name="admin_qa_api_mall_goods_switchStatus")
      */
     public function switchStatusAction($id, QAGoodsService $goodsService, Request $request)
     {

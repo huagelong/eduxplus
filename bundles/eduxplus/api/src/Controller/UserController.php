@@ -13,7 +13,6 @@ use Eduxplus\ApiBundle\Service\GoodService;
 use Eduxplus\CoreBundle\Lib\Base\BaseApiController;
 use Eduxplus\WebsiteBundle\Service\LearnService;
 use Symfony\Component\Routing\Annotation\Route;
-use FOS\RestBundle\Controller\Annotations\View as ViewAnnotations;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -22,7 +21,7 @@ use Symfony\Component\HttpFoundation\Request;
 class UserController extends BaseApiController
 {
     /**
-     * @Rest\Post("/my/meinfo", name="api_user_meinfo")
+     * @Route("/my/meinfo", name="api_user_meinfo")
      */
     public function meinfoAction()
     {
@@ -40,7 +39,7 @@ class UserController extends BaseApiController
     }
 
     /**
-     * @Rest\Post("/my/mecourse", name="api_user_mecourse")
+     * @Route("/my/mecourse", name="api_user_mecourse")
      */
     public function mecourseAction(Request $request, GoodService $goodService){
         $page = (int) $request->get("p", 1);
@@ -54,7 +53,7 @@ class UserController extends BaseApiController
     /**
      * 课程列表
      *
-     * @Rest\Post("/my/courseList", name="api_user_courseList")
+     * @Route("/my/courseList", name="api_user_courseList")
      */
     public function courseListAction(Request $request, LearnService $learnService){
         $courseId = $request->get("courseId");

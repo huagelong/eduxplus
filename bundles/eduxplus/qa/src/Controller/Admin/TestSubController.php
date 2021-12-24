@@ -128,7 +128,7 @@ class TestSubController extends BaseAdminController
 
     /**
      *
-     * @Rest\Post("/test/sub/mg/do/{id}", name="qa_admin_test_sub_do_mg")
+     * @Route("/test/sub/mg/do/{id}", name="qa_admin_test_sub_do_mg")
      */
     public function mgDoAction($id, Request $request, QATestSubService $testSubService){
         $nodeIds = $request->get("ids");
@@ -155,7 +155,7 @@ class TestSubController extends BaseAdminController
 
     /**
      *
-     * @Rest\Post("/test/sub/edit/do/{id}", name="qa_admin_test_sub_do_edit")
+     * @Route("/test/sub/edit/do/{id}", name="qa_admin_test_sub_do_edit")
      */
     public function editDoAction(Request $request){
 
@@ -163,7 +163,7 @@ class TestSubController extends BaseAdminController
 
     /**
      *
-     * @Rest\Post("/test/sub/delete/do/{id}", name="qa_admin_test_sub_delete")
+     * @Route("/test/sub/delete/do/{id}", name="qa_admin_test_sub_delete")
      */
     public function deleteDoAction($id)
     {
@@ -173,7 +173,7 @@ class TestSubController extends BaseAdminController
 
     /**
      *
-     * @Rest\Post("/test/sub/bathdelete/do", name="qa_admin_test_sub_bathdelete")
+     * @Route("/test/sub/bathdelete/do", name="qa_admin_test_sub_bathdelete")
      */
     public function bathdeleteDoAction(Request $request)
     {

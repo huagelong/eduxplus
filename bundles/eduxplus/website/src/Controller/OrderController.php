@@ -97,7 +97,7 @@ class OrderController extends BaseHtmlController
     /**
      * 去购买
      *
-     * @Rest\Post("/my/addbuy/{uuid}", name="app_order_addbuy")
+     * @Route("/my/addbuy/{uuid}", name="app_order_addbuy")
      */
     public function dobuyAction($uuid,Request $request, GoodsService $goodsService, OrderService $orderService,CsrfTokenManagerInterface $csrfTokenManager){
         $userNotes = $request->get("userNotes");

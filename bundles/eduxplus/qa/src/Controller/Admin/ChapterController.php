@@ -111,7 +111,7 @@ class ChapterController extends BaseAdminController
 
     /**
      *
-     * @Rest\Post("/chapter/add/do", name="qa_admin_chapter_do_add")
+     * @Route("/chapter/add/do", name="qa_admin_chapter_do_add")
      */
     public function addDoAction(Request $request, QAChapterService $chapterService)
     {
@@ -151,7 +151,7 @@ class ChapterController extends BaseAdminController
 
     /**
      *
-     * @Rest\Post("/chapter/edit/do/{id}", name="qa_admin_chapter_do_edit")
+     * @Route("/chapter/edit/do/{id}", name="qa_admin_chapter_do_edit")
      */
     public function editDoAction($id, Request $request, CategoryService $categoryService, QAChapterService $chapterService)
     {
@@ -174,7 +174,7 @@ class ChapterController extends BaseAdminController
 
     /**
      *
-     * @Rest\Post("/chapter/delete/do/{id}", name="qa_admin_chapter_delete")
+     * @Route("/chapter/delete/do/{id}", name="qa_admin_chapter_delete")
      */
     public function deleteDoAction($id, QAChapterService $chapterService)
     {
@@ -187,7 +187,7 @@ class ChapterController extends BaseAdminController
 
     /**
      *
-     * @Rest\Post("/chapter/bathdelete/do", name="qa_admin_chapter_bathdelete")
+     * @Route("/chapter/bathdelete/do", name="qa_admin_chapter_bathdelete")
      */
     public function bathdeleteDoAction(Request $request, QAChapterService $chapterService)
     {
@@ -206,7 +206,7 @@ class ChapterController extends BaseAdminController
     }
 
     /**
-     * @Rest\Post("/chapter/switchStatus/do/{id}", name="qa_admin_chapter_switchStatus")
+     * @Route("/chapter/switchStatus/do/{id}", name="qa_admin_chapter_switchStatus")
      */
     public function switchStatusAction($id, QAChapterService $chapterService, Request $request)
     {

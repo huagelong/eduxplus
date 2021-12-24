@@ -42,7 +42,7 @@ class NewsCategoryController extends BaseAdminController
 
 
     /**
-     * @Rest\Post("/mall/news/category/add/do", name="admin_api_mall_news_category_add")
+     * @Route("/mall/news/category/add/do", name="admin_api_mall_news_category_add")
      */
     public function addDoAction(Request $request, NewsCategoryService $newsCategoryService)
     {
@@ -83,7 +83,7 @@ class NewsCategoryController extends BaseAdminController
     }
 
     /**
-     * @Rest\Post("/mall/news/category/edit/do/{id}", name="admin_api_mall_news_category_edit")
+     * @Route("/mall/news/category/edit/do/{id}", name="admin_api_mall_news_category_edit")
      */
     public function editDoAction($id, Request $request, NewsCategoryService $newsCategoryService)
     {
@@ -103,7 +103,7 @@ class NewsCategoryController extends BaseAdminController
     }
 
     /**
-     * @Rest\Post("/mall/news/category/delete/do/{id}", name="admin_api_mall_news_category_delete")
+     * @Route("/mall/news/category/delete/do/{id}", name="admin_api_mall_news_category_delete")
      */
     public function deleteDoAction($id, NewsCategoryService $newsCategoryService)
     {
@@ -113,7 +113,7 @@ class NewsCategoryController extends BaseAdminController
     }
 
     /**
-     * @Rest\Post("/mall/news/category/updateSort/do", name="admin_api_mall_news_category_updateSort")
+     * @Route("/mall/news/category/updateSort/do", name="admin_api_mall_news_category_updateSort")
      */
     public function updateSortAction(Request $request, NewsCategoryService $newsCategoryService)
     {

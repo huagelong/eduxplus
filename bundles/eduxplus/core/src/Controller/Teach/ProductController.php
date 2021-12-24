@@ -120,7 +120,7 @@ class ProductController extends BaseAdminController
     }
 
     /**
-     * @Rest\Post("/teach/product/add/do", name="admin_api_teach_product_add")
+     * @Route("/teach/product/add/do", name="admin_api_teach_product_add")
      */
     public function addDoAction(Request $request, ProductService $productService)
     {
@@ -163,7 +163,7 @@ class ProductController extends BaseAdminController
     }
 
     /**
-     * @Rest\Post("/teach/product/edit/do/{id}", name="admin_api_teach_product_edit")
+     * @Route("/teach/product/edit/do/{id}", name="admin_api_teach_product_edit")
      */
     public function editDoAction($id, Request $request, ProductService $productService)
     {
@@ -185,7 +185,7 @@ class ProductController extends BaseAdminController
     }
 
     /**
-     * @Rest\Post("/teach/product/delete/do/{id}", name="admin_api_teach_product_delete")
+     * @Route("/teach/product/delete/do/{id}", name="admin_api_teach_product_delete")
      */
     public function deleteDoAction($id, ProductService $productService)
     {
@@ -194,7 +194,7 @@ class ProductController extends BaseAdminController
     }
 
     /**
-     * @Rest\Post("/teach/product/bathdelete/do", name="admin_api_teach_product_bathdelete")
+     * @Route("/teach/product/bathdelete/do", name="admin_api_teach_product_bathdelete")
      */
     public function bathdeleteDoAction(Request $request, ProductService $productService)
     {
@@ -213,7 +213,7 @@ class ProductController extends BaseAdminController
     }
 
     /**
-     * @Rest\Post("/teach/product/switchStatus/do/{id}", name="admin_api_teach_product_switchStatus")
+     * @Route("/teach/product/switchStatus/do/{id}", name="admin_api_teach_product_switchStatus")
      */
     public function switchStatusAction($id, ProductService $productService, Request $request)
     {

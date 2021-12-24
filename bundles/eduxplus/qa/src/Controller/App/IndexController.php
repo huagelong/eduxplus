@@ -164,7 +164,7 @@ class IndexController extends BaseHtmlController
     /**
      * 保存答案日志
      *
-     * @Rest\Post("/test/my/dosubmitAnswerLog", name="qa_test_submit_answer_log")
+     * @Route("/test/my/dosubmitAnswerLog", name="qa_test_submit_answer_log")
      */
     public function submitAnswerLogAction(QATestService $qaTestService){
         $testId = $this->request()->request->get("testId");
@@ -183,7 +183,7 @@ class IndexController extends BaseHtmlController
     /**
      *  提交答案
      * 
-     * @Rest\Post("/test/my/dosubmit-{id}", name="qa_test_submit_answer")
+     * @Route("/test/my/dosubmit-{id}", name="qa_test_submit_answer")
      */
     public function submitAnswerAction($id, QATestService $qaTestService){
         $request = $this->request()->request->all();

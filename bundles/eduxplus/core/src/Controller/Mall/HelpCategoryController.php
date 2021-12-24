@@ -42,7 +42,7 @@ class HelpCategoryController extends BaseAdminController
 
 
     /**
-     * @Rest\Post("/mall/help/category/add/do", name="admin_api_mall_help_category_add")
+     * @Route("/mall/help/category/add/do", name="admin_api_mall_help_category_add")
      */
     public function addDoAction(Request $request, HelpCategoryService $helpCategoryService)
     {
@@ -83,7 +83,7 @@ class HelpCategoryController extends BaseAdminController
     }
 
     /**
-     * @Rest\Post("/mall/help/category/edit/do/{id}", name="admin_api_mall_help_category_edit")
+     * @Route("/mall/help/category/edit/do/{id}", name="admin_api_mall_help_category_edit")
      */
     public function editDoAction($id, Request $request, HelpCategoryService $helpCategoryService)
     {
@@ -103,7 +103,7 @@ class HelpCategoryController extends BaseAdminController
     }
 
     /**
-     * @Rest\Post("/mall/help/category/delete/do/{id}", name="admin_api_mall_help_category_delete")
+     * @Route("/mall/help/category/delete/do/{id}", name="admin_api_mall_help_category_delete")
      */
     public function deleteDoAction($id, HelpCategoryService $helpCategoryService)
     {
@@ -113,7 +113,7 @@ class HelpCategoryController extends BaseAdminController
     }
 
     /**
-     * @Rest\Post("/mall/help/category/updateSort/do", name="admin_api_mall_help_category_updateSort")
+     * @Route("/mall/help/category/updateSort/do", name="admin_api_mall_help_category_updateSort")
      */
     public function updateSortAction(Request $request, HelpCategoryService $helpCategoryService)
     {

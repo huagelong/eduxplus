@@ -4,15 +4,15 @@ namespace Eduxplus\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 
 /**
  * @ORM\Table(name="base_user")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false, hardDelete=true)
  * @ORM\Entity(repositoryClass="Eduxplus\CoreBundle\Repository\BaseUserRepository")
  */
-class BaseUser implements UserInterface
+class BaseUser implements PasswordAuthenticatedUserInterface,UserInterface
 {
     /**
      * @var int
@@ -460,7 +460,7 @@ class BaseUser implements UserInterface
      *
      * @return (Role|string)[] The user roles
      */
-    public function getRoles(): ?array
+    public function getRoles(): array
     {
         return $this->roles;
     }

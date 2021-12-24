@@ -97,7 +97,7 @@ class PageController extends BaseAdminController
 
     /**
      *
-     * @Rest\Post("/mall/page/add/do", name="admin_api_mall_page_add")
+     * @Route("/mall/page/add/do", name="admin_api_mall_page_add")
      */
     public function addDoAction(Request $request, PageService $pageService)
     {
@@ -156,7 +156,7 @@ class PageController extends BaseAdminController
 
     /**
      *
-     * @Rest\Post("/mall/page/edit/do/{id}", name="admin_api_mall_page_edit")
+     * @Route("/mall/page/edit/do/{id}", name="admin_api_mall_page_edit")
      */
     public function editDoAction($id, Request $request, PageService $pageService)
     {
@@ -181,7 +181,7 @@ class PageController extends BaseAdminController
 
     /**
      *
-     * @Rest\Post("/mall/page/delete/do/{id}", name="admin_api_mall_page_delete")
+     * @Route("/mall/page/delete/do/{id}", name="admin_api_mall_page_delete")
      */
     public function deleteDoAction($id, PageService $pageService)
     {
@@ -192,7 +192,7 @@ class PageController extends BaseAdminController
 
     /**
      *
-     * @Rest\Post("/mall/page/bathdelete/do", name="admin_api_mall_page_bathdelete")
+     * @Route("/mall/page/bathdelete/do", name="admin_api_mall_page_bathdelete")
      */
     public function bathDeleteDoAction(Request $request, PageService $pageService)
     {
@@ -211,7 +211,7 @@ class PageController extends BaseAdminController
 
 
     /**
-     * @Rest\Post("/mall/page/switchStatus/do/{id}", name="admin_api_mall_page_switchStatus")
+     * @Route("/mall/page/switchStatus/do/{id}", name="admin_api_mall_page_switchStatus")
      */
     public function switchStatusAction($id, PageService $pageService, Request $request)
     {

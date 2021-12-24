@@ -133,7 +133,7 @@ class CourseController extends BaseAdminController
     }
 
     /**
-     * @Rest\Post("/teach/course/add/do", name="admin_api_teach_course_add")
+     * @Route("/teach/course/add/do", name="admin_api_teach_course_add")
      */
     public function addDoAction(Request $request, CourseService $courseService)
     {
@@ -192,7 +192,7 @@ class CourseController extends BaseAdminController
     }
 
     /**
-     * @Rest\Post("/teach/course/edit/do/{id}", name="admin_api_teach_course_edit")
+     * @Route("/teach/course/edit/do/{id}", name="admin_api_teach_course_edit")
      */
     public function editDoAction($id, Request $request, CourseService $courseService)
     {
@@ -214,7 +214,7 @@ class CourseController extends BaseAdminController
     }
 
     /**
-     * @Rest\Post("/teach/course/delete/do/{id}", name="admin_api_teach_course_delete")
+     * @Route("/teach/course/delete/do/{id}", name="admin_api_teach_course_delete")
      */
     public function deleteDoAction($id, CourseService $courseService)
     {
@@ -224,7 +224,7 @@ class CourseController extends BaseAdminController
     }
 
     /**
-     * @Rest\Post("/teach/course/bathdelete/do", name="admin_api_teach_course_bathdelete")
+     * @Route("/teach/course/bathdelete/do", name="admin_api_teach_course_bathdelete")
      */
     public function bathDeleteDoAction(Request $request, CourseService $courseService)
     {
@@ -240,7 +240,7 @@ class CourseController extends BaseAdminController
     }
 
     /**
-     * @Rest\Post("/teach/course/switchStatus/do/{id}", name="admin_api_teach_course_switchStatus")
+     * @Route("/teach/course/switchStatus/do/{id}", name="admin_api_teach_course_switchStatus")
      */
     public function switchStatusAction($id, CourseService $courseService, Request $request)
     {

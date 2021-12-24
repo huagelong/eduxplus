@@ -9,14 +9,10 @@
 
 namespace Eduxplus\ApiBundle\Controller;
 
-use Eduxplus\CoreBundle\Entity\BaseUser;
 use Eduxplus\CoreBundle\Lib\Base\BaseApiController;
-use Eduxplus\CoreBundle\Lib\Service\HelperService;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
-use FOS\RestBundle\Controller\Annotations\View as ViewAnnotations;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Eduxplus\CoreBundle\Lib\Service\Auth\WxMiniService;
 use Eduxplus\WebsiteBundle\Service\UserService;
 use Eduxplus\CoreBundle\Lib\Service\ValidateService;
@@ -28,10 +24,10 @@ use Eduxplus\WebsiteBundle\Service\GlobService;
 class AuthController extends BaseApiController
 {
     /**
-     * @Rest\Post("/login", name="api_auth_login")
+     * @Route("/login", name="api_auth_login")
      *
      */
-    public function login(Request $request,  UserPasswordEncoderInterface $passwordEncoder)
+    public function login(Request $request,  UserPasswordHasherInterface $passwordEncoder)
     {
     }
 
@@ -46,7 +42,7 @@ class AuthController extends BaseApiController
 
     /**
      * 获取微信小程序openid
-     * @Rest\Post("/wxMiniLogin", name="api_auth_wxMiniLogin")
+     * @Route("/wxMiniLogin", name="api_auth_wxMiniLogin")
      */
     public function wxMiniLoginAction(Request $request, WxMiniService $wxMiniService)
     {
@@ -58,7 +54,7 @@ class AuthController extends BaseApiController
 
     /**
      * 获取微信小程序注册
-     * @Rest\Post("/wxMiniReg", name="api_auth_wxMiniReg")
+     * @Route("/wxMiniReg", name="api_auth_wxMiniReg")
      */
     public function wxMiniRegAction(
         Request $request,

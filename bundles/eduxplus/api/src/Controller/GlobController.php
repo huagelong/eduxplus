@@ -11,8 +11,6 @@
 namespace Eduxplus\ApiBundle\Controller;
 
 use Eduxplus\CoreBundle\Lib\Base\BaseApiController;
-use Symfony\Component\Routing\Annotation\Route;
-use FOS\RestBundle\Controller\Annotations\View as ViewAnnotations;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Eduxplus\WebsiteBundle\Service\GlobService;
@@ -22,7 +20,7 @@ class GlobController extends BaseApiController
 {
     /**
      * 短信验证码
-     * @Rest\Post("/sendCaptcha", name="api_glob_sendCaptcha")
+     * @Route("/sendCaptcha", name="api_glob_sendCaptcha")
      */
     public function sendCaptchaAction(Request $request, ValidateService $validateService, GlobService $globService)
     {

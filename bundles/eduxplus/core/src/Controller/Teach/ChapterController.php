@@ -84,7 +84,7 @@ class ChapterController extends BaseAdminController
 
     /**
      *
-     * @Rest\Post("/teach/chapter/add/do/{id}", name="admin_api_teach_chapter_add")
+     * @Route("/teach/chapter/add/do/{id}", name="admin_api_teach_chapter_add")
      */
     public function addDoAction($id, Request $request, ChapterService $chapterService)
     {
@@ -179,7 +179,7 @@ class ChapterController extends BaseAdminController
 
     /**
      *
-     * @Rest\Post("/teach/chapter/edit/do/{id}", name="admin_api_teach_chapter_edit")
+     * @Route("/teach/chapter/edit/do/{id}", name="admin_api_teach_chapter_edit")
      */
     public function editDoAction($id, Request $request, ChapterService $chapterService)
     {
@@ -228,7 +228,7 @@ class ChapterController extends BaseAdminController
 
     /**
      *
-     * @Rest\Post("/teach/chapter/delete/do/{id}", name="admin_api_teach_chapter_delete")
+     * @Route("/teach/chapter/delete/do/{id}", name="admin_api_teach_chapter_delete")
      */
     public function deleteDoAction($id, ChapterService $chapterService)
     {
@@ -244,7 +244,7 @@ class ChapterController extends BaseAdminController
 
     /**
      *
-     * @Rest\Post("/teach/chapter/updateSort/do/{id}", name="admin_api_teach_chapter_updateSort")
+     * @Route("/teach/chapter/updateSort/do/{id}", name="admin_api_teach_chapter_updateSort")
      */
     public function updateSortDoAction($id, Request $request, ChapterService $chapterService)
     {
@@ -287,7 +287,7 @@ class ChapterController extends BaseAdminController
 
     /**
      * 直播 生成数据
-     * @Rest\Post("/teach/chapter/live/do/{id}", name="admin_api_teach_chapter_live")
+     * @Route("/teach/chapter/live/do/{id}", name="admin_api_teach_chapter_live")
      */
     public function liveDoAction($id, ChapterService $chapterService)
     {
@@ -342,7 +342,7 @@ class ChapterController extends BaseAdminController
 
     /**
      *
-     * @Rest\Post("/teach/chapter/video/do/{id}", name="admin_api_teach_chapter_vod")
+     * @Route("/teach/chapter/video/do/{id}", name="admin_api_teach_chapter_vod")
      */
     public function vodDoAction($id, Request $request, ChapterService $chapterService)
     {
@@ -396,7 +396,7 @@ class ChapterController extends BaseAdminController
 
     /**
      *
-     * @Rest\Post("/teach/chapter/materials/do/{id}", name="admin_api_teach_chapter_materials")
+     * @Route("/teach/chapter/materials/do/{id}", name="admin_api_teach_chapter_materials")
      */
     public function materialsDoAction($id, Request $request, ChapterService $chapterService)
     {

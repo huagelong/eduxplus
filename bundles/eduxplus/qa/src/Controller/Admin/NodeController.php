@@ -151,7 +151,7 @@ class NodeController extends BaseAdminController
 
     /**
      *
-     * @Rest\Post("/node/add/do", name="qa_admin_node_do_add")
+     * @Route("/node/add/do", name="qa_admin_node_do_add")
      */
     public function addDoAction(Request $request, QANodeService $nodeService, QAChapterSubService $chapterSubService)
     {
@@ -287,7 +287,7 @@ class NodeController extends BaseAdminController
 
     /**
      *
-     * @Rest\Post("/node/edit/do/{id}", name="qa_admin_node_do_edit")
+     * @Route("/node/edit/do/{id}", name="qa_admin_node_do_edit")
      */
     public function editDoAction($id, Request $request, QANodeService $nodeService, QAChapterSubService $chapterSubService)
     {
@@ -334,7 +334,7 @@ class NodeController extends BaseAdminController
 
     /**
      *
-     * @Rest\Post("/node/delete/do/{id}", name="qa_admin_node_delete")
+     * @Route("/node/delete/do/{id}", name="qa_admin_node_delete")
      */
     public function deleteDoAction($id, QANodeService $nodeService)
     {
@@ -351,7 +351,7 @@ class NodeController extends BaseAdminController
 
     /**
      *
-     * @Rest\Post("/node/bathdelete/do", name="qa_admin_node_bathdelete")
+     * @Route("/node/bathdelete/do", name="qa_admin_node_bathdelete")
      */
     public function bathdeleteDoAction(Request $request, QANodeService $nodeService)
     {
@@ -374,7 +374,7 @@ class NodeController extends BaseAdminController
     }
 
     /**
-     * @Rest\Post("/node/switchStatus/do/{id}", name="qa_admin_node_switchStatus")
+     * @Route("/node/switchStatus/do/{id}", name="qa_admin_node_switchStatus")
      */
     public function switchStatusAction($id,Request $request, QANodeService $nodeService)
     {

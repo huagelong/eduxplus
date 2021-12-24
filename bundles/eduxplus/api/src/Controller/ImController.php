@@ -13,7 +13,6 @@ namespace Eduxplus\ApiBundle\Controller;
 use Eduxplus\CoreBundle\Lib\Base\BaseApiController;
 use Eduxplus\WebsiteBundle\Service\ImService;
 use Symfony\Component\Routing\Annotation\Route;
-use FOS\RestBundle\Controller\Annotations\View as ViewAnnotations;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -25,7 +24,7 @@ class ImController extends BaseApiController
     /**
      *  im设置/取消禁言
      * 
-     * @Rest\Post("/im/forbidSendMsg",name="api_im_forbidSendMsg")
+     * @Route("/im/forbidSendMsg",name="api_im_forbidSendMsg")
      */
     public function forbidSendMsgAction(Request $request, ImService $imService)
     {

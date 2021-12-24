@@ -14,9 +14,9 @@ use Eduxplus\CoreBundle\Lib\Service\HelperService;
 use Eduxplus\CoreBundle\Entity\BaseRoleUser;
 use Eduxplus\CoreBundle\Entity\BaseUser;
 use Knp\Component\Pager\PaginatorInterface;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Eduxplus\CoreBundle\Lib\Base\AdminBaseService;
 use Eduxplus\CoreBundle\Lib\Service\MobileMaskService;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class UserService extends AdminBaseService
 {
@@ -27,7 +27,7 @@ class UserService extends AdminBaseService
 
     public function __construct(
         PaginatorInterface $paginator,
-        UserPasswordEncoderInterface $userPasswordEncoder,
+        UserPasswordHasherInterface $userPasswordEncoder,
         MobileMaskService $mobileMaskService
     ) {
         $this->paginator = $paginator;
@@ -114,7 +114,7 @@ class UserService extends AdminBaseService
         $model->setMobileMask($mobileMask);
         $model->setUuid($uuid);
         $model->setGravatar($this->getOption("app.user.default.gravatar", 1, 0));
-        $pwd = $this->userPasswordEncoder->encodePassword($model, $pwd1);
+        $pwd = $this->userPasswordEncoder->hashPassword($model, $pwd1);
         $model->setPassword($pwd);
         $model->setFullName($fullName);
         $model->setDisplayName($displayName);

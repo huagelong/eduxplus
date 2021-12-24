@@ -11,7 +11,6 @@ namespace Eduxplus\ApiBundle\Controller;
 
 use Eduxplus\CoreBundle\Lib\Base\BaseApiController;
 use Symfony\Component\Routing\Annotation\Route;
-use FOS\RestBundle\Controller\Annotations\View as ViewAnnotations;
 
 /**
  * @package Eduxplus\ApiBundle\Controller
@@ -19,7 +18,7 @@ use FOS\RestBundle\Controller\Annotations\View as ViewAnnotations;
 class IndexController extends BaseApiController
 {
     /**
-     * @Rest\Post("/")
+     * @Route("/")
      */
     public function index()
     {
@@ -27,7 +26,7 @@ class IndexController extends BaseApiController
     }
 
     /**
-     * @Rest\Post("/test",name="api_index_test")
+     * @Route("/test",name="api_index_test")
      */
     public function test()
     {

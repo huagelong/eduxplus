@@ -13,7 +13,6 @@ use Eduxplus\CoreBundle\Lib\Service\Vod\TengxunyunVodService;
 use Eduxplus\WebsiteBundle\Service\ImService;
 use Eduxplus\WebsiteBundle\Service\LearnService;
 use Symfony\Component\Routing\Annotation\Route;
-use FOS\RestBundle\Controller\Annotations\View as ViewAnnotations;
 use Eduxplus\CoreBundle\Lib\Base\BaseApiController;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -23,7 +22,7 @@ class LearnController extends BaseApiController
     /**
      * 课程详情
      *
-     * @Rest\Post("/my/learn", name="api_learn_index")
+     * @Route("/my/learn", name="api_learn_index")
      */
     public function indexAction(Request $request, LearnService $learnService,
                                  TengxunyunVodService $tengxunyunVodService,

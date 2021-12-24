@@ -51,7 +51,7 @@ class CategoryController extends BaseAdminController
     }
 
     /**
-     * @Rest\Post("/teach/category/add/do", name="admin_api_teach_category_add")
+     * @Route("/teach/category/add/do", name="admin_api_teach_category_add")
      */
     public function addDoAction(Request $request, CategoryService $categoryService)
     {
@@ -104,7 +104,7 @@ class CategoryController extends BaseAdminController
     }
 
     /**
-     * @Rest\Post("/teach/category/edit/do/{id}", name="admin_api_teach_category_edit")
+     * @Route("/teach/category/edit/do/{id}", name="admin_api_teach_category_edit")
      */
     public function editDoAction($id, Request $request, CategoryService $categoryService)
     {
@@ -125,7 +125,7 @@ class CategoryController extends BaseAdminController
     }
 
     /**
-     * @Rest\Post("/teach/category/delete/do/{id}", name="admin_api_teach_category_delete")
+     * @Route("/teach/category/delete/do/{id}", name="admin_api_teach_category_delete")
      */
     public function deleteDoAction($id, CategoryService $categoryService)
     {
@@ -135,7 +135,7 @@ class CategoryController extends BaseAdminController
     }
 
     /**
-     * @Rest\Post("/teach/category/updateSort/do", name="admin_api_teach_category_updateSort")
+     * @Route("/teach/category/updateSort/do", name="admin_api_teach_category_updateSort")
      */
     public function updateSortAction(Request $request, CategoryService $categoryService)
     {

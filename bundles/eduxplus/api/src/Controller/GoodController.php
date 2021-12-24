@@ -12,7 +12,6 @@ namespace Eduxplus\ApiBundle\Controller;
 use Eduxplus\ApiBundle\Service\GoodService;
 use Eduxplus\CoreBundle\Lib\Base\BaseApiController;
 use Symfony\Component\Routing\Annotation\Route;
-use FOS\RestBundle\Controller\Annotations\View as ViewAnnotations;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -22,7 +21,7 @@ class GoodController extends BaseApiController
 {
 
     /**
-     * @Rest\Post("/cateGoods",name="api_good_cateGoods")
+     * @Route("/cateGoods",name="api_good_cateGoods")
      */
     public function cateGoodsAction(Request $request, GoodService $goodService)
     {
@@ -42,7 +41,7 @@ class GoodController extends BaseApiController
     }
 
     /**
-     * @Rest\Post("/getSubCate",name="api_good_getSubCate")
+     * @Route("/getSubCate",name="api_good_getSubCate")
      */
     public function getSubCateAction(Request $request, GoodService $goodService)
     {

@@ -13,8 +13,9 @@ use Eduxplus\CoreBundle\Entity\BaseUser;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 //use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Persistence\ObjectManager;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Eduxplus\CoreBundle\Lib\Service\MobileMaskService;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+
 class InstallFixtures extends Fixture
 {
     protected $passwordEncoder;
@@ -28,7 +29,7 @@ class InstallFixtures extends Fixture
     protected $adminUserPwd;
 
     public function __construct(
-        UserPasswordEncoderInterface $passwordEncoder,
+        UserPasswordHasherInterface $passwordEncoder,
         HelperService $helperService,
         MobileMaskService $mobileMaskService,
         string $adminUserMobile,
@@ -142,7 +143,7 @@ class InstallFixtures extends Fixture
         //初始化用户
         $userModel = new BaseUser();
         $uuid = $this->helperService->getUuid();
-        $pwd = $this->passwordEncoder->encodePassword($userModel, $this->adminUserPwd);
+        $pwd = $this->passwordEncoder->needsRehash($userModel, $this->adminUserPwd);
         $userModel->setSex(1);
         $userModel->setBirthday('1949-10-01');
         $userModel->setRegSource("pc");

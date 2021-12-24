@@ -134,7 +134,7 @@ class TestController extends BaseAdminController
 
     /**
      *
-     * @Rest\Post("/test/add/do", name="qa_admin_test_do_add")
+     * @Route("/test/add/do", name="qa_admin_test_do_add")
      */
     public function addDoAction(Request $request, QATestService $testService){
         $name = $request->get("name");
@@ -177,7 +177,7 @@ class TestController extends BaseAdminController
 
     /**
      *
-     * @Rest\Post("/test/edit/do/{id}", name="qa_admin_test_do_edit")
+     * @Route("/test/edit/do/{id}", name="qa_admin_test_do_edit")
      */
     public function editDoAction($id, Request $request, QATestService $testService){
         $name = $request->get("name");
@@ -201,7 +201,7 @@ class TestController extends BaseAdminController
 
     /**
      *
-     * @Rest\Post("/test/delete/do/{id}", name="qa_admin_test_delete")
+     * @Route("/test/delete/do/{id}", name="qa_admin_test_delete")
      */
     public function deleteDoAction($id, QATestService $testService)
     {
@@ -214,7 +214,7 @@ class TestController extends BaseAdminController
 
     /**
      *
-     * @Rest\Post("/test/bathdelete/do", name="qa_admin_test_bathdelete")
+     * @Route("/test/bathdelete/do", name="qa_admin_test_bathdelete")
      */
     public function bathdeleteDoAction(Request $request, QATestService $testService)
     {
@@ -233,7 +233,7 @@ class TestController extends BaseAdminController
     }
 
     /**
-     * @Rest\Post("/test/switchStatus/do/{id}", name="qa_admin_test_switchStatus")
+     * @Route("/test/switchStatus/do/{id}", name="qa_admin_test_switchStatus")
      */
     public function switchStatusAction($id,Request $request, QATestService $testService)
     {

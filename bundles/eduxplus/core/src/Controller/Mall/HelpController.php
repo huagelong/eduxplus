@@ -125,7 +125,7 @@ class HelpController extends BaseAdminController
     }
 
     /**
-     * @Rest\Post("/mall/help/add/do", name="admin_api_mall_help_add")
+     * @Route("/mall/help/add/do", name="admin_api_mall_help_add")
      */
     public function addDoAction(Request $request, HelpService $helpService, HelpCategoryService $helpCategoryService)
     {
@@ -172,7 +172,7 @@ class HelpController extends BaseAdminController
     }
 
     /**
-     * @Rest\Post("/mall/help/edit/do/{id}", name="admin_api_mall_help_edit")
+     * @Route("/mall/help/edit/do/{id}", name="admin_api_mall_help_edit")
      */
     public function editDoAction($id, Request $request, HelpService $helpService)
     {
@@ -199,7 +199,7 @@ class HelpController extends BaseAdminController
     }
 
     /**
-     * @Rest\Post("/mall/help/delete/do/{id}", name="admin_api_mall_help_delete")
+     * @Route("/mall/help/delete/do/{id}", name="admin_api_mall_help_delete")
      */
     public function deleteDoAction($id, HelpService $helpService)
     {
@@ -209,7 +209,7 @@ class HelpController extends BaseAdminController
 
     /**
      *
-     * @Rest\Post("/mall/help/bathdelete/do", name="admin_api_mall_help_bathdelete")
+     * @Route("/mall/help/bathdelete/do", name="admin_api_mall_help_bathdelete")
      */
     public function bathdeleteDoAction(Request $request, HelpService $helpService)
     {
@@ -229,7 +229,7 @@ class HelpController extends BaseAdminController
 
 
     /**
-     * @Rest\Post("/mall/help/switchStatus/do/{id}", name="admin_api_mall_help_switchStatus")
+     * @Route("/mall/help/switchStatus/do/{id}", name="admin_api_mall_help_switchStatus")
      */
     public function switchStatusAction($id, HelpService $helpService, Request $request)
     {

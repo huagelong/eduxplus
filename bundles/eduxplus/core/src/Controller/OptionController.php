@@ -105,7 +105,7 @@ class OptionController extends BaseAdminController
     }
 
     /**
-     * @Rest\Post("/option/add/do/{type}", name="admin_api_option_add", defaults={"type":"1"})
+     * @Route("/option/add/do/{type}", name="admin_api_option_add", defaults={"type":"1"})
      */
     public function addDoAction($type, Request $request, OptionService $optionService){
         $optionKey = $request->get("optionKey");
@@ -169,7 +169,7 @@ class OptionController extends BaseAdminController
     }
 
     /**
-     * @Rest\Post("/option/edit/do/{id}", name="admin_api_option_edit")
+     * @Route("/option/edit/do/{id}", name="admin_api_option_edit")
      */
     public function editDoAction($id, Request $request, OptionService $optionService){
         $info = $optionService->getById($id);
@@ -189,7 +189,7 @@ class OptionController extends BaseAdminController
     }
 
     /**
-     * @Rest\Post("/option/delete/do/{id}", name="admin_api_option_delete")
+     * @Route("/option/delete/do/{id}", name="admin_api_option_delete")
      */
     public function deleteDoAction($id, OptionService $optionService){
         $optionService->deleteOption($id);
@@ -197,7 +197,7 @@ class OptionController extends BaseAdminController
     }
 
     /**
-     * @Rest\Post("/option/bathdelete/do", name="admin_api_option_bathdelete")
+     * @Route("/option/bathdelete/do", name="admin_api_option_bathdelete")
      */
     public function bathdeleteDoAction(Request $request, OptionService $optionService){
         $ids = $request->get("ids");

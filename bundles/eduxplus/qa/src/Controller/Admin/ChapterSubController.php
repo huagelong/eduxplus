@@ -41,7 +41,7 @@ class ChapterSubController extends BaseAdminController
     }
 
     /**
-     * @Rest\Post("/chaptersub/add/do/{chapterId}", name="qa_admin_chaptersub_adddo")
+     * @Route("/chaptersub/add/do/{chapterId}", name="qa_admin_chaptersub_adddo")
      */
     public function adddoAction($chapterId, Request $request, QAChapterSubService $chapterSubService){
         $name = $request->get("name");
@@ -81,7 +81,7 @@ class ChapterSubController extends BaseAdminController
     }
 
     /**
-     * @Rest\Post("/chaptersub/edit/do/{id}", name="qa_admin_chaptersub_edit_do")
+     * @Route("/chaptersub/edit/do/{id}", name="qa_admin_chaptersub_edit_do")
      */
     public function editDoAction($id, Request $request, QAChapterSubService $chapterSubService)
     {
@@ -103,7 +103,7 @@ class ChapterSubController extends BaseAdminController
     }
 
     /**
-     * @Rest\Post("/chaptersub/delete/do/{id}", name="qa_admin_chaptersub_delete_do")
+     * @Route("/chaptersub/delete/do/{id}", name="qa_admin_chaptersub_delete_do")
      */
     public function deleteDoAction($id, QAChapterSubService $chapterSubService)
     {
@@ -114,7 +114,7 @@ class ChapterSubController extends BaseAdminController
     }
 
     /**
-     * @Rest\Post("/chaptersub/updateSort/do/{chapterId}", name="qa_admin_chaptersub_updateSort")
+     * @Route("/chaptersub/updateSort/do/{chapterId}", name="qa_admin_chaptersub_updateSort")
      */
     public function updateSortAction($chapterId, Request $request, QAChapterSubService $chapterSubService)
     {

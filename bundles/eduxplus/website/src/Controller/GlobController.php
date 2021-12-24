@@ -51,7 +51,7 @@ class GlobController extends BaseHtmlController
 
     /**
      * 短信验证码
-     * @Rest\Post("/do/sendCaptcha", name="app_glob_sendCaptcha")
+     * @Route("/do/sendCaptcha", name="app_glob_sendCaptcha")
      */
     public function sendCaptchaAction(Request $request, ValidateService $validateService, GlobService $globService)
     {
@@ -74,7 +74,7 @@ class GlobController extends BaseHtmlController
     }
 
     /**
-     * @Rest\Post("/glob/upload/do/{type}", name="app_glob_upload", defaults={"type":"img"})
+     * @Route("/glob/upload/do/{type}", name="app_glob_upload", defaults={"type":"img"})
      */
     public function uploadAction($type, Request $request, UploadService $uploadService)
     {
@@ -134,7 +134,7 @@ class GlobController extends BaseHtmlController
 
     /**
      * 腾讯云IM回调
-     * @Rest\Route("/tengxunyunImCallback", name="app_glob_tengxunyunImCallback")
+     * @Route("/tengxunyunImCallback", name="app_glob_tengxunyunImCallback")
      */
     public function tengxunyunLiveCallbackAction(Request $request, ImService $imService, LoggerInterface $logger)
     {
@@ -163,7 +163,7 @@ class GlobController extends BaseHtmlController
     /**
      * 点播转码完成回调网址
      * 腾讯云 tengxunyun 阿里云 aliyun
-     * @Rest\Route("/vodCallback/do/{type}", name="app_glob_vodCallback", defaults={"type":"aliyun"})
+     * @Route("/vodCallback/do/{type}", name="app_glob_vodCallback", defaults={"type":"aliyun"})
      */
     public function vodCallbackAction(
         $type,
@@ -224,7 +224,7 @@ class GlobController extends BaseHtmlController
     /**
      * 支付宝支付回调网址
      *
-     * @Rest\Post("/pay/alipayCallback", name="app_glob_pay_alipayCallback")
+     * @Route("/pay/alipayCallback", name="app_glob_pay_alipayCallback")
      */
     public function alipayCallbackAction(Request $request, OrderService $orderService, LoggerInterface $logger){
         /**
@@ -249,7 +249,7 @@ class GlobController extends BaseHtmlController
     /**
      * 微信支付回调网址
      *
-     * @Rest\Post("/pay/wxpayCallback", name="app_glob_pay_wxpayCallback")
+     * @Route("/pay/wxpayCallback", name="app_glob_pay_wxpayCallback")
      */
     public function wxpayCallbackAction(Request $request, OrderService $orderService, LoggerInterface $logger){
 

@@ -148,7 +148,7 @@ class NewsController extends BaseAdminController
     }
 
     /**
-     * @Rest\Post("/mall/news/add/do", name="admin_api_mall_news_add")
+     * @Route("/mall/news/add/do", name="admin_api_mall_news_add")
      */
     public function addDoAction(Request $request, NewsService $newsService)
     {
@@ -208,7 +208,7 @@ class NewsController extends BaseAdminController
     }
 
     /**
-     * @Rest\Post("/mall/news/edit/do/{id}", name="admin_api_mall_news_edit")
+     * @Route("/mall/news/edit/do/{id}", name="admin_api_mall_news_edit")
      */
     public function editDoAction($id, Request $request, NewsService $newsService)
     {
@@ -237,7 +237,7 @@ class NewsController extends BaseAdminController
     }
 
     /**
-     * @Rest\Post("/mall/news/delete/do/{id}", name="admin_api_mall_news_delete")
+     * @Route("/mall/news/delete/do/{id}", name="admin_api_mall_news_delete")
      */
     public function deleteDoAction($id, NewsService $newsService)
     {
@@ -247,7 +247,7 @@ class NewsController extends BaseAdminController
 
     /**
      *
-     * @Rest\Post("/mall/news/bathdelete/do", name="admin_api_mall_news_bathdelete")
+     * @Route("/mall/news/bathdelete/do", name="admin_api_mall_news_bathdelete")
      */
     public function bathdeleteDoAction(Request $request, NewsService $newsService)
     {
@@ -267,7 +267,7 @@ class NewsController extends BaseAdminController
 
 
     /**
-     * @Rest\Post("/mall/news/switchStatus/do/{id}", name="admin_api_mall_news_switchStatus")
+     * @Route("/mall/news/switchStatus/do/{id}", name="admin_api_mall_news_switchStatus")
      */
     public function switchStatusAction($id, NewsService $newsService, Request $request)
     {

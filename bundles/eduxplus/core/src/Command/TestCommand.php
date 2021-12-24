@@ -30,7 +30,8 @@ use Eduxplus\CoreBundle\Entity\BaseRoleUser;
 use Eduxplus\CoreBundle\Lib\Service\MobileMaskService;
 use Eduxplus\CoreBundle\Entity\BaseUser;
 use Eduxplus\CoreBundle\Entity\BaseOption;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+
 class TestCommand extends Command
 {
     protected static $defaultName = 'Core:test';
@@ -48,7 +49,7 @@ class TestCommand extends Command
      * TestCommand constructor.
      */
     public function __construct(
-        UserPasswordEncoderInterface $passwordEncoder,
+        UserPasswordHasherInterface $passwordEncoder,
         AliyunOssService $aliyunOssService,
         UploadService $uploadService,
         CouponService $couponService,
@@ -91,7 +92,7 @@ class TestCommand extends Command
 
         $userModel = new BaseUser();
         $uuid = $this->helperService->getUuid();
-        $pwd = $this->passwordEncoder->encodePassword($userModel, "111111");
+        $pwd = $this->passwordEncoder->needsRehash($userModel, "111111");
         $userModel->setSex(1);
         $userModel->setBirthday('1988-10-01');
         $userModel->setRegSource("pc");

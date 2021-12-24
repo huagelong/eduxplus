@@ -15,7 +15,6 @@ use Eduxplus\CoreBundle\Service\MenuService;
 use Eduxplus\CoreBundle\Lib\Base\BaseAdminController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
-use FOS\RestBundle\Controller\Annotations\View as ViewAnnotations;
 
 class MenuController extends BaseAdminController
 {
@@ -88,7 +87,7 @@ class MenuController extends BaseAdminController
     }
 
     /**
-     * @Rest\Post("/menu/edit/do/{id}", name="admin_api_menu_edit")
+     * @Route("/menu/edit/do/{id}", name="admin_api_menu_edit")
      */
     public function editDoAction($id, Request $request, MenuService $menuService)
     {
@@ -127,7 +126,7 @@ class MenuController extends BaseAdminController
     }
 
     /**
-     * @Rest\Post("/menu/delete/do/{id}", name="admin_api_menu_delete")
+     * @Route("/menu/delete/do/{id}", name="admin_api_menu_delete")
      */
     public function deleteAction($id, MenuService $menuService)
     {
@@ -138,7 +137,7 @@ class MenuController extends BaseAdminController
     }
 
     /**
-     * @Rest\Post("/menu/add/do", name="admin_api_menu_add")
+     * @Route("/menu/add/do", name="admin_api_menu_add")
      */
     public function addDoAction(Request $request, MenuService $menuService)
     {
@@ -177,7 +176,7 @@ class MenuController extends BaseAdminController
     }
 
     /**
-     * @Rest\Post("/menu/updateSort/do", name="admin_api_menu_updateSort")
+     * @Route("/menu/updateSort/do", name="admin_api_menu_updateSort")
      */
     public function updateSort(Request $request, MenuService $menuService)
     {

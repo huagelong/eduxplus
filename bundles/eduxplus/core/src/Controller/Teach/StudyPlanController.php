@@ -63,7 +63,7 @@ class StudyPlanController extends BaseAdminController
 
     /**
      *
-     * @Rest\Post("/teach/studyplan/add/do/{id}", name="admin_api_teach_studyplan_add")
+     * @Route("/teach/studyplan/add/do/{id}", name="admin_api_teach_studyplan_add")
      */
     public function addDoAction($id, Request $request, StudyPlanService $studyPlanService)
     {
@@ -124,7 +124,7 @@ class StudyPlanController extends BaseAdminController
 
     /**
      *
-     * @Rest\Post("/teach/studyplan/edit/do/{id}", name="admin_api_teach_studyplan_edit")
+     * @Route("/teach/studyplan/edit/do/{id}", name="admin_api_teach_studyplan_edit")
      */
     public function editDoAction($id, Request $request, StudyPlanService $studyPlanService)
     {
@@ -156,7 +156,7 @@ class StudyPlanController extends BaseAdminController
 
     /**
      *
-     * @Rest\Post("/teach/studyplan/delete/do/{id}", name="admin_api_teach_studyplan_delete")
+     * @Route("/teach/studyplan/delete/do/{id}", name="admin_api_teach_studyplan_delete")
      */
     public function deleteDoAction($id, StudyPlanService $studyPlanService)
     {
@@ -170,7 +170,7 @@ class StudyPlanController extends BaseAdminController
 
     /**
      *
-     * @Rest\Post("/teach/studyplansub/delete/do/{id}", name="admin_api_teach_studyplansub_delete")
+     * @Route("/teach/studyplansub/delete/do/{id}", name="admin_api_teach_studyplansub_delete")
      */
     public function deleteSubDoAction($id, StudyPlanService $studyPlanService)
     {
@@ -183,7 +183,7 @@ class StudyPlanController extends BaseAdminController
 
     /**
      *
-     * @Rest\Post("/teach/studyplan/updateSort/do/{id}", name="admin_api_teach_studyplan_updateSort")
+     * @Route("/teach/studyplan/updateSort/do/{id}", name="admin_api_teach_studyplan_updateSort")
      */
     public function updateSortDoAction($id, Request $request, StudyPlanService $studyPlanService)
     {
@@ -196,7 +196,7 @@ class StudyPlanController extends BaseAdminController
     }
 
     /**
-     * @Rest\Post("/teach/studyplan/switchStatus/do/{id}", name="admin_api_teach_studyplan_switchStatus")
+     * @Route("/teach/studyplan/switchStatus/do/{id}", name="admin_api_teach_studyplan_switchStatus")
      */
     public function switchStatusAction($id, StudyPlanService $studyPlanService, Request $request)
     {

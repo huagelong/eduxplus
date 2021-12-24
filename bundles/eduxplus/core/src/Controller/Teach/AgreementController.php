@@ -101,7 +101,7 @@ class AgreementController extends BaseAdminController
     }
 
     /**
-     * @Rest\Post("/teach/agreement/add/do", name="admin_api_teach_agreement_add")
+     * @Route("/teach/agreement/add/do", name="admin_api_teach_agreement_add")
      */
     public function addDoAction(Request $request, AgreementService $agreementService){
         $name = $request->get("name");
@@ -136,7 +136,7 @@ class AgreementController extends BaseAdminController
     }
 
     /**
-     * @Rest\Post("/teach/agreement/edit/do/{id}", name="admin_api_teach_agreement_edit")
+     * @Route("/teach/agreement/edit/do/{id}", name="admin_api_teach_agreement_edit")
      */
     public function editDoAction($id, Request $request, AgreementService $agreementService){
         $name = $request->get("name");
@@ -155,7 +155,7 @@ class AgreementController extends BaseAdminController
     }
 
     /**
-     * @Rest\Post("/teach/agreement/delete/do/{id}", name="admin_api_teach_agreement_delete")
+     * @Route("/teach/agreement/delete/do/{id}", name="admin_api_teach_agreement_delete")
      */
     public function deleteAction($id, AgreementService $agreementService){
         $agreementService->del($id);
@@ -163,7 +163,7 @@ class AgreementController extends BaseAdminController
     }
 
     /**
-     * @Rest\Post("/teach/agreement/bathdelete/do", name="admin_api_teach_agreement_bathdelete")
+     * @Route("/teach/agreement/bathdelete/do", name="admin_api_teach_agreement_bathdelete")
      */
     public function bathDeleteAction(Request $request, AgreementService $agreementService){
 

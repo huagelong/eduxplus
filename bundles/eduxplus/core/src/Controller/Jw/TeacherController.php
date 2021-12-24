@@ -109,7 +109,7 @@ class TeacherController extends BaseAdminController
     }
 
     /**
-     * @Rest\Post("/jw/teacher/add/do", name="admin_api_jw_teacher_add")
+     * @Route("/jw/teacher/add/do", name="admin_api_jw_teacher_add")
      */
     public function addDoAction(Request $request, TeacherService $teacherService)
     {
@@ -200,7 +200,7 @@ class TeacherController extends BaseAdminController
     }
 
     /**
-     * @Rest\Post("/jw/teacher/edit/do/{id}", name="admin_api_jw_teacher_edit")
+     * @Route("/jw/teacher/edit/do/{id}", name="admin_api_jw_teacher_edit")
      */
     public function editDoAction($id, Request $request, TeacherService $teacherService)
     {
@@ -222,7 +222,7 @@ class TeacherController extends BaseAdminController
     }
 
     /**
-     * @Rest\Post("/jw/teacher/delete/do/{id}", name="admin_api_jw_teacher_delete")
+     * @Route("/jw/teacher/delete/do/{id}", name="admin_api_jw_teacher_delete")
      */
     public function deleteAction($id, TeacherService $teacherService)
     {
@@ -231,7 +231,7 @@ class TeacherController extends BaseAdminController
     }
 
     /**
-     * @Rest\Post("/jw/teacher/bathdelete/do", name="admin_api_jw_teacher_bathdelete")
+     * @Route("/jw/teacher/bathdelete/do", name="admin_api_jw_teacher_bathdelete")
      */
     public function bathdeleteAction(Request $request, TeacherService $teacherService)
     {
@@ -251,7 +251,7 @@ class TeacherController extends BaseAdminController
     }
 
     /**
-     * @Rest\Post("/jw/teacher/switchStatus/do/{id}", name="admin_api_jw_teacher_switchStatus")
+     * @Route("/jw/teacher/switchStatus/do/{id}", name="admin_api_jw_teacher_switchStatus")
      */
     public function switchStatusAction($id, Request $request, TeacherService $teacherService)
     {

@@ -88,7 +88,7 @@ class BannerController extends BaseAdminController
 
     /**
      *
-     * @Rest\Post("/mall/banner/add/do", name="admin_api_mall_banner_add")
+     * @Route("/mall/banner/add/do", name="admin_api_mall_banner_add")
      */
     public function addDoAction(Request $request, BannerService $bannerService)
     {
@@ -128,7 +128,7 @@ class BannerController extends BaseAdminController
 
     /**
      *
-     * @Rest\Post("/mall/banner/edit/do/{id}", name="admin_api_mall_banner_edit")
+     * @Route("/mall/banner/edit/do/{id}", name="admin_api_mall_banner_edit")
      */
     public function editDoAction($id, Request $request, BannerService $bannerService)
     {
@@ -152,7 +152,7 @@ class BannerController extends BaseAdminController
 
     /**
      *
-     * @Rest\Post("/mall/banner/delete/do/{id}", name="admin_api_mall_banner_delete")
+     * @Route("/mall/banner/delete/do/{id}", name="admin_api_mall_banner_delete")
      */
     public function deleteDoAction($id, BannerService $bannerService)
     {
@@ -163,7 +163,7 @@ class BannerController extends BaseAdminController
 
     /**
      *
-     * @Rest\Post("/mall/banner/bathdelete/do", name="admin_api_mall_banner_bathdelete")
+     * @Route("/mall/banner/bathdelete/do", name="admin_api_mall_banner_bathdelete")
      */
     public function bathDeleteDoAction(Request $request, BannerService $bannerService)
     {
@@ -260,7 +260,7 @@ class BannerController extends BaseAdminController
 
     /**
      *
-     * @Rest\Post("/mall/bannermain/add/do", name="admin_api_mall_bannermain_add")
+     * @Route("/mall/bannermain/add/do", name="admin_api_mall_bannermain_add")
      */
     public function addMainDoAction(Request $request, BannerService $bannerService)
     {
@@ -313,7 +313,7 @@ class BannerController extends BaseAdminController
 
     /**
      *
-     * @Rest\Post("/mall/bannermain/edit/do/{id}", name="admin_api_mall_bannermain_edit")
+     * @Route("/mall/bannermain/edit/do/{id}", name="admin_api_mall_bannermain_edit")
      */
     public function editMainDoAction($id, Request $request, BannerService $bannerService)
     {
@@ -338,7 +338,7 @@ class BannerController extends BaseAdminController
 
     /**
      *
-     * @Rest\Post("/mall/bannermain/delete/do/{id}", name="admin_api_mall_bannermain_delete")
+     * @Route("/mall/bannermain/delete/do/{id}", name="admin_api_mall_bannermain_delete")
      */
     public function deleteMainDoAction($id, BannerService $bannerService)
     {
@@ -350,7 +350,7 @@ class BannerController extends BaseAdminController
 
     /**
      *
-     * @Rest\Post("/mall/bannermain/bathdelete/do", name="admin_api_mall_bannermain_bathdelete")
+     * @Route("/mall/bannermain/bathdelete/do", name="admin_api_mall_bannermain_bathdelete")
      */
     public function bathDeleteMainDoAction(Request $request, BannerService $bannerService)
     {
@@ -371,7 +371,7 @@ class BannerController extends BaseAdminController
     }
 
     /**
-     * @Rest\Post("/mall/bannermain/switchStatus/do/{id}", name="admin_api_mall_bannermain_switchStatus")
+     * @Route("/mall/bannermain/switchStatus/do/{id}", name="admin_api_mall_bannermain_switchStatus")
      */
     public function switchStatusMainAction($id, BannerService $bannerService, Request $request)
     {

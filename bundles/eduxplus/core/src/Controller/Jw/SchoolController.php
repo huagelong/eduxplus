@@ -103,7 +103,7 @@ class SchoolController extends BaseAdminController
     }
 
     /**
-     * @Rest\Post("/jw/school/add/do", name="admin_api_jw_school_add")
+     * @Route("/jw/school/add/do", name="admin_api_jw_school_add")
      */
     public function addDoAction(Request $request, SchoolService $schoolService){
         $name = $request->get("name");
@@ -148,7 +148,7 @@ class SchoolController extends BaseAdminController
     }
 
     /**
-     * @Rest\Post("/jw/school/edit/do/{id}", name="admin_api_jw_school_edit")
+     * @Route("/jw/school/edit/do/{id}", name="admin_api_jw_school_edit")
      */
     public function editDoAction($id, Request $request, SchoolService $schoolService){
         $name = $request->get("name");
@@ -173,7 +173,7 @@ class SchoolController extends BaseAdminController
     }
 
     /**
-     * @Rest\Post("/jw/school/delete/do/{id}", name="admin_api_jw_school_delete")
+     * @Route("/jw/school/delete/do/{id}", name="admin_api_jw_school_delete")
      */
     public function deleteAction($id, SchoolService $schoolService){
         $schoolService->del($id);
@@ -181,7 +181,7 @@ class SchoolController extends BaseAdminController
     }
 
     /**
-     * @Rest\Post("/jw/school/bathdelete/do", name="admin_api_jw_school_bathdelete")
+     * @Route("/jw/school/bathdelete/do", name="admin_api_jw_school_bathdelete")
      */
     public function bathdeleteAction(Request $request, SchoolService $schoolService){
 
