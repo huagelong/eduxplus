@@ -20,14 +20,14 @@ use Eduxplus\CoreBundle\Service\UserService;
 use Eduxplus\CoreBundle\Lib\Base\BaseAdminController;
 use Eduxplus\QaBundle\Service\Admin\QATestService;
 use Symfony\Component\HttpFoundation\Request;
-use FOS\RestBundle\Controller\Annotations as Rest;
+use Symfony\Component\Routing\Annotation\Route;
 
 class MallGoodsController extends BaseAdminController
 {
 
     /**
      *
-     * @Rest\Get("/mall/goods/index", name="admin_qa_mall_goods_index")
+     * @Route("/mall/goods/index", name="admin_qa_mall_goods_index")
      */
     public function indexAction(
         Request $request,
@@ -135,7 +135,7 @@ class MallGoodsController extends BaseAdminController
 
     /**
      *
-     * @Rest\Get("/mall/goods/add", name="admin_qa_mall_goods_add")
+     * @Route("/mall/goods/add", name="admin_qa_mall_goods_add")
      */
     public function addAction(
         Form $form,
@@ -175,7 +175,7 @@ class MallGoodsController extends BaseAdminController
 
     /**
      *
-     * @Rest\Get("/mall/groupGoods/add", name="admin_qa_mall_group_goods_add")
+     * @Route("/mall/groupGoods/add", name="admin_qa_mall_group_goods_add")
      */
     public function addGroupAction(
         Form $form,
@@ -317,7 +317,7 @@ class MallGoodsController extends BaseAdminController
 
     /**
      *
-     * @Rest\Get("/mall/goods/edit/{id}", name="admin_qa_mall_goods_edit")
+     * @Route("/mall/goods/edit/{id}", name="admin_qa_mall_goods_edit")
      */
     public function editAction(
         $id,
@@ -371,7 +371,7 @@ class MallGoodsController extends BaseAdminController
 
     /**
      *
-     * @Rest\Get("/mall/goods/editgroup/{id}", name="admin_qa_mall_goods_editgroup")
+     * @Route("/mall/goods/editgroup/{id}", name="admin_qa_mall_goods_editgroup")
      */
     public function editgroupAction(
         $id,
@@ -425,7 +425,7 @@ class MallGoodsController extends BaseAdminController
 
     /**
      *
-     * @Rest\Get("/mall/goods/view/{id}", name="admin_qa_mall_goods_view")
+     * @Route("/mall/goods/view/{id}", name="admin_qa_mall_goods_view")
      */
     public function viewAction(
         $id,
@@ -478,7 +478,7 @@ class MallGoodsController extends BaseAdminController
 
     /**
      *
-     * @Rest\Get("/mall/goods/viewgroup/{id}", name="admin_qa_mall_goods_viewgroup")
+     * @Route("/mall/goods/viewgroup/{id}", name="admin_qa_mall_goods_viewgroup")
      */
     public function viewgroupAction(
         $id,

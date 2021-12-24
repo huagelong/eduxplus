@@ -14,14 +14,14 @@ use Eduxplus\CoreBundle\Lib\Grid\Grid;
 use Eduxplus\CoreBundle\Lib\View\View;
 use Eduxplus\CoreBundle\Service\Mall\PageService;
 use Eduxplus\CoreBundle\Lib\Base\BaseAdminController;
-use FOS\RestBundle\Controller\Annotations as Rest;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 
 class PageController extends BaseAdminController
 {
     /**
      *
-     * @Rest\Get("/mall/page/index", name="admin_mall_page_index")
+     * @Route("/mall/page/index", name="admin_mall_page_index")
      */
      public function indexAction( Request $request,Grid $grid, PageService $pageService){
          $pageSize = 40;
@@ -81,7 +81,7 @@ class PageController extends BaseAdminController
 
     /**
      *
-     * @Rest\Get("/mall/page/add", name="admin_mall_page_add")
+     * @Route("/mall/page/add", name="admin_mall_page_add")
      */
     public function addAction(Form $form) {
         $form->text("单页名称")->field("name")->isRequire(1);
@@ -122,7 +122,7 @@ class PageController extends BaseAdminController
 
     /**
      *
-     * @Rest\Get("/mall/page/view/{id}", name="admin_mall_page_view")
+     * @Route("/mall/page/view/{id}", name="admin_mall_page_view")
      */
     public function viewAction($id, View $view, PageService $pageService) {
         $info = $pageService->getById($id);
@@ -139,7 +139,7 @@ class PageController extends BaseAdminController
 
     /**
      *
-     * @Rest\Get("/mall/page/edit/{id}", name="admin_mall_page_edit")
+     * @Route("/mall/page/edit/{id}", name="admin_mall_page_edit")
      */
     public function editAction($id, Form $form, PageService $pageService) {
         $info = $pageService->getById($id);

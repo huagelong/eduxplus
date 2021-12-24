@@ -13,7 +13,7 @@ use Eduxplus\CoreBundle\Service\Teach\CategoryService;
 use Eduxplus\CoreBundle\Service\Teach\ProductService;
 use Eduxplus\CoreBundle\Service\UserService;
 use Eduxplus\CoreBundle\Lib\Base\BaseAdminController;
-use FOS\RestBundle\Controller\Annotations as Rest;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Eduxplus\CoreBundle\Lib\Form\Form;
 use Eduxplus\CoreBundle\Lib\Grid\Grid;
@@ -22,7 +22,7 @@ class ProductController extends BaseAdminController
 {
 
     /**
-     * @Rest\Get("/teach/product/index", name="admin_teach_product_index")
+     * @Route("/teach/product/index", name="admin_teach_product_index")
      */
     public function indexAction(Request $request, Grid $grid, ProductService $productService, CategoryService $categoryService, UserService $userService)
     {
@@ -101,7 +101,7 @@ class ProductController extends BaseAdminController
     }
 
     /**
-     * @Rest\Get("/teach/product/add", name="admin_teach_product_add")
+     * @Route("/teach/product/add", name="admin_teach_product_add")
      */
     public function addAction(Form $form, ProductService $productService, CategoryService $categoryService)
     {
@@ -142,7 +142,7 @@ class ProductController extends BaseAdminController
     }
 
     /**
-     * @Rest\Get("/teach/product/edit/{id}", name="admin_teach_product_edit")
+     * @Route("/teach/product/edit/{id}", name="admin_teach_product_edit")
      */
     public function editAction($id, Form $form, ProductService $productService,  CategoryService $categoryService)
     {

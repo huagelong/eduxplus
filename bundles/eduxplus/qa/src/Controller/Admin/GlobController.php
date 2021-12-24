@@ -13,7 +13,7 @@ use Eduxplus\CoreBundle\Service\Mall\GoodsService;
 use Eduxplus\CoreBundle\Lib\Base\BaseAdminController;
 use Eduxplus\QaBundle\Service\Admin\QATestService;
 use Symfony\Component\HttpFoundation\Request;
-use FOS\RestBundle\Controller\Annotations as Rest;
+use Symfony\Component\Routing\Annotation\Route;
 
 class GlobController extends BaseAdminController
 {
@@ -21,7 +21,7 @@ class GlobController extends BaseAdminController
     /**
      * 试卷商品搜索
      *
-     * @Rest\Get("/glob/searchProduct/do", name="admin_qa_api_glob_searchProductDo")
+     * @Route("/glob/searchProduct/do", name="admin_qa_api_glob_searchProductDo")
      */
     public function searchProductDoAction(Request $request, QATestService $testService){
         $kw = $request->get("kw");
@@ -32,7 +32,7 @@ class GlobController extends BaseAdminController
 
 
     /**
-     * @Rest\Get("/glob/searchGoods/do", name="admin_qa_api_glob_searchGoodsDo")
+     * @Route("/glob/searchGoods/do", name="admin_qa_api_glob_searchGoodsDo")
      */
     public function searchGoodsDoAction(Request $request, GoodsService $goodsService){
         $kw = $request->get("kw");

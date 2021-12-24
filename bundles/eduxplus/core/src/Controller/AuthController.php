@@ -10,7 +10,7 @@ namespace Eduxplus\CoreBundle\Controller;
 
 
 use Eduxplus\CoreBundle\Lib\Base\BaseAdminController;
-use FOS\RestBundle\Controller\Annotations as Rest;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;

@@ -13,7 +13,7 @@ namespace Eduxplus\CoreBundle\Controller;
 use Eduxplus\CoreBundle\Lib\View\View;
 use Eduxplus\CoreBundle\Service\MenuService;
 use Eduxplus\CoreBundle\Lib\Base\BaseAdminController;
-use FOS\RestBundle\Controller\Annotations as Rest;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use FOS\RestBundle\Controller\Annotations\View as ViewAnnotations;
 
@@ -21,7 +21,7 @@ class MenuController extends BaseAdminController
 {
 
     /**
-     * @Rest\Get("/menu/index", name="admin_menu_index")
+     * @Route("/menu/index", name="admin_menu_index")
      */
     public function indexAction(MenuService $menuService)
     {
@@ -34,7 +34,7 @@ class MenuController extends BaseAdminController
     }
 
     /**
-     * @Rest\Get("/menu/add", name="admin_menu_add")
+     * @Route("/menu/add", name="admin_menu_add")
      */
     public function addAction(MenuService $menuService)
     {
@@ -45,7 +45,7 @@ class MenuController extends BaseAdminController
     }
 
     /**
-     * @Rest\Get("/menu/edit/{id}", name="admin_menu_edit")
+     * @Route("/menu/edit/{id}", name="admin_menu_edit")
      */
     public function editAction($id, MenuService $menuService)
     {
@@ -58,7 +58,7 @@ class MenuController extends BaseAdminController
     }
 
     /**
-     * @Rest\Get("/menu/view/{id}", name="admin_menu_view")
+     * @Route("/menu/view/{id}", name="admin_menu_view")
      */
     public function viewAction($id, MenuService $menuService, View $view)
     {

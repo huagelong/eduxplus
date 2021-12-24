@@ -12,7 +12,7 @@ namespace Eduxplus\CoreBundle\Controller\Jw;
 use Eduxplus\CoreBundle\Lib\View\View;
 use Eduxplus\CoreBundle\Service\Jw\SchoolService;
 use Eduxplus\CoreBundle\Lib\Base\BaseAdminController;
-use FOS\RestBundle\Controller\Annotations as Rest;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Eduxplus\CoreBundle\Lib\Form\Form;
 use Eduxplus\CoreBundle\Lib\Grid\Grid;
@@ -20,7 +20,7 @@ use Eduxplus\CoreBundle\Lib\Grid\Grid;
 class SchoolController extends BaseAdminController
 {
     /**
-     * @Rest\Get("/jw/school/index", name="admin_jw_school_index")
+     * @Route("/jw/school/index", name="admin_jw_school_index")
      */
     public function indexAction(Request $request, Grid $grid, SchoolService $schoolService){
         $pageSize = 40;
@@ -70,7 +70,7 @@ class SchoolController extends BaseAdminController
     }
 
     /**
-     * @Rest\Get("/jw/school/view/{id}", name="admin_jw_school_view")
+     * @Route("/jw/school/view/{id}", name="admin_jw_school_view")
      */
     public function viewAction($id, View $view, SchoolService $schoolService){
         $info = $schoolService->getById($id);
@@ -88,7 +88,7 @@ class SchoolController extends BaseAdminController
     }
 
     /**
-     * @Rest\Get("/jw/school/add", name="admin_jw_school_add")
+     * @Route("/jw/school/add", name="admin_jw_school_add")
      */
     public function addAction(Form $form, SchoolService $schoolService){
         $form->text("名称")->field("name")->isRequire(1);
@@ -129,7 +129,7 @@ class SchoolController extends BaseAdminController
     }
 
     /**
-     * @Rest\Get("/jw/school/edit/{id}", name="admin_jw_school_edit")
+     * @Route("/jw/school/edit/{id}", name="admin_jw_school_edit")
      */
     public function editAction($id, Form $form, SchoolService $schoolService){
         $info = $schoolService->getById($id);

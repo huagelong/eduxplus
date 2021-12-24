@@ -17,7 +17,7 @@ use Eduxplus\CoreBundle\Lib\Base\BaseController;
 use Eduxplus\CoreBundle\Lib\Service\UploadService;
 use Eduxplus\CoreBundle\Lib\Service\Vod\AliyunVodService;
 use Eduxplus\CoreBundle\Lib\Service\Vod\TengxunyunVodService;
-use FOS\RestBundle\Controller\Annotations as Rest;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 
 class GlobController extends BaseAdminController
@@ -70,7 +70,7 @@ class GlobController extends BaseAdminController
     }
 
     /**
-     * @Rest\Get("/glob/searchAdminUser/do", name="admin_api_glob_searchAdminUserDo")
+     * @Route("/glob/searchAdminUser/do", name="admin_api_glob_searchAdminUserDo")
      */
     public function searchAdminUserDoAction(Request $request, ProductService $productService){
         $kw = $request->get("kw");
@@ -80,7 +80,7 @@ class GlobController extends BaseAdminController
     }
 
     /**
-     * @Rest\Get("/glob/searchUser/do", name="admin_api_glob_searchUserDo")
+     * @Route("/glob/searchUser/do", name="admin_api_glob_searchUserDo")
      */
     public function searchUserDoAction(Request $request, ProductService $productService){
         $kw = $request->get("kw");
@@ -90,7 +90,7 @@ class GlobController extends BaseAdminController
     }
 
     /**
-     * @Rest\Get("/glob/searchProduct/do", name="admin_api_glob_searchProductDo")
+     * @Route("/glob/searchProduct/do", name="admin_api_glob_searchProductDo")
      */
     public function searchProductDoAction(Request $request, ProductService $productService){
         $kw = $request->get("kw");
@@ -100,7 +100,7 @@ class GlobController extends BaseAdminController
     }
 
     /**
-     * @Rest\Get("/glob/searchGoods/do", name="admin_api_glob_searchGoodsDo")
+     * @Route("/glob/searchGoods/do", name="admin_api_glob_searchGoodsDo")
      */
     public function searchGoodsDoAction(Request $request, GoodsService $goodsService){
         $kw = $request->get("kw");
@@ -110,7 +110,7 @@ class GlobController extends BaseAdminController
     }
 
     /**
-     * @Rest\Get("/glob/searchCourse/do", name="admin_api_glob_searchCourseDo")
+     * @Route("/glob/searchCourse/do", name="admin_api_glob_searchCourseDo")
      */
     public function searchCourseDoAction(Request $request, StudyPlanService $studyPlanService){
         $kw = $request->get("kw");
@@ -122,7 +122,7 @@ class GlobController extends BaseAdminController
 
     /**
      * 腾讯云 高级播放签名生成
-     * @Rest\Get("/glob/tengxunyunVodAndvancePlaySign/do", name="admin_api_glob_tengxunyunVodAndvancePlaySignDo")
+     * @Route("/glob/tengxunyunVodAndvancePlaySign/do", name="admin_api_glob_tengxunyunVodAndvancePlaySignDo")
      */
     public function tengxunyunVodAndvancePlaySignAction(Request $request, TengxunyunVodService $tengxunyunVodService){
         $videoId = $request->get("videoId");
@@ -135,7 +135,7 @@ class GlobController extends BaseAdminController
 
     /**
      * 腾讯云 获取播放地址
-     * @Rest\Get("/glob/tengxunyunVodEncryptionPlayUrl/do", name="admin_api_glob_tengxunyunVodEncryptionPlayUrlDo")
+     * @Route("/glob/tengxunyunVodEncryptionPlayUrl/do", name="admin_api_glob_tengxunyunVodEncryptionPlayUrlDo")
      */
     public function tengxunyunVodEncryptionPlayUrlAction(Request $request, TengxunyunVodService $tengxunyunVodService){
         $vodeoId = $request->get("vodeoId");
@@ -148,7 +148,7 @@ class GlobController extends BaseAdminController
 
     /**
      * 腾讯云 上传签名
-     * @Rest\Get("/glob/tengxunyunSignature/do", name="admin_api_glob_tengxunyunSignatureDo")
+     * @Route("/glob/tengxunyunSignature/do", name="admin_api_glob_tengxunyunSignatureDo")
      */
     public function tengxunyunSignatureAction(Request $request, TengxunyunVodService $tengxunyunVodService){
         $rs = $tengxunyunVodService->getUploadSignature();
@@ -161,7 +161,7 @@ class GlobController extends BaseAdminController
 
     /**
      * 阿里云点播信息 playAuth 播放凭证,播放列表等
-     * @Rest\Get("/glob/getAliyunVodPlayInfo/do", name="admin_api_glob_getAliyunVodPlayInfoDo")
+     * @Route("/glob/getAliyunVodPlayInfo/do", name="admin_api_glob_getAliyunVodPlayInfoDo")
      */
     public function getAliyunVodPlayInfoAction(Request $request, AliyunVodService $aliyunVodService){
         $videoId = $request->get("videoId");
@@ -175,7 +175,7 @@ class GlobController extends BaseAdminController
 
     /**
      * 阿里云 生成上传凭证
-     * @Rest\Get("/glob/aliyunVodCreateUploadVideo/do", name="admin_api_glob_aliyunVodCreateUploadVideoDo")
+     * @Route("/glob/aliyunVodCreateUploadVideo/do", name="admin_api_glob_aliyunVodCreateUploadVideoDo")
      */
     public function aliyunVodCreateUploadVideoAction(Request $request, AliyunVodService $aliyunVodService){
         $title = $request->get("title");
@@ -194,7 +194,7 @@ class GlobController extends BaseAdminController
     /**
      * 阿里云 刷新上传凭证
      *
-     * @Rest\Get("/glob/aliyunVodRefreshUploadVideo/do", name="admin_api_glob_aliyunVodRefreshUploadVideoDo")
+     * @Route("/glob/aliyunVodRefreshUploadVideo/do", name="admin_api_glob_aliyunVodRefreshUploadVideoDo")
      */
     public function aliyunVodRefreshUploadVideoAction(Request $request, AliyunVodService $aliyunVodService){
         $videoId = $request->get("videoId");

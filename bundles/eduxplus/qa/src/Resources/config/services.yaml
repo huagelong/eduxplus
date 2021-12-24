@@ -14,6 +14,3 @@ services:
   Eduxplus\QaBundle\Controller\:
     resource: '../../../src/Controller/'
     tags: [ 'controller.service_arguments' ]
-
-  Eduxplus\QaBundle\RoutingLoader:
-    tags: [routing.loader]

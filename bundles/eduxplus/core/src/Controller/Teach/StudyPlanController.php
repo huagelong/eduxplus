@@ -12,7 +12,7 @@ namespace Eduxplus\CoreBundle\Controller\Teach;
 use Eduxplus\CoreBundle\Service\Teach\CourseService;
 use Eduxplus\CoreBundle\Service\Teach\StudyPlanService;
 use Eduxplus\CoreBundle\Lib\Base\BaseAdminController;
-use FOS\RestBundle\Controller\Annotations as Rest;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Eduxplus\CoreBundle\Lib\Form\Form;
 use Eduxplus\CoreBundle\Lib\Grid\Grid;
@@ -22,7 +22,7 @@ class StudyPlanController extends BaseAdminController
 
     /**
      *
-     * @Rest\Get("/teach/studyplan/index/{id}", name="admin_teach_studyplan_index")
+     * @Route("/teach/studyplan/index/{id}", name="admin_teach_studyplan_index")
      */
     public function indexAction($id, Request $request, Grid $grid, StudyPlanService $studyPlanService)
     {
@@ -41,7 +41,7 @@ class StudyPlanController extends BaseAdminController
 
     /**
      *
-     * @Rest\Get("/teach/studyplan/add/{id}", name="admin_teach_studyplan_add")
+     * @Route("/teach/studyplan/add/{id}", name="admin_teach_studyplan_add")
      */
     public function addAction($id, Form $form, Request $request, StudyPlanService $studyPlanService)
     {
@@ -94,7 +94,7 @@ class StudyPlanController extends BaseAdminController
 
     /**
      *
-     * @Rest\Get("/teach/studyplan/edit/{id}", name="admin_teach_studyplan_edit")
+     * @Route("/teach/studyplan/edit/{id}", name="admin_teach_studyplan_edit")
      */
     public function editAction($id, Form $form, StudyPlanService $studyPlanService, CourseService $courseService)
     {

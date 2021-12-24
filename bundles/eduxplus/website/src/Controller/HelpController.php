@@ -11,13 +11,13 @@ namespace Eduxplus\WebsiteBundle\Controller;
 
 use Eduxplus\CoreBundle\Lib\Base\BaseHtmlController;
 use Eduxplus\WebsiteBundle\Service\HelpService;
-use FOS\RestBundle\Controller\Annotations as Rest;
+use Symfony\Component\Routing\Annotation\Route;
 
 class HelpController extends BaseHtmlController
 {
 
     /**
-     * @Rest\Get("/help/{type}/{id}", name="app_help", defaults={"type":0, "id":0})
+     * @Route("/help/{type}/{id}", name="app_help", defaults={"type":0, "id":0})
      */
     public function indexAction($type, $id, HelpService $helpService){
         $data = [];

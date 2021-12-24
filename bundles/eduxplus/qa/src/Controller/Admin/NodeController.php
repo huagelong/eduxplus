@@ -17,14 +17,14 @@ use Eduxplus\CoreBundle\Lib\Base\BaseAdminController;
 use Eduxplus\QaBundle\Service\Admin\QAChapterService;
 use Eduxplus\QaBundle\Service\Admin\QAChapterSubService;
 use Eduxplus\QaBundle\Service\Admin\QANodeService;
-use FOS\RestBundle\Controller\Annotations as Rest;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 
 class NodeController extends BaseAdminController
 {
 
     /**
-     * @Rest\Get("/node/index/{chapterId}/{chapterSubId}", name="qa_admin_node_index", defaults={"chapterSubId":0})
+     * @Route("/node/index/{chapterId}/{chapterSubId}", name="qa_admin_node_index", defaults={"chapterSubId":0})
      */
     public function indexAction($chapterId, $chapterSubId, Request $request, Grid $grid, QAChapterSubService $chapterSubService,
                                 QANodeService $nodeService, QAChapterService $chapterService, UserService $userService){
@@ -112,7 +112,7 @@ class NodeController extends BaseAdminController
 
 
     /**
-     * @Rest\Get("/node/add/{chapterId}/{chapterSubId}", name="qa_admin_node_add", defaults={"chapterSubId":0})
+     * @Route("/node/add/{chapterId}/{chapterSubId}", name="qa_admin_node_add", defaults={"chapterSubId":0})
      */
     public function addAction($chapterId, $chapterSubId, Form $form, QAChapterSubService $chapterSubService){
 
@@ -196,7 +196,7 @@ class NodeController extends BaseAdminController
 
 
     /**
-     * @Rest\Get("/node/edit/{id}", name="qa_admin_node_edit")
+     * @Route("/node/edit/{id}", name="qa_admin_node_edit")
      */
     public function editAction($id, Form $form, QANodeService $nodeService, QAChapterSubService $chapterSubService){
 
@@ -241,7 +241,7 @@ class NodeController extends BaseAdminController
     }
 
     /**
-     * @Rest\Get("/node/view/{id}", name="qa_admin_node_view")
+     * @Route("/node/view/{id}", name="qa_admin_node_view")
      */
     public function viewAction($id, View $view, QANodeService $nodeService, QAChapterSubService $chapterSubService){
 

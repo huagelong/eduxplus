@@ -13,7 +13,7 @@ use Eduxplus\CoreBundle\Service\Mall\CouponService;
 use Eduxplus\CoreBundle\Service\Teach\CategoryService;
 use Eduxplus\CoreBundle\Service\UserService;
 use Eduxplus\CoreBundle\Lib\Base\BaseAdminController;
-use FOS\RestBundle\Controller\Annotations as Rest;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Eduxplus\CoreBundle\Lib\Form\Form;
 use Eduxplus\CoreBundle\Lib\Grid\Grid;
@@ -27,7 +27,7 @@ class CouponController extends BaseAdminController
 
     /**
      *
-     * @Rest\Get("/mall/coupon/index", name="admin_mall_coupon_index")
+     * @Route("/mall/coupon/index", name="admin_mall_coupon_index")
      */
     public function indexAction(Request $request,Grid $grid, CouponService $couponService, CategoryService $categoryService, UserService $userService){
         $pageSize = 40;
@@ -119,7 +119,7 @@ class CouponController extends BaseAdminController
 
     /**
      *
-     * @Rest\Get("/mall/coupon/add", name="admin_mall_coupon_add")
+     * @Route("/mall/coupon/add", name="admin_mall_coupon_add")
      */
 
     public function addAction(Form $form, CouponService $couponService, CategoryService $categoryService){
@@ -186,7 +186,7 @@ class CouponController extends BaseAdminController
 
     /**
      *
-     * @Rest\Get("/mall/coupon/edit/{id}", name="admin_mall_coupon_edit")
+     * @Route("/mall/coupon/edit/{id}", name="admin_mall_coupon_edit")
      */
     public function editAction($id, Form $form, CouponService $couponService, CategoryService $categoryService, GoodsService $goodsService){
 
@@ -311,7 +311,7 @@ class CouponController extends BaseAdminController
 
     /**
      *
-     * @Rest\Get("/mall/couponsub/index/{id}", name="admin_mall_couponsub_index")
+     * @Route("/mall/couponsub/index/{id}", name="admin_mall_couponsub_index")
      */
     public function subAction($id, Request $request,Grid $grid, CouponService $couponService){
         $couponGroupInfo = $couponService->getById($id);
@@ -351,7 +351,7 @@ class CouponController extends BaseAdminController
 
     /**
      * 生成优惠券码
-     * @Rest\Get("/mall/couponsub/create/{id}", name="admin_mall_couponsub_create")
+     * @Route("/mall/couponsub/create/{id}", name="admin_mall_couponsub_create")
      */
     public function subCouponCreateAction($id, CouponService $couponService){
         set_time_limit(0);
@@ -365,7 +365,7 @@ class CouponController extends BaseAdminController
 
     /**
      *
-     * @Rest\Get("/mall/couponsub/export/{id}", name="admin_mall_couponsub_export")
+     * @Route("/mall/couponsub/export/{id}", name="admin_mall_couponsub_export")
      */
     public function subexportAction($id, CouponService $couponService){
         $path =  $couponService->export($id);

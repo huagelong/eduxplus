@@ -13,7 +13,7 @@ use Eduxplus\CoreBundle\Service\Mall\CouponService;
 use Eduxplus\CoreBundle\Service\Teach\CategoryService;
 use Eduxplus\CoreBundle\Service\UserService;
 use Eduxplus\CoreBundle\Lib\Base\BaseAdminController;
-use FOS\RestBundle\Controller\Annotations as Rest;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Eduxplus\CoreBundle\Lib\Form\Form;
 use Eduxplus\CoreBundle\Lib\Grid\Grid;
@@ -24,7 +24,7 @@ class PayController extends BaseAdminController
 
     /**
      *
-     * @Rest\Get("/mall/pay/index", name="admin_mall_pay_index")
+     * @Route("/mall/pay/index", name="admin_mall_pay_index")
      */
     public function indexAction(Request $request, Grid $grid, PayService $payService, UserService $userService){
         $pageSize = 40;

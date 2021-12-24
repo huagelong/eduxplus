@@ -15,13 +15,13 @@ use Eduxplus\WebsiteBundle\Service\CategoryService;
 use Eduxplus\WebsiteBundle\Service\GoodsService;
 use Eduxplus\WebsiteBundle\Service\NewsService;
 use Eduxplus\WebsiteBundle\Service\PageService;
-use FOS\RestBundle\Controller\Annotations as Rest;
+use Symfony\Component\Routing\Annotation\Route;
 
 class IndexController extends BaseHtmlController
 {
 
     /**
-     * @Rest\Get("/", name="app_index")
+     * @Route("/", name="app_index")
      */
     public function indexAction(CategoryService $categoryService, GoodsService $goodsService, BannerService $bannerService, NewsService $newsService)
     {
@@ -50,7 +50,7 @@ class IndexController extends BaseHtmlController
     }
 
     /**
-     * @Rest\Get("/page/{id}", name="app_index_page")
+     * @Route("/page/{id}", name="app_index_page")
      */
     public function pageAction($id, PageService $pageService){
         $page = $pageService->getById($id);

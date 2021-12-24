@@ -15,7 +15,7 @@ use Eduxplus\CoreBundle\Service\RoleService;
 use Eduxplus\CoreBundle\Service\UserService;
 use Eduxplus\CoreBundle\Lib\Base\BaseAdminController;
 use Eduxplus\CoreBundle\Lib\Service\ValidateService;
-use FOS\RestBundle\Controller\Annotations as Rest;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Eduxplus\CoreBundle\Lib\Form\Form;
 use Eduxplus\CoreBundle\Lib\Grid\Grid;
@@ -24,7 +24,7 @@ class UserController extends BaseAdminController
 {
 
     /**
-     * @Rest\Get("/user/index", name="admin_user_index")
+     * @Route("/user/index", name="admin_user_index")
      */
     public function indexAction(Request $request, Grid $grid, UserService $userService)
     {
@@ -96,7 +96,7 @@ class UserController extends BaseAdminController
 
 
     /**
-     * @Rest\Get("/user/add", name="admin_user_add")
+     * @Route("/user/add", name="admin_user_add")
      */
     public function addAction(Form $form, RoleService $roleService)
     {
@@ -162,7 +162,7 @@ class UserController extends BaseAdminController
     }
 
     /**
-     * @Rest\Get("/user/view/{id}", name="admin_user_view")
+     * @Route("/user/view/{id}", name="admin_user_view")
      */
     public function viewAction($id, UserService $userService, RoleService $roleService, View $view)
     {
@@ -193,7 +193,7 @@ class UserController extends BaseAdminController
     }
 
     /**
-     * @Rest\Get("/user/edit/{id}", name="admin_user_edit")
+     * @Route("/user/edit/{id}", name="admin_user_edit")
      */
     public function editAction($id, UserService $userService, RoleService $roleService, Form $form)
     {
@@ -293,7 +293,7 @@ class UserController extends BaseAdminController
     }
 
     /**
-     * @Rest\Get("/user/changePwd", name="admin_user_changePwd")
+     * @Route("/user/changePwd", name="admin_user_changePwd")
      */
     public function changePwdAction(Form $form){
         

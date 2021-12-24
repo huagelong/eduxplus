@@ -12,7 +12,7 @@ namespace Eduxplus\CoreBundle\Controller\Teach;
 use Eduxplus\CoreBundle\Lib\View\View;
 use Eduxplus\CoreBundle\Service\Teach\AgreementService;
 use Eduxplus\CoreBundle\Lib\Base\BaseAdminController;
-use FOS\RestBundle\Controller\Annotations as Rest;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Eduxplus\CoreBundle\Lib\Form\Form;
 use Eduxplus\CoreBundle\Lib\Grid\Grid;
@@ -21,7 +21,7 @@ class AgreementController extends BaseAdminController
 {
 
     /**
-     * @Rest\Get("/teach/agreement/index", name="admin_teach_agreement_index")
+     * @Route("/teach/agreement/index", name="admin_teach_agreement_index")
      */
     public function indexAction(Request $request, Grid $grid, AgreementService $agreementService){
         $pageSize = 40;
@@ -71,7 +71,7 @@ class AgreementController extends BaseAdminController
     }
 
     /**
-     * @Rest\Get("/teach/agreement/view/{id}", name="admin_teach_agreement_view")
+     * @Route("/teach/agreement/view/{id}", name="admin_teach_agreement_view")
      */
     public function viewAction($id, View $view, AgreementService $agreementService){
         $info = $agreementService->getById($id);
@@ -87,7 +87,7 @@ class AgreementController extends BaseAdminController
     }
 
     /**
-     * @Rest\Get("/teach/agreement/add", name="admin_teach_agreement_add")
+     * @Route("/teach/agreement/add", name="admin_teach_agreement_add")
      */
     public function addAction(Form $form, AgreementService $agreementService){
         $form->text("名称")->field("name")->isRequire();
@@ -120,7 +120,7 @@ class AgreementController extends BaseAdminController
     }
 
     /**
-     * @Rest\Get("/teach/agreement/edit/{id}", name="admin_teach_agreement_edit")
+     * @Route("/teach/agreement/edit/{id}", name="admin_teach_agreement_edit")
      */
     public function editAction($id, Form $form, AgreementService $agreementService){
         $info = $agreementService->getById($id);

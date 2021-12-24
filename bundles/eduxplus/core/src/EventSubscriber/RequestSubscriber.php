@@ -18,24 +18,50 @@ use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Stopwatch\Stopwatch;
+use Symfony\Component\HttpKernel\Event\ViewEvent;
+use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\HttpFoundation\Response;
 
 class RequestSubscriber implements EventSubscriberInterface
 {
     protected $stopwatch;
+    protected $serializer;
 
-    public function __construct(Stopwatch $stopwatch)
+    public function __construct(Stopwatch $stopwatch, SerializerInterface $serializer)
     {
         $this->stopwatch = $stopwatch;
+        $this->serializer = $serializer;
     }
 
     public static function getSubscribedEvents(): array
     {
         return [
+            KernelEvents::VIEW => ['onKernelView', 30],
             KernelEvents::REQUEST => ['onKernelRequest', 9999],
             KernelEvents::RESPONSE => ['onKernelResponse', -9999]
         ];
     }
 
+
+    public function onKernelView(ViewEvent $event): void
+    {
+        $response = $event->getResponse();
+        if(!$response){
+            $content = $event->getControllerResult();
+            if(is_object($content)){
+                $json = $this->serializer->serialize($content, 'json');
+                $content = json_decode($json, true);
+            }
+            $event = $this->stopwatch->stop('event:elapsedTime');
+            $stopwatch = (string) $event;
+            $responseData = JsonResponseService::format(Response::HTTP_OK, $content, $stopwatch);
+            $jsonResponse = new Response();
+            $jsonResponse->headers->set('Content-Type', "application/json");
+            //全部转驼峰
+            $jsonResponse->setContent(json_encode($responseData, JSON_UNESCAPED_UNICODE));
+            $event->setResponse($jsonResponse);
+        }
+    }
 
     public function onKernelRequest(RequestEvent $event)
     {
@@ -63,7 +89,7 @@ class RequestSubscriber implements EventSubscriberInterface
             $stopwatch = (string) $event;
             $responseData = JsonResponseService::format($statusCode, $content, $stopwatch);
             $response->headers->set('Content-Type', "application/json");
-            $response->setContent(json_encode($responseData, true));
+            $response->setContent(json_encode($responseData, JSON_UNESCAPED_UNICODE));
             $response->setStatusCode(200); //强制转为200
         }
     }

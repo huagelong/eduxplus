@@ -15,7 +15,7 @@ use Eduxplus\CoreBundle\Lib\Service\Pay\AlipayService;
 use Eduxplus\CoreBundle\Lib\Service\Pay\WxpayService;
 use Eduxplus\WebsiteBundle\Service\GoodsService;
 use Eduxplus\WebsiteBundle\Service\OrderService;
-use FOS\RestBundle\Controller\Annotations as Rest;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\InvalidCsrfTokenException;
@@ -27,7 +27,7 @@ class OrderController extends BaseHtmlController
     /**
      * 我的订单列表
      *
-     * @Rest\Get("/my/orders", name="app_order_index")
+     * @Route("/my/orders", name="app_order_index")
      */
     public function indexAction(Request $request, OrderService $orderService)
     {
@@ -46,7 +46,7 @@ class OrderController extends BaseHtmlController
     /**
      * 订单详情
      *
-     * @Rest\Get("/my/order/detail/{orderNo}", name="app_order_detail")
+     * @Route("/my/order/detail/{orderNo}", name="app_order_detail")
      */
     public function detailAction($orderNo,OrderService $orderService)
     {
@@ -60,7 +60,7 @@ class OrderController extends BaseHtmlController
     /**
      * 去购买
      *
-     * @Rest\Get("/my/tobuy/{uuid}", name="app_order_tobuy")
+     * @Route("/my/tobuy/{uuid}", name="app_order_tobuy")
      */
     public function tobuyAction($uuid,Request $request, GoodsService $goodsService, OrderService $orderService){
         $detail = $goodsService->getSimpleByUuid($uuid);
@@ -176,7 +176,7 @@ class OrderController extends BaseHtmlController
 
     /**
      * 微信支付成功检查
-     * @Rest\Get("/my/do/wxpaycheck/{orderNo}", name="app_order_wxpayCheck")
+     * @Route("/my/do/wxpaycheck/{orderNo}", name="app_order_wxpayCheck")
      */
     public function wxpayCheck($orderNo, WxpayService $wxpayService, OrderService $orderService){
         $result = $wxpayService->query($orderNo);
@@ -192,7 +192,7 @@ class OrderController extends BaseHtmlController
 
     /**
      * 支付成功返回模式
-     * @Rest\Get("/my/paysuccess/{orderNo}", name="app_order_paysuccess")
+     * @Route("/my/paysuccess/{orderNo}", name="app_order_paysuccess")
      */
     public function paysuccessAction($orderNo){
         $data = [];
@@ -201,7 +201,7 @@ class OrderController extends BaseHtmlController
 
     /**
      * 支付宝购买回调 成功返回模式
-     * @Rest\Get("/my/buyreturn/{orderNo}", name="app_order_buyreturn")
+     * @Route("/my/buyreturn/{orderNo}", name="app_order_buyreturn")
      */
     public function buyreturnAction($orderNo, Request $request, OrderService $orderService){
         if(!$orderNo){

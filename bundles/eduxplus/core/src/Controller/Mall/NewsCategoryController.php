@@ -11,7 +11,7 @@ namespace Eduxplus\CoreBundle\Controller\Mall;
 
 use Eduxplus\CoreBundle\Service\Mall\NewsCategoryService;
 use Eduxplus\CoreBundle\Lib\Base\BaseAdminController;
-use FOS\RestBundle\Controller\Annotations as Rest;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Eduxplus\CoreBundle\Lib\Form\Form;
 use Eduxplus\CoreBundle\Lib\Grid\Grid;
@@ -21,7 +21,7 @@ class NewsCategoryController extends BaseAdminController
 
     /**
      *
-     * @Rest\Get("/mall/news/category/index", name="admin_mall_news_category_index")
+     * @Route("/mall/news/category/index", name="admin_mall_news_category_index")
      */
     public function indexAction(Form $form, NewsCategoryService $newsCategoryService){
         $select = $newsCategoryService->categorySelect();
@@ -62,7 +62,7 @@ class NewsCategoryController extends BaseAdminController
     }
 
     /**
-     * @Rest\Get("/mall/news/category/edit/{id}", name="admin_mall_news_category_edit")
+     * @Route("/mall/news/category/edit/{id}", name="admin_mall_news_category_edit")
      */
     public function editAction($id, Form $form, NewsCategoryService $newsCategoryService)
     {

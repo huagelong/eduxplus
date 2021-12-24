@@ -50,6 +50,10 @@ class EduxplusQaExtension extends Extension implements PrependExtensionInterface
                 ]
             ]
         ]);
+    }
 
+    public function getAlias()
+    {
+        return 'eduxplus_qa';
     }
 }

@@ -13,7 +13,7 @@ use Eduxplus\CoreBundle\Service\Mall\CouponService;
 use Eduxplus\CoreBundle\Service\Teach\CategoryService;
 use Eduxplus\CoreBundle\Service\UserService;
 use Eduxplus\CoreBundle\Lib\Base\BaseAdminController;
-use FOS\RestBundle\Controller\Annotations as Rest;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Eduxplus\CoreBundle\Lib\Form\Form;
 use Eduxplus\CoreBundle\Lib\Grid\Grid;
@@ -25,7 +25,7 @@ class OrderController extends BaseAdminController
 
     /**
      *
-     * @Rest\Get("/mall/order/index", name="admin_mall_order_index")
+     * @Route("/mall/order/index", name="admin_mall_order_index")
      */
     public function indexAction(Request $request, Grid $grid, OrderService $orderService, UserService $userService){
         $pageSize = 40;

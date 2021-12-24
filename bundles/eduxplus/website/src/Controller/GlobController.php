@@ -20,7 +20,7 @@ use Eduxplus\WebsiteBundle\Service\GlobService;
 use Eduxplus\WebsiteBundle\Service\LearnService;
 use Eduxplus\WebsiteBundle\Service\OrderService;
 use Firebase\JWT\JWT;
-use FOS\RestBundle\Controller\Annotations as Rest;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Eduxplus\CoreBundle\Lib\Service\UploadService;
@@ -32,7 +32,7 @@ class GlobController extends BaseHtmlController
 {
 
     /**
-     * @Rest\Get("/recaptcha/{type}", name="app_glob_recaptcha")
+     * @Route("/recaptcha/{type}", name="app_glob_recaptcha")
      */
     public function recaptchaAction($type, CaptchaService $captchaService, Request $request)
     {
@@ -98,7 +98,7 @@ class GlobController extends BaseHtmlController
 
     /**
      * 点播播放权限检查
-     * @Rest\Get("/aliyunVodPlayCheck", name="app_glob_aliyunVodPlayCheck")
+     * @Route("/aliyunVodPlayCheck", name="app_glob_aliyunVodPlayCheck")
      */
     public function aliyunVodPlayCheckAction(Request $request, AliyunVodService $aliyunVodService, LearnService $learnService, LoggerInterface $logger)
     {

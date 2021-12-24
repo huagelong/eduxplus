@@ -23,4 +23,10 @@ class EduxplusApiExtension extends Extension implements PrependExtensionInterfac
     {
 
     }
+
+        
+    public function getAlias()
+    {
+        return 'eduxplus_api';
+    }
 }

@@ -14,14 +14,14 @@ use Eduxplus\CoreBundle\Lib\Grid\Grid;
 use Eduxplus\CoreBundle\Lib\View\View;
 use Eduxplus\CoreBundle\Service\Mall\BannerService;
 use Eduxplus\CoreBundle\Lib\Base\BaseAdminController;
-use FOS\RestBundle\Controller\Annotations as Rest;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 
 class BannerController extends BaseAdminController
 {
     /**
      *
-     * @Rest\Get("/mall/banner/index", name="admin_mall_banner_index")
+     * @Route("/mall/banner/index", name="admin_mall_banner_index")
      */
      public function indexAction( Request $request,Grid $grid, BannerService $bannerService){
          $pageSize = 40;
@@ -73,7 +73,7 @@ class BannerController extends BaseAdminController
 
     /**
      *
-     * @Rest\Get("/mall/banner/add", name="admin_mall_banner_add")
+     * @Route("/mall/banner/add", name="admin_mall_banner_add")
      */
     public function addAction(Form $form) {
         $form->text("名称")->field("name")->isRequire(1);
@@ -112,7 +112,7 @@ class BannerController extends BaseAdminController
 
     /**
      *
-     * @Rest\Get("/mall/banner/edit/{id}", name="admin_mall_banner_edit")
+     * @Route("/mall/banner/edit/{id}", name="admin_mall_banner_edit")
      */
     public function editAction($id, Form $form, BannerService $bannerService) {
         $info = $bannerService->getById($id);
@@ -182,7 +182,7 @@ class BannerController extends BaseAdminController
 
     /**
      *
-     * @Rest\Get("/mall/bannermain/index/{pid}", name="admin_mall_bannermain_index")
+     * @Route("/mall/bannermain/index/{pid}", name="admin_mall_bannermain_index")
      */
     public function indexMainAction( $pid, Request $request,Grid $grid, BannerService $bannerService){
         $pageSize = 40;
@@ -235,7 +235,7 @@ class BannerController extends BaseAdminController
 
     /**
      *
-     * @Rest\Get("/mall/bannermain/add/{pid}", name="admin_mall_bannermain_add")
+     * @Route("/mall/bannermain/add/{pid}", name="admin_mall_bannermain_add")
      */
     public function addMainAction($pid, Form $form) {
         $options = [];
@@ -285,7 +285,7 @@ class BannerController extends BaseAdminController
 
     /**
      *
-     * @Rest\Get("/mall/bannermain/edit/{id}", name="admin_mall_bannermain_edit")
+     * @Route("/mall/bannermain/edit/{id}", name="admin_mall_bannermain_edit")
      */
     public function editMainAction($id, Form $form, BannerService $bannerService) {
         $info = $bannerService->getMainById($id);

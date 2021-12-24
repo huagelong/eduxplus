@@ -12,7 +12,7 @@ namespace Eduxplus\ApiBundle\Controller;
 
 use Eduxplus\CoreBundle\Lib\Base\BaseApiController;
 use Eduxplus\WebsiteBundle\Service\ImService;
-use FOS\RestBundle\Controller\Annotations as Rest;
+use Symfony\Component\Routing\Annotation\Route;
 use FOS\RestBundle\Controller\Annotations\View as ViewAnnotations;
 use Symfony\Component\HttpFoundation\Request;
 

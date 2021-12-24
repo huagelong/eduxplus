@@ -1,6 +1,6 @@
 <?php
 
-namespace Eduxplus\CoreBundle\Command\Job;
+namespace Eduxplus\WebsiteBundle\Command\Job;
 
 use Eduxplus\WebsiteBundle\Service\MsgService;
 use Symfony\Component\Console\Command\Command;
