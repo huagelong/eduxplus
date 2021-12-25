@@ -15,7 +15,7 @@ use Eduxplus\CoreBundle\Entity\BaseRoleUser;
 use Eduxplus\CoreBundle\Entity\BaseUser;
 use Knp\Component\Pager\PaginatorInterface;
 use Eduxplus\CoreBundle\Lib\Base\AdminBaseService;
-use Eduxplus\CoreBundle\Lib\Service\MobileMaskService;
+use Eduxplus\CoreBundle\Lib\Service\Base\MobileMaskService;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class UserService extends AdminBaseService

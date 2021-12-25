@@ -12,7 +12,7 @@ namespace Eduxplus\WebsiteBundle\Controller;
 use Eduxplus\CoreBundle\Lib\Base\AppBaseService;
 use Eduxplus\CoreBundle\Lib\Base\BaseHtmlController;
 use Eduxplus\CoreBundle\Lib\Service\HelperService;
-use Eduxplus\CoreBundle\Lib\Service\UploadService;
+use Eduxplus\CoreBundle\Lib\Service\Base\UploadService;
 use Eduxplus\CoreBundle\Lib\Service\ValidateService;
 use Eduxplus\WebsiteBundle\Service\GlobService;
 use Eduxplus\WebsiteBundle\Service\GoodsService;

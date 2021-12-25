@@ -34,6 +34,10 @@ services:
     Eduxplus\CoreBundle\Lib\Base\AppBaseService:
         parent: Eduxplus\CoreBundle\Lib\Base\BaseService
 
+    Eduxplus\CoreBundle\Lib\Service\Base\:
+        resource: '../../../src/Lib/Service/Base/**/*'
+        parent: Eduxplus\CoreBundle\Lib\Base\BaseService
+
     Eduxplus\CoreBundle\Service\:
         resource: '../../../src/Service/**/*'
         parent: Eduxplus\CoreBundle\Lib\Base\BaseService

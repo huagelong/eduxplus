@@ -11,7 +11,7 @@ namespace Eduxplus\CoreBundle\Service\Mall;
 
 use Eduxplus\CoreBundle\Service\UserService;
 use Eduxplus\CoreBundle\Lib\Base\AdminBaseService;
-use Eduxplus\CoreBundle\Lib\Service\EsService;
+use Eduxplus\CoreBundle\Lib\Service\Base\EsService;
 use Eduxplus\CoreBundle\Entity\MallNews;
 use Eduxplus\CoreBundle\Entity\MallNewsMain;
 use Knp\Component\Pager\PaginatorInterface;

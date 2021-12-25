@@ -14,7 +14,7 @@ use Eduxplus\CoreBundle\Service\Teach\ProductService;
 use Eduxplus\CoreBundle\Service\Teach\StudyPlanService;
 use Eduxplus\CoreBundle\Lib\Base\BaseAdminController;
 use Eduxplus\CoreBundle\Lib\Base\BaseController;
-use Eduxplus\CoreBundle\Lib\Service\UploadService;
+use Eduxplus\CoreBundle\Lib\Service\Base\UploadService;
 use Eduxplus\CoreBundle\Lib\Service\Vod\AliyunVodService;
 use Eduxplus\CoreBundle\Lib\Service\Vod\TengxunyunVodService;
 use Symfony\Component\Routing\Annotation\Route;

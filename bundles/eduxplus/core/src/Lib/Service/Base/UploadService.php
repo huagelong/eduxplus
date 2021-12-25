@@ -6,7 +6,7 @@
  * @Date: 2020/4/10 15:49
  */
 
-namespace Eduxplus\CoreBundle\Lib\Service;
+namespace Eduxplus\CoreBundle\Lib\Service\Base;
 
 use Eduxplus\CoreBundle\Lib\Base\BaseService;
 use Eduxplus\CoreBundle\Lib\Service\File\AliyunOssService;

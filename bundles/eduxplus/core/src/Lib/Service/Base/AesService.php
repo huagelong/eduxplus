@@ -1,5 +1,5 @@
 <?php
-namespace Eduxplus\CoreBundle\Lib\Service;
+namespace Eduxplus\CoreBundle\Lib\Service\Base;
 use Eduxplus\CoreBundle\Lib\Base\BaseService;
 /**
  * [AesSecurity aes加密，支持PHP7+]

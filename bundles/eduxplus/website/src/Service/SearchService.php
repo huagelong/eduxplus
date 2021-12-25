@@ -10,7 +10,7 @@ namespace Eduxplus\WebsiteBundle\Service;
 
 
 use Eduxplus\CoreBundle\Lib\Base\AppBaseService;
-use Eduxplus\CoreBundle\Lib\Service\EsService;
+use Eduxplus\CoreBundle\Lib\Service\Base\EsService;
 use Knp\Component\Pager\PaginatorInterface;
 
 class SearchService extends AppBaseService

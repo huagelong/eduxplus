@@ -2,7 +2,7 @@
 
 namespace Eduxplus\CoreBundle\DataFixtures;
 
-use Eduxplus\CoreBundle\Lib\Service\EsService;
+use Eduxplus\CoreBundle\Lib\Service\Base\EsService;
 use Eduxplus\CoreBundle\Lib\Service\HelperService;
 use Eduxplus\CoreBundle\Entity\BaseMenu;
 use Eduxplus\CoreBundle\Entity\BaseOption;
@@ -13,7 +13,7 @@ use Eduxplus\CoreBundle\Entity\BaseUser;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 //use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Persistence\ObjectManager;
-use Eduxplus\CoreBundle\Lib\Service\MobileMaskService;
+use Eduxplus\CoreBundle\Lib\Service\Base\MobileMaskService;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class InstallFixtures extends Fixture

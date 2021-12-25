@@ -23,7 +23,7 @@ use Firebase\JWT\JWT;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Eduxplus\CoreBundle\Lib\Service\UploadService;
+use Eduxplus\CoreBundle\Lib\Service\Base\UploadService;
 use Eduxplus\WebsiteBundle\Service\ImService;
 use Psr\Log\LoggerInterface;
 use EasyWeChat\Kernel\Support\XML;

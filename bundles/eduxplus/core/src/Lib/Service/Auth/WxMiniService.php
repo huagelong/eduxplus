@@ -11,7 +11,7 @@ use Eduxplus\CoreBundle\Lib\Base\BaseService;
  * @Date: 2020/3/28 19:38
  */
 
-use Eduxplus\CoreBundle\Lib\Service\UploadService;
+use Eduxplus\CoreBundle\Lib\Service\Base\UploadService;
 use EasyWeChat\Factory;
 use Eduxplus\CoreBundle\Service\UserService;
 use Eduxplus\CoreBundle\Lib\Service\File\AliyunOssService;

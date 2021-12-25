@@ -16,7 +16,7 @@ use Eduxplus\CoreBundle\Service\Teach\CategoryService;
 use Eduxplus\CoreBundle\Service\Teach\ProductService;
 use Eduxplus\CoreBundle\Service\UserService;
 use Eduxplus\CoreBundle\Lib\Base\BaseService;
-use Eduxplus\CoreBundle\Lib\Service\EsService;
+use Eduxplus\CoreBundle\Lib\Service\Base\EsService;
 use Eduxplus\CoreBundle\Lib\Service\HelperService;
 use Eduxplus\CoreBundle\Entity\MallGoods;
 use Eduxplus\CoreBundle\Entity\MallGoodsGroup;

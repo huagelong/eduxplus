@@ -6,7 +6,7 @@
  * @Date: 2020/11/3 10:37
  */
 
-namespace Eduxplus\CoreBundle\Lib\Service;
+namespace Eduxplus\CoreBundle\Lib\Service\Base;
 
 use Eduxplus\CoreBundle\Lib\Base\BaseService;
 use Elasticsearch\ClientBuilder;

@@ -2,12 +2,12 @@
 
 namespace Eduxplus\CoreBundle\Command;
 
-use Eduxplus\CoreBundle\Lib\Service\EsService;
+use Eduxplus\CoreBundle\Lib\Service\Base\EsService;
 use Eduxplus\CoreBundle\Lib\Service\File\AliyunOssService;
 use Eduxplus\CoreBundle\Lib\Service\Pay\AlipayService;
 use Eduxplus\CoreBundle\Lib\Service\Pay\WxpayService;
-use Eduxplus\CoreBundle\Lib\Service\SmsService;
-use Eduxplus\CoreBundle\Lib\Service\UploadService;
+use Eduxplus\CoreBundle\Lib\Service\Base\SmsService;
+use Eduxplus\CoreBundle\Lib\Service\Base\UploadService;
 use Eduxplus\CoreBundle\Lib\Service\Vod\TengxunyunVodService;
 use Eduxplus\CoreBundle\Entity\BaseMenu;
 use Eduxplus\CoreBundle\Entity\BaseRoleMenu;
@@ -27,7 +27,7 @@ use Eduxplus\CoreBundle\Service\Mall\PayService;
 use Eduxplus\CoreBundle\Service\Mall\CouponService;
 use Eduxplus\CoreBundle\Entity\BaseRole;
 use Eduxplus\CoreBundle\Entity\BaseRoleUser;
-use Eduxplus\CoreBundle\Lib\Service\MobileMaskService;
+use Eduxplus\CoreBundle\Lib\Service\Base\MobileMaskService;
 use Eduxplus\CoreBundle\Entity\BaseUser;
 use Eduxplus\CoreBundle\Entity\BaseOption;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;

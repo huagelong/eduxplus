@@ -2,7 +2,7 @@
 
 namespace Eduxplus\CoreBundle\Command;
 
-use Eduxplus\CoreBundle\Lib\Service\EsService;
+use Eduxplus\CoreBundle\Lib\Service\Base\EsService;
 use Eduxplus\CoreBundle\Lib\Service\RedisService;
 use Eduxplus\CoreBundle\Kernel;
 use Symfony\Component\Console\Command\Command;

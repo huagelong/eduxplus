@@ -10,7 +10,7 @@ namespace Eduxplus\WebsiteBundle\Service;
 
 
 use Eduxplus\CoreBundle\Lib\Base\AppBaseService;
-use Eduxplus\CoreBundle\Lib\Service\SmsService;
+use Eduxplus\CoreBundle\Lib\Service\Base\SmsService;
 use Eduxplus\CoreBundle\Lib\Service\CacheService;
 use Eduxplus\CoreBundle\Lib\Service\CaptchaService;
 use Eduxplus\CoreBundle\Entity\MallMobileSmsCode;

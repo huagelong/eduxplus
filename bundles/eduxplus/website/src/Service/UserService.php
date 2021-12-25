@@ -20,7 +20,7 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 use \Eduxplus\CoreBundle\Lib\Base\AppBaseService;
-use Eduxplus\CoreBundle\Lib\Service\MobileMaskService;
+use Eduxplus\CoreBundle\Lib\Service\Base\MobileMaskService;
 
 class UserService extends AppBaseService
 {

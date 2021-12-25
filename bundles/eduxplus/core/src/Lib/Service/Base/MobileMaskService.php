@@ -1,6 +1,6 @@
 <?php
 
-namespace Eduxplus\CoreBundle\Lib\Service;
+namespace Eduxplus\CoreBundle\Lib\Service\Base;
 use Eduxplus\CoreBundle\Lib\Base\BaseService;
 
 class MobileMaskService extends BaseService
