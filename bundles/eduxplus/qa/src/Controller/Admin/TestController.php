@@ -29,9 +29,9 @@ class TestController extends BaseAdminController
         $grid->setListService($testService, "getList");
         $grid->text("#")->field("id")->sort("a.id");
         $grid->text("试卷名称")->field("name");
-        $grid->boole2("上架？")->field("status")->sort("a.status")->actionCall("qa_admin_test_switchStatus", function ($obj) {
-            $id = $this->getPro($obj, "id");
-            $defaultValue = $this->getPro($obj, "status");
+        $grid->boole2("上架？")->field("status")->sort("a.status")->actionCall("qa_admin_test_switchStatus", function ($obj) use ($testService) {
+            $id = $testService->getPro($obj, "id");
+            $defaultValue = $testService->getPro($obj, "status");
             $url = $this->generateUrl('qa_admin_test_switchStatus', ['id' => $id]);
             $checkStr = $defaultValue ? "checked" : "";
             $confirmStr = $defaultValue ? "确认要下架吗？" : "确认要上架吗?";

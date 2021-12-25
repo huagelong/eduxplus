@@ -30,9 +30,9 @@ class HelpController extends BaseAdminController
         $grid->text("#")->field("id")->sort("a.id");
         $grid->text("名称")->field("name");
         $grid->text("分类")->field("categoryName");
-        $grid->boole2("上架？")->field("status")->sort("a.status")->actionCall("admin_api_mall_help_switchStatus", function ($obj) {
-            $id = $this->getPro($obj, "id");
-            $defaultValue = $this->getPro($obj, "status");
+        $grid->boole2("上架？")->field("status")->sort("a.status")->actionCall("admin_api_mall_help_switchStatus", function ($obj) use($helpService) {
+            $id = $helpService->getPro($obj, "id");
+            $defaultValue = $helpService->getPro($obj, "status");
             $url = $this->generateUrl('admin_api_mall_help_switchStatus', ['id' => $id]);
             $checkStr = $defaultValue ? "checked" : "";
             $confirmStr = $defaultValue ? "确认要下架吗？" : "确认要上架吗?";

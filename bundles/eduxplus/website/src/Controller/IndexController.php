@@ -39,11 +39,11 @@ class IndexController extends BaseHtmlController
         $data['news'] = $news;
         $data['live'] = $live;
 
-        $data['copyright'] = $this->getOption("app.copyright");
-        $data['beian'] = $this->getOption("app.beian.number");
+        $data['copyright'] = $goodsService->getOption("app.copyright");
+        $data['beian'] = $goodsService->getOption("app.beian.number");
 
-        $data['seoDescr'] = $this->getOption("app.seo.homepage.descr");
-        $data['seoKw'] = $this->getOption("app.seo.homepage.keyword");
+        $data['seoDescr'] = $goodsService->getOption("app.seo.homepage.descr");
+        $data['seoKw'] = $goodsService->getOption("app.seo.homepage.keyword");
         $data['route'] = "app_index";
 
         return $this->render('@WebsiteBundle/index/index.html.twig', $data);
@@ -59,10 +59,13 @@ class IndexController extends BaseHtmlController
         return $this->render('@WebsiteBundle/index/page.html.twig', $data);
     }
 
-    public function footerAction(){
+    /**
+     * @Route("/footer", name="app_footer")
+     */
+    public function footerAction(PageService $pageService){
         $data = [];
-        $data['copyright'] = $this->getOption("app.copyright");
-        $data['beian'] = $this->getOption("app.beian.number");
+        $data['copyright'] = $pageService->getOption("app.copyright");
+        $data['beian'] = $pageService->getOption("app.beian.number");
 
         return $this->render('@WebsiteBundle/index/footer.html.twig', $data);
     }

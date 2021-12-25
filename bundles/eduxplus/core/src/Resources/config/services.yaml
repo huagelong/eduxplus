@@ -25,13 +25,18 @@ services:
                       "@parameter_bag","@property_accessor",
                       "@security.token_storage","@service_container"]]
 
+    Eduxplus\CoreBundle\Lib\Base\AdminBaseService:
+        parent: Eduxplus\CoreBundle\Lib\Base\BaseService
+
+    Eduxplus\CoreBundle\Lib\Base\ApiBaseService:
+        parent: Eduxplus\CoreBundle\Lib\Base\BaseService
+
+    Eduxplus\CoreBundle\Lib\Base\AppBaseService:
+        parent: Eduxplus\CoreBundle\Lib\Base\BaseService
+
     Eduxplus\CoreBundle\Service\:
-        resource: '../../../src/Service/'
-        calls:
-            - [inject, ["@doctrine","@serializer",
-                      "@request_stack","@router.default",
-                      "@parameter_bag","@property_accessor",
-                        "@security.token_storage","@service_container"]]
+        resource: '../../../src/Service/**/*'
+        parent: Eduxplus\CoreBundle\Lib\Base\BaseService
 
 
     Eduxplus\CoreBundle\EventListener\ExceptionListener:

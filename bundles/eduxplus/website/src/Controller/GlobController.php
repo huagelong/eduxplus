@@ -143,7 +143,7 @@ class GlobController extends BaseHtmlController
         $clientIP = $request->get("ClientIP");
         $optPlatform = $request->get("OptPlatform");
         $sdkAppid = $request->get("SdkAppid");
-        $mySdkAppid = $this->getOption("app.tengxunyun.im.sdkAppid");
+        $mySdkAppid = $imService->getOption("app.tengxunyun.im.sdkAppid");
         if ($sdkAppid != $mySdkAppid) return new Response("error");
         //保存聊天记录
         if ($callbackCommand == "Group.CallbackAfterSendMsg") {

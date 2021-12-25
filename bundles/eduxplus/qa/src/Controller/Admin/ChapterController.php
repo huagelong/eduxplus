@@ -31,9 +31,9 @@ class ChapterController extends BaseAdminController
         $grid->text("#")->field("id")->sort("a.id");
         $grid->text("试题集合名称")->field("name");
         $grid->text("类目")->field("category");
-        $grid->boole2("上架？")->field("status")->sort("a.status")->actionCall("qa_admin_chapter_switchStatus", function ($obj) {
-            $id = $this->getPro($obj, "id");
-            $defaultValue = $this->getPro($obj, "status");
+        $grid->boole2("上架？")->field("status")->sort("a.status")->actionCall("qa_admin_chapter_switchStatus", function ($obj) use($chapterService) {
+            $id = $chapterService->getPro($obj, "id");
+            $defaultValue = $chapterService->getPro($obj, "status");
             $url = $this->generateUrl('qa_admin_chapter_switchStatus', ['id' => $id]);
             $checkStr = $defaultValue ? "checked" : "";
             $confirmStr = $defaultValue ? "确认要下架吗？" : "确认要上架吗?";

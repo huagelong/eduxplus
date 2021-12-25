@@ -23,7 +23,7 @@ class SearchController extends BaseHtmlController
      */
     public function indexAction($type=1, $page=1, Request $request, SearchService $searchService){
         $kw = $request->get("kw");
-        $adapter = $this->getOption("app.search.adapter");
+        $adapter = $searchService->getOption("app.search.adapter");
         $page = $page?$page:1;
         $pageSize = 40;
         $data = [];

@@ -31,9 +31,9 @@ class NewsController extends BaseAdminController
         $grid->text("标题")->field("title");
         $grid->image("封面图片")->field("img");
         $grid->text("分类")->field("categoryName");
-        $grid->boole2("上架？")->field("status")->sort("a.status")->actionCall("admin_api_mall_news_switchStatus", function ($obj) {
-            $id = $this->getPro($obj, "id");
-            $defaultValue = $this->getPro($obj, "status");
+        $grid->boole2("上架？")->field("status")->sort("a.status")->actionCall("admin_api_mall_news_switchStatus", function ($obj) use($newsService) {
+            $id = $newsService->getPro($obj, "id");
+            $defaultValue = $newsService->getPro($obj, "status");
             $url = $this->generateUrl('admin_api_mall_news_switchStatus', ['id' => $id]);
             $checkStr = $defaultValue ? "checked" : "";
             $confirmStr = $defaultValue ? "确认要下架吗？" : "确认要上架吗?";

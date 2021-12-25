@@ -36,9 +36,9 @@ class CourseController extends BaseAdminController
         $grid->text("类目")->field("category");
         $grid->image("封面图")->field("bigImg");
         $grid->text("创建人")->field("creater");
-        $grid->boole2("上架？")->field("status")->actionCall("admin_api_teach_course_switchStatus", function ($obj) {
-            $id = $this->getPro($obj, "id");
-            $defaultValue = $this->getPro($obj, "status");
+        $grid->boole2("上架？")->field("status")->actionCall("admin_api_teach_course_switchStatus", function ($obj) use($courseService) {
+            $id = $courseService->getPro($obj, "id");
+            $defaultValue = $courseService->getPro($obj, "status");
             $url = $this->generateUrl('admin_api_teach_course_switchStatus', ['id' => $id]);
             $checkStr = $defaultValue ? "checked" : "";
             $confirmStr = $defaultValue ? "确认要下架吗？" : "确认要上架吗?";

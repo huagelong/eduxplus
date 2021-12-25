@@ -36,9 +36,9 @@ class ProductController extends BaseAdminController
         $grid->text("类别")->field("category")->sort("a.category");
         $grid->text("自动分班最大班级人数")->field("maxMemberNumber");
         $grid->text("创建人")->field("creater");
-        $grid->boole2("上架？")->field("status")->actionCall("admin_api_teach_product_switchStatus", function ($obj) {
-            $id = $this->getPro($obj, "id");
-            $defaultValue = $this->getPro($obj, "status");
+        $grid->boole2("上架？")->field("status")->actionCall("admin_api_teach_product_switchStatus", function ($obj) use($productService) {
+            $id = $productService->getPro($obj, "id");
+            $defaultValue = $productService->getPro($obj, "status");
             $url = $this->generateUrl('admin_api_teach_product_switchStatus', ['id' => $id]);
             $checkStr = $defaultValue ? "checked" : "";
             $confirmStr = $defaultValue ? "确认要下架吗？" : "确认要上架吗?";

@@ -310,7 +310,7 @@ class ChapterController extends BaseAdminController
         $info = $chapterService->getVideoById($id);
 
         if(!$info){
-            $vodAdapter = $this->getOption("app.vod.adapter");
+            $vodAdapter = $chapterService->getOption("app.vod.adapter");
         }else{
             $vodAdapter = $info['videoChannel'];
         }
@@ -351,7 +351,7 @@ class ChapterController extends BaseAdminController
 
         if (!$videoId) return $this->responseError("视频id不能为空!");
 
-        $videoChannel = $this->getOption("app.vod.adapter");
+        $videoChannel = $chapterService->getOption("app.vod.adapter");
         if (!$videoChannel)  return $this->responseError("请先设置点播服务商!");
 
         $chapterService->addVideos($id, $type, $videoChannel, $videoId);

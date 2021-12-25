@@ -192,9 +192,9 @@ class BannerController extends BaseAdminController
         $grid->text("操作人")->field("creater");
         $grid->tip("链接")->field("url");
         $grid->text("排序")->field("sort")->sort("a.sort");
-        $grid->boole2("上架？")->field("status")->sort("a.status")->actionCall("admin_api_mall_bannermain_switchStatus", function ($obj) {
-            $id = $this->getPro($obj, "id");
-            $defaultValue = $this->getPro($obj, "status");
+        $grid->boole2("上架？")->field("status")->sort("a.status")->actionCall("admin_api_mall_bannermain_switchStatus", function ($obj)  use ($bannerService){
+            $id = $bannerService->getPro($obj, "id");
+            $defaultValue = $bannerService->getPro($obj, "status");
             $url = $this->generateUrl('admin_api_mall_bannermain_switchStatus', ['id' => $id]);
             $checkStr = $defaultValue ? "checked" : "";
             $confirmStr = $defaultValue ? "确认要下架吗？" : "确认要上架吗?";

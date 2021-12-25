@@ -28,9 +28,9 @@ class PageController extends BaseAdminController
          $grid->setListService($pageService, "getList");
          $grid->text("#")->field("id")->sort("a.id");
          $grid->text("单页名称")->field("name");
-         $grid->boole2("上架？")->field("status")->sort("a.status")->actionCall("admin_api_mall_page_switchStatus", function ($obj) {
-             $id = $this->getPro($obj, "id");
-             $defaultValue = $this->getPro($obj, "status");
+         $grid->boole2("上架？")->field("status")->sort("a.status")->actionCall("admin_api_mall_page_switchStatus", function ($obj) use($pageService) {
+             $id = $pageService->getPro($obj, "id");
+             $defaultValue = $pageService->getPro($obj, "status");
              $url = $this->generateUrl('admin_api_mall_page_switchStatus', ['id' => $id]);
              $checkStr = $defaultValue ? "checked" : "";
              $confirmStr = $defaultValue ? "确认要下架吗？" : "确认要上架吗?";

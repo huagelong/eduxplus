@@ -41,9 +41,9 @@ class CouponController extends BaseAdminController
         $grid->text("已使用数量")->field("usedNum");
         $grid->text("开始有效时间")->field("expirationStart");
         $grid->text("结束有效时间")->field("expirationEnd");
-        $grid->boole2("上架？")->field("status")->sort("a.status")->actionCall("admin_api_mall_coupon_switchStatus",function($obj){
-            $id = $this->getPro($obj, "id");
-            $defaultValue = $this->getPro($obj, "status");
+        $grid->boole2("上架？")->field("status")->sort("a.status")->actionCall("admin_api_mall_coupon_switchStatus",function($obj) use ($userService){
+            $id = $userService->getPro($obj, "id");
+            $defaultValue = $userService->getPro($obj, "status");
             $url = $this->generateUrl('admin_api_mall_coupon_switchStatus', ['id' => $id]);
             $checkStr = $defaultValue?"checked":"";
             $confirmStr = $defaultValue? "确认要下架吗？":"确认要上架吗?";

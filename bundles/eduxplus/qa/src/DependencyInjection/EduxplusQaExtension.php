@@ -31,7 +31,7 @@ class EduxplusQaExtension extends Extension implements PrependExtensionInterface
         $namespace = $container->getExtension("twig")->getAlias();
         $container->prependExtensionConfig($namespace, [
             "paths" => [
-                __DIR__ . "/../Resources/templates" => "QaBundle",
+                __DIR__ . "/../Resources/templates/default" => "QaBundle",
                 __DIR__ . "/../Resources/templates/admin" => "QaBundleAdmin",
             ]
         ]);

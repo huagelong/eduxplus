@@ -5,10 +5,10 @@
       <div class="layui-main">
         <div class="layui-row layui-col-space20">
           <div class="layui-col-md2">
-            {{ render(controller('WebsiteBundle:User:userNav', {route:route})) }}
+            {{ render(controller('Eduxplus\\WebSiteBundle\\Controller\\UserController:userNavAction', {route:route})) }}
           </div>
           <div class="layui-col-md10">
-            {{ render(controller('WebsiteBundle:Learn:index', {page:page})) }}
+            {{ render(controller('Eduxplus\\WebSiteBundle\\Controller\\LearnController:indexAction', {page:page})) }}
           </div>
         </div>
       </div>

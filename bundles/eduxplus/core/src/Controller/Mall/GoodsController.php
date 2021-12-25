@@ -41,9 +41,9 @@ class GoodsController extends BaseAdminController
         $grid->text("商品名称")->field("name");
         $grid->text("商品别名")->field("aliasName");
         $grid->boole("组合商品?")->field("isGroup")->sort("a.isGroup");
-        $grid->boole2("上架？")->field("status")->sort("a.status")->actionCall("admin_api_mall_goods_switchStatus", function ($obj) {
-            $id = $this->getPro($obj, "id");
-            $defaultValue = $this->getPro($obj, "status");
+        $grid->boole2("上架？")->field("status")->sort("a.status")->actionCall("admin_api_mall_goods_switchStatus", function ($obj) use($goodsService) {
+            $id = $goodsService->getPro($obj, "id");
+            $defaultValue = $goodsService->getPro($obj, "status");
             $url = $this->generateUrl('admin_api_mall_goods_switchStatus', ['id' => $id]);
             $checkStr = $defaultValue ? "checked" : "";
             $confirmStr = $defaultValue ? "确认要下架吗？" : "确认要上架吗?";

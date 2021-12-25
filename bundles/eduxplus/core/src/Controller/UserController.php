@@ -37,9 +37,9 @@ class UserController extends BaseAdminController
         $grid->text("姓名")->field("fullName");
         $grid->image("头像")->field("gravatar");
         $grid->text("性别")->field("sex")->options([0 => "未知", 1 => "男", 2 => "女"]);
-        $grid->boole2("锁定用户")->field("isLock")->actionCall("admin_api_user_switchLock", function ($obj) {
-            $id = $this->getPro($obj, "id");
-            $defaultValue = $this->getPro($obj, "isLock");
+        $grid->boole2("锁定用户")->field("isLock")->actionCall("admin_api_user_switchLock", function ($obj) use($userService) {
+            $id = $userService->getPro($obj, "id");
+            $defaultValue = $userService->getPro($obj, "isLock");
             $url = $this->generateUrl('admin_api_user_switchLock', ['id' => $id]);
             $checkStr = $defaultValue ? "checked" : "";
             $str = "<input type=\"checkbox\" data-bootstrap-switch-ajaxput href=\"{$url}\" data-confirm=\"确认更改锁定状态吗?\" {$checkStr} >";

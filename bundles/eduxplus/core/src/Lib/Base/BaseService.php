@@ -61,6 +61,10 @@ class BaseService
         return $this->em;
     }
 
+    public function getDoctrine(){
+        return $this->getManagerRegistry();
+    }
+
     public function getSerializer(){
         return $this->serializer;
     }
