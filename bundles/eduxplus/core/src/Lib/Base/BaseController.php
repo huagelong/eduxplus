@@ -10,10 +10,10 @@ namespace Eduxplus\CoreBundle\Lib\Base;
 
 
 use Eduxplus\CoreBundle\Lib\Service\JsonResponseService;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-abstract class BaseController extends BaseService
+abstract class BaseController extends AbstractController
 {
-
     public function responseSuccess($data, $msg=''){
         return JsonResponseService::genData($data, 200, $msg);
     }
@@ -31,12 +31,6 @@ abstract class BaseController extends BaseService
     }
 
     abstract public function getUid();
-
-    public function getUserInfo(){
-        $uid = $this->getUid();
-        $sql = "SELECT a FROM Core:BaseUser a WHERE a.id = :id";
-        $model = $this->fetchOne($sql, ["id"=>$uid]);
-        return $model;
-    }
+    abstract public function getUserInfo();
 
 }

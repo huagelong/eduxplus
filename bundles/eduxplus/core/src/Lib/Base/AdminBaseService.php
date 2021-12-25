@@ -9,10 +9,8 @@
 
 namespace Eduxplus\CoreBundle\Lib\Base;
 
-
 class AdminBaseService extends BaseService
 {
-
     public function getUid()
     {
         $user = $this->getUser();
@@ -72,8 +70,6 @@ class AdminBaseService extends BaseService
 
     public function isAuthorized($uid, $routeName)
     {
-
-
         if (!$uid) return false;
         $sql = "SELECT a FROM Core:BaseMenu a WHERE a.url=:url";
         $menuInfo = $this->fetchOne($sql, ['url' => $routeName]);

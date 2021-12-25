@@ -9,11 +9,7 @@
 namespace Eduxplus\CoreBundle\Lib\Base;
 
 
-use Eduxplus\CoreBundle\Entity\BaseUser;
-
 class AppBaseService extends BaseService
 {
-
-    
 
 }

@@ -34,4 +34,12 @@ class BaseHtmlController extends BaseController
         $data['redirect'] = $redirect;
         return $this->render('@WebsiteBundle/layout/msg.html.twig', $data);
     }
+
+    public function getUserInfo()
+    {
+        $uid = $this->getUid();
+        $sql = "SELECT a FROM Core:BaseUser a WHERE a.id = :id";
+        $model = $this->appBaseService->fetchOne($sql, ["id"=>$uid]);
+        return $model;
+    }
 }

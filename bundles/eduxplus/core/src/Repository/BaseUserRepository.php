@@ -72,8 +72,8 @@ class BaseUserRepository extends ServiceEntityRepository implements PasswordUpgr
     {
         return $this->createQueryBuilder('u')
             ->andWhere('u.uuid = :uuid')
+            ->andWhere('u.isLock = 0')
             ->setParameter('uuid', $username)
-            ->setParameter('is_lock', 0)
             ->getQuery()
             ->getOneOrNullResult();
     }

@@ -26,6 +26,7 @@ use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
 use Symfony\Component\Security\Csrf\CsrfToken;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Symfony\Component\Security\Http\Authenticator\AbstractLoginFormAuthenticator;
+use Symfony\Component\Security\Http\Authenticator\Passport\Badge\CsrfTokenBadge;
 use Symfony\Component\Security\Http\Authenticator\Passport\Badge\PasswordUpgradeBadge;
 use Symfony\Component\Security\Http\Authenticator\Passport\Badge\RememberMeBadge;
 use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
@@ -71,15 +72,21 @@ class PasswordLoginAuthenticator extends AbstractLoginFormAuthenticator
         }
     }
 
+
+    public function supports(Request $request): bool
+    {
+//        exit($this->urlGenerator->generate('admin_login')."|".$request->getPathInfo());
+        return $request->isMethod('POST') && $this->urlGenerator->generate('admin_login') === $request->getPathInfo();
+    }
+
     public function getCredentials(Request $request)
     {
         $credentials = [
             'mobile' => $request->request->get('mobile'),
             'password' => $request->request->get('password'),
-            'csrf_token' => $request->request->get('CsrfToken'),
+            'csrf_token' => $request->request->get('_csrf_token'),
             'recaptcha'=> $request->request->get('recaptcha'),
         ];
-
         $this->passwdCheck($credentials, $request);
 
         $request->getSession()->set(
@@ -91,11 +98,6 @@ class PasswordLoginAuthenticator extends AbstractLoginFormAuthenticator
     }
 
     protected function passwdCheck($credentials, Request $request){
-
-        $token = new CsrfToken('authenticate', $credentials['csrf_token']);
-        if (!$this->csrfTokenManager->isTokenValid($token)) {
-            throw new InvalidCsrfTokenException();
-        }
 
         $recaptcha = $credentials['recaptcha'];
         if(!$recaptcha){
@@ -149,7 +151,8 @@ class PasswordLoginAuthenticator extends AbstractLoginFormAuthenticator
             new UserBadge($user->getUuid(), [$this->userRepository, "loadUserByIdentifier"]),
             new PasswordCredentials($credentials['password']),
             [
-                new RememberMeBadge()
+                new RememberMeBadge(),
+                new CsrfTokenBadge("authenticate", $credentials['csrf_token'])
             ]
         );
         if ($this->userRepository instanceof PasswordUpgraderInterface) {

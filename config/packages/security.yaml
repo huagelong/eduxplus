@@ -1,4 +1,16 @@
 security:
+  enable_authenticator_manager: true
+  password_hashers:
+    Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface:
+      algorithm: 'auto'
+      cost:      15
+
+  providers:
+    app_user_provider:
+      entity:
+        class: Eduxplus\CoreBundle\Entity\BaseUser
+        property: uuid
+
   firewalls:
     dev:
       pattern: ^/(_(profiler|wdt)|css|images|js)/
@@ -43,6 +55,6 @@ security:
 
 
   access_control:
-    - { path: ^/admin/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+    - { path: ^/admin/login$, allow_if: "not is_granted('ROLE_USER')" }
     - { path: ^/admin, roles: ROLE_USER }
     - { path: /my[/]?, roles: ROLE_USER }

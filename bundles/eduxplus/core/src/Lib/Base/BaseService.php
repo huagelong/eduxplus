@@ -1,48 +1,79 @@
 <?php
 
-/**
- * @Author: kaihui.wang
- * @Contact  hpuwang@gmail.com
- * @Version: 1.0.0
- * @Date: 2020/3/4 20:41
- */
-
 namespace Eduxplus\CoreBundle\Lib\Base;
 
+use Doctrine\Persistence\ManagerRegistry;
+use Eduxplus\CoreBundle\Entity\BaseUser;
+use Eduxplus\CoreBundle\Lib\Base\Error;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\DependencyInjection\ParameterBag\ContainerBagInterface;
+use Symfony\Component\PropertyAccess\PropertyAccess;
+use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\UsageTrackingTokenStorage;
+use Psr\Container\ContainerInterface;
 
-class BaseService extends AbstractController
+class BaseService
 {
-    use DBTrait;
+    use Dbtrait;
+    protected $em;
+    protected $serializer;
+    protected $requestStack;
+    protected $router;
+    protected $params;
+    protected $propertyAccessor;
+    protected $tokenStorage;
+    protected $container;
 
-    protected static $originalEventListeners=[];
+    public function inject(ManagerRegistry $em,
+                         SerializerInterface $serializer,
+                         RequestStack $requestStack,
+                         UrlGeneratorInterface $router,
+                         ContainerBagInterface $params,
+                         PropertyAccessorInterface   $propertyAccessor,
+                           UsageTrackingTokenStorage $tokenStorage,
+                           ContainerInterface $container
+    ){
+        $this->em = $em;
+        $this->serializer = $serializer;
+        $this->requestStack = $requestStack;
+        $this->router = $router;
+        $this->params = $params;
+        $this->propertyAccessor = $propertyAccessor ?: PropertyAccess::createPropertyAccessor();
+        $this->tokenStorage= $tokenStorage;
+        $this->container =$container;
+    }
+
+    public function get(string $id): object
+    {
+        return $this->container->get($id);
+    }
 
     public function error()
     {
         return new Error();
     }
 
-    public function setFlash(string $type, string $message)
-    {
-        $this->addFlash($type, $message);
+    public function getManagerRegistry(){
+        return $this->em;
+    }
+
+    public function getSerializer(){
+        return $this->serializer;
     }
 
     public function genUrl(string $route, array $parameters = [], int $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH)
     {
-        return $this->generateUrl($route, $parameters, $referenceType);
+        return $this->router->generateUrl($route, $parameters, $referenceType);
     }
 
-    public function session()
+    public function getUser():?UserInterface
     {
-        return $this->request()->getSession();
-    }
-
-
-    public function dump($str)
-    {
-        \Doctrine\Common\Util\Debug::dump($str);
+        $token = $this->tokenStorage->getToken();
+        return $token->getUser();
     }
 
     /**
@@ -50,41 +81,27 @@ class BaseService extends AbstractController
      */
     public function request()
     {
-        $requestStack = $this->get("request_stack");
-        return $requestStack->getCurrentRequest();
+        return $this->requestStack->getCurrentRequest();
+    }
+
+    public function session()
+    {
+        return $this->request()->getSession();
     }
 
     public function getConfig($str)
     {
-        return $this->getParameter($str);
+        return $this->params->get($str);
     }
 
-
-
-    /**
-     * 获取项目路径
-     *
-     * @return void
-     */
     public function getBasePath()
     {
-        return $this->getParameter("kernel.project_dir");
+        return $this->getConfig("kernel.project_dir");
     }
 
     public function getPro($obj, $name)
     {
-
-        $method = "get" . ucfirst($name);
-
-        if (method_exists($obj, $method)) {
-            $rs = call_user_func([$obj, $method]);
-            return $rs;
-        } else {
-            if (is_array($obj)) {
-                $rs = isset($obj[$name]) ? $obj[$name] : "";
-                return $rs;
-            }
-        }
+        return $this->propertyAccessor->getValue($obj, $name);
     }
 
     public function getEnv()

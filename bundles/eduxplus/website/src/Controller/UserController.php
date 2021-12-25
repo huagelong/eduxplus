@@ -9,6 +9,7 @@
 namespace Eduxplus\WebsiteBundle\Controller;
 
 
+use Eduxplus\CoreBundle\Lib\Base\AppBaseService;
 use Eduxplus\CoreBundle\Lib\Base\BaseHtmlController;
 use Eduxplus\CoreBundle\Lib\Service\HelperService;
 use Eduxplus\CoreBundle\Lib\Service\UploadService;
@@ -26,7 +27,6 @@ use Symfony\Component\Security\Http\Logout\LogoutHandlerInterface;
 
 class UserController extends BaseHtmlController
 {
-
     /**
      * @Route("/login", name="app_login")
      */
@@ -245,7 +245,7 @@ class UserController extends BaseHtmlController
     public function changeMobileFirstAction(HelperService $helperService){
         $data = [];
         $user = $this->getUserInfo();
-        $mobileView = $helperService->formatMobile($user['mobile']);
+        $mobileView = $helperService->formatMobile($user->getMobile());
         $data['user'] = $user;
         $data['mobileView'] = $mobileView;
         $data['route'] = "app_user_secure";

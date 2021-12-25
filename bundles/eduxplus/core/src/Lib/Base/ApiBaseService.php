@@ -9,13 +9,11 @@
 namespace Eduxplus\CoreBundle\Lib\Base;
 
 
-use Eduxplus\CoreBundle\Lib\Base\BaseService;
-use Eduxplus\CoreBundle\Repository\BaseUserRepository;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class ApiBaseService extends BaseService
 {
-
-    public function getUser()
+    public function getUser():?UserInterface
     {
         throw new \LogicException("Method getUser Can Not Be Used");
     }

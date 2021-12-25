@@ -21,17 +21,22 @@ use Eduxplus\CoreBundle\Lib\Base\BaseService;
  * Class AlipayService
  * @package Eduxplus\CoreBundle\Lib\Service\Pay
  */
-class AlipayService extends BaseService
+class AlipayService
 {
+    protected $baseService;
+    public function __construct(BaseService $baseService){
+        $this->baseService =$baseService;
+    }
+
    protected function init()
     {
-        $appId = $this->getOption("app.alipay.appid");
-        $notifyUrl  = $this->getOption("app.alipay.notifyUrl");
+        $appId = $this->baseService->getOption("app.alipay.appid");
+        $notifyUrl  = $this->baseService->getOption("app.alipay.notifyUrl");
 
-        $merchantPrivateKey =  $this->getOption("app.alipay.merchantPrivateKey");
-        $alipayPublicKey = $this->getOption("app.alipay.alipayPublicKey");
-        $encryptKey  = $this->getOption("app.alipay.encryptKey");
-        $isSandbox = $this->getOption("app.alipay.isSandbox");
+        $merchantPrivateKey =  $this->baseService->getOption("app.alipay.merchantPrivateKey");
+        $alipayPublicKey = $this->baseService->getOption("app.alipay.alipayPublicKey");
+        $encryptKey  = $this->baseService->getOption("app.alipay.encryptKey");
+        $isSandbox = $this->baseService->getOption("app.alipay.isSandbox");
 
         $options = new Config();
         $options->protocol = 'https';
@@ -66,7 +71,7 @@ class AlipayService extends BaseService
     public function pagePay($subject, $outTradeNo, $totalAmount, $returnUrl){
         try {
             $this->init();
-            $notifyUrl  = $this->getOption("app.alipay.notifyUrl");
+            $notifyUrl  = $this->baseService->getOption("app.alipay.notifyUrl");
             $result = Factory::payment()->page();
             if($notifyUrl){
                 $result = $result->asyncNotify($notifyUrl);
@@ -74,11 +79,11 @@ class AlipayService extends BaseService
             $result = $result->pay($subject, $outTradeNo, $totalAmount, $returnUrl);
             $responseChecker = new ResponseChecker();
             if (!$responseChecker->success($result)) {
-               return $this->error()->add("调用失败，原因：". $result->msg."，".$result->subMsg.PHP_EOL);
+               return $this->baseService->error()->add("调用失败，原因：". $result->msg."，".$result->subMsg.PHP_EOL);
             }
             return $result->body;
         } catch (\Exception $e) {
-            $this->error()->add("调用失败，". $e->getMessage(). PHP_EOL);
+            $this->baseService->error()->add("调用失败，". $e->getMessage(). PHP_EOL);
         }
     }
 
@@ -97,9 +102,9 @@ class AlipayService extends BaseService
              */
             $arrResult =  $result->toMap();
             if($arrResult['code'] == 10000) return $arrResult;
-            return $this->error()->add($arrResult['sub_msg']);
+            return $this->baseService->error()->add($arrResult['sub_msg']);
         }catch (\Exception $e) {
-            $this->error()->add("调用失败，". $e->getMessage(). PHP_EOL);
+            $this->baseService->error()->add("调用失败，". $e->getMessage(). PHP_EOL);
         }
     }
 
@@ -115,9 +120,9 @@ class AlipayService extends BaseService
             $result = Factory::payment()->common()->cancel($outTradeNo);
             $arrResult =  $result->toMap();
             if($arrResult['code'] == 10000) return $arrResult;
-            return $this->error()->add($arrResult['sub_msg']);
+            return $this->baseService->error()->add($arrResult['sub_msg']);
         }catch (\Exception $e) {
-            $this->error()->add("调用失败，". $e->getMessage(). PHP_EOL);
+            $this->baseService->error()->add("调用失败，". $e->getMessage(). PHP_EOL);
         }
     }
 
@@ -134,9 +139,9 @@ class AlipayService extends BaseService
             $result = Factory::payment()->common()->close($outTradeNo);
             $arrResult =  $result->toMap();
             if($arrResult['code'] == 10000) return $arrResult;
-            return $this->error()->add($arrResult['sub_msg']);
+            return $this->baseService->error()->add($arrResult['sub_msg']);
         }catch (\Exception $e) {
-            $this->error()->add("调用失败，". $e->getMessage(). PHP_EOL);
+            $this->baseService->error()->add("调用失败，". $e->getMessage(). PHP_EOL);
         }
     }
 

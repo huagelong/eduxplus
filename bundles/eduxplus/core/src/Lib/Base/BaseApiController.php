@@ -9,20 +9,32 @@
 
 namespace Eduxplus\CoreBundle\Lib\Base;
 
-use Eduxplus\CoreBundle\Exception\NeedLoginException;
-use Jobby\Exception;
 
 class BaseApiController extends BaseController
 {
+    protected $apiBaseService;
+
+    public function __construct(ApiBaseService $apiBaseService)
+    {
+        $this->apiBaseService = $apiBaseService;
+    }
 
     public function getUid()
     {
-        $request = $this->request();
+        $request = $this->apiBaseService->request();
         $clientId = $request->headers->get('X-AUTH-CLIENT-ID');
         $token = $request->headers->get('X-AUTH-TOKEN');
         if (!$clientId || !$token) return 0;
-        $userInfoObj = $this->getUserByToken($token, $clientId);
+        $userInfoObj = $this->apiBaseService->getUserByToken($token, $clientId);
         if (!$userInfoObj) return 0;
         return $userInfoObj->getId();
+    }
+
+    public function getUserInfo()
+    {
+        $uid = $this->getUid();
+        $sql = "SELECT a FROM Core:BaseUser a WHERE a.id = :id";
+        $model = $this->apiBaseService->fetchOne($sql, ["id"=>$uid]);
+        return $model;
     }
 }

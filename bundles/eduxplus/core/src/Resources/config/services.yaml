@@ -18,6 +18,22 @@ services:
         resource: '../../../src/Controller/'
         tags: [ 'controller.service_arguments' ]
 
+    Eduxplus\CoreBundle\Lib\Base\BaseService:
+        calls:
+            - [inject, ["@doctrine","@serializer",
+                      "@request_stack","@router.default",
+                      "@parameter_bag","@property_accessor",
+                      "@security.token_storage","@service_container"]]
+
+    Eduxplus\CoreBundle\Service\:
+        resource: '../../../src/Service/'
+        calls:
+            - [inject, ["@doctrine","@serializer",
+                      "@request_stack","@router.default",
+                      "@parameter_bag","@property_accessor",
+                        "@security.token_storage","@service_container"]]
+
+
     Eduxplus\CoreBundle\EventListener\ExceptionListener:
         tags:
             - { name: kernel.event_listener, event: kernel.exception }

@@ -32,7 +32,7 @@ class ExceptionListener
 
     public function onKernelException(ExceptionEvent $event)
     {
-        if (!$event->isMasterRequest()) return true;
+        if (!$event->isMainRequest()) return true;
         $exception = $event->getThrowable();
         $msg = $exception->getMessage();
         $statusCode = $exception instanceof HttpExceptionInterface ? $exception->getStatusCode() : $exception->getCode();
