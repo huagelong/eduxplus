@@ -70,9 +70,9 @@ class UserController extends BaseHtmlController
     }
 
     /**
-     * @Route("/userMenu", name="app_user_userNav")
+     * @Route("/userNav/{route}", name="app_user_userNav")
      */
-    public function userNavAction($route, MsgService $msgService){
+    public function userNavAction($route="", MsgService $msgService){
         $user = $this->getUser();
         $data = [];
         $data['userinfo'] = $user;
