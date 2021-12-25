@@ -24,11 +24,9 @@ class LearnController extends BaseHtmlController
 
     /**
      * 产品列表
-     * @param $page
-     * @param LearnService $learnService
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @Route("/my/learn/index/{page}", name="app_learn_index")
      */
-    public function indexAction($page, LearnService $learnService)
+    public function indexAction($page=1, LearnService $learnService)
     {
         $page = $page?$page:1;
         $pageSize = 40;

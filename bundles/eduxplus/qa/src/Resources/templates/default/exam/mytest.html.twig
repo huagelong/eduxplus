@@ -6,7 +6,7 @@
       <div class="layui-main">
         <div class="layui-row layui-col-space20">
           <div class="layui-col-md2">
-            {{ render(controller('Eduxplus\\WebSiteBundle\\Controller\\UserController:userNavAction', {route:route})) }}
+            {{ render(path('app_user_userNav', {route:route})) }}
           </div>
           <div class="layui-col-md10">
        <div class="centerBody">

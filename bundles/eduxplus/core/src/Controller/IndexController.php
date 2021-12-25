@@ -52,9 +52,7 @@ class IndexController extends BaseAdminController
 
     /**
      * 导航用
-     * @param Request $request
-     * @param MenuService $menuService
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @Route("/mymenu", name="admin_mymenu")
      */
     public function mymenuAction(Request $request,MenuService $menuService){
         $route = $request->getSession()->get("_route");

@@ -5,7 +5,7 @@
   <div class="layui-main helpCard">
     <div class="layui-row layui-col-space20">
       <div class="layui-col-md2">
-        {{ render(controller('Eduxplus\\WebSiteBundle\\Controller\\HelpController:helpNavAction', {id:id,type:type})) }}
+        {{ render(path('app_help_nav', {id:id,type:type})) }}
       </div>
       <div class="layui-col-md10">
         <div class="layui-card helpHeader">

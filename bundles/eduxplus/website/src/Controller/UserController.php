@@ -69,6 +69,9 @@ class UserController extends BaseHtmlController
         return $this->render('@WebsiteBundle/user/userMenu.html.twig', $data);
     }
 
+    /**
+     * @Route("/userMenu", name="app_user_userNav")
+     */
     public function userNavAction($route, MsgService $msgService){
         $user = $this->getUser();
         $data = [];
