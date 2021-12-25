@@ -10,18 +10,20 @@
         "bundles/eduxplus-api-bundle":"@dev"
     },
     "require-dev": {
-        "symfony/flex": "^1.17",
         "easycorp/easy-deploy-bundle": "^1.0",
         "phpunit/phpunit": "^9.5",
         "symfony/browser-kit": "5.4.*",
         "symfony/css-selector": "5.4.*",
         "symfony/debug-bundle": "5.4.*",
+        "symfony/doctrine-bridge": "5.4.*",
+        "symfony/flex": "^1.17",
         "symfony/maker-bundle": "^1.34",
+        "symfony/monolog-bridge": "5.4.*",
         "symfony/phpunit-bridge": "5.4.*",
+        "symfony/security-http": "5.4.*",
+        "symfony/stopwatch": "5.4.*",
         "symfony/var-dumper": "5.4.*",
-        "symfony/doctrine-bridge":"5.4.*",
-        "symfony/monolog-bridge":"5.4.*",
-        "symfony/security-http":"5.4.*"
+        "symfony/web-profiler-bundle": "5.4.*"
     },
     "config": {
         "optimize-autoloader": true,
