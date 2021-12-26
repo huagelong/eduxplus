@@ -20,6 +20,7 @@ use Psr\Container\ContainerInterface;
 class BaseService
 {
     use Dbtrait;
+
     protected $em;
     protected $serializer;
     protected $requestStack;

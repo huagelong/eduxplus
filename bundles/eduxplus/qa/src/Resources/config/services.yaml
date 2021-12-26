@@ -17,4 +17,4 @@ services:
 
   Eduxplus\QaBundle\Service\:
     resource: '../../../src/Service/'
-    parent: Eduxplus\CoreBundle\Lib\Base\BaseService
+    parent: base.service
