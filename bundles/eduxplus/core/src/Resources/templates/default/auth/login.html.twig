@@ -1,0 +1,118 @@
+{% extends '@CoreBundle/layout/base.html.twig' %}
+
+{% block page_title %}登录{% endblock %}
+
+{% block head_stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('bundles/eduxpluscore/js/base/plugins/layer/layer.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/eduxpluscore/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/eduxpluscore/css/materialdesignicons.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/eduxpluscore/css/style.min.css') }}">
+{% endblock %}
+
+{% block head_favicon %}
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('assets/favicon.ico') }}">
+{% endblock %}
+
+{% block body_javascript %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/eduxpluscore/js/base/jquery.js') }}"></script>
+    <script src="{{ asset('bundles/eduxpluscore/js/base/utils.js') }}"></script>
+    <script src="{{ asset('bundles/eduxpluscore/js/base/plugins/jquery-form/jquery.form.js') }}"></script>
+    <script src="{{ asset('bundles/eduxpluscore/js/base/plugins/jquery-cookie/jquerycookie.js') }}"></script>
+    <script src="{{ asset('bundles/eduxpluscore/js/base/plugins/layer/layer.js') }}"></script>
+    <script src="{{ asset('bundles/eduxpluscore/js/base/plugins/underscore/underscore-min.js') }}"></script>
+    <script src="{{ asset('bundles/eduxpluscore/js/base/modules/include.js') }}"></script>
+    <script src="{{ asset('bundles/eduxpluscore/js/base/modules/ajaxform.js') }}"></script>
+    <script src="{{ asset('bundles/eduxpluscore/js/base/modules/ajaxaction.js') }}"></script>
+    <script src="{{ asset('bundles/eduxpluscore/js/base/modules/captcha.js') }}"></script>
+    <script src="{{ asset('bundles/eduxpluscore/js/base/modules/widgets.js') }}"></script>
+    <script src="{{ asset('bundles/eduxpluscore/js/base/base.js') }}"></script>
+    <script type="text/javascript">
+        $(function(){
+            $(".recaptcha").captcha();
+
+            $("input[name='mobile']").keyup(function(){
+                var mobile = $(this).val();
+                $.Cookie("last_username", mobile);
+            });
+
+        });
+    </script>
+    {% if error %}
+        <script type="text/javascript">
+            $(function() {
+                layer.msg('{{ error.messageKey|trans(error.messageData, 'security') }}', {
+                    time: 2500, //2s后自动关闭
+                    icon: 7,
+                    offset: '100px', //右下角弹出
+                });
+
+            });
+        </script>
+    {% endif %}
+{% endblock %}
+{% block body_main %}
+<div class="row no-gutters bg-white vh-100">
+    <div class="col-md-6 col-lg-7 col-xl-8 d-none d-md-block" style="background-image: url('/bundles/eduxpluscore/images/login-bg-1.jpg'); background-size: cover;">
+
+        <div class="d-flex vh-100">
+            <div class="p-5 align-self-end">
+                <img src="/bundles/eduxpluscore/images/logo.png" alt="...">
+                <br><br><br>
+                <p class="text-white">eduxplus 是一款服务于教育机构、个人、小型团队的在线教育系统,可用于个人知识付费或者在线教育培训等项目使用,基于symfony.</p>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="col-md-6 col-lg-5 col-xl-4 align-self-center">
+        <div class="p-5">
+            <div class="text-center">
+                <a href="javascript:;"> <img alt="light year admin" src="/bundles/eduxpluscore/images/logo-sidebar.png"> </a>
+            </div>
+            <p class="text-center text-muted"><small>请使用您的手机号码登录系统</small></p>
+
+            <form action="{{ path("admin_login") }}" method="post">
+                <input type="hidden" name="_csrf_token"
+                       value="{{ csrf_token('authenticate') }}"
+                >
+                <div class="form-group">
+                    <label for="mobile">手机号码</label>
+                    <input type="text" name="mobile" class="form-control" id="mobile" value="{{ last_username }}" placeholder="请输入您的手机号码">
+                </div>
+
+                <div class="form-group">
+                    <label for="password">密码</label>
+                    <input type="password" name="password" class="form-control" id="password" placeholder="请输入您的密码">
+                </div>
+
+                <div class="form-group">
+                    <label for="password">验证码</label>
+                    <div class="row">
+                        <div class="col-6">
+                            <input type="text" name="recaptcha" class="form-control" placeholder="请输入您的验证码">
+                        </div>
+                        <div class="col-6 text-left">
+                            <img  src="{{ path('app_glob_recaptcha', {'type':'adminLogin'} ) }}" class="recaptcha pull-right" style="height: 40px;cursor: pointer;" id="captcha"  title="点击刷新" alt="captcha">
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="form-group">
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input"  id="remember" name="_remember_me" checked>
+                        <label class="custom-control-label not-user-select" for="rememberme">7天内自动登录</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <button class="btn btn-block btn-primary" type="submit">立即登录</button>
+                </div>
+            </form>
+            <p class="text-center text-muted mt-3">Copyright © 2020 <a href="http://www.eduxplus.com">eduxplus</a>. All right reserved</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

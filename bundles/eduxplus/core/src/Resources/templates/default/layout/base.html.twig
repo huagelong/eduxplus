@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="{{ app.request.locale|split('_')|first|default('zh') }}">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+    <title>{% block page_title %}{% endblock %}-{{ option("app.name") }}</title>
+    {% block head_stylesheets %}{% endblock %}
+    {% block head_custom_stylesheets %}{% endblock %}
+    {% block head_favicon %} {% endblock %}
+    {% block head_javascript %} {% endblock %}
+    {% block head_stylesheets_end %}{% endblock %}
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <!--[if lt IE 9]>
+  <script src="{{ asset('bundles/eduxpluscore/js/base/html5shiv.min.js') }}"></script>
+  <script src="{{ asset('bundles/eduxpluscore/js/base/respond.min.js') }}"></script>
+    <![endif]-->
+</head>
+{% block body %}
+<body id="{% block body_id %}{% endblock %}"  class="{% block body_class %}{% endblock %}">
+{% block body_main %}{% endblock %}
+{% block body_javascript %}{% endblock %}
+{% block body_custom_javascript %}{% endblock %}
+</body>
+{% endblock %}
+</html>
+

@@ -35,7 +35,7 @@ class EduxplusCoreExtension extends Extension implements PrependExtensionInterfa
         $namespace = $container->getExtension("twig")->getAlias();
         $container->prependExtensionConfig($namespace, [
                 "paths"=>[
-                    __DIR__."/../Resources/templates"=>"CoreBundle",
+                    __DIR__."/../Resources/templates/default"=>"CoreBundle",
                     __DIR__."/../Lib/Grid/templates"=>"Grid",
                     __DIR__."/../Lib/Form/templates"=>"Form",
                     __DIR__."/../Lib/View/templates"=>"View"

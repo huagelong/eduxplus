@@ -1,0 +1,17 @@
+{% extends "@CoreBundle/layout/main.html.twig" %}
+
+{% block page_title %}生成优惠券{% endblock %}
+{% block breadcrumb %}
+    <li class="breadcrumb-item"><a href="{{ path("admin_mall_coupon_index") }}">优惠券管理</a></li>
+{% endblock %}
+{% block page %}
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="alert alert-success" role="alert">
+            优惠券生成成功! <a href="{{ path("admin_mall_couponsub_index", {"id":id}) }}">返回查看</a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

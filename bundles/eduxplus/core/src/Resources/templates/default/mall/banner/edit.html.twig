@@ -1,0 +1,20 @@
+{% extends "@CoreBundle/layout/pop.html.twig" %}
+
+{% block page_title %}编辑广告banner{% endblock %}
+{% block breadcrumb %}
+  <li class="breadcrumb-item"><a href="{{ path("admin_mall_banner_index") }}">banner管理</a></li>
+{% endblock %}
+
+{% block head_javascript %}
+  {{ parent() }}
+{% endblock %}
+
+{% block page %}
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            {{ formData|raw }}
+        </div>
+    </div>
+</section>
+{% endblock %}
