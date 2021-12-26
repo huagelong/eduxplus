@@ -18,4 +18,5 @@ class ApiBaseService extends BaseService
         throw new \LogicException("Method getUser Can Not Be Used");
     }
 
+
 }

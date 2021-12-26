@@ -7,6 +7,7 @@ use Eduxplus\CoreBundle\Entity\BaseUser;
 use Eduxplus\CoreBundle\Lib\Base\Error;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -152,5 +153,55 @@ class BaseService
         $arr = json_decode($json, true);
         return isset($arr[$key]) ? $arr[$key] : "";
     }
+
+    public function toArray($entity, $group=null)
+    {
+        $groupConfig = [];
+        if($group){
+            $groupConfig['groups'] = $group;
+        }
+        $groupConfig[DateTimeNormalizer::FORMAT_KEY]='Y-m-d H:i:s';
+        $json = $this->getSerializer()->serialize($entity, 'json', $groupConfig);
+        return json_decode($json, true);
+    }
+
+    /**
+     * @param $token
+     * @param $clientId
+     * @return BaseUser
+     */
+    public function getUserByToken($token, $clientId)
+    {
+        if ($clientId == 'ios' || $clientId == 'android') {
+            $sql = "SELECT a FROM Core:BaseUser a WHERE a.appToken=:appToken";
+            return $this->fetchOne($sql, ["appToken" => $token], 1);
+        } elseif ($clientId == 'html') {
+            $sql = "SELECT a FROM Core:BaseUser a WHERE a.htmlToken=:htmlToken";
+            return $this->fetchOne($sql, ["htmlToken" => $token], 1);
+        } elseif ($clientId == 'wxmini') {
+            $sql = "SELECT a FROM Core:BaseUser a WHERE a.wxminiToken=:wxminiToken";
+            return $this->fetchOne($sql, ["wxminiToken" => $token], 1);
+        }
+    }
+
+    public function getOption($k, $isJson = 0, $index = null, $default = null)
+    {
+        $sql = "SELECT a.optionValue FROM Core:BaseOption a WHERE a.optionKey =:optionKey";
+        $rs = $this->fetchField("optionValue", $sql, ['optionKey' => $k]);
+
+        if ($rs) {
+            if ($isJson) {
+                $arr =  json_decode($rs, 1);
+                if($index === null){
+                    return $arr;
+                }
+                return isset($arr[$index]) ? $arr[$index] : "";
+            }
+            return $rs;
+        } else {
+            return $default;
+        }
+    }
+
 
 }
