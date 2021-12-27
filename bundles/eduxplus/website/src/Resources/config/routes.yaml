@@ -9,3 +9,7 @@ user:
 search:
   resource: "./routes/search.yaml"
 
+order:
+  resource: "./routes/order.yaml"
+
+

@@ -1,0 +1,7 @@
+app_order_index:
+  path: /my/orders
+  methods: GET
+  controller: Eduxplus\WebsiteBundle\Controller\OrderController::indexAction
+
+
+

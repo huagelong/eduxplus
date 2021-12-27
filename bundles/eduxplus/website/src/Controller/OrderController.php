@@ -26,8 +26,6 @@ class OrderController extends BaseHtmlController
 {
     /**
      * 我的订单列表
-     *
-     * @Route("/my/orders", name="app_order_index")
      */
     public function indexAction(Request $request, OrderService $orderService)
     {
