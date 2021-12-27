@@ -1,4 +1,11 @@
-WebsiteBundle.Controllers:
-  resource: ../../Controller/
-  type: annotation
-  prefix: /
+# WebsiteBundle.Controllers:
+#   resource: ../../Controller/
+#   type: annotation
+#   prefix: /
+
+user:
+  resource: "./routes/user.yaml"
+
+search:
+  resource: "./routes/search.yaml"
+

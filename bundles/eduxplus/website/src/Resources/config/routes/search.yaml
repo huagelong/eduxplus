@@ -1,0 +1,8 @@
+app_search:
+  path: /search/{type}/{page}
+  defaults: 
+    type: 0
+    page: 1
+  methods: GET
+  controller: Eduxplus\WebsiteBundle\Controller\SearchController::indexAction
+
