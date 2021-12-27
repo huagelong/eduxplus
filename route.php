@@ -1,8 +1,6 @@
 <?php
 
 $routeArr = include("var/cache/dev/url_generating_routes.php");
-print_r(current($routeArr));
-
 foreach ($routeArr as $key => $value) {
 	if(substr($key, 0,1) == "_"){
 		continue;
@@ -37,8 +35,24 @@ foreach ($routeArr as $key => $value) {
 	}
 
 	$controllerArr = explode('\\', $controller);
-	list($pre, $bundel, $c, $controllerName, $action) = $controllerArr;
+	list($p, $bundel, $c, $controllerAction) = $controllerArr;
+	list($controllerName, $action) = explode('::', $controllerAction);
+
+	$routesPath = __DIR__."/bundles/eduxplus/";
+	if($bundel == "CoreBundle"){
+		$routesPath .= "core";
+	}elseif($bundel == "ApiBundle"){
+		$routesPath .= "api";
+	}elseif($bundel == "QaBundle"){
+		$routesPath .= "qa";
+	}elseif($bundel == "WebsiteBundle"){
+		$routesPath .= "website";
+	}
+	$routesPath .= "/src/Resources/config/";
+
+	$mainRouteFile = $routesPath."routes.yaml";
 	
-	print_r($controllerArr);exit;
+
+	print_r($routesPath);exit;
 
 }
