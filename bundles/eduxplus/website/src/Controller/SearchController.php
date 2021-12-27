@@ -19,6 +19,7 @@ class SearchController extends BaseHtmlController
 
     /**
      * type 1 课程，2-资讯
+     * @Route("/search/{type}/{page}", name="app_search", defaults={"type":0, "page":1})
      */
     public function indexAction($type=1, $page=1, Request $request, SearchService $searchService){
         $kw = $request->get("kw");

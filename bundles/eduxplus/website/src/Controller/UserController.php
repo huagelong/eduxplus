@@ -19,6 +19,7 @@ use Eduxplus\WebsiteBundle\Service\GoodsService;
 use Eduxplus\WebsiteBundle\Service\MsgService;
 use Eduxplus\WebsiteBundle\Service\UserService;
 use Eduxplus\CoreBundle\Exception\NeedLoginException;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
@@ -26,7 +27,9 @@ use Symfony\Component\Security\Http\Logout\LogoutHandlerInterface;
 
 class UserController extends BaseHtmlController
 {
-
+    /**
+     * @Route("/login", name="app_login")
+     */
     public function loginAction(Request $request){
         $mobile = $request->cookies->get("site_login_mobile");
         $goto = $request->get("goto");
@@ -38,12 +41,20 @@ class UserController extends BaseHtmlController
         return $this->render('@WebsiteBundle/user/login.html.twig', $data);
     }
 
-
+    /**
+     * @Route("/login", name="app_logindo")
+     */
     public function logininAction(){}
 
 
+    /**
+     * @Route("/logout", name="app_logout")
+     */
     public function logoutAction(){}
 
+    /**
+     * @Route("/userMenu", name="app_user_userMenu")
+     */
     public function userMenuAction(MsgService $msgService){
         $user = $this->getUser();
         $data = [];
@@ -58,6 +69,9 @@ class UserController extends BaseHtmlController
         return $this->render('@WebsiteBundle/user/userMenu.html.twig', $data);
     }
 
+    /**
+     * @Route("/userNav/{route}", name="app_user_userNav")
+     */
     public function userNavAction($route="", MsgService $msgService){
         $user = $this->getUser();
         $data = [];
@@ -72,7 +86,7 @@ class UserController extends BaseHtmlController
 
     /**
      * 个人主页
-     * 
+     * @Route("/my", name="app_user_home")
      */
     public function indexAction(Request $request){
         $page = $request->get("page");
@@ -86,6 +100,9 @@ class UserController extends BaseHtmlController
     }
 
 
+    /**
+     * @Route("/my/info", name="app_user_info")
+     */
     public function infoAction(UserService $userService){
         $uid = $this->getUid();
         $userInfo = $userService->getUserById($uid);
@@ -95,6 +112,9 @@ class UserController extends BaseHtmlController
         return $this->render('@WebsiteBundle/user/info.html.twig', $data);
     }
 
+    /**
+     * @Route("/my/info/do", name="app_user_info_do")
+     */
     public function doinfoAction(Request $request, ValidateService $validateService, UserService $userService){
         $avatar = $request->get("avatar");
         $displayName = $request->get("displayName");
@@ -118,7 +138,9 @@ class UserController extends BaseHtmlController
         return $this->responseMsgRedirect("操作成功！", $this->generateUrl("app_user_info"));
     }
 
-
+    /**
+     * @Route("/my/uploadimg/do/{type}", name="app_my_uploadimg", defaults={"type":"img"})
+     */
     public function uploadavatarAction($type = "img", Request $request, UploadService $uploadService)
     {
         $files = $request->files->all();
@@ -148,6 +170,9 @@ class UserController extends BaseHtmlController
         }
     }
 
+    /**
+     * @Route("/my/secure", name="app_user_secure")
+     */
     public function secureAction(UserService $userService){
         $uid = $this->getUid();
         $userInfo = $userService->getUserById($uid);
@@ -157,6 +182,9 @@ class UserController extends BaseHtmlController
         return $this->render('@WebsiteBundle/user/secure.html.twig', $data);
     }
 
+    /**
+     * @Route("/my/fav", name="app_user_fav")
+     */
     public function favAction(Request $request, GoodsService $goodsService){
         $uid = $this->getUid();
         $page = $request->get("page", 1);
@@ -169,7 +197,9 @@ class UserController extends BaseHtmlController
         return $this->render('@WebsiteBundle/user/fav.html.twig', $data);
     }
 
-
+    /**
+     * @Route("/my/msg", name="app_user_msg")
+     */
     public function msgAction(Request $request , MsgService $msgService){
         $uid = $this->getUid();
         $page = $request->get("page", 1);
@@ -182,28 +212,39 @@ class UserController extends BaseHtmlController
         return $this->render('@WebsiteBundle/user/msg.html.twig', $data);
     }
 
-
+    /**
+     * 标记为已读
+     * @Route("/my/do/msgread/{id}", name="app_user_msg_read_do")
+     */
     public function msgReadAction($id, MsgService $msgService){
         $uid = $this->getUid();
         $msgService->doRead($uid, $id);
         return $this->responseRedirect($this->generateUrl("app_user_msg"));
     }
 
-
+    /**
+     * 全部标记为已读
+     * @Route("/my/do/allmsgread", name="app_user_allmsg_read_do")
+     */
     public function allmsgReadAction(MsgService $msgService){
         $uid = $this->getUid();
         $msgService->doAllMsgRead($uid);
         return $this->responseRedirect($this->generateUrl("app_user_msg"));
     }
 
-    
+    /**
+     * 未读消息数量
+     * @Route("/my/do/msgUnreadCount", name="app_user_msg_unread_count")
+     */
     public function unreadMsgCountAction(MsgService $msgService){
         $uid = $this->getUid();
         $count =  $msgService->msgUnReadCount($uid);
         return $this->responseSuccess($count);
     }
 
-    
+    /**
+     * @Route("/my/changeMobile/first", name="app_user_changeMobile_first")
+     */
     public function changeMobileFirstAction(HelperService $helperService){
         $data = [];
         $user = $this->getUserInfo();
@@ -218,8 +259,9 @@ class UserController extends BaseHtmlController
     /**
      * 检查手机验证码
      *
+     * @Route("/my/checkMobileCode/do", name="app_user_checkMobileCode_do")
      */
-    public function doCheckMobileCodeAction(Request $request, GlobService $globService){
+    public function doCheckMobileCode(Request $request, GlobService $globService){
         $user = $this->getUserInfo();
         $mobile = $user["mobile"];
         $code = $request->get("code");
@@ -232,6 +274,9 @@ class UserController extends BaseHtmlController
         return $this->responseRedirect($this->generateUrl('app_user_changeMobile_second'));
     }
 
+    /**
+     * @Route("/my/changeMobile/second", name="app_user_changeMobile_second")
+     */
     public function changeMobileSecondAction(){
         $mobileChecked = $this->session()->get("mobileChecked");
         if(!$mobileChecked) return $this->redirectToRoute("app_user_changeMobile_first");
@@ -243,8 +288,9 @@ class UserController extends BaseHtmlController
     /**
      * 检查手机验证码
      *
+     * @Route("/my/changeMobile/do", name="app_user_changeMobile_do")
      */
-    public function doChangeMobileCodeAction(Request $request,UserService $userService, GlobService $globService, ValidateService $validateService){
+    public function doChangeMobileCode(Request $request,UserService $userService, GlobService $globService, ValidateService $validateService){
         $mobile = $request->get("mobile");
         $code = $request->get("code");
 
