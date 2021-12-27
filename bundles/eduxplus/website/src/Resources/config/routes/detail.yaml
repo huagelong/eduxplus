@@ -8,8 +8,8 @@ app_detail_center:
      categoryId: 0 
      isFree: 0 
   requirements: 
-      categoryId: 0 
-      isFree: 0 
+      categoryId: \d+
+      isFree: \d+
 app_detail_doFav:
   path: /detail/my/do/doFav/{uuid}
   controller: Eduxplus\WebsiteBundle\Controller\DetailController::doFavAction

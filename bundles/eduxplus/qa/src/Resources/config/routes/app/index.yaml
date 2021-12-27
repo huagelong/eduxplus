@@ -3,10 +3,10 @@ qa_exam_index:
   controller: Eduxplus\QaBundle\Controller\App\IndexController::indexAction
   defaults:  
      categoryId: 0 
-     isFree: 0 
-  requirements: 
-      categoryId: 0 
-      isFree: 0 
+     isFree: 0
+  requirements:
+      categoryId: \d+
+      isFree: \d+
 qa_mall_buy:
   path: /qa/mall/buy/{uuid}
   controller: Eduxplus\QaBundle\Controller\App\IndexController::buyAction
