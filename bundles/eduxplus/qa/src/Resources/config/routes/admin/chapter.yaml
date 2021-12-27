@@ -1,27 +1,27 @@
 qa_admin_chapter_index:
   path: /admin/qa/chapter/index
-  controller: Eduxplus/QaBundle/Controller/Admin/ChapterController::indexAction
+  controller: Eduxplus\QaBundle\Controller\Admin\ChapterController::indexAction
 qa_admin_chapter_add:
   path: /admin/qa/chapter/add
-  controller: Eduxplus/QaBundle/Controller/Admin/ChapterController::addAction
+  controller: Eduxplus\QaBundle\Controller\Admin\ChapterController::addAction
 qa_admin_chapter_do_add:
   path: /admin/qa/chapter/add/do
-  controller: Eduxplus/QaBundle/Controller/Admin/ChapterController::addDoAction
+  controller: Eduxplus\QaBundle\Controller\Admin\ChapterController::addDoAction
 qa_admin_chapter_edit:
   path: /admin/qa/chapter/edit/{id}
-  controller: Eduxplus/QaBundle/Controller/Admin/ChapterController::editAction
+  controller: Eduxplus\QaBundle\Controller\Admin\ChapterController::editAction
 qa_admin_chapter_do_edit:
   path: /admin/qa/chapter/edit/do/{id}
-  controller: Eduxplus/QaBundle/Controller/Admin/ChapterController::editDoAction
+  controller: Eduxplus\QaBundle\Controller\Admin\ChapterController::editDoAction
 qa_admin_chapter_delete:
   path: /admin/qa/chapter/delete/do/{id}
-  controller: Eduxplus/QaBundle/Controller/Admin/ChapterController::deleteDoAction
+  controller: Eduxplus\QaBundle\Controller\Admin\ChapterController::deleteDoAction
 qa_admin_chapter_bathdelete:
   path: /admin/qa/chapter/bathdelete/do
-  controller: Eduxplus/QaBundle/Controller/Admin/ChapterController::bathdeleteDoAction
+  controller: Eduxplus\QaBundle\Controller\Admin\ChapterController::bathdeleteDoAction
 qa_admin_chapter_switchStatus:
   path: /admin/qa/chapter/switchStatus/do/{id}
-  controller: Eduxplus/QaBundle/Controller/Admin/ChapterController::switchStatusAction
+  controller: Eduxplus\QaBundle\Controller\Admin\ChapterController::switchStatusAction
 qa_admin_chapter_searchChapter:
   path: /admin/qa/chapter/searchChapter/do
-  controller: Eduxplus/QaBundle/Controller/Admin/ChapterController::searchChapterAction
+  controller: Eduxplus\QaBundle\Controller\Admin\ChapterController::searchChapterAction

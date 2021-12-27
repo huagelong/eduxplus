@@ -1,21 +1,21 @@
 qa_admin_chaptersub_index:
   path: /admin/qa/chaptersub/index/{chapterId}
-  controller: Eduxplus/QaBundle/Controller/Admin/ChapterSubController::indexAction
+  controller: Eduxplus\QaBundle\Controller\Admin\ChapterSubController::indexAction
 qa_admin_chaptersub_adddo:
   path: /admin/qa/chaptersub/add/do/{chapterId}
-  controller: Eduxplus/QaBundle/Controller/Admin/ChapterSubController::adddoAction
+  controller: Eduxplus\QaBundle\Controller\Admin\ChapterSubController::adddoAction
 qa_admin_chaptersub_edit:
   path: /admin/qa/chaptersub/edit/{id}
-  controller: Eduxplus/QaBundle/Controller/Admin/ChapterSubController::editAction
+  controller: Eduxplus\QaBundle\Controller\Admin\ChapterSubController::editAction
 qa_admin_chaptersub_edit_do:
   path: /admin/qa/chaptersub/edit/do/{id}
-  controller: Eduxplus/QaBundle/Controller/Admin/ChapterSubController::editDoAction
+  controller: Eduxplus\QaBundle\Controller\Admin\ChapterSubController::editDoAction
 qa_admin_chaptersub_delete_do:
   path: /admin/qa/chaptersub/delete/do/{id}
-  controller: Eduxplus/QaBundle/Controller/Admin/ChapterSubController::deleteDoAction
+  controller: Eduxplus\QaBundle\Controller\Admin\ChapterSubController::deleteDoAction
 qa_admin_chaptersub_updateSort:
   path: /admin/qa/chaptersub/updateSort/do/{chapterId}
-  controller: Eduxplus/QaBundle/Controller/Admin/ChapterSubController::updateSortAction
+  controller: Eduxplus\QaBundle\Controller\Admin\ChapterSubController::updateSortAction
 qa_admin_chaptersub_getChapterSub_do:
   path: /admin/qa/chaptersub/getChapterSub/do
-  controller: Eduxplus/QaBundle/Controller/Admin/ChapterSubController::getChapterSubAction
+  controller: Eduxplus\QaBundle\Controller\Admin\ChapterSubController::getChapterSubAction

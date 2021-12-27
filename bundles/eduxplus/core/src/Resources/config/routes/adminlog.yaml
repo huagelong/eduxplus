@@ -1,3 +1,3 @@
 admin_adminlog_index:
   path: /admin/adminlog/index
-  controller: Eduxplus/CoreBundle/Controller/AdminLogController::indexAction
+  controller: Eduxplus\CoreBundle\Controller\AdminLogController::indexAction

@@ -1,27 +1,27 @@
 admin_role_index:
   path: /admin/role/index
-  controller: Eduxplus/CoreBundle/Controller/RoleController::indexAction
+  controller: Eduxplus\CoreBundle\Controller\RoleController::indexAction
 admin_role_add:
   path: /admin/role/add
-  controller: Eduxplus/CoreBundle/Controller/RoleController::addAction
+  controller: Eduxplus\CoreBundle\Controller\RoleController::addAction
 admin_api_role_add:
   path: /admin/role/add/do
-  controller: Eduxplus/CoreBundle/Controller/RoleController::addDoAction
+  controller: Eduxplus\CoreBundle\Controller\RoleController::addDoAction
 admin_role_edit:
   path: /admin/role/edit/{id}
-  controller: Eduxplus/CoreBundle/Controller/RoleController::editAction
+  controller: Eduxplus\CoreBundle\Controller\RoleController::editAction
 admin_api_role_edit:
   path: /admin/role/edit/do/{id}
-  controller: Eduxplus/CoreBundle/Controller/RoleController::editDoAction
+  controller: Eduxplus\CoreBundle\Controller\RoleController::editDoAction
 admin_api_role_delete:
   path: /admin/role/delete/do/{id}
-  controller: Eduxplus/CoreBundle/Controller/RoleController::deleteAction
+  controller: Eduxplus\CoreBundle\Controller\RoleController::deleteAction
 admin_api_role_batchdelete:
   path: /admin/role/batchdelete/do
-  controller: Eduxplus/CoreBundle/Controller/RoleController::bathDeleteAction
+  controller: Eduxplus\CoreBundle\Controller\RoleController::bathDeleteAction
 admin_role_bindmenu:
   path: /admin/role/bindmenu/{id}
-  controller: Eduxplus/CoreBundle/Controller/RoleController::bindMenuAction
+  controller: Eduxplus\CoreBundle\Controller\RoleController::bindMenuAction
 admin_api_role_bindmenu:
   path: /admin/role/bindmenu/do/{id}
-  controller: Eduxplus/CoreBundle/Controller/RoleController::bindMenuDoAction
+  controller: Eduxplus\CoreBundle\Controller\RoleController::bindMenuDoAction

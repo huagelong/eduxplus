@@ -1,36 +1,36 @@
 admin_mall_goods_index:
   path: /admin/mall/goods/index
-  controller: Eduxplus/CoreBundle/Controller/Mall/GoodsController::indexAction
+  controller: Eduxplus\CoreBundle\Controller\Mall\GoodsController::indexAction
 admin_mall_goods_add:
   path: /admin/mall/goods/add
-  controller: Eduxplus/CoreBundle/Controller/Mall/GoodsController::addAction
+  controller: Eduxplus\CoreBundle\Controller\Mall\GoodsController::addAction
 admin_mall_group_goods_add:
   path: /admin/mall/groupGoods/add
-  controller: Eduxplus/CoreBundle/Controller/Mall/GoodsController::addGroupAction
+  controller: Eduxplus\CoreBundle\Controller\Mall\GoodsController::addGroupAction
 admin_api_mall_goods_add:
   path: /admin/mall/goods/add/do
-  controller: Eduxplus/CoreBundle/Controller/Mall/GoodsController::addDoAction
+  controller: Eduxplus\CoreBundle\Controller\Mall\GoodsController::addDoAction
 admin_mall_goods_edit:
   path: /admin/mall/goods/edit/{id}
-  controller: Eduxplus/CoreBundle/Controller/Mall/GoodsController::editAction
+  controller: Eduxplus\CoreBundle\Controller\Mall\GoodsController::editAction
 admin_mall_goods_editgroup:
   path: /admin/mall/goods/editgroup/{id}
-  controller: Eduxplus/CoreBundle/Controller/Mall/GoodsController::editgroupAction
+  controller: Eduxplus\CoreBundle\Controller\Mall\GoodsController::editgroupAction
 admin_mall_goods_view:
   path: /admin/mall/goods/view/{id}
-  controller: Eduxplus/CoreBundle/Controller/Mall/GoodsController::viewAction
+  controller: Eduxplus\CoreBundle\Controller\Mall\GoodsController::viewAction
 admin_mall_goods_viewgroup:
   path: /admin/mall/goods/viewgroup/{id}
-  controller: Eduxplus/CoreBundle/Controller/Mall/GoodsController::viewgroupAction
+  controller: Eduxplus\CoreBundle\Controller\Mall\GoodsController::viewgroupAction
 admin_api_mall_goods_edit:
   path: /admin/mall/goods/edit/do/{id}
-  controller: Eduxplus/CoreBundle/Controller/Mall/GoodsController::editDoAction
+  controller: Eduxplus\CoreBundle\Controller\Mall\GoodsController::editDoAction
 admin_api_mall_goods_delete:
   path: /admin/mall/goods/delete/do/{id}
-  controller: Eduxplus/CoreBundle/Controller/Mall/GoodsController::deleteDoAction
+  controller: Eduxplus\CoreBundle\Controller\Mall\GoodsController::deleteDoAction
 admin_api_mall_goods_bathdelete:
   path: /admin/mall/goods/bathdelete/do
-  controller: Eduxplus/CoreBundle/Controller/Mall/GoodsController::bathdeleteDoAction
+  controller: Eduxplus\CoreBundle\Controller\Mall\GoodsController::bathdeleteDoAction
 admin_api_mall_goods_switchStatus:
   path: /admin/mall/goods/switchStatus/do/{id}
-  controller: Eduxplus/CoreBundle/Controller/Mall/GoodsController::switchStatusAction
+  controller: Eduxplus\CoreBundle\Controller\Mall\GoodsController::switchStatusAction

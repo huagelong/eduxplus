@@ -1,12 +1,12 @@
 api_auth_login:
   path: /api/login
-  controller: Eduxplus/ApiBundle/Controller/AuthController::login
+  controller: Eduxplus\ApiBundle\Controller\AuthController::login
 api_auth_logout:
   path: /api/logout
-  controller: Eduxplus/ApiBundle/Controller/AuthController::logout
+  controller: Eduxplus\ApiBundle\Controller\AuthController::logout
 api_auth_wxMiniLogin:
   path: /api/wxMiniLogin
-  controller: Eduxplus/ApiBundle/Controller/AuthController::wxMiniLoginAction
+  controller: Eduxplus\ApiBundle\Controller\AuthController::wxMiniLoginAction
 api_auth_wxMiniReg:
   path: /api/wxMiniReg
-  controller: Eduxplus/ApiBundle/Controller/AuthController::wxMiniRegAction
+  controller: Eduxplus\ApiBundle\Controller\AuthController::wxMiniRegAction

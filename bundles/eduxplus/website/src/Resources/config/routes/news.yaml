@@ -1,9 +1,9 @@
 app_news:
   path: /news/{category}/{page}
-  controller: Eduxplus/WebsiteBundle/Controller/NewsController::indexAction
+  controller: Eduxplus\WebsiteBundle\Controller\NewsController::indexAction
   defaults:  
      category: 0 
      page: 1 
 app_news_detail:
   path: /news_detail/{id}
-  controller: Eduxplus/WebsiteBundle/Controller/NewsController::detailAction
+  controller: Eduxplus\WebsiteBundle\Controller\NewsController::detailAction

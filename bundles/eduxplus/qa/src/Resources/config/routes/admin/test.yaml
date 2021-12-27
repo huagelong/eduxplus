@@ -1,27 +1,27 @@
 qa_admin_test_index:
   path: /admin/qa/test/index
-  controller: Eduxplus/QaBundle/Controller/Admin/TestController::indexAction
+  controller: Eduxplus\QaBundle\Controller\Admin\TestController::indexAction
 qa_admin_test_preview:
   path: /admin/qa/test/preview/{id}
-  controller: Eduxplus/QaBundle/Controller/Admin/TestController::previewAction
+  controller: Eduxplus\QaBundle\Controller\Admin\TestController::previewAction
 qa_admin_test_add:
   path: /admin/qa/test/add
-  controller: Eduxplus/QaBundle/Controller/Admin/TestController::addAction
+  controller: Eduxplus\QaBundle\Controller\Admin\TestController::addAction
 qa_admin_test_do_add:
   path: /admin/qa/test/add/do
-  controller: Eduxplus/QaBundle/Controller/Admin/TestController::addDoAction
+  controller: Eduxplus\QaBundle\Controller\Admin\TestController::addDoAction
 qa_admin_test_edit:
   path: /admin/qa/test/edit/{id}
-  controller: Eduxplus/QaBundle/Controller/Admin/TestController::editAction
+  controller: Eduxplus\QaBundle\Controller\Admin\TestController::editAction
 qa_admin_test_do_edit:
   path: /admin/qa/test/edit/do/{id}
-  controller: Eduxplus/QaBundle/Controller/Admin/TestController::editDoAction
+  controller: Eduxplus\QaBundle\Controller\Admin\TestController::editDoAction
 qa_admin_test_delete:
   path: /admin/qa/test/delete/do/{id}
-  controller: Eduxplus/QaBundle/Controller/Admin/TestController::deleteDoAction
+  controller: Eduxplus\QaBundle\Controller\Admin\TestController::deleteDoAction
 qa_admin_test_bathdelete:
   path: /admin/qa/test/bathdelete/do
-  controller: Eduxplus/QaBundle/Controller/Admin/TestController::bathdeleteDoAction
+  controller: Eduxplus\QaBundle\Controller\Admin\TestController::bathdeleteDoAction
 qa_admin_test_switchStatus:
   path: /admin/qa/test/switchStatus/do/{id}
-  controller: Eduxplus/QaBundle/Controller/Admin/TestController::switchStatusAction
+  controller: Eduxplus\QaBundle\Controller\Admin\TestController::switchStatusAction

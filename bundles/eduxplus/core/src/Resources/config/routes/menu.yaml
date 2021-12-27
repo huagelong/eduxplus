@@ -1,24 +1,24 @@
 admin_menu_index:
   path: /admin/menu/index
-  controller: Eduxplus/CoreBundle/Controller/MenuController::indexAction
+  controller: Eduxplus\CoreBundle\Controller\MenuController::indexAction
 admin_menu_add:
   path: /admin/menu/add
-  controller: Eduxplus/CoreBundle/Controller/MenuController::addAction
+  controller: Eduxplus\CoreBundle\Controller\MenuController::addAction
 admin_menu_edit:
   path: /admin/menu/edit/{id}
-  controller: Eduxplus/CoreBundle/Controller/MenuController::editAction
+  controller: Eduxplus\CoreBundle\Controller\MenuController::editAction
 admin_menu_view:
   path: /admin/menu/view/{id}
-  controller: Eduxplus/CoreBundle/Controller/MenuController::viewAction
+  controller: Eduxplus\CoreBundle\Controller\MenuController::viewAction
 admin_api_menu_edit:
   path: /admin/menu/edit/do/{id}
-  controller: Eduxplus/CoreBundle/Controller/MenuController::editDoAction
+  controller: Eduxplus\CoreBundle\Controller\MenuController::editDoAction
 admin_api_menu_delete:
   path: /admin/menu/delete/do/{id}
-  controller: Eduxplus/CoreBundle/Controller/MenuController::deleteAction
+  controller: Eduxplus\CoreBundle\Controller\MenuController::deleteAction
 admin_api_menu_add:
   path: /admin/menu/add/do
-  controller: Eduxplus/CoreBundle/Controller/MenuController::addDoAction
+  controller: Eduxplus\CoreBundle\Controller\MenuController::addDoAction
 admin_api_menu_updateSort:
   path: /admin/menu/updateSort/do
-  controller: Eduxplus/CoreBundle/Controller/MenuController::updateSort
+  controller: Eduxplus\CoreBundle\Controller\MenuController::updateSort

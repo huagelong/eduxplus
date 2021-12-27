@@ -1,11 +1,11 @@
 app_learn_index:
   path: /my/learn/index/{page}
-  controller: Eduxplus/WebsiteBundle/Controller/LearnController::indexAction
+  controller: Eduxplus\WebsiteBundle\Controller\LearnController::indexAction
   defaults:  
      page: 1 
 app_learn_courseList:
   path: /my/courseList/{courseId}
-  controller: Eduxplus/WebsiteBundle/Controller/LearnController::courseListAction
+  controller: Eduxplus\WebsiteBundle\Controller\LearnController::courseListAction
 app_learn_detail:
   path: /learn/{chapterId}
-  controller: Eduxplus/WebsiteBundle/Controller/LearnController::detailAction
+  controller: Eduxplus\WebsiteBundle\Controller\LearnController::detailAction

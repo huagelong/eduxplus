@@ -1,28 +1,28 @@
 app_glob_recaptcha:
   path: /recaptcha/{type}
-  controller: Eduxplus/WebsiteBundle/Controller/GlobController::recaptchaAction
+  controller: Eduxplus\WebsiteBundle\Controller\GlobController::recaptchaAction
 app_glob_sendCaptcha:
   path: /do/sendCaptcha
-  controller: Eduxplus/WebsiteBundle/Controller/GlobController::sendCaptchaAction
+  controller: Eduxplus\WebsiteBundle\Controller\GlobController::sendCaptchaAction
 app_glob_upload:
   path: /glob/upload/do/{type}
-  controller: Eduxplus/WebsiteBundle/Controller/GlobController::uploadAction
+  controller: Eduxplus\WebsiteBundle\Controller\GlobController::uploadAction
   defaults:  
      type: img 
 app_glob_aliyunVodPlayCheck:
   path: /aliyunVodPlayCheck
-  controller: Eduxplus/WebsiteBundle/Controller/GlobController::aliyunVodPlayCheckAction
+  controller: Eduxplus\WebsiteBundle\Controller\GlobController::aliyunVodPlayCheckAction
 app_glob_tengxunyunImCallback:
   path: /tengxunyunImCallback
-  controller: Eduxplus/WebsiteBundle/Controller/GlobController::tengxunyunLiveCallbackAction
+  controller: Eduxplus\WebsiteBundle\Controller\GlobController::tengxunyunLiveCallbackAction
 app_glob_vodCallback:
   path: /vodCallback/do/{type}
-  controller: Eduxplus/WebsiteBundle/Controller/GlobController::vodCallbackAction
+  controller: Eduxplus\WebsiteBundle\Controller\GlobController::vodCallbackAction
   defaults:  
      type: aliyun 
 app_glob_pay_alipayCallback:
   path: /pay/alipayCallback
-  controller: Eduxplus/WebsiteBundle/Controller/GlobController::alipayCallbackAction
+  controller: Eduxplus\WebsiteBundle\Controller\GlobController::alipayCallbackAction
 app_glob_pay_wxpayCallback:
   path: /pay/wxpayCallback
-  controller: Eduxplus/WebsiteBundle/Controller/GlobController::wxpayCallbackAction
+  controller: Eduxplus\WebsiteBundle\Controller\GlobController::wxpayCallbackAction

@@ -1,45 +1,45 @@
 admin_mall_banner_index:
   path: /admin/mall/banner/index
-  controller: Eduxplus/CoreBundle/Controller/Mall/BannerController::indexAction
+  controller: Eduxplus\CoreBundle\Controller\Mall\BannerController::indexAction
 admin_mall_banner_add:
   path: /admin/mall/banner/add
-  controller: Eduxplus/CoreBundle/Controller/Mall/BannerController::addAction
+  controller: Eduxplus\CoreBundle\Controller\Mall\BannerController::addAction
 admin_api_mall_banner_add:
   path: /admin/mall/banner/add/do
-  controller: Eduxplus/CoreBundle/Controller/Mall/BannerController::addDoAction
+  controller: Eduxplus\CoreBundle\Controller\Mall\BannerController::addDoAction
 admin_mall_banner_edit:
   path: /admin/mall/banner/edit/{id}
-  controller: Eduxplus/CoreBundle/Controller/Mall/BannerController::editAction
+  controller: Eduxplus\CoreBundle\Controller\Mall\BannerController::editAction
 admin_api_mall_banner_edit:
   path: /admin/mall/banner/edit/do/{id}
-  controller: Eduxplus/CoreBundle/Controller/Mall/BannerController::editDoAction
+  controller: Eduxplus\CoreBundle\Controller\Mall\BannerController::editDoAction
 admin_api_mall_banner_delete:
   path: /admin/mall/banner/delete/do/{id}
-  controller: Eduxplus/CoreBundle/Controller/Mall/BannerController::deleteDoAction
+  controller: Eduxplus\CoreBundle\Controller\Mall\BannerController::deleteDoAction
 admin_api_mall_banner_bathdelete:
   path: /admin/mall/banner/bathdelete/do
-  controller: Eduxplus/CoreBundle/Controller/Mall/BannerController::bathDeleteDoAction
+  controller: Eduxplus\CoreBundle\Controller\Mall\BannerController::bathDeleteDoAction
 admin_mall_bannermain_index:
   path: /admin/mall/bannermain/index/{pid}
-  controller: Eduxplus/CoreBundle/Controller/Mall/BannerController::indexMainAction
+  controller: Eduxplus\CoreBundle\Controller\Mall\BannerController::indexMainAction
 admin_mall_bannermain_add:
   path: /admin/mall/bannermain/add/{pid}
-  controller: Eduxplus/CoreBundle/Controller/Mall/BannerController::addMainAction
+  controller: Eduxplus\CoreBundle\Controller\Mall\BannerController::addMainAction
 admin_api_mall_bannermain_add:
   path: /admin/mall/bannermain/add/do
-  controller: Eduxplus/CoreBundle/Controller/Mall/BannerController::addMainDoAction
+  controller: Eduxplus\CoreBundle\Controller\Mall\BannerController::addMainDoAction
 admin_mall_bannermain_edit:
   path: /admin/mall/bannermain/edit/{id}
-  controller: Eduxplus/CoreBundle/Controller/Mall/BannerController::editMainAction
+  controller: Eduxplus\CoreBundle\Controller\Mall\BannerController::editMainAction
 admin_api_mall_bannermain_edit:
   path: /admin/mall/bannermain/edit/do/{id}
-  controller: Eduxplus/CoreBundle/Controller/Mall/BannerController::editMainDoAction
+  controller: Eduxplus\CoreBundle\Controller\Mall\BannerController::editMainDoAction
 admin_api_mall_bannermain_delete:
   path: /admin/mall/bannermain/delete/do/{id}
-  controller: Eduxplus/CoreBundle/Controller/Mall/BannerController::deleteMainDoAction
+  controller: Eduxplus\CoreBundle\Controller\Mall\BannerController::deleteMainDoAction
 admin_api_mall_bannermain_bathdelete:
   path: /admin/mall/bannermain/bathdelete/do
-  controller: Eduxplus/CoreBundle/Controller/Mall/BannerController::bathDeleteMainDoAction
+  controller: Eduxplus\CoreBundle\Controller\Mall\BannerController::bathDeleteMainDoAction
 admin_api_mall_bannermain_switchStatus:
   path: /admin/mall/bannermain/switchStatus/do/{id}
-  controller: Eduxplus/CoreBundle/Controller/Mall/BannerController::switchStatusMainAction
+  controller: Eduxplus\CoreBundle\Controller\Mall\BannerController::switchStatusMainAction

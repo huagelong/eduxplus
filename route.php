@@ -90,7 +90,7 @@ EOT;
         file_put_contents($subRouteFile, "", FILE_APPEND);
     }
     $content = file_get_contents($subRouteFile);
-    $controller = str_replace('\\', '/', $controller);
+    $controller = str_replace('\\', "\\", $controller);
     if(!stristr($content, $controller)) {
         $append = <<<EOT
 $routeName:

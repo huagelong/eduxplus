@@ -1,61 +1,61 @@
 app_login:
   path: /login
-  controller: Eduxplus/WebsiteBundle/Controller/UserController::loginAction
+  controller: Eduxplus\WebsiteBundle\Controller\UserController::loginAction
 app_logindo:
   path: /login
-  controller: Eduxplus/WebsiteBundle/Controller/UserController::logininAction
+  controller: Eduxplus\WebsiteBundle\Controller\UserController::logininAction
 app_logout:
   path: /logout
-  controller: Eduxplus/WebsiteBundle/Controller/UserController::logoutAction
+  controller: Eduxplus\WebsiteBundle\Controller\UserController::logoutAction
 app_user_userMenu:
   path: /userMenu
-  controller: Eduxplus/WebsiteBundle/Controller/UserController::userMenuAction
+  controller: Eduxplus\WebsiteBundle\Controller\UserController::userMenuAction
 app_user_userNav:
   path: /userNav/{route}
-  controller: Eduxplus/WebsiteBundle/Controller/UserController::userNavAction
+  controller: Eduxplus\WebsiteBundle\Controller\UserController::userNavAction
   defaults:  
      route:  
 app_user_home:
   path: /my
-  controller: Eduxplus/WebsiteBundle/Controller/UserController::indexAction
+  controller: Eduxplus\WebsiteBundle\Controller\UserController::indexAction
 app_user_info:
   path: /my/info
-  controller: Eduxplus/WebsiteBundle/Controller/UserController::infoAction
+  controller: Eduxplus\WebsiteBundle\Controller\UserController::infoAction
 app_user_info_do:
   path: /my/info/do
-  controller: Eduxplus/WebsiteBundle/Controller/UserController::doinfoAction
+  controller: Eduxplus\WebsiteBundle\Controller\UserController::doinfoAction
 app_my_uploadimg:
   path: /my/uploadimg/do/{type}
-  controller: Eduxplus/WebsiteBundle/Controller/UserController::uploadavatarAction
+  controller: Eduxplus\WebsiteBundle\Controller\UserController::uploadavatarAction
   defaults:  
      type: img 
 app_user_secure:
   path: /my/secure
-  controller: Eduxplus/WebsiteBundle/Controller/UserController::secureAction
+  controller: Eduxplus\WebsiteBundle\Controller\UserController::secureAction
 app_user_fav:
   path: /my/fav
-  controller: Eduxplus/WebsiteBundle/Controller/UserController::favAction
+  controller: Eduxplus\WebsiteBundle\Controller\UserController::favAction
 app_user_msg:
   path: /my/msg
-  controller: Eduxplus/WebsiteBundle/Controller/UserController::msgAction
+  controller: Eduxplus\WebsiteBundle\Controller\UserController::msgAction
 app_user_msg_read_do:
   path: /my/do/msgread/{id}
-  controller: Eduxplus/WebsiteBundle/Controller/UserController::msgReadAction
+  controller: Eduxplus\WebsiteBundle\Controller\UserController::msgReadAction
 app_user_allmsg_read_do:
   path: /my/do/allmsgread
-  controller: Eduxplus/WebsiteBundle/Controller/UserController::allmsgReadAction
+  controller: Eduxplus\WebsiteBundle\Controller\UserController::allmsgReadAction
 app_user_msg_unread_count:
   path: /my/do/msgUnreadCount
-  controller: Eduxplus/WebsiteBundle/Controller/UserController::unreadMsgCountAction
+  controller: Eduxplus\WebsiteBundle\Controller\UserController::unreadMsgCountAction
 app_user_changeMobile_first:
   path: /my/changeMobile/first
-  controller: Eduxplus/WebsiteBundle/Controller/UserController::changeMobileFirstAction
+  controller: Eduxplus\WebsiteBundle\Controller\UserController::changeMobileFirstAction
 app_user_checkMobileCode_do:
   path: /my/checkMobileCode/do
-  controller: Eduxplus/WebsiteBundle/Controller/UserController::doCheckMobileCode
+  controller: Eduxplus\WebsiteBundle\Controller\UserController::doCheckMobileCode
 app_user_changeMobile_second:
   path: /my/changeMobile/second
-  controller: Eduxplus/WebsiteBundle/Controller/UserController::changeMobileSecondAction
+  controller: Eduxplus\WebsiteBundle\Controller\UserController::changeMobileSecondAction
 app_user_changeMobile_do:
   path: /my/changeMobile/do
-  controller: Eduxplus/WebsiteBundle/Controller/UserController::doChangeMobileCode
+  controller: Eduxplus\WebsiteBundle\Controller\UserController::doChangeMobileCode

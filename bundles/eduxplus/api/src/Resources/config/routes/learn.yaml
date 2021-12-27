@@ -1,3 +1,3 @@
 api_learn_index:
   path: /api/my/learn
-  controller: Eduxplus/ApiBundle/Controller/LearnController::indexAction
+  controller: Eduxplus\ApiBundle\Controller\LearnController::indexAction

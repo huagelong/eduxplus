@@ -40,6 +40,8 @@ role:
   resource: "./routes/role.yaml"
 agreement:
   resource: "./routes/teach/agreement.yaml"
+category:
+  resource: "./routes/teach/category.yaml"
 chapter:
   resource: "./routes/teach/chapter.yaml"
 course:

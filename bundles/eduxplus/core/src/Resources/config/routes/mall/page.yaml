@@ -1,27 +1,27 @@
 admin_mall_page_index:
   path: /admin/mall/page/index
-  controller: Eduxplus/CoreBundle/Controller/Mall/PageController::indexAction
+  controller: Eduxplus\CoreBundle\Controller\Mall\PageController::indexAction
 admin_mall_page_add:
   path: /admin/mall/page/add
-  controller: Eduxplus/CoreBundle/Controller/Mall/PageController::addAction
+  controller: Eduxplus\CoreBundle\Controller\Mall\PageController::addAction
 admin_api_mall_page_add:
   path: /admin/mall/page/add/do
-  controller: Eduxplus/CoreBundle/Controller/Mall/PageController::addDoAction
+  controller: Eduxplus\CoreBundle\Controller\Mall\PageController::addDoAction
 admin_mall_page_view:
   path: /admin/mall/page/view/{id}
-  controller: Eduxplus/CoreBundle/Controller/Mall/PageController::viewAction
+  controller: Eduxplus\CoreBundle\Controller\Mall\PageController::viewAction
 admin_mall_page_edit:
   path: /admin/mall/page/edit/{id}
-  controller: Eduxplus/CoreBundle/Controller/Mall/PageController::editAction
+  controller: Eduxplus\CoreBundle\Controller\Mall\PageController::editAction
 admin_api_mall_page_edit:
   path: /admin/mall/page/edit/do/{id}
-  controller: Eduxplus/CoreBundle/Controller/Mall/PageController::editDoAction
+  controller: Eduxplus\CoreBundle\Controller\Mall\PageController::editDoAction
 admin_api_mall_page_delete:
   path: /admin/mall/page/delete/do/{id}
-  controller: Eduxplus/CoreBundle/Controller/Mall/PageController::deleteDoAction
+  controller: Eduxplus\CoreBundle\Controller\Mall\PageController::deleteDoAction
 admin_api_mall_page_bathdelete:
   path: /admin/mall/page/bathdelete/do
-  controller: Eduxplus/CoreBundle/Controller/Mall/PageController::bathDeleteDoAction
+  controller: Eduxplus\CoreBundle\Controller\Mall\PageController::bathDeleteDoAction
 admin_api_mall_page_switchStatus:
   path: /admin/mall/page/switchStatus/do/{id}
-  controller: Eduxplus/CoreBundle/Controller/Mall/PageController::switchStatusAction
+  controller: Eduxplus\CoreBundle\Controller\Mall\PageController::switchStatusAction

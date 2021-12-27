@@ -3,16 +3,6 @@
 #   type: annotation
 #   prefix: /
 
-user:
-  resource: "./routes/user.yaml"
-
-search:
-  resource: "./routes/search.yaml"
-
-order:
-  resource: "./routes/order.yaml"
-
-
 detail:
   resource: "./routes/detail.yaml"
 glob:
@@ -25,3 +15,9 @@ learn:
   resource: "./routes/learn.yaml"
 news:
   resource: "./routes/news.yaml"
+order:
+  resource: "./routes/order.yaml"
+search:
+  resource: "./routes/search.yaml"
+user:
+  resource: "./routes/user.yaml"
