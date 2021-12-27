@@ -1,0 +1,12 @@
+app_help:
+  path: /help/{type}/{id}
+  controller: Eduxplus/WebsiteBundle/Controller/HelpController::indexAction
+  defaults:  
+     type: 0 
+     id: 0 
+app_help_nav:
+  path: /helpNav/{id}/{type}
+  controller: Eduxplus/WebsiteBundle/Controller/HelpController::helpNavAction
+  defaults:  
+     id: 0 
+     type: 0 

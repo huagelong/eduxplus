@@ -1,0 +1,3 @@
+api_im_forbidSendMsg:
+  path: /api/im/forbidSendMsg
+  controller: Eduxplus/ApiBundle/Controller/ImController::forbidSendMsgAction

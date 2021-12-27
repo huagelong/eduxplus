@@ -1,0 +1,18 @@
+admin_mall_news_category_index:
+  path: /admin/mall/news/category/index
+  controller: Eduxplus/CoreBundle/Controller/Mall/NewsCategoryController::indexAction
+admin_api_mall_news_category_add:
+  path: /admin/mall/news/category/add/do
+  controller: Eduxplus/CoreBundle/Controller/Mall/NewsCategoryController::addDoAction
+admin_mall_news_category_edit:
+  path: /admin/mall/news/category/edit/{id}
+  controller: Eduxplus/CoreBundle/Controller/Mall/NewsCategoryController::editAction
+admin_api_mall_news_category_edit:
+  path: /admin/mall/news/category/edit/do/{id}
+  controller: Eduxplus/CoreBundle/Controller/Mall/NewsCategoryController::editDoAction
+admin_api_mall_news_category_delete:
+  path: /admin/mall/news/category/delete/do/{id}
+  controller: Eduxplus/CoreBundle/Controller/Mall/NewsCategoryController::deleteDoAction
+admin_api_mall_news_category_updateSort:
+  path: /admin/mall/news/category/updateSort/do
+  controller: Eduxplus/CoreBundle/Controller/Mall/NewsCategoryController::updateSortAction

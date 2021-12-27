@@ -1,103 +1,61 @@
-
 app_login:
   path: /login
-  methods: GET
-  controller: Eduxplus\WebsiteBundle\Controller\UserController::loginAction
-
-
+  controller: Eduxplus/WebsiteBundle/Controller/UserController::loginAction
 app_logindo:
   path: /login
-  methods: POST
-  controller: Eduxplus\WebsiteBundle\Controller\UserController::logininAction
-
+  controller: Eduxplus/WebsiteBundle/Controller/UserController::logininAction
 app_logout:
   path: /logout
-  methods: GET
-  controller: Eduxplus\WebsiteBundle\Controller\UserController::logoutAction
-
+  controller: Eduxplus/WebsiteBundle/Controller/UserController::logoutAction
 app_user_userMenu:
   path: /userMenu
-  methods: GET
-  controller: Eduxplus\WebsiteBundle\Controller\UserController::userMenuAction
-
+  controller: Eduxplus/WebsiteBundle/Controller/UserController::userMenuAction
 app_user_userNav:
   path: /userNav/{route}
-  defaults: 
-    route: ""
-  methods: GET
-  controller: Eduxplus\WebsiteBundle\Controller\UserController::userNavAction
-
-app_user_home: 
+  controller: Eduxplus/WebsiteBundle/Controller/UserController::userNavAction
+  defaults:  
+     route:  
+app_user_home:
   path: /my
-  methods: GET
-  controller: Eduxplus\WebsiteBundle\Controller\UserController::indexAction
-
-app_user_info: 
+  controller: Eduxplus/WebsiteBundle/Controller/UserController::indexAction
+app_user_info:
   path: /my/info
-  methods: GET
-  controller: Eduxplus\WebsiteBundle\Controller\UserController::infoAction
-
+  controller: Eduxplus/WebsiteBundle/Controller/UserController::infoAction
 app_user_info_do:
   path: /my/info/do
-  methods: POST
-  controller: Eduxplus\WebsiteBundle\Controller\UserController::doinfoAction
-
+  controller: Eduxplus/WebsiteBundle/Controller/UserController::doinfoAction
 app_my_uploadimg:
   path: /my/uploadimg/do/{type}
-  methods: POST
-  defaults: 
-    type: "img"
-  controller: Eduxplus\WebsiteBundle\Controller\UserController::uploadavatarAction
-
+  controller: Eduxplus/WebsiteBundle/Controller/UserController::uploadavatarAction
+  defaults:  
+     type: img 
 app_user_secure:
   path: /my/secure
-  methods: GET
-  controller: Eduxplus\WebsiteBundle\Controller\UserController::secureAction
-
+  controller: Eduxplus/WebsiteBundle/Controller/UserController::secureAction
 app_user_fav:
   path: /my/fav
-  methods: GET
-  controller: Eduxplus\WebsiteBundle\Controller\UserController::favAction
-
-
+  controller: Eduxplus/WebsiteBundle/Controller/UserController::favAction
 app_user_msg:
   path: /my/msg
-  methods: GET
-  controller: Eduxplus\WebsiteBundle\Controller\UserController::msgAction
-
-
+  controller: Eduxplus/WebsiteBundle/Controller/UserController::msgAction
 app_user_msg_read_do:
   path: /my/do/msgread/{id}
-  methods: POST
-  controller: Eduxplus\WebsiteBundle\Controller\UserController::msgReadAction
-
-
+  controller: Eduxplus/WebsiteBundle/Controller/UserController::msgReadAction
 app_user_allmsg_read_do:
   path: /my/do/allmsgread
-  methods: POST
-  controller: Eduxplus\WebsiteBundle\Controller\UserController::allmsgReadAction
-
+  controller: Eduxplus/WebsiteBundle/Controller/UserController::allmsgReadAction
 app_user_msg_unread_count:
   path: /my/do/msgUnreadCount
-  methods: POST
-  controller: Eduxplus\WebsiteBundle\Controller\UserController::unreadMsgCountAction
-
+  controller: Eduxplus/WebsiteBundle/Controller/UserController::unreadMsgCountAction
 app_user_changeMobile_first:
   path: /my/changeMobile/first
-  methods: GET
-  controller: Eduxplus\WebsiteBundle\Controller\UserController::changeMobileFirstAction
-
+  controller: Eduxplus/WebsiteBundle/Controller/UserController::changeMobileFirstAction
 app_user_checkMobileCode_do:
   path: /my/checkMobileCode/do
-  methods: POST
-  controller: Eduxplus\WebsiteBundle\Controller\UserController::doCheckMobileCodeAction
-  
+  controller: Eduxplus/WebsiteBundle/Controller/UserController::doCheckMobileCode
 app_user_changeMobile_second:
   path: /my/changeMobile/second
-  methods: GET
-  controller: Eduxplus\WebsiteBundle\Controller\UserController::changeMobileSecondAction
-
+  controller: Eduxplus/WebsiteBundle/Controller/UserController::changeMobileSecondAction
 app_user_changeMobile_do:
   path: /my/changeMobile/do
-  methods: POST
-  controller: Eduxplus\WebsiteBundle\Controller\UserController::doChangeMobileCodeAction
+  controller: Eduxplus/WebsiteBundle/Controller/UserController::doChangeMobileCode

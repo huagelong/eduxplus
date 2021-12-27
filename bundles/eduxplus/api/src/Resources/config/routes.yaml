@@ -1,4 +1,16 @@
-ApiBundle.Controllers:
-  resource: ../../Controller/
-  type: annotation
-  prefix: /api
+auth:
+  resource: "./routes/auth.yaml"
+glob:
+  resource: "./routes/glob.yaml"
+good:
+  resource: "./routes/good.yaml"
+home:
+  resource: "./routes/home.yaml"
+im:
+  resource: "./routes/im.yaml"
+index:
+  resource: "./routes/index.yaml"
+learn:
+  resource: "./routes/learn.yaml"
+user:
+  resource: "./routes/user.yaml"

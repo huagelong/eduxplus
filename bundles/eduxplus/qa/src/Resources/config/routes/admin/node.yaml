@@ -1,0 +1,31 @@
+qa_admin_node_index:
+  path: /admin/qa/node/index/{chapterId}/{chapterSubId}
+  controller: Eduxplus/QaBundle/Controller/Admin/NodeController::indexAction
+  defaults:  
+     chapterSubId: 0 
+qa_admin_node_add:
+  path: /admin/qa/node/add/{chapterId}/{chapterSubId}
+  controller: Eduxplus/QaBundle/Controller/Admin/NodeController::addAction
+  defaults:  
+     chapterSubId: 0 
+qa_admin_node_do_add:
+  path: /admin/qa/node/add/do
+  controller: Eduxplus/QaBundle/Controller/Admin/NodeController::addDoAction
+qa_admin_node_edit:
+  path: /admin/qa/node/edit/{id}
+  controller: Eduxplus/QaBundle/Controller/Admin/NodeController::editAction
+qa_admin_node_view:
+  path: /admin/qa/node/view/{id}
+  controller: Eduxplus/QaBundle/Controller/Admin/NodeController::viewAction
+qa_admin_node_do_edit:
+  path: /admin/qa/node/edit/do/{id}
+  controller: Eduxplus/QaBundle/Controller/Admin/NodeController::editDoAction
+qa_admin_node_delete:
+  path: /admin/qa/node/delete/do/{id}
+  controller: Eduxplus/QaBundle/Controller/Admin/NodeController::deleteDoAction
+qa_admin_node_bathdelete:
+  path: /admin/qa/node/bathdelete/do
+  controller: Eduxplus/QaBundle/Controller/Admin/NodeController::bathdeleteDoAction
+qa_admin_node_switchStatus:
+  path: /admin/qa/node/switchStatus/do/{id}
+  controller: Eduxplus/QaBundle/Controller/Admin/NodeController::switchStatusAction

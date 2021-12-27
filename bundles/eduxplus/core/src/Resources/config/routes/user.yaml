@@ -1,0 +1,30 @@
+admin_user_index:
+  path: /admin/user/index
+  controller: Eduxplus/CoreBundle/Controller/UserController::indexAction
+admin_user_add:
+  path: /admin/user/add
+  controller: Eduxplus/CoreBundle/Controller/UserController::addAction
+admin_api_user_add:
+  path: /admin/user/add/do
+  controller: Eduxplus/CoreBundle/Controller/UserController::addDoAction
+admin_user_view:
+  path: /admin/user/view/{id}
+  controller: Eduxplus/CoreBundle/Controller/UserController::viewAction
+admin_user_edit:
+  path: /admin/user/edit/{id}
+  controller: Eduxplus/CoreBundle/Controller/UserController::editAction
+admin_api_user_edit:
+  path: /admin/user/edit/do/{id}
+  controller: Eduxplus/CoreBundle/Controller/UserController::editDoAction
+admin_api_user_delete:
+  path: /admin/user/delete/do/{id}
+  controller: Eduxplus/CoreBundle/Controller/UserController::deleteAction
+admin_api_user_bathdelete:
+  path: /admin/user/bathdelete/do
+  controller: Eduxplus/CoreBundle/Controller/UserController::bathdeleteAction
+admin_api_user_switchLock:
+  path: /admin/user/switchLock/do/{id}
+  controller: Eduxplus/CoreBundle/Controller/UserController::switchLockAction
+admin_user_changePwd:
+  path: /admin/user/changePwd
+  controller: Eduxplus/CoreBundle/Controller/UserController::changePwdAction

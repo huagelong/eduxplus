@@ -1,0 +1,9 @@
+app_index:
+  path: /
+  controller: Eduxplus/WebsiteBundle/Controller/IndexController::indexAction
+app_index_page:
+  path: /page/{id}
+  controller: Eduxplus/WebsiteBundle/Controller/IndexController::pageAction
+app_footer:
+  path: /footer
+  controller: Eduxplus/WebsiteBundle/Controller/IndexController::footerAction

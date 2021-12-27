@@ -1,0 +1,27 @@
+admin_jw_teacher_index:
+  path: /admin/jw/teacher/index
+  controller: Eduxplus/CoreBundle/Controller/Jw/TeacherController::indexAction
+admin_jw_teacher_add:
+  path: /admin/jw/teacher/add
+  controller: Eduxplus/CoreBundle/Controller/Jw/TeacherController::addAction
+admin_api_jw_teacher_add:
+  path: /admin/jw/teacher/add/do
+  controller: Eduxplus/CoreBundle/Controller/Jw/TeacherController::addDoAction
+admin_jw_teacher_view:
+  path: /admin/jw/teacher/view/{id}
+  controller: Eduxplus/CoreBundle/Controller/Jw/TeacherController::viewAction
+admin_jw_teacher_edit:
+  path: /admin/jw/teacher/edit/{id}
+  controller: Eduxplus/CoreBundle/Controller/Jw/TeacherController::editAction
+admin_api_jw_teacher_edit:
+  path: /admin/jw/teacher/edit/do/{id}
+  controller: Eduxplus/CoreBundle/Controller/Jw/TeacherController::editDoAction
+admin_api_jw_teacher_delete:
+  path: /admin/jw/teacher/delete/do/{id}
+  controller: Eduxplus/CoreBundle/Controller/Jw/TeacherController::deleteAction
+admin_api_jw_teacher_bathdelete:
+  path: /admin/jw/teacher/bathdelete/do
+  controller: Eduxplus/CoreBundle/Controller/Jw/TeacherController::bathdeleteAction
+admin_api_jw_teacher_switchStatus:
+  path: /admin/jw/teacher/switchStatus/do/{id}
+  controller: Eduxplus/CoreBundle/Controller/Jw/TeacherController::switchStatusAction

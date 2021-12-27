@@ -1,0 +1,6 @@
+admin_jw_class_index:
+  path: /admin/jw/class/index
+  controller: Eduxplus/CoreBundle/Controller/Jw/ClassController::indexAction
+admin_jw_class_members:
+  path: /admin/jw/class/members/{classesId}
+  controller: Eduxplus/CoreBundle/Controller/Jw/ClassController::membersAction

@@ -1,0 +1,6 @@
+api_good_cateGoods:
+  path: /api/cateGoods
+  controller: Eduxplus/ApiBundle/Controller/GoodController::cateGoodsAction
+api_good_getSubCate:
+  path: /api/getSubCate
+  controller: Eduxplus/ApiBundle/Controller/GoodController::getSubCateAction

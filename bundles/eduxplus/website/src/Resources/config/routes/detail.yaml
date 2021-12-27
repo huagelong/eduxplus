@@ -1,0 +1,15 @@
+app_detail_index:
+  path: /detail/{uuid}
+  controller: Eduxplus/WebsiteBundle/Controller/DetailController::indexAction
+app_detail_center:
+  path: /center/{categoryId}/{isFree}
+  controller: Eduxplus/WebsiteBundle/Controller/DetailController::centerAction
+  defaults:  
+     categoryId: 0 
+     isFree: 0 
+  requirements: 
+      categoryId: 0 
+      isFree: 0 
+app_detail_doFav:
+  path: /detail/my/do/doFav/{uuid}
+  controller: Eduxplus/WebsiteBundle/Controller/DetailController::doFavAction

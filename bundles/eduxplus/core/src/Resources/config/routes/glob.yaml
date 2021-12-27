@@ -1,0 +1,38 @@
+admin_glob_upload:
+  path: /admin/glob/upload/{type}
+  controller: Eduxplus/CoreBundle/Controller/GlobController::uploadAction
+  defaults:  
+     type: img 
+admin_api_glob_searchAdminUserDo:
+  path: /admin/glob/searchAdminUser/do
+  controller: Eduxplus/CoreBundle/Controller/GlobController::searchAdminUserDoAction
+admin_api_glob_searchUserDo:
+  path: /admin/glob/searchUser/do
+  controller: Eduxplus/CoreBundle/Controller/GlobController::searchUserDoAction
+admin_api_glob_searchProductDo:
+  path: /admin/glob/searchProduct/do
+  controller: Eduxplus/CoreBundle/Controller/GlobController::searchProductDoAction
+admin_api_glob_searchGoodsDo:
+  path: /admin/glob/searchGoods/do
+  controller: Eduxplus/CoreBundle/Controller/GlobController::searchGoodsDoAction
+admin_api_glob_searchCourseDo:
+  path: /admin/glob/searchCourse/do
+  controller: Eduxplus/CoreBundle/Controller/GlobController::searchCourseDoAction
+admin_api_glob_tengxunyunVodAndvancePlaySignDo:
+  path: /admin/glob/tengxunyunVodAndvancePlaySign/do
+  controller: Eduxplus/CoreBundle/Controller/GlobController::tengxunyunVodAndvancePlaySignAction
+admin_api_glob_tengxunyunVodEncryptionPlayUrlDo:
+  path: /admin/glob/tengxunyunVodEncryptionPlayUrl/do
+  controller: Eduxplus/CoreBundle/Controller/GlobController::tengxunyunVodEncryptionPlayUrlAction
+admin_api_glob_tengxunyunSignatureDo:
+  path: /admin/glob/tengxunyunSignature/do
+  controller: Eduxplus/CoreBundle/Controller/GlobController::tengxunyunSignatureAction
+admin_api_glob_getAliyunVodPlayInfoDo:
+  path: /admin/glob/getAliyunVodPlayInfo/do
+  controller: Eduxplus/CoreBundle/Controller/GlobController::getAliyunVodPlayInfoAction
+admin_api_glob_aliyunVodCreateUploadVideoDo:
+  path: /admin/glob/aliyunVodCreateUploadVideo/do
+  controller: Eduxplus/CoreBundle/Controller/GlobController::aliyunVodCreateUploadVideoAction
+admin_api_glob_aliyunVodRefreshUploadVideoDo:
+  path: /admin/glob/aliyunVodRefreshUploadVideo/do
+  controller: Eduxplus/CoreBundle/Controller/GlobController::aliyunVodRefreshUploadVideoAction

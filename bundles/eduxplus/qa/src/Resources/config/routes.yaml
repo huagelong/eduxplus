@@ -1,9 +1,16 @@
-QaBundle.Admin.Controllers:
-    resource: ../../Controller/Admin/
-    type: annotation
-    prefix: /admin/qa
-
-QaBundle.App.Controllers:
-  resource: ../../Controller/App/
-  type: annotation
-  prefix: /qa
+chapter:
+  resource: "./routes/admin/chapter.yaml"
+chaptersub:
+  resource: "./routes/admin/chaptersub.yaml"
+glob:
+  resource: "./routes/admin/glob.yaml"
+mallgoods:
+  resource: "./routes/admin/mallgoods.yaml"
+node:
+  resource: "./routes/admin/node.yaml"
+test:
+  resource: "./routes/admin/test.yaml"
+testsub:
+  resource: "./routes/admin/testsub.yaml"
+index:
+  resource: "./routes/app/index.yaml"

@@ -30,12 +30,14 @@ foreach ($routeArr as $key => $value) {
 		}
 	}
 
-	if($value[2]){
-		print_r($value);exit;
-	}
-
 	$controllerArr = explode('\\', $controller);
-	list($p, $bundel, $c, $controllerAction) = $controllerArr;
+    $subDir = "";
+    if(count($controllerArr) == 4){
+        list($p, $bundel, $c, $controllerAction) = $controllerArr;
+    }else{
+        list($p, $bundel, $c, $subDir, $controllerAction) = $controllerArr;
+    }
+    $subDir = strtolower($subDir);
 	list($controllerName, $action) = explode('::', $controllerAction);
 
 	$routesPath = __DIR__."/bundles/eduxplus/";
@@ -51,8 +53,67 @@ foreach ($routeArr as $key => $value) {
 	$routesPath .= "/src/Resources/config/";
 
 	$mainRouteFile = $routesPath."routes.yaml";
-	
 
-	print_r($routesPath);exit;
+    if(!is_file($mainRouteFile)){
+        file_put_contents($mainRouteFile, "", FILE_APPEND);
+    }
 
+    $controllerName = substr($controllerName, 0,-10);
+    $controllerName = strtolower($controllerName);
+
+    $content = file_get_contents($mainRouteFile);
+    if(!stristr($content, $controllerName.".yaml")){
+        if($subDir){
+            $append=<<<EOT
+$controllerName:
+  resource: "./routes/$subDir/$controllerName.yaml"
+EOT;
+        }else{
+            $append=<<<EOT
+$controllerName:
+  resource: "./routes/$controllerName.yaml"
+EOT;
+        }
+        $append .= "\n";
+        file_put_contents($mainRouteFile,$append, FILE_APPEND);
+    }
+    if($subDir){
+        $subRouteFile = $routesPath . "routes/{$subDir}/{$controllerName}.yaml";
+        if(!is_dir($routesPath . "routes/{$subDir}")){
+            mkdir($routesPath . "routes/{$subDir}", 0777, true);
+        }
+    }else{
+        $subRouteFile = $routesPath . "routes/{$controllerName}.yaml";
+    }
+
+    if(!is_file($subRouteFile)){
+        file_put_contents($subRouteFile, "", FILE_APPEND);
+    }
+    $content = file_get_contents($subRouteFile);
+    $controller = str_replace('\\', '/', $controller);
+    if(!stristr($content, $controller)) {
+        $append = <<<EOT
+$routeName:
+  path: $path
+  controller: $controller
+EOT;
+
+        if ($defaults) {
+            $append .= "
+  defaults:  ";
+            foreach ($defaults as $k => $v) {
+                $append .= "\n     {$k}: {$v} ";
+            }
+        }
+
+        if ($requirements) {
+            $append .= "
+  requirements: ";
+            foreach ($defaults as $k => $v) {
+                $append .= "\n      {$k}: {$v} ";
+            }
+        }
+        $append .= "\n";
+        file_put_contents($subRouteFile, $append, FILE_APPEND);
+    }
 }

@@ -1,0 +1,33 @@
+qa_exam_index:
+  path: /qa/exam/{categoryId}/{isFree}
+  controller: Eduxplus/QaBundle/Controller/App/IndexController::indexAction
+  defaults:  
+     categoryId: 0 
+     isFree: 0 
+  requirements: 
+      categoryId: 0 
+      isFree: 0 
+qa_mall_buy:
+  path: /qa/mall/buy/{uuid}
+  controller: Eduxplus/QaBundle/Controller/App/IndexController::buyAction
+qa_mytest:
+  path: /qa/my/test
+  controller: Eduxplus/QaBundle/Controller/App/IndexController::mytestAction
+qa_test_detail:
+  path: /qa/test/detail/{id}
+  controller: Eduxplus/QaBundle/Controller/App/IndexController::testDetailAction
+qa_test_init:
+  path: /qa/test/my/testinit/{id}
+  controller: Eduxplus/QaBundle/Controller/App/IndexController::testInitAction
+qa_test_todo:
+  path: /qa/test/my/todo/{id}
+  controller: Eduxplus/QaBundle/Controller/App/IndexController::testToDoAction
+qa_test_submit_answer_log:
+  path: /qa/test/my/dosubmitAnswerLog
+  controller: Eduxplus/QaBundle/Controller/App/IndexController::submitAnswerLogAction
+qa_test_submit_answer:
+  path: /qa/test/my/dosubmit/{id}
+  controller: Eduxplus/QaBundle/Controller/App/IndexController::submitAnswerAction
+qa_test_answer_view:
+  path: /qa/test/my/answerView/{id}
+  controller: Eduxplus/QaBundle/Controller/App/IndexController::answerViewAction

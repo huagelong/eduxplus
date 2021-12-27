@@ -1,0 +1,6 @@
+admin_login:
+  path: /admin/login
+  controller: Eduxplus/CoreBundle/Controller/AuthController::loginAction
+admin_logout:
+  path: /admin/logout
+  controller: Eduxplus/CoreBundle/Controller/AuthController::logoutAction

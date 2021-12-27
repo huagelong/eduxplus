@@ -1,4 +1,52 @@
-CoreBundle.Controllers:
-  resource: ../../Controller/
-  type: annotation
-  prefix: /admin
+adminlog:
+  resource: "./routes/adminlog.yaml"
+auth:
+  resource: "./routes/auth.yaml"
+glob:
+  resource: "./routes/glob.yaml"
+index:
+  resource: "./routes/index.yaml"
+class:
+  resource: "./routes/jw/class.yaml"
+school:
+  resource: "./routes/jw/school.yaml"
+teacher:
+  resource: "./routes/jw/teacher.yaml"
+banner:
+  resource: "./routes/mall/banner.yaml"
+coupon:
+  resource: "./routes/mall/coupon.yaml"
+goods:
+  resource: "./routes/mall/goods.yaml"
+helpcategory:
+  resource: "./routes/mall/helpcategory.yaml"
+help:
+  resource: "./routes/mall/help.yaml"
+newscategory:
+  resource: "./routes/mall/newscategory.yaml"
+news:
+  resource: "./routes/mall/news.yaml"
+order:
+  resource: "./routes/mall/order.yaml"
+page:
+  resource: "./routes/mall/page.yaml"
+pay:
+  resource: "./routes/mall/pay.yaml"
+menu:
+  resource: "./routes/menu.yaml"
+option:
+  resource: "./routes/option.yaml"
+role:
+  resource: "./routes/role.yaml"
+agreement:
+  resource: "./routes/teach/agreement.yaml"
+chapter:
+  resource: "./routes/teach/chapter.yaml"
+course:
+  resource: "./routes/teach/course.yaml"
+product:
+  resource: "./routes/teach/product.yaml"
+studyplan:
+  resource: "./routes/teach/studyplan.yaml"
+user:
+  resource: "./routes/user.yaml"

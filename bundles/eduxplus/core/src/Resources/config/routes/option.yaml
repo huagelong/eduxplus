@@ -1,0 +1,25 @@
+admin_option_index:
+  path: /admin/option/index
+  controller: Eduxplus/CoreBundle/Controller/OptionController::indexAction
+admin_option_add:
+  path: /admin/option/add/{type}
+  controller: Eduxplus/CoreBundle/Controller/OptionController::addAction
+  defaults:  
+     type: 1 
+admin_api_option_add:
+  path: /admin/option/add/do/{type}
+  controller: Eduxplus/CoreBundle/Controller/OptionController::addDoAction
+  defaults:  
+     type: 1 
+admin_option_edit:
+  path: /admin/option/edit/{id}
+  controller: Eduxplus/CoreBundle/Controller/OptionController::editAction
+admin_api_option_edit:
+  path: /admin/option/edit/do/{id}
+  controller: Eduxplus/CoreBundle/Controller/OptionController::editDoAction
+admin_api_option_delete:
+  path: /admin/option/delete/do/{id}
+  controller: Eduxplus/CoreBundle/Controller/OptionController::deleteDoAction
+admin_api_option_bathdelete:
+  path: /admin/option/bathdelete/do
+  controller: Eduxplus/CoreBundle/Controller/OptionController::bathdeleteDoAction

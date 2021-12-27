@@ -13,3 +13,15 @@ order:
   resource: "./routes/order.yaml"
 
 
+detail:
+  resource: "./routes/detail.yaml"
+glob:
+  resource: "./routes/glob.yaml"
+help:
+  resource: "./routes/help.yaml"
+index:
+  resource: "./routes/index.yaml"
+learn:
+  resource: "./routes/learn.yaml"
+news:
+  resource: "./routes/news.yaml"

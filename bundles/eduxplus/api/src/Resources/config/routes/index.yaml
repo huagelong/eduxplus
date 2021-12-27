@@ -1,0 +1,6 @@
+eduxplus_api_index_index:
+  path: /api/
+  controller: Eduxplus/ApiBundle/Controller/IndexController::index
+api_index_test:
+  path: /api/test
+  controller: Eduxplus/ApiBundle/Controller/IndexController::test

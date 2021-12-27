@@ -1,0 +1,9 @@
+api_user_meinfo:
+  path: /api/my/meinfo
+  controller: Eduxplus/ApiBundle/Controller/UserController::meinfoAction
+api_user_mecourse:
+  path: /api/my/mecourse
+  controller: Eduxplus/ApiBundle/Controller/UserController::mecourseAction
+api_user_courseList:
+  path: /api/my/courseList
+  controller: Eduxplus/ApiBundle/Controller/UserController::courseListAction

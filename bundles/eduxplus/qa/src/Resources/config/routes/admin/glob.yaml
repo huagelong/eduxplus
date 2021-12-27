@@ -1,0 +1,6 @@
+admin_qa_api_glob_searchProductDo:
+  path: /admin/qa/glob/searchProduct/do
+  controller: Eduxplus/QaBundle/Controller/Admin/GlobController::searchProductDoAction
+admin_qa_api_glob_searchGoodsDo:
+  path: /admin/qa/glob/searchGoods/do
+  controller: Eduxplus/QaBundle/Controller/Admin/GlobController::searchGoodsDoAction

@@ -1,0 +1,3 @@
+api_home_homePage:
+  path: /api/homePage
+  controller: Eduxplus/ApiBundle/Controller/HomeController::homePageAction

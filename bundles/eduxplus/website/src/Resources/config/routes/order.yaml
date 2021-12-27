@@ -1,7 +1,21 @@
 app_order_index:
   path: /my/orders
-  methods: GET
-  controller: Eduxplus\WebsiteBundle\Controller\OrderController::indexAction
-
-
-
+  controller: Eduxplus/WebsiteBundle/Controller/OrderController::indexAction
+app_order_detail:
+  path: /my/order/detail/{orderNo}
+  controller: Eduxplus/WebsiteBundle/Controller/OrderController::detailAction
+app_order_tobuy:
+  path: /my/tobuy/{uuid}
+  controller: Eduxplus/WebsiteBundle/Controller/OrderController::tobuyAction
+app_order_addbuy:
+  path: /my/addbuy/{uuid}
+  controller: Eduxplus/WebsiteBundle/Controller/OrderController::dobuyAction
+app_order_wxpayCheck:
+  path: /my/do/wxpaycheck/{orderNo}
+  controller: Eduxplus/WebsiteBundle/Controller/OrderController::wxpayCheck
+app_order_paysuccess:
+  path: /my/paysuccess/{orderNo}
+  controller: Eduxplus/WebsiteBundle/Controller/OrderController::paysuccessAction
+app_order_buyreturn:
+  path: /my/buyreturn/{orderNo}
+  controller: Eduxplus/WebsiteBundle/Controller/OrderController::buyreturnAction

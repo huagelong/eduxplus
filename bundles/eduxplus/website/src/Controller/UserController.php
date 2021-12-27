@@ -261,7 +261,7 @@ class UserController extends BaseHtmlController
      *
      * @Route("/my/checkMobileCode/do", name="app_user_checkMobileCode_do")
      */
-    public function doCheckMobileCode(Request $request, GlobService $globService){
+    public function doCheckMobileCodeAction(Request $request, GlobService $globService){
         $user = $this->getUserInfo();
         $mobile = $user["mobile"];
         $code = $request->get("code");
@@ -290,7 +290,7 @@ class UserController extends BaseHtmlController
      *
      * @Route("/my/changeMobile/do", name="app_user_changeMobile_do")
      */
-    public function doChangeMobileCode(Request $request,UserService $userService, GlobService $globService, ValidateService $validateService){
+    public function doChangeMobileCodeAction(Request $request,UserService $userService, GlobService $globService, ValidateService $validateService){
         $mobile = $request->get("mobile");
         $code = $request->get("code");
 

@@ -1,0 +1,36 @@
+admin_qa_mall_goods_index:
+  path: /admin/qa/mall/goods/index
+  controller: Eduxplus/QaBundle/Controller/Admin/MallGoodsController::indexAction
+admin_qa_mall_goods_add:
+  path: /admin/qa/mall/goods/add
+  controller: Eduxplus/QaBundle/Controller/Admin/MallGoodsController::addAction
+admin_qa_mall_group_goods_add:
+  path: /admin/qa/mall/groupGoods/add
+  controller: Eduxplus/QaBundle/Controller/Admin/MallGoodsController::addGroupAction
+admin_qa_api_mall_goods_add:
+  path: /admin/qa/mall/goods/add/do
+  controller: Eduxplus/QaBundle/Controller/Admin/MallGoodsController::addDoAction
+admin_qa_mall_goods_edit:
+  path: /admin/qa/mall/goods/edit/{id}
+  controller: Eduxplus/QaBundle/Controller/Admin/MallGoodsController::editAction
+admin_qa_mall_goods_editgroup:
+  path: /admin/qa/mall/goods/editgroup/{id}
+  controller: Eduxplus/QaBundle/Controller/Admin/MallGoodsController::editgroupAction
+admin_qa_mall_goods_view:
+  path: /admin/qa/mall/goods/view/{id}
+  controller: Eduxplus/QaBundle/Controller/Admin/MallGoodsController::viewAction
+admin_qa_mall_goods_viewgroup:
+  path: /admin/qa/mall/goods/viewgroup/{id}
+  controller: Eduxplus/QaBundle/Controller/Admin/MallGoodsController::viewgroupAction
+admin_qa_api_mall_goods_edit:
+  path: /admin/qa/mall/goods/edit/do/{id}
+  controller: Eduxplus/QaBundle/Controller/Admin/MallGoodsController::editDoAction
+admin_qa_api_mall_goods_delete:
+  path: /admin/qa/mall/goods/delete/do/{id}
+  controller: Eduxplus/QaBundle/Controller/Admin/MallGoodsController::deleteDoAction
+admin_qa_api_mall_goods_bathdelete:
+  path: /admin/qa/mall/goods/bathdelete/do
+  controller: Eduxplus/QaBundle/Controller/Admin/MallGoodsController::bathdeleteDoAction
+admin_qa_api_mall_goods_switchStatus:
+  path: /admin/qa/mall/goods/switchStatus/do/{id}
+  controller: Eduxplus/QaBundle/Controller/Admin/MallGoodsController::switchStatusAction

@@ -1,0 +1,3 @@
+api_glob_sendCaptcha:
+  path: /api/sendCaptcha
+  controller: Eduxplus/ApiBundle/Controller/GlobController::sendCaptchaAction
