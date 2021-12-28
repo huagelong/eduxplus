@@ -10,7 +10,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class GenDirCommand extends Command
 {
-    protected static $defaultName = 'Core:gen:dir';
+    protected static $defaultName = 'core:gen:dir';
     protected $baseService;
 
     public function __construct(BaseService $baseService)

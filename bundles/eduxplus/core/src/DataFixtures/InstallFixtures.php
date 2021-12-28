@@ -143,7 +143,7 @@ class InstallFixtures extends Fixture
         //初始化用户
         $userModel = new BaseUser();
         $uuid = $this->helperService->getUuid();
-        $pwd = $this->passwordEncoder->needsRehash($userModel, $this->adminUserPwd);
+        $pwd = $this->passwordEncoder->hashPassword($userModel, $this->adminUserPwd);
         $userModel->setSex(1);
         $userModel->setBirthday('1949-10-01');
         $userModel->setRegSource("pc");
@@ -180,9 +180,9 @@ class InstallFixtures extends Fixture
         $manager->flush();
 
         //新增菜单并绑定角色
-        $this->addMenu("首页", "首页", 0, "admin_index", "fas fa-home", 0, $roleId, 1, 1, 1, 1);
-        $this->addMenu("首页", "后台首页", 0, "admin_dashboard", "fas fa-home", 0, $roleId, 1, 0, 1, 1);
-        $this->addMenu("文件上传", "文件上传处理", 0, "admin_glob_upload", "fas fa-upload", 1, $roleId, 1, 1, 0, 1);
+        $this->addMenu("首页", "首页", 0, "admin_index", "mdi-home", 0, $roleId, 1, 1, 1, 1);
+        $this->addMenu("首页", "后台首页", 0, "admin_dashboard", "mdi-home", 0, $roleId, 1, 0, 1, 1);
+        $this->addMenu("文件上传", "文件上传处理", 0, "admin_glob_upload", "mdi-upload", 1, $roleId, 1, 1, 0, 1);
         $this->addMenu("搜索用户名", "搜索用户名", 0, "admin_api_glob_searchUserDo", "", 2, $roleId, 1, 1, 0, 1);
         $this->addMenu("搜索管理员", "搜索管理员", 0, "admin_api_glob_searchAdminUserDo", "", 3, $roleId, 1, 1, 0, 1);
 
@@ -198,7 +198,7 @@ class InstallFixtures extends Fixture
         $this->addMenu("获取腾讯云点播播放网址加密", "获取腾讯云点播播放网址加密", 0, "admin_api_glob_tengxunyunVodEncryptionPlayUrlDo", "", 10, $roleId, 1, 1, 0, 1);
         $this->addMenu("获取腾讯云点播超级播放器签名", "获取腾讯云点播超级播放器签名", 0, "admin_api_glob_tengxunyunVodAndvancePlaySignDo", "", 11, $roleId, 1, 1, 0, 1);
         //安全模块
-        $accMenuId = $this->addMenu("安全", "安全方面的管理", 0, "", "fas fa-key", 2, $roleId, 1, 0, 1);
+        $accMenuId = $this->addMenu("安全", "安全方面的管理", 0, "", "mdi-key", 2, $roleId, 1, 0, 1);
         //菜单
         $menuMgId = $this->addMenu("菜单管理", "管理菜单以及对应页面的权限", $accMenuId, "admin_menu_index", "", 3, $roleId, 1, 0, 1);
         $this->addMenu("添加菜单页面", "菜单新增页面", $menuMgId, "admin_menu_add", "", 0, $roleId, 1, 1, 0);
@@ -231,7 +231,7 @@ class InstallFixtures extends Fixture
         //操作日志
         $adminlogMgId = $this->addMenu("操作日志", "操作日志", $accMenuId, "admin_adminlog_index", "", 3, $roleId, 1, 0, 1);
         //系统模块
-        $sysMenuId = $this->addMenu("系统", "系统方面的管理", 0, "", "fa fa-gears", 3, $roleId, 1, 0, 1);
+        $sysMenuId = $this->addMenu("系统", "系统方面的管理", 0, "", "mdi-cogs", 3, $roleId, 1, 0, 1);
         $optionMgId = $this->addMenu("配置", "对系统的相关配置", $sysMenuId, "admin_option_index", "", 0, $roleId, 1, 0, 1);
         $this->addMenu("添加页面", "添加配置页面展示", $optionMgId, "admin_option_add", "", 3, $roleId, 1, 1, 0);
         $this->addMenu("添加", "添加配置处理", $optionMgId, "admin_api_option_add", "", 4, $roleId, 1, 1, 0);
@@ -240,7 +240,7 @@ class InstallFixtures extends Fixture
         $this->addMenu("删除", "删除配置处理", $optionMgId, "admin_api_option_delete", "", 5, $roleId, 1, 1, 0);
         $this->addMenu("批量删除", "批量删除配置处理", $optionMgId, "admin_api_option_bathdelete", "", 6, $roleId, 1, 1, 0);
         //教研
-        $teachMenuId = $this->addMenu("教研", "教学产品方面的管理", 0, "", "fa fa-bank", 4, $roleId, 0, 0, 1);
+        $teachMenuId = $this->addMenu("教研", "教学产品方面的管理", 0, "", "mdi-school", 4, $roleId, 0, 0, 1);
         //协议
         $agreementMgId = $this->addMenu("协议管理", "针对各种协议的管理", $teachMenuId, "admin_teach_agreement_index", "", 0, $roleId, 0, 0, 1);
         $this->addMenu("查看", "查看", $agreementMgId, "admin_teach_agreement_view", "", 1, $roleId, 0, 1, 0);
@@ -304,7 +304,7 @@ class InstallFixtures extends Fixture
         $this->addMenu("开课计划上下架处理", "开课计划上下架处理", $mgId, "admin_api_teach_studyplan_switchStatus", "", 9, $roleId, 0, 1, 0);
 
         //教务
-        $jwMenuId = $this->addMenu("教务", "教务方面的管理", 0, "", "fa fa-envira", 5, $roleId, 0, 0, 1);
+        $jwMenuId = $this->addMenu("教务", "教务方面的管理", 0, "", "mdi-teach", 5, $roleId, 0, 0, 1);
         //学校管理
         $mgId = $this->addMenu("校区管理", "校区信息管理", $jwMenuId, "admin_jw_school_index", "", 0, $roleId, 0, 0, 1);
         $this->addMenu("查看", "查看", $mgId, "admin_jw_school_view", "", 0, $roleId, 0, 1, 0);
@@ -328,7 +328,7 @@ class InstallFixtures extends Fixture
         $mgId = $this->addMenu("班级管理", "班级管理", $jwMenuId, "admin_jw_class_index", "", 2, $roleId, 0, 0, 1);
         $this->addMenu("学员管理", "学员管理", $mgId, "admin_jw_class_members", "", 0, $roleId, 0, 1, 0);
         //商城
-        $mallMenuId = $this->addMenu("商城", "商城方面的管理", 0, "", "fa fa-shopping-cart", 6, $roleId, 0, 0, 1);
+        $mallMenuId = $this->addMenu("商城", "商城方面的管理", 0, "", "mdi-cart", 6, $roleId, 0, 0, 1);
         //商品管理
         $mgId = $this->addMenu("商品管理", "商品信息管理", $mallMenuId, "admin_mall_goods_index", "", 0, $roleId, 0, 0, 1);
         $this->addMenu("查看单个商品信息", "查看单个商品信息", $mgId, "admin_mall_goods_view", "", 0, $roleId, 0, 1, 0);

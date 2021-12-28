@@ -72,7 +72,7 @@
             "php bin/console doctrine:cache:clear-result --ansi --no-interaction"
         ],
         "deploy": [
-            "php bin/console app:gen:dir",
+            "php bin/console core:gen:dir",
             "php bin/console doctrine:database:create --if-not-exists",
             "php bin/console doctrine:schema:update --ansi --force --no-interaction",
             "@clear-dbcache"
@@ -82,7 +82,7 @@
             "@deploy"
         ],
         "gen": [
-            "php bin/console app:gen:dir",
+            "php bin/console core:gen:dir",
             "php bin/console doctrine:database:create --if-not-exists",
             "php bin/console doctrine:schema:drop --ansi --force --full-database --no-interaction",
             "php bin/console doctrine:schema:update --ansi --force --no-interaction",
