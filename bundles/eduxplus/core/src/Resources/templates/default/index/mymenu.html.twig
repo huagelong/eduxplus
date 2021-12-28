@@ -1,59 +1,35 @@
-<nav class="mt-2">
-    <ul class="nav nav-pills nav-sidebar  flex-column nav-child-indent" data-widget="treeview" role="menu" data-accordion="false">
-        {% if menus %}
-            {% set menuroot = menus[0] %}
-            {% for menu in menuroot %}
-                {% if menu.isShow and menu.isAccess == 0%}
-            <li class="nav-item has-treeview {% if pmenuId==menu.id and menus[menu.id] is defined %} menu-open {% endif %}">
-                <a href="{% if menu.url %}{{ path(menu.url) }}{% endif %}" class="nav-link nav-linktag {% if pmenuId==menu.id or route==menu.url %} active {% endif %}"  >
-                    <i class="nav-icon {{ menu.style|default('fas fa-th') }}"></i>
-                    <p>
-                        {{ menu.name }}
+{% if menus %}
+{% set menuroot = menus[0] %}
+    {% for menu in menuroot %}
+        {% if menu.isShow and menu.isAccess == 0%}
+            <li class="nav-item {% if menus[menu.id] is defined %} nav-item-has-subnav {% endif %} {% if pmenuId==menu.id and menus[menu.id] is defined %} open active {% endif %}">
+                  <a href="{% if menu.url %}{{ path(menu.url) }}{% else %} javascript:void(0) {% endif %}"><i class="mdi {{ menu.style|default('mdi-format-align-justify') }}"></i> <span>{{ menu.name }}</span></a>
                     {% if menus[menu.id] is defined %}
-                        <i class="right fas fa-angle-left"></i>
-                    {% endif %}
-                    </p>
-                </a>
-                {% if menus[menu.id] is defined %}
-                <ul class="nav nav-treeview">
-                    {% for menu2 in menus[menu.id] %}
-                        {% if menu2.isShow and menu2.isAccess == 0 %}
-                    <li class="nav-item {% if menus[menu2.id] is defined %} has-treeview {% endif %}">
-                        <a href="{% if menu2.url %}{{ path(menu2.url) }}{% endif %}" class="nav-link nav-linktag {% if route==menu2.url or pmenuId==menu2.id %} active {% endif %}">
-                            <i class="nav-icon {{ menu2.style|default('far fa-circle') }}"></i>
-                            <p>
-                              {{ menu2.name }}
-                              {% if menus[menu2.id] is defined %} <i class="right fas fa-angle-left"></i> {% endif %}
-                            </p>
-                        </a>
-                      {% if menus[menu2.id] is defined %}
-                      <ul class="nav nav-treeview">
-                        {% for menu3 in menus[menu2.id] %}
-                            {% if menu3.isShow and menu3.isAccess == 0 %}
-                              <li class="nav-item">
-                                <a href="{% if menu3.url %}{{ path(menu3.url) }}{% endif %}" class="nav-link nav-linktag {% if route==menu3.url or pmenuId==menu3.id %} active {% endif %}">
-                                  <i class=" nav-icon {{ menu3.style|default('far fa-dot-circle') }}"></i>
-                                  <p>{{ menu3.name }}</p>
-                                </a>
-                              </li>
-                            {% endif %}
-                        {% endfor %}
-                      </ul>
-                      {% endif %}
+                  <ul class="nav nav-subnav">
+                   {% for menu2 in menus[menu.id] %}
+                          {% if menu2.isShow and menu2.isAccess == 0 %}
+                    <li class="nav-item  {% if menu2[menu2.id] is defined %} nav-item-has-subnav {% endif %} {% if route==menu2.url or pmenuId==menu2.id %} open active {% endif %}"> 
+         <a href="{% if menu2.url %}{{ path(menu2.url) }}{% else %} javascript:void(0) {% endif %}"><i class="mdi {{ menu2.style|default('') }}"></i> <span>{{ menu2.name }}</span></a>
+
+                {% if menus2[menu2.id] is defined %}
+                  <ul class="nav nav-subnav">
+                   {% for menu3 in menus2[menu2.id] %}
+                          {% if menu3.isShow and menu3.isAccess == 0 %}
+                    <li class="nav-item  {% if menu3[menu3.id] is defined %} nav-item-has-subnav {% endif %} {% if route==menu3.url or pmenuId==menu3.id %} open active {% endif %}"> 
+         <a href="{% if menu3.url %}{{ path(menu3.url) }}{% else %} javascript:void(0) {% endif %}"><i class="mdi {{ menu3.style|default('') }}"></i> <span>{{ menu3.name }}</span></a>
                     </li>
                         {% endif %}
                     {% endfor %}
-                </ul>
-                {% endif %}
+                  </ul>
+              {% endif %}
+
+
+                    </li>
+                        {% endif %}
+                    {% endfor %}
+                  </ul>
+                   {% endif %}
             </li>
-                {% endif %}
-            {% endfor %}
         {% endif %}
-        <li class="nav-header">其他</li>
-        <li class="nav-item">
-            <a title='退出' data-url="{{ path("admin_logout") }}" href="javascript:;"  class="logouthref nav-link nav-linktag">
-                <i class="nav-icon fas fa-power-off"></i> <p>退出</p>
-            </a>
-        </li>
-    </ul>
-</nav>
+    {% endfor %}
+{% endif %}
