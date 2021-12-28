@@ -9,7 +9,7 @@ $(function () {
       activeName = href;
     }
     $(this).click(function () {
-      $.Cookie("menu_current", href);
+      $.cookie("menu_current", href);
       return true;
     });
   });
@@ -27,7 +27,7 @@ $(function () {
   });
 
   if (!activeName) {
-    activeName = $.Cookie("menu_current");
+    activeName = $.cookie("menu_current");
   }
 
   //导航选中处理

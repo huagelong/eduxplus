@@ -87,9 +87,9 @@
 
 
       if (responseText.code == "200") {
-        var form_name = $.Cookie("form_name");
+        var form_name = $.cookie("form_name");
         form_name = form_name ? form_name : "form";
-        $.Cookie(form_name, 1);
+        $.cookie(form_name, 1);
       }
 
 

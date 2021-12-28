@@ -11,13 +11,13 @@
 /**
  * Create a Cookie with the given name and value and other optional parameters.
  *
- * @example $.Cookie('the_cookie', 'the_value');
+ * @example $.cookie('the_cookie', 'the_value');
  * @desc Set the value of a Cookie.
- * @example $.Cookie('the_cookie', 'the_value', { expires: 7, path: '/', domain: 'jquery.com', secure: true });
+ * @example $.cookie('the_cookie', 'the_value', { expires: 7, path: '/', domain: 'jquery.com', secure: true });
  * @desc Create a Cookie with all available options.
- * @example $.Cookie('the_cookie', 'the_value');
+ * @example $.cookie('the_cookie', 'the_value');
  * @desc Create a session Cookie.
- * @example $.Cookie('the_cookie', null);
+ * @example $.cookie('the_cookie', null);
  * @desc Delete a Cookie by passing null as value. Keep in mind that you have to use the same path and domain
  *       used when the Cookie was set.
  *
@@ -34,7 +34,7 @@
  *                        require a secure protocol (like HTTPS).
  * @type undefined
  *
- * @name $.Cookie
+ * @name $.cookie
  * @cat Plugins/Cookie
  * @author Klaus Hartl/klaus.hartl@stilbuero.de
  */
@@ -42,18 +42,18 @@
 /**
  * Get the value of a Cookie with the given name.
  *
- * @example $.Cookie('the_cookie');
+ * @example $.cookie('the_cookie');
  * @desc Get the value of a Cookie.
  *
  * @param String name The name of the Cookie.
  * @return The value of the Cookie.
  * @type String
  *
- * @name $.Cookie
+ * @name $.cookie
  * @cat Plugins/Cookie
  * @author Klaus Hartl/klaus.hartl@stilbuero.de
  */
-$.Cookie = function(name, value, options) {
+$.cookie = function(name, value, options) {
     if (typeof value != 'undefined') { // name and value given, set Cookie
         options = options || {};
         if (value === null) {
