@@ -17,9 +17,10 @@ class TeachQAChapter
     /**
      * @var int
      *
-     * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\GeneratedValue(strategy="CUSTOM")
+     * @ORM\CustomIdGenerator(class="Eduxplus\CoreBundle\Doctrine\Generator\SnowflakeGenerator")
+     * @ORM\Column(type="bigint", unique=true)
      */
     private $id;
 
@@ -33,7 +34,7 @@ class TeachQAChapter
     /**
      * @var int|null
      *
-     * @ORM\Column(name="category_id", type="integer", nullable=true, options={"comment"="类目id"})
+     * @ORM\Column(name="category_id", type="bigint", nullable=true, options={"comment"="类目id"})
      */
     private $categoryId;
 

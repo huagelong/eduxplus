@@ -17,16 +17,17 @@ class TeachTestOrder
     /**
      * @var int
      *
-     * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\GeneratedValue(strategy="CUSTOM")
+     * @ORM\CustomIdGenerator(class="Eduxplus\CoreBundle\Doctrine\Generator\SnowflakeGenerator")
+     * @ORM\Column(type="bigint", unique=true)
      */
     private $id;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="test_id", type="integer", nullable=true, options={"comment"="试卷id"})
+     * @ORM\Column(name="test_id", type="bigint", nullable=true, options={"comment"="试卷id"})
      */
     private $testId;
 
@@ -34,7 +35,7 @@ class TeachTestOrder
     /**
      * @var int|null
      *
-     * @ORM\Column(name="order_id", type="integer", nullable=true, options={"comment"="订单id"})
+     * @ORM\Column(name="order_id", type="bigint", nullable=true, options={"comment"="订单id"})
      */
     private $orderId;
 
@@ -42,14 +43,14 @@ class TeachTestOrder
         /**
      * @var bool
      *
-     * @ORM\Column(name="order_status", type="integer", length=1,nullable=false, options={"comment"="订单状态:0支付过期,1待支付,2支付成功,3已取消"})
+     * @ORM\Column(name="order_status", type="bigint", length=1,nullable=false, options={"comment"="订单状态:0支付过期,1待支付,2支付成功,3已取消"})
      */
     private $orderStatus = '0';
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="uid", type="integer", nullable=true, options={"comment"="uid"})
+     * @ORM\Column(name="uid", type="bigint", nullable=true, options={"comment"="uid"})
      */
     private $uid;
 

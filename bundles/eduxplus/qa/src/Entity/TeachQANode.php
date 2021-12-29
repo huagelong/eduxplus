@@ -17,9 +17,10 @@ class TeachQANode
     /**
      * @var int
      *
-     * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\GeneratedValue(strategy="CUSTOM")
+     * @ORM\CustomIdGenerator(class="Eduxplus\CoreBundle\Doctrine\Generator\SnowflakeGenerator")
+     * @ORM\Column(type="bigint", unique=true)
      */
     private $id;
 
@@ -41,21 +42,21 @@ class TeachQANode
     /**
      * @var int|null
      *
-     * @ORM\Column(name="chapter_id", type="integer", nullable=true, options={"comment"="章节点集合id"})
+     * @ORM\Column(name="chapter_id", type="bigint", nullable=true, options={"comment"="章节点集合id"})
      */
     private $chapterId;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="chapter_sub_id", type="integer", nullable=true, options={"comment"="章节点id"})
+     * @ORM\Column(name="chapter_sub_id", type="bigint", nullable=true, options={"comment"="章节点id"})
      */
     private $chapterSubId;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="node_type", type="integer", nullable=true, options={"comment"="题类，类似 0-常考题，1-易错题，2-好题，3-压轴题"})
+     * @ORM\Column(name="node_type", type="bigint", nullable=true, options={"comment"="题类，类似 0-常考题，1-易错题，2-好题，3-压轴题"})
      */
     private $nodeType;
 
@@ -76,7 +77,7 @@ class TeachQANode
     /**
      * @var int|null
      *
-     * @ORM\Column(name="create_uid", type="integer", nullable=true, options={"comment"="后台添加人"})
+     * @ORM\Column(name="create_uid", type="bigint", nullable=true, options={"comment"="后台添加人"})
      */
     private $createUid = '0';
 

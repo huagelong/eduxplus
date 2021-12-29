@@ -17,23 +17,24 @@ class TeachTestAnswer
     /**
      * @var int
      *
-     * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\GeneratedValue(strategy="CUSTOM")
+     * @ORM\CustomIdGenerator(class="Eduxplus\CoreBundle\Doctrine\Generator\SnowflakeGenerator")
+     * @ORM\Column(type="bigint", unique=true)
      */
     private $id;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="test_id", type="integer", nullable=true, options={"comment"="试卷id"})
+     * @ORM\Column(name="test_id", type="bigint", nullable=true, options={"comment"="试卷id"})
      */
     private $testId;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="uid", type="integer", nullable=true, options={"comment"="用户uid"})
+     * @ORM\Column(name="uid", type="bigint", nullable=true, options={"comment"="用户uid"})
      */
     private $uid;
 
@@ -47,28 +48,28 @@ class TeachTestAnswer
     /**
      * @var int|null
      *
-     * @ORM\Column(name="error_num", type="integer", nullable=true, options={"comment"="错误数量"})
+     * @ORM\Column(name="error_num", type="bigint", nullable=true, options={"comment"="错误数量"})
      */
     private $errorNum;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="right_num", type="integer", nullable=true, options={"comment"="正确数量"})
+     * @ORM\Column(name="right_num", type="bigint", nullable=true, options={"comment"="正确数量"})
      */
     private $rightNum;
 
         /**
      * @var int|null
      *
-     * @ORM\Column(name="score", type="integer", nullable=true, options={"comment"="得分"})
+     * @ORM\Column(name="score", type="bigint", nullable=true, options={"comment"="得分"})
      */
     private $score;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="undo_num", type="integer", nullable=true, options={"comment"="未做数量"})
+     * @ORM\Column(name="undo_num", type="bigint", nullable=true, options={"comment"="未做数量"})
      */
     private $undoNum;
 

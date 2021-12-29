@@ -17,9 +17,10 @@ class TeachTest
     /**
      * @var int
      *
-     * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\GeneratedValue(strategy="CUSTOM")
+     * @ORM\CustomIdGenerator(class="Eduxplus\CoreBundle\Doctrine\Generator\SnowflakeGenerator")
+     * @ORM\Column(type="bigint", unique=true)
      */
     private $id;
 
@@ -33,28 +34,28 @@ class TeachTest
     /**
      * @var int|null
      *
-     * @ORM\Column(name="create_uid", type="integer", nullable=true, options={"comment"="后台添加人"})
+     * @ORM\Column(name="create_uid", type="bigint", nullable=true, options={"comment"="后台添加人"})
      */
     private $createUid = '0';
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="score", type="integer", nullable=true, options={"comment"="分数"})
+     * @ORM\Column(name="score", type="bigint", nullable=true, options={"comment"="分数"})
      */
     private $score = '0';
 
         /**
      * @var int|null
      *
-     * @ORM\Column(name="view_number", type="integer", nullable=true, options={"comment"="浏览数"})
+     * @ORM\Column(name="view_number", type="bigint", nullable=true, options={"comment"="浏览数"})
      */
     private $viewNumber = '0';
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="expire_time", type="integer", nullable=true, options={"comment"="考试时长"})
+     * @ORM\Column(name="expire_time", type="bigint", nullable=true, options={"comment"="考试时长"})
      */
     private $expireTime = '0';
 
@@ -69,7 +70,7 @@ class TeachTest
     /**
      * @var int|null
      *
-     * @ORM\Column(name="category_id", type="integer", nullable=true, options={"comment"="类目id"})
+     * @ORM\Column(name="category_id", type="bigint", nullable=true, options={"comment"="类目id"})
      */
     private $categoryId;
 

@@ -56,7 +56,7 @@ class BaseOption
     /**
      * @var bool|null
      *
-     * @ORM\Column(name="type", type="bigint", length=1, nullable=true, options={"comment"="配置类型, 1-文本, 2-文件链接"})
+     * @ORM\Column(name="type", type="integer", length=1, nullable=true, options={"comment"="配置类型, 1-文本, 2-文件链接"})
      */
     private $type = '1';
 

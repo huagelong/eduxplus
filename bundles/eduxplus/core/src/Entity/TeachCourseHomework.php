@@ -27,28 +27,28 @@ class TeachCourseHomework
     /**
      * @var int|null
      *
-     * @ORM\Column(name="course_id", type="integer", nullable=true)
+     * @ORM\Column(name="course_id", type="bigint", nullable=true)
      */
     private $courseId;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="chapter_id", type="integer", nullable=true)
+     * @ORM\Column(name="chapter_id", type="bigint", nullable=true)
      */
     private $chapterId;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="name", type="integer", nullable=true)
+     * @ORM\Column(name="name", type="bigint", nullable=true)
      */
     private $name;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="test_id", type="integer", nullable=true)
+     * @ORM\Column(name="test_id", type="bigint", nullable=true)
      */
     private $testId;
 

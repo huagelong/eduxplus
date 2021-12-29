@@ -41,7 +41,7 @@ class JwClassesMembers
     /**
      * @var bool|null
      *
-     * @ORM\Column(name="type", type="bigint",length=1, nullable=true, options={"comment"="1-在学学员，2-退学学员"})
+     * @ORM\Column(name="type", type="integer",length=1, nullable=true, options={"comment"="1-在学学员，2-退学学员"})
      */
     private $type;
 

@@ -34,7 +34,7 @@ class TeachCourse
     /**
      * @var integer|null
      *
-     * @ORM\Column(name="type", type="bigint",length=1, nullable=true, options={"comment"="1-线上,2-线下,3-混合"})
+     * @ORM\Column(name="type", type="integer",length=1, nullable=true, options={"comment"="1-线上,2-线下,3-混合"})
      */
     private $type;
 

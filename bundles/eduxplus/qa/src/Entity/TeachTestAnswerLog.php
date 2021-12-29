@@ -17,30 +17,31 @@ class TeachTestAnswerLog
     /**
      * @var int
      *
-     * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\GeneratedValue(strategy="CUSTOM")
+     * @ORM\CustomIdGenerator(class="Eduxplus\CoreBundle\Doctrine\Generator\SnowflakeGenerator")
+     * @ORM\Column(type="bigint", unique=true)
      */
     private $id;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="test_id", type="integer", nullable=true, options={"comment"="试卷id"})
+     * @ORM\Column(name="test_id", type="bigint", nullable=true, options={"comment"="试卷id"})
      */
     private $testId;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="qa_node_id", type="integer", nullable=true, options={"comment"="试题节点id"})
+     * @ORM\Column(name="qa_node_id", type="bigint", nullable=true, options={"comment"="试题节点id"})
      */
     private $qaNodeId;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="uid", type="integer", nullable=true, options={"comment"="用户uid"})
+     * @ORM\Column(name="uid", type="bigint", nullable=true, options={"comment"="用户uid"})
      */
     private $uid;
 

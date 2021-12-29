@@ -17,16 +17,17 @@ class TeachQANodeSub
     /**
      * @var int
      *
-     * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\GeneratedValue(strategy="CUSTOM")
+     * @ORM\CustomIdGenerator(class="Eduxplus\CoreBundle\Doctrine\Generator\SnowflakeGenerator")
+     * @ORM\Column(type="bigint", unique=true)
      */
     private $id;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="qa_node_id", type="integer", nullable=true, options={"comment"="试题节点id"})
+     * @ORM\Column(name="qa_node_id", type="bigint", nullable=true, options={"comment"="试题节点id"})
      */
     private $qaNodeId;
 
@@ -61,7 +62,7 @@ class TeachQANodeSub
     /**
      * @var int|null
      *
-     * @ORM\Column(name="score", type="integer", nullable=true, options={"comment"="得分，少选取50%分数的四舍五入值"})
+     * @ORM\Column(name="score", type="bigint", nullable=true, options={"comment"="得分，少选取50%分数的四舍五入值"})
      */
     private $score;
 
