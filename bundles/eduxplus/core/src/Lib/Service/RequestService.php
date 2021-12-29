@@ -1,12 +1,12 @@
 <?php
 
-namespace Eduxplus\CoreBundle\Util;
+namespace Eduxplus\CoreBundle\Lib\Service;
 
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Exception\ValidatorException;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
-use Eduxplus\CoreBundle\Util\ViolationService;
+use Eduxplus\CoreBundle\Lib\Service\ViolationService;
 
 class RequestService
 {

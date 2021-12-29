@@ -175,6 +175,9 @@
     "gedmo/doctrine-extensions": {
         "version": "v3.4.0"
     },
+    "godruoyi/php-snowflake": {
+        "version": "1.1.1"
+    },
     "guzzlehttp/command": {
         "version": "1.0.0"
     },

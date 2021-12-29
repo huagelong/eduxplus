@@ -1,10 +1,9 @@
 <?php
 
-namespace Eduxplus\CoreBundle\Util;
+namespace Eduxplus\CoreBundle\Lib\Service;
 
 use Symfony\Component\Validator\ConstraintViolation;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
-use Eduxplus\CoreBundle\Util\Helper\ToolTrait;
 
 class ViolationService
 {
