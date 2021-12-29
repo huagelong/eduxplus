@@ -27,7 +27,7 @@ class BaseOpenAuth
     /**
      * @var bool|null
      *
-     * @ORM\Column(name="uid", type="integer", length=1, nullable=true, options={"comment"="对应uid"})
+     * @ORM\Column(name="uid", type="bigint", length=1, nullable=true, options={"comment"="对应uid"})
      */
     private $uid;
 

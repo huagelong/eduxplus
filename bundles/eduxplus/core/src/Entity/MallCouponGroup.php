@@ -34,28 +34,28 @@ class MallCouponGroup
     /**
      * @var bool
      *
-     * @ORM\Column(name="coupon_type", type="integer",length=1, nullable=false, options={"comment"="类型:1金额优惠,2折扣优惠"})
+     * @ORM\Column(name="coupon_type", type="bigint",length=1, nullable=false, options={"comment"="类型:1金额优惠,2折扣优惠"})
      */
     private $couponType = '0';
 
     /**
      * @var int
      *
-     * @ORM\Column(name="discount", type="integer", nullable=false, options={"unsigned"=true,"comment"="优惠码折扣(百分数)/优惠码金额(乘以100)"})
+     * @ORM\Column(name="discount", type="bigint", nullable=false, options={"unsigned"=true,"comment"="优惠码折扣(百分数)/优惠码金额(乘以100)"})
      */
     private $discount = '0';
 
     /**
      * @var int
      *
-     * @ORM\Column(name="has_code", type="integer", nullable=false, options={"unsigned"=true,"comment"="是否生成优惠码"})
+     * @ORM\Column(name="has_code", type="bigint", nullable=false, options={"unsigned"=true,"comment"="是否生成优惠码"})
      */
     private $hasCode = '0';
 
     /**
      * @var int
      *
-     * @ORM\Column(name="count_num", type="integer", nullable=false, options={"unsigned"=true,"comment"="发放数量"})
+     * @ORM\Column(name="count_num", type="bigint", nullable=false, options={"unsigned"=true,"comment"="发放数量"})
      */
     private $countNum = '0';
 
@@ -63,28 +63,28 @@ class MallCouponGroup
     /**
      * @var int
      *
-     * @ORM\Column(name="created_num", type="integer", nullable=false, options={"unsigned"=true,"comment"="已生成数量"})
+     * @ORM\Column(name="created_num", type="bigint", nullable=false, options={"unsigned"=true,"comment"="已生成数量"})
      */
     private $createdNum = '0';
 
     /**
      * @var int
      *
-     * @ORM\Column(name="used_num", type="integer", nullable=false, options={"unsigned"=true,"comment"="已使用的数量"})
+     * @ORM\Column(name="used_num", type="bigint", nullable=false, options={"unsigned"=true,"comment"="已使用的数量"})
      */
     private $usedNum = '0';
 
     /**
      * @var int
      *
-     * @ORM\Column(name="expiration_start", type="integer", nullable=false, options={"unsigned"=true,"comment"="开始有效日期"})
+     * @ORM\Column(name="expiration_start", type="bigint", nullable=false, options={"unsigned"=true,"comment"="开始有效日期"})
      */
     private $expirationStart;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="expiration_end", type="integer", nullable=false, options={"unsigned"=true,"comment"="结束有效日期"})
+     * @ORM\Column(name="expiration_end", type="bigint", nullable=false, options={"unsigned"=true,"comment"="结束有效日期"})
      */
     private $expirationEnd;
 
@@ -98,7 +98,7 @@ class MallCouponGroup
     /**
      * @var int
      *
-     * @ORM\Column(name="create_uid", type="integer", nullable=false, options={"unsigned"=true,"comment"="创建人"})
+     * @ORM\Column(name="create_uid", type="bigint", nullable=false, options={"unsigned"=true,"comment"="创建人"})
      */
     private $createUid;
 

@@ -34,28 +34,28 @@ class MallPay
     /**
      * @var int
      *
-     * @ORM\Column(name="order_id", type="integer", nullable=false, options={"unsigned"=true,"comment"="订单id"})
+     * @ORM\Column(name="order_id", type="bigint", nullable=false, options={"unsigned"=true,"comment"="订单id"})
      */
     private $orderId;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="uid", type="integer", nullable=false, options={"unsigned"=true,"comment"="下单人"})
+     * @ORM\Column(name="uid", type="bigint", nullable=false, options={"unsigned"=true,"comment"="下单人"})
      */
     private $uid;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="pay_time", type="integer", nullable=true, options={"unsigned"=true,"comment"="支付完成时间"})
+     * @ORM\Column(name="pay_time", type="bigint", nullable=true, options={"unsigned"=true,"comment"="支付完成时间"})
      */
     private $payTime;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="amount", type="integer", nullable=false, options={"unsigned"=true,"comment"="金额,乘以100"})
+     * @ORM\Column(name="amount", type="bigint", nullable=false, options={"unsigned"=true,"comment"="金额,乘以100"})
      */
     private $amount;
 

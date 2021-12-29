@@ -27,7 +27,7 @@ class MallGoodsGroup
     /**
      * @var int|null
      *
-     * @ORM\Column(name="goods_id", type="integer", nullable=true, options={"comment"="商品id"})
+     * @ORM\Column(name="goods_id", type="bigint", nullable=true, options={"comment"="商品id"})
      */
     private $goodsId;
 

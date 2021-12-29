@@ -48,14 +48,14 @@ class JwTeacher
     /**
      * @var bool|null
      *
-     * @ORM\Column(name="type", type="integer",length=1, nullable=true, options={"comment"="1-网课老师，2-分校老师，-1-全部"})
+     * @ORM\Column(name="type", type="bigint",length=1, nullable=true, options={"comment"="1-网课老师，2-分校老师，-1-全部"})
      */
     private $type;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="school_id", type="integer", nullable=true, options={"comment"="所属分校"})
+     * @ORM\Column(name="school_id", type="bigint", nullable=true, options={"comment"="所属分校"})
      */
     private $schoolId;
 

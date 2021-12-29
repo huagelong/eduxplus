@@ -27,21 +27,21 @@ class TeachCourseTeachers
     /**
      * @var int|null
      *
-     * @ORM\Column(name="teacher_id", type="integer", nullable=true, options={"comment"="老师id"})
+     * @ORM\Column(name="teacher_id", type="bigint", nullable=true, options={"comment"="老师id"})
      */
     private $teacherId;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="course_id", type="integer", nullable=true, options={"comment"="课程id"})
+     * @ORM\Column(name="course_id", type="bigint", nullable=true, options={"comment"="课程id"})
      */
     private $courseId;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="chapter_id", type="integer", nullable=true, options={"comment"="章节id"})
+     * @ORM\Column(name="chapter_id", type="bigint", nullable=true, options={"comment"="章节id"})
      */
     private $chapterId;
 

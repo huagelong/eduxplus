@@ -34,7 +34,7 @@ class MallMsg
     /**
      * @var int
      *
-     * @ORM\Column(name="uid", type="integer", nullable=false, options={"unsigned"=true,"comment"="用户uid, 0全部"})
+     * @ORM\Column(name="uid", type="bigint", nullable=false, options={"unsigned"=true,"comment"="用户uid, 0全部"})
      */
     private $uid = '0';
 

@@ -27,14 +27,14 @@ class MallBannerMain
     /**
      * @var int
      *
-     * @ORM\Column(name="banner_id", type="integer", nullable=false, options={"unsigned"=true,"comment"="广告banner id"})
+     * @ORM\Column(name="banner_id", type="bigint", nullable=false, options={"unsigned"=true,"comment"="广告banner id"})
      */
     private $bannerId = '0';
 
     /**
      * @var int
      *
-     * @ORM\Column(name="uid", type="integer", nullable=false, options={"unsigned"=true,"comment"="最近操作人id"})
+     * @ORM\Column(name="uid", type="bigint", nullable=false, options={"unsigned"=true,"comment"="最近操作人id"})
      */
     private $uid = '0';
 

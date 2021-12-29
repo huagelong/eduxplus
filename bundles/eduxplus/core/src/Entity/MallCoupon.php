@@ -27,7 +27,7 @@ class MallCoupon
     /**
      * @var int
      *
-     * @ORM\Column(name="coupon_group_id", type="integer", nullable=false, options={"unsigned"=true,"comment"="优惠码管理id"})
+     * @ORM\Column(name="coupon_group_id", type="bigint", nullable=false, options={"unsigned"=true,"comment"="优惠码管理id"})
      */
     private $couponGroupId;
 
@@ -41,21 +41,21 @@ class MallCoupon
     /**
      * @var int|null
      *
-     * @ORM\Column(name="uid", type="integer", nullable=true, options={"unsigned"=true,"comment"="使用会员"})
+     * @ORM\Column(name="uid", type="bigint", nullable=true, options={"unsigned"=true,"comment"="使用会员"})
      */
     private $uid;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="used_time", type="integer", nullable=true, options={"unsigned"=true,"comment"="使用时间"})
+     * @ORM\Column(name="used_time", type="bigint", nullable=true, options={"unsigned"=true,"comment"="使用时间"})
      */
     private $usedTime;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="send_time", type="integer", nullable=true, options={"unsigned"=true,"comment"="发送时间"})
+     * @ORM\Column(name="send_time", type="bigint", nullable=true, options={"unsigned"=true,"comment"="发送时间"})
      */
     private $sendTime;
 

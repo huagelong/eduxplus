@@ -42,7 +42,7 @@ class MallNewsCategory
     /**
      * @var int
      *
-     * @ORM\Column(name="parent_id", type="integer", nullable=false, options={"unsigned"=true,"comment"="父id"})
+     * @ORM\Column(name="parent_id", type="bigint", nullable=false, options={"unsigned"=true,"comment"="父id"})
      */
     private $parentId = '0';
 

@@ -20,12 +20,12 @@ class BaseRoleUser
     private $id;
 
     /**
-     * @ORM\Column(type="integer", options={"comment"="用户id"})
+     * @ORM\Column(type="bigint", options={"comment"="用户id"})
      */
     private $uid;
 
     /**
-     * @ORM\Column(type="integer", options={"comment"="角色id"})
+     * @ORM\Column(type="bigint", options={"comment"="角色id"})
      */
     private $roleId;
 

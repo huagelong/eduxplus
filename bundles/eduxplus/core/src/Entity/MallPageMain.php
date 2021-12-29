@@ -27,7 +27,7 @@ class MallPageMain
     /**
      * @var int
      *
-     * @ORM\Column(name="page_id", type="integer", nullable=false, options={"unsigned"=true,"comment"="单页id"})
+     * @ORM\Column(name="page_id", type="bigint", nullable=false, options={"unsigned"=true,"comment"="单页id"})
      */
     private $pageId;
 

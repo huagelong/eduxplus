@@ -27,7 +27,7 @@ class TeachStudyPlanSub
     /**
      * @var int|null
      *
-     * @ORM\Column(name="study_plan_id", type="integer", nullable=true)
+     * @ORM\Column(name="study_plan_id", type="bigint", nullable=true)
      */
     private $studyPlanId;
 
@@ -41,7 +41,7 @@ class TeachStudyPlanSub
     /**
      * @var int|null
      *
-     * @ORM\Column(name="course_id", type="integer", nullable=true, options={"comment"="课程"})
+     * @ORM\Column(name="course_id", type="bigint", nullable=true, options={"comment"="课程"})
      */
     private $courseId;
 

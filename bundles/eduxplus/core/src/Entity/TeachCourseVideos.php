@@ -27,28 +27,28 @@ class TeachCourseVideos
     /**
      * @var int|null
      *
-     * @ORM\Column(name="course_id", type="integer", nullable=true)
+     * @ORM\Column(name="course_id", type="bigint", nullable=true)
      */
     private $courseId;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="chapter_id", type="integer", nullable=true, options={"comment"="章节id"})
+     * @ORM\Column(name="chapter_id", type="bigint", nullable=true, options={"comment"="章节id"})
      */
     private $chapterId;
 
     /**
      * @var bool|null
      *
-     * @ORM\Column(name="type", type="integer", length=1,nullable=true, options={"comment"="1-直播,2-点播, 点播可以是直播转换过来"})
+     * @ORM\Column(name="type", type="bigint", length=1,nullable=true, options={"comment"="1-直播,2-点播, 点播可以是直播转换过来"})
      */
     private $type;
 
     /**
      * @var bool|null
      *
-     * @ORM\Column(name="video_channel", type="integer",length=1, nullable=true, options={"comment"="1-腾讯云,2-阿里云"})
+     * @ORM\Column(name="video_channel", type="bigint",length=1, nullable=true, options={"comment"="1-腾讯云,2-阿里云"})
      */
     private $videoChannel;
 

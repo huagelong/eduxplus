@@ -27,7 +27,7 @@ class MallHelp
     /**
      * @var int
      *
-     * @ORM\Column(name="category_id", type="integer", nullable=false, options={"unsigned"=true,"comment"="分类id"})
+     * @ORM\Column(name="category_id", type="bigint", nullable=false, options={"unsigned"=true,"comment"="分类id"})
      */
     private $categoryId = '0';
 
@@ -56,7 +56,7 @@ class MallHelp
     /**
      * @var bool|null
      *
-     * @ORM\Column(name="top_value", type="integer", nullable=true, options={"comment"="置顶帮助"})
+     * @ORM\Column(name="top_value", type="bigint", nullable=true, options={"comment"="置顶帮助"})
      */
     private $topValue = '0';
 

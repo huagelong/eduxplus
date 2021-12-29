@@ -27,7 +27,7 @@ class BaseAdminLog
     /**
      * @var int|null
      *
-     * @ORM\Column(name="uid", type="integer", nullable=true)
+     * @ORM\Column(name="uid", type="bigint", nullable=true)
      */
     private $uid;
 

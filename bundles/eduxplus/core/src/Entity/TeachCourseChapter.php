@@ -27,7 +27,7 @@ class TeachCourseChapter
     /**
      * @var int|null
      *
-     * @ORM\Column(name="course_id", type="integer", nullable=true)
+     * @ORM\Column(name="course_id", type="bigint", nullable=true)
      */
     private $courseId;
 
@@ -41,14 +41,14 @@ class TeachCourseChapter
     /**
      * @var int|null
      *
-     * @ORM\Column(name="open_time", type="integer", nullable=true, options={"comment"="开课时间"})
+     * @ORM\Column(name="open_time", type="bigint", nullable=true, options={"comment"="开课时间"})
      */
     private $openTime;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="parent_id", type="integer", nullable=true, options={"comment"="父章节"})
+     * @ORM\Column(name="parent_id", type="bigint", nullable=true, options={"comment"="父章节"})
      */
     private $parentId;
 
@@ -69,7 +69,7 @@ class TeachCourseChapter
     /**
      * @var bool|null
      *
-     * @ORM\Column(name="study_way", type="integer", nullable=true, options={"comment"="学习方式, 1-直播，2-点播，3-面授"})
+     * @ORM\Column(name="study_way", type="bigint", nullable=true, options={"comment"="学习方式, 1-直播，2-点播，3-面授"})
      */
     private $studyWay = '1';
 

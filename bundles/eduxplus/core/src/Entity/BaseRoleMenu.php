@@ -20,12 +20,12 @@ class BaseRoleMenu
     private $id;
 
     /**
-     * @ORM\Column(type="integer", options={"comment"="导航id"})
+     * @ORM\Column(type="bigint", options={"comment"="导航id"})
      */
     private $menuId;
 
     /**
-     * @ORM\Column(type="integer", options={"comment"="角色id"})
+     * @ORM\Column(type="bigint", options={"comment"="角色id"})
      */
     private $roleId;
 

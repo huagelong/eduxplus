@@ -27,7 +27,7 @@ class MallBanner
     /**
      * @var int
      *
-     * @ORM\Column(name="position", type="integer", nullable=false, options={"unsigned"=true,"comment"="广告banner位置0，代表首页导航banner"})
+     * @ORM\Column(name="position", type="bigint", nullable=false, options={"unsigned"=true,"comment"="广告banner位置0，代表首页导航banner"})
      */
     private $position = '0';
 

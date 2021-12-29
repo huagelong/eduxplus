@@ -27,7 +27,7 @@ class MallNewsMain
     /**
      * @var int
      *
-     * @ORM\Column(name="news_id", type="integer", nullable=false, options={"unsigned"=true,"comment"="资讯id"})
+     * @ORM\Column(name="news_id", type="bigint", nullable=false, options={"unsigned"=true,"comment"="资讯id"})
      */
     private $newsId;
 

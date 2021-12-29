@@ -71,21 +71,21 @@ class BaseUser implements PasswordAuthenticatedUserInterface,UserInterface
     /**
      * @var bool|null
      *
-     * @ORM\Column(name="sex", type="integer", length=1, nullable=true, options={"comment"="1-男,2-女"})
+     * @ORM\Column(name="sex", type="bigint", length=1, nullable=true, options={"comment"="1-男,2-女"})
      */
     private $sex;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="report_uid", type="integer", nullable=true, options={"default"="1","comment"="汇报上级"})
+     * @ORM\Column(name="report_uid", type="bigint", nullable=true, options={"default"="1","comment"="汇报上级"})
      */
     private $reportUid = '1';
 
     /**
      * @var bool|null
      *
-     * @ORM\Column(name="real_role", type="integer", length=1, nullable=true, options={"comment"="真实角色 1-管理员 ，2-讲师，3-助教，4-班主任,5-学生"})
+     * @ORM\Column(name="real_role", type="bigint", length=1, nullable=true, options={"comment"="真实角色 1-管理员 ，2-讲师，3-助教，4-班主任,5-学生"})
      */
     private $realRole = '5';
 
@@ -126,7 +126,7 @@ class BaseUser implements PasswordAuthenticatedUserInterface,UserInterface
     private $password;
 
     /**
-     * @ORM\Column(name="password_change_date", type="integer", nullable=true, options={"comment"="密码修改时间"})
+     * @ORM\Column(name="password_change_date", type="bigint", nullable=true, options={"comment"="密码修改时间"})
      */
     private $passwordChangeDate;
 

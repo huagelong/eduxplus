@@ -41,14 +41,14 @@ class JwClasses
     /**
      * @var int|null
      *
-     * @ORM\Column(name="study_plan_id", type="integer", nullable=true, options={"comment"="开课计划id"})
+     * @ORM\Column(name="study_plan_id", type="bigint", nullable=true, options={"comment"="开课计划id"})
      */
     private $studyPlanId;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="product_id", type="integer", nullable=true, options={"comment"="产品id"})
+     * @ORM\Column(name="product_id", type="bigint", nullable=true, options={"comment"="产品id"})
      */
     private $productId;
 

@@ -41,49 +41,49 @@ class MallOrder
     /**
      * @var int
      *
-     * @ORM\Column(name="uid", type="integer", nullable=false, options={"unsigned"=true,"comment"="下单人"})
+     * @ORM\Column(name="uid", type="bigint", nullable=false, options={"unsigned"=true,"comment"="下单人"})
      */
     private $uid;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="goods_id", type="integer", nullable=false, options={"unsigned"=true,"comment"="商品id"})
+     * @ORM\Column(name="goods_id", type="bigint", nullable=false, options={"unsigned"=true,"comment"="商品id"})
      */
     private $goodsId;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="order_agreement_id", type="integer", nullable=false, options={"unsigned"=true,"comment"="订单协议"})
+     * @ORM\Column(name="order_agreement_id", type="bigint", nullable=false, options={"unsigned"=true,"comment"="订单协议"})
      */
     private $orderAgreementId= '0';
 
     /**
      * @var int
      *
-     * @ORM\Column(name="order_amount", type="integer", nullable=false, options={"comment"="订单实际支付价格，已减去优惠价格"})
+     * @ORM\Column(name="order_amount", type="bigint", nullable=false, options={"comment"="订单实际支付价格，已减去优惠价格"})
      */
     private $orderAmount = '0';
 
     /**
      * @var int
      *
-     * @ORM\Column(name="discount_amount", type="integer", nullable=false, options={"comment"="优惠金额"})
+     * @ORM\Column(name="discount_amount", type="bigint", nullable=false, options={"comment"="优惠金额"})
      */
     private $discountAmount = '0';
 
     /**
      * @var int
      *
-     * @ORM\Column(name="original_amount", type="integer", nullable=false, options={"comment"="原价"})
+     * @ORM\Column(name="original_amount", type="bigint", nullable=false, options={"comment"="原价"})
      */
     private $originalAmount = '0';
 
     /**
      * @var bool
      *
-     * @ORM\Column(name="order_status", type="integer", length=1,nullable=false, options={"comment"="订单状态:0支付过期,1待支付,2支付成功,3已取消"})
+     * @ORM\Column(name="order_status", type="bigint", length=1,nullable=false, options={"comment"="订单状态:0支付过期,1待支付,2支付成功,3已取消"})
      */
     private $orderStatus = '0';
 
@@ -91,7 +91,7 @@ class MallOrder
     /**
      * @var bool
      *
-     * @ORM\Column(name="payment_type", type="integer", length=1,nullable=false, options={"comment"="支付方式:1支付宝,2微信支付"})
+     * @ORM\Column(name="payment_type", type="bigint", length=1,nullable=false, options={"comment"="支付方式:1支付宝,2微信支付"})
      */
     private $paymentType = '0';
 
@@ -119,7 +119,7 @@ class MallOrder
     /**
      * @var int
      *
-     * @ORM\Column(name="coupon_group_id", type="integer", nullable=false, options={"unsigned"=true,"comment"="优惠码组"})
+     * @ORM\Column(name="coupon_group_id", type="bigint", nullable=false, options={"unsigned"=true,"comment"="优惠码组"})
      */
     private $couponGroupId= '0';
 

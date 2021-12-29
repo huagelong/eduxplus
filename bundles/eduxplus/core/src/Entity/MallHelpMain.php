@@ -27,7 +27,7 @@ class MallHelpMain
     /**
      * @var int
      *
-     * @ORM\Column(name="help_id", type="integer", nullable=false, options={"unsigned"=true,"comment"="帮助id"})
+     * @ORM\Column(name="help_id", type="bigint", nullable=false, options={"unsigned"=true,"comment"="帮助id"})
      */
     private $helpId;
 

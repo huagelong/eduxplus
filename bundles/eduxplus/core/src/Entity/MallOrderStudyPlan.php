@@ -26,7 +26,7 @@ class MallOrderStudyPlan
     /**
      * @var int
      *
-     * @ORM\Column(name="order_id", type="integer", nullable=false, options={"unsigned"=true,"comment"="订单id"})
+     * @ORM\Column(name="order_id", type="bigint", nullable=false, options={"unsigned"=true,"comment"="订单id"})
      */
     private $orderId='0';
 
@@ -34,35 +34,35 @@ class MallOrderStudyPlan
     /**
      * @var bool
      *
-     * @ORM\Column(name="order_status", type="integer", length=1,nullable=false, options={"comment"="订单状态:0支付过期,1待支付,2支付成功,3已取消"})
+     * @ORM\Column(name="order_status", type="bigint", length=1,nullable=false, options={"comment"="订单状态:0支付过期,1待支付,2支付成功,3已取消"})
      */
     private $orderStatus = '0';
 
     /**
      * @var int
      *
-     * @ORM\Column(name="uid", type="integer", nullable=false, options={"unsigned"=true,"comment"="下单用户uid"})
+     * @ORM\Column(name="uid", type="bigint", nullable=false, options={"unsigned"=true,"comment"="下单用户uid"})
      */
     private $uid='0';
 
     /**
      * @var int
      *
-     * @ORM\Column(name="study_plan_id", type="integer", nullable=false, options={"unsigned"=true,"comment"="开课计划ID"})
+     * @ORM\Column(name="study_plan_id", type="bigint", nullable=false, options={"unsigned"=true,"comment"="开课计划ID"})
      */
     private $studyPlanId='0';
 
     /**
      * @var int
      *
-     * @ORM\Column(name="course_id", type="integer", nullable=false, options={"unsigned"=true,"comment"="课程id"})
+     * @ORM\Column(name="course_id", type="bigint", nullable=false, options={"unsigned"=true,"comment"="课程id"})
      */
     private $courseId='0';
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="open_time", type="integer", nullable=true, options={"comment"="开课时间"})
+     * @ORM\Column(name="open_time", type="bigint", nullable=true, options={"comment"="开课时间"})
      */
     private $openTime;
 

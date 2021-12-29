@@ -27,7 +27,7 @@ class TeachLiveChatLog
     /**
      * @var int|null
      *
-     * @ORM\Column(name="chapter_id", type="integer", nullable=true)
+     * @ORM\Column(name="chapter_id", type="bigint", nullable=true)
      */
     private $chapterId;
 
@@ -48,7 +48,7 @@ class TeachLiveChatLog
     /**
      * @var int|null
      *
-     * @ORM\Column(name="msg_time", type="integer", nullable=true)
+     * @ORM\Column(name="msg_time", type="bigint", nullable=true)
      */
     private $msgTime;
 

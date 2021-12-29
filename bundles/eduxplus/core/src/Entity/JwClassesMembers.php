@@ -27,21 +27,21 @@ class JwClassesMembers
     /**
      * @var int|null
      *
-     * @ORM\Column(name="classes_id", type="integer", nullable=true, options={"comment"="班级id"})
+     * @ORM\Column(name="classes_id", type="bigint", nullable=true, options={"comment"="班级id"})
      */
     private $classesId;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="uid", type="integer", nullable=true)
+     * @ORM\Column(name="uid", type="bigint", nullable=true)
      */
     private $uid;
 
     /**
      * @var bool|null
      *
-     * @ORM\Column(name="type", type="integer",length=1, nullable=true, options={"comment"="1-在学学员，2-退学学员"})
+     * @ORM\Column(name="type", type="bigint",length=1, nullable=true, options={"comment"="1-在学学员，2-退学学员"})
      */
     private $type;
 

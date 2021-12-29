@@ -27,7 +27,7 @@ framework:
         transports:
             # https://symfony.com/doc/current/messenger.html#transport-configuration
              async:
-                 dsn: '%env(MESSENGER_TRANSPORT_DSN)%/messages%messenger.consumer.name%?auto_setup=true&stream_max_entries=50&dbindex=4'
+                 dsn: 'redis://%redis_host%/messages%messenger.consumer.name%?auto_setup=true&stream_max_entries=50&dbindex=4'
                  failure_transport: failed_default
                  retry_strategy:
                      max_retries: 3
@@ -36,7 +36,7 @@ framework:
                      max_delay: 0
 
              failed_default:
-                 dsn: '%env(MESSENGER_TRANSPORT_DSN)%/async_messenger_failed%messenger.consumer.name%'
+                 dsn: 'redis://%redis_host%/async_messenger_failed%messenger.consumer.name%'
             # sync: 'sync://'
 
         routing:

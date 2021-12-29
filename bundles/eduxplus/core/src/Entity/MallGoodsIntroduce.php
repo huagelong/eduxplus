@@ -27,14 +27,14 @@ class MallGoodsIntroduce
     /**
      * @var int|null
      *
-     * @ORM\Column(name="goods_id", type="integer", nullable=true)
+     * @ORM\Column(name="goods_id", type="bigint", nullable=true)
      */
     private $goodsId;
 
     /**
      * @var bool|null
      *
-     * @ORM\Column(name="introduce_type", type="integer",length=1, nullable=true, options={"comment"="课程介绍类型 1-图文介绍"})
+     * @ORM\Column(name="introduce_type", type="bigint",length=1, nullable=true, options={"comment"="课程介绍类型 1-图文介绍"})
      */
     private $introduceType = '0';
 

@@ -27,21 +27,21 @@ class JwClassesTeachers
     /**
      * @var int|null
      *
-     * @ORM\Column(name="classes_id", type="integer", nullable=true, options={"comment"="班级id"})
+     * @ORM\Column(name="classes_id", type="bigint", nullable=true, options={"comment"="班级id"})
      */
     private $classesId;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="teacher_id", type="integer", nullable=true, options={"comment"="老师id"})
+     * @ORM\Column(name="teacher_id", type="bigint", nullable=true, options={"comment"="老师id"})
      */
     private $teacherId;
 
     /**
      * @var bool|null
      *
-     * @ORM\Column(name="teacher_type", type="integer",length=1, nullable=true, options={"comment"="1-班主任"})
+     * @ORM\Column(name="teacher_type", type="bigint",length=1, nullable=true, options={"comment"="1-班主任"})
      */
     private $teacherType;
 

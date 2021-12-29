@@ -30,7 +30,7 @@ class BaseMenu
     private $url = '';
 
     /**
-     * @ORM\Column(type="integer", options={"default"="0","comment"="父节点id"})
+     * @ORM\Column(type="bigint", options={"default"="0","comment"="父节点id"})
      */
     private $pid ='0';
 

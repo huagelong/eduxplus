@@ -34,20 +34,20 @@ class TeachStudyPlan
     /**
      * @var int|null
      *
-     * @ORM\Column(name="product_id", type="integer", nullable=true, options={"comment"="产品id"})
+     * @ORM\Column(name="product_id", type="bigint", nullable=true, options={"comment"="产品id"})
      */
     private $productId;
 
     /**
      * @var int|null
-     * @ORM\Column(name="applyed_at", type="integer", nullable=true, options={"comment"="预计报名时间，程序根据预计报名时间给出预警"})
+     * @ORM\Column(name="applyed_at", type="bigint", nullable=true, options={"comment"="预计报名时间，程序根据预计报名时间给出预警"})
      */
     private $applyedAt;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="create_uid", type="integer", nullable=true, options={"comment"="创建人uid，自己创建的自己可见"})
+     * @ORM\Column(name="create_uid", type="bigint", nullable=true, options={"comment"="创建人uid，自己创建的自己可见"})
      */
     private $createUid;
 

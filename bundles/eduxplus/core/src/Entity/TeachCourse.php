@@ -34,7 +34,7 @@ class TeachCourse
     /**
      * @var integer|null
      *
-     * @ORM\Column(name="type", type="integer",length=1, nullable=true, options={"comment"="1-线上,2-线下,3-混合"})
+     * @ORM\Column(name="type", type="bigint",length=1, nullable=true, options={"comment"="1-线上,2-线下,3-混合"})
      */
     private $type;
 
@@ -55,21 +55,21 @@ class TeachCourse
     /**
      * @var int|null
      *
-     * @ORM\Column(name="category_id", type="integer", nullable=true, options={"comment"="类目id"})
+     * @ORM\Column(name="category_id", type="bigint", nullable=true, options={"comment"="类目id"})
      */
     private $categoryId;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="first_category_id", type="integer", nullable=true, options={"comment"="品类id"})
+     * @ORM\Column(name="first_category_id", type="bigint", nullable=true, options={"comment"="品类id"})
      */
     private $firstCategoryId;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="create_uid", type="integer", nullable=true, options={"comment"="创建人uid，自己创建的自己可见"})
+     * @ORM\Column(name="create_uid", type="bigint", nullable=true, options={"comment"="创建人uid，自己创建的自己可见"})
      */
     private $createUid;
 
@@ -83,14 +83,14 @@ class TeachCourse
     /**
      * @var int|null
      *
-     * @ORM\Column(name="course_hour", type="integer", nullable=true, options={"comment"="课时，乘以100"})
+     * @ORM\Column(name="course_hour", type="bigint", nullable=true, options={"comment"="课时，乘以100"})
      */
     private $courseHour;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="open_time", type="integer", nullable=true, options={"comment"="最早开课时间"})
+     * @ORM\Column(name="open_time", type="bigint", nullable=true, options={"comment"="最早开课时间"})
      */
     private $openTime = '0';
 

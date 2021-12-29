@@ -27,14 +27,14 @@ class TeachCourseMaterials
     /**
      * @var int|null
      *
-     * @ORM\Column(name="course_id", type="integer", nullable=true)
+     * @ORM\Column(name="course_id", type="bigint", nullable=true)
      */
     private $courseId;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="chapter_id", type="integer", nullable=true, options={"comment"="章节id"})
+     * @ORM\Column(name="chapter_id", type="bigint", nullable=true, options={"comment"="章节id"})
      */
     private $chapterId;
 

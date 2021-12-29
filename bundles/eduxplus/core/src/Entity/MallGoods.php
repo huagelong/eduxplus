@@ -53,42 +53,42 @@ class MallGoods
     /**
      * @var int|null
      *
-     * @ORM\Column(name="category_id", type="integer", nullable=true, options={"comment"="类目id"})
+     * @ORM\Column(name="category_id", type="bigint", nullable=true, options={"comment"="类目id"})
      */
     private $categoryId;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="first_category_id", type="integer", nullable=true, options={"comment"="品类id"})
+     * @ORM\Column(name="first_category_id", type="bigint", nullable=true, options={"comment"="品类id"})
      */
     private $firstCategoryId;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="product_id", type="integer", nullable=true, options={"comment"="产品id"})
+     * @ORM\Column(name="product_id", type="bigint", nullable=true, options={"comment"="产品id"})
      */
     private $productId;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="top_value", type="integer", nullable=true, options={"comment"="热门课程"})
+     * @ORM\Column(name="top_value", type="bigint", nullable=true, options={"comment"="热门课程"})
      */
     private $topValue;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="recommend_value", type="integer", nullable=true, options={"comment"="推荐课程"})
+     * @ORM\Column(name="recommend_value", type="bigint", nullable=true, options={"comment"="推荐课程"})
      */
     private $recommendValue;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="teaching_method", type="integer", nullable=true, options={"comment"="授课方式 1.面授 2.直播 3.点播 4.面授+直播 5.直播+点播 6.点播+面授 7.直播+点播+面授"})
+     * @ORM\Column(name="teaching_method", type="bigint", nullable=true, options={"comment"="授课方式 1.面授 2.直播 3.点播 4.面授+直播 5.直播+点播 6.点播+面授 7.直播+点播+面授"})
      */
     private $teachingMethod;
 
@@ -125,42 +125,42 @@ class MallGoods
     /**
      * @var int|null
      *
-     * @ORM\Column(name="course_hour", type="integer", nullable=true, options={"comment"="课时，乘以10"})
+     * @ORM\Column(name="course_hour", type="bigint", nullable=true, options={"comment"="课时，乘以10"})
      */
     private $courseHour = '0';
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="course_count", type="integer", nullable=true, options={"comment"="课次数"})
+     * @ORM\Column(name="course_count", type="bigint", nullable=true, options={"comment"="课次数"})
      */
     private $courseCount = '0';
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="market_price", type="integer", nullable=true, options={"comment"="成本价,乘以100"})
+     * @ORM\Column(name="market_price", type="bigint", nullable=true, options={"comment"="成本价,乘以100"})
      */
     private $marketPrice = '0';
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="shop_price", type="integer", nullable=true, options={"comment"="售价,乘以100"})
+     * @ORM\Column(name="shop_price", type="bigint", nullable=true, options={"comment"="售价,乘以100"})
      */
     private $shopPrice = '0';
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="buy_number", type="integer", nullable=true, options={"comment"="购买人数"})
+     * @ORM\Column(name="buy_number", type="bigint", nullable=true, options={"comment"="购买人数"})
      */
     private $buyNumber = '0';
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="buy_number_false", type="integer", nullable=true, options={"comment"="购买人数真假数据之和"})
+     * @ORM\Column(name="buy_number_false", type="bigint", nullable=true, options={"comment"="购买人数真假数据之和"})
      */
     private $buyNumberFalse = '0';
 
@@ -188,7 +188,7 @@ class MallGoods
     /**
      * @var int|null
      *
-     * @ORM\Column(name="creater_uid", type="integer", nullable=true, options={"comment"="后台创建人"})
+     * @ORM\Column(name="creater_uid", type="bigint", nullable=true, options={"comment"="后台创建人"})
      */
     private $createrUid = '0';
 
@@ -209,21 +209,21 @@ class MallGoods
     /**
      * @var int|null
      *
-     * @ORM\Column(name="group_type", type="integer", nullable=true, options={"comment"="0-未知，1-可选,2-全部"})
+     * @ORM\Column(name="group_type", type="bigint", nullable=true, options={"comment"="0-未知，1-可选,2-全部"})
      */
     private $groupType = '0';
 
     /**
      * @var int
      *
-     * @ORM\Column(name="agreement_id", type="integer", nullable=false, options={"unsigned"=true,"comment"="协议id"})
+     * @ORM\Column(name="agreement_id", type="bigint", nullable=false, options={"unsigned"=true,"comment"="协议id"})
      */
     private $agreementId = '0';
 
     /**
      * @var int
      *
-     * @ORM\Column(name="good_type", type="integer", nullable=false, options={"unsigned"=true,"comment"="产品类型,1-视频课程,2-试卷"})
+     * @ORM\Column(name="good_type", type="bigint", nullable=false, options={"unsigned"=true,"comment"="产品类型,1-视频课程,2-试卷"})
      */
     private $goodType = '1';
 

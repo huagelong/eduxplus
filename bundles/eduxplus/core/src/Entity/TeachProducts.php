@@ -34,14 +34,14 @@ class TeachProducts
     /**
      * @var int|null
      *
-     * @ORM\Column(name="first_category_id", type="integer", nullable=true, options={"comment"="品类id"})
+     * @ORM\Column(name="first_category_id", type="bigint", nullable=true, options={"comment"="品类id"})
      */
     private $firstCategoryId;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="category_id", type="integer", nullable=true, options={"comment"="类目id"})
+     * @ORM\Column(name="category_id", type="bigint", nullable=true, options={"comment"="类目id"})
      */
     private $categoryId;
 
@@ -56,7 +56,7 @@ class TeachProducts
     /**
      * @var int|null
      *
-     * @ORM\Column(name="agreement_id", type="integer", nullable=true, options={"comment"="协议id"})
+     * @ORM\Column(name="agreement_id", type="bigint", nullable=true, options={"comment"="协议id"})
      */
     private $agreementId;
 
@@ -70,7 +70,7 @@ class TeachProducts
     /**
      * @var int|null
      *
-     * @ORM\Column(name="create_uid", type="integer", nullable=true, options={"comment"="创建人uid，自己创建的自己可见"})
+     * @ORM\Column(name="create_uid", type="bigint", nullable=true, options={"comment"="创建人uid，自己创建的自己可见"})
      */
     private $createUid;
 
@@ -97,7 +97,7 @@ class TeachProducts
     /**
      * @var int|null
      *
-     * @ORM\Column(name="max_member_number", type="integer", nullable=true, options={"comment"="自动分班，最大班级人数"})
+     * @ORM\Column(name="max_member_number", type="bigint", nullable=true, options={"comment"="自动分班，最大班级人数"})
      */
     private $maxMemberNumber;
 

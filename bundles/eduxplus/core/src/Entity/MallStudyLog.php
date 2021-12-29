@@ -28,14 +28,14 @@ class MallStudyLog
     /**
      * @var int
      *
-     * @ORM\Column(name="uid", type="integer", nullable=false, options={"unsigned"=true,"comment"="用户uid"})
+     * @ORM\Column(name="uid", type="bigint", nullable=false, options={"unsigned"=true,"comment"="用户uid"})
      */
     private $uid = '0';
 
     /**
      * @var int
      *
-     * @ORM\Column(name="chapter_id", type="integer", nullable=false, options={"unsigned"=true,"comment"="章节id"})
+     * @ORM\Column(name="chapter_id", type="bigint", nullable=false, options={"unsigned"=true,"comment"="章节id"})
      */
     private $chapterId = '0';
 

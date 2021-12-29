@@ -27,28 +27,28 @@ class MallNews
     /**
      * @var int
      *
-     * @ORM\Column(name="category_id", type="integer", nullable=false, options={"unsigned"=true,"comment"="分类id"})
+     * @ORM\Column(name="category_id", type="bigint", nullable=false, options={"unsigned"=true,"comment"="分类id"})
      */
     private $categoryId = '0';
 
     /**
      * @var int
      *
-     * @ORM\Column(name="uid", type="integer", nullable=false, options={"unsigned"=true,"comment"="创建人id"})
+     * @ORM\Column(name="uid", type="bigint", nullable=false, options={"unsigned"=true,"comment"="创建人id"})
      */
     private $uid = '0';
 
     /**
      * @var int
      *
-     * @ORM\Column(name="view_number", type="integer", nullable=false, options={"unsigned"=true,"comment"="浏览量"})
+     * @ORM\Column(name="view_number", type="bigint", nullable=false, options={"unsigned"=true,"comment"="浏览量"})
      */
     private $viewNumber = '0';
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="top_value", type="integer", nullable=true, options={"comment"="置顶数据"})
+     * @ORM\Column(name="top_value", type="bigint", nullable=true, options={"comment"="置顶数据"})
      */
     private $topValue;
 
