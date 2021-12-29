@@ -1,14 +1,45 @@
 framework:
     messenger:
+        default_bus: command.bus
+        buses:
+            command.bus:
+                middleware:
+                    - validation
+                    - doctrine_transaction
+            query.bus:
+                middleware:
+                    - validation
+            event.bus:
+                # the 'allow_no_handlers' middleware allows to have no handler
+                # configured for this bus without throwing an exception
+                default_middleware: allow_no_handlers
+                middleware:
+                    - validation
         # Uncomment this (and the failed transport below) to send failed messages to this transport for later handling.
         # failure_transport: failed
+        reset_on_message: true
+        serializer:
+            default_serializer: messenger.transport.symfony_serializer
+            symfony_serializer:
+                format: json
+                context: { }
 
         transports:
             # https://symfony.com/doc/current/messenger.html#transport-configuration
-             async: "redis://%redis_host%/messages"
-            # failed: 'doctrine://default?queue_name=failed'
+             async:
+                 dsn: '%env(MESSENGER_TRANSPORT_DSN)%/messages%messenger.consumer.name%?auto_setup=true&stream_max_entries=50&dbindex=4'
+                 failure_transport: failed_default
+                 retry_strategy:
+                     max_retries: 3
+                     delay: 1000
+                     multiplier: 1
+                     max_delay: 0
+
+             failed_default:
+                 dsn: '%env(MESSENGER_TRANSPORT_DSN)%/async_messenger_failed%messenger.consumer.name%'
             # sync: 'sync://'
 
         routing:
             # Route your messages to the transports
+            # 'Wechance\CoreBundle\Messenger\TestMessenger': async
             # 'App\Message\YourMessage': async

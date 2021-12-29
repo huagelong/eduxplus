@@ -2,6 +2,7 @@ parameters:
     redis_host: '%env(REDIS_HOST)%'
     upload_dir: '%env(UPLOAD_DIR)%'
     secret: '%env(APP_SECRET)%'
+    messenger.consumer.name: '%env(MESSENGER_CONSUMER_NAME)%'
 
 services:
 
@@ -18,9 +19,3 @@ services:
     App\Bundle\:
         resource: '../src/Controller'
         tags: ['controller.service_arguments']
-
-    snc_second_level_cache:
-        class: '%snc_redis.doctrine_cache_phpredis.class%'
-#        lazy: true
-        arguments:
-            - '@snc_redis.secondlevelcache'

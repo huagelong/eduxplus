@@ -1,5 +1,0 @@
-imper86_jobby:
-    jobs:
-      msg:
-        command: 'job:msg'
-        schedule: '* * * * *'

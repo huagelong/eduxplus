@@ -1,0 +1,17 @@
+zenstruck_schedule:
+  without_overlapping_lock_factory: lock.scheduler
+  single_server_lock_factory: lock.scheduler
+  timezone: Asia/Shanghai
+
+  messenger:
+    enabled: true
+    message_bus: command.bus
+  schedule_extensions:
+    environments:         [dev, prod, staging]
+    on_single_server:
+      enabled: true
+      ttl: 3600
+  tasks:
+    - task: job:msg
+      frequency: '0 0 * * *'
+      description: msg read todo

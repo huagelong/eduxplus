@@ -837,5 +837,8 @@
     },
     "xin/helper": {
         "version": "1.0.0"
+    },
+    "zenstruck/schedule-bundle": {
+        "version": "v1.2.1"
     }
 }

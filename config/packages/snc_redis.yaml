@@ -26,15 +26,5 @@ snc_redis:
           options:
             prefix: exp_session_
 
-      secondlevelcache:
-          type: phpredis
-          alias: secondlevelcache
-          dsn: "redis://%redis_host%/4"
-          logging: '%kernel.debug%'
-          options:
-              prefix: exp_secondlevelcache_
-              connection_timeout: 10
-              read_write_timeout: 30
-
   session:
       client: session

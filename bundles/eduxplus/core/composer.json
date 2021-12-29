@@ -22,7 +22,6 @@
         "elasticsearch/elasticsearch": "^7.15",
         "firebase/php-jwt": "^5.5",
         "guzzlehttp/guzzle": "^6.5",
-        "imper86/jobby-cron-bundle": "^1.0",
         "knplabs/knp-paginator-bundle": "^5.7",
         "mk-j/php_xlsxwriter": "~0.38.0",
         "nelmio/cors-bundle": "^2.1",
@@ -31,7 +30,6 @@
         "qcloud/cos-sdk-v5": "^2.4",
         "qcloudsms/qcloudsms_php": "^0.1.4",
         "ramsey/uuid": "^4.2",
-        "sensio/framework-extra-bundle": "^6.2",
         "snc/redis-bundle": "^3.5",
         "stof/doctrine-extensions-bundle": "^1.6",
         "symfony/apache-pack": "^1.0",
@@ -68,7 +66,8 @@
         "tencent/tls-sig-api-v2": "^1.1",
         "tencentcloud/tencentcloud-sdk-php": "^3.0",
         "twig/extra-bundle": "^3.3",
-        "twig/twig": "^3.3"
+        "twig/twig": "^3.3",
+        "zenstruck/schedule-bundle": "^1.2"
     },
     "require-dev": {
     },
