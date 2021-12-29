@@ -33,6 +33,21 @@ class ExceptionListener
     public function onKernelException(ExceptionEvent $event)
     {
         if (!$event->isMainRequest()) return true;
+
+        $pathPatterns = $this->baseService->getConfig("wechance_core.path_patterns");
+        $requestUri = $this->baseService->request()->getRequestUri();
+        if($pathPatterns){
+            $hasMatch = 0;
+            foreach ($pathPatterns as $regx){
+                if(preg_match($regx, $requestUri)){
+                    $hasMatch++;
+                }
+            }
+            if(!$hasMatch){
+                return ;
+            }
+        }
+
         $exception = $event->getThrowable();
         $msg = $exception->getMessage();
         $statusCode = $exception instanceof HttpExceptionInterface ? $exception->getStatusCode() : $exception->getCode();

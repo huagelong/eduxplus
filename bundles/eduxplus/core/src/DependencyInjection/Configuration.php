@@ -11,6 +11,7 @@ class Configuration implements ConfigurationInterface
         $builder = new TreeBuilder('eduxplus_core');
         $builder->getRootNode()
             ->children()
+            ->arrayNode('path_patterns')->scalarPrototype()->end()->end()
             ->end()
             ->end()
         ;

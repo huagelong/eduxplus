@@ -1,0 +1,4 @@
+eduxplus_core: 
+      path_patterns:
+        - /^\/api\//i
+        - /\/do[\/]?/i

@@ -67,7 +67,8 @@
         "tencentcloud/tencentcloud-sdk-php": "^3.0",
         "twig/extra-bundle": "^3.3",
         "twig/twig": "^3.3",
-        "zenstruck/schedule-bundle": "^1.2"
+        "zenstruck/schedule-bundle": "^1.2",
+        "godruoyi/php-snowflake": "^1.1"
     },
     "require-dev": {
     },

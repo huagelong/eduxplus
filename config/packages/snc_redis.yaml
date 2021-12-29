@@ -7,6 +7,8 @@ snc_redis:
           logging: '%kernel.debug%'
           options:
             prefix: exp_
+            connection_timeout: 10
+            read_write_timeout: 30
 
       cache:
           type: phpredis
@@ -25,6 +27,19 @@ snc_redis:
 #          logging: '%kernel.debug%'
           options:
             prefix: exp_session_
+            connection_timeout: 10
+            read_write_timeout: 30
+
+      persistence:
+          type: phpredis
+          alias: persistence
+          dsn: "redis://%redis_host%/4"
+          # logging: '%kernel.debug%'
+          options:
+            prefix: exp_persistence_
+            connection_timeout: 10
+            read_write_timeout: 30
+      
 
   session:
       client: session
