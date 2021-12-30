@@ -1,0 +1,24 @@
+admin_teach_product_index:
+  path: /admin/teach/product/index
+  controller: Eduxplus\EduxBundle\Controller\Teach\ProductController::indexAction
+admin_teach_product_add:
+  path: /admin/teach/product/add
+  controller: Eduxplus\EduxBundle\Controller\Teach\ProductController::addAction
+admin_api_teach_product_add:
+  path: /admin/teach/product/add/do
+  controller: Eduxplus\EduxBundle\Controller\Teach\ProductController::addDoAction
+admin_teach_product_edit:
+  path: /admin/teach/product/edit/{id}
+  controller: Eduxplus\EduxBundle\Controller\Teach\ProductController::editAction
+admin_api_teach_product_edit:
+  path: /admin/teach/product/edit/do/{id}
+  controller: Eduxplus\EduxBundle\Controller\Teach\ProductController::editDoAction
+admin_api_teach_product_delete:
+  path: /admin/teach/product/delete/do/{id}
+  controller: Eduxplus\EduxBundle\Controller\Teach\ProductController::deleteDoAction
+admin_api_teach_product_bathdelete:
+  path: /admin/teach/product/bathdelete/do
+  controller: Eduxplus\EduxBundle\Controller\Teach\ProductController::bathdeleteDoAction
+admin_api_teach_product_switchStatus:
+  path: /admin/teach/product/switchStatus/do/{id}
+  controller: Eduxplus\EduxBundle\Controller\Teach\ProductController::switchStatusAction

@@ -5,6 +5,7 @@
     "type": "project",
     "require": {
        "bundles/eduxplus-core-bundle":"@dev",
+        "bundles/eduxplus-edux-bundle":"@dev",
         "bundles/eduxplus-website-bundle":"@dev",
         "bundles/eduxplus-qa-bundle":"@dev",
         "bundles/eduxplus-api-bundle":"@dev"

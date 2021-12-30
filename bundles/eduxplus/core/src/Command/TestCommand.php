@@ -147,7 +147,7 @@ class TestCommand extends Command
 
 //        $this->esService->esCreateIndex("goods", "name", 1);
 
-//        $sql = "SELECT a FROM Core:MallGoods a WHERE a.status=1";
+//        $sql = "SELECT a FROM Edux:MallGoods a WHERE a.status=1";
 //        $list = $this->esService->fetchAll($sql);
 //        if($list){
 //            foreach ($list as $v){
@@ -172,8 +172,8 @@ class TestCommand extends Command
 //        $sql = "SELECT * FROM mall_msg WHERE uid =?";
 //        $rs = $this->msgService->fetchAssocBySql($sql, [0]);
 //        var_dump($rs);
-//        $sql = "SELECT * FROM Core:MallMsg WHERE uid =?";
-//        $rs =  $this->msgService->formatTableClass($sql, ["Core:MallMsg"]);
+//        $sql = "SELECT * FROM Edux:MallMsg WHERE uid =?";
+//        $rs =  $this->msgService->formatTableClass($sql, ["Edux:MallMsg"]);
 //        var_dump($rs);
 //        $sql = "SELECT a FROM Core:BaseLoginLog a WHERE a.id=1";
 //        $model = $this->msgService->fetchOne($sql,[], 1);

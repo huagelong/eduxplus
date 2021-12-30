@@ -1,0 +1,3 @@
+admin_mall_pay_index:
+  path: /admin/mall/pay/index
+  controller: Eduxplus\EduxBundle\Controller\Mall\PayController::indexAction

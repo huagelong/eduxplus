@@ -25,7 +25,7 @@ class NewsService extends AppBaseService
     }
 
     public function getTopNews($limit=9){
-        $sql = "SELECT a FROM Core:MallNews a WHERE a.status=1 ORDER BY a.createdAt DESC";
+        $sql = "SELECT a FROM Edux:MallNews a WHERE a.status=1 ORDER BY a.createdAt DESC";
         $result = $this->fetchAll($sql, [],0,$limit);
         if(!$result) return $result;
         foreach ($result as &$v){
@@ -36,13 +36,13 @@ class NewsService extends AppBaseService
 
 
     public function getAllNewsCategory(){
-        $sql = "SELECT a FROM Core:MallNewsCategory a WHERE a.isShow =1 AND a.parentId = 0 ORDER BY a.sort DESC";
+        $sql = "SELECT a FROM Edux:MallNewsCategory a WHERE a.isShow =1 AND a.parentId = 0 ORDER BY a.sort DESC";
         $category = $this->fetchAll($sql);
         return $category;
     }
 
     public function viewNumIncre($id){
-        $sql = "UPDATE Core:MallNews a SET a.viewNumber = a.viewNumber+1 WHERE a.id = :id ";
+        $sql = "UPDATE Edux:MallNews a SET a.viewNumber = a.viewNumber+1 WHERE a.id = :id ";
         $this->execute($sql, ["id"=>$id]);
     }
 
@@ -51,7 +51,7 @@ class NewsService extends AppBaseService
      * @param $topValue 0-公告，1-热门
      */
     public function getNewsByTopValue($topValue, $limit=5){
-        $sql = "SELECT a FROM Core:MallNews a WHERE a.status=1 AND a.topValue = :topValue ORDER BY a.sort DESC, a.createdAt DESC";
+        $sql = "SELECT a FROM Edux:MallNews a WHERE a.status=1 AND a.topValue = :topValue ORDER BY a.sort DESC, a.createdAt DESC";
         $result = $this->fetchAll($sql, ["topValue"=>$topValue],0,$limit);
         if(!$result) return $result;
         foreach ($result as &$v){
@@ -62,9 +62,9 @@ class NewsService extends AppBaseService
 
     public function getNewsList($category, $page, $pageSize){
         if($category){
-            $dql = "SELECT a FROM Core:MallNews a WHERE a.categoryId = :categoryId ORDER BY a.createdAt DESC";
+            $dql = "SELECT a FROM Edux:MallNews a WHERE a.categoryId = :categoryId ORDER BY a.createdAt DESC";
         }else{
-            $dql = "SELECT a FROM Core:MallNews a ORDER BY a.createdAt DESC ";
+            $dql = "SELECT a FROM Edux:MallNews a ORDER BY a.createdAt DESC ";
         }
 
         $em = $this->getDoctrine()->getManager();
@@ -91,11 +91,11 @@ class NewsService extends AppBaseService
 
 
     public function getById($id){
-        $dql = "SELECT a FROM Core:MallNews a WHERE a.id =:id ";
+        $dql = "SELECT a FROM Edux:MallNews a WHERE a.id =:id ";
         $detail = $this->fetchOne($dql, ["id"=>$id]);
         if(!$detail) return $detail;
         $detail['createdAtTime'] = $detail["createdAt"]->getTimestamp();
-        $mainSql = "SELECT a FROM Core:MallNewsMain a WHERE a.newsId =:newsId ";
+        $mainSql = "SELECT a FROM Edux:MallNewsMain a WHERE a.newsId =:newsId ";
         $mainDetail = $this->fetchOne($mainSql, ["newsId"=>$id]);
         $detail['main'] = $mainDetail;
         return $detail;

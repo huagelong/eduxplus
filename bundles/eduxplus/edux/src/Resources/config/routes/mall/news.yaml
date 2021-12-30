@@ -1,0 +1,27 @@
+admin_mall_news_index:
+  path: /admin/mall/news/index
+  controller: Eduxplus\EduxBundle\Controller\Mall\NewsController::indexAction
+admin_mall_news_view:
+  path: /admin/mall/news/view/{id}
+  controller: Eduxplus\EduxBundle\Controller\Mall\NewsController::viewAction
+admin_mall_news_add:
+  path: /admin/mall/news/add
+  controller: Eduxplus\EduxBundle\Controller\Mall\NewsController::addAction
+admin_api_mall_news_add:
+  path: /admin/mall/news/add/do
+  controller: Eduxplus\EduxBundle\Controller\Mall\NewsController::addDoAction
+admin_mall_news_edit:
+  path: /admin/mall/news/edit/{id}
+  controller: Eduxplus\EduxBundle\Controller\Mall\NewsController::editAction
+admin_api_mall_news_edit:
+  path: /admin/mall/news/edit/do/{id}
+  controller: Eduxplus\EduxBundle\Controller\Mall\NewsController::editDoAction
+admin_api_mall_news_delete:
+  path: /admin/mall/news/delete/do/{id}
+  controller: Eduxplus\EduxBundle\Controller\Mall\NewsController::deleteDoAction
+admin_api_mall_news_bathdelete:
+  path: /admin/mall/news/bathdelete/do
+  controller: Eduxplus\EduxBundle\Controller\Mall\NewsController::bathdeleteDoAction
+admin_api_mall_news_switchStatus:
+  path: /admin/mall/news/switchStatus/do/{id}
+  controller: Eduxplus\EduxBundle\Controller\Mall\NewsController::switchStatusAction

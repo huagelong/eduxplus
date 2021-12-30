@@ -30,7 +30,7 @@ class LearnService extends AppBaseService
     public function getList($uid, $page, $pageSize)
     {
         $time = time();
-        $dql = "SELECT a.courseId, abs({$time}-a.openTime) as diffTime FROM Core:MallOrderStudyPlan a WHERE a.uid=:uid AND a.orderStatus=2 ORDER BY diffTime ASC";
+        $dql = "SELECT a.courseId, abs({$time}-a.openTime) as diffTime FROM Edux:MallOrderStudyPlan a WHERE a.uid=:uid AND a.orderStatus=2 ORDER BY diffTime ASC";
         $em = $this->getDoctrine()->getManager();
         $em = $this->enableSoftDeleteable($em);
         $query = $em->createQuery($dql);
@@ -46,7 +46,7 @@ class LearnService extends AppBaseService
             foreach ($items as $v) {
                 $vArr =  $this->toArray($v);
                 $courseId = $vArr['courseId'];
-                $sql = "SELECT a FROM Core:TeachCourse a WHERE a.id=:id";
+                $sql = "SELECT a FROM Edux:TeachCourse a WHERE a.id=:id";
                 $itemsArr[] =  $this->fetchOne($sql, ['id' => $courseId]);
             }
         }
@@ -55,28 +55,28 @@ class LearnService extends AppBaseService
 
     public function getCourseCount($uid)
     {
-        $dql = "SELECT count(a.id) as cnt FROM Core:MallOrderStudyPlan a WHERE a.uid=:uid AND a.orderStatus=2 ";
+        $dql = "SELECT count(a.id) as cnt FROM Edux:MallOrderStudyPlan a WHERE a.uid=:uid AND a.orderStatus=2 ";
         return $this->fetchField("cnt", $dql, ['uid' => $uid]);
     }
 
 
     public function getCourseInfo($courseId)
     {
-        $sql = "SELECT a FROM Core:TeachCourse a WHERE a.id=:id";
+        $sql = "SELECT a FROM Edux:TeachCourse a WHERE a.id=:id";
         return $this->fetchOne($sql, ['id' => $courseId]);
     }
 
     public function checkChapterCanView($chapterId, $uid){
-        $sql = "SELECT a FROM Core:TeachCourseChapter a WHERE a.id=:id";
+        $sql = "SELECT a FROM Edux:TeachCourseChapter a WHERE a.id=:id";
         $info = $this->fetchOne($sql, ["id" => $chapterId]);
         if($info['isFree']) return true;
         if(!$uid) return false;
-        $orderPlanSql = "SELECT a FROM Core:MallOrderStudyPlan a WHERE a.courseId = :courseId AND a.uid=:uid";
+        $orderPlanSql = "SELECT a FROM Edux:MallOrderStudyPlan a WHERE a.courseId = :courseId AND a.uid=:uid";
         $orderPlans = $this->fetchAll($orderPlanSql, ["courseId" => $info['courseId'], "uid"=>$uid]);
         if(!$orderPlans) return false;
         foreach ($orderPlans as $v){
             $orderId = $v["orderId"];
-            $orderSql = "SELECT a FROM Core:MallOrder a WHERE a.id=:id AND a.orderStatus=2";
+            $orderSql = "SELECT a FROM Edux:MallOrder a WHERE a.id=:id AND a.orderStatus=2";
             $orderInfo = $this->fetchOne($orderSql, ["id"=>$orderId]);
             if($orderInfo) return true;
         }
@@ -89,7 +89,7 @@ class LearnService extends AppBaseService
      * @param $uid
      */
     public function addStudyLog($chapterId, $uid){
-        $logsql = "SELECT a.id FROM Core:MallStudyLog a WHERE a.uid=:uid AND a.chapterId=:chapterId";
+        $logsql = "SELECT a.id FROM Edux:MallStudyLog a WHERE a.uid=:uid AND a.chapterId=:chapterId";
         $studyLog = $this->fetchOne($logsql, ["uid"=>$uid, "chapterId"=>$chapterId]);
         if(!$studyLog){
             $model = new MallStudyLog();
@@ -107,35 +107,35 @@ class LearnService extends AppBaseService
      * @return bool
      */
     public function checkBlock($chapterId, $uid){
-        $sql = "SELECT a FROM Core:TeachCourseChapter a WHERE a.id=:id";
+        $sql = "SELECT a FROM Edux:TeachCourseChapter a WHERE a.id=:id";
         $info = $this->fetchOne($sql, ["id" => $chapterId]);
         $courseId = $info['courseId'];
-        $orderPlanSql = "SELECT a FROM Core:MallOrderStudyPlan a WHERE a.courseId = :courseId AND a.uid=:uid";
+        $orderPlanSql = "SELECT a FROM Edux:MallOrderStudyPlan a WHERE a.courseId = :courseId AND a.uid=:uid";
         $orderPlans = $this->fetchAll($orderPlanSql, ["courseId" => $courseId, "uid"=>$uid]);
         if(!$orderPlans) return false;
         foreach ($orderPlans as $v){
             $studyPlanId = $v["studyPlanId"];
-            $studyPlanSql = "SELECT a FROM Core:TeachStudyPlan a WHERE a.id=:id";
+            $studyPlanSql = "SELECT a FROM Edux:TeachStudyPlan a WHERE a.id=:id";
             $studyPlan = $this->fetchOne($studyPlanSql, ["id"=>$studyPlanId]);
             //挡板处理
             if($studyPlan['isBlock']){
                 //如果已经存在则表示以前有权限
-                $logsql = "SELECT a.id FROM Core:MallStudyLog a WHERE a.uid=:uid AND a.chapterId=:chapterId";
+                $logsql = "SELECT a.id FROM Edux:MallStudyLog a WHERE a.uid=:uid AND a.chapterId=:chapterId";
                 $studyLog = $this->fetchOne($logsql, ["uid"=>$uid, "chapterId"=>$chapterId]);
                 if($studyLog) return true;
 
-                $studyPlanSubSql = "SELECT a FROM Core:TeachStudyPlanSub a WHERE a.studyPlanId =:studyPlanId ORDER BY a.sort ASC";
+                $studyPlanSubSql = "SELECT a FROM Edux:TeachStudyPlanSub a WHERE a.studyPlanId =:studyPlanId ORDER BY a.sort ASC";
                 $studyPlanSubCourseIds = $this->fetchFields("courseId", $studyPlanSubSql, ["studyPlanId"=>$studyPlanId]);
                 $preCounseIds = [];
                 foreach ($studyPlanSubCourseIds as $k=>$subCourseId){
-                    $sql = "SELECT a FROM Core:TeachCourseChapter a WHERE a.courseId = :courseId ORDER BY a.sort ASC";
+                    $sql = "SELECT a FROM Edux:TeachCourseChapter a WHERE a.courseId = :courseId ORDER BY a.sort ASC";
                     $ids = $this->fetchFields("id", $sql, ["courseId"=>$courseId]);
                     $firstId = isset($ids[0])?$ids[0]:0;
                     $endId = $ids[count($ids)-1];
                     if($k > 0){
                         //检查上一个课程最后章节是否看过
                         $preCounseEndId = $preCounseIds[count($preCounseIds)-1];
-                        $logsql = "SELECT a.id FROM Core:MallStudyLog a WHERE a.uid=:uid AND a.chapterId=:chapterId";
+                        $logsql = "SELECT a.id FROM Edux:MallStudyLog a WHERE a.uid=:uid AND a.chapterId=:chapterId";
                         $studyLog = $this->fetchOne($logsql, ["uid"=>$uid, "chapterId"=>$preCounseEndId]);
                         if(!$studyLog) return false;
                     }
@@ -144,7 +144,7 @@ class LearnService extends AppBaseService
                     $preChapterId = 0;
                     foreach ($ids as $chapterIdDiff){
                         if($chapterIdDiff == $chapterId){//找到自己的位置,判断上一章节是否看过
-                            $logsql = "SELECT a.id FROM Core:MallStudyLog a WHERE a.uid=:uid AND a.chapterId=:chapterId";
+                            $logsql = "SELECT a.id FROM Edux:MallStudyLog a WHERE a.uid=:uid AND a.chapterId=:chapterId";
                             $studyLog = $this->fetchOne($logsql, ["uid"=>$uid, "chapterId"=>$preChapterId]);
                             if($studyLog) return true;
                         }
@@ -160,7 +160,7 @@ class LearnService extends AppBaseService
 
     public function getChapter($chapterId)
     {
-        $sql = "SELECT a FROM Core:TeachCourseChapter a WHERE a.id=:id";
+        $sql = "SELECT a FROM Edux:TeachCourseChapter a WHERE a.id=:id";
         $info = $this->fetchOne($sql, ["id" => $chapterId]);
         if (!$info) return [];
         $info['isOpen'] = 0;
@@ -175,7 +175,7 @@ class LearnService extends AppBaseService
 
     public function getChapterTree($courseId, $getActiveVideo = 0)
     {
-        $sql = "SELECT a FROM Core:TeachCourseChapter a WHERE a.courseId=:courseId ORDER BY a.sort ASC";
+        $sql = "SELECT a FROM Edux:TeachCourseChapter a WHERE a.courseId=:courseId ORDER BY a.sort ASC";
         $list = $this->fetchAll($sql, ["courseId" => $courseId]);
         if (!$list) return [];
 
@@ -211,35 +211,35 @@ class LearnService extends AppBaseService
 
     public function getTeacherIds($chapterId)
     {
-        $sql = "SELECT a FROM Core:TeachCourseTeachers a WHERE a.chapterId=:chapterId";
+        $sql = "SELECT a FROM Edux:TeachCourseTeachers a WHERE a.chapterId=:chapterId";
         $teacherIds = $this->fetchFields('teacherId', $sql, ['chapterId' => $chapterId]);
         if (!$teacherIds) return [];
-        $sql = "SELECT a FROM Core:JwTeacher a WHERE a.id IN(:id)";
+        $sql = "SELECT a FROM Edux:JwTeacher a WHERE a.id IN(:id)";
         return $this->fetchAll($sql, ['id' => $teacherIds]);
     }
 
 
     public function getVideoByRealId($id)
     {
-        $sql = "SELECT a FROM Core:TeachCourseVideos a WHERE a.id=:id";
+        $sql = "SELECT a FROM Edux:TeachCourseVideos a WHERE a.id=:id";
         return $this->fetchOne($sql, ['id' => $id]);
     }
 
     public function getVideoById($id)
     {
-        $sql = "SELECT a FROM Core:TeachCourseVideos a WHERE a.chapterId=:chapterId ";
+        $sql = "SELECT a FROM Edux:TeachCourseVideos a WHERE a.chapterId=:chapterId ";
         return $this->fetchOne($sql, ['chapterId' => $id]);
     }
 
     public function getActiveVideoById($id)
     {
-        $sql = "SELECT a FROM Core:TeachCourseVideos a WHERE a.chapterId=:chapterId AND a.status=:status ";
+        $sql = "SELECT a FROM Edux:TeachCourseVideos a WHERE a.chapterId=:chapterId AND a.status=:status ";
         return $this->fetchOne($sql, ['chapterId' => $id, "status" => 1]);
     }
 
     public function getMaterialsById($id)
     {
-        $sql = "SELECT a FROM Core:TeachCourseMaterials a WHERE a.chapterId=:chapterId";
+        $sql = "SELECT a FROM Edux:TeachCourseMaterials a WHERE a.chapterId=:chapterId";
         return $this->fetchOne($sql, ['chapterId' => $id]);
     }
 
@@ -250,7 +250,7 @@ class LearnService extends AppBaseService
      */
     public function updateVideoStatus($videoChannel, $videoId, $status = 1)
     {
-        $sql = "SELECT a FROM Core:TeachCourseVideos a WHERE a.videoId=:videoId AND a.videoChannel=:videoChannel";
+        $sql = "SELECT a FROM Edux:TeachCourseVideos a WHERE a.videoId=:videoId AND a.videoChannel=:videoChannel";
         $model = $this->fetchOne($sql, ['videoId' => $videoId, "videoChannel" => $videoChannel], 1);
         if ($model) {
             $model->setStatus($status);
@@ -260,7 +260,7 @@ class LearnService extends AppBaseService
 
     public function getVideoByVideoId($videoId)
     {
-        $sql = "SELECT a FROM Core:TeachCourseVideos a WHERE a.videoId=:videoId";
+        $sql = "SELECT a FROM Edux:TeachCourseVideos a WHERE a.videoId=:videoId";
         return $this->fetchOne($sql, ['videoId' => $videoId]);
     }
 

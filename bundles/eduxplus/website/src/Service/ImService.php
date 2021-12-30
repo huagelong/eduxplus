@@ -92,7 +92,7 @@ class ImService extends AppBaseService
      * @return void
      */
     public function initGroup($chapterId, $number=6000){
-        $sql = "SELECT a FROM Core:TeachCourseChapter a WHERE a.id=:id";
+        $sql = "SELECT a FROM Edux:TeachCourseChapter a WHERE a.id=:id";
         $chapterInfo = $this->fetchOne($sql, ["id"=>$chapterId], 1);
         if(!$chapterInfo) return $this->error()->add("群组不存在!");
         $groupId = $chapterInfo->getImGroupId();
@@ -153,7 +153,7 @@ class ImService extends AppBaseService
      * @return void
      */
     public function saveChatLog($groupId, $ip, $platform, $msgTime, $jsonContent){
-        $sql = "SELECT a FROM Core:TeachCourseChapter a WHERE a.imGroupId=:imGroupId";
+        $sql = "SELECT a FROM Edux:TeachCourseChapter a WHERE a.imGroupId=:imGroupId";
         $chapterInfo = $this->fetchOne($sql, ["imGroupId"=>$groupId]);
         if(!$chapterInfo) return ;
         $chapterId = $chapterInfo['id'];

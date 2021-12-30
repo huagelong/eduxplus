@@ -15,7 +15,7 @@ class TeacherService extends AppBaseService
 {
 
     public function getTeachers($teacherIds){
-        $sql = "SELECT a FROM Core:JwTeacher a WHERE a.id IN (:id)";
+        $sql = "SELECT a FROM Edux:JwTeacher a WHERE a.id IN (:id)";
         $result = $this->fetchAll($sql, ["id"=>$teacherIds]);
         return $result;
     }

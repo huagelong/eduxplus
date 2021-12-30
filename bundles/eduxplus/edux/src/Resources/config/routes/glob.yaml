@@ -1,0 +1,10 @@
+
+admin_api_glob_searchProductDo:
+  path: /admin/glob/searchProduct/do
+  controller: Eduxplus\EduxBundle\Controller\GlobController::searchProductDoAction
+admin_api_glob_searchGoodsDo:
+  path: /admin/glob/searchGoods/do
+  controller: Eduxplus\EduxBundle\Controller\GlobController::searchGoodsDoAction
+admin_api_glob_searchCourseDo:
+  path: /admin/glob/searchCourse/do
+  controller: Eduxplus\EduxBundle\Controller\GlobController::searchCourseDoAction

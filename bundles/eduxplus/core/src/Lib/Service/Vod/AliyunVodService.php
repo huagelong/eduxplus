@@ -94,7 +94,8 @@ class AliyunVodService extends BaseService
         if($dataKey){
             list($cipherText, $plaintext) = $dataKey;
             //更新keyData
-            $sql = "SELECT a FROM Core:TeachCourseVideos a WHERE a.videoId=:videoId";
+            //todo
+            $sql = "SELECT a FROM Edux:TeachCourseVideos a WHERE a.videoId=:videoId";
             $model = $this->fetchOne($sql, ["videoId"=>$videoId], 1);
             $vodData = $model->getVodData();
             $vodData = $vodData?json_decode($vodData, true):[];

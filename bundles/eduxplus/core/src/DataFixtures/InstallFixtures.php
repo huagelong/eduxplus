@@ -19,7 +19,6 @@ use Eduxplus\CoreBundle\DataFixtures\Fixtures\OptionsFixtures;
 
 class InstallFixtures extends Fixture
 {
-    public const ROLE_ID="role_id";
 
     protected $passwordEncoder;
     /**
@@ -79,6 +78,7 @@ class InstallFixtures extends Fixture
  
          //添加默认权限
          $roleModel = new BaseRole();
+         $roleModel->setId(1);
          $roleModel->setName("超级管理员");
          $roleModel->setDescr("超级管理员有所有权限");
          $roleModel->setIsLock(1);

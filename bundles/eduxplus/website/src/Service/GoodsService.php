@@ -34,7 +34,7 @@ class GoodsService extends AppBaseService
     public function getRecentlyLiveCourse($limit=2){
         $end = time()+3600*24*2;
         $start = time()-10;
-        $sql = "SELECT a FROM Core:TeachCourseChapter a WHERE a.openTime < ".$end." AND a.openTime > ".$start." AND a.studyWay=1 ORDER BY a.openTime DESC";
+        $sql = "SELECT a FROM Edux:TeachCourseChapter a WHERE a.openTime < ".$end." AND a.openTime > ".$start." AND a.studyWay=1 ORDER BY a.openTime DESC";
         $result = $this->fetchAll($sql, [], 0, 200);
         if(!$result) return $result;
         $goods=[];
@@ -44,27 +44,27 @@ class GoodsService extends AppBaseService
             $chapterId = $v['id'];
             $courseId = $v['courseId'];
             $openTime = $v['openTime'];
-            $sqlCourse = "SELECT a FROM Core:TeachCourse a WHERE a.id=".$courseId." AND a.status=1";
+            $sqlCourse = "SELECT a FROM Edux:TeachCourse a WHERE a.id=".$courseId." AND a.status=1";
             $courseResult = $this->fetchOne($sqlCourse);
             if(!$courseResult) continue;
             $planSql = "
-                SELECT a FROM Core:TeachStudyPlanSub a WHERE a.courseId = ".$courseId."
+                SELECT a FROM Edux:TeachStudyPlanSub a WHERE a.courseId = ".$courseId."
             ";
             $planResult = $this->fetchOne($planSql);
             if(!$planResult) continue;
 
             $studyPlanId = $planResult["studyPlanId"];
             $planSql = "
-                SELECT a FROM Core:TeachStudyPlan a WHERE a.id = ".$studyPlanId." AND a.status=1
+                SELECT a FROM Edux:TeachStudyPlan a WHERE a.id = ".$studyPlanId." AND a.status=1
             ";
             $planResult = $this->fetchOne($planSql);
             if(!$planResult) continue;
 
             $productId = $planResult['productId'];
-            $sqlProduct = "SELECT a FROM Core:TeachProducts a WHERE a.id=".$productId." AND a.status=1";
+            $sqlProduct = "SELECT a FROM Edux:TeachProducts a WHERE a.id=".$productId." AND a.status=1";
             $productResult = $this->fetchOne($sqlProduct);
             if(!$productResult) continue;
-            $goodsSql = "SELECT a FROM Core:MallGoods a WHERE a.productId=".$productId." AND a.status=1 AND  a.goodType=1 ";
+            $goodsSql = "SELECT a FROM Edux:MallGoods a WHERE a.productId=".$productId." AND a.status=1 AND  a.goodType=1 ";
             $goodsResult = $this->fetchOne($goodsSql);
             if(!$goodsResult) continue;
             $i++;
@@ -83,7 +83,7 @@ class GoodsService extends AppBaseService
      * @return mixed
      */
     public function getGoodsByTopValue($limit=8){
-        $sql = "SELECT a FROM Core:MallGoods a WHERE a.topValue>0 AND a.status=1 AND  a.goodType=1  ORDER BY a.topValue DESC";
+        $sql = "SELECT a FROM Edux:MallGoods a WHERE a.topValue>0 AND a.status=1 AND  a.goodType=1  ORDER BY a.topValue DESC";
         $result = $this->fetchAll($sql, [], 0, $limit);
         if(!$result) return $result;
         foreach ($result as &$v) {
@@ -99,7 +99,7 @@ class GoodsService extends AppBaseService
      * @return mixed
      */
     public function getGoodsByRecommendValue($limit=4){
-        $sql = "SELECT a FROM Core:MallGoods a WHERE a.recommendValue>0 AND a.status=1 AND  a.goodType=1 ORDER BY a.recommendValue DESC";
+        $sql = "SELECT a FROM Edux:MallGoods a WHERE a.recommendValue>0 AND a.status=1 AND  a.goodType=1 ORDER BY a.recommendValue DESC";
         $result = $this->fetchAll($sql, [], 0, $limit);
         if(!$result) return $result;
         foreach ($result as &$v) {
@@ -119,7 +119,7 @@ class GoodsService extends AppBaseService
         }
 
         if ($level == 2) {
-            $sql = "SELECT a FROM Core:MallGoods a WHERE a.categoryId=:categoryId ".$shopPriceStr." AND a.status=1  AND  a.goodType=1  ORDER BY a.sort DESC";
+            $sql = "SELECT a FROM Edux:MallGoods a WHERE a.categoryId=:categoryId ".$shopPriceStr." AND a.status=1  AND  a.goodType=1  ORDER BY a.sort DESC";
             $categoryIds = $categoryId;
         } else {
             $subCates = $this->categoryService->getSubsCategory($categoryId);
@@ -129,7 +129,7 @@ class GoodsService extends AppBaseService
             } else {
                 $categoryIds = [$categoryId];
             }
-            $sql = "SELECT a FROM Core:MallGoods a WHERE a.categoryId IN (:categoryId)  ".$shopPriceStr." AND a.status=1 AND  a.goodType=1  ORDER BY a.sort DESC";
+            $sql = "SELECT a FROM Edux:MallGoods a WHERE a.categoryId IN (:categoryId)  ".$shopPriceStr." AND a.status=1 AND  a.goodType=1  ORDER BY a.sort DESC";
         }
 
         $em = $this->getDoctrine()->getManager();
@@ -162,7 +162,7 @@ class GoodsService extends AppBaseService
      */
     public function getStudyPlan($id)
     {
-        $sql = "SELECT a FROM Core:MallGoods a WHERE a.id=:id";
+        $sql = "SELECT a FROM Edux:MallGoods a WHERE a.id=:id";
         $info = $this->fetchOne($sql, ['id' => $id]);
         if (!$info) return [];
         $info['studyPlans'] = [];
@@ -170,25 +170,25 @@ class GoodsService extends AppBaseService
         //非组合商品
         if ($info["productId"]) {
             //判断产品是否存在
-            $sql = "SELECT a.id FROM Core:TeachProducts a WHERE a.id=:id AND a.status=1";
+            $sql = "SELECT a.id FROM Edux:TeachProducts a WHERE a.id=:id AND a.status=1";
             $productInfo = $this->fetchOne($sql, ['id' => $info["productId"]]);
             if (!$productInfo) return $info;
             //            var_dump($productInfo);exit;
             //获取默认的开课计划
-            $sql = "SELECT a FROM Core:TeachStudyPlan a WHERE a.productId=:productId AND a.isDefault=1 AND a.status=1";
+            $sql = "SELECT a FROM Edux:TeachStudyPlan a WHERE a.productId=:productId AND a.isDefault=1 AND a.status=1";
             $studyPlan = $this->fetchOne($sql, ["productId" => $info["productId"]]);
             //            var_dump($studyPlan);exit;
             if (!$studyPlan) {  //如果没有默认的开课计划,按照最新创建时间处理
-                $sql = "SELECT a FROM Core:TeachStudyPlan a WHERE a.productId=:productId AND a.status=1 ORDER BY a.createdAt DESC";
+                $sql = "SELECT a FROM Edux:TeachStudyPlan a WHERE a.productId=:productId AND a.status=1 ORDER BY a.createdAt DESC";
                 $studyPlan = $this->fetchOne($sql, ["productId" => $info["productId"]]);
             }
             if (!$studyPlan) return $info;
             $studyPlanId = $studyPlan["id"];
-            $sql = "SELECT a FROM Core:TeachStudyPlanSub a WHERE a.studyPlanId=:studyPlanId ORDER BY a.sort ASC";
+            $sql = "SELECT a FROM Edux:TeachStudyPlanSub a WHERE a.studyPlanId=:studyPlanId ORDER BY a.sort ASC";
             $studyPlans = $this->fetchAll($sql, ["studyPlanId" => $studyPlanId]);
             if (!$studyPlans) return $info;
             foreach ($studyPlans as &$sv) {
-                $sql = "SELECT a FROM Core:TeachCourse a WHERE a.id=:id AND a.status=1";
+                $sql = "SELECT a FROM Edux:TeachCourse a WHERE a.id=:id AND a.status=1";
                 $courseInfo = $this->fetchOne($sql, ["id" => $sv["courseId"]]);
                 if (!$courseInfo) continue;
                 //获取章节等
@@ -212,7 +212,7 @@ class GoodsService extends AppBaseService
 
     public function getChapter($courseId, $parentId)
     {
-        $sql = "SELECT a FROM Core:TeachCourseChapter a WHERE a.courseId=:courseId AND a.parentId=:parentId ORDER BY a.sort ASC";
+        $sql = "SELECT a FROM Edux:TeachCourseChapter a WHERE a.courseId=:courseId AND a.parentId=:parentId ORDER BY a.sort ASC";
         $list = $this->fetchAll($sql, ["courseId" => $courseId, "parentId" => $parentId]);
         if (!$list) [];
         $rs = [];
@@ -231,25 +231,25 @@ class GoodsService extends AppBaseService
 
     public function getTeacherIds($chapterId)
     {
-        $sql = "SELECT a FROM Core:TeachCourseTeachers a WHERE a.chapterId=:chapterId";
+        $sql = "SELECT a FROM Edux:TeachCourseTeachers a WHERE a.chapterId=:chapterId";
         return $this->fetchFields('teacherId', $sql, ['chapterId' => $chapterId]);
     }
 
     public function getVideoById($id)
     {
-        $sql = "SELECT a FROM Core:TeachCourseVideos a WHERE a.chapterId=:chapterId";
+        $sql = "SELECT a FROM Edux:TeachCourseVideos a WHERE a.chapterId=:chapterId";
         return $this->fetchOne($sql, ['chapterId' => $id]);
     }
 
     public function getMaterialsById($id)
     {
-        $sql = "SELECT a FROM Core:TeachCourseMaterials a WHERE a.chapterId=:chapterId";
+        $sql = "SELECT a FROM Edux:TeachCourseMaterials a WHERE a.chapterId=:chapterId";
         return $this->fetchOne($sql, ['chapterId' => $id]);
     }
 
 
     public function getByIds($ids){
-        $sql = "SELECT a FROM Core:MallGoods a WHERE a.id IN (:id) ";
+        $sql = "SELECT a FROM Edux:MallGoods a WHERE a.id IN (:id) ";
         $infos = $this->fetchAll($sql, ['id' => $ids]);
 
         if($infos){
@@ -264,7 +264,7 @@ class GoodsService extends AppBaseService
     }
 
     public function getSimpleByUuid($uuid){
-        $sql = "SELECT a FROM Core:MallGoods a WHERE a.uuid=:uuid ";
+        $sql = "SELECT a FROM Edux:MallGoods a WHERE a.uuid=:uuid ";
         $info = $this->fetchOne($sql, ['uuid' => $uuid]);
         if($info){
             $info['name'] = $info['aliasName']?$info['aliasName']:$info['name'];
@@ -273,7 +273,7 @@ class GoodsService extends AppBaseService
     }
 
     public function getSimpleById($id){
-        $sql = "SELECT a FROM Core:MallGoods a WHERE a.id=:id";
+        $sql = "SELECT a FROM Edux:MallGoods a WHERE a.id=:id";
         $info = $this->fetchOne($sql, ['id' => $id]);
         if($info){
             $info['name'] = $info['aliasName']?$info['aliasName']:$info['name'];
@@ -283,7 +283,7 @@ class GoodsService extends AppBaseService
 
     public function getByUuId($uuid)
     {
-        $sql = "SELECT a FROM Core:MallGoods a WHERE a.uuid=:uuid ";
+        $sql = "SELECT a FROM Edux:MallGoods a WHERE a.uuid=:uuid ";
         $info = $this->fetchOne($sql, ['uuid' => $uuid]);
         if (!$info) return [];
         $id = $info["id"];
@@ -295,7 +295,7 @@ class GoodsService extends AppBaseService
         $info['marketPriceView'] = number_format($info['marketPrice'], 2);
         $info['shopPriceView'] = number_format($info['shopPrice'], 2);
 
-        $sql2 = "SELECT a FROM Core:MallGoodsIntroduce a WHERE a.goodsId=:goodsId AND a.introduceType=1";
+        $sql2 = "SELECT a FROM Edux:MallGoodsIntroduce a WHERE a.goodsId=:goodsId AND a.introduceType=1";
         $introduce = $this->fetchOne($sql2, ['goodsId' => $id]);
         $info["introduce"] = $introduce;
         $info['childGoods'] = $this->getGoodsGroup($id);
@@ -311,13 +311,13 @@ class GoodsService extends AppBaseService
 
     public function getTeachersByIds($ids)
     {
-        $sql = "SELECT a FROM Core:JwTeacher a WHERE a.id IN (:id)";
+        $sql = "SELECT a FROM Edux:JwTeacher a WHERE a.id IN (:id)";
         return $this->fetchAll($sql, ['id' => $ids]);
     }
 
     public function getById($id)
     {
-        $sql = "SELECT a FROM Core:MallGoods a WHERE a.id=:id";
+        $sql = "SELECT a FROM Edux:MallGoods a WHERE a.id=:id";
         $info = $this->fetchOne($sql, ['id' => $id]);
         if (!$info) return [];
         $info['courseHour'] = $info['courseHour'] / 10;
@@ -326,7 +326,7 @@ class GoodsService extends AppBaseService
         $info['marketPriceView'] = number_format($info['marketPrice'], 2);
         $info['shopPriceView'] = number_format($info['shopPrice'], 2);
 
-        $sql2 = "SELECT a FROM Core:MallGoodsIntroduce a WHERE a.goodsId=:goodsId AND a.introduceType=1";
+        $sql2 = "SELECT a FROM Edux:MallGoodsIntroduce a WHERE a.goodsId=:goodsId AND a.introduceType=1";
         $introduce = $this->fetchOne($sql2, ['goodsId' => $id]);
         $info["introduce"] = $introduce;
         $info['childGoods'] = $this->getGoodsGroup($id);
@@ -341,7 +341,7 @@ class GoodsService extends AppBaseService
      * @return array
      */
     public function getGoodsGroupIds($id, &$goodIds){
-        $sql3 = "SELECT a FROM Core:MallGoodsGroup a WHERE a.goodsId=:goodsId";
+        $sql3 = "SELECT a FROM Edux:MallGoodsGroup a WHERE a.goodsId=:goodsId";
         $params = [];
         $params['goodsId'] = $id;
         $allGoodIds = $this->fetchFields("groupGoodsId", $sql3, $params);
@@ -363,14 +363,14 @@ class GoodsService extends AppBaseService
      */
     public function getGoodsGroup($id)
     {
-        $sql3 = "SELECT a FROM Core:MallGoodsGroup a WHERE a.goodsId=:goodsId";
+        $sql3 = "SELECT a FROM Edux:MallGoodsGroup a WHERE a.goodsId=:goodsId";
         $params = [];
         $params['goodsId'] = $id;
         $allGoodIds = $this->fetchFields("groupGoodsId", $sql3, $params);
         if (!$allGoodIds) {
             return [];
         } else {
-            $sql4 = "SELECT a FROM Core:MallGoods a where a.id IN(:id) ";
+            $sql4 = "SELECT a FROM Edux:MallGoods a where a.id IN(:id) ";
             $params = [];
             $params['id'] = $allGoodIds;
             $goodsInfo =  $this->fetchAll($sql4, $params);
@@ -391,7 +391,7 @@ class GoodsService extends AppBaseService
      * @param $uid
      */
     public function getFav($goodsId, $uid){
-        $sql = "SELECT a FROM Core:MallGoodsFav a WHERE a.uid=:uid AND a.goodsId =:goodsId ";
+        $sql = "SELECT a FROM Edux:MallGoodsFav a WHERE a.uid=:uid AND a.goodsId =:goodsId ";
         return $this->fetchOne($sql, ["uid"=>$uid, "goodsId"=>$goodsId]);
     }
 
@@ -404,7 +404,7 @@ class GoodsService extends AppBaseService
      * @return bool
      */
     public function delFav($goodsId, $uid){
-        $sql = "SELECT a FROM Core:MallGoodsFav a WHERE a.uid=:uid AND a.goodsId =:goodsId ";
+        $sql = "SELECT a FROM Edux:MallGoodsFav a WHERE a.uid=:uid AND a.goodsId =:goodsId ";
         $model =  $this->fetchOne($sql, ["uid"=>$uid, "goodsId"=>$goodsId], 1);
         return $this->hardDelete($model);
     }
@@ -429,7 +429,7 @@ class GoodsService extends AppBaseService
      * @return array
      */
     public function favList($uid, $page, $pageSize){
-        $dql = "SELECT a FROM Core:MallGoodsFav a WHERE a.uid =:uid";
+        $dql = "SELECT a FROM Edux:MallGoodsFav a WHERE a.uid =:uid";
         $em = $this->getDoctrine()->getManager();
         $query = $em->createQuery($dql);
         $query= $query->setParameters(["uid"=>$uid]);
@@ -444,7 +444,7 @@ class GoodsService extends AppBaseService
         if($items) {
             foreach ($items as $v) {
                 $vArr = $this->toArray($v);
-                $sql = "SELECT a FROM Core:MallGoods a WHERE a.id =:id ";
+                $sql = "SELECT a FROM Edux:MallGoods a WHERE a.id =:id ";
                 $goodsInfo = $this->fetchOne($sql, ["id"=>$vArr['goodsId']]);
                 $goodsInfo['shopPriceView'] = number_format($goodsInfo['shopPrice'] / 100, 2);
                 $goodsInfo['name'] = $goodsInfo['aliasName']?$goodsInfo['aliasName']:$goodsInfo['name'];

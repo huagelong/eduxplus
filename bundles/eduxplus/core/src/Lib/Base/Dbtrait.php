@@ -264,8 +264,8 @@ trait Dbtrait
 
     /**
      * 原生sql，第一行，单个字段值
-     * @param $sql  eg "SELECT * FROM Core:MallMsg WHERE uid =?";
-     * @param array $params eg ["Core:MallMsg"]
+     * @param $sql  eg "SELECT * FROM Edux:MallMsg WHERE uid =?";
+     * @param array $params eg ["Edux:MallMsg"]
      * @param array $types
      * @param null $name
      * @return mixed

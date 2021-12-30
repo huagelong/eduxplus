@@ -1,0 +1,3 @@
+admin_mall_order_index:
+  path: /admin/mall/order/index
+  controller: Eduxplus\EduxBundle\Controller\Mall\OrderController::indexAction

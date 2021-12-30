@@ -1,0 +1,27 @@
+admin_teach_studyplan_index:
+  path: /admin/teach/studyplan/index/{id}
+  controller: Eduxplus\EduxBundle\Controller\Teach\StudyPlanController::indexAction
+admin_teach_studyplan_add:
+  path: /admin/teach/studyplan/add/{id}
+  controller: Eduxplus\EduxBundle\Controller\Teach\StudyPlanController::addAction
+admin_api_teach_studyplan_add:
+  path: /admin/teach/studyplan/add/do/{id}
+  controller: Eduxplus\EduxBundle\Controller\Teach\StudyPlanController::addDoAction
+admin_teach_studyplan_edit:
+  path: /admin/teach/studyplan/edit/{id}
+  controller: Eduxplus\EduxBundle\Controller\Teach\StudyPlanController::editAction
+admin_api_teach_studyplan_edit:
+  path: /admin/teach/studyplan/edit/do/{id}
+  controller: Eduxplus\EduxBundle\Controller\Teach\StudyPlanController::editDoAction
+admin_api_teach_studyplan_delete:
+  path: /admin/teach/studyplan/delete/do/{id}
+  controller: Eduxplus\EduxBundle\Controller\Teach\StudyPlanController::deleteDoAction
+admin_api_teach_studyplansub_delete:
+  path: /admin/teach/studyplansub/delete/do/{id}
+  controller: Eduxplus\EduxBundle\Controller\Teach\StudyPlanController::deleteSubDoAction
+admin_api_teach_studyplan_updateSort:
+  path: /admin/teach/studyplan/updateSort/do/{id}
+  controller: Eduxplus\EduxBundle\Controller\Teach\StudyPlanController::updateSortDoAction
+admin_api_teach_studyplan_switchStatus:
+  path: /admin/teach/studyplan/switchStatus/do/{id}
+  controller: Eduxplus\EduxBundle\Controller\Teach\StudyPlanController::switchStatusAction

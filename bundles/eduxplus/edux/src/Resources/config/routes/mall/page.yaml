@@ -1,0 +1,27 @@
+admin_mall_page_index:
+  path: /admin/mall/page/index
+  controller: Eduxplus\EduxBundle\Controller\Mall\PageController::indexAction
+admin_mall_page_add:
+  path: /admin/mall/page/add
+  controller: Eduxplus\EduxBundle\Controller\Mall\PageController::addAction
+admin_api_mall_page_add:
+  path: /admin/mall/page/add/do
+  controller: Eduxplus\EduxBundle\Controller\Mall\PageController::addDoAction
+admin_mall_page_view:
+  path: /admin/mall/page/view/{id}
+  controller: Eduxplus\EduxBundle\Controller\Mall\PageController::viewAction
+admin_mall_page_edit:
+  path: /admin/mall/page/edit/{id}
+  controller: Eduxplus\EduxBundle\Controller\Mall\PageController::editAction
+admin_api_mall_page_edit:
+  path: /admin/mall/page/edit/do/{id}
+  controller: Eduxplus\EduxBundle\Controller\Mall\PageController::editDoAction
+admin_api_mall_page_delete:
+  path: /admin/mall/page/delete/do/{id}
+  controller: Eduxplus\EduxBundle\Controller\Mall\PageController::deleteDoAction
+admin_api_mall_page_bathdelete:
+  path: /admin/mall/page/bathdelete/do
+  controller: Eduxplus\EduxBundle\Controller\Mall\PageController::bathDeleteDoAction
+admin_api_mall_page_switchStatus:
+  path: /admin/mall/page/switchStatus/do/{id}
+  controller: Eduxplus\EduxBundle\Controller\Mall\PageController::switchStatusAction

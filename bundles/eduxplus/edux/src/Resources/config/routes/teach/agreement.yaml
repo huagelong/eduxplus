@@ -1,0 +1,24 @@
+admin_teach_agreement_index:
+  path: /admin/teach/agreement/index
+  controller: Eduxplus\EduxBundle\Controller\Teach\AgreementController::indexAction
+admin_teach_agreement_view:
+  path: /admin/teach/agreement/view/{id}
+  controller: Eduxplus\EduxBundle\Controller\Teach\AgreementController::viewAction
+admin_teach_agreement_add:
+  path: /admin/teach/agreement/add
+  controller: Eduxplus\EduxBundle\Controller\Teach\AgreementController::addAction
+admin_api_teach_agreement_add:
+  path: /admin/teach/agreement/add/do
+  controller: Eduxplus\EduxBundle\Controller\Teach\AgreementController::addDoAction
+admin_teach_agreement_edit:
+  path: /admin/teach/agreement/edit/{id}
+  controller: Eduxplus\EduxBundle\Controller\Teach\AgreementController::editAction
+admin_api_teach_agreement_edit:
+  path: /admin/teach/agreement/edit/do/{id}
+  controller: Eduxplus\EduxBundle\Controller\Teach\AgreementController::editDoAction
+admin_api_teach_agreement_delete:
+  path: /admin/teach/agreement/delete/do/{id}
+  controller: Eduxplus\EduxBundle\Controller\Teach\AgreementController::deleteAction
+admin_api_teach_agreement_bathdelete:
+  path: /admin/teach/agreement/bathdelete/do
+  controller: Eduxplus\EduxBundle\Controller\Teach\AgreementController::bathDeleteAction

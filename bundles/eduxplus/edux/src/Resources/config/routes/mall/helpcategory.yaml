@@ -1,0 +1,18 @@
+admin_mall_help_category_index:
+  path: /admin/mall/help/category/index
+  controller: Eduxplus\EduxBundle\Controller\Mall\HelpCategoryController::indexAction
+admin_api_mall_help_category_add:
+  path: /admin/mall/help/category/add/do
+  controller: Eduxplus\EduxBundle\Controller\Mall\HelpCategoryController::addDoAction
+admin_mall_help_category_edit:
+  path: /admin/mall/help/category/edit/{id}
+  controller: Eduxplus\EduxBundle\Controller\Mall\HelpCategoryController::editAction
+admin_api_mall_help_category_edit:
+  path: /admin/mall/help/category/edit/do/{id}
+  controller: Eduxplus\EduxBundle\Controller\Mall\HelpCategoryController::editDoAction
+admin_api_mall_help_category_delete:
+  path: /admin/mall/help/category/delete/do/{id}
+  controller: Eduxplus\EduxBundle\Controller\Mall\HelpCategoryController::deleteDoAction
+admin_api_mall_help_category_updateSort:
+  path: /admin/mall/help/category/updateSort/do
+  controller: Eduxplus\EduxBundle\Controller\Mall\HelpCategoryController::updateSortAction

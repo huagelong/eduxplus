@@ -1,0 +1,39 @@
+admin_teach_chapter_index:
+  path: /admin/teach/chapter/index/{id}
+  controller: Eduxplus\EduxBundle\Controller\Teach\ChapterController::indexAction
+admin_teach_chapter_add:
+  path: /admin/teach/chapter/add/{id}
+  controller: Eduxplus\EduxBundle\Controller\Teach\ChapterController::addAction
+admin_api_teach_chapter_add:
+  path: /admin/teach/chapter/add/do/{id}
+  controller: Eduxplus\EduxBundle\Controller\Teach\ChapterController::addDoAction
+admin_teach_chapter_edit:
+  path: /admin/teach/chapter/edit/{id}
+  controller: Eduxplus\EduxBundle\Controller\Teach\ChapterController::editAction
+admin_api_teach_chapter_edit:
+  path: /admin/teach/chapter/edit/do/{id}
+  controller: Eduxplus\EduxBundle\Controller\Teach\ChapterController::editDoAction
+admin_api_teach_chapter_delete:
+  path: /admin/teach/chapter/delete/do/{id}
+  controller: Eduxplus\EduxBundle\Controller\Teach\ChapterController::deleteDoAction
+admin_api_teach_chapter_updateSort:
+  path: /admin/teach/chapter/updateSort/do/{id}
+  controller: Eduxplus\EduxBundle\Controller\Teach\ChapterController::updateSortDoAction
+admin_teach_chapter_live:
+  path: /admin/teach/chapter/live/{id}
+  controller: Eduxplus\EduxBundle\Controller\Teach\ChapterController::liveAction
+admin_api_teach_chapter_live:
+  path: /admin/teach/chapter/live/do/{id}
+  controller: Eduxplus\EduxBundle\Controller\Teach\ChapterController::liveDoAction
+admin_teach_chapter_vod:
+  path: /admin/teach/chapter/vod/{id}
+  controller: Eduxplus\EduxBundle\Controller\Teach\ChapterController::vodAction
+admin_api_teach_chapter_vod:
+  path: /admin/teach/chapter/video/do/{id}
+  controller: Eduxplus\EduxBundle\Controller\Teach\ChapterController::vodDoAction
+admin_teach_chapter_materials:
+  path: /admin/teach/chapter/materials/{id}
+  controller: Eduxplus\EduxBundle\Controller\Teach\ChapterController::materialsAction
+admin_api_teach_chapter_materials:
+  path: /admin/teach/chapter/materials/do/{id}
+  controller: Eduxplus\EduxBundle\Controller\Teach\ChapterController::materialsDoAction

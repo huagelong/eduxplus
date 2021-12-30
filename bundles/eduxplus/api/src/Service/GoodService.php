@@ -17,7 +17,7 @@ class GoodService extends ApiBaseService
     public function getHomeData()
     {
         //获取类目
-        $sql = "SELECT a FROM Core:TeachCategory a WHERE a.parentId = 0 AND a.isShow=1 ORDER BY a.sort ASC";
+        $sql = "SELECT a FROM Edux:TeachCategory a WHERE a.parentId = 0 AND a.isShow=1 ORDER BY a.sort ASC";
         $cateArr = $this->fetchAll($sql);
         $cateList = [];
         if ($cateArr) {
@@ -73,7 +73,7 @@ class GoodService extends ApiBaseService
      */
     public function getChildCate($cateId)
     {
-        $sql = "SELECT a FROM Core:TeachCategory a WHERE a.parentId=:parentId AND a.isShow=1 ORDER BY a.sort ASC";
+        $sql = "SELECT a FROM Edux:TeachCategory a WHERE a.parentId=:parentId AND a.isShow=1 ORDER BY a.sort ASC";
         $list = $this->fetchAll($sql, ["parentId" => $cateId]);
         return $list;
     }
@@ -87,7 +87,7 @@ class GoodService extends ApiBaseService
     public function getCateGoods($cateId)
     {
         $cateId = (int) $cateId;
-        $sql = "SELECT a FROM Core:TeachCategory a WHERE a.findPath LIKE :findPath AND a.isShow=1 ORDER BY a.sort ASC";
+        $sql = "SELECT a FROM Edux:TeachCategory a WHERE a.findPath LIKE :findPath AND a.isShow=1 ORDER BY a.sort ASC";
         $subCates = $this->fetchAll($sql, ["findPath" => "%," . $cateId . ",%"]);
         $categoryIds = $subCates ? array_column($subCates, "id") : [];
         if ($categoryIds) {
@@ -128,7 +128,7 @@ class GoodService extends ApiBaseService
 
     public function getSubCate($cateId)
     {
-        $sql = "SELECT a FROM Core:TeachCategory a WHERE a.parentId = :parentId AND a.isShow=1 ORDER BY a.sort ASC";
+        $sql = "SELECT a FROM Edux:TeachCategory a WHERE a.parentId = :parentId AND a.isShow=1 ORDER BY a.sort ASC";
         $subCates = $this->fetchAll($sql, ["parentId" => $cateId]);
         if (!$subCates) return [];
         $list = [];
@@ -168,7 +168,7 @@ class GoodService extends ApiBaseService
         if ($items) {
             foreach ($items as $vArr) {
                 $courseId = $vArr['courseId'];
-                $sql = "SELECT a FROM Core:TeachCourse a WHERE a.id=:id";
+                $sql = "SELECT a FROM Edux:TeachCourse a WHERE a.id=:id";
                 $tmp = $this->fetchOne($sql, ['id' => $courseId]);
                 $tmp['courseHour'] = $tmp['courseHour']/100;
                 $tmp['bigImg'] = $this->jsonGet($tmp['bigImg']);

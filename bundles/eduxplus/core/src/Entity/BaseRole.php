@@ -71,6 +71,14 @@ class BaseRole
         return $this->id;
     }
 
+
+    public function setId(?int $int): self
+    {
+        $this->int = $int;
+
+        return $this;
+    }
+
     public function getName(): ?string
     {
         return $this->name;
