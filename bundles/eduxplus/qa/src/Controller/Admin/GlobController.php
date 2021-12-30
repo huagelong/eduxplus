@@ -9,7 +9,7 @@
 namespace Eduxplus\QaBundle\Controller\Admin;
 
 
-use Eduxplus\CoreBundle\Service\Mall\GoodsService;
+use Eduxplus\EduxBundle\Service\Mall\GoodsService;
 use Eduxplus\CoreBundle\Lib\Base\BaseAdminController;
 use Eduxplus\QaBundle\Service\Admin\QATestService;
 use Symfony\Component\HttpFoundation\Request;

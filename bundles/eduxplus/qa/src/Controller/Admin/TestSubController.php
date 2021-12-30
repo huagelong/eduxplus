@@ -11,7 +11,7 @@ namespace Eduxplus\QaBundle\Controller\Admin;
 
 use Eduxplus\CoreBundle\Lib\Form\Form;
 use Eduxplus\CoreBundle\Lib\Grid\Grid;
-use Eduxplus\CoreBundle\Service\Teach\CategoryService;
+use Eduxplus\EduxBundle\Service\Teach\CategoryService;
 use Eduxplus\CoreBundle\Lib\Base\BaseAdminController;
 use Eduxplus\QaBundle\Service\Admin\QAChapterService;
 use Eduxplus\QaBundle\Service\Admin\QAChapterSubService;

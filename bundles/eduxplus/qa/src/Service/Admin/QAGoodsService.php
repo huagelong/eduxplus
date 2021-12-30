@@ -9,7 +9,7 @@
 namespace Eduxplus\QaBundle\Service\Admin;
 
 
-use Eduxplus\CoreBundle\Service\Mall\GoodsService;
+use Eduxplus\EduxBundle\Service\Mall\GoodsService;
 
 class QAGoodsService extends GoodsService
 {
