@@ -1,9 +1,6 @@
 admin_index:
   path: /admin/
   controller: Eduxplus\CoreBundle\Controller\IndexController::indexAction
-admin_dashboard:
-  path: /admin/dashboard
-  controller: Eduxplus\CoreBundle\Controller\IndexController::dashboardAction
 admin_mymenu:
   path: /admin/mymenu
   controller: Eduxplus\CoreBundle\Controller\IndexController::mymenuAction

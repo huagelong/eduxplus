@@ -9,7 +9,6 @@
 namespace Eduxplus\CoreBundle\Controller;
 
 
-use Eduxplus\CoreBundle\Service\DashboardService;
 use Eduxplus\CoreBundle\Service\MenuService;
 use Eduxplus\CoreBundle\Lib\Base\BaseAdminController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -31,22 +30,6 @@ class IndexController extends BaseAdminController
      */
     public function indexAction(){
         return $this->render('@CoreBundle/index/index.html.twig');
-    }
-
-    /**
-     * @Route("/dashboard", name="admin_dashboard")
-     */
-    public function dashboardAction(DashboardService $dashboardService){
-        list($todayIncome, $todayRegUserCount, $todayOrderCount, $totalRegUserCount) = $dashboardService->dashboardStat();
-
-        $data = [];
-        $data["todayIncome"] = number_format($todayIncome, 2);
-        $data["todayRegUserCount"] = $todayRegUserCount;
-        $data["todayOrderCount"] = $todayOrderCount;
-        $data["totalRegUserCount"] = $totalRegUserCount;
-        $data['lastOrder'] = $dashboardService->lastOrder();
-
-        return $this->render('@CoreBundle/index/dashboard.html.twig', $data);
     }
 
 

@@ -3,21 +3,21 @@
 #   type: annotation
 #   prefix: /
 
-detail:
+website_detail:
   resource: "./routes/detail.yaml"
-glob:
+website_glob:
   resource: "./routes/glob.yaml"
-help:
+website_help:
   resource: "./routes/help.yaml"
-index:
+website_index:
   resource: "./routes/index.yaml"
-learn:
+website_learn:
   resource: "./routes/learn.yaml"
-news:
+website_news:
   resource: "./routes/news.yaml"
-order:
+website_order:
   resource: "./routes/order.yaml"
-search:
+website_search:
   resource: "./routes/search.yaml"
-user:
+website_user:
   resource: "./routes/user.yaml"

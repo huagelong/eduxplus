@@ -1,16 +1,16 @@
-auth:
+api_auth:
   resource: "./routes/auth.yaml"
-glob:
+api_glob:
   resource: "./routes/glob.yaml"
-good:
+api_good:
   resource: "./routes/good.yaml"
-home:
+api_home:
   resource: "./routes/home.yaml"
-im:
+api_im:
   resource: "./routes/im.yaml"
-index:
+api_index:
   resource: "./routes/index.yaml"
-learn:
+api_learn:
   resource: "./routes/learn.yaml"
-user:
+api_user:
   resource: "./routes/user.yaml"

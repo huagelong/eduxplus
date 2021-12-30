@@ -1,16 +1,16 @@
-chapter:
+qa_chapter:
   resource: "./routes/admin/chapter.yaml"
-chaptersub:
+qa_chaptersub:
   resource: "./routes/admin/chaptersub.yaml"
-glob:
+qa_glob:
   resource: "./routes/admin/glob.yaml"
-mallgoods:
+qa_mallgoods:
   resource: "./routes/admin/mallgoods.yaml"
-node:
+qa_node:
   resource: "./routes/admin/node.yaml"
-test:
+qa_test:
   resource: "./routes/admin/test.yaml"
-testsub:
+qa_testsub:
   resource: "./routes/admin/testsub.yaml"
-index:
+qa_index:
   resource: "./routes/app/index.yaml"

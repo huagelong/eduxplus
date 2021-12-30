@@ -1,40 +1,42 @@
-glob:
+edux_glob:
+  resource: "./routes/index.yaml"
+edux_glob:
   resource: "./routes/glob.yaml"
-class:
+edux_class:
   resource: "./routes/jw/class.yaml"
-school:
+edux_school:
   resource: "./routes/jw/school.yaml"
-teacher:
+edux_teacher:
   resource: "./routes/jw/teacher.yaml"
-banner:
+edux_banner:
   resource: "./routes/mall/banner.yaml"
-coupon:
+edux_coupon:
   resource: "./routes/mall/coupon.yaml"
-goods:
+edux_goods:
   resource: "./routes/mall/goods.yaml"
-helpcategory:
+edux_helpcategory:
   resource: "./routes/mall/helpcategory.yaml"
-help:
+edux_help:
   resource: "./routes/mall/help.yaml"
-newscategory:
+edux_newscategory:
   resource: "./routes/mall/newscategory.yaml"
-news:
+edux_news:
   resource: "./routes/mall/news.yaml"
-order:
+edux_order:
   resource: "./routes/mall/order.yaml"
-page:
+edux_page:
   resource: "./routes/mall/page.yaml"
-pay:
+edux_pay:
   resource: "./routes/mall/pay.yaml"
-agreement:
+edux_agreement:
   resource: "./routes/teach/agreement.yaml"
-category:
+edux_category:
   resource: "./routes/teach/category.yaml"
-chapter:
+edux_chapter:
   resource: "./routes/teach/chapter.yaml"
-course:
+edux_course:
   resource: "./routes/teach/course.yaml"
-product:
+edux_product:
   resource: "./routes/teach/product.yaml"
-studyplan:
+edux_studyplan:
   resource: "./routes/teach/studyplan.yaml"

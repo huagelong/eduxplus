@@ -1,16 +1,16 @@
-adminlog:
+core_adminlog:
   resource: "./routes/adminlog.yaml"
-auth:
+core_auth:
   resource: "./routes/auth.yaml"
-glob:
+core_glob:
   resource: "./routes/glob.yaml"
-index:
+core_index:
   resource: "./routes/index.yaml"
-menu:
+core_menu:
   resource: "./routes/menu.yaml"
-option:
+core_option:
   resource: "./routes/option.yaml"
-role:
+core_role:
   resource: "./routes/role.yaml"
-user:
+core_user:
   resource: "./routes/user.yaml"

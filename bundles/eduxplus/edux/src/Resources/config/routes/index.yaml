@@ -1,0 +1,3 @@
+admin_dashboard:
+  path: /admin/dashboard
+  controller: Eduxplus\CoreBundle\Controller\IndexController::dashboardAction
