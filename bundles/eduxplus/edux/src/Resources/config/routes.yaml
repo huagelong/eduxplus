@@ -1,4 +1,4 @@
-edux_glob:
+edux_index:
   resource: "./routes/index.yaml"
 edux_glob:
   resource: "./routes/glob.yaml"
