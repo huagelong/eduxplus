@@ -20,7 +20,7 @@ trait Dbtrait
      */
     public function insert($model, $name = null)
     {
-        $em = $this->getManagerRegistry()->getManager($name);
+        $em = $this->getDoctrine()->getManager($name);
         $em = $this->enableSoftDeleteable($em);
         $em->persist($model);
         $em->flush();
@@ -45,7 +45,7 @@ trait Dbtrait
      */
     public function update($model, $name = null)
     {
-        $em = $this->getManagerRegistry()->getManager($name);
+        $em = $this->getDoctrine()->getManager($name);
         $em = $this->enableSoftDeleteable($em);
         $em->persist($model);
         $em->flush();
@@ -62,7 +62,7 @@ trait Dbtrait
      */
     public function delete($models, $name = null)
     {
-        $em = $this->getManagerRegistry()->getManager($name);
+        $em = $this->getDoctrine()->getManager($name);
         $em = $this->enableSoftDeleteable($em);
         if (is_array($models)) {
             foreach ($models as $model) {
@@ -85,7 +85,7 @@ trait Dbtrait
     public function execute($dql, $params = [], $name = null)
     {
         //execute
-        $em = $this->getManagerRegistry()->getManager($name);
+        $em = $this->getDoctrine()->getManager($name);
         $em = $this->enableSoftDeleteable($em);
         $query = $em->createQuery($dql);
         if ($params) $query = $query->setParameters($params);
@@ -104,7 +104,7 @@ trait Dbtrait
     public function hardExecute($dql, $params = [], $name = null)
     {
         //execute
-        $em = $this->getManagerRegistry()->getManager($name);
+        $em = $this->getDoctrine()->getManager($name);
         $em = $this->disableSoftDeleteable($em);
         $query = $em->createQuery($dql);
         if ($params) $query = $query->setParameters($params);
@@ -122,7 +122,7 @@ trait Dbtrait
      */
     public function hardDelete($models, $name = null)
     {
-        $em = $this->getManagerRegistry()->getManager($name);
+        $em = $this->getDoctrine()->getManager($name);
         $em = $this->disableSoftDeleteable($em);
         if (is_array($models)) {
             foreach ($models as $model) {
@@ -152,7 +152,7 @@ trait Dbtrait
 
     public function fetchAll($dql, $params = [], $getObject = 0, $limit = null, $offset = null, $name = null)
     {
-        $em = $this->getManagerRegistry()->getManager($name);
+        $em = $this->getDoctrine()->getManager($name);
         $em = $this->enableSoftDeleteable($em);
         $query = $em->createQuery($dql);
         if ($params) $query = $query->setParameters($params);
@@ -177,7 +177,7 @@ trait Dbtrait
 
     public function fetchAllHard($dql, $params = [], $getObject = 0, $limit = null, $offset = null, $name = null)
     {
-        $em = $this->getManagerRegistry()->getManager($name);
+        $em = $this->getDoctrine()->getManager($name);
         $em = $this->disableSoftDeleteable($em);
         $query = $em->createQuery($dql);
         if ($params) $query = $query->setParameters($params);
@@ -202,7 +202,7 @@ trait Dbtrait
 
     public function fetchOne($dql, $params = [], $getObject = 0, $name = null)
     {
-        $em = $this->getManagerRegistry()->getManager($name);
+        $em = $this->getDoctrine()->getManager($name);
         $em = $this->enableSoftDeleteable($em);
         $query = $em->createQuery($dql);
         if ($params) $query = $query->setParameters($params);
@@ -213,7 +213,7 @@ trait Dbtrait
 
     public function fetchOneHard($dql, $params = [], $getObject = 0, $name = null)
     {
-        $em = $this->getManagerRegistry()->getManager($name);
+        $em = $this->getDoctrine()->getManager($name);
         $em = $this->disableSoftDeleteable($em);
         $query = $em->createQuery($dql);
         if ($params) $query = $query->setParameters($params);
@@ -230,7 +230,7 @@ trait Dbtrait
      */
     public function conn($name = null)
     {
-        $conn = $this->getManagerRegistry()->getManager($name)->getConnection();
+        $conn = $this->getDoctrine()->getManager($name)->getConnection();
         return  $conn;
     }
 
@@ -285,7 +285,7 @@ trait Dbtrait
      */
     public function formatTableClass($sql, $params=[], $name=null){
         if(!$params) return $sql;
-        $em = $this->getManagerRegistry()->getManager($name);
+        $em = $this->getDoctrine()->getManager($name);
         foreach ($params as $v){
             $tableName = $em->getClassMetadata($v)->getTableName();
             if($tableName) $sql = str_replace($v, $tableName, $sql);
@@ -299,7 +299,7 @@ trait Dbtrait
      * @param null $name
      */
     public function getTableName($dbTableClassName, $name=null){
-        $em = $this->getManagerRegistry()->getManager($name);
+        $em = $this->getDoctrine()->getManager($name);
         $tableName = $em->getClassMetadata($dbTableClassName)->getTableName();
         $em->clear($name);
         return $tableName;
@@ -307,21 +307,21 @@ trait Dbtrait
 
     public function beginTransaction($name = null)
     {
-        $em = $this->getManagerRegistry()->getManager($name);
+        $em = $this->getDoctrine()->getManager($name);
         $em->getConnection()->beginTransaction();
         return $em;
     }
 
     public function commit($name = null)
     {
-        $em = $this->getManagerRegistry()->getManager($name);
+        $em = $this->getDoctrine()->getManager($name);
         $em->getConnection()->commit();
         return $em;
     }
 
     public function rollback($name = null)
     {
-        $em = $this->getManagerRegistry()->getManager($name);
+        $em = $this->getDoctrine()->getManager($name);
         $em->getConnection()->rollback();
         return $em;
     }

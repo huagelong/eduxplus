@@ -16,6 +16,7 @@ use Symfony\Component\PropertyAccess\PropertyAccess;
 use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\UsageTrackingTokenStorage;
 use Psr\Container\ContainerInterface;
+use Symfony\Component\Security\Core\Security;
 
 class BaseService
 {
@@ -29,6 +30,8 @@ class BaseService
     protected $propertyAccessor;
     protected $tokenStorage;
     protected $container;
+    protected $security;
+    
 
     public function inject(ManagerRegistry $em,
                          SerializerInterface $serializer,
@@ -37,7 +40,8 @@ class BaseService
                          ContainerBagInterface $params,
                          PropertyAccessorInterface   $propertyAccessor,
                            UsageTrackingTokenStorage $tokenStorage,
-                           ContainerInterface $container
+                           ContainerInterface $container,
+                           Security $security
     ){
         $this->em = $em;
         $this->serializer = $serializer;
@@ -47,6 +51,12 @@ class BaseService
         $this->propertyAccessor = $propertyAccessor ?: PropertyAccess::createPropertyAccessor();
         $this->tokenStorage= $tokenStorage;
         $this->container =$container;
+        $this->security = $security;
+    }
+
+    public function isGranted(mixed $attributes, mixed $subject = null): bool
+    {
+        return $this->security->isGranted($attributes, $subject);
     }
 
     public function get(string $id): object
@@ -59,16 +69,16 @@ class BaseService
         return new Error();
     }
 
-    public function getManagerRegistry(){
-        return $this->em;
-    }
-
     public function getDoctrine(){
-        return $this->getManagerRegistry();
+        return $this->em;
     }
 
     public function getSerializer(){
         return $this->serializer;
+    }
+
+    public function getTokenStorage(){
+        return $this->tokenStorage;
     }
 
     public function genUrl(string $route, array $parameters = [], int $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH)
@@ -79,6 +89,7 @@ class BaseService
     public function getUser():?UserInterface
     {
         $token = $this->tokenStorage->getToken();
+        if(!$token)  return null;
         return $token->getUser();
     }
 
