@@ -4,9 +4,6 @@ services:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
         public: false
-        bind:
-            $adminUserMobile: '%env(ADMIN_USER_MOBILE)%'
-            $adminUserPwd: '%env(ADMIN_USER_PWD)%'
 
     Eduxplus\EduxBundle\:
         resource: '../../../src/'
