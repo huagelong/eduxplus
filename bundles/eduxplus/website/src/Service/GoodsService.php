@@ -11,7 +11,7 @@ namespace Eduxplus\WebsiteBundle\Service;
 
 
 use Eduxplus\CoreBundle\Lib\Base\AppBaseService;
-use Eduxplus\CoreBundle\Entity\MallGoodsFav;
+use Eduxplus\EduxBundle\Entity\MallGoodsFav;
 use Knp\Component\Pager\PaginatorInterface;
 
 class GoodsService extends AppBaseService

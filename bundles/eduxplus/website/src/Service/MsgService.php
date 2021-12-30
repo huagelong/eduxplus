@@ -11,8 +11,8 @@ namespace Eduxplus\WebsiteBundle\Service;
 
 use Eduxplus\CoreBundle\Lib\Base\AppBaseService;
 use Eduxplus\CoreBundle\Lib\Service\RedisService;
-use Eduxplus\CoreBundle\Entity\MallMsg;
-use Eduxplus\CoreBundle\Entity\MallMsgStatus;
+use Eduxplus\EduxBundle\Entity\MallMsg;
+use Eduxplus\EduxBundle\Entity\MallMsgStatus;
 use Knp\Component\Pager\PaginatorInterface;
 
 class MsgService extends AppBaseService

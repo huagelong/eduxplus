@@ -13,7 +13,7 @@ use Eduxplus\CoreBundle\Lib\Base\AppBaseService;
 use Eduxplus\CoreBundle\Lib\Service\Base\SmsService;
 use Eduxplus\CoreBundle\Lib\Service\CacheService;
 use Eduxplus\CoreBundle\Lib\Service\CaptchaService;
-use Eduxplus\CoreBundle\Entity\MallMobileSmsCode;
+use Eduxplus\EduxBundle\Entity\MallMobileSmsCode;
 
 class GlobService extends AppBaseService
 {

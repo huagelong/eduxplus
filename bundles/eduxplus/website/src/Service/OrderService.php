@@ -13,11 +13,11 @@ use Eduxplus\CoreBundle\Lib\Base\AppBaseService;
 use Eduxplus\CoreBundle\Lib\Service\Pay\AlipayService;
 use Eduxplus\CoreBundle\Lib\Service\Pay\WxpayService;
 use Eduxplus\QaBundle\Entity\TeachTestOrder;
-use Eduxplus\CoreBundle\Entity\JwClasses;
-use Eduxplus\CoreBundle\Entity\JwClassesMembers;
-use Eduxplus\CoreBundle\Entity\MallOrder;
-use Eduxplus\CoreBundle\Entity\MallOrderStudyPlan;
-use Eduxplus\CoreBundle\Entity\MallPay;
+use Eduxplus\EduxBundle\Entity\JwClasses;
+use Eduxplus\EduxBundle\Entity\JwClassesMembers;
+use Eduxplus\EduxBundle\Entity\MallOrder;
+use Eduxplus\EduxBundle\Entity\MallOrderStudyPlan;
+use Eduxplus\EduxBundle\Entity\MallPay;
 use Knp\Component\Pager\PaginatorInterface;
 
 class OrderService extends AppBaseService
