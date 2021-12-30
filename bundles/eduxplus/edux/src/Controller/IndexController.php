@@ -6,7 +6,7 @@
  * @Date: 2020/3/26 19:43
  */
 
-namespace Eduxplus\CoreBundle\Controller;
+namespace Eduxplus\EduxBundle\Controller;
 
 
 use Eduxplus\EduxBundle\Service\DashboardService;

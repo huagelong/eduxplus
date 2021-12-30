@@ -11,6 +11,7 @@ return [
     Symfony\Bundle\MonologBundle\MonologBundle::class => ['all' => true],
     Symfony\Bundle\MakerBundle\MakerBundle::class => ['dev' => true],
     Eduxplus\CoreBundle\EduxplusCoreBundle::class => ['all' => true],
+    Eduxplus\EduxBundle\EduxplusEduxBundle::class => ['all' => true],
     Eduxplus\WebsiteBundle\EduxplusWebsiteBundle::class => ['all' => true],
     Eduxplus\ApiBundle\EduxplusApiBundle::class => ['all' => true],
     Eduxplus\QaBundle\EduxplusQaBundle::class => ['all' => true],

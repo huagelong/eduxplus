@@ -35,6 +35,9 @@
     "bundles/eduxplus-core-bundle": {
         "version": "master"
     },
+    "bundles/eduxplus-edux-bundle": {
+        "version": "master"
+    },
     "bundles/eduxplus-qa-bundle": {
         "version": "master"
     },

@@ -6,7 +6,7 @@
  * @Date: 2020/4/10 15:41
  */
 
-namespace Eduxplus\CoreBundle\Controller;
+namespace Eduxplus\EduxBundle\Controller;
 
 
 use Eduxplus\EduxBundle\Service\Mall\GoodsService;
