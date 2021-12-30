@@ -34,10 +34,10 @@ class ExceptionListener
     {
         if (!$event->isMainRequest()) return true;
 
-        $pathPatterns = $this->baseService->getConfig("wechance_core.path_patterns");
+        $pathPatterns = $this->baseService->getConfig("wechance_core.json_patterns");
         $requestUri = $this->baseService->request()->getRequestUri();
+        $hasMatch = 0;
         if($pathPatterns){
-            $hasMatch = 0;
             foreach ($pathPatterns as $regx){
                 if(preg_match($regx, $requestUri)){
                     $hasMatch++;
@@ -51,7 +51,7 @@ class ExceptionListener
         $exception = $event->getThrowable();
         $msg = $exception->getMessage();
         $statusCode = $exception instanceof HttpExceptionInterface ? $exception->getStatusCode() : $exception->getCode();
-        if (($event->getRequest()->getRequestFormat() == 'json') || (in_array("application/json", $event->getRequest()->getAcceptableContentTypes()))) {
+        if ($hasMatch (($event->getRequest()->getRequestFormat() == 'json') || (in_array("application/json", $event->getRequest()->getAcceptableContentTypes())))) {
             $this->logger->error($exception->getTraceAsString());
             $responseData = JsonResponseService::genData([], $statusCode, $msg);
             $response = new JsonResponse($responseData);

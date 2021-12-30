@@ -1,4 +1,4 @@
 eduxplus_core: 
-      path_patterns:
+      json_patterns:
         - /^\/api\//i
         - /\/do[\/]?/i
