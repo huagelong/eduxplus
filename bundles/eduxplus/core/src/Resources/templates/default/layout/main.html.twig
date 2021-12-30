@@ -2,7 +2,6 @@
 {% block style %}
     {{ parent() }}
 {% endblock %}
-{% block body_class %} sidebar-mini control-sidebar-slide-open text-sm {% endblock %}
 {% block body_javascript %}
     {{ parent() }}
     <script src="{{ asset('assets/admin/js/admin.js') }}"></script>
@@ -54,11 +53,7 @@ var id = setWatermark(str1, now)
 {% endblock %}
 {% block body_main %}
     {{ parent() }}
-    <div class="wrapper">
-        <!-- Content Wrapper. Contains page content -->
-            <!-- Main content -->
-            <div class="content">
-                <div class="container-fluid">
+    <div class="container-fluid p-t-15">
                   <div class="row">
                     <ul class="navbar-nav">
                       <li class="nav-item">
@@ -73,11 +68,7 @@ var id = setWatermark(str1, now)
                     </ul>
                   </div>
 
-                    {% block page %}{% endblock %}
+        {% block page %}{% endblock %}
                     <!-- /.row -->
-                </div><!-- /.container-fluid -->
-            </div>
-            <!-- /.content -->
-        <!-- /.content-wrapper -->
-    </div>
+    </div><!-- /.container-fluid -->
 {% endblock %}

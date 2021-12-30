@@ -1,6 +1,6 @@
 <?php
 
-namespace Eduxplus\CoreBundle\Command;
+namespace Eduxplus\EduxBundle\Command;
 
 use Eduxplus\CoreBundle\Lib\Service\Base\EsService;
 use Eduxplus\CoreBundle\Lib\Service\File\AliyunOssService;
@@ -90,34 +90,34 @@ class TestCommand extends Command
     {
         $this->manager();
 
-        $userModel = new BaseUser();
-        $uuid = $this->helperService->getUuid();
-        $pwd = $this->passwordEncoder->needsRehash($userModel, "111111");
-        $userModel->setSex(1);
-        $userModel->setBirthday('1988-10-01');
-        $userModel->setRegSource("pc");
-        $userModel->setMobile("17621487000");
-        $mobileMask =  $this->mobileMaskService->encrypt("17621487000");
-        $userModel->setMobileMask($mobileMask);
-        $userModel->setReportUid(0);
-        $userModel->setUuid($uuid);
-        $userModel->setDisplayName("超级管理员");
-        $userModel->setFullName("管理员大大");
-        $userModel->setIsAdmin(1);
-        $userModel->setPassword($pwd);
-        $userModel->setRealRole(1);
-        $userModel->setGravatar("http://demo.eduxplus.com/assets/images/gravatar.jpeg");
-        $userModel->setAppToken("sdasdasda");
-        $this->manager->persist($userModel);
-        $this->manager->flush();
-        $uid = $userModel->getId();
-
-        //绑定用户角色
-        $roleUserModel = new BaseRoleUser();
-        $roleUserModel->setUid($uid);
-        $roleUserModel->setRoleId(1);
-        $this->manager->persist($roleUserModel);
-        $this->manager->flush();
+//        $userModel = new BaseUser();
+//        $uuid = $this->helperService->getUuid();
+//        $pwd = $this->passwordEncoder->needsRehash($userModel, "111111");
+//        $userModel->setSex(1);
+//        $userModel->setBirthday('1988-10-01');
+//        $userModel->setRegSource("pc");
+//        $userModel->setMobile("17621487000");
+//        $mobileMask =  $this->mobileMaskService->encrypt("17621487000");
+//        $userModel->setMobileMask($mobileMask);
+//        $userModel->setReportUid(0);
+//        $userModel->setUuid($uuid);
+//        $userModel->setDisplayName("超级管理员");
+//        $userModel->setFullName("管理员大大");
+//        $userModel->setIsAdmin(1);
+//        $userModel->setPassword($pwd);
+//        $userModel->setRealRole(1);
+//        $userModel->setGravatar("http://demo.eduxplus.com/assets/images/gravatar.jpeg");
+//        $userModel->setAppToken("sdasdasda");
+//        $this->manager->persist($userModel);
+//        $this->manager->flush();
+//        $uid = $userModel->getId();
+//
+//        //绑定用户角色
+//        $roleUserModel = new BaseRoleUser();
+//        $roleUserModel->setUid($uid);
+//        $roleUserModel->setRoleId(1);
+//        $this->manager->persist($roleUserModel);
+//        $this->manager->flush();
 
         //帮助中心
         $roleId = 1;
