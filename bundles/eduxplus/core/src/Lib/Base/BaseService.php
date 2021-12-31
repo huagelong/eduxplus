@@ -17,6 +17,7 @@ use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\UsageTrackingTokenStorage;
 use Psr\Container\ContainerInterface;
 use Symfony\Component\Security\Core\Security;
+use Psr\Log\LoggerInterface;
 
 class BaseService
 {
@@ -31,7 +32,7 @@ class BaseService
     protected $tokenStorage;
     protected $container;
     protected $security;
-    
+    protected $logger;
 
     public function inject(ManagerRegistry $em,
                          SerializerInterface $serializer,
@@ -41,7 +42,8 @@ class BaseService
                          PropertyAccessorInterface   $propertyAccessor,
                            UsageTrackingTokenStorage $tokenStorage,
                            ContainerInterface $container,
-                           Security $security
+                           Security $security,
+                           LoggerInterface $logger
     ){
         $this->em = $em;
         $this->serializer = $serializer;
@@ -52,6 +54,7 @@ class BaseService
         $this->tokenStorage= $tokenStorage;
         $this->container =$container;
         $this->security = $security;
+        $this->logger = $logger;
     }
 
     public function isGranted(mixed $attributes, mixed $subject = null): bool
@@ -73,13 +76,6 @@ class BaseService
         return $this->em;
     }
 
-    public function getSerializer(){
-        return $this->serializer;
-    }
-
-    public function getTokenStorage(){
-        return $this->tokenStorage;
-    }
 
     public function genUrl(string $route, array $parameters = [], int $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH)
     {
@@ -173,7 +169,7 @@ class BaseService
             $groupConfig['groups'] = $group;
         }
         $groupConfig[DateTimeNormalizer::FORMAT_KEY]='Y-m-d H:i:s';
-        $json = $this->getSerializer()->serialize($entity, 'json', $groupConfig);
+        $json = $this->serializer->serialize($entity, 'json', $groupConfig);
         return json_decode($json, true);
     }
 
