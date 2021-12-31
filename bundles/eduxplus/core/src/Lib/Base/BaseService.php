@@ -23,16 +23,16 @@ class BaseService
 {
     use Dbtrait;
 
-    protected $em;
-    protected $serializer;
-    protected $requestStack;
-    protected $router;
-    protected $params;
-    protected $propertyAccessor;
-    protected $tokenStorage;
-    protected $container;
-    protected $security;
-    protected $logger;
+    private $em;
+    private $serializer;
+    private $requestStack;
+    private $router;
+    private $params;
+    private $propertyAccessor;
+    private $tokenStorage;
+    private $container;
+    private $security;
+    private $logger;
 
     public function inject(ManagerRegistry $em,
                          SerializerInterface $serializer,
