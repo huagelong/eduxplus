@@ -280,7 +280,6 @@ class CreateBundleCommand extends Command
                     $pathinfo = pathinfo($tmpPath);
                     $extArr = explode(",", $ext);
                     if(isset($pathinfo['extension']) && in_array($pathinfo['extension'], $extArr)){
-                        echo $tmpPath."\n";
                         $tmpData = file_get_contents($tmpPath);
                         $tmpData = preg_replace($reg, $replaceTo, $tmpData);
                         file_put_contents($tmpPath, $tmpData);
