@@ -331,7 +331,15 @@ class ChapterService extends AdminBaseService
     {
         if ($type == 2) {
             if ($videoChannel == 2) {
-                $this->aliyunVodService->submitTranscodeJobs($videoId);
+                $this->aliyunVodService->submitTranscodeJobs($videoId, function($videoId, $dataKey){
+                    $sql = "SELECT a FROM Edux:TeachCourseVideos a WHERE a.videoId=:videoId";
+                    $model = $this->fetchOne($sql, ["videoId"=>$videoId], 1);
+                    $vodData = $model->getVodData();
+                    $vodData = $vodData?json_decode($vodData, true):[];
+                    $vodData['aliyunVod'] = $dataKey;
+                    $model->setVodData(json_encode($vodData));
+                    $this->save($model);
+                });
             } else if ($videoChannel == 1) {
                 $this->tengxunyunVodService->processMediaByProcedureRequest($videoId);
             }

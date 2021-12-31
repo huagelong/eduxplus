@@ -78,7 +78,7 @@ class AliyunVodService extends BaseService
      * @param $cipherText
      * @return array|bool
      */
-    public function submitTranscodeJobs($videoId){
+    public function submitTranscodeJobs($videoId, $callback){
         if(!$videoId) return true;
         $this->initClient();
         if(!$this->templateGroupId) return true;
@@ -95,14 +95,8 @@ class AliyunVodService extends BaseService
             list($cipherText, $plaintext) = $dataKey;
             //更新keyData
             //todo
-            $sql = "SELECT a FROM Edux:TeachCourseVideos a WHERE a.videoId=:videoId";
-            $model = $this->fetchOne($sql, ["videoId"=>$videoId], 1);
-            $vodData = $model->getVodData();
-            $vodData = $vodData?json_decode($vodData, true):[];
-            $vodData['aliyunVod'] = $dataKey;
-            $model->setVodData(json_encode($vodData));
-            $this->save($model);
-
+            $callback($videoId, $dataKey);
+            
             $payLoadArr = [];
             $payLoadArr['videoId'] = $videoId;
             $key = $this->getConfig("secret");

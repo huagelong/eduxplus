@@ -236,7 +236,7 @@ trait Dbtrait
 
     /**
      * 原生sql，多个值
-     * @param $sql  eg "SELECT * FROM mall_msg WHERE uid =?" or "SELECT * FROM mall_msg WHERE uid =:uid"
+     * @param $sql  eg "SELECT * FROM xx_msg WHERE uid =?" or "SELECT * FROM xx_msg WHERE uid =:uid"
      * @param array $params eg [1] or [":uid"=>uid]
      * @param array $types
      * @param null $name
@@ -264,8 +264,8 @@ trait Dbtrait
 
     /**
      * 原生sql，第一行，单个字段值
-     * @param $sql  eg "SELECT * FROM Edux:MallMsg WHERE uid =?";
-     * @param array $params eg ["Edux:MallMsg"]
+     * @param $sql  eg "SELECT * FROM XX:XxMsg WHERE uid =?";
+     * @param array $params eg ["XX:XxMsg"]
      * @param array $types
      * @param null $name
      * @return mixed
