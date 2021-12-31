@@ -1,0 +1,28 @@
+{
+    "name": "bundles/acme-foo-bundle",
+    "description": "bundleDescription",
+    "type": "symfony-bundle",
+    "require": {
+    },
+    "require-dev": {
+    },
+    "autoload": {
+        "psr-4": {
+            "Acme\\FooBundle\\": "src/"
+        }
+    },
+    "license": "Apache-2.0",
+    "authors": [
+        {
+            "name": "yourName",
+            "email": "yourEmail"
+        }
+    ],
+    "extra": {
+        "branch-alias": {
+            "dev-master": "master"
+        }
+    },
+    "scripts": {
+    }
+}

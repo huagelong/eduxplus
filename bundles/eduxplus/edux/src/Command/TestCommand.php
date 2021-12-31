@@ -34,7 +34,7 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class TestCommand extends Command
 {
-    protected static $defaultName = 'Core:test';
+    protected static $defaultName = 'edux:test';
     protected $aliyunOssService;
     protected $uploadService;
     protected $manager;
