@@ -57,32 +57,39 @@ class BaseService
         $this->logger = $logger;
     }
 
-    public function isGranted(mixed $attributes, mixed $subject = null): bool
+    public final function isGranted(mixed $attributes, mixed $subject = null): bool
     {
         return $this->security->isGranted($attributes, $subject);
     }
 
-    public function get(string $id): object
+    public final function get(string $id): object
     {
         return $this->container->get($id);
     }
 
-    public function error()
+    public final function error()
     {
         return new Error();
     }
 
-    public function getDoctrine(){
+    public final function getDoctrine(){
         return $this->em;
     }
 
+    public final function logger(){
+        return $this->logger;
+    }
 
-    public function genUrl(string $route, array $parameters = [], int $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH)
+    public final function getSecurity(){
+        return $this->security;
+    }
+
+    public final function genUrl(string $route, array $parameters = [], int $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH)
     {
         return $this->router->generateUrl($route, $parameters, $referenceType);
     }
 
-    public function getUser():?UserInterface
+    public final function getUser():?UserInterface
     {
         $token = $this->tokenStorage->getToken();
         if(!$token)  return null;
@@ -92,39 +99,39 @@ class BaseService
     /**
      * @return Request
      */
-    public function request()
+    public final function request()
     {
         return $this->requestStack->getCurrentRequest();
     }
 
-    public function session()
+    public final function session()
     {
         return $this->request()->getSession();
     }
 
-    public function getConfig($str)
+    public final function getConfig($str)
     {
         return $this->params->get($str);
     }
 
-    public function getBasePath()
+    public final function getBasePath()
     {
         return $this->getConfig("kernel.project_dir");
     }
 
-    public function getPro($obj, $name)
+    public final function getPro($obj, $name)
     {
         return $this->propertyAccessor->getValue($obj, $name);
     }
 
-    public function getEnv()
+    public final function getEnv()
     {
         $env = $_SERVER['APP_ENV'];
         return $env;
     }
 
 
-    public function baseCurlGet($url, $method, $body="")
+    public final function baseCurlGet($url, $method, $body="")
     {
         //        debug(func_get_args());
         $method = strtoupper($method);
@@ -155,14 +162,14 @@ class BaseService
         return $rtn;
     }
 
-    public function jsonGet($json, $key = 0)
+    public final function jsonGet($json, $key = 0)
     {
         if (!$json) return "";
         $arr = json_decode($json, true);
         return isset($arr[$key]) ? $arr[$key] : "";
     }
 
-    public function toArray($entity, $group=null)
+    public final function toArray($entity, $group=null)
     {
         $groupConfig = [];
         if($group){
@@ -178,7 +185,7 @@ class BaseService
      * @param $clientId
      * @return BaseUser
      */
-    public function getUserByToken($token, $clientId)
+    public final function getUserByToken($token, $clientId)
     {
         if ($clientId == 'ios' || $clientId == 'android') {
             $sql = "SELECT a FROM Core:BaseUser a WHERE a.appToken=:appToken";
@@ -192,7 +199,7 @@ class BaseService
         }
     }
 
-    public function getOption($k, $isJson = 0, $index = null, $default = null)
+    public final function getOption($k, $isJson = 0, $index = null, $default = null)
     {
         $sql = "SELECT a.optionValue FROM Core:BaseOption a WHERE a.optionKey =:optionKey";
         $rs = $this->fetchField("optionValue", $sql, ['optionKey' => $k]);

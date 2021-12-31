@@ -13,10 +13,5 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class ApiBaseService extends BaseService
 {
-    public function getUser():?UserInterface
-    {
-        throw new \LogicException("Method getUser Can Not Be Used");
-    }
-
 
 }
