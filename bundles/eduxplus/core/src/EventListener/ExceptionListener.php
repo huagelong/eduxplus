@@ -34,7 +34,7 @@ class ExceptionListener
     {
         if (!$event->isMainRequest()) return true;
 
-        $pathPatterns = $this->baseService->getConfig("wechance_core.json_patterns");
+        $pathPatterns = $this->baseService->getConfig("eduxplus_core.json_patterns");
         $requestUri = $this->baseService->request()->getRequestUri();
         $hasMatch = 0;
         if($pathPatterns){

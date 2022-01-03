@@ -54,21 +54,30 @@ var id = setWatermark(str1, now)
 {% block body_main %}
     {{ parent() }}
     <div class="container-fluid p-t-15">
-                  <div class="row">
-                    <ul class="navbar-nav">
-                      <li class="nav-item">
-                        <ol class="breadcrumb float-sm-right">
-                          <li class="breadcrumb-item"> </li>
-                          {% block breadcrumb %}{% endblock %}
-                          {% if app.session.get("_route") != "admin_dashboard" %}
-                            <li class="breadcrumb-item active">{{ block('page_title') }}</li>
-                          {% endif %}
-                        </ol>
-                      </li>
-                    </ul>
-                  </div>
-
-        {% block page %}{% endblock %}
-                    <!-- /.row -->
+        <div class="row">
+          <div class="col-lg-12">
+              <ul class="navbar-nav float-left">
+                <li class="nav-item">
+                  <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"> </li>
+                    {% block breadcrumb %}{% endblock %}
+                    {% if app.session.get("_route") != "admin_dashboard" %}
+                      <li class="breadcrumb-item active">{{ block('page_title') }}</li>
+                    {% endif %}
+                  </ol>
+                </li>
+              </ul>
+            </div>
+        </div>
+          <div class="row">
+          <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+            {% block page %}{% endblock %}
+                </div>
+            </div>
+          </div>
+    </div>    
+   <!-- /.row -->
     </div><!-- /.container-fluid -->
 {% endblock %}
