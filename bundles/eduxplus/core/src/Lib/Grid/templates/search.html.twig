@@ -4,7 +4,7 @@
             {% for k,v in searchField %}
                 <div class="col-sm-6">
                     <div class="form-group row">
-                        <label class="col-sm-3 col-form-label" >{{ k }} ：</label>
+                        <label class="col-sm-2 col-form-label" >{{ k }} ：</label>
                         {% if v['type'] == "text" %}
                             <div class="col-sm-2">
                                 <select name="{{ v['operates'] }}" class="form-control form-control-sm">
@@ -73,7 +73,7 @@
                                 <div class="input-group">
                                     <div class="input-group-prepend">
                                   <span class="input-group-text">
-                                    <i class="far fa-calendar-alt"></i>
+                                    <i class="mdi mdi-calendar"></i>
                                   </span>
                                     </div>
                                     <input type="text" name="{{ v['values'] }}" value="{{ array_get(app.request.query.get("values"), v['field']) }}" class="form-control form-control-sm daterange" placeholder="输入 ...">
@@ -87,7 +87,7 @@
                                 <input type="hidden" name="{{ v['types'] }}" value="{{ v['type'] }}">
                                 <div class="input-group">
                                     <div class="input-group-prepend">
-                                        <span class="input-group-text"><i class="far fa-clock"></i></span>
+                                        <span class="input-group-text"><i class="mdi mdi-clock"></i></span>
                                     </div>
                                     <input type="text" name="{{ v['values'] }}" value="{{ array_get(app.request.query.get("values"), v['field']) }}" class="form-control form-control-sm datetimerange" placeholder="输入 ...">
                                 </div>
@@ -102,8 +102,8 @@
             <div class="col-sm-3">
                 <div class="form-group row float-right">
                     <input type="hidden" name="showSearch" value="1">
-                    <button type="submit" class="btn btn-info submit btn-sm" style="margin-right: 10px;"><i class="fa fa-search"></i>&nbsp;&nbsp;搜索</button>
-                    <a href="{{ pathinfo }}?showSearch=1" class="btn btn-default btn-sm reset"><i class="fa fa-undo"></i>&nbsp;&nbsp;重置</a>
+                    <button type="submit" class="btn btn-info submit btn-sm" style="margin-right: 10px;"><i class="fa fa-search"></i>搜索</button>
+                    <a href="{{ pathinfo }}?showSearch=1" class="btn btn-default btn-sm reset"><i class="fa fa-undo"></i>重置</a>
                 </div>
             </div>
             <div class="col-sm-3"></div>

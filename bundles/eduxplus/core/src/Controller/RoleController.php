@@ -45,14 +45,14 @@ class RoleController extends BaseAdminController
         $grid->setTableAction('admin_role_bindmenu', function($obj){
             $id = $obj->getId();
             $url = $this->generateUrl('admin_role_bindmenu',['id'=>$id]);
-            return  '<a href='.$url.' data-title="绑定菜单" class=" btn btn-primary btn-xs poppage" ><i class="fa fa-chain"></i></a>';
+            return  '<a href='.$url.' data-title="绑定菜单" class=" btn btn-primary btn-xs poppage" ><i class="mdi mdi-link"></i></a>';
         });
 
         $grid->setTableAction('admin_role_edit', function($obj){
             if($obj->getIsLock()) return ;
             $id = $obj->getId();
             $url = $this->generateUrl('admin_role_edit',['id'=>$id]);
-            $str = '<a href='.$url.' data-title="编辑角色" class=" btn btn-info btn-xs poppage"><i class="fas fa-edit"></i></a>';
+            $str = '<a href='.$url.' data-title="编辑角色" class=" btn btn-info btn-xs poppage"><i class="mdi mdi-file-document-edit"></i></a>';
             return  $str;
         });
 
@@ -60,7 +60,7 @@ class RoleController extends BaseAdminController
             if ($obj->getIsLock()) return;
             $id = $obj->getId();
             $url = $this->generateUrl('admin_api_role_delete', ['id' => $id]);
-            return '<a href=' . $url . ' data-confirm="确认要删除吗?"  class=" btn btn-danger btn-xs ajaxDelete"><i class="fas fa-trash"></i></a>';
+            return '<a href=' . $url . ' data-confirm="确认要删除吗?"  class=" btn btn-danger btn-xs ajaxDelete"><i class="mdi mdi-delete"></i></a>';
         });
 
         //批量删除

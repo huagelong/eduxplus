@@ -4,3 +4,52 @@
 .float-right{
     float: right;
 }
+.display-hide{
+    display: none;
+}
+.grid-search
+{
+    margin-top:10px;
+}
+.sortable:after{
+    font-weight: 900;
+    -webkit-font-smoothing: antialiased;
+    display: inline-block;
+    font-style: normal;
+    font-variant: normal;
+    text-rendering: auto;
+    line-height: 1;
+    font-family: "Material Design Icons";
+    text-align: center;
+    width: 1.25em;
+    content: "\F4BA";
+}
+
+.asc:after {
+    font-weight: 900;
+    -webkit-font-smoothing: antialiased;
+    display: inline-block;
+    font-style: normal;
+    font-variant: normal;
+    text-rendering: auto;
+    line-height: 1;
+    font-family: "Material Design Icons";
+    text-align: center;
+    width: 1.25em;
+    content: "\F4BC";
+}
+
+.desc:after {
+    font-weight: 900;
+    -webkit-font-smoothing: antialiased;
+    display: inline-block;
+    font-style: normal;
+    font-variant: normal;
+    text-rendering: auto;
+    line-height: 1;
+    font-family: "Material Design Icons";
+    text-align: center;
+    width: 1.25em;
+    content: "\F4BD";
+}
+
