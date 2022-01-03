@@ -7,10 +7,10 @@
             <strong>{{ l['name']|raw }}</strong>
             <span class="pull-right dd-nodrag">
                 {% if is_authorized('qa_admin_chaptersub_edit') %}
-                  <a href="{{ path("qa_admin_chaptersub_edit", {"id":l['id']}) }}" data-title="编辑"  class="poppage"><i class="fas fa-edit"></i></a>
+                  <a href="{{ path("qa_admin_chaptersub_edit", {"id":l['id']}) }}" data-title="编辑"  class="poppage"><i class="mdi mdi-file-document-edit"></i></a>
                 {% endif %}
               {% if is_authorized('qa_admin_chaptersub_delete_do') %}
-                <a href="{{ path("qa_admin_chaptersub_delete_do", {"id":l['id']}) }}"  data-confirm="确认要删除吗?" class="tree_branch_delete ajaxDelete"><i class="fas fa-trash"></i></a>
+                <a href="{{ path("qa_admin_chaptersub_delete_do", {"id":l['id']}) }}"  data-confirm="确认要删除吗?" class="tree_branch_delete ajaxDelete"><i class="mdi mdi-delete"></i></a>
               {% endif %}
                 </span>
           </div>

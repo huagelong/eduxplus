@@ -38,7 +38,7 @@ class TestSubController extends BaseAdminController
 
         $grid->gbButton("试题管理")->route("qa_admin_test_sub_mg")
             ->url($this->generateUrl("qa_admin_test_sub_mg", ['type'=>0,"isFirst"=>1,'id'=>$id]))
-            ->styleClass("btn-success")->iconClass("fas fa-edit");
+            ->styleClass("btn-success")->iconClass("mdi mdi-file-document-edit");
 
 
         $grid->setTableAction('qa_admin_node_view', function ($obj) {

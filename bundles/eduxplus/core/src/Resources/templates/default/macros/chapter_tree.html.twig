@@ -27,11 +27,11 @@
                 {% endif %}
 
                 {% if is_authorized('admin_teach_chapter_edit') %}
-                    <a href="{{ path("admin_teach_chapter_edit", {"id":chapter['id']}) }}" data-title="编辑"  title="编辑" class="poppage"><i class="fas fa-edit"></i></a>
+                    <a href="{{ path("admin_teach_chapter_edit", {"id":chapter['id']}) }}" data-title="编辑"  title="编辑" class="poppage"><i class="mdi mdi-file-document-edit"></i></a>
                 {% endif %}
 
                 {% if is_authorized('admin_api_teach_chapter_delete') %}
-                    <a href="{{ path("admin_api_teach_chapter_delete", {"id":chapter['id']}) }}" title="删除"  data-confirm="确认要删除吗?" class="tree_branch_delete ajaxDelete"><i class="fas fa-trash"></i></a>
+                    <a href="{{ path("admin_api_teach_chapter_delete", {"id":chapter['id']}) }}" title="删除"  data-confirm="确认要删除吗?" class="tree_branch_delete ajaxDelete"><i class="mdi mdi-delete"></i></a>
                 {% endif %}
                 </span>
                 </div>

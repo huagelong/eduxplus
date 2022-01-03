@@ -2256,7 +2256,7 @@
             title: "fab fa-edge",
             searchTerms: [ "browser", "ie" ]
         }, {
-            title: "fas fa-edit",
+            title: "mdi mdi-file-document-edit",
             searchTerms: [ "edit", "pen", "pencil", "update", "write" ]
         }, {
             title: "far fa-edit",
@@ -4854,10 +4854,10 @@
             title: "fas fa-transgender-alt",
             searchTerms: []
         }, {
-            title: "fas fa-trash",
+            title: "mdi mdi-delete",
             searchTerms: [ "delete", "garbage", "hide", "remove" ]
         }, {
-            title: "fas fa-trash-alt",
+            title: "mdi mdi-delete-alt",
             searchTerms: [ "delete", "garbage", "hide", "remove", "trash", "trash-o" ]
         }, {
             title: "far fa-trash-alt",

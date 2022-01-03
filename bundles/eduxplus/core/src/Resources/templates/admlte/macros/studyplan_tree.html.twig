@@ -11,7 +11,7 @@
                     <span class="pull-right dd-nodrag">
 
                 {% if is_authorized('admin_teach_studyplan_edit') %}
-                    <a href="{{ path("admin_teach_studyplan_edit", {"id":studyplan['id']}) }}" data-width="1000px" data-title="编辑"  title="编辑" class="poppage"><i class="fas fa-edit"></i></a>
+                    <a href="{{ path("admin_teach_studyplan_edit", {"id":studyplan['id']}) }}" data-width="1000px" data-title="编辑"  title="编辑" class="poppage"><i class="mdi mdi-file-document-edit"></i></a>
                 {% endif %}
 
                 {% if is_authorized('admin_api_teach_studyplan_switchStatus') %}
@@ -24,7 +24,7 @@
 
 
                 {% if is_authorized('admin_api_teach_studyplan_delete') %}
-                    <a href="{{ path("admin_api_teach_studyplan_delete", {"id":studyplan['id']}) }}" title="删除"  data-confirm="确认要删除吗?" class="tree_branch_delete ajaxDelete"><i class="fas fa-trash"></i></a>
+                    <a href="{{ path("admin_api_teach_studyplan_delete", {"id":studyplan['id']}) }}" title="删除"  data-confirm="确认要删除吗?" class="tree_branch_delete ajaxDelete"><i class="mdi mdi-delete"></i></a>
                 {% endif %}
                     </span>
                 </div>
@@ -36,7 +36,7 @@
                                 {{ loop.index }}.&nbsp;<strong>{{ sub['course']['name']|raw }}</strong>
                                 <span class="pull-right dd-nodrag">
                                     {% if is_authorized('admin_api_teach_studyplansub_delete') %}
-                                        <a href="{{ path("admin_api_teach_studyplansub_delete", {"id":sub['id']}) }}" title="删除"  data-confirm="确认要删除吗?" class="tree_branch_delete ajaxDelete"><i class="fas fa-trash"></i></a>
+                                        <a href="{{ path("admin_api_teach_studyplansub_delete", {"id":sub['id']}) }}" title="删除"  data-confirm="确认要删除吗?" class="tree_branch_delete ajaxDelete"><i class="mdi mdi-delete"></i></a>
                                     {% endif %}
                                 </span>
                             </div>

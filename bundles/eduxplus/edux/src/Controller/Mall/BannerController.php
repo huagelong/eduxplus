@@ -50,14 +50,14 @@ class BannerController extends BaseAdminController
          $grid->setTableAction('admin_mall_banner_edit', function ($obj) {
              $id = $obj['id'];
              $url = $this->generateUrl('admin_mall_banner_edit', ['id' => $id]);
-             $str = '<a href=' . $url . ' data-width="1000px" data-title="编辑" title="编辑" class=" btn btn-info btn-xs poppage"><i class="fas fa-edit"></i></a>';
+             $str = '<a href=' . $url . ' data-width="1000px" data-title="编辑" title="编辑" class=" btn btn-info btn-xs poppage"><i class="mdi mdi-file-document-edit"></i></a>';
              return  $str;
          });
 
          $grid->setTableAction('admin_api_mall_banner_delete', function ($obj) {
              $id = $obj['id'];
              $url = $this->generateUrl('admin_api_mall_banner_delete', ['id' => $id]);
-             return '<a href=' . $url . ' data-confirm="确认要删除吗?" title="删除" class=" btn btn-danger btn-xs ajaxDelete"><i class="fas fa-trash"></i></a>';
+             return '<a href=' . $url . ' data-confirm="确认要删除吗?" title="删除" class=" btn btn-danger btn-xs ajaxDelete"><i class="mdi mdi-delete"></i></a>';
          });
 
          //批量删除
@@ -212,14 +212,14 @@ class BannerController extends BaseAdminController
         $grid->setTableAction('admin_mall_bannermain_edit', function ($obj) {
             $id = $obj['id'];
             $url = $this->generateUrl('admin_mall_bannermain_edit', ['id' => $id]);
-            $str = '<a href=' . $url . ' data-width="1000px" data-title="编辑" title="编辑" class=" btn btn-info btn-xs poppage"><i class="fas fa-edit"></i></a>';
+            $str = '<a href=' . $url . ' data-width="1000px" data-title="编辑" title="编辑" class=" btn btn-info btn-xs poppage"><i class="mdi mdi-file-document-edit"></i></a>';
             return  $str;
         });
 
         $grid->setTableAction('admin_api_mall_bannermain_delete', function ($obj) {
             $id = $obj['id'];
             $url = $this->generateUrl('admin_api_mall_bannermain_delete', ['id' => $id]);
-            return '<a href=' . $url . ' data-confirm="确认要删除吗?" title="删除" class=" btn btn-danger btn-xs ajaxDelete"><i class="fas fa-trash"></i></a>';
+            return '<a href=' . $url . ' data-confirm="确认要删除吗?" title="删除" class=" btn btn-danger btn-xs ajaxDelete"><i class="mdi mdi-delete"></i></a>';
         });
 
         //批量删除

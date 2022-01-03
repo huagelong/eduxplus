@@ -49,14 +49,14 @@ class SchoolController extends BaseAdminController
         $grid->setTableAction('admin_jw_school_edit', function($obj){
             $id = $obj["id"];
             $url = $this->generateUrl('admin_jw_school_edit',['id'=>$id]);
-            $str = '<a href='.$url.' data-width="800px" data-height="600px" title="编辑" data-title="编辑" class=" btn btn-info btn-xs poppage"><i class="fas fa-edit"></i></a>';
+            $str = '<a href='.$url.' data-width="800px" data-height="600px" title="编辑" data-title="编辑" class=" btn btn-info btn-xs poppage"><i class="mdi mdi-file-document-edit"></i></a>';
             return  $str;
         });
 
         $grid->setTableAction('admin_api_jw_school_delete', function ($obj) {
             $id = $obj["id"];
             $url = $this->generateUrl('admin_api_jw_school_delete', ['id' => $id]);
-            return '<a href=' . $url . ' data-confirm="确认要删除吗?"  title="删除" class=" btn btn-danger btn-xs ajaxDelete"><i class="fas fa-trash"></i></a>';
+            return '<a href=' . $url . ' data-confirm="确认要删除吗?"  title="删除" class=" btn btn-danger btn-xs ajaxDelete"><i class="mdi mdi-delete"></i></a>';
         });
 
         //批量删除
