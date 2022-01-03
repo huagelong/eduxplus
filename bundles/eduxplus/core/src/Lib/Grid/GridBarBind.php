@@ -11,7 +11,7 @@ namespace Eduxplus\CoreBundle\Lib\Grid;
 
 class GridBarBind
 {
-    protected $struct=["type"=>"button","route"=>"","url"=>"", "iconCLass"=>"fas fa-plus", "class"=>"btn-success", "isBlank"=>0];
+    protected $struct=["type"=>"button","route"=>"","url"=>"", "iconCLass"=>"mdi mdi-plus", "class"=>"btn-success", "isBlank"=>0];
     private $title=null;
     protected $service;
     protected $uid;

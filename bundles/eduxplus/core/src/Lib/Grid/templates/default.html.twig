@@ -3,7 +3,8 @@
         <div class="card-title">
             {% if searchField %}
             <div class="input-group input-group-sm">
-                <button type="button" class="btn btn-sm btn-primary search-btn-filter"><i class="fas fa-filter"></i> 查询</button>
+      <button class="btn btn-label btn-info btn-sm search-btn-filter">
+      <label><i class="mdi mdi-filter"></i></label> 查询</button>
             </div>
             {% endif %}
         </div>
@@ -12,7 +13,7 @@
             <div class="input-group input-group-sm">
                 {% for gk, gv in gridBar %}
                     {% if gv['type'] == 'button' %}
-                <a href="{{ gv['url'] }}" class="btn btn-sm {{ gv['class'] }}" title="{{ gk }}" style="margin-right: 10px;" {% if gv['isBlank'] %} target="_blank" {% endif %}>
+                <a href="{{ gv['url'] }}" class="btn btn-sm btn-info {{ gv['class'] }}" title="{{ gk }}" style="margin-right: 10px;" {% if gv['isBlank'] %} target="_blank" {% endif %}>
                     <i class="{{ gv['iconCLass'] }}"></i><span class="hidden-xs">{{ gk }}</span>
                 </a>
                     {% endif %}
@@ -29,8 +30,11 @@
             <tr>
               {% for cv in column %}
                 {% if cv['type'] == 'id' %}
-                  <th align="left">
-                      <input type="checkbox" id="choose-all" name="choose-all">
+                  <th align="left" >
+                   <div class="custom-control custom-checkbox">
+                      <input type="checkbox"  class="custom-control-input" id="choose-all" name="choose-all">
+                      <label class="custom-control-label"  for="choose-all"></label>
+                    </div>
                   </th>
                 {% endif %}
               {% endfor %}
@@ -53,7 +57,10 @@
                   <td align="left">
                       {% if array_get(v, 'isLock') %}
                       {% else %}
-                      <input type="checkbox" name="ids[]" value="{{ get_prop(v, cv["field"], cv['type'], cv['options'])|raw }}">
+                      <div class="custom-control custom-checkbox">
+                       <input type="checkbox" class="custom-control-input" name="ids[]" value="{{ get_prop(v, cv["field"], cv['type'], cv['options'])|raw }}">
+                       <label class="custom-control-label" ></label>
+                      </div>
                       {% endif %}
                   </td>
                   {% endif %}

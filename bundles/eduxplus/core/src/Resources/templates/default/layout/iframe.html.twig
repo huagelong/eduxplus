@@ -7,6 +7,7 @@
 
 {% block body_javascript %}
     {{ parent() }}
+    <script src="{{ asset('bundles/eduxpluscore/js/index.min.js') }}"></script>
     <script src="{{ asset('bundles/eduxpluscore/core/admin.js') }}"></script>
 {% endblock %}
 {% block body_main %}

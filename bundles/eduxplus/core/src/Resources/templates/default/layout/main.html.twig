@@ -4,7 +4,8 @@
 {% endblock %}
 {% block body_javascript %}
     {{ parent() }}
-    <script src="{{ asset('assets/admin/js/admin.js') }}"></script>
+    <script src="{{ asset('bundles/eduxpluscore/js/main.min.js') }}"></script>
+    <script src="{{ asset('bundles/eduxpluscore/core/admin.js') }}"></script>
     <script>
     $(function(){
     function setWatermark (str1, str2){

@@ -76,7 +76,7 @@ class ProductController extends BaseAdminController
 
         $grid->gbButton("添加")->route("admin_teach_product_add")
             ->url($this->generateUrl("admin_teach_product_add"))
-            ->styleClass("btn-success")->iconClass("fas fa-plus");
+            ->styleClass("btn-success")->iconClass("mdi mdi-plus");
 
         //搜索
         $grid->snumber("ID")->field("a.id");

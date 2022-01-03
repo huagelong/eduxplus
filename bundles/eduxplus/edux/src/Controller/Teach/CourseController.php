@@ -74,7 +74,7 @@ class CourseController extends BaseAdminController
         $delUrl = $this->genUrl("admin_api_teach_course_bathdelete");
         $grid->setBathDelete("admin_api_teach_course_bathdelete", $delUrl);
 
-        $grid->gbButton("添加")->iconClass("fas fa-plus")->route("admin_teach_course_add")
+        $grid->gbButton("添加")->iconClass("mdi mdi-plus")->route("admin_teach_course_add")
             ->url($this->generateUrl("admin_teach_course_add"))->styleClass("btn-success");
 
         //搜索

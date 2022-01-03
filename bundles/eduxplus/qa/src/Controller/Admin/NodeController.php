@@ -56,7 +56,7 @@ class NodeController extends BaseAdminController
 
         $grid->gbButton("添加")->route("qa_admin_node_add")
             ->url($this->generateUrl("qa_admin_node_add", ["chapterId"=>$chapterId, "chapterSubId"=>$chapterSubId]))
-            ->styleClass("btn-success")->iconClass("fas fa-plus");
+            ->styleClass("btn-success")->iconClass("mdi mdi-plus");
 
 
         $grid->setTableAction('qa_admin_node_view', function ($obj) {

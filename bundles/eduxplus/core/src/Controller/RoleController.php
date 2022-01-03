@@ -39,7 +39,7 @@ class RoleController extends BaseAdminController
 
         $grid->gbButton("添加")->route("admin_role_add")
             ->url($this->generateUrl("admin_role_add"))
-            ->styleClass("btn-success")->iconClass("fas fa-plus");
+            ->styleClass("btn-success")->iconClass("mdi mdi-plus");
 
         //绑定菜单
         $grid->setTableAction('admin_role_bindmenu', function($obj){

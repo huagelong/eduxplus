@@ -36,11 +36,11 @@ class OptionController extends BaseAdminController
 
         $grid->gbButton("文本配置")->route("admin_option_add")
             ->url($this->generateUrl("admin_option_add",["type"=>1]))
-            ->styleClass("btn-success")->iconClass("fas fa-plus");
+            ->styleClass("btn-success")->iconClass("mdi mdi-plus");
 
         $grid->gbButton("上传文件配置")->route("admin_option_add")
             ->url($this->generateUrl("admin_option_add",["type"=>2]))
-            ->styleClass("btn-primary")->iconClass("fas fa-plus");
+            ->styleClass("btn-primary")->iconClass("mdi mdi-plus");
 
         //搜索
         $grid->sselect("配置分组")->field("a.optionGroup")->options($optionService->getAllOptionGroup());

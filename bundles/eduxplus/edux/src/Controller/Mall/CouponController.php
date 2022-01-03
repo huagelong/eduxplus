@@ -88,7 +88,7 @@ class CouponController extends BaseAdminController
 
         $grid->gbButton("添加")->route("admin_mall_coupon_add")
             ->url($this->generateUrl("admin_mall_coupon_add"))
-            ->styleClass("btn-success")->iconClass("fas fa-plus");
+            ->styleClass("btn-success")->iconClass("mdi mdi-plus");
         //搜索
         $select = $categoryService->categorySelect();
         $grid->snumber("ID")->field("a.id");

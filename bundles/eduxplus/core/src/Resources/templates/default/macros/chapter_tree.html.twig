@@ -11,7 +11,7 @@
 
                     <span class="pull-right dd-nodrag">
                 {% if is_authorized('admin_teach_chapter_add') and (chapter['parentId'] == 0) %}
-                    <a href="{{ path("admin_teach_chapter_add", {"id":chapter['courseId']}) }}?pid={{ chapter['id'] }}" data-title="添加子章节"  title="添加子章节" class="poppage"><i class="fas fa-plus"></i></a>
+                    <a href="{{ path("admin_teach_chapter_add", {"id":chapter['courseId']}) }}?pid={{ chapter['id'] }}" data-title="添加子章节"  title="添加子章节" class="poppage"><i class="mdi mdi-plus"></i></a>
                 {% endif %}
 
             {% if is_authorized('admin_teach_chapter_live') and (chapter['childs'] is empty) %}

@@ -33,7 +33,7 @@ class AgreementController extends BaseAdminController
 
         $grid->gbButton("添加")->route("admin_teach_agreement_add")
             ->url($this->generateUrl("admin_teach_agreement_add"))
-            ->styleClass("btn-success")->iconClass("fas fa-plus");
+            ->styleClass("btn-success")->iconClass("mdi mdi-plus");
 
         $grid->stext("名称")->field("a.name");
         $grid->sdaterange("创建时间")->field("a.createdAt");

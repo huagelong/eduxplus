@@ -48,7 +48,7 @@ class TestController extends BaseAdminController
 
         $grid->gbButton("添加")->route("qa_admin_test_add")
             ->url($this->generateUrl("qa_admin_test_add"))
-            ->styleClass("btn-success")->iconClass("fas fa-plus");
+            ->styleClass("btn-success")->iconClass("mdi mdi-plus");
 
         $grid->setTableAction('qa_admin_test_preview', function ($obj) {
             $id = $obj['id'];
@@ -60,7 +60,7 @@ class TestController extends BaseAdminController
         $grid->setTableAction('qa_admin_test_sub_index', function ($obj) {
             $id = $obj['id'];
             $url = $this->generateUrl('qa_admin_test_sub_index', ['id' => $id]);
-            $str = '<a href=' . $url . ' data-width="1000px" data-title="考题管理" title="考题管理" class=" btn btn-info btn-xs"><i class="fas fa-plus-square"></i></a>';
+            $str = '<a href=' . $url . ' data-width="1000px" data-title="考题管理" title="考题管理" class=" btn btn-info btn-xs"><i class="mdi mdi-plus-square"></i></a>';
             return  $str;
         });
 

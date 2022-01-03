@@ -33,7 +33,7 @@ class SchoolController extends BaseAdminController
         $grid->datetime("创建时间")->field("createdAt")->sort("a.createdAt");
 
         $grid->gbButton("添加")->route("admin_jw_school_add")
-            ->url($this->generateUrl("admin_jw_school_add"))->styleClass("btn-success")->iconClass("fas fa-plus");
+            ->url($this->generateUrl("admin_jw_school_add"))->styleClass("btn-success")->iconClass("mdi mdi-plus");
 
         $grid->stext("名称")->field("a.name");
         $grid->sdaterange("创建时间")->field("a.createdAt");

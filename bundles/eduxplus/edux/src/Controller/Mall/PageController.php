@@ -42,7 +42,7 @@ class PageController extends BaseAdminController
          //添加
          $grid->gbButton("添加")->route("admin_mall_page_add")
              ->url($this->generateUrl("admin_mall_page_add"))
-             ->styleClass("btn-success")->iconClass("fas fa-plus");
+             ->styleClass("btn-success")->iconClass("mdi mdi-plus");
          //搜索
          $grid->snumber("ID")->field("a.id");
          $grid->stext("单页名称")->field("a.name");

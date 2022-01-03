@@ -14,18 +14,6 @@ $(function () {
     });
   });
 
-  $(".logouthref").click(function(){
-      var url = $(this).data("url");
-      location.assign(url);
-  });
-
-  $(".iframe-refresh").click(function(){
-    $(".tab-loading").show();
-    var that = $("iframe", $(".tab-content>.active"));
-    that.attr('src', that.attr('src'));
-    $(".tab-loading").hide();
-  });
-
   if (!activeName) {
     activeName = $.cookie("menu_current");
   }
@@ -383,6 +371,7 @@ $(function () {
   });
 
   $("#choose-all").click(function() {
+    console.log(this.checked);
     if (this.checked) {
       $("input[name='ids[]']:checkbox").each(function() {
         $(this).prop("checked", true);
