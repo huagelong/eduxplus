@@ -129,7 +129,7 @@
   function prvcontainerPosition() {
     var _this2 = this;
 
-    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.ope;
+    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.options.state;
 
     this.$container.css('margin-left', function () {
       var values = [0, '-' + _this2.privateHandleWidth + 'px'];

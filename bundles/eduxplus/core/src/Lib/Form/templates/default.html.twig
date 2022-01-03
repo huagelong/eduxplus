@@ -175,7 +175,6 @@
                     <div class="col-sm-10">
                         <div class="input-group">
                         <input type="checkbox"
-
                             {% if v['attributes'] %}
                                 {% for ok,ov in v['attributes'] %}
                                     {{ ok }}="{{ ov }}"
@@ -183,8 +182,7 @@
                             {% endif %}
 
                             {% if v['defaultValue'] %} checked {% endif %}
-
-                               data-bootstrap-switch data-off-color="danger" data-on-color="success"
+                            data-bootstrap-switch
                         >
                         </div>
                     </div>
