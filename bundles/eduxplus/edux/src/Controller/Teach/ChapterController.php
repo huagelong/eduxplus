@@ -4,221 +4,409 @@
  * @Author: kaihui.wang
  * @Contact  hpuwang@gmail.com
  * @Version: 1.0.0
- * @Date: 2020/4/13 09:57
+ * @Date: 2020/4/19 19:53
  */
 
 namespace Eduxplus\EduxBundle\Controller\Teach;
 
-use Eduxplus\EduxBundle\Service\Teach\CategoryService;
-use Eduxplus\EduxBundle\Service\Teach\ProductService;
-use Eduxplus\CoreBundle\Service\UserService;
+use Eduxplus\EduxBundle\Service\Teach\ChapterService;
+use Eduxplus\EduxBundle\Service\Teach\CourseService;
 use Eduxplus\CoreBundle\Lib\Base\BaseAdminController;
+use Eduxplus\CoreBundle\Lib\Service\Live\AliyunLiveService;
+use Eduxplus\CoreBundle\Lib\Service\Live\TengxunyunLiveService;
+use Eduxplus\CoreBundle\Lib\Service\Vod\AliyunVodService;
+use Eduxplus\CoreBundle\Lib\Service\Vod\TengxunyunVodService;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Eduxplus\CoreBundle\Lib\Form\Form;
 use Eduxplus\CoreBundle\Lib\Grid\Grid;
 
-class ProductController extends BaseAdminController
+class ChapterController extends BaseAdminController
 {
 
     /**
-     * @Route("/teach/product/index", name="admin_teach_product_index")
+     *
+     * @Route("/teach/chapter/index/{id}", name="admin_teach_chapter_index")
      */
-    public function indexAction(Request $request, Grid $grid, ProductService $productService, CategoryService $categoryService, UserService $userService)
+    public function indexAction($id, ChapterService $chapterService)
     {
-
-        $select = $categoryService->categorySelect();
-
-        $pageSize = 40;
-        $grid->setListService($productService, "getList");
-        $grid->text("#")->field("id")->sort("a.id");
-        $grid->text("产品名称")->field("name")->sort("a.name");
-        $grid->text("类别")->field("category")->sort("a.category");
-        $grid->text("自动分班最大班级人数")->field("maxMemberNumber");
-        $grid->text("创建人")->field("creater");
-        $grid->boole2("上架？")->field("status")->actionCall("admin_api_teach_product_switchStatus", function ($obj) use($productService) {
-            $id = $productService->getPro($obj, "id");
-            $defaultValue = $productService->getPro($obj, "status");
-            $url = $this->generateUrl('admin_api_teach_product_switchStatus', ['id' => $id]);
-            $checkStr = $defaultValue ? "checked" : "";
-            $confirmStr = $defaultValue ? "确认要下架吗？" : "确认要上架吗?";
-            $str = "<input type=\"checkbox\" data-bootstrap-switch-ajaxput href=\"{$url}\" data-confirm=\"{$confirmStr}\" {$checkStr} >";
-            return $str;
-        });
-        $grid->text("类别")->field("category");
-        $grid->text("协议")->field("agreement");
-        $grid->datetime("创建时间")->field("createdAt")->sort("a.createdAt");
-
-
-        $grid->setTableAction('admin_teach_studyplan_index', function ($obj) {
-            $id = $obj['id'];
-            $url = $this->generateUrl('admin_teach_studyplan_index', ['id' => $id]);
-            $str = '<a href=' . $url . ' data-width="1000px" title="开课计划管理" class=" btn btn-info btn-xs"><i class="mdi iconfont icon-zhangjiekecheng"></i></a>';
-            return  $str;
-        });
-
-        $grid->setTableAction('admin_teach_product_edit', function ($obj) {
-            $id = $obj['id'];
-            $url = $this->generateUrl('admin_teach_product_edit', ['id' => $id]);
-            $str = '<a href=' . $url . ' data-width="1000px" data-title="编辑" title="编辑" class=" btn btn-info btn-xs poppage"><i class="mdi mdi-file-document-edit"></i></a>';
-            return  $str;
-        });
-
-        $grid->setTableAction('admin_api_teach_product_delete', function ($obj) {
-            $id = $obj['id'];
-            $url = $this->generateUrl('admin_api_teach_product_delete', ['id' => $id]);
-            return '<a href=' . $url . ' data-confirm="确认要删除吗?" title="删除" class=" btn btn-danger btn-xs ajaxDelete"><i class="mdi mdi-delete"></i></a>';
-        });
-
-        //批量删除
-        $bathDelUrl = $this->genUrl("admin_api_teach_product_bathdelete");
-        $grid->setBathDelete("admin_api_teach_product_bathdelete", $bathDelUrl);
-
-        $grid->gbButton("添加")->route("admin_teach_product_add")
-            ->url($this->generateUrl("admin_teach_product_add"))
-            ->styleClass("btn-success")->iconClass("mdi mdi-plus");
-
-        //搜索
-        $grid->snumber("ID")->field("a.id");
-        $grid->stext("名称")->field("a.name");
-        $grid->sselect("类别")->field("a.categoryId")->options($select);
-        $grid->sselect("上架？")->field("a.status")->options(["全部" => -1, "下架" => 0, "上架" => 1]);
-        $grid->ssearchselect("创建人")->field("a.createUid")->options(function () use ($request, $userService) {
-            $values = $request->get("values");
-            $createUid = ($values && isset($values["a.createUid"])) ? $values["a.createUid"] : 0;
-            if ($createUid) {
-                $users = $userService->searchResult($createUid);
-            } else {
-                $users = [];
-            }
-            return [$this->generateUrl("admin_api_glob_searchAdminUserDo"), $users];
-        });
-        $grid->sdaterange("创建时间")->field("a.createdAt");
-
         $data = [];
-        $data['list'] = $grid->create($request, $pageSize);
-        return $this->render("@EduxBundle/teach/product/index.html.twig", $data);
+        $data['all'] = $chapterService->getChapterTree(0, $id);
+        $data['id'] = $id;
+        return $this->render("@EduxBundle/teach/chapter/index.html.twig", $data);
     }
 
     /**
-     * @Route("/teach/product/add", name="admin_teach_product_add")
+     *
+     * @Route("/teach/chapter/add/{id}", name="admin_teach_chapter_add")
      */
-    public function addAction(Form $form, ProductService $productService, CategoryService $categoryService)
+    public function addAction($id, Form $form, Request $request, ChapterService $chapterService, CourseService $courseService)
     {
+        $select = $chapterService->chapterSelect($id);
 
-        $form->text("产品名称")->field("name")->isRequire(1);
-        $form->select("协议")->field("agreementId")->isRequire(1)->options($productService->getAgreements());
-        $form->select("类目")->field("categoryId")->isRequire(1)->options($categoryService->categorySelect());
-        $form->boole("上架？")->field("status")->isRequire(1);
-        $form->text("自动分班最大班级人数")->field("maxMemberNumber")->isRequire(1)->placeholder("请输入整数");
-        $form->textarea("简介")->field("descr");
+        $parentId = $request->get("pid");
+        $form->text("名称")->field("name")->isRequire(1);
+        $form->select("父章节")->field("parentId")->isRequire(1)->defaultValue($parentId)->options($select);
+        $form->datetime("上课时间")->field("openTime")->placeholder("直播必须输入上课时间");
+        $form->multiSelect("上课老师")->field("teachers[]")->isRequire(1)->options($chapterService->getTeachers());
 
-        $formData = $form->create($this->generateUrl("admin_api_teach_product_add"));
+        $courseInfo = $courseService->getById($id);
+        $teachType = $courseInfo['type'];
+        $form->select("学习方式")->field("studyWay")->isRequire(1)->options(function () use ($teachType) {
+            if ($teachType == 1) {
+                return [
+                    "直播" => 1,
+                    "点播" => 2
+                ];
+            } else if ($teachType == 2) {
+                return [
+                    "面授" => 3
+                ];
+            } else if ($teachType == 3) {
+                return [
+                    "直播" => 1,
+                    "点播" => 2,
+                    "面授" => 3
+                ];
+            }
+        });
+        $form->boole("免费？")->field("isFree")->isRequire(1);
+        $form->text("排序")->field("sort")->isRequire(1)->defaultValue(0);
+
+        $formData = $form->create($this->generateUrl("admin_api_teach_chapter_add", [
+            'id' => $id
+        ]));
         $data = [];
         $data["formData"] = $formData;
-        return $this->render("@EduxBundle/teach/product/add.html.twig", $data);
+        $data['id'] = $id;
+        return $this->render("@EduxBundle/teach/chapter/add.html.twig", $data);
     }
 
     /**
-     * @Route("/teach/product/add/do", name="admin_api_teach_product_add")
+     *
+     * @Route("/teach/chapter/add/do/{id}", name="admin_api_teach_chapter_add")
      */
-    public function addDoAction(Request $request, ProductService $productService)
+    public function addDoAction($id, Request $request, ChapterService $chapterService)
     {
         $name = $request->get("name");
-        $agreementId = (int) $request->get("agreementId");
-        $categoryId = (int) $request->get("categoryId");
-        $descr = $request->get("descr");
-        $status = $request->get("status");
-        $maxMemberNumber = (int) $request->get("maxMemberNumber");
-        $status = $status == "on" ? 1 : 0;
+        $parentId = (int) $request->get("parentId");
+        $openTime = $request->get("openTime");
+        $studyWay = (int) $request->get("studyWay");
+        $isFree = $request->get("isFree");
+        $sort = (int) $request->get("sort");
+        $teachers = $request->get("teachers");
 
-        if (!$name) return $this->responseError("产品名称不能为空!");
-        if (mb_strlen($name, 'utf-8') > 50) return $this->responseError("产品名称不能大于50字!");
-        if ($categoryId <= 0) return $this->responseError("请选择分类!");
-        $uid = $this->getUid();
-        $productService->add($uid, $name, $agreementId, $status, $maxMemberNumber, $categoryId, $descr);
+        $isFree = $isFree == "on" ? 1 : 0;
 
-        return $this->responseMsgRedirect("添加成功!", $this->generateUrl("admin_teach_product_index"));
-    }
+        if (!$name)
+            return $this->responseError("章节名称不能为空!");
+        if (mb_strlen($name, 'utf-8') > 50)
+            return $this->responseError("章节名称不能大于50字!");
 
-    /**
-     * @Route("/teach/product/edit/{id}", name="admin_teach_product_edit")
-     */
-    public function editAction($id, Form $form, ProductService $productService,  CategoryService $categoryService)
-    {
-        $info = $productService->getById($id);
+        if (!$teachers)
+            return $this->responseError("上课老师不能为空!");
 
+        $path = $chapterService->findPath($parentId);
+        $path = trim($path, ",");
+        if($path){
+            $pathArr = explode(",", $path);
+            $currentPathCount = count($pathArr);
+        }else{
+            $currentPathCount = 0;
+        }
+        if($currentPathCount>1) return $this->responseError("章节层级不能达到3级!");
 
-        $form->text("产品名称")->field("name")->isRequire(1)->defaultValue($info['name']);
-        $form->select("协议")->field("agreementId")->isRequire(1)->options($productService->getAgreements())->defaultValue($info['agreementId']);
-        $form->select("类目")->field("categoryId")->isRequire(1)->options($categoryService->categorySelect())->defaultValue($info['categoryId']);
-        $form->boole("上架？")->field("status")->isRequire(1)->defaultValue($info['status']);
-        $form->text("自动分班最大班级人数")->field("maxMemberNumber")->isRequire(1)->placeholder("请输入整数")->defaultValue($info['maxMemberNumber']);
-        $form->textarea("简介")->field("descr")->defaultValue($info['descr']);
-
-        $formData = $form->create($this->generateUrl("admin_api_teach_product_edit", ['id' => $id]));
-        $data = [];
-        $data["formData"] = $formData;
-        return $this->render("@EduxBundle/teach/product/edit.html.twig", $data);
-    }
-
-    /**
-     * @Route("/teach/product/edit/do/{id}", name="admin_api_teach_product_edit")
-     */
-    public function editDoAction($id, Request $request, ProductService $productService)
-    {
-        $name = $request->get("name");
-        $agreementId = (int) $request->get("agreementId");
-        $categoryId = (int) $request->get("categoryId");
-        $descr = $request->get("descr");
-        $status = $request->get("status");
-        $maxMemberNumber = (int) $request->get("maxMemberNumber");
-        $status = $status == "on" ? 1 : 0;
-
-        if (!$name) return $this->responseError("产品名称不能为空!");
-        if (mb_strlen($name, 'utf-8') > 50) return $this->responseError("产品名称不能大于50字!");
-        if ($categoryId <= 0) return $this->responseError("请选择分类!");
-        $uid = $this->getUid();
-        $productService->edit($id, $name, $agreementId, $status, $maxMemberNumber, $categoryId, $descr);
-
-        return $this->responseMsgRedirect("编辑成功!", $this->generateUrl("admin_teach_product_index"));
-    }
-
-    /**
-     * @Route("/teach/product/delete/do/{id}", name="admin_api_teach_product_delete")
-     */
-    public function deleteDoAction($id, ProductService $productService)
-    {
-        $productService->del($id);
-        return $this->responseMsgRedirect("删除成功!", $this->generateUrl("admin_teach_product_index"));
-    }
-
-    /**
-     * @Route("/teach/product/bathdelete/do", name="admin_api_teach_product_bathdelete")
-     */
-    public function bathdeleteDoAction(Request $request, ProductService $productService)
-    {
-        $ids = $request->get("ids");
-        if($ids){
-            foreach ($ids as $id){
-                $productService->del($id);
-            }
+        $openTime = $openTime ? strtotime($openTime) : 0;
+        if($studyWay == 1){
+            if(!$openTime) return $this->responseError("直播时，上课时间不能为空!");
         }
 
+        $chapterService->add($name, $teachers, $parentId, $openTime, $studyWay, $isFree, $sort, $id);
+
+        return $this->responseMsgRedirect("操作成功!", $this->generateUrl('admin_teach_chapter_index', [
+            'id' => $id
+        ]));
+    }
+
+    /**
+     *
+     * @Route("/teach/chapter/edit/{id}", name="admin_teach_chapter_edit")
+     */
+    public function editAction($id, Form $form, ChapterService $chapterService, CourseService $courseService)
+    {
+        $info = $chapterService->getById($id);
+
+        $select = $chapterService->chapterSelect($info["courseId"]);
+
+        $form->text("名称")->field("name")->isRequire(1)->defaultValue($info['name']);
+        $form->select("父章节")->field("parentId")->isRequire(1)->defaultValue($info['parentId'])->options($select);
+        $form->datetime("上课时间")->field("openTime")->defaultValue($info['openTime']?date('Y-m-d H:i', $info['openTime']):"")->placeholder("直播必须输入上课时间");
+
+        $teacherIds = $chapterService->getTeacherIds($id);
+        $form->multiSelect("上课老师")->field("teachers[]")->isRequire(1)->defaultValue($teacherIds)->options($chapterService->getTeachers());
+
+        $courseInfo = $courseService->getById($info["courseId"]);
+        $teachType = $courseInfo['type'];
+        $form->select("学习方式")->field("studyWay")->isRequire(1)->defaultValue($info['studyWay'])->options(function () use ($teachType) {
+            if ($teachType == 1) {
+                return [
+                    "直播" => 1,
+                    "点播" => 2
+                ];
+            } else if ($teachType == 2) {
+                return [
+                    "面授" => 3
+                ];
+            } else if ($teachType == 3) {
+                return [
+                    "直播" => 1,
+                    "点播" => 2,
+                    "面授" => 3
+                ];
+            }
+        });
+        $form->boole("免费？")->field("isFree")->isRequire(1)->defaultValue($info['isFree']);
+        $form->text("排序")->field("sort")->isRequire(1)->defaultValue(0)->defaultValue($info['sort']);
+
+        $formData = $form->create($this->generateUrl("admin_api_teach_chapter_edit", [
+            'id' => $id
+        ]));
+        $data = [];
+        $data["formData"] = $formData;
+        $data['id'] = $id;
+        return $this->render("@EduxBundle/teach/chapter/edit.html.twig", $data);
+    }
+
+    /**
+     *
+     * @Route("/teach/chapter/edit/do/{id}", name="admin_api_teach_chapter_edit")
+     */
+    public function editDoAction($id, Request $request, ChapterService $chapterService)
+    {
+        $name = $request->get("name");
+        $parentId = (int) $request->get("parentId");
+        $openTime = $request->get("openTime");
+        $studyWay = (int) $request->get("studyWay");
+        $isFree = $request->get("isFree");
+        $sort = (int) $request->get("sort");
+        $teachers = $request->get("teachers");
+        $isFree = $isFree == "on" ? 1 : 0;
+
+        if (!$name)
+            return $this->responseError("章节名称不能为空!");
+        if (mb_strlen($name, 'utf-8') > 50)
+            return $this->responseError("章节名称不能大于50字!");
+
+        if (!$teachers)
+            return $this->responseError("上课老师不能为空!");
+
+        $path = $chapterService->findPath($parentId);
+        $path = trim($path, ",");
+        if($path){
+            $pathArr = explode(",", $path);
+            $currentPathCount = count($pathArr);
+        }else{
+            $currentPathCount =0;
+        }
+
+        if($currentPathCount>1) return $this->responseError("章节层级不能达到3级!");
+
+        $openTime = $openTime ? strtotime($openTime) : 0;
+
+        if($studyWay == 1){
+            if(!$openTime) return $this->responseError("直播时，上课时间不能为空!");
+        }
+
+        $chapterService->edit($id, $name, $teachers, $parentId, $openTime, $studyWay, $isFree, $sort);
+
+        $info = $chapterService->getById($id);
+
+        return $this->responseMsgRedirect("操作成功!", $this->generateUrl('admin_teach_chapter_index', [
+            'id' => $info['courseId']
+        ]));
+    }
+
+    /**
+     *
+     * @Route("/teach/chapter/delete/do/{id}", name="admin_api_teach_chapter_delete")
+     */
+    public function deleteDoAction($id, ChapterService $chapterService)
+    {
+        if ($chapterService->hasChild($id))
+            return $this->responseError("删除失败，请先删除子章节!");
+        $chapterService->del($id);
+        $info = $chapterService->getById($id);
+
+        return $this->responseMsgRedirect("删除成功!", $this->generateUrl("admin_teach_chapter_index"), [
+            'id' => $info['courseId']
+        ]);
+    }
+
+    /**
+     *
+     * @Route("/teach/chapter/updateSort/do/{id}", name="admin_api_teach_chapter_updateSort")
+     */
+    public function updateSortDoAction($id, Request $request, ChapterService $chapterService)
+    {
+        $data = $request->request->all();
+        $chapterService->updateSort($data);
+        return $this->responseMsgRedirect("更新排序成功!", $this->generateUrl("admin_teach_chapter_index", [
+            "id" => $id
+        ]));
+    }
+
+    /**
+     * 直播
+     * @Route("/teach/chapter/live/{id}", name="admin_teach_chapter_live")
+     */
+    public function liveAction($id, ChapterService $chapterService)
+    {
+        $info = $chapterService->getVideoById($id);
+        $data = [];
+        $data["id"] = $id;
+        $data["pushUrl"] = "";
+        $data["playUrl"] = "";
+        if($info && $info['liveData']){
+            $liveData = $chapterService->parseLiveData($info['liveData'], $info['videoChannel']);
+            if($liveData){
+                $data["pushUrl"] = $liveData['pushUrl'];
+                $data["playUrl"] = json_encode($liveData['playUrl']);
+//                if($info['videoChannel'] == 1){
+//                    $data["playUrl"] = json_encode($liveData['playUrl']);
+//                }else{
+//                    $data["playUrl"] = $liveData['playUrl'];
+//                }
+
+            }
+        }
+        $data['info'] = $info;
+
+        return $this->render("@EduxBundle/teach/chapter/live.html.twig", $data);
+    }
+
+
+    /**
+     * 直播 生成数据
+     * @Route("/teach/chapter/live/do/{id}", name="admin_api_teach_chapter_live")
+     */
+    public function liveDoAction($id, ChapterService $chapterService)
+    {
+        $info = $chapterService->getById($id);
+        $chapterService->genLiveData($id);
         if($this->error()->has()){
             return $this->responseError($this->error()->getLast());
         }
-
-        return $this->responseMsgRedirect("删除成功!", $this->generateUrl("admin_teach_product_index"));
+        return $this->responseMsgRedirect("操作成功!", $this->generateUrl("admin_teach_chapter_index", [
+            "id" => $info['courseId']
+        ]));
     }
 
     /**
-     * @Route("/teach/product/switchStatus/do/{id}", name="admin_api_teach_product_switchStatus")
+     * 点播
+     * @Route("/teach/chapter/vod/{id}", name="admin_teach_chapter_vod")
      */
-    public function switchStatusAction($id, ProductService $productService, Request $request)
+    public function vodAction($id, Form $form, ChapterService $chapterService, TengxunyunVodService $tengxunyunVodService, AliyunVodService $aliyunVodService)
     {
-        $state = (int) $request->get("state");
-        $productService->switchStatus($id, $state);
-        return $this->responseMsgRedirect("操作成功!");
+        $info = $chapterService->getVideoById($id);
+
+        if(!$info){
+            $vodAdapter = $chapterService->getOption("app.vod.adapter");
+        }else{
+            $vodAdapter = $info['videoChannel'];
+        }
+
+        $form->text("视频id")->field("videoId")->placeholder("如果不输入视频id，可以通过下面控件上传视频")->defaultValue(isset($info['videoId']) ? $info['videoId'] : "");
+        $form->disableSubmit();
+
+        $formData = $form->create($this->generateUrl("admin_api_teach_chapter_vod", [
+            'id' => $id
+        ]));
+        $data = [];
+        $data["formData"] = $formData;
+        $data['id'] = $id;
+        $data['vodAdapter'] = $vodAdapter;
+        $data['userId'] = $aliyunVodService->getConfigUserId();
+        $data['tengxunyunAppId'] = $tengxunyunVodService->getAppId();
+        $data['fileName'] = $chapterService->getVideoName($id);
+        $data['region'] = $chapterService->getRegion();
+        $data['videoInfo'] = $info;
+
+        if($vodAdapter == 2){
+            $play = $aliyunVodService->getVodPlayInfo($info["videoId"]);
+            $data['palyAuth'] = $play['playAuth'];
+        }
+
+
+        return $this->render("@EduxBundle/teach/chapter/video.html.twig", $data);
+    }
+
+    /**
+     *
+     * @Route("/teach/chapter/video/do/{id}", name="admin_api_teach_chapter_vod")
+     */
+    public function vodDoAction($id, Request $request, ChapterService $chapterService)
+    {
+        $type = 2; //点播
+        $videoId = $request->get("videoId");
+
+        if (!$videoId) return $this->responseError("视频id不能为空!");
+
+        $videoChannel = $chapterService->getOption("app.vod.adapter");
+        if (!$videoChannel)  return $this->responseError("请先设置点播服务商!");
+
+        $chapterService->addVideos($id, $type, $videoChannel, $videoId);
+
+        if ($this->error()->has()) {
+            return $this->responseError($this->error()->getLast());
+        }
+
+        $chapterInfo = $chapterService->getById($id);
+        $courseId = $chapterInfo["courseId"];
+        return $this->responseMsgRedirect("操作成功!", $this->generateUrl("admin_teach_chapter_index", [
+            "id" => $courseId
+        ]));
+    }
+
+    /**
+     *
+     * @Route("/teach/chapter/materials/{id}", name="admin_teach_chapter_materials")
+     */
+    public function materialsAction($id, Form $form, ChapterService $chapterService)
+    {
+        $info = $chapterService->getMaterialsById($id);
+        $options = [];
+        $options["data-upload-url"] = $this->generateUrl("admin_glob_upload", ["type" => "course_materials"]);
+        $options["data-min-file-count"] = 1;
+        $options['data-max-total-file-count'] = 100;
+        $options["data-max-file-size"] = 1024 * 50; //50m
+        $options["data-required"] = 1;
+        if ($info) $options['data-initial-preview'] = $info['path'];
+        if ($info) $options['data-initial-preview-config'] = $chapterService->getInitialPreviewConfig($info['path']);
+
+        $form->file("附件")->field("path")->attr($options)->defaultValue(isset($info['path']) ? $info['path'] : "");
+
+        $formData = $form->create($this->generateUrl("admin_api_teach_chapter_materials", [
+            'id' => $id
+        ]));
+        $data = [];
+        $data["formData"] = $formData;
+        $data['id'] = $id;
+        return $this->render("@EduxBundle/teach/chapter/materials.html.twig", $data);
+    }
+
+    /**
+     *
+     * @Route("/teach/chapter/materials/do/{id}", name="admin_api_teach_chapter_materials")
+     */
+    public function materialsDoAction($id, Request $request, ChapterService $chapterService)
+    {
+        $path = $request->get("path");
+        if (!$path) return $this->responseError("附件不能为空!");
+
+        $chapterService->addMaterials($id, $path);
+
+        return $this->responseMsgRedirect("操作成功!", $this->generateUrl("admin_teach_chapter_index", [
+            "id" => $id
+        ]));
     }
 }
