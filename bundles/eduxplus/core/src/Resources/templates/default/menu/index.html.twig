@@ -4,14 +4,12 @@
 {% block page_title %}菜单管理{% endblock %}
 
 {% block head_custom_stylesheets %}
-    <link rel="stylesheet" href="{{ asset('assets/plugins/jquery-nestable2/jquery.nestable.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/plugins/fontawesome-iconpicker/css/fontawesome-iconpicker.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/eduxpluscore/js/jquery-nestable2/jquery.nestable.min.css') }}">
 {% endblock %}
 
 {% block body_javascript %}
     {{ parent() }}
-    <script src="{{ asset('assets/plugins/jquery-nestable2/jquery.nestable.min.js') }}"></script>
-    <script src="{{ asset('assets/plugins/fontawesome-iconpicker/js/fontawesome-iconpicker.min.js') }}"></script>
+    <script src="{{ asset('bundles/eduxpluscore/js/jquery-nestable2/jquery.nestable.min.js') }}"></script>
 {% endblock %}
 
 {% block body_custom_javascript %}
@@ -23,7 +21,7 @@
                 height:"500px"
             })
 
-            $('.select2').select2({ theme: 'bootstrap4', "allowClear":true,"placeholder":{"id":"","text":"\u7236\u7ea7\u83dc\u5355"}});
+            $('.select2').select2({"allowClear":true,"placeholder":{"id":"","text":"\u7236\u7ea7\u83dc\u5355"}});
 
             $('.icon').iconpicker({placement:'bottomLeft'});
 
