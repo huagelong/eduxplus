@@ -54,7 +54,7 @@ class CourseController extends BaseAdminController
         $grid->setTableAction('admin_teach_chapter_index', function ($obj) {
             $id = $obj['id'];
             $url = $this->generateUrl('admin_teach_chapter_index', ['id' => $id]);
-            $str = '<a href=' . $url . ' data-width="1000px" title="章节管理" class=" btn btn-info btn-xs"><i class="fas fa-book"></i></a>';
+            $str = '<a href=' . $url . ' data-width="1000px" title="章节管理" class=" btn btn-info btn-xs"><i class="mdi mdi-book"></i></a>';
             return  $str;
         });
 

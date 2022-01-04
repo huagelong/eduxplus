@@ -68,7 +68,7 @@ class ChapterController extends BaseAdminController
         $grid->setTableAction('qa_admin_chaptersub_index', function ($obj) {
             $id = $obj['id'];
             $url = $this->generateUrl('qa_admin_chaptersub_index', ['chapterId' => $id]);
-            $str = '<a href=' . $url . ' data-width="1000px" data-title="章节点管理" title="章节点管理" class=" btn btn-info btn-xs"><i class="fas fa-tree"></i></a>';
+            $str = '<a href=' . $url . ' data-width="1000px" data-title="章节点管理" title="章节点管理" class=" btn btn-info btn-xs"><i class="mdi mdi-tree"></i></a>';
             return  $str;
         });
 

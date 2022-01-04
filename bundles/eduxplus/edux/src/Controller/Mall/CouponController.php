@@ -62,7 +62,7 @@ class CouponController extends BaseAdminController
             $hasCode = $obj['hasCode'];
             if($hasCode){
                 $url = $this->generateUrl('admin_mall_couponsub_index',['id'=>$id]);
-                $str = '<a href='.$url.' data-width="1000px" data-title="优惠码管理" title="优惠码管理" class=" btn btn-info btn-xs"><i class="fas fa-database"></i></a>';
+                $str = '<a href='.$url.' data-width="1000px" data-title="优惠码管理" title="优惠码管理" class=" btn btn-info btn-xs"><i class="mdi mdi-database"></i></a>';
                 return  $str;
             }else{
                 return "";
@@ -332,12 +332,12 @@ class CouponController extends BaseAdminController
             }
             $grid->gbButton("生成")->route("admin_mall_couponsub_create")
                 ->url($this->generateUrl("admin_mall_couponsub_create"))
-                ->styleClass("btn-primary")->iconClass("fas fa-gavel");
+                ->styleClass("btn-primary")->iconClass("mdi mdi-gavel ");
         }
 
         $grid->gbButton("导出")->route("admin_mall_couponsub_export")
             ->url($this->generateUrl("admin_mall_couponsub_export", ["id"=>$id]))
-            ->styleClass("btn-success")->iconClass("fas fa-download")->isBlank(1);
+            ->styleClass("btn-success")->iconClass("mdi mdi-download")->isBlank(1);
 
         //搜索
         $grid->snumber("ID")->field("a.id");

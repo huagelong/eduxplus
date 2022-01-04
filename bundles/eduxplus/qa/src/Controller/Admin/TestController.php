@@ -53,7 +53,7 @@ class TestController extends BaseAdminController
         $grid->setTableAction('qa_admin_test_preview', function ($obj) {
             $id = $obj['id'];
             $url = $this->generateUrl('qa_admin_test_preview', ['id' => $id]);
-            $str = '<a href=' . $url . ' data-width="1000px" data-title="试卷预览" title="试卷预览" class=" btn btn-info btn-xs"><i class="fas fa-search"></i></a>';
+            $str = '<a href=' . $url . ' data-width="1000px" data-title="试卷预览" title="试卷预览" class=" btn btn-info btn-xs"><i class="mdi mdi-file-eye"></i></a>';
             return  $str;
         });
 

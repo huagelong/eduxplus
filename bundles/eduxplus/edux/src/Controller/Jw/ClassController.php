@@ -38,7 +38,7 @@ class ClassController extends BaseAdminController
         $grid->setTableAction('admin_jw_class_members', function ($obj) {
             $id = $obj["id"];
             $url = $this->generateUrl('admin_jw_class_members', ['classesId' => $id]);
-            $str = '<a href=' . $url . ' data-title="班级成员" title="班级成员" class=" btn btn-default btn-xs"><i class="fas fa-user-friends"></i></a>';
+            $str = '<a href=' . $url . ' data-title="班级成员" title="班级成员" class=" btn btn-default btn-xs"><i class="mdi mdi-account-group"></i></a>';
             return  $str;
         });
 

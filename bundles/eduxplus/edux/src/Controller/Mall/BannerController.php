@@ -43,7 +43,7 @@ class BannerController extends BaseAdminController
          $grid->setTableAction('admin_mall_bannermain_index', function ($obj) {
              $id = $obj['id'];
              $url = $this->generateUrl('admin_mall_bannermain_index', ['pid' => $id]);
-             $str = '<a href=' . $url . ' data-width="1000px" data-title="单个banner列表" title="单个banner列表" class=" btn btn-info btn-xs"><i class="fas fa-list-ol"></i></a>';
+             $str = '<a href=' . $url . ' data-width="1000px" data-title="单个banner列表" title="单个banner列表" class=" btn btn-info btn-xs"><i class="mdi mdi-format-list-numbered"></i></a>';
              return  $str;
          });
          //编辑
