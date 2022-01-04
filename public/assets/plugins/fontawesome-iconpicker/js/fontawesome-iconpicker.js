@@ -1332,7 +1332,7 @@
             title: "fas fa-barcode",
             searchTerms: [ "scan" ]
         }, {
-            title: "fas fa-bars",
+            title: "mdi mdi-menu",
             searchTerms: [ "checklist", "drag", "hamburger", "list", "menu", "nav", "navigation", "ol", "reorder", "settings", "todo", "ul" ]
         }, {
             title: "fas fa-baseball-ball",
@@ -2349,16 +2349,16 @@
             title: "fas fa-external-link-square-alt",
             searchTerms: [ "external-link-square", "new", "open" ]
         }, {
-            title: "fas fa-eye",
+            title: "mdi mdi-eye",
             searchTerms: [ "optic", "see", "seen", "show", "sight", "views", "visible" ]
         }, {
             title: "far fa-eye",
             searchTerms: [ "optic", "see", "seen", "show", "sight", "views", "visible" ]
         }, {
-            title: "fas fa-eye-dropper",
+            title: "mdi mdi-eye-dropper",
             searchTerms: [ "eyedropper" ]
         }, {
-            title: "fas fa-eye-slash",
+            title: "mdi mdi-eye-slash",
             searchTerms: [ "blind", "hide", "show", "toggle", "unseen", "views", "visible", "visiblity" ]
         }, {
             title: "far fa-eye-slash",
@@ -3249,13 +3249,13 @@
             title: "fab fa-kaggle",
             searchTerms: []
         }, {
-            title: "fas fa-key",
+            title: "mdi mdi-key",
             searchTerms: [ "password", "unlock" ]
         }, {
             title: "fab fa-keybase",
             searchTerms: []
         }, {
-            title: "fas fa-keyboard",
+            title: "mdi mdi-keyboard",
             searchTerms: [ "input", "type" ]
         }, {
             title: "far fa-keyboard",
@@ -4218,7 +4218,7 @@
             title: "fab fa-sass",
             searchTerms: []
         }, {
-            title: "fas fa-save",
+            title: "mdi mdi-content-save",
             searchTerms: [ "floppy", "floppy-o" ]
         }, {
             title: "far fa-save",
@@ -5088,10 +5088,10 @@
             title: "fab fa-viber",
             searchTerms: []
         }, {
-            title: "fas fa-video",
+            title: "mdi mdi-video",
             searchTerms: [ "camera", "film", "movie", "record", "video-camera" ]
         }, {
-            title: "fas fa-video-slash",
+            title: "mdi mdi-video-slash",
             searchTerms: []
         }, {
             title: "fas fa-vihara",

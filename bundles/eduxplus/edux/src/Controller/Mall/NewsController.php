@@ -58,7 +58,7 @@ class NewsController extends BaseAdminController
         $grid->setTableAction('admin_mall_news_view', function ($obj) {
             $id = $obj['id'];
             $url = $this->generateUrl('admin_mall_news_view', ['id' => $id]);
-            $str = '<a href=' . $url . ' data-title="查看" title="查看" class=" btn btn-default btn-xs poppage"><i class="fas fa-eye"></i></a>';
+            $str = '<a href=' . $url . ' data-title="查看" title="查看" class=" btn btn-default btn-xs poppage"><i class="mdi mdi-eye"></i></a>';
             return  $str;
         });
 

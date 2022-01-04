@@ -74,7 +74,7 @@ class MallGoodsController extends BaseAdminController
             }else{
                 $url = $this->generateUrl('admin_qa_mall_goods_view', ['id' => $id]);
             }
-            $str = '<a href=' . $url . ' data-title="查看" title="查看" class=" btn btn-default btn-xs poppage"><i class="fas fa-eye"></i></a>';
+            $str = '<a href=' . $url . ' data-title="查看" title="查看" class=" btn btn-default btn-xs poppage"><i class="mdi mdi-eye"></i></a>';
             return  $str;
         });
 

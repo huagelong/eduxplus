@@ -16,9 +16,9 @@
 
                 {% if is_authorized('admin_api_teach_studyplan_switchStatus') %}
                     {% if studyplan['status'] == 1 %}
-                    <a href="{{ path("admin_api_teach_studyplan_switchStatus", {"id":studyplan['id']}) }}" title="下架"  data-confirm="确认要下架吗?" class="ajaxDelete"><i class="fas fa-toggle-on"></i></a>
+                    <a href="{{ path("admin_api_teach_studyplan_switchStatus", {"id":studyplan['id']}) }}" title="下架"  data-confirm="确认要下架吗?" class="ajaxDelete"><i class="mdi mdi-toggle-switch"></i></a>
                     {% else %}
-                        <a href="{{ path("admin_api_teach_studyplan_switchStatus", {"id":studyplan['id']}) }}" title="上架"  data-confirm="确认要上架吗?" class="ajaxDelete"><i class="fas fa-toggle-off"></i></a>
+                        <a href="{{ path("admin_api_teach_studyplan_switchStatus", {"id":studyplan['id']}) }}" title="上架"  data-confirm="确认要上架吗?" class="ajaxDelete"><i class="mdi mdi-toggle-switch-off"></i></a>
                     {% endif %}
                 {% endif %}
 

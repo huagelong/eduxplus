@@ -16,7 +16,7 @@
 
             {% if is_authorized('admin_teach_chapter_live') and (chapter['childs'] is empty) %}
                     {% if (chapter['studyWay'] == 1) and ((chapter['video'] and chapter['video']['type']==1) or ( chapter['video'] is empty)) %}
-                    <a href="{{ path("admin_teach_chapter_live", {"id":chapter['id']}) }}" data-title="管理直播"  title="管理直播" class="poppage" {% if chapter['video'] and chapter['video']['liveData']!="" %} style="color:#75C82A"  {% endif %} ><i class="fas fa-video"></i></a>
+                    <a href="{{ path("admin_teach_chapter_live", {"id":chapter['id']}) }}" data-title="管理直播"  title="管理直播" class="poppage" {% if chapter['video'] and chapter['video']['liveData']!="" %} style="color:#75C82A"  {% endif %} ><i class="mdi mdi-video"></i></a>
                     {% endif %}
             {% endif %}
 
