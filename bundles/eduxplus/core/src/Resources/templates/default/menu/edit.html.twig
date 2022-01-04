@@ -1,23 +1,10 @@
 {% extends "@CoreBundle/layout/pop.html.twig" %}
 
-{% block head_custom_stylesheets %}
-    <link rel="stylesheet" href="{{ asset('assets/plugins/select2/css/select2.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/plugins/fontawesome-iconpicker/css/fontawesome-iconpicker.min.css') }}">
-{% endblock %}
-{% block body_javascript %}
-    {{ parent() }}
-    <script src="{{ asset('assets/plugins/select2/js/select2.full.min.js') }}"></script>
-    <script src="{{ asset('assets/plugins/fontawesome-iconpicker/js/fontawesome-iconpicker.min.js') }}"></script>
-    <script src="{{ asset('assets/plugins/bootstrap-switch/js/bootstrap-switch.min.js') }}"></script>
-{% endblock %}
 {% block body_custom_javascript %}
     <script>
         $(function(){
 
-            $('.select2').select2({ theme: 'bootstrap4', "allowClear":true,"placeholder":{"id":"","text":"\u7236\u7ea7\u83dc\u5355"}});
-
-            $('.icon').iconpicker({placement:'bottomLeft'});
+            $('.select2').select2({"size":"mini","allowClear":true,"placeholder":{"id":"","text":"\u7236\u7ea7\u83dc\u5355"}});
 
             $("input[data-bootstrap-switch]").each(function(){
                 $(this).bootstrapSwitch('state', $(this).prop('checked'));
@@ -36,7 +23,8 @@
 
 {% block page %}
 
-    <section class="content">
+    <div class="card">
+     <div class="card-body"> 
         <div class="row">
             <div class="col-md-12">
                 <div class="card card-default">
@@ -94,7 +82,7 @@
                                     </div>
                                     <span class="help-block">
                                         <i class="mdi mdi-information"></i>
-                                        &nbsp;更多图标请查看 <a href="http://fontawesome.io/icons/" target="_blank">http://fontawesome.io/icons/</a>
+                                        &nbsp;更多图标请查看 <a href="https://materialdesignicons.com/" target="_blank">https://materialdesignicons.com/</a>
                                     </span>
                                 </div>
                             </div>
@@ -158,5 +146,6 @@
                 </div>
             </div>
         </div>
-    </section>
+      </div>
+    </div>
 {% endblock %}

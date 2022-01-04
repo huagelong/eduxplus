@@ -3,74 +3,63 @@
 {% block page_title %}首页{% endblock %}
 
 {% block page %}
-<section class="content">
     <!-- Small boxes (Stat box) -->
   <div class="row">
-      <div class="col-lg-3 col-6">
-        <!-- small box -->
-        <div class="small-box bg-info">
-          <div class="inner">
-            <h3>¥{{ todayIncome }}</h3>
-
-            <p>今日收入</p>
-          </div>
-          <div class="icon">
-            <i class="ion ion-bag"></i>
-          </div>
-          {% if is_authorized('admin_mall_pay_index') %}
-          <a href="{{ path('admin_mall_pay_index') }}" class="small-box-footer">更多<i class="mdi mdi-arrow-right-circle"></i></a>
-          {% endif %}
-        </div>
+      <div class="col-sm-6 col-sm-6 col-md-6 col-lg-3">
+            <div class="card">
+              <div class="card-body">
+                <div class="flex-box">
+                  <div>
+                    <p class="text-muted m-b-10">今日收入</p>
+                    <h2>¥{{ todayIncome }}</h2>
+                  </div>
+                  <span class="img-avatar img-avatar-48 bg-primary"><i class="mdi mdi-account fs-22"></i></span>
+                </div>
+              </div>
+            </div>
       </div>
       <!-- ./col -->
-      <div class="col-lg-3 col-6">
-        <!-- small box -->
-        <div class="small-box bg-success">
-          <div class="inner">
-            <h3>{{ todayRegUserCount }}</h3>
-
-            <p>今日注册用户</p>
-          </div>
-          <div class="icon">
-            <i class="ion ion-stats-bars"></i>
-          </div>
-          {% if is_authorized('admin_user_index') %}
-          <a href="{{ path('admin_user_index') }}" class="small-box-footer">更多<i class="mdi mdi-arrow-right-circle"></i></a>
-          {% endif %}
-        </div>
+      <div class="col-sm-6 col-sm-6 col-md-6 col-lg-3">
+            <div class="card">
+              <div class="card-body">
+                <div class="flex-box">
+                  <div>
+                    <p class="text-muted m-b-10">今日注册用户</p>
+                    <h2>¥{{ todayRegUserCount }}</h2>
+                  </div>
+                  <span class="img-avatar img-avatar-48 bg-primary"><i class="mdi mdi-account fs-22"></i></span>
+                </div>
+              </div>
+            </div>
       </div>
-      <div class="col-lg-3 col-6">
-        <!-- small box -->
-        <div class="small-box bg-danger">
-          <div class="inner">
-            <h3>{{ todayOrderCount }}</h3>
-            <p>今日订单数</p>
+      <div class="col-sm-6 col-sm-6 col-md-6 col-lg-3">
+        <div class="card">
+          <div class="card-body">
+            <div class="flex-box">
+              <div>
+                <p class="text-muted m-b-10">今日订单数</p>
+                <h2>{{ todayOrderCount }}</h2>
+              </div>
+              <span class="img-avatar img-avatar-48 bg-primary"><i class="mdi mdi-shopping fs-22"></i></span>
+            </div>
           </div>
-          <div class="icon">
-            <i class="ion ion-pie-graph"></i>
-          </div>
-          {% if is_authorized('admin_mall_order_index') %}
-            <a href="{{ path('admin_mall_order_index') }}" class="small-box-footer">更多<i class="mdi mdi-arrow-right-circle"></i></a>
-          {% endif %}
         </div>
       </div>
       <!-- ./col -->
       <!-- ./col -->
-      <div class="col-lg-3 col-6">
+      <div class="col-sm-6 col-sm-6 col-md-6 col-lg-3">
+            <div class="card">
+              <div class="card-body">
+                <div class="flex-box">
+                  <div>
+                    <p class="text-muted m-b-10">总用户数</p>
+                    <h2>{{ totalRegUserCount }}</h2>
+                  </div>
+                  <span class="img-avatar img-avatar-48 bg-primary"><i class="mdi mdi-account fs-22"></i></span>
+                </div>
+              </div>
+            </div>
         <!-- small box -->
-        <div class="small-box bg-warning">
-          <div class="inner">
-            <h3>{{ totalRegUserCount }}</h3>
-
-            <p>总用户数</p>
-          </div>
-          <div class="icon">
-            <i class="ion ion-person-add"></i>
-          </div>
-          {% if is_authorized('admin_user_index') %}
-          <a href="{{ path('admin_user_index') }}" class="small-box-footer">更多<i class="mdi mdi-arrow-right-circle"></i></a>
-          {% endif %}
-        </div>
       </div>
       <!-- ./col -->
     </div>
@@ -129,5 +118,4 @@
       </div>
     </div>
   </div>
-</section>
 {% endblock %}
