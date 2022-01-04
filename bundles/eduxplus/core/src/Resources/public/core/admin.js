@@ -135,7 +135,7 @@ $(function () {
     }
       $(this).select2({
         language: "zh-CN",
-        theme: "bootstrap4",
+        placeholder: "",
         allowClear: allowClear,
       });
   })
@@ -151,7 +151,6 @@ $(function () {
 
     $(this).select2({
       language: "zh-CN",
-      theme: "bootstrap4",
       allowClear: allowClear,
       placeholder: "",
       ajax: {
