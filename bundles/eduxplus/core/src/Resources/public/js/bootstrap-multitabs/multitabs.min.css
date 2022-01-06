@@ -6,19 +6,19 @@
     width : 100%;
     z-index: 200;
     position: absolute;
-    display: flex;
 }
 .mt-nav-bar .mt-nav{
+    display: inline-block;
     background-color: #fff;
+    vertical-align: top;  /* remove vertical gap from display:inline */
+    margin-left: -1px;    /* remove 1px horizontal gap from display:inline */
+    margin-right : -4px;  /* remove 1px horizontal gap from display:inline and 3px ext padding-right, border-right from bootstrap nav*/
 }
 .mt-nav-panel{
     overflow: hidden;
 }
 .mt-nav-panel ul{
     width: 10000px;
-}
-.mt-nav-panel ul li {
-    position: relative;
 }
 .mt-tab-content{
     height: 100%;
@@ -28,7 +28,7 @@
     font-size: 10px;
     width: 16px;
     height: 16px;
-    top: 18px;
+    top: 15px;
     right: 10px;
     color: #c2c2c2;
     cursor: pointer;
@@ -48,7 +48,7 @@
     -webkit-transform: scale(.8);
     transform: scale(.8);
     display: inline-block;
-    /*vertical-align: -1px;*/
+    vertical-align: -1px;
 }
 li:hover .mt-close-tab {
     display: inline;
@@ -58,9 +58,8 @@ li:hover .mt-close-tab {
 }
 .mt-nav-bar a {
     cursor: pointer !important;
+    line-height: 1.95!important;
     max-height: 48px;
-    padding-top: 14px;
-    padding-bottom: 13px;
 }
 @media (max-width: 767px){
     .mt-tab-content{
@@ -108,7 +107,4 @@ li:hover .mt-close-tab {
 .mt-nav-tools-left li a,
 .mt-nav-tools-right li a {
     padding-right: 15px!important;
-}
-.mt-nav-bar .mt-nav .nav-tabs .mt-dragging {
-    margin-bottom: -1px;
 }

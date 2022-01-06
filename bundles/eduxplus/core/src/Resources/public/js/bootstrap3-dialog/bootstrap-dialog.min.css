@@ -1,0 +1,120 @@
+.bootstrap-dialog .modal-header {
+	border-top-left-radius:3px;
+	border-top-right-radius:3px
+}
+.bootstrap-dialog .bootstrap-dialog-title {
+	color:#fff;
+	display:inline-block;
+	font-size:16px
+}
+.bootstrap-dialog .bootstrap-dialog-message {
+	font-size:14px
+}
+.bootstrap-dialog .bootstrap-dialog-button-icon {
+	margin-right:3px
+}
+.bootstrap-dialog .bootstrap-dialog-close-button {
+	font-size:20px;
+	float:right;
+	opacity:.9;
+	filter:alpha(opacity=90)
+}
+.bootstrap-dialog .bootstrap-dialog-close-button:hover {
+	cursor:pointer;
+	opacity:1;
+	filter:alpha(opacity=100)
+}
+.bootstrap-dialog.type-default .modal-header {
+	background-color:#fff
+}
+.bootstrap-dialog.type-default .bootstrap-dialog-title {
+	color:#333
+}
+.bootstrap-dialog.type-info .modal-header {
+	background-color:#48b0f7
+}
+.bootstrap-dialog.type-primary .modal-header {
+	background-color:#33cabb
+}
+.bootstrap-dialog.type-success .modal-header {
+	background-color:#15c377
+}
+.bootstrap-dialog.type-warning .modal-header {
+	background-color:#faa64b
+}
+.bootstrap-dialog.type-danger .modal-header {
+	background-color:#f96868
+}
+.bootstrap-dialog.type-secondary .modal-header {
+	background-color:#e4e7ea
+}
+.bootstrap-dialog.type-purple .modal-header {
+	background-color:#926dde
+}
+.bootstrap-dialog.type-pink .modal-header {
+	background-color:#f96197
+}
+.bootstrap-dialog.type-cyan .modal-header {
+	background-color:#57c7d4
+}
+.bootstrap-dialog.type-yellow .modal-header {
+	background-color:#fcc525
+}
+.bootstrap-dialog.type-brown .modal-header {
+	background-color:#8d6658
+}
+.bootstrap-dialog.type-dark .modal-header {
+	background-color:#465161
+}
+.bootstrap-dialog.size-large .bootstrap-dialog-title {
+	font-size:24px
+}
+.bootstrap-dialog.size-large .bootstrap-dialog-close-button {
+	font-size:30px
+}
+.bootstrap-dialog.size-large .bootstrap-dialog-message {
+	font-size:18px
+}
+.bootstrap-dialog .icon-spin {
+	display:inline-block;
+	-moz-animation:spin 2s infinite linear;
+	-o-animation:spin 2s infinite linear;
+	-webkit-animation:spin 2s infinite linear;
+	animation:spin 2s infinite linear
+}
+@-moz-keyframes spin {
+	0% {
+	-moz-transform:rotate(0deg)
+}
+100% {
+	-moz-transform:rotate(359deg)
+}
+}@-webkit-keyframes spin {
+	0% {
+	-webkit-transform:rotate(0deg)
+}
+100% {
+	-webkit-transform:rotate(359deg)
+}
+}@-o-keyframes spin {
+	0% {
+	-o-transform:rotate(0deg)
+}
+100% {
+	-o-transform:rotate(359deg)
+}
+}@-ms-keyframes spin {
+	0% {
+	-ms-transform:rotate(0deg)
+}
+100% {
+	-ms-transform:rotate(359deg)
+}
+}@keyframes spin {
+	0% {
+	transform:rotate(0deg)
+}
+100% {
+	transform:rotate(359deg)
+}
+}

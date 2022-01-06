@@ -1,9 +1,0 @@
-$(function(){
-    $('.ajaxform').ajaxform();
-    $('.ajaxDelete').ajaxDelete();
-    $('.ajaxPut').ajaxPut();
-    $('.ajaxGet').ajaxGet();
-    $('.tip').tips();
-    $('.msgtip').msgtips();
-    $('.poppage').popPage();
-})
