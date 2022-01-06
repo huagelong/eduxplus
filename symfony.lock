@@ -20,6 +20,12 @@
     "aliyuncs/oss-sdk-php": {
         "version": "v2.4.3"
     },
+    "amphp/amp": {
+        "version": "v2.6.1"
+    },
+    "amphp/byte-stream": {
+        "version": "v1.8.1"
+    },
     "beberlei/doctrineextensions": {
         "version": "v1.3.0"
     },
@@ -50,8 +56,20 @@
     "composer/package-versions-deprecated": {
         "version": "1.11.99.4"
     },
+    "composer/pcre": {
+        "version": "1.0.0"
+    },
+    "composer/semver": {
+        "version": "3.2.7"
+    },
+    "composer/xdebug-handler": {
+        "version": "3.0.1"
+    },
     "danielstjules/stringy": {
         "version": "3.1.0"
+    },
+    "dnoegel/php-xdg-base-dir": {
+        "version": "v0.1.1"
     },
     "doctrine/annotations": {
         "version": "1.13",
@@ -169,6 +187,12 @@
     "ezimuel/ringphp": {
         "version": "1.2.0"
     },
+    "felixfbecker/advanced-json-rpc": {
+        "version": "v3.2.1"
+    },
+    "felixfbecker/language-server-protocol": {
+        "version": "1.5.1"
+    },
     "firebase/php-jwt": {
         "version": "v5.5.1"
     },
@@ -241,8 +265,14 @@
             "./config/packages/nelmio_cors.yaml"
         ]
     },
+    "netresearch/jsonmapper": {
+        "version": "v4.0.0"
+    },
     "nikic/php-parser": {
         "version": "v4.13.2"
+    },
+    "openlss/lib-array2xml": {
+        "version": "1.0.0"
     },
     "opis/closure": {
         "version": "3.6.2"
@@ -835,8 +865,14 @@
     "twig/twig": {
         "version": "v3.3.4"
     },
+    "vimeo/psalm": {
+        "version": "4.17.0"
+    },
     "webmozart/assert": {
         "version": "1.10.0"
+    },
+    "webmozart/path-util": {
+        "version": "2.3.0"
     },
     "xin/container": {
         "version": "2.0.1"
