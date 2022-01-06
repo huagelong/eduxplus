@@ -28,8 +28,18 @@ class IndexController extends BaseAdminController
     /**
      * @Route("/", name="admin_index")
      */
-    public function indexAction(){
-        return $this->render('@CoreBundle/index/index.html.twig');
+    public function indexAction(Request $request,MenuService $menuService){
+        $route = $request->getSession()->get("_route");
+        $uid = $this->getUid();
+
+        $menu = $menuService->getMyMenu($uid, 1);
+//        var_dump($menu);
+        $pmenuId = $menuService->getParentMenuId($route);
+        $data = [];
+        $data['menus'] = $menu;
+        $data['route'] = $route;
+        $data['pmenuId'] = $pmenuId;
+        return $this->render('@CoreBundle/index/index.html.twig', $data);
     }
 
 
