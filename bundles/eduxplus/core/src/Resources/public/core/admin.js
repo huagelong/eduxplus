@@ -2,33 +2,6 @@
  * Created by wangkaihui on 2020/4/11.
  */
 $(function () {
-  var activeName = "";
-  $(".nav-linktag").each(function () {
-    var href = $(this).attr("href");
-    if ($(this).hasClass("active")) {
-      activeName = href;
-    }
-    $(this).click(function () {
-      $.cookie("menu_current", href);
-      return true;
-    });
-  });
-
-  if (!activeName) {
-    activeName = $.cookie("menu_current");
-  }
-
-  //导航选中处理
-  if (activeName) {
-    $(".nav-linktag[href='" + activeName + "']")
-      .parents(".nav-item")
-      .find(".nav-link:first")
-      .addClass("active");
-    $(".nav-linktag[href='" + activeName + "']")
-      .parents(".nav-item")
-      .addClass("menu-open");
-  }
-
   var clipboard = new Clipboard(".clipboard");
   clipboard.on("success", function (e) {
     layer.msg("复制成功", {
