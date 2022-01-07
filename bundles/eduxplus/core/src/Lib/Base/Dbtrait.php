@@ -170,7 +170,7 @@ trait Dbtrait
         } else {
             $rs = $query->getResult();
         }
-        //        dump($query->getSql());
+//        $this->logger()->info($query->getSql());
         return $rs ? $rs : [];
     }
 
@@ -196,7 +196,7 @@ trait Dbtrait
             $rs = $query->getResult();
         }
         //        dump($query->getSql());
-
+//        $this->logger()->info($query->getSql());
         return $rs ? $rs : [];
     }
 

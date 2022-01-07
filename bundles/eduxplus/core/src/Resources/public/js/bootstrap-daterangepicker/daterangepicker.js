@@ -72,10 +72,10 @@
             direction: 'ltr',
             format: moment.localeData().longDateFormat('L'),
             separator: ' - ',
-            applyLabel: '确定',
-            cancelLabel: '取消',
+            applyLabel: 'Apply',
+            cancelLabel: 'Cancel',
             weekLabel: 'W',
-            customRangeLabel: '自定义范围',
+            customRangeLabel: 'Custom Range',
             daysOfWeek: moment.weekdaysMin(),
             monthNames: moment.monthsShort(),
             firstDay: moment.localeData().firstDayOfWeek()
@@ -1299,6 +1299,8 @@
                         var ampm = this.container.find('.left .ampmselect').val();
                         if (ampm === 'PM' && hour < 12)
                             hour += 12;
+
+
                         if (ampm === 'AM' && hour === 12)
                             hour = 0;
                     }
@@ -1312,10 +1314,12 @@
                 this.endDate = null;
                 this.setStartDate(date.clone());
             } else if (!this.endDate && date.isBefore(this.startDate)) {
+                this.autoUpdateInput=true;
                 //special case: clicking the same date for start/end,
                 //but the time of the end date is before the start date
                 this.setEndDate(this.startDate.clone());
             } else { // picking end
+                this.autoUpdateInput=true;
                 if (this.timePicker) {
                     var hour = parseInt(this.container.find('.right .hourselect').val(), 10);
                     if (!this.timePicker24Hour) {
@@ -1385,6 +1389,7 @@
         },
 
         clickApply: function(e) {
+            this.autoUpdateInput=true;
             this.hide();
             this.element.trigger('apply.daterangepicker', this);
         },

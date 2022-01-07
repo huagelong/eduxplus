@@ -23,6 +23,9 @@ class BaseService
 {
     use Dbtrait;
 
+    /**
+     * @var ManagerRegistry
+     */
     private $em;
     private $serializer;
     private $requestStack;
@@ -30,8 +33,17 @@ class BaseService
     private $params;
     private $propertyAccessor;
     private $tokenStorage;
+    /**
+     * @var ContainerInterface
+     */
     private $container;
+    /**
+     * @var Security
+     */
     private $security;
+    /**
+     * @var LoggerInterface
+     */
     private $logger;
 
     public function inject(ManagerRegistry $em,

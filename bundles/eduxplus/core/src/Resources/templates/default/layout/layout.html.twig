@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="{{ asset('bundles/eduxpluscore/css/animate.css') }}">
     <link rel="stylesheet" href="{{ asset('bundles/eduxpluscore/css/style-mini-v4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('bundles/eduxpluscore/js/select2/select2_v4.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('bundles/eduxpluscore/js/bootstrap-daterangepicker/daterangepicker.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/eduxpluscore/js/bootstrap-daterangepicker/daterangepicker.css') }}">
     <link rel="stylesheet" href="{{ asset('bundles/eduxpluscore/js/bootstrap-switch/css/bootstrap-switch.css') }}">
 {% endblock %}
 
@@ -25,35 +25,32 @@
             dashboard:"{{ path("admin_dashboard") }}",
         }
     </script>
-<script src="{{ asset('bundles/eduxpluscore/js/base/jquery.js') }}"></script>
+    <script src="{{ asset('bundles/eduxpluscore/js/base/jquery.js') }}"></script>
+    <script src="{{ asset('bundles/eduxpluscore/js/layer/layer.min.js') }}"></script>
+    <script src="{{ asset('bundles/eduxpluscore/js/base/utils.js') }}"></script>
+    <script src="{{ asset('bundles/eduxpluscore/js/base/plugins/jquery-form/jquery.form.js') }}"></script>
+    <script src="{{ asset('bundles/eduxpluscore/js/base/plugins/jquery-cookie/jquery.cookie.min.js') }}"></script>
+    <script src="{{ asset('bundles/eduxpluscore/js/base/plugins/hinclude.js') }}"></script>
+    <script src="{{ asset('bundles/eduxpluscore/js/base/modules/ajaxform.js') }}"></script>
+    <script src="{{ asset('bundles/eduxpluscore/js/base/modules/ajaxaction.js') }}"></script>
+    <script src="{{ asset('bundles/eduxpluscore/js/base/modules/captcha.js') }}"></script>
+    <script src="{{ asset('bundles/eduxpluscore/js/base/modules/widgets.js') }}"></script>
+    <script src="{{ asset('bundles/eduxpluscore/js/clipboardjs/clipboard.min.js') }}"></script>
+    <script src="{{ asset('bundles/eduxpluscore/js/bootstrap-switch/js/bootstrap-switch.js') }}"></script>
+    <script src="{{ asset('bundles/eduxpluscore/js/base/base.js') }}"></script>
+
+    <script src="{{ asset('bundles/eduxpluscore/js/popper.min.js') }}"></script>
+    <script src="{{ asset('bundles/eduxpluscore/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('bundles/eduxpluscore/js/perfect-scrollbar.min.js') }}"></script>
+    <script src="{{ asset('bundles/eduxpluscore/js/bootstrap-multitabs-v4/multitabs.min.js') }}"></script>
+    <script src="{{ asset('bundles/eduxpluscore/js/select2/select2.min.js') }}"></script>
+    <script src="{{ asset('bundles/eduxpluscore/js/select2/i18n/zh-CN.js') }}"></script>
+    <script src="{{ asset('bundles/eduxpluscore/js/moment.js/moment.js') }}"></script>
+    <script src="{{ asset('bundles/eduxpluscore/js/moment.js/locale/zh-cn.min.js') }}"></script>
+    <script src="{{ asset('bundles/eduxpluscore/js/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
 {% endblock %}
 
 {% block head_favicon %}
     {{ parent() }}
     <link rel="icon" type="image/png" href="{{ asset(option("app.icon", 1, 0)) }}">
-{% endblock %}
-
-{% block body_javascript %}
-    {{ parent() }}
-<script src="{{ asset('bundles/eduxpluscore/js/layer/layer.min.js') }}"></script>
-<script src="{{ asset('bundles/eduxpluscore/js/base/utils.js') }}"></script>
-<script src="{{ asset('bundles/eduxpluscore/js/base/plugins/jquery-form/jquery.form.js') }}"></script>
-<script src="{{ asset('bundles/eduxpluscore/js/base/plugins/jquery-cookie/jquery.cookie.min.js') }}"></script>
-<script src="{{ asset('bundles/eduxpluscore/js/base/plugins/hinclude.js') }}"></script>
-<script src="{{ asset('bundles/eduxpluscore/js/base/modules/ajaxform.js') }}"></script>
-<script src="{{ asset('bundles/eduxpluscore/js/base/modules/ajaxaction.js') }}"></script>
-<script src="{{ asset('bundles/eduxpluscore/js/base/modules/captcha.js') }}"></script>
-<script src="{{ asset('bundles/eduxpluscore/js/base/modules/widgets.js') }}"></script>
-<script src="{{ asset('bundles/eduxpluscore/js/clipboardjs/clipboard.min.js') }}"></script>
-<script src="{{ asset('bundles/eduxpluscore/js/bootstrap-switch/js/bootstrap-switch.js') }}"></script>
-<script src="{{ asset('bundles/eduxpluscore/js/base/base.js') }}"></script>
-
-<script src="{{ asset('bundles/eduxpluscore/js/popper.min.js') }}"></script>
-<script src="{{ asset('bundles/eduxpluscore/js/bootstrap.min.js') }}"></script>
-<script src="{{ asset('bundles/eduxpluscore/js/perfect-scrollbar.min.js') }}"></script>
-<script src="{{ asset('bundles/eduxpluscore/js/bootstrap-multitabs-v4/multitabs.min.js') }}"></script>
-<script src="{{ asset('bundles/eduxpluscore/js/select2/select2.min.js') }}"></script>
-<script src="{{ asset('bundles/eduxpluscore/js/select2/i18n/zh-CN.js') }}"></script>
-<script src="{{ asset('bundles/eduxpluscore/js/bootstrap-daterangepicker/daterangepicker.min.js') }}"></script>
-<script src="{{ asset('bundles/eduxpluscore/js/index-mini-v4.min.js') }}"></script>
 {% endblock %}

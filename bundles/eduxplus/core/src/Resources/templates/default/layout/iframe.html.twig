@@ -39,17 +39,17 @@ jQuery( function() {
         <div class="lyear-layout-sidebar-info lyear-scroll">
           <nav class="sidebar-main">
             <ul class="nav-drawer">
-              <li class="nav-item active" data-toggle="tooltip" data-placement="right" title="首页">
-                <a href="javascript:void(0)" data-nav-target="#home">
-                  <i class="mdi mdi-home"></i>
-                </a>
-              </li>
+{#              <li class="nav-item active" data-toggle="tooltip" data-placement="right" title="首页">#}
+{#                <a href="#!" data-nav-target="#home">#}
+{#                  <i class="mdi mdi-home"></i>#}
+{#                </a>#}
+{#              </li>#}
 {% if menus %}
   {% set menuroot = menus[0] %}
     {% for menu in menuroot %}
           {% if menu.isShow and menu.isAccess == 0%}
-              <li class="nav-item" data-toggle="tooltip" data-placement="right" title="{{ menu.name }}">
-                <a href="javascript:void(0)" data-nav-target="#menu_{{ menu.id }}">
+              <li class="nav-item {% if route==menu.url or pmenuId==menu.id %} open active {% endif %}" data-toggle="tooltip" data-placement="right" title="{{ menu.name }}">
+                <a href="#!" data-nav-target="#menu_{{ menu.id }}">
                   <i class="mdi {{ menu.style|default('mdi-format-align-justify') }}"></i>
                 </a>
               </li>
@@ -61,25 +61,38 @@ jQuery( function() {
         </div>
         <!--菜单子栏目-->
         <div class="lyear-scroll lyear-layout-sub-column">
-          <ul class="nav nav-subnav" id="home" style="display: block">
-            <li class="active"> <a class="multitabs" href="{{ path("admin_dashboard") }}">首页</a> </li>
-          </ul>
+{#          <ul class="nav nav-subnav" id="home" style="display: block">#}
+{#            <li class="active"> <a class="multitabs" href="{{ path("admin_dashboard") }}">首页</a> </li>#}
+{#          </ul>#}
 {% if menus %}
   {% set menuroot = menus[0] %}
-    {% for menu in menuroot %}
+    {% for k,menu in menuroot %}
           {% if menu.isShow and menu.isAccess == 0%}  
                   {% if menus[menu.id] is defined %}        
-          <ul class="nav nav-subnav" id="menu_{{ menu.id }}">
+          <ul class="nav nav-subnav" id="menu_{{ menu.id }}" {% if k==0 %} style="display: block" {% endif %}>
               {% for menu2 in menus[menu.id] %}
                 {% if menu2.isShow and menu2.isAccess == 0 %}
-          <li class="{% if menu2[menu2.id] is defined %}nav-item nav-item-has-subnav {% endif %} {% if route==menu2.url or pmenuId==menu2.id %} open active {% endif %}">
-<a {% if menu2.url %} class="multitabs" {% endif %} href="{% if menu2.url %}{{ path(menu2.url) }}{% else %} javascript:void(0) {% endif %}">{{ menu2.name }}</a>
-      {% if menus2[menu2.id] is defined %}
+          <li   class="{% if menus[menu2.id] is defined %}nav-item nav-item-has-subnav {% endif %} {% if route==menu2.url or pmenuId==menu2.id %} open active {% endif %}">
+<a {% if menu2.url %} class="multitabs" {% endif %} href="{% if menu2.url %}{{ path(menu2.url) }}{% else %} #! {% endif %}">{{ menu2.name }}</a>
+      {% if menus[menu2.id] is defined %}
         <ul class="nav nav-subnav">
-          {% for menu3 in menus2[menu2.id] %}
+          {% for menu3 in menus[menu2.id] %}
                 {% if menu3.isShow and menu3.isAccess == 0 %}
-          <li class="{% if route==menu3.url or pmenuId==menu3.id %} active {% endif %}">
-<a {% if menu3.url %} class="multitabs" {% endif %} href="{% if menu3.url %}{{ path(menu3.url) }}{% else %} javascript:void(0) {% endif %}">{{ menu3.name }}</a>
+          <li class="{% if menus[menu3.id] is defined %}nav-item nav-item-has-subnav {% endif %} {% if route==menu3.url or pmenuId==menu3.id %} open active {% endif %}">
+<a {% if menu3.url %} class="multitabs" {% endif %}  href="{% if menu3.url %}{{ path(menu3.url) }}{% else %} #! {% endif %}">{{ menu3.name }}</a>
+
+              {% if menus[menu3.id] is defined %}
+                  <ul class="nav nav-subnav">
+                      {% for menu4 in menus[menu3.id] %}
+                          {% if menu4.isShow and menu4.isAccess == 0 %}
+                              <li class="{% if menus[menu4.id] is defined %}nav-item nav-item-has-subnav {% endif %} {% if route==menu4.url or pmenuId==menu4.id %} open active {% endif %}">
+                                  <a {% if menu4.url %} class="multitabs" {% endif %}  href="{% if menu4.url %}{{ path(menu4.url) }}{% else %} #! {% endif %}">{{ menu4.name }}</a>
+                              </li>
+                          {% endif %}
+                      {% endfor %}
+                  </ul>
+              {% endif %}
+
           </li>
               {% endif %}
           {% endfor %}
@@ -253,19 +266,19 @@ jQuery( function() {
 		  </li>
           <!--切换主题配色-->
           <li class="dropdown dropdown-profile">
-            <a href="javascript:void(0)" data-toggle="dropdown" class="dropdown-toggle">
-              <img class="img-avatar img-avatar-48 m-r-10" src="{{ asset(app.user.gravatar|default(option("app.user.default.gravatar", 1, 0))) }}" alt="{{ app.user.fullName }}" />
+            <a href="#!" data-toggle="dropdown" class="dropdown-toggle">
+              <img class="img-avatar img-avatar-36 m-r-10" src="{{ asset(app.user.gravatar|default(option("app.user.default.gravatar", 1, 0))) }}" alt="{{ app.user.fullName }}" />
               <span>{{ app.user.fullName }}</span>
             </a>
             <ul class="dropdown-menu dropdown-menu-right">
               <li>
-                <a class="multitabs dropdown-item" data-url="lyear_pages_profile.html" href="javascript:void(0)"><i class="mdi mdi-account"></i> 个人信息</a>
+                <a class="multitabs dropdown-item" data-url="lyear_pages_profile.html" href="#!"><i class="mdi mdi-account"></i> 个人信息</a>
               </li>
               <li>
-                <a class="multitabs dropdown-item" data-url="lyear_pages_edit_pwd.html" href="javascript:void(0)"><i class="mdi mdi-lock-outline"></i> 修改密码</a>
+                <a class="multitabs dropdown-item" data-url="lyear_pages_edit_pwd.html" href="#!"><i class="mdi mdi-lock-outline"></i> 修改密码</a>
               </li>
               <li>
-                <a class="dropdown-item" href="javascript:void(0)"><i class="mdi mdi-delete"></i> 清空缓存</a>
+                <a class="dropdown-item" href="#!"><i class="mdi mdi-delete"></i> 清空缓存</a>
               </li>
               <li class="dropdown-divider"></li>
               <li>

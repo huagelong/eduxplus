@@ -92,7 +92,7 @@ class MenuService extends AdminBaseService
     public function getMyMenu($uid, $onlyShow=0){
         //获取用户角色
         $menulist = $this->getMyMenuDefault($uid, $onlyShow);
-//        dump($menulist);
+//        print_r($menulist);exit;
         //处理
         if(!$menulist) return [];
         $rs = [];
@@ -100,6 +100,7 @@ class MenuService extends AdminBaseService
             $pid = $v['pid'];
             $rs[$pid][] = $v;
         }
+//        print_r($rs);exit;
         return $rs;
     }
 

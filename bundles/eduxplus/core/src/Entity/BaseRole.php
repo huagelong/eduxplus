@@ -72,9 +72,9 @@ class BaseRole
     }
 
 
-    public function setId(?int $int): self
+    public function setId(?int $id): self
     {
-        $this->int = $int;
+        $this->id = $id;
 
         return $this;
     }
