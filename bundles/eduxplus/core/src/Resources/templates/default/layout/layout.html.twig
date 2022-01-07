@@ -2,8 +2,6 @@
 {% block head_stylesheets %}
     {{ parent() }}
     {% block style %}{% endblock %}
-    <link rel="stylesheet" href="{{ asset('bundles/eduxpluscore/js/base/plugins/layer/layer.css') }}">
-
     <link rel="stylesheet" href="{{ asset('bundles/eduxpluscore/css/materialdesignicons.min.css') }}">
     <link rel="stylesheet" href="{{ asset('bundles/eduxpluscore/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('bundles/eduxpluscore/js/bootstrap-multitabs-v4/multitabs.min.css') }}">
@@ -37,10 +35,10 @@
 
 {% block body_javascript %}
     {{ parent() }}
+<script src="{{ asset('bundles/eduxpluscore/js/layer/layer.min.js') }}"></script>
 <script src="{{ asset('bundles/eduxpluscore/js/base/utils.js') }}"></script>
 <script src="{{ asset('bundles/eduxpluscore/js/base/plugins/jquery-form/jquery.form.js') }}"></script>
 <script src="{{ asset('bundles/eduxpluscore/js/base/plugins/jquery-cookie/jquery.cookie.min.js') }}"></script>
-<script src="{{ asset('bundles/eduxpluscore/js/base/plugins/layer/layer.js') }}"></script>
 <script src="{{ asset('bundles/eduxpluscore/js/base/plugins/hinclude.js') }}"></script>
 <script src="{{ asset('bundles/eduxpluscore/js/base/modules/ajaxform.js') }}"></script>
 <script src="{{ asset('bundles/eduxpluscore/js/base/modules/ajaxaction.js') }}"></script>
