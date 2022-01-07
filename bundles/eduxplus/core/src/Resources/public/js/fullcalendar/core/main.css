@@ -273,10 +273,13 @@ temporary rendered events).
 
 .fc-event,
 .fc-event:hover {
-  color: #fff;
+  color: #fff!important;
   /* default TEXT color */
   text-decoration: none;
   /* if <a> has an href */
+}
+.fc-event:hover {
+  background-color: #52d3c7;
 }
 
 .fc-event[href],

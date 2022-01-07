@@ -23,7 +23,8 @@
     {{ parent() }}
     <script>
         var globOption = {
-            appDomain:"{{ option("app.domain") }}"
+            appDomain:"{{ option("app.domain") }}",
+            dashboard:"{{ path("admin_dashboard") }}",
         }
     </script>
 <script src="{{ asset('bundles/eduxpluscore/js/base/jquery.js') }}"></script>
