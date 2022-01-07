@@ -48,7 +48,7 @@ jQuery( function() {
   {% set menuroot = menus[0] %}
     {% for menu in menuroot %}
           {% if menu.isShow and menu.isAccess == 0%}
-              <li class="nav-item {% if route==menu.url or pmenuId==menu.id %} open active {% endif %}" data-toggle="tooltip" data-placement="right" title="{{ menu.name }}">
+              <li class="nav-item {% if route==menu.url or pmenuId==menu.id %} active {% endif %}" data-toggle="tooltip" data-placement="right" title="{{ menu.name }}">
                 <a href="javascript:;" data-nav-target="#menu_{{ menu.id }}">
                   <i class="mdi {{ menu.style|default('mdi-format-align-justify') }}"></i>
                 </a>
@@ -72,20 +72,20 @@ jQuery( function() {
           <ul class="nav nav-subnav" id="menu_{{ menu.id }}" {% if k==0 %} style="display: block" {% endif %}>
               {% for menu2 in menus[menu.id] %}
                 {% if menu2.isShow and menu2.isAccess == 0 %}
-          <li   class="{% if menus[menu2.id] is defined %}nav-item nav-item-has-subnav {% endif %} {% if route==menu2.url or pmenuId==menu2.id %} open active {% endif %}">
+          <li   class="{% if menus[menu2.id] is defined %}nav-item nav-item-has-subnav {% endif %} ">
 <a {% if menu2.url %} class="multitabs" {% endif %} href="{% if menu2.url %}{{ path(menu2.url) }}{% else %} javascript:; {% endif %}">{{ menu2.name }}</a>
       {% if menus[menu2.id] is defined %}
         <ul class="nav nav-subnav">
           {% for menu3 in menus[menu2.id] %}
                 {% if menu3.isShow and menu3.isAccess == 0 %}
-          <li class="{% if menus[menu3.id] is defined %}nav-item nav-item-has-subnav {% endif %} {% if route==menu3.url or pmenuId==menu3.id %} open active {% endif %}">
+          <li class="{% if menus[menu3.id] is defined %}nav-item nav-item-has-subnav {% endif %} ">
 <a {% if menu3.url %} class="multitabs" {% endif %}  href="{% if menu3.url %}{{ path(menu3.url) }}{% else %} javascript:; {% endif %}">{{ menu3.name }}</a>
 
               {% if menus[menu3.id] is defined %}
                   <ul class="nav nav-subnav">
                       {% for menu4 in menus[menu3.id] %}
                           {% if menu4.isShow and menu4.isAccess == 0 %}
-                              <li class="{% if menus[menu4.id] is defined %}nav-item nav-item-has-subnav {% endif %} {% if route==menu4.url or pmenuId==menu4.id %} open active {% endif %}">
+                              <li class="{% if menus[menu4.id] is defined %}nav-item nav-item-has-subnav {% endif %}">
                                   <a {% if menu4.url %} class="multitabs" {% endif %}  href="{% if menu4.url %}{{ path(menu4.url) }}{% else %} javascript:; {% endif %}">{{ menu4.name }}</a>
                               </li>
                           {% endif %}
