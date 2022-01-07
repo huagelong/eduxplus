@@ -40,7 +40,7 @@ jQuery( function() {
           <nav class="sidebar-main">
             <ul class="nav-drawer">
 {#              <li class="nav-item active" data-toggle="tooltip" data-placement="right" title="首页">#}
-{#                <a href="#!" data-nav-target="#home">#}
+{#                <a href="javascript:;" data-nav-target="#home">#}
 {#                  <i class="mdi mdi-home"></i>#}
 {#                </a>#}
 {#              </li>#}
@@ -49,7 +49,7 @@ jQuery( function() {
     {% for menu in menuroot %}
           {% if menu.isShow and menu.isAccess == 0%}
               <li class="nav-item {% if route==menu.url or pmenuId==menu.id %} open active {% endif %}" data-toggle="tooltip" data-placement="right" title="{{ menu.name }}">
-                <a href="#!" data-nav-target="#menu_{{ menu.id }}">
+                <a href="javascript:;" data-nav-target="#menu_{{ menu.id }}">
                   <i class="mdi {{ menu.style|default('mdi-format-align-justify') }}"></i>
                 </a>
               </li>
@@ -73,20 +73,20 @@ jQuery( function() {
               {% for menu2 in menus[menu.id] %}
                 {% if menu2.isShow and menu2.isAccess == 0 %}
           <li   class="{% if menus[menu2.id] is defined %}nav-item nav-item-has-subnav {% endif %} {% if route==menu2.url or pmenuId==menu2.id %} open active {% endif %}">
-<a {% if menu2.url %} class="multitabs" {% endif %} href="{% if menu2.url %}{{ path(menu2.url) }}{% else %} #! {% endif %}">{{ menu2.name }}</a>
+<a {% if menu2.url %} class="multitabs" {% endif %} href="{% if menu2.url %}{{ path(menu2.url) }}{% else %} javascript:; {% endif %}">{{ menu2.name }}</a>
       {% if menus[menu2.id] is defined %}
         <ul class="nav nav-subnav">
           {% for menu3 in menus[menu2.id] %}
                 {% if menu3.isShow and menu3.isAccess == 0 %}
           <li class="{% if menus[menu3.id] is defined %}nav-item nav-item-has-subnav {% endif %} {% if route==menu3.url or pmenuId==menu3.id %} open active {% endif %}">
-<a {% if menu3.url %} class="multitabs" {% endif %}  href="{% if menu3.url %}{{ path(menu3.url) }}{% else %} #! {% endif %}">{{ menu3.name }}</a>
+<a {% if menu3.url %} class="multitabs" {% endif %}  href="{% if menu3.url %}{{ path(menu3.url) }}{% else %} javascript:; {% endif %}">{{ menu3.name }}</a>
 
               {% if menus[menu3.id] is defined %}
                   <ul class="nav nav-subnav">
                       {% for menu4 in menus[menu3.id] %}
                           {% if menu4.isShow and menu4.isAccess == 0 %}
                               <li class="{% if menus[menu4.id] is defined %}nav-item nav-item-has-subnav {% endif %} {% if route==menu4.url or pmenuId==menu4.id %} open active {% endif %}">
-                                  <a {% if menu4.url %} class="multitabs" {% endif %}  href="{% if menu4.url %}{{ path(menu4.url) }}{% else %} #! {% endif %}">{{ menu4.name }}</a>
+                                  <a {% if menu4.url %} class="multitabs" {% endif %}  href="{% if menu4.url %}{{ path(menu4.url) }}{% else %} javascript:; {% endif %}">{{ menu4.name }}</a>
                               </li>
                           {% endif %}
                       {% endfor %}
@@ -139,15 +139,15 @@ jQuery( function() {
             <div class="dropdown-menu dropdown-menu-right">
               <div class="lyear-notifications">
                 
-                <div class="lyear-notifications-title clearfix"  data-stopPropagation="true"><a href="#!" class="float-right">查看全部</a>你有 10 条未读消息</div>
+                <div class="lyear-notifications-title clearfix"  data-stopPropagation="true"><a href="javascript:;" class="float-right">查看全部</a>你有 10 条未读消息</div>
                 <div class="lyear-notifications-info lyear-scroll">
-                  <a href="#!" class="dropdown-item" title="树莓派销量猛增，疫情期间居家工作学习、医疗领域都需要它">树莓派销量猛增，疫情期间居家工作学习、医疗领域都需要它</a>
-                  <a href="#!" class="dropdown-item" title="GNOME 用户体验团队将为 GNOME Shell 提供更多改进">GNOME 用户体验团队将为 GNOME Shell 提供更多改进</a>
-                  <a href="#!" class="dropdown-item" title="Linux On iPhone 即将面世，支持 iOS 的双启动">Linux On iPhone 即将面世，支持 iOS 的双启动</a>
-                  <a href="#!" class="dropdown-item" title="GitHub 私有仓库完全免费面向团队提供">GitHub 私有仓库完全免费面向团队提供</a>
-                  <a href="#!" class="dropdown-item" title="Wasmtime 为 WebAssembly 增加 Go 语言绑定">Wasmtime 为 WebAssembly 增加 Go 语言绑定</a>
-                  <a href="#!" class="dropdown-item" title="红帽借“订阅”成开源一哥，首创者 Cormier 升任总裁">红帽借“订阅”成开源一哥，首创者 Cormier 升任总裁</a>
-                  <a href="#!" class="dropdown-item" title="Zend 宣布推出两项 PHP 新产品">Zend 宣布推出两项 PHP 新产品</a>
+                  <a href="javascript:;" class="dropdown-item" title="树莓派销量猛增，疫情期间居家工作学习、医疗领域都需要它">树莓派销量猛增，疫情期间居家工作学习、医疗领域都需要它</a>
+                  <a href="javascript:;" class="dropdown-item" title="GNOME 用户体验团队将为 GNOME Shell 提供更多改进">GNOME 用户体验团队将为 GNOME Shell 提供更多改进</a>
+                  <a href="javascript:;" class="dropdown-item" title="Linux On iPhone 即将面世，支持 iOS 的双启动">Linux On iPhone 即将面世，支持 iOS 的双启动</a>
+                  <a href="javascript:;" class="dropdown-item" title="GitHub 私有仓库完全免费面向团队提供">GitHub 私有仓库完全免费面向团队提供</a>
+                  <a href="javascript:;" class="dropdown-item" title="Wasmtime 为 WebAssembly 增加 Go 语言绑定">Wasmtime 为 WebAssembly 增加 Go 语言绑定</a>
+                  <a href="javascript:;" class="dropdown-item" title="红帽借“订阅”成开源一哥，首创者 Cormier 升任总裁">红帽借“订阅”成开源一哥，首创者 Cormier 升任总裁</a>
+                  <a href="javascript:;" class="dropdown-item" title="Zend 宣布推出两项 PHP 新产品">Zend 宣布推出两项 PHP 新产品</a>
                 </div>
                 
               </div>
@@ -230,7 +230,7 @@ jQuery( function() {
 			  <li class="drop-title"><p>侧边栏</p></li>
 			  <li class="drop-skin-li clearfix">
                 <span class="inverse">
-                  <input type="radio" name="sidebar_bg" value="default" id="sidebar_bg_1" checked>
+                  <input type="radio" name="sidebar_bg" value="default" id="sidebar_bg_1">
                   <label for="sidebar_bg_1"></label>
                 </span>
                 <span>
@@ -258,7 +258,7 @@ jQuery( function() {
                   <label for="sidebar_bg_7"></label>
                 </span>
                 <span>
-                  <input type="radio" name="sidebar_bg" value="color_8" id="sidebar_bg_8">
+                  <input type="radio" name="sidebar_bg" value="color_8" id="sidebar_bg_8" checked>
                   <label for="sidebar_bg_8"></label>
                 </span>
 			  </li>
@@ -266,19 +266,19 @@ jQuery( function() {
 		  </li>
           <!--切换主题配色-->
           <li class="dropdown dropdown-profile">
-            <a href="#!" data-toggle="dropdown" class="dropdown-toggle">
-              <img class="img-avatar img-avatar-36 m-r-10" src="{{ asset(app.user.gravatar|default(option("app.user.default.gravatar", 1, 0))) }}" alt="{{ app.user.fullName }}" />
+            <a href="javascript:;" data-toggle="dropdown" class="dropdown-toggle">
+              <img class="img-avatar img-avatar-28 m-r-10" src="{{ asset(app.user.gravatar|default(option("app.user.default.gravatar", 1, 0))) }}" alt="{{ app.user.fullName }}" />
               <span>{{ app.user.fullName }}</span>
             </a>
             <ul class="dropdown-menu dropdown-menu-right">
               <li>
-                <a class="multitabs dropdown-item" data-url="lyear_pages_profile.html" href="#!"><i class="mdi mdi-account"></i> 个人信息</a>
+                <a class="multitabs dropdown-item" data-url="lyear_pages_profile.html" href="javascript:;"><i class="mdi mdi-account"></i> 个人信息</a>
               </li>
               <li>
-                <a class="multitabs dropdown-item" data-url="lyear_pages_edit_pwd.html" href="#!"><i class="mdi mdi-lock-outline"></i> 修改密码</a>
+                <a class="multitabs dropdown-item" data-url="lyear_pages_edit_pwd.html" href="javascript:;"><i class="mdi mdi-lock-outline"></i> 修改密码</a>
               </li>
               <li>
-                <a class="dropdown-item" href="#!"><i class="mdi mdi-delete"></i> 清空缓存</a>
+                <a class="dropdown-item" href="javascript:;"><i class="mdi mdi-delete"></i> 清空缓存</a>
               </li>
               <li class="dropdown-divider"></li>
               <li>

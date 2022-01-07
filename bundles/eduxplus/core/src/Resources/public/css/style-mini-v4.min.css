@@ -398,6 +398,13 @@ i.mdi:after {
     border-radius: 50%;
     text-align: center;
 }
+
+.img-avatar-28 {
+    min-width: 28px;
+    width: 28px;
+    height: 28px;
+    line-height: 28px;
+}
 .img-avatar-36 {
     min-width: 36px;
     width: 36px;
