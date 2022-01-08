@@ -27,10 +27,10 @@ class AdminLogController extends BaseAdminController
         $pageSize = 40;
         $grid->setListService($adminLogService, "getList");
         $grid->text("#")->field("id")->sort("a.id");
-        $grid->textarea("动作")->field("descr");
+        $grid->badgeInfo("动作")->field("descr");
 //        $grid->text("路由")->field("route");
         $grid->badgeMuted("操作人")->field("fullName");
-        $grid->badgeUrple("Ip")->field("ip");
+        $grid->badgePurple("Ip")->field("ip");
         $grid->tip("参数")->field("inputData");
         $grid->datetime("操作时间")->field("createdAt")->sort("a.createdAt");
 

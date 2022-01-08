@@ -20,6 +20,7 @@
                 var title = $(this).attr("title");
                 layer.open({
                     type: 1,
+                    skin: "lyear-skin-info",
                     area: ['420px', '240px'], //宽高
                     content: title
                   });
@@ -41,6 +42,7 @@
                 layer.open({
                     type: 2,
                     title: title,
+                    skin: "lyear-skin-info",
                     closeBtn: 1, //不显示关闭按钮
                     shade: [0],
                     area: [width, height],

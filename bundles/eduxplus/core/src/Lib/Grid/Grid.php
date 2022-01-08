@@ -238,8 +238,8 @@ class Grid
         return $this->gridBind($title, "badgeDark");
     }
 
-    public function badgeUrple($title){
-        return $this->gridBind($title, "badgeUrple");
+    public function badgePurple($title){
+        return $this->gridBind($title, "badgePurple");
     }
 
     public function badgePink($title){
