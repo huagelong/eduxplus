@@ -9,7 +9,7 @@ security:
     app_user_provider:
       entity:
         class: Eduxplus\CoreBundle\Entity\BaseUser
-        property: uuid
+        property: id
 
   firewalls:
     dev:

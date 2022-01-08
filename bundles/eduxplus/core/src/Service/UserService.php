@@ -13,6 +13,7 @@ namespace Eduxplus\CoreBundle\Service;
 use Eduxplus\CoreBundle\Lib\Service\HelperService;
 use Eduxplus\CoreBundle\Entity\BaseRoleUser;
 use Eduxplus\CoreBundle\Entity\BaseUser;
+use Eduxplus\CoreBundle\Lib\Service\RedisService;
 use Knp\Component\Pager\PaginatorInterface;
 use Eduxplus\CoreBundle\Lib\Base\AdminBaseService;
 use Eduxplus\CoreBundle\Lib\Service\Base\MobileMaskService;
@@ -24,15 +25,18 @@ class UserService extends AdminBaseService
     protected $paginator;
     protected $userPasswordEncoder;
     protected $mobileMaskService;
+    protected $redisService;
 
     public function __construct(
         PaginatorInterface $paginator,
         UserPasswordHasherInterface $userPasswordEncoder,
-        MobileMaskService $mobileMaskService
+        MobileMaskService $mobileMaskService,
+        RedisService $redisService
     ) {
         $this->paginator = $paginator;
         $this->userPasswordEncoder = $userPasswordEncoder;
         $this->mobileMaskService = $mobileMaskService;
+        $this->redisService = $redisService;
     }
 
     public function userList($request, $page, $pageSize)
@@ -106,13 +110,12 @@ class UserService extends AdminBaseService
 
     public function add($mobile, $displayName, $pwd1, $fullName, $sex, $roles)
     {
-        $helperService = new HelperService();
-        $uuid = $helperService->getUuid();
         $model = new BaseUser();
         $model->setMobile($mobile);
         $mobileMask =  $this->mobileMaskService->encrypt($mobile);
         $model->setMobileMask($mobileMask);
-        $model->setUuid($uuid);
+        $model->setMobileTail(substr($mobile, -6));
+        $model->setSno($this->getSno($mobile));
         $model->setGravatar($this->getOption("app.user.default.gravatar", 1, 0));
         $pwd = $this->userPasswordEncoder->hashPassword($model, $pwd1);
         $model->setPassword($pwd);
@@ -136,6 +139,33 @@ class UserService extends AdminBaseService
         return $uid;
     }
 
+    /**
+     * 获取学号
+     * @param $mobile
+     * @return string
+     */
+    public function getSno($mobile){
+        $snoTmp = substr($mobile, -6);
+        $redisKey = "user_no_incr:".$mobile;
+        if($this->redisService->exists($redisKey)) {
+            $rcount = $this->redisService->incr($redisKey);
+            if ($rcount > 1) {
+                return $snoTmp . $rcount;
+            } else {
+                return $snoTmp;
+            }
+        }
+        $sql = "SELECT count(a.id) FROM Core:BaseUser a WHERE a.mobileTail=:mobileTail";
+        $count = $this->fetchColumnBySql($sql, ["mobileTail"=>$snoTmp],"c");
+        if($count == 0){
+            $this->redisService->incr($redisKey);
+            return $snoTmp;
+        }
+        $count = $count+1;
+        $this->redisService->incrby($redisKey, $count);
+        return $snoTmp.$count;
+    }
+
     public function getById($id)
     {
         $sql = "SELECT a FROM Core:BaseUser a WHERE a.id=:id";
@@ -154,13 +184,10 @@ class UserService extends AdminBaseService
         return $this->fetchFields('roleId', $sql, ['uid' => $uid]);
     }
 
-    public function edit($id, $mobile, $displayName, $fullName, $sex, $roles)
+    public function edit($id, $displayName, $fullName, $sex, $roles)
     {
         $sql = "SELECT a FROM Core:BaseUser a WHERE a.id=:id";
         $model = $this->fetchOne($sql, ['id' => $id], 1);
-        $model->setMobile($mobile);
-        $mobileMask =  $this->mobileMaskService->encrypt($mobile);
-        $model->setMobileMask($mobileMask);
         $model->setFullName($fullName);
         $model->setDisplayName($displayName);
         $model->setSex($sex);

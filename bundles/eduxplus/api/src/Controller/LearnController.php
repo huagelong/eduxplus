@@ -69,16 +69,16 @@ class LearnController extends BaseApiController
                 $adapter = $videoInfo['videoChannel'];
                 //统一用腾讯云im
                 $user = $this->getUserInfo();
-                $uuid = $user['uuid'];
+                $uid = $user['id'];
                 //初始化用户
                 $imService->initUser($user['id']);
                 //初始化群组
                 $groupId = $imService->initGroup($chapterId);
-                $imService->addGroupMember($groupId, $uuid);
-                $sign = $imService->createUserSig($uuid);
+                $imService->addGroupMember($groupId, $uid);
+                $sign = $imService->createUserSig($uid);
                 $data['sign'] = $sign;
                 $data['sdkAppID'] = $imService->getSDKAppID();
-                $data['uuid'] = $uuid;
+                $data['uuid'] = $uid;
                 $data['groupId'] = $groupId;
 
                 $playUrl = isset($liveVodData["playUrl"])?$liveVodData["playUrl"]:"";

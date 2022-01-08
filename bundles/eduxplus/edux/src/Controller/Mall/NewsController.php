@@ -27,7 +27,7 @@ class NewsController extends BaseAdminController
     public function indexAction(Request $request, Grid $grid, NewsService $newsService){
         $pageSize = 40;
         $grid->setListService($newsService, "getList");
-        $grid->text("#")->field("id")->sort("a.id");
+        $grid->text("ID")->field("id")->sort("a.id");
         $grid->text("标题")->field("title");
         $grid->image("封面图片")->field("img");
         $grid->text("分类")->field("categoryName");

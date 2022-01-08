@@ -29,7 +29,7 @@ class TeacherController extends BaseAdminController
     {
         $pageSize = 40;
         $grid->setListService($teacherService, "getList");
-        $grid->text("#")->field("id")->sort("a.id");
+        $grid->text("ID")->field("id")->sort("a.id");
         $grid->text("名称")->field("name");
         $grid->image("头像")->field("gravatar");
         $grid->text("类型")->field("type")->options([-1 => "全部", 1 => "网课老师", 2 => "分校老师"]);

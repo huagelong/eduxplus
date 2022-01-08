@@ -27,7 +27,7 @@ class RoleController extends BaseAdminController
     public function indexAction(Request $request, RoleService $roleService, Grid $grid){
         $pageSize = 40;
         $grid->setListService($roleService, "roleMenu");
-        $grid->text("#")->field("id")->sort("a.id");
+        $grid->text("ID")->field("id")->sort("a.id");
         $grid->text("名称")->field("name");
         $grid->datetime("创建时间")->field("createdAt")->sort("a.createdAt");
         $grid->boole("锁定？")->field("isLock");

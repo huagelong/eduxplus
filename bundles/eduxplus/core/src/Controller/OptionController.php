@@ -25,7 +25,7 @@ class OptionController extends BaseAdminController
     public function indexAction(Request $request, Grid $grid, OptionService $optionService){
         $pageSize = 40;
         $grid->setListService($optionService, "optionList");
-        $grid->text("#")->field("id")->sort("a.id");
+        $grid->text("ID")->field("id")->sort("a.id");
         $grid->textarea("配置说明")->field("descr");
 //        $grid->text("健")->field("optionKey")->sort("a.optionKey");
         $grid->code("值")->field("optionValue");

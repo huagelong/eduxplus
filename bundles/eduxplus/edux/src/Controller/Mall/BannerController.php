@@ -26,7 +26,7 @@ class BannerController extends BaseAdminController
      public function indexAction( Request $request,Grid $grid, BannerService $bannerService){
          $pageSize = 40;
          $grid->setListService($bannerService, "getList");
-         $grid->text("#")->field("id")->sort("a.id");
+         $grid->text("ID")->field("id")->sort("a.id");
          $grid->text("名称")->field("name");
          $grid->text("位置")->field("position");
          $grid->datetime("创建时间")->field("createdAt")->sort("a.createdAt");
@@ -187,7 +187,7 @@ class BannerController extends BaseAdminController
     public function indexMainAction( $pid, Request $request,Grid $grid, BannerService $bannerService){
         $pageSize = 40;
         $grid->setListService($bannerService, "getMainList", $pid);
-        $grid->text("#")->field("id")->sort("a.id");
+        $grid->text("ID")->field("id")->sort("a.id");
         $grid->image("图片")->field("bannerImg");
         $grid->text("操作人")->field("creater");
         $grid->tip("链接")->field("url");

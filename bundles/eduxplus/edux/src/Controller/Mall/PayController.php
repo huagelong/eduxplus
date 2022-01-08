@@ -29,7 +29,7 @@ class PayController extends BaseAdminController
     public function indexAction(Request $request, Grid $grid, PayService $payService, UserService $userService){
         $pageSize = 40;
         $grid->setListService($payService, "getList");
-        $grid->text("#")->field("id")->sort("a.id");
+        $grid->text("ID")->field("id")->sort("a.id");
         $grid->text("订单号")->field("orderNo");
         $grid->text("支付流水号")->field("transactionId");
         $grid->text("支付状态")->field("orderStatus")->options([0=>"支付过期",1=>"待支付", 2=>"已支付", 3=>"已取消"]);

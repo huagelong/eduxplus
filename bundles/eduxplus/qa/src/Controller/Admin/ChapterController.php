@@ -28,7 +28,7 @@ class ChapterController extends BaseAdminController
 
         $pageSize = 40;
         $grid->setListService($chapterService, "getCollectionList");
-        $grid->text("#")->field("id")->sort("a.id");
+        $grid->text("ID")->field("id")->sort("a.id");
         $grid->text("试题集合名称")->field("name");
         $grid->text("类目")->field("category");
         $grid->boole2("上架？")->field("status")->sort("a.status")->actionCall("qa_admin_chapter_switchStatus", function ($obj) use($chapterService) {

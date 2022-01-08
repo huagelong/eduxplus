@@ -147,7 +147,7 @@ class CategoryService extends AdminBaseService
         $all = $this->getAllCategory();
         //        dump($all);
         $rs = [];
-        $rs['root'] = 0;
+        $rs['/'] = 0;
         if ($all) {
             foreach ($all[0] as $vv) {
                 $id = $vv['id']; //1

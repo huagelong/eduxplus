@@ -2,6 +2,16 @@
  * Created by wangkaihui on 2020/4/11.
  */
 $(function () {
+  $("button[type='submit']").click(function(){
+    var l = $(this).lyearloading({
+      opacity: 0.2,
+      spinnerSize: 'nm'
+    });
+    setTimeout(function() {
+      l.destroy(); // 可以使用hide，页面中如果有多个loading，最好用destroy，避免后面的loading设置不生效
+    }, 1e3)
+  });
+
   var clipboard = new Clipboard(".clipboard");
   clipboard.on("success", function (e) {
     layer.msg("复制成功", {
@@ -327,7 +337,7 @@ $(function () {
       type: 1,
       title: false,
       closeBtn: 0,
-      skin: "layui-layer-nobg",
+      skin: "layui-layer-primary",
       shadeClose: true,
       area: [bigW + "px", bigH + "px"],
       content:

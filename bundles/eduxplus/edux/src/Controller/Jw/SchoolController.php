@@ -25,7 +25,7 @@ class SchoolController extends BaseAdminController
     public function indexAction(Request $request, Grid $grid, SchoolService $schoolService){
         $pageSize = 40;
         $grid->setListService($schoolService, "getList");
-        $grid->text("#")->field("id")->sort("a.id");
+        $grid->text("ID")->field("id")->sort("a.id");
         $grid->text("名称")->field("name");
         $grid->text("地址")->field("address");
         $grid->text("省市")->field("stateCity");

@@ -29,7 +29,7 @@ class CourseController extends BaseAdminController
 
         $pageSize = 40;
         $grid->setListService($courseService, "getList");
-        $grid->text("#")->field("id")->sort("a.id");
+        $grid->text("ID")->field("id")->sort("a.id");
         $grid->text("课程名称")->field("name")->sort("a.name");
         $grid->text("类型")->field("type")->sort("a.type")->options([1 => "线上", 2 => "线下", 3 => "混合"]);
         $grid->text("品类")->field("brand");

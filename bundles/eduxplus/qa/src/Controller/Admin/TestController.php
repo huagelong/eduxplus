@@ -27,7 +27,7 @@ class TestController extends BaseAdminController
     public function indexAction(Request $request, Grid $grid, QATestService $testService, UserService $userService, CategoryService $categoryService){
         $pageSize = 40;
         $grid->setListService($testService, "getList");
-        $grid->text("#")->field("id")->sort("a.id");
+        $grid->text("ID")->field("id")->sort("a.id");
         $grid->text("试卷名称")->field("name");
         $grid->boole2("上架？")->field("status")->sort("a.status")->actionCall("qa_admin_test_switchStatus", function ($obj) use ($testService) {
             $id = $testService->getPro($obj, "id");

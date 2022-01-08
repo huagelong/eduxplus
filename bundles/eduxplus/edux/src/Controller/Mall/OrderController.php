@@ -30,7 +30,7 @@ class OrderController extends BaseAdminController
     public function indexAction(Request $request, Grid $grid, OrderService $orderService, UserService $userService){
         $pageSize = 40;
         $grid->setListService($orderService, "getList");
-        $grid->text("#")->field("id")->sort("a.id");
+        $grid->text("ID")->field("id")->sort("a.id");
         $grid->text("订单名称")->field("name");
         $grid->text("订单号")->field("orderNo");
         $grid->text("订单状态")->field("orderStatus")->sort("a.orderStatus")->options([0=>"支付过期",1=>"待支付", 2=>"已支付", 3=>"已取消"]);

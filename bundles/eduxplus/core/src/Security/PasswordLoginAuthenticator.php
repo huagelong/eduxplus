@@ -148,7 +148,7 @@ class PasswordLoginAuthenticator extends AbstractLoginFormAuthenticator
         }
 
         $passport = new Passport(
-            new UserBadge($user->getUuid(), [$this->userRepository, "loadUserByIdentifier"]),
+            new UserBadge($user->getId(), [$this->userRepository, "loadUserByIdentifier"]),
             new PasswordCredentials($credentials['password']),
             [
                 new RememberMeBadge(),

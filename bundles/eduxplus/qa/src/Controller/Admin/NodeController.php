@@ -31,7 +31,7 @@ class NodeController extends BaseAdminController
 
         $pageSize = 40;
         $grid->setListService($nodeService, "getList", $chapterId);
-        $grid->text("#")->field("id")->sort("a.id");
+        $grid->text("ID")->field("id")->sort("a.id");
         $grid->text("试题类型")->field("type")->options([0=>"单项选择",1=>"多项选择",2=>"不定项选择题",3=>"判断题",4=>"填空题",5=>"问答题",6=>"理解题"]);
         $grid->text("试题")->field("topic");
         $grid->boole2("上架？")->field("status")->sort("a.status")->actionCall("qa_admin_node_switchStatus", function ($obj) use($nodeService) {

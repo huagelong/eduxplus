@@ -26,7 +26,7 @@ class ClassController extends BaseAdminController
     public function indexAction(Request $request, Grid $grid, ClassService $classService){
         $pageSize = 40;
         $grid->setListService($classService, "getClassList");
-        $grid->text("#")->field("id")->sort("a.id");
+        $grid->text("ID")->field("id")->sort("a.id");
         $grid->text("班级名称")->field("name");
         $grid->text("产品名称")->field("product");
         $grid->text("学习计划")->field("studyPlan");
@@ -53,7 +53,7 @@ class ClassController extends BaseAdminController
     public function membersAction($classesId, Request $request, Grid $grid, ClassService $classService, UserService $userService){
         $pageSize = 40;
         $grid->setListService($classService, "getMemberList", $classesId);
-        $grid->text("#")->field("id")->sort("a.id");
+        $grid->text("ID")->field("id")->sort("a.id");
         $grid->text("学员")->field("user");
         $grid->text("学员类型")->field("type")->sort("a.type")->options([1 => "在学学员", 2 => "退学学员"]);
         $grid->datetime("创建时间")->field("createdAt")->sort("a.createdAt");

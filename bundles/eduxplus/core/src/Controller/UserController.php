@@ -30,11 +30,11 @@ class UserController extends BaseAdminController
     {
         $pageSize = 40;
         $grid->setListService($userService, "userList");
-        $grid->text("#")->field("id")->sort("a.id");
-        $grid->text("唯一码")->field("uuid")->sort("a.uuid");
+        $grid->text("ID")->field("id")->sort("a.id");
+        $grid->badgeSuccess("学号")->field("sno")->sort("a.sno");
         $grid->text("手机号码")->field("mobile");
-        $grid->text("昵称")->field("displayName");
-        $grid->text("姓名")->field("fullName");
+        $grid->badgeInfo("昵称")->field("displayName");
+        $grid->badgePrimary("姓名")->field("fullName");
         $grid->image("头像")->field("gravatar");
         $grid->text("性别")->field("sex")->options([0 => "未知", 1 => "男", 2 => "女"]);
         $grid->boole2("锁定用户")->field("isLock")->actionCall("admin_api_user_switchLock", function ($obj) use($userService) {
@@ -55,7 +55,7 @@ class UserController extends BaseAdminController
 
         //搜索
         $grid->snumber("ID")->field("a.id");
-        $grid->stext("唯一码")->field("a.uuid");
+        $grid->stext("学号")->field("a.sno");
         $grid->stext("手机号码")->field("a.mobile");
         $grid->stext("昵称")->field("a.displayName");
         $grid->stext("姓名")->field("a.fullName");
@@ -171,6 +171,7 @@ class UserController extends BaseAdminController
         $view->text("手机号码")->field("mobile")->defaultValue($info['mobile']);
         $view->text("昵称")->field("displayName")->defaultValue($info['displayName']);
         $view->text("姓名")->field("fullName")->defaultValue($info['fullName']);
+        $view->text("学号")->field("sno")->defaultValue($info['sno']);
         $view->select("性别")->field("sex")->options(["男" => 1, "女" => 2])->defaultValue($info['sex']);
         $view->boole("是否可以登陆后台")->field("isAdmin")->defaultValue($info['isAdmin']);
         $view->boole("是否锁定")->field("isLock")->defaultValue($info['isLock']);
@@ -199,7 +200,7 @@ class UserController extends BaseAdminController
     {
         $info = $userService->getById($id);
 
-        $form->text("手机号码")->field("mobile")->isRequire(1)->defaultValue($info['mobile']);
+        $form->string("手机号码")->field("mobile")->isRequire(1)->defaultValue($info['mobile']);
         $form->text("昵称")->field("displayName")->isRequire(1)->defaultValue($info['displayName']);
         $form->text("姓名")->field("fullName")->isRequire(1)->defaultValue($info['fullName']);
         $form->select("性别")->field("sex")->isRequire(1)->options(["男" => 1, "女" => 2])->placeholder("选择性别")->defaultValue($info['sex']);
@@ -230,15 +231,10 @@ class UserController extends BaseAdminController
         ValidateService $validateService,
         UserService $userService
     ) {
-        $mobile = $request->get("mobile");
         $displayName = $request->get("displayName");
         $fullName = $request->get("fullName");
         $sex = $request->get("sex");
         $roles = $request->get("roles");
-
-        if (!$mobile) return $this->responseError("手机号码不能为空!");
-        if (!$validateService->mobileValidate($mobile)) return $this->responseError($this->error()->getLast());
-        if ($userService->checkMobile($mobile, $id)) return $this->responseError("手机号码已存在!");
 
         if (!$displayName) return $this->responseError("昵称不能为空!");
         if (!$validateService->nicknameValidate($displayName)) return $this->responseError($this->error()->getLast());
@@ -249,7 +245,7 @@ class UserController extends BaseAdminController
 
         if (!$sex) return $this->responseError("性别不能为空!");
 
-        $userService->edit($id, $mobile, $displayName, $fullName, $sex, $roles);
+        $userService->edit($id, $displayName, $fullName, $sex, $roles);
 
         return $this->responseMsgRedirect("操作成功!", $this->generateUrl('admin_user_index'));
     }

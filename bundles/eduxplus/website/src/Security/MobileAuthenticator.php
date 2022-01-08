@@ -192,7 +192,7 @@ class MobileAuthenticator extends AbstractLoginFormAuthenticator
         $response->sendHeaders();
 
         $passport = new Passport(
-            new UserBadge($userInfo->getUuid(), [$this->userRepository, "loadUserByIdentifier"]),
+            new UserBadge($userInfo->getId(), [$this->userRepository, "loadUserByIdentifier"]),
             new PasswordCredentials($credentials['password'])
         );
         if ($this->userRepository instanceof PasswordUpgraderInterface) {

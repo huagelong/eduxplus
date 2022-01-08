@@ -44,13 +44,13 @@ class ImService extends AppBaseService
         if(!$userInfo) return $this->error()->add("用户不存在!");
         $imImported = $userInfo->getImImported();
         if($imImported) return true;
-        $uuid = $userInfo->getUuid();
+        $uid = $userInfo->getId();
         $displayName = $userInfo->getFullName()?$userInfo->getFullName():$userInfo->getDisplayName();
         $gravatar = $userInfo->getGravatar();
         $sex = $userInfo->getSex();
         $role = $userInfo->getRealRole();
         //初始化导入
-        $rs = $this->tengxunyunImService->multiaccountImport($uuid);
+        $rs = $this->tengxunyunImService->multiaccountImport($uid);
         if(!$rs) return $rs;
         //更新资料
         $upRs = $this->tengxunyunImService->portraitSet($uuid, $displayName, $gravatar, $sex, $role);
@@ -117,8 +117,8 @@ class ImService extends AppBaseService
         $key = "ImService_addGroupMember_".$groupId."_".$userUUid;
         $check = $this->cacheService->get($key);
         if($check) return true;
-        $sql = "SELECT a FROM Core:BaseUser a WHERE a.uuid=:uuid ";
-        $userInfo = $this->fetchOne($sql, ["uuid"=>$userUUid]);
+        $sql = "SELECT a FROM Core:BaseUser a WHERE a.id=:id ";
+        $userInfo = $this->fetchOne($sql, ["id"=>$userUUid]);
         $realUser = $userInfo['realRole'];
         $rs = $this->tengxunyunImService->addGroupMember($groupId, $userUUid);
         if($realUser<5){

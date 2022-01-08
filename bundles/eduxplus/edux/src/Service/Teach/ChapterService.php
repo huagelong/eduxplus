@@ -99,7 +99,7 @@ class ChapterService extends AdminBaseService
     {
         $all = $this->getAllChapter($courseId);
         $rs = [];
-        $rs['root'] = 0;
+        $rs['/'] = 0;
         if ($all) {
             foreach ($all[0] as $vv) {
                 $id = $vv['id'];

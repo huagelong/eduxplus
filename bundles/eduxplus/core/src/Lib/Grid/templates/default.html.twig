@@ -94,10 +94,6 @@
                             <span class="badge badge-purple">{{ get_prop(v, cv["field"], cv['type'], cv['options'])|raw }}</span>
                         {% endif %}
 
-                        {% if cv['type'] == 'badgePrimary' %}
-                            <span class="badge badge-primary">{{ get_prop(v, cv["field"], cv['type'], cv['options'])|raw }}</span>
-                        {% endif %}
-
                         {% if cv['type'] == 'badgePink' %}
                             <span class="badge badge-pink">{{ get_prop(v, cv["field"], cv['type'], cv['options'])|raw }}</span>
                         {% endif %}
@@ -193,6 +189,7 @@ $(function(){
         }
 
         layer.msg(isconfirm, {
+            skin:"bg-dark",
           time: 0 //不自动关闭
           , btn: ['是', '否']
           , yes: function (index) {

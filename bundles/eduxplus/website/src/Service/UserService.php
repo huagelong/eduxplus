@@ -19,8 +19,9 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
-use \Eduxplus\CoreBundle\Lib\Base\AppBaseService;
+use Eduxplus\CoreBundle\Lib\Base\AppBaseService;
 use Eduxplus\CoreBundle\Lib\Service\Base\MobileMaskService;
+use Eduxplus\CoreBundle\Service\UserService as CoreUserService;
 
 class UserService extends AppBaseService
 {
@@ -31,19 +32,22 @@ class UserService extends AppBaseService
     protected $tokenStorage;
     protected $eventDispatcher;
     protected $mobileMaskService;
+    protected $coreUserServie;
 
     public function __construct(
         GlobService $globService,
         HelperService $helperService,
         TokenStorageInterface $tokenStorage,
         EventDispatcherInterface $eventDispatcher,
-        MobileMaskService $mobileMaskService
+        MobileMaskService $mobileMaskService,
+        CoreUserService $coreUserServie
     ) {
         $this->globService = $globService;
         $this->helperService = $helperService;
         $this->tokenStorage = $tokenStorage;
         $this->eventDispatcher = $eventDispatcher;
         $this->mobileMaskService = $mobileMaskService;
+        $this->coreUserServie = $coreUserServie;
     }
 
 
@@ -64,7 +68,6 @@ class UserService extends AppBaseService
         if (!$userInfo) {
             //没有用户信息则注册
             $displayName = $this->helperService->formatMobile($mobile);
-            $uuid = $this->helperService->getUuid();
             $model = new BaseUser();
             $model->setMobile($mobile);
             $model->setMobileMask($mobileMask);
@@ -75,7 +78,8 @@ class UserService extends AppBaseService
             $model->setDisplayName($displayName);
             $model->setFullName($displayName);
             $model->setGravatar(trim($this->getOption("app.domain"),"/")."/assets/images/gravatar.jpeg");
-            $model->setUuid($uuid);
+            $model->setMobileTail($mobile);
+            $model->setSno($this->coreUserServie->getSno($mobile));
             $model->setBirthday(date('Y-m-d'));
             $model->setReportUid(0);
             $uid =  $this->save($model);
@@ -106,14 +110,6 @@ class UserService extends AppBaseService
         $user = $this->fetchOne($sql, ["id" => $uid], 1);
         return $user;
     }
-
-    public function getUserByUUid($uuid)
-    {
-        $sql = "SELECT a FROM Core:BaseUser a WHERE a.uuid = :uuid";
-        $user = $this->fetchOne($sql, ["uuid" => $uuid]);
-        return $user;
-    }
-
 
     public function getUserById($uid)
     {

@@ -26,7 +26,7 @@ class AgreementController extends BaseAdminController
     public function indexAction(Request $request, Grid $grid, AgreementService $agreementService){
         $pageSize = 40;
         $grid->setListService($agreementService, "agreementList");
-        $grid->text("#")->field("id")->sort("a.id");
+        $grid->text("ID")->field("id")->sort("a.id");
         $grid->text("名称")->field("name");
         $grid->boole("展示？")->field("isShow");
         $grid->datetime("创建时间")->field("createdAt")->sort("a.createdAt");

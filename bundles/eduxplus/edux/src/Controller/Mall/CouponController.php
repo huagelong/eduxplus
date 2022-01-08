@@ -32,7 +32,7 @@ class CouponController extends BaseAdminController
     public function indexAction(Request $request,Grid $grid, CouponService $couponService, CategoryService $categoryService, UserService $userService){
         $pageSize = 40;
         $grid->setListService($couponService, "getList");
-        $grid->text("#")->field("id")->sort("a.id");
+        $grid->text("ID")->field("id")->sort("a.id");
         $grid->text("优惠券名称")->field("name");
         $grid->text("优惠类型")->field("couponType")->sort("a.couponType")->options([0=>"未知", 1=>"金额优惠", 2=>"折扣优惠"]);
         $grid->text("生成优惠码?")->field("hasCode")->sort("a.hasCode")->options([0=>"否", 1=>"是"]);
@@ -317,7 +317,7 @@ class CouponController extends BaseAdminController
         $couponGroupInfo = $couponService->getById($id);
         $pageSize = 40;
         $grid->setListService($couponService, "getSubList", $id);
-        $grid->text("#")->field("id")->sort("a.id");
+        $grid->text("ID")->field("id")->sort("a.id");
         $grid->code("优惠券编码")->field("couponSn");
         $grid->text("使用时间")->field("usedTime");
         $grid->text("赠送时间")->field("sendTime");

@@ -64,26 +64,26 @@ function timeago(dateTimeStamp){   //dateTimeStamp是一个时间毫秒。
 }
 
 function showMsg(code, msg) {
-  var icontype = 4;
+  var icontype = "cry";
   var skin="bg-success";
   code = code + "";
   var msgType = code.substr(0, 1);
   msgType = parseInt(msgType);
   switch (msgType) {
     case 2:
-      icontype = "";//成功
+      icontype = "smile";//成功
       skin="bg-success";
       break;
     case 5:
-      icontype = 2;//失败
+      icontype = "cry";//失败
       skin="bg-danger";
       break;
     case 4:
-      icontype = 7;//警告
-      skin="bg-purple";
+      icontype = "cry";//警告
+      skin="bg-info";
       break;
     default:
-      icontype = 7;//警告
+      icontype = "cry";//警告
       skin="bg-info";
   }
 

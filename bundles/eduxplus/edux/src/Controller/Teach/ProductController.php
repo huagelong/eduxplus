@@ -31,7 +31,7 @@ class ProductController extends BaseAdminController
 
         $pageSize = 40;
         $grid->setListService($productService, "getList");
-        $grid->text("#")->field("id")->sort("a.id");
+        $grid->text("ID")->field("id")->sort("a.id");
         $grid->text("产品名称")->field("name")->sort("a.name");
         $grid->text("类别")->field("category")->sort("a.category");
         $grid->text("自动分班最大班级人数")->field("maxMemberNumber");

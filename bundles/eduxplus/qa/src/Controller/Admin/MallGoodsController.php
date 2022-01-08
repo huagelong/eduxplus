@@ -38,7 +38,7 @@ class MallGoodsController extends BaseAdminController
     ) {
         $pageSize = 40;
         $grid->setListService($goodsService, "getList");
-        $grid->text("#")->field("id")->sort("a.id");
+        $grid->text("ID")->field("id")->sort("a.id");
         $grid->text("试卷商品名称")->field("name");
         $grid->text("试卷商品别名")->field("aliasName");
         $grid->boole("组合试卷商品?")->field("isGroup")->sort("a.isGroup");

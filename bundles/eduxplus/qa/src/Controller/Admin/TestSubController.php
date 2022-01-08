@@ -29,7 +29,7 @@ class TestSubController extends BaseAdminController
     public function indexAction($id, Request $request, Grid $grid, QATestSubService $testSubService, QATestService $testService){
         $pageSize = 40;
         $grid->setListService($testSubService, "getList", $id);
-        $grid->text("#")->field("id")->sort("a.id");
+        $grid->text("ID")->field("id")->sort("a.id");
         $grid->text("试题类型")->field("type")->options([0=>"单项选择",1=>"多项选择",2=>"不定项选择题",3=>"判断题",4=>"填空题",5=>"问答题",6=>"理解题"]);
         $grid->text("试题id")->field("qaNodeId");
         $grid->textarea("试题题目")->field("topic");

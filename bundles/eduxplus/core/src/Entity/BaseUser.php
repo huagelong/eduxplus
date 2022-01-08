@@ -25,10 +25,14 @@ class BaseUser implements PasswordAuthenticatedUserInterface,UserInterface
     private $id;
 
     /**
-     * @ORM\Column(name="uuid", type="guid", unique=true,nullable=false, options={"comment"="唯一码"})
+     * @ORM\Column(name="sno", type="string", length=20, unique=false, nullable=false, options={"comment"="学号,手机号码末6位"})
      */
-    private $uuid;
+    private $sno;
 
+    /**
+     * @ORM\Column(name="mobile_tail", type="string", length=12, unique=false, nullable=false, options={"comment"="手机码末6位"})
+     */
+    private $mobileTail;
 
     /**
      * @ORM\Column(name="mobile", type="string", length=12, unique=false, nullable=false, options={"comment"="手机码"})
@@ -177,7 +181,7 @@ class BaseUser implements PasswordAuthenticatedUserInterface,UserInterface
      */
     public function getUsername(): string
     {
-        return (string) $this->uuid;
+        return (string) $this->id;
     }
 
 
@@ -231,17 +235,6 @@ class BaseUser implements PasswordAuthenticatedUserInterface,UserInterface
         return $this->id;
     }
 
-    public function getUuid(): ?string
-    {
-        return $this->uuid;
-    }
-
-    public function setUuid(?string $uuid): self
-    {
-        $this->uuid = $uuid;
-
-        return $this;
-    }
 
     public function getMobile(): ?string
     {
@@ -500,20 +493,57 @@ class BaseUser implements PasswordAuthenticatedUserInterface,UserInterface
         return $this;
     }
 
-    public function getWxminiToken(): ?string
+    public function getUserIdentifier(): string
+    {
+        return $this->getUsername();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSno()
+    {
+        return $this->sno;
+    }
+
+    /**
+     * @param mixed $sno
+     */
+    public function setSno($sno): void
+    {
+        $this->sno = $sno;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getWxminiToken()
     {
         return $this->wxminiToken;
     }
 
-    public function setWxminiToken(?string $wxminiToken): self
+    /**
+     * @param mixed $wxminiToken
+     */
+    public function setWxminiToken($wxminiToken): void
     {
         $this->wxminiToken = $wxminiToken;
-
-        return $this;
     }
 
-    public function getUserIdentifier(): string
+    /**
+     * @return mixed
+     */
+    public function getMobileTail()
     {
-        return $this->getUsername();
+        return $this->mobileTail;
+    }
+
+    /**
+     * @param mixed $mobileTail
+     */
+    public function setMobileTail($mobileTail): void
+    {
+        $mobileTail = substr($mobileTail,-6);
+        $this->mobileTail = $mobileTail;
     }
 }

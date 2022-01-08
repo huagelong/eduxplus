@@ -26,7 +26,7 @@ class AdminLogController extends BaseAdminController
     public function indexAction(Request $request, AdminlogService $adminLogService, Grid $grid, UserService $userService){
         $pageSize = 40;
         $grid->setListService($adminLogService, "getList");
-        $grid->text("#")->field("id")->sort("a.id");
+        $grid->text("ID")->field("id")->sort("a.id");
         $grid->badgeInfo("动作")->field("descr");
 //        $grid->text("路由")->field("route");
         $grid->badgeMuted("操作人")->field("fullName");

@@ -4,10 +4,10 @@
 
 {% block head_stylesheets %}
     {{ parent() }}
-    <link rel="stylesheet" href="{{ asset('bundles/eduxpluscore/js/base/plugins/layer/layer.css') }}">
     <link rel="stylesheet" href="{{ asset('bundles/eduxpluscore/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('bundles/eduxpluscore/css/materialdesignicons.min.css') }}">
     <link rel="stylesheet" href="{{ asset('bundles/eduxpluscore/css/style.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/eduxpluscore/js/layer/theme/lightyear/style.min.css') }}">
 {% endblock %}
 
 {% block head_favicon %}
@@ -17,15 +17,16 @@
 {% block body_javascript %}
     {{ parent() }}
     <script src="{{ asset('bundles/eduxpluscore/js/base/jquery.js') }}"></script>
+    <script src="{{ asset('bundles/eduxpluscore/js/layer/layer.min.js') }}"></script>
     <script src="{{ asset('bundles/eduxpluscore/js/base/utils.js') }}"></script>
     <script src="{{ asset('bundles/eduxpluscore/js/base/plugins/jquery-form/jquery.form.js') }}"></script>
     <script src="{{ asset('bundles/eduxpluscore/js/base/plugins/jquery-cookie/jquery.cookie.min.js') }}"></script>
-    <script src="{{ asset('bundles/eduxpluscore/js/base/plugins/layer/layer.js') }}"></script>
     <script src="{{ asset('bundles/eduxpluscore/js/base/modules/ajaxform.js') }}"></script>
     <script src="{{ asset('bundles/eduxpluscore/js/base/modules/ajaxaction.js') }}"></script>
     <script src="{{ asset('bundles/eduxpluscore/js/base/modules/captcha.js') }}"></script>
     <script src="{{ asset('bundles/eduxpluscore/js/base/modules/widgets.js') }}"></script>
     <script src="{{ asset('bundles/eduxpluscore/js/base/base.js') }}"></script>
+    <script src="{{ asset('bundles/eduxpluscore/js/lyear-loading.js') }}"></script>
     <script type="text/javascript">
         $(function(){
             $(".recaptcha").captcha();
@@ -35,14 +36,25 @@
                 $.cookie("last_username", mobile);
             });
 
+            $("button[type='submit']").click(function(){
+                var l = $(this).lyearloading({
+                    opacity: 0.2,
+                    spinnerSize: 'nm'
+                });
+                setTimeout(function() {
+                    l.destroy(); // 可以使用hide，页面中如果有多个loading，最好用destroy，避免后面的loading设置不生效
+                }, 1e3)
+            });
+
         });
     </script>
     {% if error %}
         <script type="text/javascript">
             $(function() {
                 layer.msg('{{ error.messageKey|trans(error.messageData, 'security') }}', {
-                    time: 2500, //2s后自动关闭
-                    icon: 7,
+                    time: 25000, //2s后自动关闭
+                    icon: "cry",
+                    skin:"bg-info",
                     offset: '100px', //右下角弹出
                 });
 

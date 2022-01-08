@@ -55,7 +55,6 @@ class InstallFixtures extends Fixture
     {
          //初始化用户
          $userModel = new BaseUser();
-         $uuid = $this->helperService->getUuid();
          $pwd = $this->passwordEncoder->hashPassword($userModel, $this->adminUserPwd);
          $userModel->setSex(1);
          $userModel->setBirthday('1949-10-01');
@@ -64,7 +63,8 @@ class InstallFixtures extends Fixture
          $mobileMask =  $this->mobileMaskService->encrypt($this->adminUserMobile);
          $userModel->setMobileMask($mobileMask);
          $userModel->setReportUid(0);
-         $userModel->setUuid($uuid);
+         $userModel->setSno(substr($this->adminUserMobile,-6));
+         $userModel->setMobileTail($this->adminUserMobile);
          $userModel->setDisplayName("超级管理员");
          $userModel->setFullName("超级管理员");
          $userModel->setIsAdmin(1);

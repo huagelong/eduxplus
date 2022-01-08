@@ -27,7 +27,7 @@ class HelpController extends BaseAdminController
     public function indexAction(Request $request, Grid $grid, HelpService $helpService){
         $pageSize = 40;
         $grid->setListService($helpService, "getList");
-        $grid->text("#")->field("id")->sort("a.id");
+        $grid->text("ID")->field("id")->sort("a.id");
         $grid->text("名称")->field("name");
         $grid->text("分类")->field("categoryName");
         $grid->boole2("上架？")->field("status")->sort("a.status")->actionCall("admin_api_mall_help_switchStatus", function ($obj) use($helpService) {

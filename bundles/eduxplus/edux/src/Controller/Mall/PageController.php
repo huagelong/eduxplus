@@ -26,7 +26,7 @@ class PageController extends BaseAdminController
      public function indexAction( Request $request,Grid $grid, PageService $pageService){
          $pageSize = 40;
          $grid->setListService($pageService, "getList");
-         $grid->text("#")->field("id")->sort("a.id");
+         $grid->text("ID")->field("id")->sort("a.id");
          $grid->text("单页名称")->field("name");
          $grid->boole2("上架？")->field("status")->sort("a.status")->actionCall("admin_api_mall_page_switchStatus", function ($obj) use($pageService) {
              $id = $pageService->getPro($obj, "id");
