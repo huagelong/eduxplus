@@ -99,7 +99,7 @@ class CategoryController extends BaseAdminController
 
         $formData = $form->create($this->generateUrl("admin_api_teach_category_edit", ['id' => $id]));
         $data = [];
-        $data["formData"] = $formData;
+        $data["formData"] = $formData;$data["breadcrumb"] = 1;
         return $this->render("@EduxBundle/teach/category/edit.html.twig", $data);
     }
 

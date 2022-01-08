@@ -105,7 +105,7 @@ class ChapterController extends BaseAdminController
 
         $formData = $form->create($this->generateUrl("qa_admin_chapter_do_add"));
         $data = [];
-        $data["formData"] = $formData;
+        $data["formData"] = $formData;$data["breadcrumb"] = 1;
         return $this->render("@QaBundleAdmin/chapter/add.html.twig", $data);
     }
 
@@ -145,7 +145,7 @@ class ChapterController extends BaseAdminController
             'id' => $id
         ]));
         $data = [];
-        $data["formData"] = $formData;
+        $data["formData"] = $formData;$data["breadcrumb"] = 1;
         return $this->render("@QaBundleAdmin/chapter/edit.html.twig", $data);
     }
 

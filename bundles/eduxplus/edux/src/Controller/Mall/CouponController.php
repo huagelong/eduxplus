@@ -142,7 +142,7 @@ class CouponController extends BaseAdminController
 
         $formData = $form->create($this->generateUrl("admin_api_mall_coupon_add"));
         $data = [];
-        $data["formData"] = $formData;
+        $data["formData"] = $formData;$data["breadcrumb"] = 1;
         return $this->render("@EduxBundle/mall/coupon/add.html.twig", $data);
     }
 
@@ -223,7 +223,7 @@ class CouponController extends BaseAdminController
 
         $formData = $form->create($this->generateUrl("admin_api_mall_coupon_edit",["id"=>$id]));
         $data = [];
-        $data["formData"] = $formData;
+        $data["formData"] = $formData;$data["breadcrumb"] = 1;
         return $this->render("@EduxBundle/mall/coupon/edit.html.twig", $data);
     }
 

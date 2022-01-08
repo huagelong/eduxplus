@@ -100,7 +100,7 @@ class OptionController extends BaseAdminController
         $form->boole("锁定")->field("isLock")->isRequire(1);
         $formData = $form->create($this->generateUrl("admin_api_option_add",['type'=>$type]));
         $data = [];
-        $data["formData"] = $formData;
+        $data["formData"] = $formData;$data["breadcrumb"] = 1;
         return $this->render("@CoreBundle/option/add.html.twig", $data);
     }
 
@@ -164,7 +164,7 @@ class OptionController extends BaseAdminController
         }
         $formData = $form->create($this->generateUrl("admin_api_option_edit",['id'=>$id]));
         $data = [];
-        $data["formData"] = $formData;
+        $data["formData"] = $formData;$data["breadcrumb"] = 1;
         return $this->render("@CoreBundle/option/edit.html.twig", $data);
     }
 

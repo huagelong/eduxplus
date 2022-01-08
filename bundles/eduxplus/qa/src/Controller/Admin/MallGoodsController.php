@@ -168,7 +168,7 @@ class MallGoodsController extends BaseAdminController
 
         $formData = $form->create($this->generateUrl("admin_qa_api_mall_goods_add"));
         $data = [];
-        $data["formData"] = $formData;
+        $data["formData"] = $formData;$data["breadcrumb"] = 1;
         return $this->render("@QaBundleAdmin/mall/goods/add.html.twig", $data);
     }
 
@@ -210,7 +210,7 @@ class MallGoodsController extends BaseAdminController
 
         $formData = $form->create($this->generateUrl("admin_qa_api_mall_goods_add"));
         $data = [];
-        $data["formData"] = $formData;
+        $data["formData"] = $formData;$data["breadcrumb"] = 1;
         return $this->render("@QaBundleAdmin/mall/goods/addgroup.html.twig", $data);
     }
 
@@ -365,7 +365,7 @@ class MallGoodsController extends BaseAdminController
             'id' => $id
         ]));
         $data = [];
-        $data["formData"] = $formData;
+        $data["formData"] = $formData;$data["breadcrumb"] = 1;
         return $this->render("@QaBundleAdmin/mall/goods/edit.html.twig", $data);
     }
 
@@ -419,7 +419,7 @@ class MallGoodsController extends BaseAdminController
             'id' => $id
         ]));
         $data = [];
-        $data["formData"] = $formData;
+        $data["formData"] = $formData;$data["breadcrumb"] = 1;
         return $this->render("@QaBundleAdmin/mall/goods/editgroup.html.twig", $data);
     }
 
@@ -472,7 +472,7 @@ class MallGoodsController extends BaseAdminController
 
         $formData = $view->create();
         $data = [];
-        $data["formData"] = $formData;
+        $data["formData"] = $formData;$data["breadcrumb"] = 1;
         return $this->render("@QaBundleAdmin/mall/goods/view.html.twig", $data);
     }
 
@@ -524,7 +524,7 @@ class MallGoodsController extends BaseAdminController
 
         $formData = $view->create();
         $data = [];
-        $data["formData"] = $formData;
+        $data["formData"] = $formData;$data["breadcrumb"] = 1;
         return $this->render("@QaBundleAdmin/mall/goods/viewgroup.html.twig", $data);
     }
 

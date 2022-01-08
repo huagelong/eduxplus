@@ -104,7 +104,7 @@ class TeacherController extends BaseAdminController
         $form->richEditor("描述")->field("descr")->attr(['data-width' => 800, 'data-height' => 200]);
         $formData = $form->create($this->generateUrl("admin_api_jw_teacher_add"));
         $data = [];
-        $data["formData"] = $formData;
+        $data["formData"] = $formData;$data["breadcrumb"] = 1;
         return $this->render("@EduxBundle/jw/teacher/add.html.twig", $data);
     }
 
@@ -161,7 +161,7 @@ class TeacherController extends BaseAdminController
 
         $formData = $view->create();
         $data = [];
-        $data["formData"] = $formData;
+        $data["formData"] = $formData;$data["breadcrumb"] = 1;
         $data['info'] = $info;
         return $this->render("@EduxBundle/jw/teacher/view.html.twig", $data);
     }
@@ -194,7 +194,7 @@ class TeacherController extends BaseAdminController
 
         $formData = $form->create($this->generateUrl("admin_api_jw_teacher_edit", ["id" => $id]));
         $data = [];
-        $data["formData"] = $formData;
+        $data["formData"] = $formData;$data["breadcrumb"] = 1;
         $data['info'] = $info;
         return $this->render("@EduxBundle/jw/teacher/edit.html.twig", $data);
     }

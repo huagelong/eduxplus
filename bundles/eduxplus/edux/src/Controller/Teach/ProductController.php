@@ -115,7 +115,7 @@ class ProductController extends BaseAdminController
 
         $formData = $form->create($this->generateUrl("admin_api_teach_product_add"));
         $data = [];
-        $data["formData"] = $formData;
+        $data["formData"] = $formData;$data["breadcrumb"] = 1;
         return $this->render("@EduxBundle/teach/product/add.html.twig", $data);
     }
 
@@ -158,7 +158,7 @@ class ProductController extends BaseAdminController
 
         $formData = $form->create($this->generateUrl("admin_api_teach_product_edit", ['id' => $id]));
         $data = [];
-        $data["formData"] = $formData;
+        $data["formData"] = $formData;$data["breadcrumb"] = 1;
         return $this->render("@EduxBundle/teach/product/edit.html.twig", $data);
     }
 

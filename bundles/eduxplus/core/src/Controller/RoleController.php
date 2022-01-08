@@ -82,7 +82,7 @@ class RoleController extends BaseAdminController
         $form->textarea("描述")->field("descr");
         $formData = $form->create($this->generateUrl("admin_api_role_add"));
         $data = [];
-        $data["formData"] = $formData;
+        $data["formData"] = $formData;$data["breadcrumb"] = 1;
         return $this->render("@CoreBundle/role/add.html.twig", $data);
     }
 
@@ -116,7 +116,7 @@ class RoleController extends BaseAdminController
         $form->textarea("描述")->field("descr")->defaultValue($info['descr']);
         $formData = $form->create($this->generateUrl("admin_api_role_edit",['id'=>$id]));
         $data = [];
-        $data["formData"] = $formData;
+        $data["formData"] = $formData;$data["breadcrumb"] = 1;
         return $this->render("@CoreBundle/role/edit.html.twig", $data);
     }
 

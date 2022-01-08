@@ -128,7 +128,7 @@ class TestController extends BaseAdminController
 
         $formData = $form->create($this->generateUrl("qa_admin_test_do_add"));
         $data = [];
-        $data["formData"] = $formData;
+        $data["formData"] = $formData;$data["breadcrumb"] = 1;
         return $this->render("@QaBundleAdmin/test/add.html.twig", $data);
     }
 
@@ -171,7 +171,7 @@ class TestController extends BaseAdminController
             'id' => $id
         ]));
         $data = [];
-        $data["formData"] = $formData;
+        $data["formData"] = $formData;$data["breadcrumb"] = 1;
         return $this->render("@QaBundleAdmin/test/edit.html.twig", $data);
     }
 

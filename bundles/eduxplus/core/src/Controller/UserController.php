@@ -119,7 +119,7 @@ class UserController extends BaseAdminController
 
         $formData = $form->create($this->generateUrl("admin_api_user_add"));
         $data = [];
-        $data["formData"] = $formData;
+        $data["formData"] = $formData;$data["breadcrumb"] = 1;
         return $this->render("@CoreBundle/user/add.html.twig", $data);
     }
 
@@ -218,7 +218,7 @@ class UserController extends BaseAdminController
 
         $formData = $form->create($this->generateUrl("admin_api_user_edit", ["id" => $id]));
         $data = [];
-        $data["formData"] = $formData;
+        $data["formData"] = $formData;$data["breadcrumb"] = 1;
         return $this->render("@CoreBundle/user/edit.html.twig", $data);
     }
 

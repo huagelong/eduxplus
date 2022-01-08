@@ -191,7 +191,7 @@ class GoodsController extends BaseAdminController
 
         $formData = $form->create($this->generateUrl("admin_api_mall_goods_add"));
         $data = [];
-        $data["formData"] = $formData;
+        $data["formData"] = $formData;$data["breadcrumb"] = 1;
         return $this->render("@EduxBundle/mall/goods/add.html.twig", $data);
     }
 
@@ -251,7 +251,7 @@ class GoodsController extends BaseAdminController
 
         $formData = $form->create($this->generateUrl("admin_api_mall_goods_add"));
         $data = [];
-        $data["formData"] = $formData;
+        $data["formData"] = $formData;$data["breadcrumb"] = 1;
         return $this->render("@EduxBundle/mall/goods/addgroup.html.twig", $data);
     }
 
@@ -442,7 +442,7 @@ class GoodsController extends BaseAdminController
             'id' => $id
         ]));
         $data = [];
-        $data["formData"] = $formData;
+        $data["formData"] = $formData;$data["breadcrumb"] = 1;
         return $this->render("@EduxBundle/mall/goods/edit.html.twig", $data);
     }
 
@@ -522,7 +522,7 @@ class GoodsController extends BaseAdminController
             'id' => $id
         ]));
         $data = [];
-        $data["formData"] = $formData;
+        $data["formData"] = $formData;$data["breadcrumb"] = 1;
         return $this->render("@EduxBundle/mall/goods/editgroup.html.twig", $data);
     }
 
@@ -602,7 +602,7 @@ class GoodsController extends BaseAdminController
 
         $formData = $view->create();
         $data = [];
-        $data["formData"] = $formData;
+        $data["formData"] = $formData;$data["breadcrumb"] = 1;
         return $this->render("@EduxBundle/mall/goods/view.html.twig", $data);
     }
 
@@ -681,7 +681,7 @@ class GoodsController extends BaseAdminController
 
         $formData = $view->create();
         $data = [];
-        $data["formData"] = $formData;
+        $data["formData"] = $formData;$data["breadcrumb"] = 1;
         return $this->render("@EduxBundle/mall/goods/viewgroup.html.twig", $data);
     }
 

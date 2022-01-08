@@ -82,7 +82,7 @@ class SchoolController extends BaseAdminController
         $view->disableSubmit();
         $formData = $view->create();
         $data = [];
-        $data["formData"] = $formData;
+        $data["formData"] = $formData;$data["breadcrumb"] = 1;
         $data['info'] = $info;
         return $this->render("@EduxBundle/jw/school/view.html.twig", $data);
     }
@@ -98,7 +98,7 @@ class SchoolController extends BaseAdminController
         $form->disableSubmit();
         $formData = $form->create($this->generateUrl("admin_api_jw_school_add"));
         $data = [];
-        $data["formData"] = $formData;
+        $data["formData"] = $formData;$data["breadcrumb"] = 1;
         return $this->render("@EduxBundle/jw/school/add.html.twig", $data);
     }
 
@@ -142,7 +142,7 @@ class SchoolController extends BaseAdminController
         $form->disableSubmit();
         $formData = $form->create($this->generateUrl("admin_api_jw_school_edit", ['id'=>$id]));
         $data = [];
-        $data["formData"] = $formData;
+        $data["formData"] = $formData;$data["breadcrumb"] = 1;
         $data['info'] = $info;
         return $this->render("@EduxBundle/jw/school/edit.html.twig", $data);
     }

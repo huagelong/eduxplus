@@ -81,7 +81,7 @@ class BannerController extends BaseAdminController
 
         $formData = $form->create($this->generateUrl("admin_api_mall_banner_add"));
         $data = [];
-        $data["formData"] = $formData;
+        $data["formData"] = $formData;$data["breadcrumb"] = 1;
         return $this->render("@EduxBundle/mall/banner/add.html.twig", $data);
     }
 
@@ -122,7 +122,7 @@ class BannerController extends BaseAdminController
 
         $formData = $form->create($this->generateUrl("admin_api_mall_banner_edit", ["id"=>$id]));
         $data = [];
-        $data["formData"] = $formData;
+        $data["formData"] = $formData;$data["breadcrumb"] = 1;
         return $this->render("@EduxBundle/mall/banner/edit.html.twig", $data);
     }
 
@@ -252,7 +252,7 @@ class BannerController extends BaseAdminController
 
         $formData = $form->create($this->generateUrl("admin_api_mall_bannermain_add"));
         $data = [];
-        $data["formData"] = $formData;
+        $data["formData"] = $formData;$data["breadcrumb"] = 1;
         $data["pid"] = $pid;
         return $this->render("@EduxBundle/mall/bannermain/add.html.twig", $data);
     }
@@ -306,7 +306,7 @@ class BannerController extends BaseAdminController
 
         $formData = $form->create($this->generateUrl("admin_api_mall_bannermain_edit", ["id"=>$id]));
         $data = [];
-        $data["formData"] = $formData;
+        $data["formData"] = $formData;$data["breadcrumb"] = 1;
         $data["pid"] = $info['bannerId'];
         return $this->render("@EduxBundle/mall/bannermain/edit.html.twig", $data);
     }

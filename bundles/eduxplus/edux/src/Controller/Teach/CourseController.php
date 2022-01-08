@@ -128,7 +128,7 @@ class CourseController extends BaseAdminController
 
         $formData = $form->create($this->generateUrl("admin_api_teach_course_add"));
         $data = [];
-        $data["formData"] = $formData;
+        $data["formData"] = $formData;$data["breadcrumb"] = 1;
         return $this->render("@EduxBundle/teach/course/add.html.twig", $data);
     }
 
@@ -187,7 +187,7 @@ class CourseController extends BaseAdminController
 
         $formData = $form->create($this->generateUrl("admin_api_teach_course_edit", ['id' => $id]));
         $data = [];
-        $data["formData"] = $formData;
+        $data["formData"] = $formData;$data["breadcrumb"] = 1;
         return $this->render("@EduxBundle/teach/course/edit.html.twig", $data);
     }
 

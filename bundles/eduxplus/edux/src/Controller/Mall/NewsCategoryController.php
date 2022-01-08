@@ -78,7 +78,7 @@ class NewsCategoryController extends BaseAdminController
 
         $formData = $form->create($this->generateUrl("admin_api_mall_news_category_edit", ['id' => $id]));
         $data = [];
-        $data["formData"] = $formData;
+        $data["formData"] = $formData;$data["breadcrumb"] = 1;
         return $this->render("@EduxBundle/mall/news/edit_cate.html.twig", $data);
     }
 

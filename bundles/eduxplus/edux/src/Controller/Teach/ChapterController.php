@@ -77,7 +77,7 @@ class ChapterController extends BaseAdminController
             'id' => $id
         ]));
         $data = [];
-        $data["formData"] = $formData;
+        $data["formData"] = $formData;$data["breadcrumb"] = 1;
         $data['id'] = $id;
         return $this->render("@EduxBundle/teach/chapter/add.html.twig", $data);
     }
@@ -172,7 +172,7 @@ class ChapterController extends BaseAdminController
             'id' => $id
         ]));
         $data = [];
-        $data["formData"] = $formData;
+        $data["formData"] = $formData;$data["breadcrumb"] = 1;
         $data['id'] = $id;
         return $this->render("@EduxBundle/teach/chapter/edit.html.twig", $data);
     }
@@ -322,7 +322,7 @@ class ChapterController extends BaseAdminController
             'id' => $id
         ]));
         $data = [];
-        $data["formData"] = $formData;
+        $data["formData"] = $formData;$data["breadcrumb"] = 1;
         $data['id'] = $id;
         $data['vodAdapter'] = $vodAdapter;
         $data['userId'] = $aliyunVodService->getConfigUserId();
@@ -389,7 +389,7 @@ class ChapterController extends BaseAdminController
             'id' => $id
         ]));
         $data = [];
-        $data["formData"] = $formData;
+        $data["formData"] = $formData;$data["breadcrumb"] = 1;
         $data['id'] = $id;
         return $this->render("@EduxBundle/teach/chapter/materials.html.twig", $data);
     }

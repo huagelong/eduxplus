@@ -82,7 +82,7 @@ class AgreementController extends BaseAdminController
 
         $formData = $view->create();
         $data = [];
-        $data["formData"] = $formData;
+        $data["formData"] = $formData;$data["breadcrumb"] = 1;
         return $this->render("@EduxBundle/teach/agreement/view.html.twig", $data);
     }
 
@@ -96,7 +96,7 @@ class AgreementController extends BaseAdminController
 
         $formData = $form->create($this->generateUrl("admin_api_teach_agreement_add"));
         $data = [];
-        $data["formData"] = $formData;
+        $data["formData"] = $formData;$data["breadcrumb"] = 1;
         return $this->render("@EduxBundle/teach/agreement/add.html.twig", $data);
     }
 
@@ -131,7 +131,7 @@ class AgreementController extends BaseAdminController
 
         $formData = $form->create($this->generateUrl("admin_api_teach_agreement_edit", ['id'=>$id]));
         $data = [];
-        $data["formData"] = $formData;
+        $data["formData"] = $formData;$data["breadcrumb"] = 1;
         return $this->render("@EduxBundle/teach/agreement/edit.html.twig", $data);
     }
 

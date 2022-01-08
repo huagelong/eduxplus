@@ -100,7 +100,7 @@ class HelpController extends BaseAdminController
 
         $formData = $view->create();
         $data = [];
-        $data["formData"] = $formData;
+        $data["formData"] = $formData;$data["breadcrumb"] = 1;
         return $this->render("@EduxBundle/mall/help/view.html.twig", $data);
     }
 
@@ -120,7 +120,7 @@ class HelpController extends BaseAdminController
 
         $formData = $form->create($this->generateUrl("admin_api_mall_help_add"));
         $data = [];
-        $data["formData"] = $formData;
+        $data["formData"] = $formData;$data["breadcrumb"] = 1;
         return $this->render("@EduxBundle/mall/help/add.html.twig", $data);
     }
 
@@ -167,7 +167,7 @@ class HelpController extends BaseAdminController
 
         $formData = $form->create($this->generateUrl("admin_api_mall_help_edit", ["id"=>$id]));
         $data = [];
-        $data["formData"] = $formData;
+        $data["formData"] = $formData;$data["breadcrumb"] = 1;
         return $this->render("@EduxBundle/mall/help/edit.html.twig", $data);
     }
 

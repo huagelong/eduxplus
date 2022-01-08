@@ -142,7 +142,7 @@ class NodeController extends BaseAdminController
 
         $formData = $form->create($this->generateUrl("qa_admin_node_do_add"));
         $data = [];
-        $data["formData"] = $formData;
+        $data["formData"] = $formData;$data["breadcrumb"] = 1;
         $data["chapterId"] = $chapterId;
         $data["chapterSubId"] = $chapterSubId;
 
@@ -231,7 +231,7 @@ class NodeController extends BaseAdminController
 
         $formData = $form->create($this->generateUrl("qa_admin_node_do_edit",["id"=>$id]));
         $data = [];
-        $data["formData"] = $formData;
+        $data["formData"] = $formData;$data["breadcrumb"] = 1;
         $data["chapterId"] = $chapterId;
         $data["chapterSubId"] = $chapterSubId;
         $data["id"] = $id;
@@ -276,7 +276,7 @@ class NodeController extends BaseAdminController
 
         $formData = $view->create();
         $data = [];
-        $data["formData"] = $formData;
+        $data["formData"] = $formData;$data["breadcrumb"] = 1;
         $data["chapterId"] = $chapterId;
         $data["chapterSubId"] = $chapterSubId;
         $data["id"] = $id;

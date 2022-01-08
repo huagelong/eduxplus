@@ -90,7 +90,7 @@ class PageController extends BaseAdminController
 
         $formData = $form->create($this->generateUrl("admin_api_mall_page_add"));
         $data = [];
-        $data["formData"] = $formData;
+        $data["formData"] = $formData;$data["breadcrumb"] = 1;
         return $this->render("@EduxBundle/mall/page/add.html.twig", $data);
     }
 
@@ -133,7 +133,7 @@ class PageController extends BaseAdminController
 
         $formData = $view->create();
         $data = [];
-        $data["formData"] = $formData;
+        $data["formData"] = $formData;$data["breadcrumb"] = 1;
         return $this->render("@EduxBundle/mall/page/view.html.twig", $data);
     }
 
@@ -150,7 +150,7 @@ class PageController extends BaseAdminController
 
         $formData = $form->create($this->generateUrl("admin_api_mall_page_edit", ["id"=>$id]));
         $data = [];
-        $data["formData"] = $formData;
+        $data["formData"] = $formData;$data["breadcrumb"] = 1;
         return $this->render("@EduxBundle/mall/page/edit.html.twig", $data);
     }
 

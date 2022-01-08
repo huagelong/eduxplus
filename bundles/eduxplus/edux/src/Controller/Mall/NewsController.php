@@ -113,7 +113,7 @@ class NewsController extends BaseAdminController
 
         $formData = $view->create();
         $data = [];
-        $data["formData"] = $formData;
+        $data["formData"] = $formData;$data["breadcrumb"] = 1;
         return $this->render("@EduxBundle/mall/news/view.html.twig", $data);
     }
 
@@ -143,7 +143,7 @@ class NewsController extends BaseAdminController
 
         $formData = $form->create($this->generateUrl("admin_api_mall_news_add"));
         $data = [];
-        $data["formData"] = $formData;
+        $data["formData"] = $formData;$data["breadcrumb"] = 1;
         return $this->render("@EduxBundle/mall/news/add.html.twig", $data);
     }
 
@@ -203,7 +203,7 @@ class NewsController extends BaseAdminController
 
         $formData = $form->create($this->generateUrl("admin_api_mall_news_edit", ["id"=>$id]));
         $data = [];
-        $data["formData"] = $formData;
+        $data["formData"] = $formData;$data["breadcrumb"] = 1;
         return $this->render("@EduxBundle/mall/news/edit.html.twig", $data);
     }
 

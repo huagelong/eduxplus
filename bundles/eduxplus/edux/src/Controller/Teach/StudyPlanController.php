@@ -56,7 +56,7 @@ class StudyPlanController extends BaseAdminController
             'id' => $id
         ]));
         $data = [];
-        $data["formData"] = $formData;
+        $data["formData"] = $formData;$data["breadcrumb"] = 1;
         $data['id'] = $id;
         return $this->render("@EduxBundle/teach/studyplan/add.html.twig", $data);
     }
@@ -117,7 +117,7 @@ class StudyPlanController extends BaseAdminController
             'id' => $id
         ]));
         $data = [];
-        $data["formData"] = $formData;
+        $data["formData"] = $formData;$data["breadcrumb"] = 1;
         $data['id'] = $id;
         return $this->render("@EduxBundle/teach/studyplan/edit.html.twig", $data);
     }
