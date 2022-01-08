@@ -29,8 +29,8 @@ class AdminLogController extends BaseAdminController
         $grid->text("#")->field("id")->sort("a.id");
         $grid->textarea("动作")->field("descr");
 //        $grid->text("路由")->field("route");
-        $grid->text("操作人")->field("fullName");
-        $grid->text("Ip")->field("ip");
+        $grid->badgeMuted("操作人")->field("fullName");
+        $grid->badgeUrple("Ip")->field("ip");
         $grid->tip("参数")->field("inputData");
         $grid->datetime("操作时间")->field("createdAt")->sort("a.createdAt");
 

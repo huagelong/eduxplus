@@ -1,31 +1,25 @@
-<div class="card card-default">
+<div class="card">
     <div class="card-header">
         <div class="card-title">
             {% if searchField %}
-            <div class="input-group input-group-sm">
-      <button class="btn btn-label btn-info btn-sm search-btn-filter">
-      <label><i class="mdi mdi-filter"></i></label> 查询</button>
-            </div>
-            {% endif %}
-        </div>
-        <div class="card-tools">
-            {% if gridBar %}
-            <div class="input-group input-group-sm">
-                {% for gk, gv in gridBar %}
-                    {% if gv['type'] == 'button' %}
-                <a href="{{ gv['url'] }}" class="btn btn-sm btn-info {{ gv['class'] }}" title="{{ gk }}" style="margin-right: 10px;" {% if gv['isBlank'] %} target="_blank" {% endif %}>
-                    <i class="{{ gv['iconCLass'] }}"></i><span class="hidden-xs">{{ gk }}</span>
-                </a>
-                    {% endif %}
-                {% endfor %}
-            </div>
-
+                  <button class="btn btn-brown btn-sm search-btn-filter">
+                      <i class="mdi mdi-filter"></i><span class="hidden-xs">查询</span>
+                  </button>
+                {% if gridBar %}
+                    {% for gk, gv in gridBar %}
+                        {% if gv['type'] == 'button' %}
+                            <a href="{{ gv['url'] }}"  class="btn btn-sm btn-info {{ gv['class'] }}" title="{{ gk }}" style="margin-right: 10px;" {% if gv['isBlank'] %} target="_blank" {% endif %}>
+                                <i class="{{ gv['iconCLass'] }}"></i><span class="hidden-xs">{{ gk }}</span>
+                            </a>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
             {% endif %}
         </div>
     </div>
   {{ include("@Grid/search.html.twig", {'searchField':searchField}) }}
-    <div class="card-body table-responsive .p-0" style="max-height: 600px;">
-        <table class="table table-hover text-nowrap table-head-fixed ">
+    <div class="card-body table-responsive .p-0">
+        <table class="table table-hover text-nowrap">
             <thead>
             <tr>
               {% for cv in column %}
@@ -71,8 +65,53 @@
                             {{ get_prop(v, cv["field"], cv['type'], cv['options'])|raw }}
                         {% endif %}
 
+                        {% if cv['type'] == 'badgePrimary' %}
+                <span class="badge badge-primary">{{ get_prop(v, cv["field"], cv['type'], cv['options'])|raw }}</span>
+                        {% endif %}
+
+                        {% if cv['type'] == 'badgeSuccess' %}
+                            <span class="badge badge-success">{{ get_prop(v, cv["field"], cv['type'], cv['options'])|raw }}</span>
+                        {% endif %}
+
+
+                        {% if cv['type'] == 'badgeInfo' %}
+                            <span class="badge badge-info">{{ get_prop(v, cv["field"], cv['type'], cv['options'])|raw }}</span>
+                        {% endif %}
+
+                        {% if cv['type'] == 'badgeWarning' %}
+                            <span class="badge badge-warning">{{ get_prop(v, cv["field"], cv['type'], cv['options'])|raw }}</span>
+                        {% endif %}
+
+                        {% if cv['type'] == 'badgeDanger' %}
+                            <span class="badge badge-danger">{{ get_prop(v, cv["field"], cv['type'], cv['options'])|raw }}</span>
+                        {% endif %}
+
+                        {% if cv['type'] == 'badgeDark' %}
+                            <span class="badge badge-dark">{{ get_prop(v, cv["field"], cv['type'], cv['options'])|raw }}</span>
+                        {% endif %}
+
+                        {% if cv['type'] == 'badgeUrple' %}
+                            <span class="badge badge-urple">{{ get_prop(v, cv["field"], cv['type'], cv['options'])|raw }}</span>
+                        {% endif %}
+
+                        {% if cv['type'] == 'badgePrimary' %}
+                            <span class="badge badge-primary">{{ get_prop(v, cv["field"], cv['type'], cv['options'])|raw }}</span>
+                        {% endif %}
+
+                        {% if cv['type'] == 'badgePink' %}
+                            <span class="badge badge-pink">{{ get_prop(v, cv["field"], cv['type'], cv['options'])|raw }}</span>
+                        {% endif %}
+
+                        {% if cv['type'] == 'badgeBrown' %}
+                            <span class="badge badge-brown">{{ get_prop(v, cv["field"], cv['type'], cv['options'])|raw }}</span>
+                        {% endif %}
+
+                        {% if cv['type'] == 'badgeMuted' %}
+                            <span class="badge badge-muted">{{ get_prop(v, cv["field"], cv['type'], cv['options'])|raw }}</span>
+                        {% endif %}
+
                          {% if cv['type'] == 'tip' %}
-                            <a title='<code>{{ get_prop(v, cv["field"], cv['type'], cv['options'])|raw }}</code>' class="msgtip" style="color:#e83e8c">
+                            <a title='{{ get_prop(v, cv["field"], cv['type'], cv['options'])|raw }}' class="msgtip" style="color:#e83e8c">
                             {{ get_prop(v, cv["field"], cv['type'], cv['options'])|raw|striptags|substr(0, 20)}}
                             </a>
                         {% endif %}

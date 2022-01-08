@@ -214,6 +214,45 @@ class Grid
         return $this->gridBind($title, "text");
     }
 
+    public function badgePrimary($title){
+        return $this->gridBind($title, "badgePrimary");
+    }
+
+    public function badgeSuccess($title){
+        return $this->gridBind($title, "badgeSuccess");
+    }
+
+    public function badgeInfo($title){
+        return $this->gridBind($title, "badgeInfo");
+    }
+
+    public function badgeWarning($title){
+        return $this->gridBind($title, "badgeWarning");
+    }
+
+    public function badgeDanger($title){
+        return $this->gridBind($title, "badgeDanger");
+    }
+
+    public function badgeDark($title){
+        return $this->gridBind($title, "badgeDark");
+    }
+
+    public function badgeUrple($title){
+        return $this->gridBind($title, "badgeUrple");
+    }
+
+    public function badgePink($title){
+        return $this->gridBind($title, "badgePink");
+    }
+
+    public function badgeBrown($title){
+        return $this->gridBind($title, "badgeBrown");
+    }
+
+    public function badgeMuted($title){
+        return $this->gridBind($title, "badgeMuted");
+    }
 
     public function datetime($title){
         return $this->gridBind($title, "datetime");

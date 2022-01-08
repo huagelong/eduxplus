@@ -32,18 +32,13 @@ jQuery( function() {
     {{ parent() }}
  <div class="lyear-layout-web">
   <div class="lyear-layout-container">
-    
+
   <aside class="lyear-layout-sidebar">
       <div class="lyear-layout-mini-sidebar">
         <!--菜单小图标-->
         <div class="lyear-layout-sidebar-info lyear-scroll">
           <nav class="sidebar-main">
             <ul class="nav-drawer">
-{#              <li class="nav-item active" data-toggle="tooltip" data-placement="right" title="首页">#}
-{#                <a href="javascript:;" data-nav-target="#home">#}
-{#                  <i class="mdi mdi-home"></i>#}
-{#                </a>#}
-{#              </li>#}
 {% if menus %}
   {% set menuroot = menus[0] %}
     {% for menu in menuroot %}
@@ -112,7 +107,7 @@ jQuery( function() {
       
     </aside>
     <!--End 左侧导航-->
-    
+
     <!--头部信息-->
     <header class="lyear-layout-header">
       
@@ -121,7 +116,7 @@ jQuery( function() {
         <div class="navbar-left d-flex align-items-center">
           <!-- logo -->
           <div id="logo" class="sidebar-header">
-            <a href="index.html"><img src="/bundles/eduxpluscore/images/logo-sidebar.png" title="LightYear" alt="LightYear" /></a>
+            <a href="/"><img src="/bundles/eduxpluscore/images/logo-sidebar.png" title="LightYear" alt="LightYear" /></a>
           </div>
           <div class="lyear-aside-toggler">
             <span class="lyear-toggler-bar"></span>
@@ -131,28 +126,6 @@ jQuery( function() {
         </div>
           
         <ul class="navbar-right d-flex align-items-center">
-          <li class="dropdown dropdown-notice">
-            <span data-toggle="dropdown" class="icon-item">
-              <i class="mdi mdi-bell-outline"></i>
-              <span class="badge badge-danger">10</span>
-            </span>
-            <div class="dropdown-menu dropdown-menu-right">
-              <div class="lyear-notifications">
-                
-                <div class="lyear-notifications-title clearfix"  data-stopPropagation="true"><a href="javascript:;" class="float-right">查看全部</a>你有 10 条未读消息</div>
-                <div class="lyear-notifications-info lyear-scroll">
-                  <a href="javascript:;" class="dropdown-item" title="树莓派销量猛增，疫情期间居家工作学习、医疗领域都需要它">树莓派销量猛增，疫情期间居家工作学习、医疗领域都需要它</a>
-                  <a href="javascript:;" class="dropdown-item" title="GNOME 用户体验团队将为 GNOME Shell 提供更多改进">GNOME 用户体验团队将为 GNOME Shell 提供更多改进</a>
-                  <a href="javascript:;" class="dropdown-item" title="Linux On iPhone 即将面世，支持 iOS 的双启动">Linux On iPhone 即将面世，支持 iOS 的双启动</a>
-                  <a href="javascript:;" class="dropdown-item" title="GitHub 私有仓库完全免费面向团队提供">GitHub 私有仓库完全免费面向团队提供</a>
-                  <a href="javascript:;" class="dropdown-item" title="Wasmtime 为 WebAssembly 增加 Go 语言绑定">Wasmtime 为 WebAssembly 增加 Go 语言绑定</a>
-                  <a href="javascript:;" class="dropdown-item" title="红帽借“订阅”成开源一哥，首创者 Cormier 升任总裁">红帽借“订阅”成开源一哥，首创者 Cormier 升任总裁</a>
-                  <a href="javascript:;" class="dropdown-item" title="Zend 宣布推出两项 PHP 新产品">Zend 宣布推出两项 PHP 新产品</a>
-                </div>
-                
-              </div>
-            </div>
-          </li>
           <!--切换主题配色-->
 		  <li class="dropdown dropdown-skin">
 		    <span data-toggle="dropdown" class="icon-item"><i class="mdi mdi-palette"></i></span>

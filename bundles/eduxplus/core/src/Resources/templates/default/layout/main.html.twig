@@ -17,7 +17,7 @@
 
     var can = document.createElement('canvas')
     // 设置canvas画布大小
-    can.width = 150
+    can.width = 250
     can.height = 80
 
     var cans = can.getContext('2d')
@@ -44,7 +44,7 @@
     return id
 }
 var str1="{{ app.user.fullName }}";
-var now = (new Date()).toLocaleDateString();
+var now = (new Date()).toLocaleString();
 var id = setWatermark(str1, now)
   if (document.getElementById(id) === null) {
     id = setWatermark(str1, now)

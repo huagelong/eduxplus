@@ -1,39 +1,32 @@
 {% if formField %}
     {% if disableSubmit != 1 %}
-        <div class="card card-default"  style="padding-top: 10px;">
+        <div class="card">
         <form method="POST" action="{{ url }}" class="form-horizontal ajaxform" accept-charset="UTF-8" >
-            <div class="card-body" style="display: block;">
+            <div class="card-body">
     {% endif %}
             {% for k,v in formField %}
-                <div class="form-group  row">
+                <div class="form-group">
                     {% if v['type'] != 'hidden' %}
-                    <label for="title" class="col-sm-2  {% if v['attributes']['data-required'] is defined and v['attributes']['data-required'] %} require {% endif %} col-form-label">{{ k }} :</label>
+                    <label for="title" class="{% if v['attributes']['data-required'] is defined and v['attributes']['data-required'] %} require {% endif %}">{{ k }} :</label>
                     {% endif %}
 
                     {% if v['type'] == 'text' %}
-                        <div class="col-sm-10">
-                            <div class="input-group">
                                 <input type="text"
-
                                 {% if v['attributes'] %}
                                     {% for ok,ov in v['attributes'] %}
                                         {{ ok }}="{{ ov }}"
                                     {% endfor %}
                                 {% endif %}
-
                                        value="{{ v['defaultValue'] }}"
                                        class="form-control form-control-sm"
                                 >
-                            </div>
-                        </div>
                     {% endif %}
 
                     {% if v['type'] == 'string' %}
-                        <div class="col-sm-10">{{ v['defaultValue'] }}</div>
+                    <label>{{ v['defaultValue'] }}</label>
                     {% endif %}
 
                     {% if v['type'] == 'daterange' %}
-                        <div class="col-sm-10">
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                   <span class="input-group-text">
@@ -51,11 +44,9 @@
                                 placeholder="输入 ..."
                                 >
                             </div>
-                        </div>
                     {% endif %}
 
                      {% if v['type'] == 'datetime' %}
-                        <div class="col-sm-10">
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="far fa-clock"></i></span>
@@ -72,11 +63,9 @@
                                 class="form-control form-control-sm datetime"
                                 placeholder="输入 ...">
                             </div>
-                        </div>
                     {% endif %}
 
                     {% if v['type'] == 'date' %}
-                        <div class="col-sm-10">
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="far fa-clock"></i></span>
@@ -92,11 +81,9 @@
                                 class="form-control form-control-sm date"
                                 placeholder="输入 ...">
                             </div>
-                        </div>
                     {% endif %}
 
                     {% if v['type'] == 'datetimerange' %}
-                        <div class="col-sm-10">
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="far fa-clock"></i></span>
@@ -113,11 +100,9 @@
                                 class="form-control form-control-sm datetimerange"
                                 placeholder="输入 ...">
                             </div>
-                        </div>
                     {% endif %}
 
                     {% if v['type'] == 'file' %}
-                        <div class="col-sm-10">
                             <div class="input-group">
                                 <input type="hidden" name="{{ v['field'] }}"  value="{{ v['defaultValue'] }}"  {% if v['attributes']['data-required'] is defined and v['attributes']['data-required'] %} data-required="1" {% endif %} >
                                 <input type="file" data-field="{{ v['field'] }}"
@@ -132,11 +117,9 @@
                                        class="form-control form-control-sm ufile"
                                 />
                             </div>
-                        </div>
                     {% endif %}
 
                     {% if v['type'] == 'password' %}
-                        <div class="col-sm-10">
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="mdi mdi-key"></i></span>
@@ -152,11 +135,9 @@
                                        class="form-control form-control-sm"
                                 />
                             </div>
-                        </div>
                     {% endif %}
 
                     {% if v['type'] == 'textarea' %}
-                        <div class="col-sm-10">
                             <div class="input-group">
                                 <textarea
                                 {% if v['attributes'] %}
@@ -168,11 +149,9 @@
 
                                 >{{ v['defaultValue'] }}</textarea>
                             </div>
-                        </div>
                     {% endif %}
 
                     {% if v['type'] == 'boole' %}
-                    <div class="col-sm-10">
                         <div class="input-group">
                         <input type="checkbox"
                             {% if v['attributes'] %}
@@ -185,11 +164,9 @@
                             data-bootstrap-switch
                         >
                         </div>
-                    </div>
                   {% endif %}
 
                     {% if v['type'] == 'select' %}
-                    <div class="col-sm-10">
                         <div class="input-group">
                             <input type="hidden" name="formHidden-{{ v['field'] }}" value="{{ v['defaultValue'] }}"  />
                             <select
@@ -215,11 +192,9 @@
                                 {% endif %}
                             </select>
                         </div>
-                    </div>
                     {% endif %}
 
                     {% if v['type'] == 'multiSelect' %}
-                        <div class="col-sm-10">
                             <div class="input-group" >
                                 <input type="hidden" name="formHidden-{{ v['field'] }}" value="{{ v['defaultValue']|json_encode }}"  />
                                 <select
@@ -246,11 +221,9 @@
                                     {% endif %}
                                 </select>
                             </div>
-                        </div>
                     {% endif %}
 
                     {% if v['type'] == "search_select" %}
-                          <div class="col-sm-10">
                                 <div class="input-group" >
                                    <input type="hidden" name="formHidden-{{ v['field'] }}" value="{{ v['defaultValue']|json_encode }}"  />
                                     {% set selectV = get_prop(v['options'],"") %}
@@ -274,11 +247,9 @@
                                     {% endif %}
                                     </select>
                                 </div>
-                          </div>
                     {% endif %}
 
                     {% if v['type'] == "search_multiple_select" %}
-                        <div class="col-sm-10">
                             <div class="input-group" >
                                 <input type="hidden" name="formHidden-{{ v['field'] }}" value="{{ v['defaultValue']|json_encode }}"  />
                                 {% set selectV = get_prop(v['options'],"") %}
@@ -303,7 +274,6 @@
                                 {% endif %}
                                 </select>
                             </div>
-                        </div>
                     {% endif %}
 
                     {% if v['type'] == 'hidden' %}
@@ -319,7 +289,6 @@
                     {% endif %}
 
                     {% if v['type'] == 'rich_editor' %}
-                        <div class="col-sm-10">
                             <div class="input-group" >
                 <textarea  class="form-control form-control-sm rich_text"
                 {% if v['attributes'] %}
@@ -329,7 +298,6 @@
                 {% endif %}
                 />{{ v['defaultValue']}}</textarea>
                             </div>
-                        </div>
                     {% endif %}
 
                 </div>
