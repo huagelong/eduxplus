@@ -48,27 +48,9 @@ class TeacherController extends BaseAdminController
 
         $grid->gbAddButton("admin_jw_teacher_add");
 
-        //编辑等
-        $grid->setTableAction('admin_jw_teacher_view', function ($obj) {
-            $id = $obj["id"];
-            $url = $this->generateUrl('admin_jw_teacher_view', ['id' => $id]);
-            $str = '<a href=' . $url . ' data-title="查看" title="查看" class=" btn btn-default btn-xs poppage"><i class="mdi mdi-eye"></i></a>';
-            return  $str;
-        });
-
-        $grid->setTableAction('admin_jw_teacher_edit', function ($obj) {
-            $id = $obj["id"];
-            $url = $this->generateUrl('admin_jw_teacher_edit', ['id' => $id]);
-            $str = '<a href=' . $url . ' data-width="800px" data-height="600px" title="编辑" data-title="编辑" class=" btn btn-info btn-xs poppage"><i class="mdi mdi-file-document-edit"></i></a>';
-            return  $str;
-        });
-
-        $grid->setTableAction('admin_api_jw_teacher_delete', function ($obj) {
-            $id = $obj["id"];
-            $url = $this->generateUrl('admin_api_jw_teacher_delete', ['id' => $id]);
-            return '<a href=' . $url . ' data-confirm="确认要删除吗?"  title="删除" class=" btn btn-danger btn-xs ajaxDelete"><i class="mdi mdi-delete"></i></a>';
-        });
-
+        $grid->viewAction("admin_jw_teacher_view")
+            ->editAction("admin_jw_teacher_edit")
+            ->deleteAction("admin_api_jw_teacher_delete");
         //批量删除
         $grid->setBathDelete("admin_api_jw_teacher_bathdelete");
 

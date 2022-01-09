@@ -62,7 +62,9 @@ class UserController extends BaseAdminController
         $grid->sdaterange("创建时间")->field("a.createdAt");
 
         //编辑等
-        $grid->viewAction("admin_user_view")->editAction("admin_user_edit")->deleteAction("admin_api_user_delete");
+        $grid->viewAction("admin_user_view")
+            ->editAction("admin_user_edit")
+            ->deleteAction("admin_api_user_delete");
 
         //批量删除
         $grid->setBathDelete("admin_api_user_bathdelete");

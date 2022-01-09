@@ -89,11 +89,7 @@ class MallGoodsController extends BaseAdminController
             return  $str;
         });
 
-        $grid->setTableAction('admin_qa_api_mall_goods_delete', function ($obj) {
-            $id = $obj['id'];
-            $url = $this->generateUrl('admin_qa_api_mall_goods_delete', ['id' => $id]);
-            return '<a href=' . $url . ' data-confirm="确认要删除吗?" title="删除" class=" btn btn-danger btn-xs ajaxDelete"><i class="mdi mdi-delete"></i></a>';
-        });
+        $grid->deleteAction("admin_qa_api_mall_goods_delete");
 
         //批量删除
         $grid->setBathDelete("admin_qa_api_mall_goods_bathdelete");
