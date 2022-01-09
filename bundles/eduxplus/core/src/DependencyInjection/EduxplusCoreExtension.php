@@ -38,7 +38,8 @@ class EduxplusCoreExtension extends Extension implements PrependExtensionInterfa
                     __DIR__."/../Resources/templates/default"=>"CoreBundle",
                     __DIR__."/../Lib/Grid/templates"=>"Grid",
                     __DIR__."/../Lib/Form/templates"=>"Form",
-                    __DIR__."/../Lib/View/templates"=>"View"
+                    __DIR__."/../Lib/View/templates"=>"View",
+                    __DIR__."/../Lib/Content/templates"=>"Content"
                 ]
         ]);
 

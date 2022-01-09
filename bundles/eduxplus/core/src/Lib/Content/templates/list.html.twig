@@ -1,0 +1,15 @@
+{% extends "@CoreBundle/layout/main.html.twig" %}
+
+{% block page_title %}{{ title }}{% endblock %}
+
+{% block page %}
+<div class="card">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                {{ body|raw }}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

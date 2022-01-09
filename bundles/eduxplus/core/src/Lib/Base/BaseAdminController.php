@@ -7,14 +7,21 @@
  */
 
 namespace Eduxplus\CoreBundle\Lib\Base;
+use Eduxplus\CoreBundle\Lib\Content\ContentService;
 
 class BaseAdminController extends BaseController
 {
     protected $adminBaseService;
+    private $contentService;
 
-    public function __construct(AdminBaseService $adminBaseService)
+    public function __construct(AdminBaseService $adminBaseService, ContentService $contentService)
     {
         $this->adminBaseService = $adminBaseService;
+        $this->contentService = $contentService;
+    }
+
+    public function content(){
+        return $this->contentService;
     }
 
     public function getUid()

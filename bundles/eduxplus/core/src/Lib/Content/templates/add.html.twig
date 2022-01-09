@@ -1,0 +1,21 @@
+{% extends "@CoreBundle/layout/main.html.twig" %}
+
+{% block page_title %}{{ title }}{% endblock %}
+{% block breadcrumb %}
+    {% if breadcrumb is defined %}
+        {% for bv in breadcrumb %}
+    <li class="breadcrumb-item"><a href="{{ path(bv["path"]) }}">{{ bv["name"] }}</a></li>
+        {% endfor %}
+    {% endif %}
+{% endblock %}
+{% block page %}
+<div class="card">
+     <div class="card-body"> 
+    <div class="row">
+        <div class="col-md-12">
+            {{ body|raw }}
+        </div>
+    </div>
+  </div>
+    </div>
+{% endblock %}

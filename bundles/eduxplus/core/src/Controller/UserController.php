@@ -89,9 +89,8 @@ class UserController extends BaseAdminController
         $bathDelUrl = $this->genUrl("admin_api_user_bathdelete");
         $grid->setBathDelete("admin_api_user_bathdelete", $bathDelUrl);
 
-        $data = [];
-        $data['list'] = $grid->create($request, $pageSize);
-        return $this->render("@CoreBundle/user/index.html.twig", $data);
+        return $this->content()->title("用户管理")->breadcrumb("用户管理", "admin_user_index")
+            ->body($grid->create($request, $pageSize))->renderList();
     }
 
 
