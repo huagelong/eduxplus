@@ -56,9 +56,6 @@ jQuery( function() {
         </div>
         <!--菜单子栏目-->
         <div class="lyear-scroll lyear-layout-sub-column">
-{#          <ul class="nav nav-subnav" id="home" style="display: block">#}
-{#            <li class="active"> <a class="multitabs" href="{{ path("admin_dashboard") }}">首页</a> </li>#}
-{#          </ul>#}
 {% if menus %}
   {% set menuroot = menus[0] %}
     {% for k,menu in menuroot %}
@@ -116,7 +113,7 @@ jQuery( function() {
         <div class="navbar-left d-flex align-items-center">
           <!-- logo -->
           <div id="logo" class="sidebar-header">
-            <a href="/"><img src="/bundles/eduxpluscore/images/logo-sidebar.png" title="LightYear" alt="LightYear" /></a>
+            <a href="/admin"><img src="/bundles/eduxpluscore/images/logo-sidebar.png" title="LightYear" alt="LightYear" /></a>
           </div>
           <div class="lyear-aside-toggler">
             <span class="lyear-toggler-bar"></span>
