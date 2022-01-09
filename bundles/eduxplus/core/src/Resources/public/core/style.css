@@ -55,4 +55,7 @@
 .content{
     padding: 10px;
 }
+.breadcrumb{
+    padding:0rem 1rem!important;
+}
 

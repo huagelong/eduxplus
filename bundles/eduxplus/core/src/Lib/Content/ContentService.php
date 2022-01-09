@@ -70,15 +70,18 @@ class ContentService
         return $this->render(1);
     }
 
-    public function renderAdd(){
+    public function renderAdd($body=""){
+        if($body) $this->body($body);
         return $this->render(2);
     }
 
-    public function renderEdit(){
+    public function renderEdit($body=""){
+        if($body) $this->body($body);
         return $this->render(3);
     }
 
-    public function renderView(){
+    public function renderView($body=""){
+        if($body) $this->body($body);
         return $this->render(4);
     }
 

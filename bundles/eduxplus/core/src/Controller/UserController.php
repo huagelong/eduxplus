@@ -70,7 +70,6 @@ class UserController extends BaseAdminController
         $grid->setBathDelete("admin_api_user_bathdelete");
 
         return $this->content()->title("用户管理")
-//            ->breadcrumb("用户管理", "admin_user_index")
             ->body($grid->create($request, $pageSize))
             ->renderList();
     }
@@ -102,8 +101,7 @@ class UserController extends BaseAdminController
 
         return $this->content()->title("添加用户")
             ->breadcrumb("用户管理", "admin_user_index")
-            ->body($formData)
-            ->renderAdd();
+            ->renderAdd($formData);
     }
 
     /**
@@ -172,10 +170,7 @@ class UserController extends BaseAdminController
 
         $viewData = $view->create();
 
-        return $this->content()->title("查看用户")
-            ->breadcrumb("用户管理", "admin_user_index")
-            ->body($viewData)
-            ->renderView();
+        return $this->content()->renderView($viewData);
     }
 
     /**
@@ -202,10 +197,7 @@ class UserController extends BaseAdminController
         })->placeholder("选择角色");
 
         $formData = $form->create($this->generateUrl("admin_api_user_edit", ["id" => $id]));
-        return $this->content()->title("编辑用户")
-            ->breadcrumb("用户管理", "admin_user_index")
-            ->body($formData)
-            ->renderEdit();
+        return $this->content()->renderEdit($formData);
     }
 
     /**
