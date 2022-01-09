@@ -32,9 +32,7 @@ class BannerController extends BaseAdminController
          $grid->datetime("创建时间")->field("createdAt")->sort("a.createdAt");
 
          //添加
-         $grid->gbButton("添加")->route("admin_mall_banner_add")
-             ->url($this->generateUrl("admin_mall_banner_add"))
-             ->styleClass("btn-success")->iconClass("mdi mdi-plus");
+         $grid->gbAddButton("admin_mall_banner_add");
          //搜索
          $grid->snumber("ID")->field("a.id");
          $grid->stext("名称")->field("a.name");
@@ -203,9 +201,7 @@ class BannerController extends BaseAdminController
         $grid->datetime("创建时间")->field("createdAt")->sort("a.createdAt");
 
         //添加
-        $grid->gbButton("添加")->route("admin_mall_bannermain_add")
-            ->url($this->generateUrl("admin_mall_bannermain_add", ["pid"=>$pid]))
-            ->styleClass("btn-success")->iconClass("mdi mdi-plus");
+        $grid->gbAddButton("admin_mall_bannermain_add", ["pid"=>$pid]);
 
         //编辑
         $grid->setTableAction('admin_mall_bannermain_edit', function ($obj) {

@@ -42,7 +42,7 @@ class QAChapterService extends AdminBaseService
         if ($items) {
             foreach ($items as $v) {
                 $vArr = $this->toArray($v);
-                $sql = "SELECT a FROM Core:TeachCategory a WHERE a.id=:id";
+                $sql = "SELECT a FROM Edux:TeachCategory a WHERE a.id=:id";
                 $categoryInfo = $this->fetchOne($sql, ['id' => $vArr['categoryId']]);
                 $vArr['category'] = $categoryInfo['name'];
                 $itemsArr[] = $vArr;

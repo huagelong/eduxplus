@@ -53,11 +53,7 @@ class NodeController extends BaseAdminController
         $grid->datetime("创建时间")->field("createdAt")->sort("a.createdAt");
 
         //添加
-
-        $grid->gbButton("添加")->route("qa_admin_node_add")
-            ->url($this->generateUrl("qa_admin_node_add", ["chapterId"=>$chapterId, "chapterSubId"=>$chapterSubId]))
-            ->styleClass("btn-success")->iconClass("mdi mdi-plus");
-
+        $grid->gbAddButton("qa_admin_node_add");
 
         $grid->setTableAction('qa_admin_node_view', function ($obj) {
             $id = $obj["id"];

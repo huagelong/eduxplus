@@ -31,13 +31,10 @@ class SchoolController extends BaseAdminController
         $grid->text("省市")->field("stateCity");
         $grid->text("联系方式")->field("linkin");
         $grid->datetime("创建时间")->field("createdAt")->sort("a.createdAt");
-
-        $grid->gbButton("添加")->route("admin_jw_school_add")
-            ->url($this->generateUrl("admin_jw_school_add"))->styleClass("btn-success")->iconClass("mdi mdi-plus");
-
         $grid->stext("名称")->field("a.name");
         $grid->sdaterange("创建时间")->field("a.createdAt");
 
+        $grid->gbAddButton("admin_jw_school_add");
         //编辑等
         $grid->setTableAction('admin_jw_school_view', function ($obj) {
             $id = $obj["id"];

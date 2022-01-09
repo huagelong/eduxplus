@@ -43,10 +43,10 @@ class TeacherController extends BaseAdminController
             return $str;
         });
         $grid->datetime("创建时间")->field("createdAt")->sort("a.createdAt");
-        $grid->gbButton("添加")->route("admin_jw_teacher_add")->url($this->generateUrl("admin_jw_teacher_add"))->iconClass("mdi mdi-plus")->styleClass("btn-success");
-
         $grid->stext("名称")->field("a.name");
         $grid->sdaterange("创建时间")->field("a.createdAt");
+
+        $grid->gbAddButton("admin_jw_teacher_add");
 
         //编辑等
         $grid->setTableAction('admin_jw_teacher_view', function ($obj) {

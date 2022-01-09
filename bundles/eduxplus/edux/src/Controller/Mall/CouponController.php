@@ -85,9 +85,7 @@ class CouponController extends BaseAdminController
         //批量删除
         $grid->setBathDelete("admin_api_mall_coupon_bathdelete");
 
-        $grid->gbButton("添加")->route("admin_mall_coupon_add")
-            ->url($this->generateUrl("admin_mall_coupon_add"))
-            ->styleClass("btn-success")->iconClass("mdi mdi-plus");
+        $grid->gbAddButton("admin_mall_coupon_add");
         //搜索
         $select = $categoryService->categorySelect();
         $grid->snumber("ID")->field("a.id");
@@ -330,12 +328,10 @@ class CouponController extends BaseAdminController
                 $str = "";
             }
             $grid->gbButton("生成")->route("admin_mall_couponsub_create")
-                ->url($this->generateUrl("admin_mall_couponsub_create"))
                 ->styleClass("btn-primary")->iconClass("mdi mdi-gavel ");
         }
 
-        $grid->gbButton("导出")->route("admin_mall_couponsub_export")
-            ->url($this->generateUrl("admin_mall_couponsub_export", ["id"=>$id]))
+        $grid->gbButton("导出")->route("admin_mall_couponsub_export",["id"=>$id])
             ->styleClass("btn-success")->iconClass("mdi mdi-download")->isBlank(1);
 
         //搜索

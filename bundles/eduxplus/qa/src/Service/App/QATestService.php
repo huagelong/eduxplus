@@ -41,7 +41,7 @@ class QATestService extends AppBaseService
         }
 
         if ($level == 2) {
-            $sql = "SELECT a FROM Core:MallGoods a WHERE a.categoryId=:categoryId ".$shopPriceStr." AND a.status=1  AND  a.goodType=2  ORDER BY a.sort DESC";
+            $sql = "SELECT a FROM Edux:MallGoods a WHERE a.categoryId=:categoryId ".$shopPriceStr." AND a.status=1  AND  a.goodType=2  ORDER BY a.sort DESC";
             $categoryIds = $categoryId;
         } else {
             $subCates = $this->categoryService->getSubsCategory($categoryId);
@@ -51,7 +51,7 @@ class QATestService extends AppBaseService
             } else {
                 $categoryIds = [$categoryId];
             }
-            $sql = "SELECT a FROM Core:MallGoods a WHERE a.categoryId IN (:categoryId)  ".$shopPriceStr." AND a.status=1 AND  a.goodType=2  ORDER BY a.sort DESC";
+            $sql = "SELECT a FROM Edux:MallGoods a WHERE a.categoryId IN (:categoryId)  ".$shopPriceStr." AND a.status=1 AND  a.goodType=2  ORDER BY a.sort DESC";
         }
 
         $em = $this->getDoctrine()->getManager();

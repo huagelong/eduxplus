@@ -44,9 +44,7 @@ class HelpController extends BaseAdminController
         $grid->datetime("创建时间")->field("createdAt")->sort("a.createdAt");
 
         //添加
-        $grid->gbButton("添加")->route("admin_mall_help_add")
-            ->url($this->generateUrl("admin_mall_help_add"))
-            ->styleClass("btn-success")->iconClass("mdi mdi-plus");
+        $grid->gbAddButton("admin_mall_help_add");
         //搜索
         $grid->snumber("ID")->field("a.id");
         $grid->stext("名称")->field("a.name");

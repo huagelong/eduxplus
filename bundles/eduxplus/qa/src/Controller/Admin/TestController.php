@@ -45,11 +45,7 @@ class TestController extends BaseAdminController
         $grid->text("创建人")->field("creater");
         $grid->datetime("创建时间")->field("createdAt")->sort("a.createdAt");
 
-
-        $grid->gbButton("添加")->route("qa_admin_test_add")
-            ->url($this->generateUrl("qa_admin_test_add"))
-            ->styleClass("btn-success")->iconClass("mdi mdi-plus");
-
+        $grid->gbAddButton("qa_admin_test_add");
         $grid->setTableAction('qa_admin_test_preview', function ($obj) {
             $id = $obj['id'];
             $url = $this->generateUrl('qa_admin_test_preview', ['id' => $id]);

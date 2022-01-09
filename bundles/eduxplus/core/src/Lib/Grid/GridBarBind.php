@@ -39,13 +39,9 @@ class GridBarBind
         return $this;
     }
 
-    public function route($route){
+    public function route($route, $params=[]){
         $this->struct["route"] = $route;
-        return $this;
-    }
-
-    public function url($url){
-        $this->struct["url"] = $url;
+        $this->struct["url"] = $this->service->genUrl($route, $params);
         return $this;
     }
 

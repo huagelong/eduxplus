@@ -76,7 +76,7 @@ class QAGoodsService extends GoodsService
             2
         );
 
-        $sql = "SELECT a FROM Core:MallGoods a WHERE a.id=:id";
+        $sql = "SELECT a FROM Edux:MallGoods a WHERE a.id=:id";
         $model = $this->fetchOne($sql, ['id' => $id], 1);
         $model->setParameter1($year);
         $this->save($model);
@@ -141,7 +141,7 @@ class QAGoodsService extends GoodsService
             $recommendValue
         );
 
-        $sql = "SELECT a FROM Core:MallGoods a WHERE a.id=:id";
+        $sql = "SELECT a FROM Edux:MallGoods a WHERE a.id=:id";
         $model = $this->fetchOne($sql, ['id' => $id], 1);
         $model->setParameter1($year);
         $this->save($model);

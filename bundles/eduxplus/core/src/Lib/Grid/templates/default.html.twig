@@ -8,7 +8,7 @@
                 {% if gridBar %}
                     {% for gk, gv in gridBar %}
                         {% if gv['type'] == 'button' %}
-                            <a href="{{ gv['url'] }}"  class="btn btn-sm btn-info {{ gv['class'] }}" title="{{ gk }}" style="margin-right: 10px;" {% if gv['isBlank'] %} target="_blank" {% endif %}>
+                            <a href="{{ gv['url'] }}"  class="btn btn-sm btn-info {{ gv['class'] }}" title="{{ gk }}" {% if gv['isBlank'] %} target="_blank" {% endif %}>
                                 <i class="{{ gv['iconCLass'] }}"></i><span class="hidden-xs">{{ gk }}</span>
                             </a>
                         {% endif %}

@@ -31,9 +31,7 @@ class AgreementController extends BaseAdminController
         $grid->boole("展示？")->field("isShow");
         $grid->datetime("创建时间")->field("createdAt")->sort("a.createdAt");
 
-        $grid->gbButton("添加")->route("admin_teach_agreement_add")
-            ->url($this->generateUrl("admin_teach_agreement_add"))
-            ->styleClass("btn-success")->iconClass("mdi mdi-plus");
+        $grid->gbAddButton("admin_teach_agreement_add");
 
         $grid->stext("名称")->field("a.name");
         $grid->sdaterange("创建时间")->field("a.createdAt");

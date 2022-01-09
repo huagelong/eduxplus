@@ -37,9 +37,7 @@ class RoleController extends BaseAdminController
         $grid->stext("名称")->field("a.name");
         $grid->sdatetimerange("创建时间")->field("a.createdAt");
 
-        $grid->gbButton("添加")->route("admin_role_add")
-            ->url($this->generateUrl("admin_role_add"))
-            ->styleClass("btn-success")->iconClass("mdi mdi-plus");
+        $grid->gbAddButton("admin_role_add");
 
         //绑定菜单
         $grid->setTableAction('admin_role_bindmenu', function($obj){

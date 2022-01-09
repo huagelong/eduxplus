@@ -73,10 +73,7 @@ class ProductController extends BaseAdminController
         //批量删除
         $grid->setBathDelete("admin_api_teach_product_bathdelete");
 
-        $grid->gbButton("添加")->route("admin_teach_product_add")
-            ->url($this->generateUrl("admin_teach_product_add"))
-            ->styleClass("btn-success")->iconClass("mdi mdi-plus");
-
+        $grid->gbAddButton("admin_teach_product_add");
         //搜索
         $grid->snumber("ID")->field("a.id");
         $grid->stext("名称")->field("a.name");

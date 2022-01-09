@@ -49,10 +49,7 @@ class UserController extends BaseAdminController
         $grid->text("注册来源")->field("regSource");
         $grid->datetime("创建时间")->field("createdAt")->sort("a.createdAt");
 
-        $grid->gbButton("添加")->route("admin_user_add")
-            ->url($this->generateUrl("admin_user_add"))
-            ->styleClass("btn-success")->iconClass("mdi mdi-plus");
-
+        $grid->gbAddButton("admin_user_add");
         //搜索
         $grid->snumber("ID")->field("a.id");
         $grid->stext("学号")->field("a.sno");
@@ -276,6 +273,7 @@ class UserController extends BaseAdminController
     }
 
     /**
+     * 重置密码 @todo
      * @Route("/user/changePwd", name="admin_user_changePwd")
      */
     public function changePwdAction(Form $form){

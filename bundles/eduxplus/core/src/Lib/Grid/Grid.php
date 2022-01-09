@@ -247,6 +247,11 @@ class Grid
         return $this->gridBarBind($title, "button");
     }
 
+    public function gbAddButton($path, $params=[], $title="添加"){
+        return $this->gridBarBind($title, "button")->route($path, $params)
+            ->styleClass("btn-success")->iconClass("mdi mdi-plus");
+    }
+
     public function id(){
 //        $title = "多选";
         return $this->gridBind("", "id");

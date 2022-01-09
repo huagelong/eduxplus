@@ -43,9 +43,7 @@ class ChapterController extends BaseAdminController
         $grid->datetime("创建时间")->field("createdAt")->sort("a.createdAt");
 
         //添加
-        $grid->gbButton("添加")->route("qa_admin_chapter_add")
-            ->url($this->generateUrl("qa_admin_chapter_add"))
-            ->styleClass("btn-success")->iconClass("mdi mdi-plus");
+        $grid->gbAddButton("qa_admin_chapter_add");
 
         //搜索
         $grid->snumber("ID")->field("a.id");

@@ -30,7 +30,7 @@ class GoodService extends ApiBaseService
             }
         }
         //推荐商品
-        $topSql = "SELECT a FROM Core:MallGoods a WHERE a.topValue >0 AND a.goodType=1 ORDER BY a.topValue DESC ";
+        $topSql = "SELECT a FROM Edux:MallGoods a WHERE a.topValue >0 AND a.goodType=1 ORDER BY a.topValue DESC ";
         $goodArr = $this->fetchAll($topSql, [], 0, 10);
         $goodList = [];
         if ($goodArr) {
@@ -58,7 +58,7 @@ class GoodService extends ApiBaseService
 
     public function getTeachers($teacherIds)
     {
-        $sql = "SELECT a.id, a.name,a.gravatar FROM Core:JwTeacher a WHERE a.id IN (:id)";
+        $sql = "SELECT a.id, a.name,a.gravatar FROM Edux:JwTeacher a WHERE a.id IN (:id)";
         $result = $this->fetchAll($sql, ["id" => $teacherIds]);
         if ($result) {
             foreach ($result as &$v) {
@@ -96,7 +96,7 @@ class GoodService extends ApiBaseService
             $categoryIds = [$cateId];
         }
 
-        $sql = "SELECT a FROM Core:MallGoods a WHERE a.categoryId IN (:categoryId) AND a.status=1 AND  a.goodType=1  ORDER BY a.sort ASC";
+        $sql = "SELECT a FROM Edux:MallGoods a WHERE a.categoryId IN (:categoryId) AND a.status=1 AND  a.goodType=1  ORDER BY a.sort ASC";
         $goodArr = $this->fetchAll($sql, ["categoryId" => $categoryIds]);
         if (!$goodArr) return [];
 
@@ -156,11 +156,11 @@ class GoodService extends ApiBaseService
         $offset = ($page-1)*$pageSize;
 
         $time = time();
-        $dqlCount = "SELECT count(a.courseId) as cnt FROM Core:MallOrderStudyPlan a WHERE a.uid=:uid";
+        $dqlCount = "SELECT count(a.courseId) as cnt FROM Edux:MallOrderStudyPlan a WHERE a.uid=:uid";
         $countInfo = $this->fetchOne($dqlCount, ["uid"=>$uid]);
         $totalCount = $countInfo['cnt'];
 
-        $dql = "SELECT a.courseId, abs({$time}-a.openTime) as diffTime FROM Core:MallOrderStudyPlan a
+        $dql = "SELECT a.courseId, abs({$time}-a.openTime) as diffTime FROM Edux:MallOrderStudyPlan a
                 WHERE a.uid=:uid ORDER BY diffTime ASC";
         $items = $this->fetchAll($dql, ["uid"=>$uid],0,$pageSize, $offset);
         $itemsArr = [];

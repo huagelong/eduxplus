@@ -101,11 +101,8 @@ class GoodsController extends BaseAdminController
         //批量删除
         $grid->setBathDelete("admin_api_mall_goods_bathdelete");
 
-        $grid->gbButton("添加单个商品")->route("admin_mall_goods_add")
-            ->url($this->generateUrl("admin_mall_goods_add"))->iconClass("mdi mdi-plus")->styleClass("btn-success");
-
-        $grid->gbButton("添加组合商品")->route("admin_mall_group_goods_add")
-            ->url($this->generateUrl("admin_mall_group_goods_add"))->iconClass("mdi mdi-plus")->styleClass("btn-success");
+        $grid->gbAddButton("admin_mall_goods_add",[],"添加单个商品");
+        $grid->gbAddButton("admin_mall_group_goods_add",[],"添加组合商品");
         //搜索
         $select = $categoryService->categorySelect();
         $grid->snumber("ID")->field("a.id");

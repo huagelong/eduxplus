@@ -34,13 +34,8 @@ class OptionController extends BaseAdminController
 //        $grid->boole("锁定？")->field("isLock");
         $grid->datetime("创建时间")->field("createdAt")->sort("a.createdAt");
 
-        $grid->gbButton("文本配置")->route("admin_option_add")
-            ->url($this->generateUrl("admin_option_add",["type"=>1]))
-            ->styleClass("btn-success")->iconClass("mdi mdi-plus");
-
-        $grid->gbButton("上传文件配置")->route("admin_option_add")
-            ->url($this->generateUrl("admin_option_add",["type"=>2]))
-            ->styleClass("btn-primary")->iconClass("mdi mdi-plus");
+        $grid->gbAddButton("admin_option_add", ["type"=>1], "文本配置");
+        $grid->gbAddButton("admin_option_add", ["type"=>2], "上传文件配置");
 
         //搜索
         $grid->sselect("配置分组")->field("a.optionGroup")->options($optionService->getAllOptionGroup());
