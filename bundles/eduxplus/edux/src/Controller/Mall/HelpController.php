@@ -73,8 +73,7 @@ class HelpController extends BaseAdminController
         });
 
         //批量删除
-        $bathDelUrl = $this->genUrl("admin_api_mall_help_bathdelete");
-        $grid->setBathDelete("admin_api_mall_help_bathdelete", $bathDelUrl);
+        $grid->setBathDelete("admin_api_mall_help_bathdelete");
 
         $data = [];
 

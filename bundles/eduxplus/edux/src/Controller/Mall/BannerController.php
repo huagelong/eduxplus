@@ -61,8 +61,7 @@ class BannerController extends BaseAdminController
          });
 
          //批量删除
-         $bathDelUrl = $this->genUrl("admin_api_mall_banner_bathdelete");
-         $grid->setBathDelete("admin_api_mall_banner_bathdelete", $bathDelUrl);
+         $grid->setBathDelete("admin_api_mall_banner_bathdelete");
 
          $data = [];
 
@@ -223,8 +222,7 @@ class BannerController extends BaseAdminController
         });
 
         //批量删除
-        $bathDelUrl = $this->genUrl("admin_api_mall_bannermain_bathdelete");
-        $grid->setBathDelete("admin_api_mall_bannermain_bathdelete", $bathDelUrl);
+        $grid->setBathDelete("admin_api_mall_bannermain_bathdelete");
 
         $data = [];
 

@@ -86,8 +86,7 @@ class ChapterController extends BaseAdminController
         });
 
         //批量删除
-        $bathDelUrl = $this->genUrl("qa_admin_chapter_bathdelete");
-        $grid->setBathDelete("qa_admin_chapter_bathdelete", $bathDelUrl);
+        $grid->setBathDelete("qa_admin_chapter_bathdelete");
 
         $data = [];
         $data['list'] = $grid->create($request, $pageSize);

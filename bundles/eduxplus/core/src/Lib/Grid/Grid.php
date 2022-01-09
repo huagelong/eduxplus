@@ -56,12 +56,54 @@ class Grid
     }
 
     /**
+     * 查看
+     * @param $path
+     * @param $params
+     */
+    public function viewAction($path){
+        $this->setTableAction($path, function ($obj) use($path) {
+            $id = $obj->getId();
+            $params = ['id' => $id];
+            $url = $this->service->genUrl($path, $params);
+            $str = '<a href=' . $url . ' data-title="查看" title="查看" class=" btn btn-default btn-xs poppage"><i class="mdi mdi-eye"></i></a>';
+            return  $str;
+        });
+        return $this;
+    }
+
+    public function editAction($path){
+        $this->setTableAction($path, function ($obj) use($path) {
+            $id = $obj->getId();
+            $params = ['id' => $id];
+            $url = $this->service->genUrl($path, $params);
+            $str = '<a href=' . $url . ' data-title="编辑" title="编辑" class=" btn btn-info btn-xs poppage"><i class="mdi mdi-file-document-edit"></i></a>';
+            return  $str;
+        });
+        return $this;
+    }
+
+
+    public function deleteAction($path){
+        $this->setTableAction($path, function ($obj) use($path) {
+            $id = $obj->getId();
+            $params = ['id' => $id];
+            $url = $this->service->genUrl($path, $params);
+            return '<a href=' . $url . ' data-confirm="确认要删除吗?" title="删除"  class=" btn btn-danger btn-xs ajaxDelete"><i class="mdi mdi-delete"></i></a>';
+        });
+        return $this;
+    }
+
+
+
+
+    /**
      * 设置批量删除
      * @param $routeName
      */
-    public function setBathDelete($routeName, $url, $field="id"){
+    public function setBathDelete($routeName, $field="id"){
         if(!$this->service->isAuthorized($this->uid, $routeName)) return ;
         $this->id()->field($field);
+        $url = $this->service->genUrl($routeName);
         $this->bathDelete = $url;
     }
 

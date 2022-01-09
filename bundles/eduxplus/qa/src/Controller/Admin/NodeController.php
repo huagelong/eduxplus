@@ -80,8 +80,7 @@ class NodeController extends BaseAdminController
         });
 
         //批量删除
-        $bathDelUrl = $this->genUrl("qa_admin_node_bathdelete");
-        $grid->setBathDelete("qa_admin_node_bathdelete", $bathDelUrl);
+        $grid->setBathDelete("qa_admin_node_bathdelete");
 
         //搜索
         $grid->snumber("ID")->field("a.id");

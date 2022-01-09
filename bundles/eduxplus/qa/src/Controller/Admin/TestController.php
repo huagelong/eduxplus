@@ -78,8 +78,7 @@ class TestController extends BaseAdminController
         });
 
         //批量删除
-        $bathDelUrl = $this->genUrl("qa_admin_test_bathdelete");
-        $grid->setBathDelete("qa_admin_test_bathdelete", $bathDelUrl);
+        $grid->setBathDelete("qa_admin_test_bathdelete");
 
         $grid->snumber("ID")->field("a.id");
         $grid->stext("试卷名称")->field("a.name");

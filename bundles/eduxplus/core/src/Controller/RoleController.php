@@ -64,8 +64,7 @@ class RoleController extends BaseAdminController
         });
 
         //批量删除
-        $bathDelUrl = $this->genUrl("admin_api_role_batchdelete");
-        $grid->setBathDelete("admin_api_role_batchdelete", $bathDelUrl);
+        $grid->setBathDelete("admin_api_role_batchdelete");
 
         $data = [];
         $data['list'] = $grid->create($request, $pageSize);

@@ -48,9 +48,7 @@ class ContentService
     public function render($type=1){
         $data = [];
         $data["body"] = $this->body;
-        if($type !=1){
-            $data["breadcrumb"] = $this->breadcrumb;
-        }
+        $data["breadcrumb"] = $this->breadcrumb;
         $data["title"] = $this->title;
         $tpl = "list";
         if($type ==1){

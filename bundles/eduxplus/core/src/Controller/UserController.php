@@ -65,32 +65,15 @@ class UserController extends BaseAdminController
         $grid->sdaterange("创建时间")->field("a.createdAt");
 
         //编辑等
-        $grid->setTableAction('admin_user_view', function ($obj) {
-            $id = $obj->getId();
-            $url = $this->generateUrl('admin_user_view', ['id' => $id]);
-            $str = '<a href=' . $url . ' data-title="查看" title="查看" class=" btn btn-default btn-xs poppage"><i class="mdi mdi-eye"></i></a>';
-            return  $str;
-        });
-
-        $grid->setTableAction('admin_user_edit', function ($obj) {
-            $id = $obj->getId();
-            $url = $this->generateUrl('admin_user_edit', ['id' => $id]);
-            $str = '<a href=' . $url . ' data-title="编辑" title="编辑" class=" btn btn-info btn-xs poppage"><i class="mdi mdi-file-document-edit"></i></a>';
-            return  $str;
-        });
-
-        $grid->setTableAction('admin_api_user_delete', function ($obj) {
-            $id = $obj->getId();
-            $url = $this->generateUrl('admin_api_user_delete', ['id' => $id]);
-            return '<a href=' . $url . ' data-confirm="确认要删除吗?" title="删除"  class=" btn btn-danger btn-xs ajaxDelete"><i class="mdi mdi-delete"></i></a>';
-        });
+        $grid->viewAction("admin_user_view")->editAction("admin_user_edit")->deleteAction("admin_api_user_delete");
 
         //批量删除
-        $bathDelUrl = $this->genUrl("admin_api_user_bathdelete");
-        $grid->setBathDelete("admin_api_user_bathdelete", $bathDelUrl);
+        $grid->setBathDelete("admin_api_user_bathdelete");
 
-        return $this->content()->title("用户管理")->breadcrumb("用户管理", "admin_user_index")
-            ->body($grid->create($request, $pageSize))->renderList();
+        return $this->content()->title("用户管理")
+//            ->breadcrumb("用户管理", "admin_user_index")
+            ->body($grid->create($request, $pageSize))
+            ->renderList();
     }
 
 
@@ -117,9 +100,11 @@ class UserController extends BaseAdminController
 
 
         $formData = $form->create($this->generateUrl("admin_api_user_add"));
-        $data = [];
-        $data["formData"] = $formData;$data["breadcrumb"] = 1;
-        return $this->render("@CoreBundle/user/add.html.twig", $data);
+
+        return $this->content()->title("添加用户")
+            ->breadcrumb("用户管理", "admin_user_index")
+            ->body($formData)
+            ->renderAdd();
     }
 
     /**
@@ -187,9 +172,11 @@ class UserController extends BaseAdminController
         });
 
         $viewData = $view->create();
-        $data = [];
-        $data["viewData"] = $viewData;
-        return $this->render("@CoreBundle/user/view.html.twig", $data);
+
+        return $this->content()->title("查看用户")
+            ->breadcrumb("用户管理", "admin_user_index")
+            ->body($viewData)
+            ->renderView();
     }
 
     /**
@@ -216,9 +203,10 @@ class UserController extends BaseAdminController
         })->placeholder("选择角色");
 
         $formData = $form->create($this->generateUrl("admin_api_user_edit", ["id" => $id]));
-        $data = [];
-        $data["formData"] = $formData;$data["breadcrumb"] = 1;
-        return $this->render("@CoreBundle/user/edit.html.twig", $data);
+        return $this->content()->title("编辑用户")
+            ->breadcrumb("用户管理", "admin_user_index")
+            ->body($formData)
+            ->renderEdit();
     }
 
     /**

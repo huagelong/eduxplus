@@ -98,7 +98,7 @@ class BaseService
 
     public final function genUrl(string $route, array $parameters = [], int $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH)
     {
-        return $this->router->generateUrl($route, $parameters, $referenceType);
+        return $this->router->generate($route, $parameters, $referenceType);
     }
 
     public final function getUser():?UserInterface

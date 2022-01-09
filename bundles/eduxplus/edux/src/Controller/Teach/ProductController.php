@@ -71,8 +71,7 @@ class ProductController extends BaseAdminController
         });
 
         //批量删除
-        $bathDelUrl = $this->genUrl("admin_api_teach_product_bathdelete");
-        $grid->setBathDelete("admin_api_teach_product_bathdelete", $bathDelUrl);
+        $grid->setBathDelete("admin_api_teach_product_bathdelete");
 
         $grid->gbButton("添加")->route("admin_teach_product_add")
             ->url($this->generateUrl("admin_teach_product_add"))

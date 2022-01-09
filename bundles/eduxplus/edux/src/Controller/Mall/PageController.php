@@ -69,8 +69,7 @@ class PageController extends BaseAdminController
          });
 
          //批量删除
-         $bathDelUrl = $this->genUrl("admin_api_mall_page_bathdelete");
-         $grid->setBathDelete("admin_api_mall_page_bathdelete", $bathDelUrl);
+         $grid->setBathDelete("admin_api_mall_page_bathdelete");
 
          $data = [];
 

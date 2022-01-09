@@ -60,8 +60,7 @@ class SchoolController extends BaseAdminController
         });
 
         //批量删除
-        $bathDelUrl = $this->genUrl("admin_api_jw_school_bathdelete");
-        $grid->setBathDelete("admin_api_jw_school_bathdelete", $bathDelUrl);
+        $grid->setBathDelete("admin_api_jw_school_bathdelete");
 
         $data = [];
         $data['list'] = $grid->create($request, $pageSize);

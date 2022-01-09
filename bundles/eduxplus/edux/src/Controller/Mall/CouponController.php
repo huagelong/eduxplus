@@ -83,8 +83,7 @@ class CouponController extends BaseAdminController
         });
 
         //批量删除
-        $bathDelUrl = $this->genUrl("admin_api_mall_coupon_bathdelete");
-        $grid->setBathDelete("admin_api_mall_coupon_bathdelete", $bathDelUrl);
+        $grid->setBathDelete("admin_api_mall_coupon_bathdelete");
 
         $grid->gbButton("添加")->route("admin_mall_coupon_add")
             ->url($this->generateUrl("admin_mall_coupon_add"))
