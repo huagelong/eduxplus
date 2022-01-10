@@ -69,9 +69,7 @@ class UserController extends BaseAdminController
         //批量删除
         $grid->setBathDelete("admin_api_user_bathdelete");
 
-        return $this->content()->title("用户管理")
-            ->body($grid->create($request, $pageSize))
-            ->renderList();
+        return $this->content()->renderList($grid->create($request, $pageSize));
     }
 
 

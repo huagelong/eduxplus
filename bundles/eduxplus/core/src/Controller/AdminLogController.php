@@ -50,8 +50,7 @@ class AdminLogController extends BaseAdminController
 
         $grid->sdatetimerange("创建时间")->field("a.createdAt");
 
-        $data = [];
-        $data['list'] = $grid->create($request, $pageSize);
-        return $this->render("@CoreBundle/adminlog/index.html.twig", $data);
+
+        return $this->content()->renderList($grid->create($request, $pageSize));
     }
 }

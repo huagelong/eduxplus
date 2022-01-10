@@ -41,14 +41,9 @@ class OptionController extends BaseAdminController
         $grid->sselect("配置分组")->field("a.optionGroup")->options($optionService->getAllOptionGroup());
         $grid->stext("配置说明")->field("a.descr");
         $grid->sselect("值类型")->field("a.type")->options(["全部"=>"","文本"=>1, "文件链接"=>2]);
-
+          
         //编辑等
-        $grid->setTableAction('admin_option_edit', function($obj){
-            $id = $obj->getId();
-            $url = $this->generateUrl('admin_option_edit',['id'=>$id]);
-            $str = '<a href='.$url.' data-title="编辑" title="编辑" data-width="1000px" class=" btn btn-info btn-xs poppage"><i class="mdi mdi-file-document-edit"></i></a>';
-            return  $str;
-        });
+        $grid->editAction("admin_option_edit");
 
         $grid->setTableAction('admin_api_option_delete', function ($obj) {
             if($obj->getIsLock()) return ;
@@ -59,10 +54,8 @@ class OptionController extends BaseAdminController
 
         //批量删除
         $grid->setBathDelete("admin_api_option_bathdelete");
-
-        $data = [];
-        $data['list'] = $grid->create($request, $pageSize);
-        return $this->render("@CoreBundle/option/index.html.twig", $data);
+        
+        return $this->content()->renderList($grid->create($request, $pageSize));
     }
 
     /**
@@ -93,9 +86,7 @@ class OptionController extends BaseAdminController
         $form->select("配置分组")->field("optionGroup")->options($optionService->getAllOptionGroup());
         $form->boole("锁定")->field("isLock")->isRequire(1);
         $formData = $form->create($this->generateUrl("admin_api_option_add",['type'=>$type]));
-        $data = [];
-        $data["formData"] = $formData;$data["breadcrumb"] = 1;
-        return $this->render("@CoreBundle/option/add.html.twig", $data);
+        return $this->content()->breadcrumb("系统配置管理", "admin_option_index")->renderAdd($formData);
     }
 
     /**
@@ -157,9 +148,7 @@ class OptionController extends BaseAdminController
             $form->boole("锁定")->field("isLock")->isRequire(1)->defaultValue($info['isLock']);
         }
         $formData = $form->create($this->generateUrl("admin_api_option_edit",['id'=>$id]));
-        $data = [];
-        $data["formData"] = $formData;$data["breadcrumb"] = 1;
-        return $this->render("@CoreBundle/option/edit.html.twig", $data);
+        return $this->content()->renderEdit($formData);
     }
 
     /**

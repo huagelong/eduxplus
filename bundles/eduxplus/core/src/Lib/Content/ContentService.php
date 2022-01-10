@@ -66,7 +66,8 @@ class ContentService
         return $response;
     }
 
-    public function renderList(){
+    public function renderList($body=""){
+        if($body) $this->body($body);
         return $this->render(1);
     }
 

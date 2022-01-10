@@ -78,12 +78,42 @@ class UserService extends AdminBaseService
         return $this->fetchOne($sql, $params);
     }
 
+    public function searchAdminFullNameFormat($name)
+    {
+        $users = $this->searchAdminFullName($name);
+        if (!$users) return [];
+        $rs = [];
+        foreach ($users as $v) {
+            $tmp = [];
+            $tmp['id'] = $v['id'];
+            $tmp['text'] = $v['fullName'];
+            $rs[] = $tmp;
+        }
+        return $rs;
+    }
+
     public function searchAdminFullName($name)
     {
         $sql = "SELECT a FROM Core:BaseUser a where a.fullName like :fullName AND a.isAdmin=1 ";
         $params = [];
         $params['fullName'] = "%" . $name . "%";
         return $this->fetchAll($sql, $params);
+    }
+
+    
+
+    public function searchFullNameFormat($name)
+    {
+        $users = $this->searchFullName($name);
+        if (!$users) return [];
+        $rs = [];
+        foreach ($users as $v) {
+            $tmp = [];
+            $tmp['id'] = $v['id'];
+            $tmp['text'] = $v['fullName'];
+            $rs[] = $tmp;
+        }
+        return $rs;
     }
 
     public function searchFullName($name)

@@ -81,9 +81,7 @@ class MenuController extends BaseAdminController
         $view->textarea("描述")->field("descr")->defaultValue($detail['descr']);
 
         $viewData = $view->create();
-        $data = [];
-        $data["viewData"] = $viewData;
-        return $this->render("@CoreBundle/menu/view.html.twig", $data);
+        return $this->content()->renderView($viewData);
     }
 
     /**

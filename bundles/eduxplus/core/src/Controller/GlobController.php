@@ -16,6 +16,7 @@ use Eduxplus\CoreBundle\Lib\Service\Vod\AliyunVodService;
 use Eduxplus\CoreBundle\Lib\Service\Vod\TengxunyunVodService;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Eduxplus\CoreBundle\Service\UserService;
 
 class GlobController extends BaseAdminController
 {
@@ -69,20 +70,20 @@ class GlobController extends BaseAdminController
     /**
      * @Route("/glob/searchAdminUser/do", name="admin_api_glob_searchAdminUserDo")
      */
-    public function searchAdminUserDoAction(Request $request, ProductService $productService){
+    public function searchAdminUserDoAction(Request $request, UserService $userService){
         $kw = $request->get("kw");
         if(!$kw) return [];
-        $data = $productService->searchAdminFullName($kw);
+        $data = $userService->searchAdminFullName($kw);
         return $data;
     }
 
     /**
      * @Route("/glob/searchUser/do", name="admin_api_glob_searchUserDo")
      */
-    public function searchUserDoAction(Request $request, ProductService $productService){
+    public function searchUserDoAction(Request $request, UserService $userService){
         $kw = $request->get("kw");
         if(!$kw) return [];
-        $data = $productService->searchFullName($kw);
+        $data = $userService->searchFullNameFormat($kw);
         return $data;
     }
 
