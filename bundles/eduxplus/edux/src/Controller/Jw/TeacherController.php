@@ -54,9 +54,7 @@ class TeacherController extends BaseAdminController
         //批量删除
         $grid->setBathDelete("admin_api_jw_teacher_bathdelete");
 
-        $data = [];
-        $data['list'] = $grid->create($request, $pageSize);
-        return $this->render("@EduxBundle/jw/teacher/index.html.twig", $data);
+        return $this->content()->renderList($grid->create($request, $pageSize));
     }
 
     /**
@@ -84,9 +82,9 @@ class TeacherController extends BaseAdminController
 
         $form->richEditor("描述")->field("descr")->attr(['data-width' => 800, 'data-height' => 200]);
         $formData = $form->create($this->generateUrl("admin_api_jw_teacher_add"));
-        $data = [];
-        $data["formData"] = $formData;$data["breadcrumb"] = 1;
-        return $this->render("@EduxBundle/jw/teacher/add.html.twig", $data);
+        return $this->content()->title("添加老师")
+                ->breadcrumb("老师管理","admin_jw_teacher_index")
+                ->renderAdd($formData);
     }
 
     /**
@@ -141,10 +139,7 @@ class TeacherController extends BaseAdminController
         $view->richEditor("描述")->field("descr")->defaultValue($info['descr'])->attr(['data-width' => 800, 'data-height' => 200]);
 
         $formData = $view->create();
-        $data = [];
-        $data["formData"] = $formData;$data["breadcrumb"] = 1;
-        $data['info'] = $info;
-        return $this->render("@EduxBundle/jw/teacher/view.html.twig", $data);
+        return $this->content()->renderView($formData);
     }
 
     /**

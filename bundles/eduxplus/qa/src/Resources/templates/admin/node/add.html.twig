@@ -5,12 +5,6 @@
     <li class="breadcrumb-item"><a href="{{ path("qa_admin_node_index", {chapterId:chapterId, chapterSubId:chapterSubId}) }}">试题管理</a></li>
 {% endblock %}
 
-{% block head_javascript %}
-  {{ parent() }}
-  <script src="{{ asset('assets/plugins/tinymce/tinymce.min.js') }}"></script>
-  <script src="{{ asset('assets/plugins/tinymce/langs/zh_CN.js') }}"></script>
-{% endblock %}
-
 {% block page %}
 <div class="card">
      <div class="card-body"> 

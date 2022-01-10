@@ -2,6 +2,7 @@
 {% block head_stylesheets %}
     {{ parent() }}
     {% block style %}{% endblock %}
+    <link rel="stylesheet" href="{{ asset('bundles/eduxpluscore/js/glyphicons/css/glyphicons.css') }}">
     <link rel="stylesheet" href="{{ asset('bundles/eduxpluscore/css/materialdesignicons.min.css') }}">
     <link rel="stylesheet" href="{{ asset('bundles/eduxpluscore/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('bundles/eduxpluscore/js/bootstrap-multitabs-v4/multitabs.min.css') }}">
@@ -54,6 +55,9 @@
     <script src="{{ asset('bundles/eduxpluscore/js/lyear-loading.js') }}"></script>
     <script src="{{ asset('bundles/eduxpluscore/js/perfect-scrollbar.min.js') }}"></script>
     <script src="{{ asset('bundles/eduxpluscore/js/bootstrap-multitabs-v4/multitabs.mini.min.js') }}"></script>
+
+    <script src="{{ asset('bundles/eduxpluscore/js/tinymce/tinymce.min.js') }}"></script>
+    <script src="{{ asset('bundles/eduxpluscore/js/tinymce/langs/zh_CN.js') }}"></script>
 
 {% endblock %}
 
