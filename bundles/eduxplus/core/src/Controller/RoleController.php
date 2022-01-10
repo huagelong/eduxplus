@@ -63,10 +63,7 @@ class RoleController extends BaseAdminController
 
         //批量删除
         $grid->setBathDelete("admin_api_role_batchdelete");
-
-        $data = [];
-        $data['list'] = $grid->create($request, $pageSize);
-        return $this->render("@CoreBundle/role/index.html.twig", $data);
+        return $this->content()->renderList($grid->create($request, $pageSize));
     }
 
     /**
@@ -78,9 +75,7 @@ class RoleController extends BaseAdminController
         $form->boole("锁定?")->field("isLock")->isRequire();
         $form->textarea("描述")->field("descr");
         $formData = $form->create($this->generateUrl("admin_api_role_add"));
-        $data = [];
-        $data["formData"] = $formData;$data["breadcrumb"] = 1;
-        return $this->render("@CoreBundle/role/add.html.twig", $data);
+        return $this->content()->breadcrumb("角色管理", "admin_role_index")->renderAdd($formData);
     }
 
 
@@ -112,9 +107,7 @@ class RoleController extends BaseAdminController
         $form->boole("锁定？")->field("isLock")->isRequire()->defaultValue($info['isLock']);
         $form->textarea("描述")->field("descr")->defaultValue($info['descr']);
         $formData = $form->create($this->generateUrl("admin_api_role_edit",['id'=>$id]));
-        $data = [];
-        $data["formData"] = $formData;$data["breadcrumb"] = 1;
-        return $this->render("@CoreBundle/role/edit.html.twig", $data);
+        return $this->content()->renderEdit($formData);
     }
 
     /**

@@ -86,7 +86,7 @@ class OptionController extends BaseAdminController
         $form->select("配置分组")->field("optionGroup")->options($optionService->getAllOptionGroup());
         $form->boole("锁定")->field("isLock")->isRequire(1);
         $formData = $form->create($this->generateUrl("admin_api_option_add",['type'=>$type]));
-        return $this->content()->breadcrumb("系统配置管理", "admin_option_index")->renderAdd($formData);
+        return $this->content()->title($type==2?"添加上传文件配置":"添加文本配置")->breadcrumb("系统配置管理", "admin_option_index")->renderAdd($formData);
     }
 
     /**

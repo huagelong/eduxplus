@@ -62,7 +62,11 @@ class Grid
      */
     public function viewAction($path){
         $this->setTableAction($path, function ($obj) use($path) {
-            $id = $obj->getId();
+            if(is_array($obj)){
+                $id = $obj["id"];
+            }else{
+                $id = $obj->getId();
+            }
             $params = ['id' => $id];
             $url = $this->service->genUrl($path, $params);
             $str = '<a href=' . $url . ' data-title="查看" title="查看" class=" btn btn-default btn-xs poppage"><i class="mdi mdi-eye"></i></a>';
@@ -73,7 +77,11 @@ class Grid
 
     public function editAction($path){
         $this->setTableAction($path, function ($obj) use($path) {
-            $id = $obj->getId();
+            if(is_array($obj)){
+                $id = $obj["id"];
+            }else{
+                $id = $obj->getId();
+            }
             $params = ['id' => $id];
             $url = $this->service->genUrl($path, $params);
             $str = '<a href=' . $url . ' data-title="编辑" title="编辑" class=" btn btn-info btn-xs poppage"><i class="mdi mdi-file-document-edit"></i></a>';
@@ -85,7 +93,11 @@ class Grid
 
     public function deleteAction($path){
         $this->setTableAction($path, function ($obj) use($path) {
-            $id = $obj->getId();
+            if(is_array($obj)){
+                $id = $obj["id"];
+            }else{
+                $id = $obj->getId();
+            }
             $params = ['id' => $id];
             $url = $this->service->genUrl($path, $params);
             return '<a href=' . $url . ' data-confirm="确认要删除吗?" title="删除"  class=" btn btn-danger btn-xs ajaxDelete"><i class="mdi mdi-delete"></i></a>';

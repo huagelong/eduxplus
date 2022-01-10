@@ -36,7 +36,7 @@ class ContentService
     /**
      * @param mixed $body
      */
-    public function body($body)
+    protected function body($body)
     {
         $this->body = $body;
         return $this;

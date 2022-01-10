@@ -42,11 +42,7 @@ class SchoolController extends BaseAdminController
 
         //批量删除
         $grid->setBathDelete("admin_api_jw_school_bathdelete");
-
-        $data = [];
-        $data['list'] = $grid->create($request, $pageSize);
-        return $this->render("@EduxBundle/jw/school/index.html.twig", $data);
-
+        return $this->content()->renderList($grid->create($request, $pageSize));
     }
 
     /**
@@ -62,7 +58,7 @@ class SchoolController extends BaseAdminController
         $view->disableSubmit();
         $formData = $view->create();
         $data = [];
-        $data["formData"] = $formData;$data["breadcrumb"] = 1;
+        $data["formData"] = $formData;
         $data['info'] = $info;
         return $this->render("@EduxBundle/jw/school/view.html.twig", $data);
     }
@@ -122,7 +118,7 @@ class SchoolController extends BaseAdminController
         $form->disableSubmit();
         $formData = $form->create($this->generateUrl("admin_api_jw_school_edit", ['id'=>$id]));
         $data = [];
-        $data["formData"] = $formData;$data["breadcrumb"] = 1;
+        $data["formData"] = $formData;
         $data['info'] = $info;
         return $this->render("@EduxBundle/jw/school/edit.html.twig", $data);
     }

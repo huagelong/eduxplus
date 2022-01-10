@@ -42,9 +42,7 @@ class ClassController extends BaseAdminController
             return  $str;
         });
 
-        $data = [];
-        $data['list'] = $grid->create($request, $pageSize);
-        return $this->render("@EduxBundle/jw/class/index.html.twig", $data);
+        return $this->content()->renderList($grid->create($request, $pageSize));
     }
 
     /**
@@ -70,11 +68,10 @@ class ClassController extends BaseAdminController
         });
         $grid->sselect("学员类型")->field("a.type")->options(["在学学员"=>1, "退学学员"=>2]);
         $grid->sdaterange("创建时间")->field("a.createdAt");
-
-        $data = [];
-        $data['list'] = $grid->create($request, $pageSize);
-        $data["classInfo"] = $classService->getById($classesId);
-        return $this->render("@EduxBundle/jw/class/members.html.twig", $data);
+        $classInfo = $classService->getById($classesId);
+        return $this->content()
+            ->breadcrumb($classInfo['name'],"admin_jw_class_index")
+            ->title("学员管理")->renderList($grid->create($request, $pageSize));
     }
 
 }
