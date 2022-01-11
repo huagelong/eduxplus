@@ -4,7 +4,7 @@
     <script>
         $(function(){
 
-            $('.select2').select2({"size":"mini","allowClear":true,"placeholder":{"id":"","text":"\u7236\u7ea7\u83dc\u5355"}});
+            $('.select2').select2({"size":"mini","allowClear":true});
 
             $("input[data-bootstrap-switch]").each(function(){
                 $(this).bootstrapSwitch('state', $(this).prop('checked'));
@@ -36,10 +36,6 @@
     }).fail(function() {
         console.error('字体图标配置加载失败');
     });
-    
-    $(document).on('change', '#icon', function(){
-        $('#show-mdi').html($(this).val());
-    });
 
         });
 
@@ -61,7 +57,7 @@
                                 <div class="col-sm-8">
                                     <input type="hidden" name="parentIdSelect" value="{{ detail.pid }}"/>
                                     <select class="form-control form-control-sm select2" style="width: 100%;" name="parent_id" data-value="" >
-                                        <option value="0">ROOT</option>
+                                        <option value="0">/</option>
                                         {% if menuSelect %}
                                             {% for menus in menuSelect %}
                                                 <option value="{{ menus.id }}">{{ menus.name|raw }}</option>
@@ -97,14 +93,10 @@
                                 <label for="icon" class="col-sm-2 control-label">图标</label>
                                 <div class="col-sm-8">
                                     <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text"><i class="mdi mdi-adjust"></i></span>
-                                        </div>
                                         <input style="width: 140px" type="text" id="icon" name="icon" value="{{ detail.style }}"
                                                class="form-control form-control-sm icon"
                                                placeholder="输入图标"
                                         >
-                                        <span id="show-mdi"></span>
                                     </div>
                                     <span class="help-block">
                                         <i class="mdi mdi-information"></i>

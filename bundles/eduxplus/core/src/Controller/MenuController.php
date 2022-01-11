@@ -114,6 +114,10 @@ class MenuController extends BaseAdminController
             if (mb_strlen($descr, 'utf-8') > 20) return $this->responseError("描述不能大于20字!");
         }
 
+        if(!$uri){
+            return $this->responseError("路径不能为空!");
+        }
+
         $menuService->editMenu($id, $name, $descr, $pid, $uri, $style, $sort, $isLock, $isAccess, $isShow);
 
         if ($this->error()->has()) {
@@ -162,6 +166,10 @@ class MenuController extends BaseAdminController
 
         if ($menuService->checkMenuName($name)) {
             return $this->responseError("标题已存在!");
+        }
+
+        if(!$uri){
+            return $this->responseError("路径不能为空!");
         }
 
         if ($descr) {

@@ -20,9 +20,9 @@ class MenuFixtures
     {
 
         //新增菜单并绑定角色
-        $accMenuId = $this->addMenu("首页", "首页", 0, "admin_index", "mdi-home", 0, $roleId, 1, 0, 1, 1);
-        $this->addMenu("控制面板", "控制面板", $accMenuId, "admin_dashboard", "mdi-home", 0, $roleId, 1, 0, 1, 1);
-        $this->addMenu("文件上传", "文件上传处理", 0, "admin_glob_upload", "mdi-upload", 1, $roleId, 1, 1, 0, 1);
+        $accMenuId = $this->addMenu("首页", "首页", 0, "admin_index", "mdi  mdi-home", 0, $roleId, 1, 0, 1, 1);
+        $this->addMenu("控制面板", "控制面板", $accMenuId, "admin_dashboard", "mdi  mdi-home", 0, $roleId, 1, 0, 1, 1);
+        $this->addMenu("文件上传", "文件上传处理", 0, "admin_glob_upload", "mdi  mdi-upload", 1, $roleId, 1, 1, 0, 1);
         $this->addMenu("搜索用户名", "搜索用户名", 0, "admin_api_glob_searchUserDo", "", 2, $roleId, 1, 1, 0, 1);
         $this->addMenu("搜索管理员", "搜索管理员", 0, "admin_api_glob_searchAdminUserDo", "", 3, $roleId, 1, 1, 0, 1);
 
@@ -34,7 +34,7 @@ class MenuFixtures
         $this->addMenu("获取腾讯云点播播放网址加密", "获取腾讯云点播播放网址加密", 0, "admin_api_glob_tengxunyunVodEncryptionPlayUrlDo", "", 10, $roleId, 1, 1, 0, 1);
         $this->addMenu("获取腾讯云点播超级播放器签名", "获取腾讯云点播超级播放器签名", 0, "admin_api_glob_tengxunyunVodAndvancePlaySignDo", "", 11, $roleId, 1, 1, 0, 1);
         //安全模块
-        $accMenuId = $this->addMenu("安全", "安全方面的管理", 0, "", "mdi-key", 2, $roleId, 1, 0, 1);
+        $accMenuId = $this->addMenu("安全", "安全方面的管理", 0, "", "mdi  mdi-key", 2, $roleId, 1, 0, 1);
         //菜单
         $menuMgId = $this->addMenu("菜单管理", "管理菜单以及对应页面的权限", $accMenuId, "admin_menu_index", "", 3, $roleId, 1, 0, 1);
         $this->addMenu("添加菜单页面", "菜单新增页面", $menuMgId, "admin_menu_add", "", 0, $roleId, 1, 1, 0);
@@ -67,7 +67,7 @@ class MenuFixtures
         //操作日志
         $adminlogMgId = $this->addMenu("操作日志", "操作日志", $accMenuId, "admin_adminlog_index", "", 3, $roleId, 1, 0, 1);
         //系统模块
-        $sysMenuId = $this->addMenu("系统", "系统方面的管理", 0, "", "mdi-cogs", 3, $roleId, 1, 0, 1);
+        $sysMenuId = $this->addMenu("系统", "系统方面的管理", 0, "", "mdi  mdi-cogs", 3, $roleId, 1, 0, 1);
         $optionMgId = $this->addMenu("配置", "对系统的相关配置", $sysMenuId, "admin_option_index", "", 0, $roleId, 1, 0, 1);
         $this->addMenu("添加页面", "添加配置页面展示", $optionMgId, "admin_option_add", "", 3, $roleId, 1, 1, 0);
         $this->addMenu("添加", "添加配置处理", $optionMgId, "admin_api_option_add", "", 4, $roleId, 1, 1, 0);
