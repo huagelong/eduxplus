@@ -11,6 +11,9 @@
                     {% endif %}
 
                     {% if v['type'] == 'text' %}
+                        <div class="input-group-prepend">
+                            <li class="mdi mdi-pencil"></li>
+                        </div>
                                 <input type="text"
                                 {% if v['attributes'] %}
                                     {% for ok,ov in v['attributes'] %}
