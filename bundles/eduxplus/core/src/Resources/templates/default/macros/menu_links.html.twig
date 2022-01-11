@@ -5,7 +5,7 @@
                 {#dd-collapsed#}
                 <li class="dd-item dd-collapsed" data-id="{{ menu.id }}">
                     <div class="dd-handle">
-                        <i class="{{ menu.style|default('far fa-circle') }}"></i>&nbsp;<strong>{{ menu.name }}</strong>&nbsp;&nbsp;&nbsp;
+                        <i class="mdi {{ menu.style|default('mdi mdi-circle') }}"></i>&nbsp;<strong>{{ menu.name }}</strong>&nbsp;&nbsp;&nbsp;
                         {% if menu.url!="" and menu.isAccess==0 %}<a href="{{ path(menu.url) }}" class="dd-nodrag">{{ path(menu.url) }}</a>{% endif %}
                         <span class="font-weight-lighter"> {{ menu.descr }}</span>
                         {% if menu.isLock %}
