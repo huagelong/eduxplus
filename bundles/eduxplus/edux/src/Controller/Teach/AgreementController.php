@@ -45,11 +45,7 @@ class AgreementController extends BaseAdminController
 
         //批量删除
         $grid->setBathDelete("admin_api_teach_agreement_bathdelete");
-
-        $data = [];
-        $data['list'] = $grid->create($request, $pageSize);
-        return $this->render("@EduxBundle/teach/agreement/index.html.twig", $data);
-
+        return $this->content()->renderList($grid->create($request, $pageSize));
     }
 
     /**
@@ -63,9 +59,7 @@ class AgreementController extends BaseAdminController
         $view->boole("展示？")->field("isShow")->defaultValue($info['isShow']);
 
         $formData = $view->create();
-        $data = [];
-        $data["formData"] = $formData;$data["breadcrumb"] = 1;
-        return $this->render("@EduxBundle/teach/agreement/view.html.twig", $data);
+        return $this->content()->renderView($formData);
     }
 
     /**
@@ -77,9 +71,7 @@ class AgreementController extends BaseAdminController
         $form->boole("展示？")->field("isShow")->isRequire();
 
         $formData = $form->create($this->generateUrl("admin_api_teach_agreement_add"));
-        $data = [];
-        $data["formData"] = $formData;$data["breadcrumb"] = 1;
-        return $this->render("@EduxBundle/teach/agreement/add.html.twig", $data);
+        return $this->content()->title("添加协议")->breadcrumb("协议管理", "admin_teach_agreement_index")->renderAdd($formData);
     }
 
     /**
@@ -112,9 +104,7 @@ class AgreementController extends BaseAdminController
         $form->boole("展示？")->field("isShow")->isRequire()->defaultValue($info['isShow']);
 
         $formData = $form->create($this->generateUrl("admin_api_teach_agreement_edit", ['id'=>$id]));
-        $data = [];
-        $data["formData"] = $formData;$data["breadcrumb"] = 1;
-        return $this->render("@EduxBundle/teach/agreement/edit.html.twig", $data);
+        return $this->content()->renderEdit($formData);
     }
 
     /**

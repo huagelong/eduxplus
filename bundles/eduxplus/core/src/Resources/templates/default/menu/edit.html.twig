@@ -16,6 +16,31 @@
             var selectUri = $("input[name='uriSelect']").val();
             $("select[name='uri']").val(selectUri).trigger("change");
 
+    var font_element = $('#icon').fontIconPicker({
+        theme: 'fip-bootstrap'
+    });
+    
+    $.ajax({
+        url: '/bundles/eduxpluscore/js/fontIconPicker/fontjson/materialdesignicons_v4.json',
+        type: 'GET',
+        dataType: 'json'
+    }).done(function(response) {
+ 
+        var fontello_json_icons = [];
+ 
+        $.each(response.glyphs, function(i, v) {
+            fontello_json_icons.push( v.css );
+        });
+ 
+        font_element.setIcons(fontello_json_icons);
+    }).fail(function() {
+        console.error('字体图标配置加载失败');
+    });
+    
+    $(document).on('change', '#icon', function(){
+        $('#show-mdi').html($(this).val());
+    });
+
         });
 
     </script>
@@ -79,6 +104,7 @@
                                                class="form-control form-control-sm icon"
                                                placeholder="输入图标"
                                         >
+                                        <span id="show-mdi"></span>
                                     </div>
                                     <span class="help-block">
                                         <i class="mdi mdi-information"></i>
