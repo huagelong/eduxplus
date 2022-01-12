@@ -56,7 +56,7 @@ class UserController extends BaseAdminController
         $grid->stext("手机号码")->field("a.mobile");
         $grid->stext("昵称")->field("a.displayName");
         $grid->stext("姓名")->field("a.fullName");
-        $grid->sselect("可以登陆后台？")->field("a.isAdmin")->options(function () {
+        $grid->sselect("登陆后台？")->field("a.isAdmin")->options(function () {
             return ["全部" => -1, "是" => 1, "否" => 0];
         });
         $grid->sdaterange("创建时间")->field("a.createdAt");

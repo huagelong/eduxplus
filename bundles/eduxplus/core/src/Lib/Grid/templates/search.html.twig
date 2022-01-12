@@ -13,8 +13,13 @@
                                 </select>
                             </div>
                             <div class="col-sm-7">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="mdi mdi-pencil"></i></span>
+                                    </div>
                                 <input type="hidden" name="{{ v['types'] }}" value="{{ v['type'] }}">
                                 <input type="text" name="{{ v['values'] }}" value="{{ array_get(app.request.query.get("values"), v['field']) }}" class="form-control form-control-sm " placeholder="输入 ...">
+                                </div>
                             </div>
                         {% endif %}
 
@@ -61,8 +66,13 @@
                                 </select>
                             </div>
                             <div class="col-sm-7">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="mdi mdi-pencil"></i></span>
+                                    </div>
                                 <input type="hidden"  name="{{ v['types'] }}" value="{{ v['type'] }}">
                                 <input type="text" name="{{ v['values'] }}" value="{{ array_get(app.request.query.get("values"), v['field']) }}" class="form-control form-control-sm " placeholder="输入 ...">
+                                </div>
                             </div>
                         {% endif %}
 

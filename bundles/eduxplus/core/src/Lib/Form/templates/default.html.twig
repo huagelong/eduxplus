@@ -11,9 +11,10 @@
                     {% endif %}
 
                     {% if v['type'] == 'text' %}
-                        <div class="input-group-prepend">
-                            <li class="mdi mdi-pencil"></li>
-                        </div>
+                         <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="mdi mdi-pencil"></i></span>
+                                </div>
                                 <input type="text"
                                 {% if v['attributes'] %}
                                     {% for ok,ov in v['attributes'] %}
@@ -23,10 +24,11 @@
                                        value="{{ v['defaultValue'] }}"
                                        class="form-control form-control-sm"
                                 >
+                         </div>
                     {% endif %}
 
                     {% if v['type'] == 'string' %}
-                    <label>{{ v['defaultValue'] }}</label>
+                    <div>{{ v['defaultValue'] }}</div>
                     {% endif %}
 
                     {% if v['type'] == 'daterange' %}
