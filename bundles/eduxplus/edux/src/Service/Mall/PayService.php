@@ -81,15 +81,15 @@ class PayService extends AdminBaseService
         $model->setTransactionId($transactionId);
         $model->setAmount($amount * 100);
         $model->setOrderId($orderId);
-        return $this->save($model);
+        return $this->db()->save($model);
     }
 
     public function completedPay($payId)
     {
         $sql = "SELECT a FROM Edux:MallPay a WHERE a.id=:id";
-        $detail = $this->fetchOne($sql, ["id" => $payId], 1);
+        $detail = $this->db()->fetchOne($sql, ["id" => $payId], 1);
         if (!$detail) return false;
         $detail->setPayTime(time());
-        $this->save($detail);
+        $this->db()->save($detail);
     }
 }

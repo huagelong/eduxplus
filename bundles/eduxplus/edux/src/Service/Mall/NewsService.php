@@ -73,7 +73,7 @@ class NewsService extends AdminBaseService
     public function switchStatus($id, $state)
     {
         $sql = "SELECT a FROM Edux:MallNews a WHERE a.id=:id";
-        $model = $this->fetchOne($sql, ['id' => $id], 1);
+        $model = $this->db()->fetchOne($sql, ['id' => $id], 1);
         $model->setStatus($state);
 
         if($state){
@@ -82,12 +82,12 @@ class NewsService extends AdminBaseService
             $this->delEs($id);
         }
 
-        return $this->save($model);
+        return $this->db()->save($model);
     }
 
     public function edit($id, $name, $content, $status, $categoryId, $uid, $topValue, $sort, $img){
         $sql = "SELECT a FROM Edux:MallNews a WHERE a.id=:id";
-        $model = $this->fetchOne($sql, ['id' => $id], 1);
+        $model = $this->db()->fetchOne($sql, ['id' => $id], 1);
         $model->setTitle($name);
         $model->setStatus($status);
         $model->setSort($sort);
@@ -95,12 +95,12 @@ class NewsService extends AdminBaseService
         $model->setCategoryId($categoryId);
         $model->setUid($uid);
         $model->setTopValue($topValue);
-        $this->save($model);
+        $this->db()->save($model);
 
         $sql = "SELECT a FROM Edux:MallNewsMain a WHERE a.newsId=:newsId";
-        $mainModel = $this->fetchOne($sql, ['newsId' => $id], 1);
+        $mainModel = $this->db()->fetchOne($sql, ['newsId' => $id], 1);
         $mainModel->setContent($content);
-        $this->save($mainModel);
+        $this->db()->save($mainModel);
 
         if($status){
             $this->saveEs($id, $name);
@@ -119,12 +119,12 @@ class NewsService extends AdminBaseService
         $model->setSort($sort);
         $model->setImg($img);
         $model->setCategoryId($categoryId);
-        $id = $this->save($model);
+        $id = $this->db()->save($model);
         if(!$id) return $this->error()->add("添加失败");
         $mainModel = new MallNewsMain();
         $mainModel->setNewsId($id);
         $mainModel->setContent($content);
-        $this->save($mainModel);
+        $this->db()->save($mainModel);
 
         if($status) {
             $this->saveEs($id, $name);
@@ -135,11 +135,11 @@ class NewsService extends AdminBaseService
 
     public function getById($id){
         $sql = "SELECT a FROM Edux:MallNews a WHERE a.id=:id";
-        $info = $this->fetchOne($sql, ['id' => $id]);
+        $info = $this->db()->fetchOne($sql, ['id' => $id]);
         $info["main"] = [];
         if($info){
             $sql = "SELECT a FROM Edux:MallNewsMain a WHERE a.newsId=:newsId";
-            $main = $this->fetchOne($sql, ['newsId' => $info['id']]);
+            $main = $this->db()->fetchOne($sql, ['newsId' => $info['id']]);
             $info["main"] = $main;
         }
         return $info;
@@ -147,8 +147,8 @@ class NewsService extends AdminBaseService
 
     public function del($id){
         $sql = "SELECT a FROM Edux:MallNews a WHERE a.id=:id";
-        $model = $this->fetchOne($sql, ["id" => $id], 1);
-        $result = $this->delete($model);
+        $model = $this->db()->fetchOne($sql, ["id" => $id], 1);
+        $result = $this->db()->delete($model);
         $this->delEs($id);
         return $result;
     }

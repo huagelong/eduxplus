@@ -99,7 +99,7 @@ class ProductService extends AdminBaseService
         $sql = "SELECT a FROM Edux:TeachProducts a WHERE a.name like :name AND a.status=1 ";
         $params = [];
         $params['name'] = "%" . $name . "%";
-        $all = $this->fetchAll($sql, $params);
+        $all = $this->db()->fetchAll($sql, $params);
         if (!$all) return [];
         $rs = [];
         foreach ($all as $v) {
@@ -138,13 +138,13 @@ class ProductService extends AdminBaseService
         $model->setAgreementId($agreementId);
         $model->setMaxMemberNumber($maxMemberNumber);
         $model->setCreateUid($uid);
-        return $this->save($model);
+        return $this->db()->save($model);
     }
 
     public function getById($id)
     {
         $sql = "SELECT a FROM Edux:TeachProducts a WHERE a.id=:id";
-        return $this->fetchOne($sql, ['id' => $id]);
+        return $this->db()->fetchOne($sql, ['id' => $id]);
     }
 
     public function getByName($name, $id = 0)
@@ -156,7 +156,7 @@ class ProductService extends AdminBaseService
             $sql = $sql . " AND a.id !=:id ";
             $params['id'] = $id;
         }
-        return $this->fetchOne($sql, $params);
+        return $this->db()->fetchOne($sql, $params);
     }
 
     public function edit($id, $name, $agreementId, $status, $maxMemberNumber, $categoryId, $descr)
@@ -167,7 +167,7 @@ class ProductService extends AdminBaseService
         $brandId = end($pathArr);
 
         $courceSql = "SELECT a FROM Edux:TeachProducts a WHERE a.id=:id";
-        $model = $this->fetchOne($courceSql, ['id' => $id], 1);
+        $model = $this->db()->fetchOne($courceSql, ['id' => $id], 1);
         $model->setName($name);
         $model->setDescr($descr);
         $model->setStatus($status);
@@ -175,21 +175,21 @@ class ProductService extends AdminBaseService
         $model->setCategoryId($categoryId);
         $model->setAgreementId($agreementId);
         $model->setMaxMemberNumber($maxMemberNumber);
-        return $this->save($model);
+        return $this->db()->save($model);
     }
 
     public function del($id)
     {
         $sql = "SELECT a FROM Edux:TeachProducts a WHERE a.id=:id";
-        $model = $this->fetchOne($sql, ['id' => $id], 1);
-        return $this->delete($model);
+        $model = $this->db()->fetchOne($sql, ['id' => $id], 1);
+        return $this->db()->delete($model);
     }
 
     public function switchStatus($id, $state)
     {
         $sql = "SELECT a FROM Edux:TeachProducts a WHERE a.id=:id";
-        $model = $this->fetchOne($sql, ['id' => $id], 1);
+        $model = $this->db()->fetchOne($sql, ['id' => $id], 1);
         $model->setStatus($state);
-        return $this->save($model);
+        return $this->db()->save($model);
     }
 }

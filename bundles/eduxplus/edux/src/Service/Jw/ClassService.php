@@ -41,11 +41,11 @@ class ClassService extends AdminBaseService
                 //学习计划
                 $studyPlanId = $vArr["studyPlanId"];
                 $sql = "SELECT a FROM Edux:TeachStudyPlan a WHERE a.id=:id";
-                $studyPlanInfo = $this->fetchOne($sql, ['id' => $studyPlanId]);
+                $studyPlanInfo = $this->db()->fetchOne($sql, ['id' => $studyPlanId]);
                 //产品
                 $productId = $vArr["productId"];
                 $sql = "SELECT a FROM Edux:TeachProducts a WHERE a.id=:id";
-                $productInfo = $this->fetchOne($sql, ['id' => $productId]);
+                $productInfo = $this->db()->fetchOne($sql, ['id' => $productId]);
 
                 $vArr["studyPlan"] = $studyPlanInfo?$studyPlanInfo['name']:"";
                 $vArr["product"] = $productInfo?$productInfo['name']:"";
@@ -84,7 +84,7 @@ class ClassService extends AdminBaseService
                 //学习计划
                 $uid = $vArr["uid"];
                 $sql = "SELECT a FROM Edux:BaseUser a WHERE a.id=:id";
-                $userInfo = $this->fetchOne($sql, ['id' => $uid]);
+                $userInfo = $this->db()->fetchOne($sql, ['id' => $uid]);
                 $vArr["user"] = $userInfo?($userInfo['fullName']."/".$userInfo['displayName']):"";
                 $itemsArr[] = $vArr;
             }
@@ -95,7 +95,7 @@ class ClassService extends AdminBaseService
     public function getById($id)
     {
         $sql = "SELECT a FROM Edux:JwClasses a WHERE a.id=:id";
-        return $this->fetchOne($sql, ['id' => $id]);
+        return $this->db()->fetchOne($sql, ['id' => $id]);
     }
 
 }

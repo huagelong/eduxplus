@@ -63,7 +63,7 @@ class UserService extends AdminBaseService
             $sql = $sql . " AND a.id !=:id ";
             $params['id'] = $id;
         }
-        return $this->fetchOne($sql, $params);
+        return $this->db()->fetchOne($sql, $params);
     }
 
     public function checkFullName($name, $id = 0)
@@ -75,7 +75,7 @@ class UserService extends AdminBaseService
             $sql = $sql . " AND a.id !=:id ";
             $params['id'] = $id;
         }
-        return $this->fetchOne($sql, $params);
+        return $this->db()->fetchOne($sql, $params);
     }
 
     public function searchAdminFullNameFormat($name)
@@ -97,7 +97,7 @@ class UserService extends AdminBaseService
         $sql = "SELECT a FROM Core:BaseUser a where a.fullName like :fullName AND a.isAdmin=1 ";
         $params = [];
         $params['fullName'] = "%" . $name . "%";
-        return $this->fetchAll($sql, $params);
+        return $this->db()->fetchAll($sql, $params);
     }
 
     
@@ -121,7 +121,7 @@ class UserService extends AdminBaseService
         $sql = "SELECT a FROM Core:BaseUser a where a.fullName like :fullName";
         $params = [];
         $params['fullName'] = "%" . $name . "%";
-        return $this->fetchAll($sql, $params);
+        return $this->db()->fetchAll($sql, $params);
     }
 
     public function checkMobile($name, $id = 0)
@@ -135,7 +135,7 @@ class UserService extends AdminBaseService
             $sql = $sql . " AND a.id !=:id ";
             $params['id'] = $id;
         }
-        return $this->fetchOne($sql, $params);
+        return $this->db()->fetchOne($sql, $params);
     }
 
     public function add($mobile, $displayName, $pwd1, $fullName, $sex, $roles)
@@ -156,14 +156,14 @@ class UserService extends AdminBaseService
         if ($roles) {
             $model->setIsAdmin(1);
         }
-        $uid = $this->save($model);
+        $uid = $this->db()->save($model);
 
         if ($roles) {
             foreach ($roles as $roleId) {
                 $modelRole = new BaseRoleUser();
                 $modelRole->setRoleId($roleId);
                 $modelRole->setUid($uid);
-                $this->save($modelRole);
+                $this->db()->save($modelRole);
             }
         }
         return $uid;
@@ -185,8 +185,8 @@ class UserService extends AdminBaseService
                 return $snoTmp;
             }
         }
-        $sql = "SELECT count(a.id) FROM Core:BaseUser a WHERE a.mobileTail=:mobileTail";
-        $count = $this->fetchColumnBySql($sql, ["mobileTail"=>$snoTmp],"c");
+        $sql = "SELECT count(a.id) as c FROM Core:BaseUser a WHERE a.mobileTail=:mobileTail";
+        $count = $this->db()->fetchField("c",$sql, ["mobileTail"=>$snoTmp]);
         if($count == 0){
             $this->redisService->incr($redisKey);
             return $snoTmp;
@@ -199,7 +199,7 @@ class UserService extends AdminBaseService
     public function getById($id)
     {
         $sql = "SELECT a FROM Core:BaseUser a WHERE a.id=:id";
-        return $this->fetchOne($sql, ['id' => $id]);
+        return $this->db()->fetchOne($sql, ['id' => $id]);
     }
 
     public function searchResult($id)
@@ -211,13 +211,13 @@ class UserService extends AdminBaseService
     public function getMyRoleIds($uid)
     {
         $sql = "SELECT a FROM Core:BaseRoleUser a WHERE a.uid=:uid";
-        return $this->fetchFields('roleId', $sql, ['uid' => $uid]);
+        return $this->db()->fetchFields('roleId', $sql, ['uid' => $uid]);
     }
 
     public function edit($id, $displayName, $fullName, $sex, $roles)
     {
         $sql = "SELECT a FROM Core:BaseUser a WHERE a.id=:id";
-        $model = $this->fetchOne($sql, ['id' => $id], 1);
+        $model = $this->db()->fetchOne($sql, ['id' => $id], 1);
         $model->setFullName($fullName);
         $model->setDisplayName($displayName);
         $model->setSex($sex);
@@ -226,19 +226,19 @@ class UserService extends AdminBaseService
         } else {
             $model->setIsAdmin(0);
         }
-        $uid = $this->save($model);
+        $uid = $this->db()->save($model);
 
         if ($roles) {
             //先删除
             $sql = "SELECT a FROM Core:BaseRoleUser a WHERE a.uid=:uid";
-            $models = $this->fetchAll($sql, ['uid' => $id], 1);
-            $this->hardDelete($models);
+            $models = $this->db()->fetchAll($sql, ['uid' => $id], 1);
+            $this->db()->hardDelete($models);
             //后添加
             foreach ($roles as $roleId) {
                 $modelRole = new BaseRoleUser();
                 $modelRole->setRoleId($roleId);
                 $modelRole->setUid($uid);
-                $this->save($modelRole);
+                $this->db()->save($modelRole);
             }
         }
         return $uid;
@@ -247,15 +247,15 @@ class UserService extends AdminBaseService
     public function delUser($id)
     {
         $sql = "SELECT a FROM Core:BaseUser a WHERE a.id=:id";
-        $model = $this->fetchOne($sql, ["id" => $id], 1);
-        $this->delete($model);
+        $model = $this->db()->fetchOne($sql, ["id" => $id], 1);
+        $this->db()->delete($model);
     }
 
     public function switchLock($id, $state)
     {
         $sql = "SELECT a FROM Core:BaseUser a WHERE a.id=:id";
-        $model = $this->fetchOne($sql, ['id' => $id], 1);
+        $model = $this->db()->fetchOne($sql, ['id' => $id], 1);
         $model->setIsLock($state);
-        return $this->save($model);
+        return $this->db()->save($model);
     }
 }

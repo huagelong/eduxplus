@@ -66,7 +66,7 @@ class GlobService extends AppBaseService
        $model->setType($type);
        $model->setCode($value);
        $model->setMobile($mobile);
-       $this->save($model);
+       $this->db()->save($model);
        return true;
    }
 

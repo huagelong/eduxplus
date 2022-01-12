@@ -9,8 +9,8 @@
 namespace Eduxplus\CoreBundle\Lib\Service\Base;
 
 use Eduxplus\CoreBundle\Lib\Base\BaseService;
-use Eduxplus\CoreBundle\Lib\Service\File\AliyunOssService;
-use Eduxplus\CoreBundle\Lib\Service\File\TengxunyunCosService;
+use Eduxplus\CoreBundle\Lib\Service\Base\File\AliyunOssService;
+use Eduxplus\CoreBundle\Lib\Service\Base\File\TengxunyunCosService;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class UploadService extends BaseService
@@ -33,7 +33,6 @@ class UploadService extends BaseService
             rename($remoteFilePath, $localFile);
             return $remoteFilePath;
         }
-
         //阿里云oss
         if($uploadAdapter == 2){
             return $this->aliyunOssService->up($remoteFilePath, $localFile);

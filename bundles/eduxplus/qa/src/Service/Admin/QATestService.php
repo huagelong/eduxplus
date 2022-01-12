@@ -47,7 +47,7 @@ class QATestService  extends AdminBaseService
                 $createrUser = $this->userService->getById($createrUid);
                 $vArr['creater'] = $createrUser['fullName'];
                 $cateSql = "SELECT a FROM Edux:TeachCategory a WHERE a.id=:id ";
-                $cateInfo = $this->fetchOne($cateSql, ["id"=>$vArr['categoryId']]);
+                $cateInfo = $this->db()->fetchOne($cateSql, ["id"=>$vArr['categoryId']]);
                 $vArr['category'] = $cateInfo['name'];
                 $itemsArr[] = $vArr;
             }
@@ -63,28 +63,28 @@ class QATestService  extends AdminBaseService
         $model->setName($name);
         $model->setSort($sort);
         $model->setExpireTime($expireTime);
-        return $this->save($model);
+        return $this->db()->save($model);
     }
 
     public function edit($id, $name, $categoryId, $sort,$status, $expireTime){
         $sql = "SELECT a FROM Qa:TeachTest a WHERE a.id=:id ";
-        $model = $this->fetchOne($sql, ['id'=>$id], 1);
+        $model = $this->db()->fetchOne($sql, ['id'=>$id], 1);
         $model->setStatus($status);
         $model->setCategoryId($categoryId);
         $model->setName($name);
         $model->setSort($sort);
         $model->setExpireTime($expireTime);
-        return $this->save($model);
+        return $this->db()->save($model);
     }
 
 
     public function del($id){
         $sql = "SELECT count(a.id) as cnt FROM Qa:TeachTestSub a WHERE a.testId = :testId";
-        $sub = $this->fetchField("cnt", $sql, ["testId"=>$id]);
+        $sub = $this->db()->fetchField("cnt", $sql, ["testId"=>$id]);
         if($sub>0) return $this->error()->add("请先删除试题数据");
         $sql = "SELECT a FROM Qa:TeachTest a WHERE a.id=:id ";
-        $model = $this->fetchOne($sql, ['id'=>$id], 1);
-        $this->delete($model);
+        $model = $this->db()->fetchOne($sql, ['id'=>$id], 1);
+        $this->db()->delete($model);
         return true;
     }
 
@@ -96,7 +96,7 @@ class QATestService  extends AdminBaseService
             $sql = $sql . " AND a.id !=:id ";
             $params['id'] = $id;
         }
-        return $this->fetchOne($sql, $params);
+        return $this->db()->fetchOne($sql, $params);
     }
 
 
@@ -105,7 +105,7 @@ class QATestService  extends AdminBaseService
         $sql = "SELECT a FROM Qa:TeachTest a WHERE a.name like :name AND a.status=1 ";
         $params = [];
         $params['name'] = "%" . $name . "%";
-        $all = $this->fetchAll($sql, $params);
+        $all = $this->db()->fetchAll($sql, $params);
         if (!$all) return [];
         $rs = [];
         foreach ($all as $v) {
@@ -120,14 +120,14 @@ class QATestService  extends AdminBaseService
 
     public function getById($id){
         $sql = "SELECT a FROM Qa:TeachTest a WHERE a.id=:id";
-        return $this->fetchOne($sql, ['id' => $id]);
+        return $this->db()->fetchOne($sql, ['id' => $id]);
     }
 
     public function switchStatus($id, $state){
         $sql = "SELECT a FROM Qa:TeachTest a WHERE a.id=:id";
-        $model = $this->fetchOne($sql, ['id' => $id], 1);
+        $model = $this->db()->fetchOne($sql, ['id' => $id], 1);
         $model->setStatus($state);
-        return $this->save($model);
+        return $this->db()->save($model);
     }
 
 }

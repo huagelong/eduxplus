@@ -6,10 +6,11 @@
  * @Date: 2020/6/29 17:50
  */
 
-namespace Eduxplus\CoreBundle\Lib\Service\Im;
+namespace Eduxplus\CoreBundle\Lib\Service\Base\Im;
 
 use Eduxplus\CoreBundle\Lib\Base\BaseService;
 use Eduxplus\CoreBundle\Lib\Service\CacheService;
+use Eduxplus\CoreBundle\Lib\Utils;
 use Tencent\TLSSigAPIv2;
 
 class TengxunyunImService extends BaseService{
@@ -282,7 +283,7 @@ class TengxunyunImService extends BaseService{
             $usersig = $this->createUserSig($identifier, 600);
             $url = "https://console.tim.qq.com/{$apiPath}?sdkappid={$sdkappid}&identifier={$identifier}&usersig={$usersig}&random=".time()."&contenttype=json";
             $body = json_encode($params);
-            $content = $this->baseCurlGet($url, "POST", $body);
+            $content = Utils::baseCurlGet($url, "POST", $body);
             $result = json_decode($content, true);
             if($result['ActionStatus'] == "FAIL"){
                 return $this->formatError($result['ErrorCode'], $errors);

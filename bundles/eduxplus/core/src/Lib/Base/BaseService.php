@@ -4,7 +4,6 @@ namespace Eduxplus\CoreBundle\Lib\Base;
 
 use Doctrine\Persistence\ManagerRegistry;
 use Eduxplus\CoreBundle\Entity\BaseUser;
-use Eduxplus\CoreBundle\Lib\Base\Error;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
@@ -18,21 +17,37 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\UsageTrackingTo
 use Psr\Container\ContainerInterface;
 use Symfony\Component\Security\Core\Security;
 use Psr\Log\LoggerInterface;
-use Eduxplus\CoreBundle\Lib\Base\DbService;
 
 class BaseService
 {
-    use Dbtrait;
 
     /**
      * @var ManagerRegistry
      */
     private $em;
+    /**
+     * @var SerializerInterface
+     */
     private $serializer;
+    /**
+     * @var RequestStack
+     */
     private $requestStack;
+    /**
+     * @var UrlGeneratorInterface
+     */
     private $router;
+    /**
+     * @var ContainerBagInterface
+     */
     private $params;
+    /**
+     * @var PropertyAccessorInterface
+     */
     private $propertyAccessor;
+    /**
+     * @var UsageTrackingTokenStorage
+     */
     private $tokenStorage;
     /**
      * @var ContainerInterface
@@ -47,6 +62,9 @@ class BaseService
      */
     private $logger;
 
+    /**
+     * @var DbService
+     */
     private $db;
 
     public function inject(ManagerRegistry $em,
@@ -85,10 +103,13 @@ class BaseService
         return $this->container->get($id);
     }
 
+    /**
+     * @var DbService
+     */
     public final function db()
     {
-        $db = $db->setDoctrine($this->em);
-        return $db;
+//        $this->logger()->info("db:".get_called_class());
+        return $this->db->setDoctrine($this->em);
     }
 
     public final function error()
@@ -102,6 +123,10 @@ class BaseService
 
     public final function logger(){
         return $this->logger;
+    }
+
+    public final function log($log){
+        return $this->logger()->info($log);
     }
 
     public final function getSecurity(){
@@ -154,38 +179,6 @@ class BaseService
         return $env;
     }
 
-
-    public final function baseCurlGet($url, $method, $body="")
-    {
-        //        debug(func_get_args());
-        $method = strtoupper($method);
-        $ch = curl_init();
-
-        if ($method == 'POST' || $method == 'PUT') {
-            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $method);
-            if($body) curl_setopt($ch, CURLOPT_POSTFIELDS, $body);
-        }
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_TIMEOUT, 5);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-
-        if (substr($url, 0, 5) == 'https') {
-            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-            curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
-        }
-
-        $rtn = curl_exec($ch);
-
-        if ($rtn === false) {
-            // 大多由设置等原因引起，一般无法保障后续逻辑正常执行，
-            // 所以这里触发的是E_USER_ERROR，会终止脚本执行，无法被try...catch捕获，需要用户排查环境、网络等故障
-            trigger_error("[CURL_" . curl_errno($ch) . "]: " . curl_error($ch), E_USER_ERROR);
-        }
-        curl_close($ch);
-
-        return $rtn;
-    }
-
     public final function jsonGet($json, $key = 0)
     {
         if (!$json) return "";
@@ -213,20 +206,20 @@ class BaseService
     {
         if ($clientId == 'ios' || $clientId == 'android') {
             $sql = "SELECT a FROM Core:BaseUser a WHERE a.appToken=:appToken";
-            return $this->fetchOne($sql, ["appToken" => $token], 1);
+            return $this->db()->fetchOne($sql, ["appToken" => $token], 1);
         } elseif ($clientId == 'html') {
             $sql = "SELECT a FROM Core:BaseUser a WHERE a.htmlToken=:htmlToken";
-            return $this->fetchOne($sql, ["htmlToken" => $token], 1);
+            return $this->db()->fetchOne($sql, ["htmlToken" => $token], 1);
         } elseif ($clientId == 'wxmini') {
             $sql = "SELECT a FROM Core:BaseUser a WHERE a.wxminiToken=:wxminiToken";
-            return $this->fetchOne($sql, ["wxminiToken" => $token], 1);
+            return $this->db()->fetchOne($sql, ["wxminiToken" => $token], 1);
         }
     }
 
     public final function getOption($k, $isJson = 0, $index = null, $default = null)
     {
         $sql = "SELECT a.optionValue FROM Core:BaseOption a WHERE a.optionKey =:optionKey";
-        $rs = $this->fetchField("optionValue", $sql, ['optionKey' => $k]);
+        $rs = $this->db()->fetchField("optionValue", $sql, ['optionKey' => $k]);
 
         if ($rs) {
             if ($isJson) {

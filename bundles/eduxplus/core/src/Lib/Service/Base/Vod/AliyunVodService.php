@@ -6,7 +6,7 @@
  * @Date: 2020/6/22 11:13
  */
 
-namespace Eduxplus\CoreBundle\Lib\Service\Vod;
+namespace Eduxplus\CoreBundle\Lib\Service\Base\Vod;
 
 
 use Eduxplus\CoreBundle\Lib\Base\BaseService;

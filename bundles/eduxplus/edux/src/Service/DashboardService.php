@@ -26,19 +26,19 @@ class DashboardService extends BaseService
         //今日收入
         $todayDate = date('Y-m-d');
         $sql = "SELECT SUM(a.orderAmount) as sum FROM Edux:MallOrder a WHERE a.orderStatus=2 AND a.createdAt LIKE '".$todayDate."%'";
-        $todayIncome =$this->fetchField("sum", $sql);
+        $todayIncome =$this->db()->fetchField("sum", $sql);
         $todayIncome = $todayIncome?$todayIncome/100:0;
         //今日注册用户
         $sql = "SELECT COUNT(a.id) as cnt FROM Core:BaseUser a WHERE a.createdAt LIKE '".$todayDate."%'";
-        $todayRegUserCount =$this->fetchField("cnt", $sql);
+        $todayRegUserCount =$this->db()->fetchField("cnt", $sql);
         $todayRegUserCount = $todayRegUserCount?$todayRegUserCount:0;
         //今日订单数
         $sql = "SELECT COUNT(a.id) as cnt FROM Edux:MallOrder a WHERE a.createdAt LIKE '".$todayDate."%'";
-        $todayOrderCount =$this->fetchField("cnt", $sql);
+        $todayOrderCount =$this->db()->fetchField("cnt", $sql);
         $todayOrderCount = $todayOrderCount?$todayOrderCount:0;
         //总注册用户数
         $sql = "SELECT COUNT(a.id) as cnt FROM Core:BaseUser a ";
-        $totalRegUserCount =$this->fetchField("cnt", $sql);
+        $totalRegUserCount =$this->db()->fetchField("cnt", $sql);
         $totalRegUserCount = $totalRegUserCount?$totalRegUserCount:0;
 
         return [$todayIncome, $todayRegUserCount, $todayOrderCount, $totalRegUserCount];
@@ -47,7 +47,7 @@ class DashboardService extends BaseService
     public function lastOrder(){
         $pageSize = 10;
         $sql = "SELECT a FROM Edux:MallOrder a ORDER BY a.createdAt DESC";
-        $items =$this->fetchAll($sql, [], 0, $pageSize);
+        $items =$this->db()->fetchAll($sql, [], 0, $pageSize);
         $itemsArr = [];
         if ($items) {
             foreach ($items as $vArr) {

@@ -53,19 +53,19 @@ class MsgService extends AppBaseService
      */
     public function doRead($uid, $msgId){
         $sql = "SELECT a FROM Edux:MallMsg a WHERE a.id=:id";
-        $msgInfo = $this->fetchOne($sql, ["id"=>$msgId], 1);
+        $msgInfo = $this->db()->fetchOne($sql, ["id"=>$msgId], 1);
         if($msgInfo->getUid()){
             $msgInfo->setStatus(1);
-            return $this->save($msgInfo);
+            return $this->db()->save($msgInfo);
         }else{
             $sql = "SELECT a FROM Edux:MallMsgStatus a WHERE a.uid=:uid AND a.msgId=:msgId ";
-            $msgStatusInfo = $this->fetchOne($sql, ["uid"=>$uid, "msgId"=>$msgId]);
+            $msgStatusInfo = $this->db()->fetchOne($sql, ["uid"=>$uid, "msgId"=>$msgId]);
             if(!$msgStatusInfo){
                 $model = new MallMsgStatus();
                 $model->setUid($uid);
                 $model->setStatus(1);
                 $model->setMsgId($msgId);
-                return $this->save($model);
+                return $this->db()->save($model);
             }
         }
     }
@@ -76,21 +76,21 @@ class MsgService extends AppBaseService
      */
     public function doAllMsgRead($uid){
         $updateSql = "UPDATE Edux:MallMsg a SET a.status=1 WHERE a.uid =:uid AND a.status =0";
-        $this->execute($updateSql, ["uid"=>$uid]);
+        $this->db()->execute($updateSql, ["uid"=>$uid]);
 
         $dql = "SELECT a FROM Edux:MallMsg a WHERE a.uid =0";
-        $row = $this->fetchAll($dql);
+        $row = $this->db()->fetchAll($dql);
         if($row){
             foreach ($row as $v){
                 $msgId = $v["id"];
                 $sql = "SELECT a FROM Edux:MallMsgStatus a WHERE a.uid=:uid AND a.msgId=:msgId ";
-                $msgStatusInfo = $this->fetchOne($sql, ["uid"=>$uid, "msgId"=>$msgId]);
+                $msgStatusInfo = $this->db()->fetchOne($sql, ["uid"=>$uid, "msgId"=>$msgId]);
                 if(!$msgStatusInfo){
                     $model = new MallMsgStatus();
                     $model->setUid($uid);
                     $model->setStatus(1);
                     $model->setMsgId($msgId);
-                    return $this->save($model);
+                    return $this->db()->save($model);
                 }
             }
         }
@@ -103,13 +103,13 @@ class MsgService extends AppBaseService
      */
     public function msgUnReadCount($uid){
         $countSql = "SELECT count(a.id) as cnt FROM  Edux:MallMsg a WHERE a.uid =:uid AND a.status =0";
-        $count = $this->fetchField("cnt", $countSql, ["uid"=>$uid]);
+        $count = $this->db()->fetchField("cnt", $countSql, ["uid"=>$uid]);
 
         $sysTotalCountSql = "SELECT count(a.id) as cnt FROM  Edux:MallMsg a WHERE a.uid =0 AND a.status =0";
-        $sysTotalcount = $this->fetchField("cnt", $sysTotalCountSql);
+        $sysTotalcount = $this->db()->fetchField("cnt", $sysTotalCountSql);
 
         $sysTotalReadCountSql = "SELECT count(a.id) as cnt FROM  Edux:MallMsgStatus a WHERE a.uid =:uid AND a.status=1";
-        $sysReadTotalcount = $this->fetchField("cnt", $sysTotalReadCountSql, ["uid"=>$uid]);
+        $sysReadTotalcount = $this->db()->fetchField("cnt", $sysTotalReadCountSql, ["uid"=>$uid]);
 
         return $count+$sysTotalcount-$sysReadTotalcount;
     }
@@ -156,7 +156,7 @@ class MsgService extends AppBaseService
         $model->setMsgTemplateKey($tplKey);
         $model->setParams($params);
         $model->setStatus(0);
-        return $this->save($model);
+        return $this->db()->save($model);
     }
 
     /**
@@ -186,7 +186,7 @@ class MsgService extends AppBaseService
 
                 if(!$vArr['uid']){
                     $sql = "SELECT a FROM Edux:MallMsgStatus a WHERE a.uid=:uid AND a.msgId=:msgId ";
-                    $msgStatusInfo = $this->fetchOne($sql, ["uid"=>$uid, "msgId"=>$vArr["id"]]);
+                    $msgStatusInfo = $this->db()->fetchOne($sql, ["uid"=>$uid, "msgId"=>$vArr["id"]]);
                     if(!$msgStatusInfo){
                         $status = 0;
                     }else{

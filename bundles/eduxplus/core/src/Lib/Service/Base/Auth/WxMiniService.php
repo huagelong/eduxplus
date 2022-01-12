@@ -1,6 +1,6 @@
 <?php
 
-namespace Eduxplus\CoreBundle\Lib\Service\Auth;
+namespace Eduxplus\CoreBundle\Lib\Service\Base\Auth;
 
 use Eduxplus\CoreBundle\Lib\Base\BaseService;
 
@@ -14,7 +14,6 @@ use Eduxplus\CoreBundle\Lib\Base\BaseService;
 use Eduxplus\CoreBundle\Lib\Service\Base\UploadService;
 use EasyWeChat\Factory;
 use Eduxplus\CoreBundle\Service\UserService;
-use Eduxplus\CoreBundle\Lib\Service\File\AliyunOssService;
 use Eduxplus\CoreBundle\Entity\BaseOpenAuth;
 
 class WxMiniService extends BaseService
@@ -67,7 +66,7 @@ class WxMiniService extends BaseService
 
         if ($openId) {
             $sql = "SELECT a FROM Core:BaseOpenAuth a WHERE a.openId =:openId AND a.type=:type";
-            $openAuth = $this->fetchOne($sql, ["openId" => $openId, "type" => $source]);
+            $openAuth = $this->db()->fetchOne($sql, ["openId" => $openId, "type" => $source]);
             if ($openAuth) {
                 $uid = $openAuth["uid"];
                 $token = $this->userService->setLogin($uid, $source);
@@ -102,13 +101,13 @@ class WxMiniService extends BaseService
         if (!$uid) return $this->error()->add("添加新用户失败!");
         //更新openid
         $sql = "SELECT a FROM Core:BaseOpenAuth a WHERE a.openId =:openId AND a.type=:type";
-        $openAuth = $this->fetchOne($sql, ["openId" => $openId, "type" => $source]);
+        $openAuth = $this->db()->fetchOne($sql, ["openId" => $openId, "type" => $source]);
         if (!$openAuth) {
             $openAuthModel = new BaseOpenAuth();
             $openAuthModel->setUid($uid);
             $openAuthModel->setOpenId($openId);
             $openAuthModel->setType($source);
-            $this->save($openAuthModel);
+            $this->db()->save($openAuthModel);
         }
         //登录
         $token = $this->userService->setLogin($uid, $source);

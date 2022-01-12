@@ -27,7 +27,7 @@ class OptionService extends AdminBaseService
 
     public function getOptionGroup(){
         $sql = "SELECT distinct a.optionGroup FROM Core:BaseOption a GROUP BY a.optionGroup ";
-        $groups = $this->fetchFields("optionGroup", $sql);
+        $groups = $this->db()->fetchFields("optionGroup", $sql);
         return $groups;
     }
 
@@ -65,13 +65,13 @@ class OptionService extends AdminBaseService
             $sql = $sql . " AND a.id !=:id ";
             $params['id'] = $id;
         }
-        return $this->fetchOne($sql, $params);
+        return $this->db()->fetchOne($sql, $params);
     }
 
     public function getById($id)
     {
         $sql = "SELECT a FROM Core:BaseOption a where a.id =:id ";
-        return $this->fetchOne($sql, ["id" => $id]);
+        return $this->db()->fetchOne($sql, ["id" => $id]);
     }
 
     public function add($type, $optionKey, $optionValue, $descr, $isLock, $optionGroup)
@@ -83,26 +83,26 @@ class OptionService extends AdminBaseService
         $model->setOptionValue($optionValue);
         $model->setIsLock($isLock);
         $model->setOptionGroup($optionGroup);
-        return $this->save($model);
+        return $this->db()->save($model);
     }
 
     public function edit($id, $optionKey, $optionValue, $descr, $isLock)
     {
         $sql = "SELECT a FROM Core:BaseOption a where a.id =:id ";
-        $model =  $this->fetchOne($sql, ["id" => $id], 1);
+        $model =  $this->db()->fetchOne($sql, ["id" => $id], 1);
         $isLock = $model->getIsLock();
         $model->setDescr($descr);
         if (!$isLock) $model->setOptionKey($optionKey);
         $model->setOptionValue($optionValue);
         if (!$isLock) $model->setIsLock($isLock);
-        return $this->save($model);
+        return $this->db()->save($model);
     }
 
     public function deleteOption($id)
     {
         $sql = "SELECT a FROM Core:BaseOption a where a.id =:id ";
-        $model =  $this->fetchOne($sql, ["id" => $id], 1);
-        $this->hardDelete($model);
+        $model =  $this->db()->fetchOne($sql, ["id" => $id], 1);
+        $this->db()->hardDelete($model);
         return true;
     }
 }

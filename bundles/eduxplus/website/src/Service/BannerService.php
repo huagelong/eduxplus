@@ -15,11 +15,11 @@ class BannerService extends AppBaseService
 {
     public function getBanners($position=0){
         $sql = "SELECT a FROM Edux:MallBanner a WHERE a.position=:position ";
-        $result = $this->fetchOne($sql, ["position"=>$position]);
+        $result = $this->db()->fetchOne($sql, ["position"=>$position]);
         if(!$result) return $result;
         $bannerId = $result["id"];
         $sqlMain = "SELECT a FROM Edux:MallBannerMain a WHERE a.bannerId=:bannerId AND a.status=1 ORDER BY a.sort ASC";
-        $result = $this->fetchAll($sqlMain, ["bannerId"=>$bannerId]);
+        $result = $this->db()->fetchAll($sqlMain, ["bannerId"=>$bannerId]);
         return $result;
     }
 }

@@ -10,8 +10,8 @@ namespace Eduxplus\WebsiteBundle\Service;
 
 
 use Eduxplus\CoreBundle\Lib\Base\AppBaseService;
-use Eduxplus\CoreBundle\Lib\Service\Pay\AlipayService;
-use Eduxplus\CoreBundle\Lib\Service\Pay\WxpayService;
+use Eduxplus\CoreBundle\Lib\Service\Base\Pay\AlipayService;
+use Eduxplus\CoreBundle\Lib\Service\Base\Pay\WxpayService;
 use Eduxplus\QaBundle\Entity\TeachTestOrder;
 use Eduxplus\EduxBundle\Entity\JwClasses;
 use Eduxplus\EduxBundle\Entity\JwClassesMembers;
@@ -86,7 +86,7 @@ class OrderService extends AppBaseService
 
     public function getSimpleByOrderNo($orderNo){
         $dql = "SELECT a FROM Edux:MallOrder a WHERE a.orderNo = :orderNo";
-        $detail = $this->fetchOne($dql, ["orderNo"=>$orderNo]);
+        $detail = $this->db()->fetchOne($dql, ["orderNo"=>$orderNo]);
         return $detail;
     }
 
@@ -96,7 +96,7 @@ class OrderService extends AppBaseService
      */
     public function getByOrderNo($orderNo){
         $dql = "SELECT a FROM Edux:MallOrder a WHERE a.orderNo = :orderNo";
-        $detail = $this->fetchOne($dql, ["orderNo"=>$orderNo]);
+        $detail = $this->db()->fetchOne($dql, ["orderNo"=>$orderNo]);
         if(!$detail) return [];
 
         if($detail['goodsAll']){
@@ -104,11 +104,11 @@ class OrderService extends AppBaseService
             $sql4 = "SELECT a FROM Edux:MallGoods a where a.id IN(:id) ";
             $params = [];
             $params['id'] = $goodsAllIds;
-            $goodsAllInfos =  $this->fetchAll($sql4, $params);
+            $goodsAllInfos =  $this->db()->fetchAll($sql4, $params);
             $detail['goods'] = $goodsAllInfos;
         }else{
             $sql4 = "SELECT a FROM Edux:MallGoods a where a.id=:id ";
-            $goodsInfo = $this->fetchOne($sql4, ['id'=>$detail['goodsId']]);
+            $goodsInfo = $this->db()->fetchOne($sql4, ['id'=>$detail['goodsId']]);
             $detail['goods'] = [$goodsInfo];
         }
 
@@ -119,7 +119,7 @@ class OrderService extends AppBaseService
         $detail['paywayView'] = $this->getPayWayView($detail['paymentType']);
 
         $dql = "SELECT a FROM Edux:MallPay a WHERE a.orderId = :orderId";
-        $payDetail = $this->fetchOne($dql, ["orderId"=>$detail['id']]);
+        $payDetail = $this->db()->fetchOne($dql, ["orderId"=>$detail['id']]);
         $detail['pay']=[];
         if($payDetail){
             $detail['pay'] = $payDetail;
@@ -130,7 +130,7 @@ class OrderService extends AppBaseService
     public function useCoupon($uid, $couponSn, $status=0)
     {
         $sql = "SELECT a FROM Edux:MallCoupon a WHERE a.couponSn=:couponSn";
-        $detail = $this->fetchOne($sql, ["couponSn" => $couponSn], 1);
+        $detail = $this->db()->fetchOne($sql, ["couponSn" => $couponSn], 1);
         if (!$detail) return false;
         if($detail->getUid()){
             if ($detail->getUid() != $uid) return false;
@@ -142,7 +142,7 @@ class OrderService extends AppBaseService
             $detail->setSendTime(time());
         }
         $detail->setStatus($status);
-        $this->save($detail);
+        $this->db()->save($detail);
         return $detail->getCouponGroupId();
     }
 
@@ -155,7 +155,7 @@ class OrderService extends AppBaseService
     public function checkCoupon($couponSn, $uid){
         //检查优惠券
         $sql = "SELECT a FROM Edux:MallCoupon a WHERE a.couponSn=:couponSn";
-        $detail = $this->fetchOne($sql, ["couponSn" => $couponSn]);
+        $detail = $this->db()->fetchOne($sql, ["couponSn" => $couponSn]);
         if (!$detail) return $this->error()->add("优惠券不存在!");
         if ($detail['status'] != 0) return $this->error()->add("优惠券已被使用!");
         $couponUid = $detail["uid"];
@@ -165,7 +165,7 @@ class OrderService extends AppBaseService
         $couponGroupId = $detail['couponGroupId'];
 
         $sqlGroup = "SELECT a FROM Edux:MallCouponGroup a WHERE a.id=:id ";
-        $groupInfo = $this->fetchOne($sqlGroup, ["id"=>$couponGroupId]);
+        $groupInfo = $this->db()->fetchOne($sqlGroup, ["id"=>$couponGroupId]);
         //判断
         if($groupInfo['status'] == 0) return $this->error()->add("优惠券不存在");
         $expirationStart = $groupInfo['expirationStart'];
@@ -191,7 +191,7 @@ class OrderService extends AppBaseService
         $goodsIdstr  = $groupCouponInfo["goodsIds"];
         if(!$shopPrice){
             $sql = "SELECT a FROM Edux:MallGoods a where a.id=:id ";
-            $goodsInfo = $this->fetchOne($sql, ['id'=>$goodId]);
+            $goodsInfo = $this->db()->fetchOne($sql, ['id'=>$goodId]);
             $shopPrice = $goodsInfo['shopPrice'];
         }
         $checkRange = $this->checkRange($categoryId, $teachingMethod, $goodsIdstr, $goodId);
@@ -224,7 +224,7 @@ class OrderService extends AppBaseService
         }
 
         $sql = "SELECT a FROM Edux:MallGoods a where a.id=:id ";
-        $goodsInfo = $this->fetchOne($sql, ['id'=>$checkGoodId]);
+        $goodsInfo = $this->db()->fetchOne($sql, ['id'=>$checkGoodId]);
         $teachingMethodTmp = $goodsInfo['teachingMethod'];
         if($teachingMethod){
             if($teachingMethod == $teachingMethodTmp){
@@ -237,7 +237,7 @@ class OrderService extends AppBaseService
         if($categoryId){
             $categoryIdTmp = $goodsInfo['categoryId'];
             $sql = "SELECT a.findPath FROM Edux:TeachCategory a where a.id=:id ";
-            $findPath = $this->fetchField("findPath", $sql, ["id"=>$categoryIdTmp]);
+            $findPath = $this->db()->fetchField("findPath", $sql, ["id"=>$categoryIdTmp]);
             $findPath = trim( $findPath, ',');
             if($findPath){
                 $cateIds = explode(",", $findPath);
@@ -276,11 +276,11 @@ class OrderService extends AppBaseService
     public function add($uid, $paymentType, $name, $goodsId, $goodsAll, $orderAmount, $originalAmount, $discountAmount, $couponSn,$groupCouponId, $orderStatus, $referer, $userNotes)
     {
         try {
-            $this->beginTransaction();
+            $this->db()->beginTransaction();
             $userNotes = $userNotes?$userNotes:"";
             $sql = "SELECT a FROM Edux:MallGoods a WHERE a.id=:id";
 
-            $goodInfo = $this->fetchOne($sql, ['id' => $goodsId]);
+            $goodInfo = $this->db()->fetchOne($sql, ['id' => $goodsId]);
 
             $agreementId = $goodInfo["agreementId"];
             $goodType = $goodInfo["goodType"];
@@ -314,7 +314,7 @@ class OrderService extends AppBaseService
             $model->setOrderStatus($orderStatus);
             $model->setReferer($referer);
             $model->setUserNotes($userNotes);
-            $orderId = $this->save($model);
+            $orderId = $this->db()->save($model);
             if ($orderId) {
                 if ($goodType == 1) {
                     //获取开课计划
@@ -330,13 +330,13 @@ class OrderService extends AppBaseService
                     if ($studyPlanIds) {
                         $studyPlanIds = array_unique($studyPlanIds);
                         $sql = "SELECT a FROM Edux:TeachStudyPlanSub a WHERE a.studyPlanId IN(:studyPlanId)";
-                        $studyPlanSubs = $this->fetchAll($sql, ["studyPlanId" => $studyPlanIds]);
+                        $studyPlanSubs = $this->db()->fetchAll($sql, ["studyPlanId" => $studyPlanIds]);
                         if ($studyPlanSubs) {
                             foreach ($studyPlanSubs as $sv) {
                                 $sid = $sv['studyPlanId'];
                                 $courseId = $sv['courseId'];
                                 $sql = "SELECT a FROM Edux:TeachCourse a WHERE a.id=:id AND a.status=1 ";
-                                $courseInfos = $this->fetchAll($sql, ["id" => $courseId]);
+                                $courseInfos = $this->db()->fetchAll($sql, ["id" => $courseId]);
                                 if ($courseInfos) {
                                     foreach ($courseInfos as $course) {
                                         $sModel = new MallOrderStudyPlan();
@@ -346,7 +346,7 @@ class OrderService extends AppBaseService
                                         $sModel->setCourseId($course['id']);
                                         $sModel->setOrderStatus($orderStatus);
                                         $sModel->setOpenTime($course['openTime']);
-                                        $this->save($sModel);
+                                        $this->db()->save($sModel);
                                     }
                                 }
                             }
@@ -360,7 +360,7 @@ class OrderService extends AppBaseService
                         array_push($goodsAll, $goodsId);
                     }
                     $sql = "SELECT a FROM Edux:MallGoods a WHERE a.id in(:id)";
-                    $productIds = $this->fetchFields("productId", $sql, ["id"=>$goodsAll]);
+                    $productIds = $this->db()->fetchFields("productId", $sql, ["id"=>$goodsAll]);
                     if($productIds){
                         foreach ($productIds as $testId){
                             $teachTestOrderModel = new TeachTestOrder();
@@ -368,16 +368,16 @@ class OrderService extends AppBaseService
                             $teachTestOrderModel->setUid($uid);
                             $teachTestOrderModel->setOrderId($orderId);
                             $teachTestOrderModel->setOrderStatus($orderStatus);
-                            $this->save($teachTestOrderModel);
+                            $this->db()->save($teachTestOrderModel);
                         }
 
                     }
                 }
-                $this->commit();
+                $this->db()->commit();
             }
             return [$orderId, $orderNo];
         } catch (\Exception $e) {
-            $this->rollback();
+            $this->db()->rollback();
             return $this->error()->add($e->getMessage());
         }
     }
@@ -387,7 +387,7 @@ class OrderService extends AppBaseService
      */
     public function autoClasses($orderId, $uid){
         $dql = "SELECT a FROM Edux:MallOrder a WHERE a.id = :id";
-        $detail = $this->fetchOne($dql, ["id"=>$orderId]);
+        $detail = $this->db()->fetchOne($dql, ["id"=>$orderId]);
         if(!$detail) return [];
         $goodsAll = $detail['goodsAll'];
         $goodsId = $detail['goodsId'];
@@ -404,18 +404,18 @@ class OrderService extends AppBaseService
             $studyPlanIds = array_unique($studyPlanIds);
             foreach ($studyPlanIds as $studyPlanId){
                 $sql = "SELECT a FROM Edux:TeachStudyPlan a WHERE a.id=:id";
-                $planInfo = $this->fetchOne($sql, ["id"=>$studyPlanId]);
+                $planInfo = $this->db()->fetchOne($sql, ["id"=>$studyPlanId]);
                 if(!$planInfo) return $planInfo;
                 $productId = $planInfo["productId"];
 
                 $productSql = "SELECT a FROM Edux:TeachProducts a WHERE a.id=:id";
-                $productInfo = $this->fetchOne($productSql, ["id"=>$productId]);
+                $productInfo = $this->db()->fetchOne($productSql, ["id"=>$productId]);
                 if(!$productInfo) return $productInfo;
                 $productName = $productInfo["name"];
                 $maxMemberNumber = $productInfo["maxMemberNumber"];//最大分班人数
                 //判断人数
                 $classSql = "SELECT a FROM Edux:JwClasses a WHERE a.studyPlanId = :studyPlanId ORDER BY a.createdAt DESC";
-                $classInfo = $this->fetchOne($classSql, ["studyPlanId"=>$studyPlanId]);
+                $classInfo = $this->db()->fetchOne($classSql, ["studyPlanId"=>$studyPlanId]);
                 if($classInfo){
                     $classesId = $classInfo["id"];
                     if(!$maxMemberNumber){//如果不限制人数
@@ -423,11 +423,11 @@ class OrderService extends AppBaseService
                         $classMemberModel->setUid($uid);
                         $classMemberModel->setClassesId($classesId);
                         $classMemberModel->setType(1);
-                        $this->save($classMemberModel);
+                        $this->db()->save($classMemberModel);
                     }else{
                         //判断人数
                         $memberSql = "SELECT count(a.id) as cnt FROM Edux:JwClassesMembers a WHERE a.classesId = :classesId";
-                        $memberCount = $this->fetchField("cnt", $memberSql, ["classesId"=>$classesId]);
+                        $memberCount = $this->db()->fetchField("cnt", $memberSql, ["classesId"=>$classesId]);
                         if($memberCount >= $maxMemberNumber){//大于等于限制人数,新增班级
                             //获取产品现有班级
                             $this->newClassAndMember($productId, $productName, $studyPlanId, $uid);
@@ -437,7 +437,7 @@ class OrderService extends AppBaseService
                             $classMemberModel->setUid($uid);
                             $classMemberModel->setClassesId($classesId);
                             $classMemberModel->setType(1);
-                            $this->save($classMemberModel);
+                            $this->db()->save($classMemberModel);
                         }
                     }
                 }else{
@@ -452,7 +452,7 @@ class OrderService extends AppBaseService
 
     public function newClassAndMember($productId, $productName, $studyPlanId, $uid){
         $classProductSql = "SELECT a FROM Edux:JwClasses a WHERE a.productId = :productId ORDER BY a.createdAt DESC";
-        $classProductInfo = $this->fetchOne($classProductSql, ["productId"=>$productId]);
+        $classProductInfo = $this->db()->fetchOne($classProductSql, ["productId"=>$productId]);
         if($classProductInfo){
             $classesNo = $classProductInfo["classesNo"]+1;
         }else{
@@ -464,13 +464,13 @@ class OrderService extends AppBaseService
         $jwClassesModel->setClassesNo($classesNo);
         $jwClassesModel->setProductId($productId);
         $jwClassesModel->setStudyPlanId($studyPlanId);
-        $newClassesId = $this->save($jwClassesModel);
+        $newClassesId = $this->db()->save($jwClassesModel);
         if($newClassesId){
             $classMemberModel = new JwClassesMembers();
             $classMemberModel->setUid($uid);
             $classMemberModel->setClassesId($newClassesId);
             $classMemberModel->setType(1);
-            $this->save($classMemberModel);
+            $this->db()->save($classMemberModel);
         }
         return $newClassesId;
     }
@@ -484,21 +484,21 @@ class OrderService extends AppBaseService
     public function getStudyPlan($id, &$studyPlans = [])
     {
         $sql = "SELECT a FROM Edux:MallGoods a WHERE a.id=:id";
-        $info = $this->fetchOne($sql, ['id' => $id]);
+        $info = $this->db()->fetchOne($sql, ['id' => $id]);
         if (!$info) return [];
         //非组合商品
         if ($info["productId"]) {
             //判断产品是否存在
             $sql = "SELECT a.id FROM Edux:TeachProducts a WHERE a.id=:id AND a.status=1";
-            $productInfo = $this->fetchOne($sql, ['id' => $info["productId"]]);
+            $productInfo = $this->db()->fetchOne($sql, ['id' => $info["productId"]]);
             if (!$productInfo) return;
             //获取默认的开课计划
             $sql = "SELECT a FROM Edux:TeachStudyPlan a WHERE a.productId=:productId AND a.isDefault=1 AND a.status=1";
-            $studyPlan = $this->fetchOne($sql, ["productId" => $info["productId"]]);
+            $studyPlan = $this->db()->fetchOne($sql, ["productId" => $info["productId"]]);
 
             if (!$studyPlan) {  //如果没有默认的开课计划,按照最新创建时间处理
                 $sql = "SELECT a FROM Edux:TeachStudyPlan a WHERE a.productId=:productId AND a.status=1 ORDER BY a.createdAt DESC";
-                $studyPlan = $this->fetchOne($sql, ["productId" => $info["productId"]]);
+                $studyPlan = $this->db()->fetchOne($sql, ["productId" => $info["productId"]]);
             }
             if ($studyPlan) {
                 $studyPlanId = $studyPlan["id"];
@@ -509,7 +509,7 @@ class OrderService extends AppBaseService
             $sql3 = "SELECT a FROM Edux:MallGoodsGroup a WHERE a.goodsId=:goodsId ORDER BY a.createdAt ASC";
             $params = [];
             $params['goodsId'] = $id;
-            $allGoodIds = $this->fetchFields("groupGoodsId", $sql3, $params);
+            $allGoodIds = $this->db()->fetchFields("groupGoodsId", $sql3, $params);
             if ($allGoodIds) {
                 foreach ($allGoodIds as $av) {
                     $this->getStudyPlan($av, $studyPlans);
@@ -568,7 +568,7 @@ class OrderService extends AppBaseService
     public function formatGoodCouponNoCode($goodId, $shopPrice){
         $now = time();
         $sql = "SELECT a FROM Edux:MallCouponGroup a WHERE a.status=1 AND a.hasCode=0 AND a.expirationStart<{$now} AND a.expirationEnd >{$now}";
-        $all = $this->fetchAll($sql);
+        $all = $this->db()->fetchAll($sql);
         if(!$all) return [0,0];
         //寻找最优惠模式
         $groupCouponId = 0;
@@ -591,17 +591,17 @@ class OrderService extends AppBaseService
      */
     public function updateOrderStatus($orderId, $status=2){
         $dql = "SELECT a FROM Edux:MallOrder a WHERE a.id = :id";
-        $detail = $this->fetchOne($dql, ["id"=>$orderId], 1);
+        $detail = $this->db()->fetchOne($dql, ["id"=>$orderId], 1);
         if(!$detail) return [];
         $detail->setOrderStatus($status);
-        $this->save($detail);
+        $this->db()->save($detail);
         
         //更新课程或者试卷状态
         $planSql = "UPDATE Edux:MallOrderStudyPlan a SET a.orderStatus =:orderStatus WHERE a.orderId =:orderId";
-        $this->execute($planSql, ["orderStatus"=>$status, "orderId"=>$orderId]);
+        $this->db()->execute($planSql, ["orderStatus"=>$status, "orderId"=>$orderId]);
         
         $testSql = "UPDATE Qa:TeachTestOrder a SET a.orderStatus =:orderStatus WHERE a.orderId =:orderId";
-        $this->execute($testSql, ["orderStatus"=>$status, "orderId"=>$orderId]);
+        $this->db()->execute($testSql, ["orderStatus"=>$status, "orderId"=>$orderId]);
 
     }
 
@@ -652,7 +652,7 @@ class OrderService extends AppBaseService
         $model->setAmount($amount);
         $model->setOrderId($orderId);
         $model->setPayTime(time());
-        return $this->save($model);
+        return $this->db()->save($model);
     }
 
     public function orderSuccessFreeOrder($orderNo){

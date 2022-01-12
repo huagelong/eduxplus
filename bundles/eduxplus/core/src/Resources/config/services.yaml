@@ -46,11 +46,11 @@ services:
 
 
     Eduxplus\CoreBundle\Lib\Service\Base\:
-        resource: '../../../src/Lib/Service/Base/*'
+        resource: '../../../src/Lib/Service/Base/'
         parent: base.service
 
     Eduxplus\CoreBundle\Service\:
-        resource: '../../../src/Service/*'
+        resource: '../../../src/Service/'
         parent: base.service
 
 

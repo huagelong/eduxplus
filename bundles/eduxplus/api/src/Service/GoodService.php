@@ -18,7 +18,7 @@ class GoodService extends ApiBaseService
     {
         //获取类目
         $sql = "SELECT a FROM Edux:TeachCategory a WHERE a.parentId = 0 AND a.isShow=1 ORDER BY a.sort ASC";
-        $cateArr = $this->fetchAll($sql);
+        $cateArr = $this->db()->fetchAll($sql);
         $cateList = [];
         if ($cateArr) {
             foreach ($cateArr as $k => $v) {
@@ -31,7 +31,7 @@ class GoodService extends ApiBaseService
         }
         //推荐商品
         $topSql = "SELECT a FROM Edux:MallGoods a WHERE a.topValue >0 AND a.goodType=1 ORDER BY a.topValue DESC ";
-        $goodArr = $this->fetchAll($topSql, [], 0, 10);
+        $goodArr = $this->db()->fetchAll($topSql, [], 0, 10);
         $goodList = [];
         if ($goodArr) {
             foreach ($goodArr as $k => $v) {
@@ -59,7 +59,7 @@ class GoodService extends ApiBaseService
     public function getTeachers($teacherIds)
     {
         $sql = "SELECT a.id, a.name,a.gravatar FROM Edux:JwTeacher a WHERE a.id IN (:id)";
-        $result = $this->fetchAll($sql, ["id" => $teacherIds]);
+        $result = $this->db()->fetchAll($sql, ["id" => $teacherIds]);
         if ($result) {
             foreach ($result as &$v) {
                 $v['gravatar'] = $this->jsonGet($v["gravatar"]);
@@ -74,7 +74,7 @@ class GoodService extends ApiBaseService
     public function getChildCate($cateId)
     {
         $sql = "SELECT a FROM Edux:TeachCategory a WHERE a.parentId=:parentId AND a.isShow=1 ORDER BY a.sort ASC";
-        $list = $this->fetchAll($sql, ["parentId" => $cateId]);
+        $list = $this->db()->fetchAll($sql, ["parentId" => $cateId]);
         return $list;
     }
 
@@ -88,7 +88,7 @@ class GoodService extends ApiBaseService
     {
         $cateId = (int) $cateId;
         $sql = "SELECT a FROM Edux:TeachCategory a WHERE a.findPath LIKE :findPath AND a.isShow=1 ORDER BY a.sort ASC";
-        $subCates = $this->fetchAll($sql, ["findPath" => "%," . $cateId . ",%"]);
+        $subCates = $this->db()->fetchAll($sql, ["findPath" => "%," . $cateId . ",%"]);
         $categoryIds = $subCates ? array_column($subCates, "id") : [];
         if ($categoryIds) {
             array_push($categoryIds, $cateId);
@@ -97,7 +97,7 @@ class GoodService extends ApiBaseService
         }
 
         $sql = "SELECT a FROM Edux:MallGoods a WHERE a.categoryId IN (:categoryId) AND a.status=1 AND  a.goodType=1  ORDER BY a.sort ASC";
-        $goodArr = $this->fetchAll($sql, ["categoryId" => $categoryIds]);
+        $goodArr = $this->db()->fetchAll($sql, ["categoryId" => $categoryIds]);
         if (!$goodArr) return [];
 
         $goodList = [];
@@ -129,7 +129,7 @@ class GoodService extends ApiBaseService
     public function getSubCate($cateId)
     {
         $sql = "SELECT a FROM Edux:TeachCategory a WHERE a.parentId = :parentId AND a.isShow=1 ORDER BY a.sort ASC";
-        $subCates = $this->fetchAll($sql, ["parentId" => $cateId]);
+        $subCates = $this->db()->fetchAll($sql, ["parentId" => $cateId]);
         if (!$subCates) return [];
         $list = [];
         $tmp = [];
@@ -157,19 +157,19 @@ class GoodService extends ApiBaseService
 
         $time = time();
         $dqlCount = "SELECT count(a.courseId) as cnt FROM Edux:MallOrderStudyPlan a WHERE a.uid=:uid";
-        $countInfo = $this->fetchOne($dqlCount, ["uid"=>$uid]);
+        $countInfo = $this->db()->fetchOne($dqlCount, ["uid"=>$uid]);
         $totalCount = $countInfo['cnt'];
 
         $dql = "SELECT a.courseId, abs({$time}-a.openTime) as diffTime FROM Edux:MallOrderStudyPlan a
                 WHERE a.uid=:uid ORDER BY diffTime ASC";
-        $items = $this->fetchAll($dql, ["uid"=>$uid],0,$pageSize, $offset);
+        $items = $this->db()->fetchAll($dql, ["uid"=>$uid],0,$pageSize, $offset);
         $itemsArr = [];
 
         if ($items) {
             foreach ($items as $vArr) {
                 $courseId = $vArr['courseId'];
                 $sql = "SELECT a FROM Edux:TeachCourse a WHERE a.id=:id";
-                $tmp = $this->fetchOne($sql, ['id' => $courseId]);
+                $tmp = $this->db()->fetchOne($sql, ['id' => $courseId]);
                 $tmp['courseHour'] = $tmp['courseHour']/100;
                 $tmp['bigImg'] = $this->jsonGet($tmp['bigImg']);
                 $tmp['courseId'] = $courseId;

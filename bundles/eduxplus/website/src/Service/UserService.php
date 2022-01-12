@@ -64,7 +64,7 @@ class UserService extends AppBaseService
         //查询用户信息
         $mobileMask =  $this->mobileMaskService->encrypt($mobile);
         $sql = "SELECT a FROM Core:BaseUser a WHERE a.mobileMask = :mobileMask";
-        $userInfo = $this->fetchOneHard($sql, ["mobileMask" => $mobileMask]);
+        $userInfo = $this->db()->fetchOneHard($sql, ["mobileMask" => $mobileMask]);
         if (!$userInfo) {
             //没有用户信息则注册
             $displayName = $this->helperService->formatMobile($mobile);
@@ -82,7 +82,7 @@ class UserService extends AppBaseService
             $model->setSno($this->coreUserServie->getSno($mobile));
             $model->setBirthday(date('Y-m-d'));
             $model->setReportUid(0);
-            $uid =  $this->save($model);
+            $uid =  $this->db()->save($model);
         } else {
             $isLock = $userInfo["isLock"];
             if ($isLock) return $this->error()->add("账号已被锁定!");
@@ -107,14 +107,14 @@ class UserService extends AppBaseService
     public function getUserObj($uid)
     {
         $sql = "SELECT a FROM Core:BaseUser a WHERE a.id = :id";
-        $user = $this->fetchOne($sql, ["id" => $uid], 1);
+        $user = $this->db()->fetchOne($sql, ["id" => $uid], 1);
         return $user;
     }
 
     public function getUserById($uid)
     {
         $sql = "SELECT a FROM Core:BaseUser a WHERE a.id = :id";
-        $model = $this->fetchOne($sql, ["id" => $uid]);
+        $model = $this->db()->fetchOne($sql, ["id" => $uid]);
         if ($model) {
             $model["mobileView"] = $this->helperService->formatMobile($model["mobile"]);
         }
@@ -145,7 +145,7 @@ class UserService extends AppBaseService
         $model->setDisplayName($displayName);
         $model->setSex($sex);
         $model->setRegSource($source);
-        $uid = $this->save($model);
+        $uid = $this->db()->save($model);
 
         return $uid;
     }
@@ -160,7 +160,7 @@ class UserService extends AppBaseService
     public function setLogin($uid, $source = 'html')
     {
         $sql = "SELECT a FROM Core:BaseUser a WHERE a.id = :id";
-        $model = $this->fetchOneHard($sql, ["id" => $uid], 1);
+        $model = $this->db()->fetchOneHard($sql, ["id" => $uid], 1);
 
         $token = session_create_id("");
         if ($source == "html") {
@@ -171,7 +171,7 @@ class UserService extends AppBaseService
             $model->setWxminiToken($token);
         }
 
-        $this->update($model);
+        $this->db()->update($model);
 
         //登录记录
         $loginLog = new BaseLoginLog();
@@ -179,7 +179,7 @@ class UserService extends AppBaseService
         $loginLog->setSource($source);
         $ip = $this->request()->getClientIp();
         $loginLog->setIp($ip);
-        $this->save($loginLog);
+        $this->db()->save($loginLog);
         //set token
         return $token;
     }
@@ -188,14 +188,14 @@ class UserService extends AppBaseService
     public function edit($uid, $displayName, $fullName, $birthday, $sex, $avatar)
     {
         $sql = "SELECT a FROM Core:BaseUser a WHERE a.id = :id";
-        $user = $this->fetchOne($sql, ["id" => $uid], 1);
+        $user = $this->db()->fetchOne($sql, ["id" => $uid], 1);
         if (!$user) return false;
         $user->setDisplayName($displayName);
         $user->setFullName($fullName);
         $user->setBirthday($birthday);
         $user->setSex($sex);
         $user->setGravatar($avatar);
-        $this->save($user);
+        $this->db()->save($user);
         return true;
     }
 
@@ -203,18 +203,18 @@ class UserService extends AppBaseService
     {
         $mobileMask =  $this->mobileMaskService->encrypt($mobile);
         $sql = "SELECT a FROM Core:BaseUser a WHERE  a.mobileMask=:mobileMask";
-        $user = $this->fetchOne($sql, ["mobileMask" => $mobileMask]);
+        $user = $this->db()->fetchOne($sql, ["mobileMask" => $mobileMask]);
         return $user;
     }
 
     public function updateMobile($uid, $mobile)
     {
         $sql = "SELECT a FROM Core:BaseUser a WHERE a.id = :id";
-        $user = $this->fetchOne($sql, ["id" => $uid], 1);
+        $user = $this->db()->fetchOne($sql, ["id" => $uid], 1);
         $user->setMobile($mobile);
         $mobileMask =  $this->mobileMaskService->encrypt($mobile);
         $user->setMobileMask($mobileMask);
-        $this->save($user);
+        $this->db()->save($user);
         return true;
     }
 }

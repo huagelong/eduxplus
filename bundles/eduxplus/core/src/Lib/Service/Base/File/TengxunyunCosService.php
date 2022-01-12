@@ -6,7 +6,7 @@
  * @Date: 2020/9/17 15:51
  */
 
-namespace Eduxplus\CoreBundle\Lib\Service\File;
+namespace Eduxplus\CoreBundle\Lib\Service\Base\File;
 
 
 use Eduxplus\CoreBundle\Lib\Base\BaseService;

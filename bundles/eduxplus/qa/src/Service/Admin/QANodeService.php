@@ -74,12 +74,12 @@ class QANodeService extends AdminBaseService
             foreach ($items as $v) {
                 $vArr = $this->toArray($v);
                 $sql = "SELECT a FROM Qa:TeachQANodeSub a WHERE a.qaNodeId=:qaNodeId";
-                $nodeSub = $this->fetchOne($sql, ['qaNodeId' => $vArr['id']]);
+                $nodeSub = $this->db()->fetchOne($sql, ['qaNodeId' => $vArr['id']]);
                 $vArr['nodeSub'] = $nodeSub;
 
                 //章节点
                 $chapterSubSql = "SELECT a FROM Qa:TeachQAChapterSub a WHERE a.id=:id";
-                $chapterSubName = $this->fetchField("name",$chapterSubSql, ["id"=>$vArr['chapterSubId']]);
+                $chapterSubName = $this->db()->fetchField("name",$chapterSubSql, ["id"=>$vArr['chapterSubId']]);
                 $vArr['chapterSubName'] = $chapterSubName;
 
                 $createrUid = $vArr['createUid'];
@@ -111,7 +111,7 @@ class QANodeService extends AdminBaseService
             $model->setYear($year);
             $model->setSource($source);
             $model->setTopic($topic);
-            $nodeId = $this->save($model);
+            $nodeId = $this->db()->save($model);
             if(!$nodeId) return $this->error()->add("添加失败!");
             $options = json_encode($choose);
             $subModel = new TeachQANodeSub();
@@ -121,7 +121,7 @@ class QANodeService extends AdminBaseService
             $subModel->setQaNodeId($nodeId);
             $subModel->setOptions($options);
             $subModel->setScore($score);
-            $this->save($subModel);
+            $this->db()->save($subModel);
             return $nodeId;
     }
 
@@ -132,7 +132,7 @@ class QANodeService extends AdminBaseService
         }
 
         $sql = "SELECT a FROM Qa:TeachQANode a WHERE a.id=:id ";
-        $model= $this->fetchOne($sql, ["id"=>$id], 1);
+        $model= $this->db()->fetchOne($sql, ["id"=>$id], 1);
         $model->setChapterId($chapterId);
         $model->setChapterSubId($chapterSubId);
         $model->setType($type);
@@ -142,23 +142,23 @@ class QANodeService extends AdminBaseService
         $model->setYear($year);
         $model->setSource($source);
         $model->setTopic($topic);
-        $this->save($model);
+        $this->db()->save($model);
         $sql = "SELECT a FROM Qa:TeachQANodeSub a WHERE a.id=:id ";
-        $subModel= $this->fetchOne($sql, ["id"=>$id], 1);
+        $subModel= $this->db()->fetchOne($sql, ["id"=>$id], 1);
         $options = json_encode($choose);
         $subModel->setAnalysis($analysis);
         $subModel->setAnswer($answer);
         $subModel->setKnowledge($knowledge);
         $subModel->setOptions($options);
         $subModel->setScore($score);
-        return $this->save($subModel);
+        return $this->db()->save($subModel);
     }
 
     public function getById($id){
         $dql = "SELECT a FROM Qa:TeachQANode a WHERE a.id=:id";
-        $info = $this->fetchOne($dql, ["id"=>$id]);
+        $info = $this->db()->fetchOne($dql, ["id"=>$id]);
         $subSql = "SELECT a FROM Qa:TeachQANodeSub a WHERE a.qaNodeId=:qaNodeId";
-        $sub = $this->fetchOne($subSql, ["qaNodeId"=>$id]);
+        $sub = $this->db()->fetchOne($subSql, ["qaNodeId"=>$id]);
         $sub['options'] = (isset($sub['options']) && $sub['options']) ?json_decode($sub['options'], true):[];
         $info['sub'] = $sub;
         return $info;
@@ -166,21 +166,21 @@ class QANodeService extends AdminBaseService
 
     public function del($id){
         $sql = "SELECT a FROM Qa:TeachQANode a WHERE a.id=:id";
-        $model = $this->fetchOne($sql, ['id' => $id], 1);
-        $this->delete($model);
+        $model = $this->db()->fetchOne($sql, ['id' => $id], 1);
+        $this->db()->delete($model);
 
         $sql = "SELECT a FROM Qa:TeachQANodeSub a WHERE a.qaNodeId=:qaNodeId";
-        $model = $this->fetchOne($sql, ['qaNodeId' => $id], 1);
-        $this->delete($model);
+        $model = $this->db()->fetchOne($sql, ['qaNodeId' => $id], 1);
+        $this->db()->delete($model);
 
         return true;
     }
 
     public function switchStatus($id, $state){
         $sql = "SELECT a FROM Qa:TeachQANode a WHERE a.id=:id";
-        $model = $this->fetchOne($sql, ['id' => $id], 1);
+        $model = $this->db()->fetchOne($sql, ['id' => $id], 1);
         $model->setStatus($state);
-        return $this->save($model);
+        return $this->db()->save($model);
     }
 
 }

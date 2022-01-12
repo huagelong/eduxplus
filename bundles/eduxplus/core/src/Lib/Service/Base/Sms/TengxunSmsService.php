@@ -6,7 +6,7 @@
  * @Date: 2020/9/17 17:30
  */
 
-namespace Eduxplus\CoreBundle\Lib\Service\Sms;
+namespace Eduxplus\CoreBundle\Lib\Service\Base\Sms;
 
 
 use Eduxplus\CoreBundle\Lib\Base\BaseService;

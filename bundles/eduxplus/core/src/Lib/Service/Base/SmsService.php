@@ -10,8 +10,8 @@ namespace Eduxplus\CoreBundle\Lib\Service\Base;
 
 
 use Eduxplus\CoreBundle\Lib\Base\BaseService;
-use Eduxplus\CoreBundle\Lib\Service\Sms\AliSmsService;
-use Eduxplus\CoreBundle\Lib\Service\Sms\TengxunSmsService;
+use Eduxplus\CoreBundle\Lib\Service\Base\Sms\AliSmsService;
+use Eduxplus\CoreBundle\Lib\Service\Base\Sms\TengxunSmsService;
 use Psr\Log\LoggerInterface;
 use AlibabaCloud\Client\AlibabaCloud;
 use AlibabaCloud\Client\Exception\ClientException;

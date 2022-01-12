@@ -92,9 +92,9 @@ class OrderService extends AdminBaseService
     public function add($uid, $paymentType, $name, $goodsId, $goodsAll, $orderAmount, $originalAmount, $discountAmount, $couponSn, $orderStatus, $referer, $userNotes)
     {
         try {
-            $this->beginTransaction();
+            $this->db()->beginTransaction();
             $sql = "SELECT a FROM Edux:MallGoods a WHERE a.id=:id";
-            $agreementId = $this->fetchField("agreementId", $sql, ['id' => $goodsId]);
+            $agreementId = $this->db()->fetchField("agreementId", $sql, ['id' => $goodsId]);
 
             $orderNo = date('Ymd') . "o" . session_create_id("");
             $model = new MallOrder();
@@ -113,7 +113,7 @@ class OrderService extends AdminBaseService
             $model->setOrderStatus($orderStatus);
             $model->setReferer($referer);
             $model->setUserNotes($userNotes);
-            $orderId = $this->save($model);
+            $orderId = $this->db()->save($model);
             if ($orderId) {
                 //获取开课计划
                 $studyPlanIds = [];
@@ -126,13 +126,13 @@ class OrderService extends AdminBaseService
                 }
                 if ($studyPlanIds) {
                     $sql = "SELECT a FROM Edux:TeachStudyPlanSub a WHERE a.studyPlanId IN(:studyPlanId)";
-                    $studyPlanSubs = $this->fetchAll($sql, ["studyPlanId" => $studyPlanIds]);
+                    $studyPlanSubs = $this->db()->fetchAll($sql, ["studyPlanId" => $studyPlanIds]);
                     if ($studyPlanSubs) {
                         foreach ($studyPlanSubs as $sv) {
                             $sid = $sv['studyPlanId'];
                             $courseId = $sv['courseId'];
                             $sql = "SELECT a FROM Edux:TeachCourse a WHERE a.id=:id AND a.status=1 ";
-                            $courseInfos = $this->fetchAll($sql, ["id" => $courseId]);
+                            $courseInfos = $this->db()->fetchAll($sql, ["id" => $courseId]);
                             if ($courseInfos) {
                                 foreach ($courseInfos as $course) {
                                     $sModel = new MallOrderStudyPlan();
@@ -141,7 +141,7 @@ class OrderService extends AdminBaseService
                                     $sModel->setOrderId($orderId);
                                     $sModel->setCourseId($course['id']);
                                     $sModel->setOpenTime($course['openTime']);
-                                    $this->save($sModel);
+                                    $this->db()->save($sModel);
                                 }
                             }
                         }
@@ -150,17 +150,17 @@ class OrderService extends AdminBaseService
                     throw new \Exception("错误，目前课程开课计划为空，暂时无法添加订单!");
                 }
             }
-            $this->commit();
+            $this->db()->commit();
             return $orderId;
         } catch (\Exception $e) {
-            $this->rollback();
+            $this->db()->rollback();
             return $this->error()->add($e->getMessage());
         }
     }
 
     public function getById($id){
         $sql = "SELECT a FROM Edux:MallOrder a WHERE a.id=:id";
-        $model = $this->fetchOne($sql, ["id" => $id]);
+        $model = $this->db()->fetchOne($sql, ["id" => $id]);
         return $model;
     }
 
@@ -174,9 +174,9 @@ class OrderService extends AdminBaseService
     public function setOrderStatus($orderId, $orderStatus)
     {
         $sql = "SELECT a FROM Edux:MallOrder a WHERE a.id=:id";
-        $model = $this->fetchOne($sql, ["id" => $orderId], 1);
+        $model = $this->db()->fetchOne($sql, ["id" => $orderId], 1);
         if (!$model) return false;
         $model->setOrderStatus($orderStatus);
-        $this->save($model);
+        $this->db()->save($model);
     }
 }

@@ -33,6 +33,8 @@ class ExceptionListener
     public function onKernelException(ExceptionEvent $event)
     {
         if (!$event->isMainRequest()) return true;
+        $exception = $event->getThrowable();
+        $this->logger->error($exception->getTraceAsString());
 
         $pathPatterns = $this->baseService->getConfig("eduxplus_core.json_patterns");
         $requestUri = $this->baseService->request()->getRequestUri();
@@ -47,12 +49,9 @@ class ExceptionListener
                 return ;
             }
         }
-
-        $exception = $event->getThrowable();
         $msg = $exception->getMessage();
         $statusCode = $exception instanceof HttpExceptionInterface ? $exception->getStatusCode() : $exception->getCode();
-        if ($hasMatch (($event->getRequest()->getRequestFormat() == 'json') || (in_array("application/json", $event->getRequest()->getAcceptableContentTypes())))) {
-            $this->logger->error($exception->getTraceAsString());
+        if ($hasMatch  && (($event->getRequest()->getRequestFormat() == 'json') || (in_array("application/json", $event->getRequest()->getAcceptableContentTypes())))) {
             $responseData = JsonResponseService::genData([], $statusCode, $msg);
             $response = new JsonResponse($responseData);
             $response->setStatusCode(200); //强制转为200

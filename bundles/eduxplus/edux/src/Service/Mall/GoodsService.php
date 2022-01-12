@@ -121,7 +121,7 @@ class GoodsService extends AdminBaseService
             $sql = $sql . " AND a.id !=:id ";
             $params['id'] = $id;
         }
-        return $this->fetchOne($sql, $params);
+        return $this->db()->fetchOne($sql, $params);
     }
 
 
@@ -196,14 +196,14 @@ class GoodsService extends AdminBaseService
             $model->setGroupType(0);
             $model->setIsGroup(0);
         }
-        $id = $this->save($model);
+        $id = $this->db()->save($model);
 
         if ($goodsId && $id) {
             foreach ($goodsId as $gid) {
                 $goodsModel = new MallGoodsGroup();
                 $goodsModel->setGoodsId($id);
                 $goodsModel->setGroupGoodsId($gid);
-                $this->save($goodsModel);
+                $this->db()->save($goodsModel);
             }
         }
 
@@ -212,7 +212,7 @@ class GoodsService extends AdminBaseService
             $descrModel->setGoodsId($id);
             $descrModel->setContent($descr);
             $descrModel->setIntroduceType(1);
-            $this->save($descrModel);
+            $this->db()->save($descrModel);
         }
 
         if($status){
@@ -246,10 +246,10 @@ class GoodsService extends AdminBaseService
     public function getById($id)
     {
         $sql = "SELECT a FROM Edux:MallGoods a WHERE a.id=:id";
-        $info = $this->fetchOne($sql, ['id' => $id]);
+        $info = $this->db()->fetchOne($sql, ['id' => $id]);
         if (!$info) return [];
         $sql2 = "SELECT a FROM Edux:MallGoodsIntroduce a WHERE a.goodsId=:goodsId AND a.introduceType=1";
-        $introduce = $this->fetchOne($sql2, ['goodsId' => $id]);
+        $introduce = $this->db()->fetchOne($sql2, ['goodsId' => $id]);
         $info["introduce"] = $introduce;
         return $info;
     }
@@ -259,7 +259,7 @@ class GoodsService extends AdminBaseService
         $sql = "SELECT a FROM Edux:MallGoods a where a.id IN(:id) ";
         $params = [];
         $params['id'] = $ids;
-        return $this->fetchAll($sql, $params);
+        return $this->db()->fetchAll($sql, $params);
     }
 
     public function getSelectByIds($ids)
@@ -282,7 +282,7 @@ class GoodsService extends AdminBaseService
             $sql = $sql . " AND a.id !=:id ";
             $params['id'] = $id;
         }
-        return $this->fetchOne($sql, $params);
+        return $this->db()->fetchOne($sql, $params);
     }
 
     public function getGroupGoods($id)
@@ -290,7 +290,7 @@ class GoodsService extends AdminBaseService
         $sql = "SELECT a FROM Edux:MallGoodsGroup a WHERE a.goodsId=:goodsId";
         $params = [];
         $params['goodsId'] = $id;
-        $allGoodIds = $this->fetchFields("groupGoodsId", $sql, $params);
+        $allGoodIds = $this->db()->fetchFields("groupGoodsId", $sql, $params);
         if (!$allGoodIds) return [];
         return $allGoodIds;
     }
@@ -300,12 +300,12 @@ class GoodsService extends AdminBaseService
         $sql = "SELECT a FROM Edux:MallGoodsGroup a WHERE a.goodsId=:goodsId";
         $params = [];
         $params['goodsId'] = $id;
-        $allGoodIds = $this->fetchFields("groupGoodsId", $sql, $params);
+        $allGoodIds = $this->db()->fetchFields("groupGoodsId", $sql, $params);
         if (!$allGoodIds) return [];
         $sql2 = "SELECT a FROM Edux:MallGoods a WHERE a.id IN(:id)";
         $params2 = [];
         $params2['id'] = $allGoodIds;
-        $allGoods =  $this->fetchAll($sql2, $params2);
+        $allGoods =  $this->db()->fetchAll($sql2, $params2);
         $tmp = [];
         foreach ($allGoods as $v) {
             $tmp[$v["name"]] = $v["id"];
@@ -347,7 +347,7 @@ class GoodsService extends AdminBaseService
         $brandId = end($pathArr);
 
         $sql = "SELECT a FROM Edux:MallGoods a WHERE a.id=:id";
-        $model = $this->fetchOne($sql, ['id' => $id], 1);
+        $model = $this->db()->fetchOne($sql, ['id' => $id], 1);
 
         $model->setName($name);
         $model->setSort($sort);
@@ -382,31 +382,31 @@ class GoodsService extends AdminBaseService
             $model->setGroupType(0);
             $model->setIsGroup(0);
         }
-        $this->save($model);
+        $this->db()->save($model);
 
         if ($goodsId && $id) {
             $dql = "DELETE FROM Edux:MallGoodsGroup a WHERE a.goodsId=:goodsId";
-            $this->hardExecute($dql, ["goodsId" => $id]);
+            $this->db()->hardExecute($dql, ["goodsId" => $id]);
             foreach ($goodsId as $gid) {
                 $goodsModel = new MallGoodsGroup();
                 $goodsModel->setGoodsId($id);
                 $goodsModel->setGroupGoodsId($gid);
-                $this->save($goodsModel);
+                $this->db()->save($goodsModel);
             }
         }
 
         if ($descr) {
             $dql = "SELECT a FROM Edux:MallGoodsIntroduce a WHERE a.goodsId=:goodsId AND a.introduceType=1";
-            $descrModel = $this->fetchOne($dql, ["goodsId" => $id], 1);
+            $descrModel = $this->db()->fetchOne($dql, ["goodsId" => $id], 1);
             if ($descrModel) {
                 $descrModel->setContent($descr);
-                $this->save($descrModel);
+                $this->db()->save($descrModel);
             } else {
                 $descrModel = new MallGoodsIntroduce();
                 $descrModel->setGoodsId($id);
                 $descrModel->setContent($descr);
                 $descrModel->setIntroduceType(1);
-                $this->save($descrModel);
+                $this->db()->save($descrModel);
             }
         }
 
@@ -424,13 +424,13 @@ class GoodsService extends AdminBaseService
     {
         //先删除说明
         $sql = "DELETE FROM Edux:MallGoodsIntroduce a WHERE a.goodsId=:goodsId";
-        $this->execute($sql, ["goodsId" => $id]);
+        $this->db()->execute($sql, ["goodsId" => $id]);
         //删除group
         $sql = "DELETE FROM Edux:MallGoodsGroup a WHERE a.goodsId=:goodsId";
-        $this->execute($sql, ["goodsId" => $id]);
+        $this->db()->execute($sql, ["goodsId" => $id]);
 
         $sql = "DELETE FROM Edux:MallGoods a WHERE a.id=:id";
-        $this->execute($sql, ["id" => $id]);
+        $this->db()->execute($sql, ["id" => $id]);
 
         $this->delEs($id);
 
@@ -446,7 +446,7 @@ class GoodsService extends AdminBaseService
     public function hasGroup($id)
     {
         $sql = "SELECT a FROM Edux:MallGoodsGroup a WHERE a.groupGoodsId=:groupGoodsId";
-        return $this->fetchOne($sql, ['groupGoodsId' => $id]);
+        return $this->db()->fetchOne($sql, ['groupGoodsId' => $id]);
     }
 
     public function searchGoodsName($name, $goodType=1)
@@ -454,7 +454,7 @@ class GoodsService extends AdminBaseService
         $sql = "SELECT a FROM Edux:MallGoods a WHERE a.name like :name AND a.status=1 AND a.goodType=".$goodType." ORDER BY a.id DESC";
         $params = [];
         $params['name'] = "%" . $name . "%";
-        $all = $this->fetchAll($sql, $params);
+        $all = $this->db()->fetchAll($sql, $params);
         if (!$all) return [];
         $rs = [];
         foreach ($all as $v) {
@@ -469,9 +469,9 @@ class GoodsService extends AdminBaseService
     public function switchStatus($id, $state)
     {
         $sql = "SELECT a FROM Edux:MallGoods a WHERE a.id=:id";
-        $model = $this->fetchOne($sql, ['id' => $id], 1);
+        $model = $this->db()->fetchOne($sql, ['id' => $id], 1);
         $model->setStatus($state);
-        $result = $this->save($model);
+        $result = $this->db()->save($model);
 
         if($state){
             $this->saveEs($id, $model->getName());
@@ -485,21 +485,21 @@ class GoodsService extends AdminBaseService
     public function getStudyPlan($id, &$studyPlans = [])
     {
         $sql = "SELECT a FROM Edux:MallGoods a WHERE a.id=:id AND a.goodType=1";
-        $info = $this->fetchOne($sql, ['id' => $id]);
+        $info = $this->db()->fetchOne($sql, ['id' => $id]);
         if (!$info) return [];
         //非组合商品
         if ($info["productId"]) {
             //判断产品是否存在
             $sql = "SELECT a.id FROM Edux:TeachProducts a WHERE a.id=:id AND a.status=1";
-            $productInfo = $this->fetchOne($sql, ['id' => $info["productId"]]);
+            $productInfo = $this->db()->fetchOne($sql, ['id' => $info["productId"]]);
             if (!$productInfo) return;
             //获取默认的开课计划
             $sql = "SELECT a FROM Edux:TeachStudyPlan a WHERE a.productId=:productId AND a.isDefault=1 AND a.status=1";
-            $studyPlan = $this->fetchOne($sql, ["productId" => $info["productId"]]);
+            $studyPlan = $this->db()->fetchOne($sql, ["productId" => $info["productId"]]);
 
             if (!$studyPlan) {  //如果没有默认的开课计划,按照最新创建时间处理
                 $sql = "SELECT a FROM Edux:TeachStudyPlan a WHERE a.productId=:productId AND a.status=1 ORDER BY a.createdAt DESC";
-                $studyPlan = $this->fetchOne($sql, ["productId" => $info["productId"]]);
+                $studyPlan = $this->db()->fetchOne($sql, ["productId" => $info["productId"]]);
             }
             if ($studyPlan) {
                 $studyPlanId = $studyPlan["id"];
@@ -510,7 +510,7 @@ class GoodsService extends AdminBaseService
             $sql3 = "SELECT a FROM Edux:MallGoodsGroup a WHERE a.goodsId=:goodsId ORDER BY a.createdAt ASC";
             $params = [];
             $params['goodsId'] = $id;
-            $allGoodIds = $this->fetchFields("groupGoodsId", $sql3, $params);
+            $allGoodIds = $this->db()->fetchFields("groupGoodsId", $sql3, $params);
             if ($allGoodIds) {
                 foreach ($allGoodIds as $av) {
                     $this->getStudyPlan($av['groupGoodsId'], $studyPlans);

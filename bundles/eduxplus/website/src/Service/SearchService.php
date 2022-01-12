@@ -39,7 +39,7 @@ class SearchService extends AppBaseService
         $idsTmp = implode(",", $ids);
         if($ids){
             $sql = "SELECT a FROM Edux:MallGoods a WHERE a.id IN(:id) AND a.status=1 ORDER BY FIELD(a.id,".$idsTmp.")";
-            $items = $this->fetchAll($sql, ["id"=>$ids]);
+            $items = $this->db()->fetchAll($sql, ["id"=>$ids]);
             if ($items) {
                 foreach ($items as &$vArr) {
                     $vArr['shopPriceView'] = number_format($vArr['shopPrice'] / 100, 2);
@@ -58,7 +58,7 @@ class SearchService extends AppBaseService
         $idsTmp = implode(",", $ids);
         if($ids){
             $sql = "SELECT a FROM Edux:MallNews a WHERE a.id IN(:id) AND a.status=1 ORDER BY FIELD(a.id,".$idsTmp.")";
-            $items = $this->fetchAll($sql, ["id"=>$ids]);
+            $items = $this->db()->fetchAll($sql, ["id"=>$ids]);
             if ($items) {
                 foreach ($items as &$vArr) {
                     $vArr['createdAtTime'] = $vArr["createdAt"]->getTimestamp();
@@ -82,13 +82,13 @@ class SearchService extends AppBaseService
         if($kw){
             $sql = "SELECT a FROM Edux:MallGoods a WHERE a.name LIKE :name AND a.status=1  AND  a.goodType=1  ORDER BY a.createdAt DESC";
             $em = $this->getDoctrine()->getManager();
-            $em = $this->enableSoftDeleteable($em);
+            $em = $this->db()->enableSoftDeleteable($em);
             $query = $em->createQuery($sql);
             $query = $query->setParameters(["name"=>"%".$kw."%"]);
         }else{
             $sql = "SELECT a FROM Edux:MallGoods a WHERE a.status=1  AND  a.goodType=1 ORDER BY a.createdAt DESC";
             $em = $this->getDoctrine()->getManager();
-            $em = $this->enableSoftDeleteable($em);
+            $em = $this->db()->enableSoftDeleteable($em);
             $query = $em->createQuery($sql);
         }
 
@@ -115,13 +115,13 @@ class SearchService extends AppBaseService
         if($kw) {
             $sql = "SELECT a FROM Edux:MallNews a WHERE a.title LIKE :title AND a.status=1 ORDER BY a.createdAt DESC";
             $em = $this->getDoctrine()->getManager();
-            $em = $this->enableSoftDeleteable($em);
+            $em = $this->db()->enableSoftDeleteable($em);
             $query = $em->createQuery($sql);
             $query = $query->setParameters(["title" => "%" . $kw . "%"]);
         }else{
             $sql = "SELECT a FROM Edux:MallNews a WHERE a.status=1 ORDER BY a.createdAt DESC";
             $em = $this->getDoctrine()->getManager();
-            $em = $this->enableSoftDeleteable($em);
+            $em = $this->db()->enableSoftDeleteable($em);
             $query = $em->createQuery($sql);
         }
 

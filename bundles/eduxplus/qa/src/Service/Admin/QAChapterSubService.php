@@ -29,10 +29,10 @@ class QAChapterSubService extends AdminBaseService
             foreach ($data as $k => $v) {
                 $id = $v['id'];
                 $sql = "SELECT a FROM Qa:TeachQAChapterSub a WHERE a.id=:id";
-                $model = $this->fetchOne($sql, ['id' => $id], 1);
+                $model = $this->db()->fetchOne($sql, ['id' => $id], 1);
                 $model->setSort($sort);
                 $model->setParentId($pid);
-                $this->update($model);
+                $this->db()->update($model);
                 if (isset($v['children'])) {
                     $this->updateSort($v['children'], $id);
                 }
@@ -44,14 +44,14 @@ class QAChapterSubService extends AdminBaseService
     public function del($id)
     {
         $sql = "SELECT a FROM Qa:TeachQAChapterSub a WHERE a.id=:id";
-        $model = $this->fetchOne($sql, ['id' => $id], 1);
-        return $this->delete($model);
+        $model = $this->db()->fetchOne($sql, ['id' => $id], 1);
+        return $this->db()->delete($model);
     }
 
     public function getById($id)
     {
         $sql = "SELECT a FROM Qa:TeachQAChapterSub a WHERE a.id=:id";
-        return $this->fetchOne($sql, ['id' => $id]);
+        return $this->db()->fetchOne($sql, ['id' => $id]);
     }
 
     public function searchResultByid($chapterSubId){
@@ -62,7 +62,7 @@ class QAChapterSubService extends AdminBaseService
 
     public function hasChild($id){
         $sql = "SELECT a FROM Qa:TeachQAChapterSub a WHERE a.parentId=:parentId";
-        return $this->fetchOne($sql, ['parentId' => $id]);
+        return $this->db()->fetchOne($sql, ['parentId' => $id]);
     }
 
     public function add($name, $parentId, $sort, $status, $chapterId){
@@ -74,14 +74,14 @@ class QAChapterSubService extends AdminBaseService
         $model->setStatus($status);
         $model->setSort($sort);
         $model->setChapterId($chapterId);
-        return $this->save($model);
+        return $this->db()->save($model);
     }
 
     public function findPath($id)
     {
         if (!$id) return "";
         $sql = "SELECT a.parentId FROM Qa:TeachQAChapterSub a WHERE a.id = :id";
-        $pid = $this->fetchField("parentId", $sql, ['id' => $id]);
+        $pid = $this->db()->fetchField("parentId", $sql, ['id' => $id]);
         if (!$pid) return ",{$id},";
         $str = ",{$id},";
         $str .= ltrim($this->findPath($pid), ",");
@@ -90,14 +90,14 @@ class QAChapterSubService extends AdminBaseService
 
     public function edit($name, $parentId, $sort, $status, $id){
         $sql = "SELECT a FROM Qa:TeachQAChapterSub a WHERE a.id=:id";
-        $model =  $this->fetchOne($sql, ['id' => $id], 1);
+        $model =  $this->db()->fetchOne($sql, ['id' => $id], 1);
         $findPath = $this->findPath($parentId);
         $model->setName($name);
         $model->setFindPath($findPath);
         $model->setParentId($parentId);
         $model->setStatus($status);
         $model->setSort($sort);
-        return $this->save($model);
+        return $this->db()->save($model);
     }
 
     public function checkDeposit($id)
@@ -113,7 +113,7 @@ class QAChapterSubService extends AdminBaseService
     public function getChapterTree($parentId, $chapterId)
     {
         $sql = "SELECT a FROM Qa:TeachQAChapterSub a WHERE a.parentId = :parentId AND a.chapterId =:chapterId ORDER BY a.sort ASC";
-        $items = $this->fetchAll($sql, ['parentId' => $parentId, "chapterId"=>$chapterId]);
+        $items = $this->db()->fetchAll($sql, ['parentId' => $parentId, "chapterId"=>$chapterId]);
         if (!$items) return [];
         $result = [];
         foreach ($items as &$v) {
@@ -164,7 +164,7 @@ class QAChapterSubService extends AdminBaseService
     public function getAllChapter($chapterId)
     {
         $sql = "SELECT a FROM Qa:TeachQAChapterSub a WHERE a.chapterId =:chapterId ORDER BY a.sort ASC";
-        $list = $this->fetchAll($sql, ["chapterId"=>$chapterId]);
+        $list = $this->db()->fetchAll($sql, ["chapterId"=>$chapterId]);
         if (!$list) return [];
 
         $rs = [];
@@ -193,7 +193,7 @@ class QAChapterSubService extends AdminBaseService
     public function getChapterSubIds($id)
     {
         $sql = "SELECT a FROM Qa:TeachQAChapterSub a WHERE a.findPath like :findPath AND a.status=1 ORDER BY a.sort ASC";
-        return $this->fetchFields("id", $sql, ["findPath" => '%,'.$id.',%']);
+        return $this->db()->fetchFields("id", $sql, ["findPath" => '%,'.$id.',%']);
     }
 
 }

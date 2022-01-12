@@ -7,11 +7,12 @@
  * @Date: 2020/4/22 17:06
  */
 
-namespace Eduxplus\CoreBundle\Lib\Service\Vod;
+namespace Eduxplus\CoreBundle\Lib\Service\Base\Vod;
 
 
 use Eduxplus\CoreBundle\Lib\Base\BaseService;
 use Eduxplus\CoreBundle\Lib\Service\CacheService;
+use Eduxplus\CoreBundle\Lib\Utils;
 use Firebase\JWT\JWT;
 use TencentCloud\Cme\V20191029\Models\DeleteClassRequest;
 use TencentCloud\Common\Credential;
@@ -100,7 +101,7 @@ class TengxunyunVodService extends BaseService
         $appId = $this->getAppId();
         $token = $this->getAndvancePlaySign($videoId);
         $getplayinfo = "http://playvideo.qcloud.com/getplayinfo/v4/{$appId}/{$videoId}?psign=$token";
-        $result = $this->baseCurlGet($getplayinfo, "get");
+        $result = Utils::baseCurlGet($getplayinfo, "get");
         if(!$result) return $this->error()->add("获取播放信息失败!");
         $resultJson = json_decode($result, true);
         if($resultJson['code']>0) return $this->error()->add("获取播放信息失败!");

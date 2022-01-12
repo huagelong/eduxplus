@@ -57,7 +57,7 @@ class QATestSubService  extends AdminBaseService
             foreach ($items as $v) {
                 $vArr = $this->toArray($v);
                 $nodeSql = "SELECT a FROM Qa:TeachQANode a WHERE a.id=:id ";
-                $nodeInfo = $this->fetchOne($nodeSql, ["id"=>$vArr['qaNodeId']]);
+                $nodeInfo = $this->db()->fetchOne($nodeSql, ["id"=>$vArr['qaNodeId']]);
                 $vArr['topic'] = $nodeInfo['topic'];
                 $itemsArr[] = $vArr;
             }
@@ -73,37 +73,37 @@ class QATestSubService  extends AdminBaseService
         $model->setCategoryId($categoryId);
         $model->setName($name);
         $model->setSort($sort);
-        return $this->save($model);
+        return $this->db()->save($model);
     }
 
     public function edit($id, $name, $categoryId, $sort,$status){
         $sql = "SELECT a FROM Qa:TeachTest a WHERE a.id=:id ";
-        $model = $this->fetchOne($sql, ['id'=>$id], 1);
+        $model = $this->db()->fetchOne($sql, ['id'=>$id], 1);
         $model->setStatus($status);
         $model->setCategoryId($categoryId);
         $model->setName($name);
         $model->setSort($sort);
-        return $this->save($model);
+        return $this->db()->save($model);
     }
 
 
     public function del($id){
         $sql = "SELECT a FROM Qa:TeachTestSub a WHERE a.id=:id ";
-        $model = $this->fetchOne($sql, ['id'=>$id], 1);
-        $this->delete($model);
+        $model = $this->db()->fetchOne($sql, ['id'=>$id], 1);
+        $this->db()->delete($model);
         return true;
     }
 
     public function getById($id){
         $sql = "SELECT a FROM Qa:TeachTestSub a WHERE a.id=:id";
-        return $this->fetchOne($sql, ['id' => $id]);
+        return $this->db()->fetchOne($sql, ['id' => $id]);
     }
 
 
     public function getNodeByIds($nodeIds){
 
         $dql = "SELECT a FROM Qa:TeachQANode a WHERE a.id IN(:id) ORDER BY FIELD(a.type,0,1,2,3,4,5,6), a.id DESC";
-        $items = $this->fetchAll($dql, ["id"=>$nodeIds]);
+        $items = $this->db()->fetchAll($dql, ["id"=>$nodeIds]);
 
         $types = [0=>"单项选择",1=>"多项选择",2=>"不定项选择题",3=>"判断题",4=>"填空题",5=>"问答题",6=>"理解题"];
         $levels = [0=>"容易",1=>"一般",2=>"困难"];
@@ -117,12 +117,12 @@ class QATestSubService  extends AdminBaseService
                 $vArr['nType'] = $nTypes[$vArr['nodeType']];
 
                 $sql = "SELECT a FROM Qa:TeachQANodeSub a WHERE a.qaNodeId=:qaNodeId";
-                $nodeSub = $this->fetchOne($sql, ['qaNodeId' => $vArr['id']]);
+                $nodeSub = $this->db()->fetchOne($sql, ['qaNodeId' => $vArr['id']]);
                 $vArr['nodeSub'] = $nodeSub;
 
                 //章节点
                 $chapterSubSql = "SELECT a FROM Qa:TeachQAChapterSub a WHERE a.id=:id";
-                $chapterSubName = $this->fetchField("name",$chapterSubSql, ["id"=>$vArr['chapterSubId']]);
+                $chapterSubName = $this->db()->fetchField("name",$chapterSubSql, ["id"=>$vArr['chapterSubId']]);
                 $vArr['chapterSubName'] = $chapterSubName;
 
                 $result[$vArr['typeName']][] = $vArr;
@@ -161,7 +161,7 @@ class QATestSubService  extends AdminBaseService
             $subCategoryIds = $this->categoryService->getSubCategoryIds($categoryId);
             array_push($subCategoryIds, $categoryId);
             $chapterIdSql = "SELECT a FROM Qa:TeachQAChapter a WHERE a.categoryId IN(:categoryId) AND a.status=1 ";
-            $chapterIds = $this->fetchFields("id", $chapterIdSql, ["categoryId"=>$subCategoryIds]);
+            $chapterIds = $this->db()->fetchFields("id", $chapterIdSql, ["categoryId"=>$subCategoryIds]);
             $sql .= " AND a.chapterId IN(:chapterId) ";
         }
 
@@ -196,12 +196,12 @@ class QATestSubService  extends AdminBaseService
                 $vArr['createdAt'] = date('Y-m-d H:i:s', $vArr["createdAt"]["timestamp"]);
 
                 $sql = "SELECT a FROM Qa:TeachQANodeSub a WHERE a.qaNodeId=:qaNodeId";
-                $nodeSub = $this->fetchOne($sql, ['qaNodeId' => $vArr['id']]);
+                $nodeSub = $this->db()->fetchOne($sql, ['qaNodeId' => $vArr['id']]);
                 $vArr['nodeSub'] = $nodeSub;
 
                 //章节点
                 $chapterSubSql = "SELECT a FROM Qa:TeachQAChapterSub a WHERE a.id=:id";
-                $chapterSubName = $this->fetchField("name",$chapterSubSql, ["id"=>$vArr['chapterSubId']]);
+                $chapterSubName = $this->db()->fetchField("name",$chapterSubSql, ["id"=>$vArr['chapterSubId']]);
                 $vArr['chapterSubName'] = $chapterSubName;
 
                 $createrUid = $vArr['createUid'];
@@ -217,7 +217,7 @@ class QATestSubService  extends AdminBaseService
 
     public function getAllNodeIds($testId){
         $sql = "SELECT a FROM Qa:TeachTestSub a WHERE a.testId =:testId ";
-        return $this->fetchFields("qaNodeId", $sql, ["testId"=>$testId]);
+        return $this->db()->fetchFields("qaNodeId", $sql, ["testId"=>$testId]);
     }
 
     /**
@@ -230,10 +230,10 @@ class QATestSubService  extends AdminBaseService
     public function mgNode($testId, $nodeIds, $types, $sorts){
 
         try{
-            $this->beginTransaction();
+            $this->db()->beginTransaction();
             //先删除
             $sql = "DELETE FROM Qa:TeachTestSub a WHERE a.testId=:testId";
-            $this->execute($sql, ["testId" => $testId]);
+            $this->db()->execute($sql, ["testId" => $testId]);
 
             foreach ($nodeIds as $k=>$nodeId){
                 $sort = $sorts[$k];
@@ -243,19 +243,19 @@ class QATestSubService  extends AdminBaseService
                 $model->setQaNodeId($nodeId);
                 $model->setType($type);
                 $model->setTestId($testId);
-                $this->save($model);
+                $this->db()->save($model);
             }
 
             //更新试卷分数
             $totalScoreSql = "SELECT SUM(a.score) as cnt FROM Qa:TeachQANodeSub a WHERE a.qaNodeId IN(:qaNodeId) ";
-            $totalScore = $this->fetchField("cnt", $totalScoreSql, ["qaNodeId"=>$nodeIds]);
-            $testModel = $this->fetchOne("SELECT a FROM Qa:TeachTest a WHERE a.id=:id", ["id"=>$testId], 1);
+            $totalScore = $this->db()->fetchField("cnt", $totalScoreSql, ["qaNodeId"=>$nodeIds]);
+            $testModel = $this->db()->fetchOne("SELECT a FROM Qa:TeachTest a WHERE a.id=:id", ["id"=>$testId], 1);
             $testModel->setScore($totalScore);
-            $this->update($testModel);
-            $this->commit();
+            $this->db()->update($testModel);
+            $this->db()->commit();
             return true;
         }catch (\Exception $e){
-            $this->rollback();
+            $this->db()->rollback();
             return $this->error()->add($e->getMessage());
         }
     }
@@ -266,7 +266,7 @@ class QATestSubService  extends AdminBaseService
      */
     public function hasTestDo($testId){
         $sql = "SELECT count(a.id) as cnt FROM Qa:TeachTestAnswer a WHERE a.testId=:testId ";
-        $count = $this->fetchField("cnt", $sql, ["testId"=>$testId]);
+        $count = $this->db()->fetchField("cnt", $sql, ["testId"=>$testId]);
         return $count;
     }
 }

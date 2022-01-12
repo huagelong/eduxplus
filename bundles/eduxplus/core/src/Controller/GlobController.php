@@ -10,10 +10,9 @@ namespace Eduxplus\CoreBundle\Controller;
 
 
 use Eduxplus\CoreBundle\Lib\Base\BaseAdminController;
-use Eduxplus\CoreBundle\Lib\Base\BaseController;
 use Eduxplus\CoreBundle\Lib\Service\Base\UploadService;
-use Eduxplus\CoreBundle\Lib\Service\Vod\AliyunVodService;
-use Eduxplus\CoreBundle\Lib\Service\Vod\TengxunyunVodService;
+use Eduxplus\CoreBundle\Lib\Service\Base\Vod\AliyunVodService;
+use Eduxplus\CoreBundle\Lib\Service\Base\Vod\TengxunyunVodService;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Eduxplus\CoreBundle\Service\UserService;

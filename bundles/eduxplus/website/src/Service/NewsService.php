@@ -26,7 +26,7 @@ class NewsService extends AppBaseService
 
     public function getTopNews($limit=9){
         $sql = "SELECT a FROM Edux:MallNews a WHERE a.status=1 ORDER BY a.createdAt DESC";
-        $result = $this->fetchAll($sql, [],0,$limit);
+        $result = $this->db()->fetchAll($sql, [],0,$limit);
         if(!$result) return $result;
         foreach ($result as &$v){
             $v['createdAtTime'] = $v["createdAt"]->getTimestamp();
@@ -37,13 +37,13 @@ class NewsService extends AppBaseService
 
     public function getAllNewsCategory(){
         $sql = "SELECT a FROM Edux:MallNewsCategory a WHERE a.isShow =1 AND a.parentId = 0 ORDER BY a.sort DESC";
-        $category = $this->fetchAll($sql);
+        $category = $this->db()->fetchAll($sql);
         return $category;
     }
 
     public function viewNumIncre($id){
         $sql = "UPDATE Edux:MallNews a SET a.viewNumber = a.viewNumber+1 WHERE a.id = :id ";
-        $this->execute($sql, ["id"=>$id]);
+        $this->db()->execute($sql, ["id"=>$id]);
     }
 
     /**
@@ -52,7 +52,7 @@ class NewsService extends AppBaseService
      */
     public function getNewsByTopValue($topValue, $limit=5){
         $sql = "SELECT a FROM Edux:MallNews a WHERE a.status=1 AND a.topValue = :topValue ORDER BY a.sort DESC, a.createdAt DESC";
-        $result = $this->fetchAll($sql, ["topValue"=>$topValue],0,$limit);
+        $result = $this->db()->fetchAll($sql, ["topValue"=>$topValue],0,$limit);
         if(!$result) return $result;
         foreach ($result as &$v){
             $v['createdAtTime'] = $v["createdAt"]->getTimestamp();
@@ -68,7 +68,7 @@ class NewsService extends AppBaseService
         }
 
         $em = $this->getDoctrine()->getManager();
-        $em = $this->enableSoftDeleteable($em);
+        $em = $this->db()->enableSoftDeleteable($em);
         $query = $em->createQuery($dql);
        if($category) $query = $query->setParameters(["categoryId" => $category]);
         $pagination = $this->paginator->paginate(
@@ -92,11 +92,11 @@ class NewsService extends AppBaseService
 
     public function getById($id){
         $dql = "SELECT a FROM Edux:MallNews a WHERE a.id =:id ";
-        $detail = $this->fetchOne($dql, ["id"=>$id]);
+        $detail = $this->db()->fetchOne($dql, ["id"=>$id]);
         if(!$detail) return $detail;
         $detail['createdAtTime'] = $detail["createdAt"]->getTimestamp();
         $mainSql = "SELECT a FROM Edux:MallNewsMain a WHERE a.newsId =:newsId ";
-        $mainDetail = $this->fetchOne($mainSql, ["newsId"=>$id]);
+        $mainDetail = $this->db()->fetchOne($mainSql, ["newsId"=>$id]);
         $detail['main'] = $mainDetail;
         return $detail;
     }

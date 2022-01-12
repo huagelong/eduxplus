@@ -51,7 +51,7 @@ class SchoolService extends AdminBaseService
     public function getAll()
     {
         $dql = "SELECT a FROM Edux:JwSchool a ";
-        return $this->fetchAll($dql);
+        return $this->db()->fetchAll($dql);
     }
 
     public function add($name, $descr, $address, $linkin, $state, $city, $region)
@@ -64,13 +64,13 @@ class SchoolService extends AdminBaseService
         $model->setState($state);
         $model->setCity($city);
         $model->setRegion($region);
-        return $this->save($model);
+        return $this->db()->save($model);
     }
 
     public function getById($id)
     {
         $sql = "SELECT a FROM Edux:JwSchool a WHERE a.id=:id";
-        return $this->fetchOne($sql, ['id' => $id]);
+        return $this->db()->fetchOne($sql, ['id' => $id]);
     }
 
     public function getByName($name, $id = 0)
@@ -82,13 +82,13 @@ class SchoolService extends AdminBaseService
             $sql = $sql . " AND a.id !=:id ";
             $params['id'] = $id;
         }
-        return $this->fetchOne($sql, $params);
+        return $this->db()->fetchOne($sql, $params);
     }
 
     public function edit($id, $name, $descr, $address, $linkin, $state, $city, $region)
     {
         $sql = "SELECT a FROM Edux:JwSchool a WHERE a.id=:id";
-        $model = $this->fetchOne($sql, ['id' => $id], 1);
+        $model = $this->db()->fetchOne($sql, ['id' => $id], 1);
         $model->setName($name);
         $model->setDescr($descr);
         $model->setAddress($address);
@@ -96,13 +96,13 @@ class SchoolService extends AdminBaseService
         $model->setState($state);
         $model->setCity($city);
         $model->setRegion($region);
-        return $this->save($model);
+        return $this->db()->save($model);
     }
 
     public function del($id)
     {
         $sql = "SELECT a FROM Edux:JwSchool a WHERE a.id=:id";
-        $model = $this->fetchOne($sql, ['id' => $id], 1);
-        return $this->delete($model);
+        $model = $this->db()->fetchOne($sql, ['id' => $id], 1);
+        return $this->db()->delete($model);
     }
 }

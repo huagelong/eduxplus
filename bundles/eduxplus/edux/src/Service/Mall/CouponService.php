@@ -106,22 +106,22 @@ class CouponService extends AdminBaseService
         }
 
         $model->setDescr($descr);
-        $id = $this->save($model);
+        $id = $this->db()->save($model);
         return $id;
     }
 
     public function switchStatus($id, $state)
     {
         $sql = "SELECT a FROM Edux:MallCouponGroup a WHERE a.id=:id";
-        $model = $this->fetchOne($sql, ['id' => $id], 1);
+        $model = $this->db()->fetchOne($sql, ['id' => $id], 1);
         $model->setStatus($state);
-        return $this->save($model);
+        return $this->db()->save($model);
     }
 
     public function getById($id)
     {
         $sql = "SELECT a FROM Edux:MallCouponGroup a WHERE a.id=:id";
-        $info = $this->fetchOne($sql, ['id' => $id]);
+        $info = $this->db()->fetchOne($sql, ['id' => $id]);
         if (!$info) return [];
         return $info;
     }
@@ -135,7 +135,7 @@ class CouponService extends AdminBaseService
             $sql = $sql . " AND a.id !=:id ";
             $params['id'] = $id;
         }
-        return $this->fetchOne($sql, $params);
+        return $this->db()->fetchOne($sql, $params);
     }
 
 
@@ -157,7 +157,7 @@ class CouponService extends AdminBaseService
     ) {
         $discount = $discount*100;
         $sql = "SELECT a FROM Edux:MallCouponGroup a WHERE a.id=:id";
-        $model = $this->fetchOne($sql, ['id' => $id], 1);
+        $model = $this->db()->fetchOne($sql, ['id' => $id], 1);
         $model->setName($name);
         $model->setCouponType($couponType);
         $model->setDiscount($discount);
@@ -175,17 +175,17 @@ class CouponService extends AdminBaseService
             $model->setGoodsIds("");
         }
         $model->setDescr($descr);
-        $id = $this->save($model);
+        $id = $this->db()->save($model);
         return $id;
     }
 
     public function del($id)
     {
         $sql = "DELETE FROM Edux:MallCoupon a WHERE a.couponGroupId=:couponGroupId";
-        $this->execute($sql, ["couponGroupId" => $id]);
+        $this->db()->execute($sql, ["couponGroupId" => $id]);
 
         $sql = "DELETE FROM Edux:MallCouponGroup a WHERE a.id=:id";
-        $this->execute($sql, ["id" => $id]);
+        $this->db()->execute($sql, ["id" => $id]);
         return true;
     }
 
@@ -226,11 +226,11 @@ class CouponService extends AdminBaseService
     public function sendCoupon($uid, $id)
     {
         $sql = "SELECT a FROM Edux:MallCoupon a WHERE a.couponGroupId=:couponGroupId AND a.status=:status";
-        $detail = $this->fetchOne($sql, ["couponGroupId" => $id, "status" => 0], 1);
+        $detail = $this->db()->fetchOne($sql, ["couponGroupId" => $id, "status" => 0], 1);
         if ($detail) {
             $detail->setUid($uid);
             $detail->setSendTime(time());
-            $this->save($detail);
+            $this->db()->save($detail);
             return $detail->getCouponSn();
         } else {
             return $this->error()->add("优惠券已送完!");
@@ -239,27 +239,27 @@ class CouponService extends AdminBaseService
 
     public function getCouponCodeCountByGroupId($groupId){
         $sql = "SELECT count(a.id) as cnt FROM Edux:MallCoupon a WHERE a.couponGroupId=:couponGroupId ";
-        $count = $this->fetchField("cnt", $sql, ["couponGroupId"=>$groupId]);
+        $count = $this->db()->fetchField("cnt", $sql, ["couponGroupId"=>$groupId]);
         return $count;
     }
 
     public function useCoupon($uid, $couponSn)
     {
         $sql = "SELECT a FROM Edux:MallCoupon a WHERE a.couponSn=:couponSn";
-        $detail = $this->fetchOne($sql, ["couponSn" => $couponSn], 1);
+        $detail = $this->db()->fetchOne($sql, ["couponSn" => $couponSn], 1);
         if (!$detail) return false;
         if ($detail->getUid() != $uid) return false;
         if ($detail->getStatus() != 0) return false;
         $detail->setUsedTime(time());
         $detail->setStatus(1);
-        $this->save($detail);
+        $this->db()->save($detail);
         return true;
     }
 
     public function createCoupon($id)
     {
         $sql = "SELECT a FROM Edux:MallCouponGroup a WHERE a.id=:id";
-        $couponGroup = $this->fetchOne($sql, ["id" => $id]);
+        $couponGroup = $this->db()->fetchOne($sql, ["id" => $id]);
         $countNum = (int) $couponGroup["countNum"];
         $createdNum =  (int) $couponGroup["createdNum"];
         //检查是否已经生成完成
@@ -278,14 +278,14 @@ class CouponService extends AdminBaseService
                 $em->flush();
                 //更新生成数量
                 $sql = "UPDATE Edux:MallCouponGroup a SET a.createdNum=:createdNum WHERE a.id=:id";
-                $this->execute($sql, ["id" => $id, "createdNum" => $i]);
+                $this->db()->execute($sql, ["id" => $id, "createdNum" => $i]);
                 $em->clear();
             }
         }
         $em->flush();
         $sql = "UPDATE Edux:MallCouponGroup a SET a.createdNum=:createdNum WHERE a.id=:id";
         $n = $i - 1;
-        $this->execute($sql, ["id" => $id, "createdNum" => $n]);
+        $this->db()->execute($sql, ["id" => $id, "createdNum" => $n]);
         $em->clear();
         return true;
     }
@@ -294,7 +294,7 @@ class CouponService extends AdminBaseService
     {
         $info = $this->getById($id);
         $sql = "SELECT a FROM Edux:MallCoupon a WHERE a.couponGroupId=:couponGroupId";
-        $list = $this->fetchAll($sql, ["couponGroupId" => $id]);
+        $list = $this->db()->fetchAll($sql, ["couponGroupId" => $id]);
         $headers = [
             "优惠券" => "string",
             "使用时间" => "YYYY-MM-DD HH:MM:SS",

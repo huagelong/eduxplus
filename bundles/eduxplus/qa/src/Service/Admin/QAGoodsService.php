@@ -77,9 +77,9 @@ class QAGoodsService extends GoodsService
         );
 
         $sql = "SELECT a FROM Edux:MallGoods a WHERE a.id=:id";
-        $model = $this->fetchOne($sql, ['id' => $id], 1);
+        $model = $this->db()->fetchOne($sql, ['id' => $id], 1);
         $model->setParameter1($year);
-        $this->save($model);
+        $this->db()->save($model);
         return $id;
     }
 
@@ -142,9 +142,9 @@ class QAGoodsService extends GoodsService
         );
 
         $sql = "SELECT a FROM Edux:MallGoods a WHERE a.id=:id";
-        $model = $this->fetchOne($sql, ['id' => $id], 1);
+        $model = $this->db()->fetchOne($sql, ['id' => $id], 1);
         $model->setParameter1($year);
-        $this->save($model);
+        $this->db()->save($model);
         return $id;
     }
 

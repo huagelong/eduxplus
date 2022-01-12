@@ -11,7 +11,7 @@ namespace Eduxplus\WebsiteBundle\Service;
 
 use Eduxplus\CoreBundle\Lib\Base\AppBaseService;
 use Eduxplus\CoreBundle\Lib\Service\CacheService;
-use Eduxplus\CoreBundle\Lib\Service\Im\TengxunyunImService;
+use Eduxplus\CoreBundle\Lib\Service\Base\Im\TengxunyunImService;
 use Eduxplus\EduxBundle\Entity\TeachLiveChatLog;
 
 class ImService extends AppBaseService
@@ -40,7 +40,7 @@ class ImService extends AppBaseService
      */
     public function initUser($uid){
         $sql = "SELECT a FROM Core:BaseUser a WHERE a.id=:id ";
-        $userInfo = $this->fetchOne($sql, ["id"=>$uid], 1);
+        $userInfo = $this->db()->fetchOne($sql, ["id"=>$uid], 1);
         if(!$userInfo) return $this->error()->add("用户不存在!");
         $imImported = $userInfo->getImImported();
         if($imImported) return true;
@@ -57,7 +57,7 @@ class ImService extends AppBaseService
         if($upRs){
             //更新状态
             $userInfo->setImImported(1);
-            $this->save($userInfo);
+            $this->db()->save($userInfo);
         }
         return $upRs;
     }
@@ -93,7 +93,7 @@ class ImService extends AppBaseService
      */
     public function initGroup($chapterId, $number=6000){
         $sql = "SELECT a FROM Edux:TeachCourseChapter a WHERE a.id=:id";
-        $chapterInfo = $this->fetchOne($sql, ["id"=>$chapterId], 1);
+        $chapterInfo = $this->db()->fetchOne($sql, ["id"=>$chapterId], 1);
         if(!$chapterInfo) return $this->error()->add("群组不存在!");
         $groupId = $chapterInfo->getImGroupId();
         if($groupId) return $groupId;
@@ -102,7 +102,7 @@ class ImService extends AppBaseService
         $rs = $this->tengxunyunImService->createLiveChatRoom($userUuid, $chapterId, $number);
         if(!$rs) return $rs;
         $chapterInfo->setImGroupId($rs);
-        $this->save($chapterInfo);
+        $this->db()->save($chapterInfo);
         return $rs;
     }
 
@@ -118,7 +118,7 @@ class ImService extends AppBaseService
         $check = $this->cacheService->get($key);
         if($check) return true;
         $sql = "SELECT a FROM Core:BaseUser a WHERE a.id=:id ";
-        $userInfo = $this->fetchOne($sql, ["id"=>$userUUid]);
+        $userInfo = $this->db()->fetchOne($sql, ["id"=>$userUUid]);
         $realUser = $userInfo['realRole'];
         $rs = $this->tengxunyunImService->addGroupMember($groupId, $userUUid);
         if($realUser<5){
@@ -154,7 +154,7 @@ class ImService extends AppBaseService
      */
     public function saveChatLog($groupId, $ip, $platform, $msgTime, $jsonContent){
         $sql = "SELECT a FROM Edux:TeachCourseChapter a WHERE a.imGroupId=:imGroupId";
-        $chapterInfo = $this->fetchOne($sql, ["imGroupId"=>$groupId]);
+        $chapterInfo = $this->db()->fetchOne($sql, ["imGroupId"=>$groupId]);
         if(!$chapterInfo) return ;
         $chapterId = $chapterInfo['id'];
         $model = new TeachLiveChatLog();
@@ -163,7 +163,7 @@ class ImService extends AppBaseService
         $model->setIp($ip);
         $model->setPlatform($platform);
         $model->setContent($jsonContent);
-        return $this->save($model);
+        return $this->db()->save($model);
     }
 
 }

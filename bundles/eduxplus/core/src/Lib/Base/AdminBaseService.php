@@ -72,17 +72,17 @@ class AdminBaseService extends BaseService
     {
         if (!$uid) return false;
         $sql = "SELECT a FROM Core:BaseMenu a WHERE a.url=:url";
-        $menuInfo = $this->fetchOne($sql, ['url' => $routeName]);
+        $menuInfo = $this->db()->fetchOne($sql, ['url' => $routeName]);
         if (!$menuInfo) return false;
         $menuId = $menuInfo['id'];
 
         $userSql = "SELECT a.roleId FROM Core:BaseRoleUser a WHERE a.uid=:uid";
-        $roleIds = $this->fetchFields("roleId", $userSql, ['uid' => $uid]);
+        $roleIds = $this->db()->fetchFields("roleId", $userSql, ['uid' => $uid]);
 
         if (!$roleIds) return false;
 
         $sql = "SELECT a.menuId FROM Core:BaseRoleMenu a WHERE a.roleId IN(:roleId) ";
-        $menuIds = $this->fetchFields("menuId", $sql, ['roleId' => $roleIds]);
+        $menuIds = $this->db()->fetchFields("menuId", $sql, ['roleId' => $roleIds]);
         if (!$menuIds) return false;
         return in_array($menuId, $menuIds);
     }

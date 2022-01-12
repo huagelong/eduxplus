@@ -52,22 +52,22 @@ class PageService extends AdminBaseService
     public function switchStatus($id, $state)
     {
         $sql = "SELECT a FROM Edux:MallPage a WHERE a.id=:id";
-        $model = $this->fetchOne($sql, ['id' => $id], 1);
+        $model = $this->db()->fetchOne($sql, ['id' => $id], 1);
         $model->setStatus($state);
-        return $this->save($model);
+        return $this->db()->save($model);
     }
 
     public function edit($id, $name, $content, $status){
         $sql = "SELECT a FROM Edux:MallPage a WHERE a.id=:id";
-        $model = $this->fetchOne($sql, ['id' => $id], 1);
+        $model = $this->db()->fetchOne($sql, ['id' => $id], 1);
         $model->setName($name);
         $model->setStatus($status);
-        $this->save($model);
+        $this->db()->save($model);
 
         $sql = "SELECT a FROM Edux:MallPageMain a WHERE a.pageId=:pageId";
-        $mainModel = $this->fetchOne($sql, ['pageId' => $id], 1);
+        $mainModel = $this->db()->fetchOne($sql, ['pageId' => $id], 1);
         $mainModel->setContent($content);
-        $this->save($mainModel);
+        $this->db()->save($mainModel);
 
     }
 
@@ -75,22 +75,22 @@ class PageService extends AdminBaseService
         $model = new MallPage();
         $model->setName($name);
         $model->setStatus($status);
-        $id = $this->save($model);
+        $id = $this->db()->save($model);
         if(!$id) return $this->error()->add("添加单页失败");
         $mainModel = new MallPageMain();
         $mainModel->setPageId($id);
         $mainModel->setContent($content);
-        $this->save($mainModel);
+        $this->db()->save($mainModel);
         return $id;
     }
 
     public function getById($id){
         $sql = "SELECT a FROM Edux:MallPage a WHERE a.id=:id";
-        $info = $this->fetchOne($sql, ['id' => $id]);
+        $info = $this->db()->fetchOne($sql, ['id' => $id]);
         $info["main"] = [];
         if($info){
             $sql = "SELECT a FROM Edux:MallPageMain a WHERE a.pageId=:pageId";
-            $main = $this->fetchOne($sql, ['pageId' => $info['id']]);
+            $main = $this->db()->fetchOne($sql, ['pageId' => $info['id']]);
             $info["main"] = $main;
         }
         return $info;
@@ -98,8 +98,8 @@ class PageService extends AdminBaseService
 
     public function del($id){
         $sql = "SELECT a FROM Edux:MallPage a WHERE a.id=:id";
-        $model = $this->fetchOne($sql, ["id" => $id], 1);
-        return $this->delete($model);
+        $model = $this->db()->fetchOne($sql, ["id" => $id], 1);
+        return $this->db()->delete($model);
     }
 
 }

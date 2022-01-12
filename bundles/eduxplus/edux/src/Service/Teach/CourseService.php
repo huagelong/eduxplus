@@ -14,8 +14,8 @@ use Eduxplus\CoreBundle\Lib\Base\AdminBaseService;
 use Eduxplus\EduxBundle\Service\Jw\SchoolService;
 use Eduxplus\CoreBundle\Service\UserService;
 use Eduxplus\CoreBundle\Lib\Base\BaseService;
-use Eduxplus\CoreBundle\Lib\Service\Vod\AliyunVodService;
-use Eduxplus\CoreBundle\Lib\Service\Vod\TengxunyunVodService;
+use Eduxplus\CoreBundle\Lib\Service\Base\Vod\AliyunVodService;
+use Eduxplus\CoreBundle\Lib\Service\Base\Vod\TengxunyunVodService;
 use Eduxplus\EduxBundle\Entity\TeachCourse;
 use Knp\Component\Pager\PaginatorInterface;
 
@@ -131,7 +131,7 @@ class CourseService extends AdminBaseService
         $model->setSchoolId($schoolId);
         $model->setCourseHour($courseHour * 100);
         $model->setCreateUid($uid);
-        $courseId =  $this->save($model);
+        $courseId =  $this->db()->save($model);
         return $courseId;
     }
 
@@ -139,7 +139,7 @@ class CourseService extends AdminBaseService
     public function getById($id)
     {
         $sql = "SELECT a FROM Edux:TeachCourse a WHERE a.id=:id";
-        return $this->fetchOne($sql, ['id' => $id]);
+        return $this->db()->fetchOne($sql, ['id' => $id]);
     }
 
     public function getByName($name, $id = 0)
@@ -151,7 +151,7 @@ class CourseService extends AdminBaseService
             $sql = $sql . " AND a.id !=:id ";
             $params['id'] = $id;
         }
-        return $this->fetchOne($sql, $params);
+        return $this->db()->fetchOne($sql, $params);
     }
 
     public function edit($id, $name, $type, $bigImg, $descr, $categoryId, $schoolId, $courseHour)
@@ -161,7 +161,7 @@ class CourseService extends AdminBaseService
         $pathArr = explode(",", $path);
         $brandId = end($pathArr);
         $courceSql = "SELECT a FROM Edux:TeachCourse a WHERE a.id=:id";
-        $model = $this->fetchOne($courceSql, ['id' => $id], 1);
+        $model = $this->db()->fetchOne($courceSql, ['id' => $id], 1);
         $model->setName($name);
         $model->setDescr($descr);
         $model->setType($type);
@@ -173,28 +173,28 @@ class CourseService extends AdminBaseService
         $model->setCategoryId($categoryId);
         $model->setSchoolId($schoolId);
         $model->setCourseHour($courseHour * 100);
-        return $this->save($model);
+        return $this->db()->save($model);
     }
 
     public function del($id)
     {
         $sql = "SELECT a FROM Edux:TeachCourse a WHERE a.id=:id";
-        $model = $this->fetchOne($sql, ['id' => $id], 1);
-        return $this->delete($model);
+        $model = $this->db()->fetchOne($sql, ['id' => $id], 1);
+        return $this->db()->delete($model);
     }
 
     public function switchStatus($id, $state)
     {
         $sql = "SELECT a FROM Edux:TeachCourse a WHERE a.id=:id";
-        $model = $this->fetchOne($sql, ['id' => $id], 1);
+        $model = $this->db()->fetchOne($sql, ['id' => $id], 1);
         $model->setStatus($state);
-        return $this->save($model);
+        return $this->db()->save($model);
     }
 
     public function hasChapter($id)
     {
         $sql = "SELECT a FROM Edux:TeachCourseChapter a WHERE a.courseId=:courseId";
-        return $this->fetchOne($sql, ["courseId" => $id]);
+        return $this->db()->fetchOne($sql, ["courseId" => $id]);
     }
 
     public function getByIds($ids)
@@ -202,14 +202,14 @@ class CourseService extends AdminBaseService
         $sql = "SELECT a FROM Edux:TeachCourse a where a.id IN(:id) ";
         $params = [];
         $params['id'] = $ids;
-        return $this->fetchAll($sql, $params);
+        return $this->db()->fetchAll($sql, $params);
     }
 
     public function getSelectByIds($ids){
         $sql = "SELECT a FROM Edux:TeachCourse a where a.id IN(:id) ";
         $params = [];
         $params['id'] = $ids;
-        $list = $this->fetchAll($sql, $params);
+        $list = $this->db()->fetchAll($sql, $params);
         if(!$list) return [];
         $tmp = [];
         foreach ($list as $v) {
@@ -223,6 +223,6 @@ class CourseService extends AdminBaseService
         $sql = "SELECT a FROM Edux:TeachCourse a where a.name like :name AND a.status=1 ORDER BY a.id DESC";
         $params = [];
         $params['name'] = "%" . $name . "%";
-        return $this->fetchAll($sql, $params);
+        return $this->db()->fetchAll($sql, $params);
     }
 }

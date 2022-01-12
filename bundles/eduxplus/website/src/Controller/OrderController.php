@@ -11,8 +11,8 @@ namespace Eduxplus\WebsiteBundle\Controller;
 
 
 use Eduxplus\CoreBundle\Lib\Base\BaseHtmlController;
-use Eduxplus\CoreBundle\Lib\Service\Pay\AlipayService;
-use Eduxplus\CoreBundle\Lib\Service\Pay\WxpayService;
+use Eduxplus\CoreBundle\Lib\Service\Base\Pay\AlipayService;
+use Eduxplus\CoreBundle\Lib\Service\Base\Pay\WxpayService;
 use Eduxplus\WebsiteBundle\Service\GoodsService;
 use Eduxplus\WebsiteBundle\Service\OrderService;
 use Symfony\Component\Routing\Annotation\Route;

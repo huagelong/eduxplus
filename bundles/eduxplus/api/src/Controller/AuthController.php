@@ -13,7 +13,7 @@ use Eduxplus\CoreBundle\Lib\Base\BaseApiController;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
-use Eduxplus\CoreBundle\Lib\Service\Auth\WxMiniService;
+use Eduxplus\CoreBundle\Lib\Service\Base\Auth\WxMiniService;
 use Eduxplus\WebsiteBundle\Service\UserService;
 use Eduxplus\CoreBundle\Lib\Service\ValidateService;
 use Eduxplus\WebsiteBundle\Service\GlobService;

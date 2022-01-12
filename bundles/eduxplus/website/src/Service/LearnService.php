@@ -56,7 +56,7 @@ class LearnService extends AppBaseService
     public function getCourseCount($uid)
     {
         $dql = "SELECT count(a.id) as cnt FROM Edux:MallOrderStudyPlan a WHERE a.uid=:uid AND a.orderStatus=2 ";
-        return $this->fetchField("cnt", $dql, ['uid' => $uid]);
+        return $this->db()->fetchField("cnt", $dql, ['uid' => $uid]);
     }
 
 
@@ -95,7 +95,7 @@ class LearnService extends AppBaseService
             $model = new MallStudyLog();
             $model->setUid($uid);
             $model->setChapterId($chapterId);
-            $this->save($model);
+            $this->db()->save($model);
         }
     }
 
@@ -254,7 +254,7 @@ class LearnService extends AppBaseService
         $model = $this->fetchOne($sql, ['videoId' => $videoId, "videoChannel" => $videoChannel], 1);
         if ($model) {
             $model->setStatus($status);
-            $this->save($model);
+            $this->db()->save($model);
         }
     }
 

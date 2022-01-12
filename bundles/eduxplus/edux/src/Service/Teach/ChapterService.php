@@ -13,10 +13,10 @@ namespace Eduxplus\EduxBundle\Service\Teach;
 use Eduxplus\CoreBundle\Lib\Base\AdminBaseService;
 use Eduxplus\EduxBundle\Service\Jw\TeacherService;
 use Eduxplus\CoreBundle\Lib\Base\BaseService;
-use Eduxplus\CoreBundle\Lib\Service\Live\AliyunLiveService;
-use Eduxplus\CoreBundle\Lib\Service\Live\TengxunyunLiveService;
-use Eduxplus\CoreBundle\Lib\Service\Vod\AliyunVodService;
-use Eduxplus\CoreBundle\Lib\Service\Vod\TengxunyunVodService;
+use Eduxplus\CoreBundle\Lib\Service\Base\Live\AliyunLiveService;
+use Eduxplus\CoreBundle\Lib\Service\Base\Live\TengxunyunLiveService;
+use Eduxplus\CoreBundle\Lib\Service\Base\Vod\AliyunVodService;
+use Eduxplus\CoreBundle\Lib\Service\Base\Vod\TengxunyunVodService;
 use Eduxplus\EduxBundle\Entity\TeachCourseChapter;
 use Eduxplus\EduxBundle\Entity\TeachCourseMaterials;
 use Eduxplus\EduxBundle\Entity\TeachCourseTeachers;
@@ -48,7 +48,7 @@ class ChapterService extends AdminBaseService
     public function getChapterTree($parentId, $courseId)
     {
         $sql = "SELECT a FROM Edux:TeachCourseChapter a WHERE a.parentId = :parentId AND a.courseId = :courseId ORDER BY a.sort ASC";
-        $items = $this->fetchAll($sql, ['parentId' => $parentId, "courseId" => $courseId]);
+        $items = $this->db()->fetchAll($sql, ['parentId' => $parentId, "courseId" => $courseId]);
         if (!$items) return [];
         $result = [];
         foreach ($items as &$v) {
@@ -69,10 +69,10 @@ class ChapterService extends AdminBaseService
             foreach ($data as $k => $v) {
                 $id = $v['id'];
                 $sql = "SELECT a FROM Edux:TeachCourseChapter a WHERE a.id=:id";
-                $model = $this->fetchOne($sql, ['id' => $id], 1);
+                $model = $this->db()->fetchOne($sql, ['id' => $id], 1);
                 $model->setSort($sort);
                 $model->setParentId($pid);
-                $this->save($model);
+                $this->db()->save($model);
                 $sort++;
                 if (isset($v['children'])) {
                     $this->updateSort($v['children'], $id);
@@ -84,7 +84,7 @@ class ChapterService extends AdminBaseService
     public function getAllChapter($courseId)
     {
         $sql = "SELECT a FROM Edux:TeachCourseChapter a WHERE a.courseId=:courseId ORDER BY a.sort ASC";
-        $list = $this->fetchAll($sql, ["courseId" => $courseId]);
+        $list = $this->db()->fetchAll($sql, ["courseId" => $courseId]);
         if (!$list) return [];
 
         $rs = [];
@@ -152,7 +152,7 @@ class ChapterService extends AdminBaseService
         $model->setSort($sort);
         $model->setCourseId($id);
         $model->setPath($path);
-        $chapterId = $this->save($model);
+        $chapterId = $this->db()->save($model);
 
         if ($teachers) {
             foreach ($teachers as $teacherId) {
@@ -160,7 +160,7 @@ class ChapterService extends AdminBaseService
                 $tmodel->setCourseId($id);
                 $tmodel->setChapterId($chapterId);
                 $tmodel->setTeacherId($teacherId);
-                $this->save($tmodel);
+                $this->db()->save($tmodel);
             }
         }
 
@@ -176,7 +176,7 @@ class ChapterService extends AdminBaseService
     {
         if (!$id) return ",";
         $sql = "SELECT a.parentId FROM Edux:TeachCourseChapter a WHERE a.id = :id";
-        $pid = $this->fetchField("parentId", $sql, ['id' => $id]);
+        $pid = $this->db()->fetchField("parentId", $sql, ['id' => $id]);
         if (!$pid) return ",{$id},";
         $str = ",{$id},";
         $str .= ltrim($this->findPath($pid), ",");
@@ -187,12 +187,12 @@ class ChapterService extends AdminBaseService
     protected function updateCourseOpenTime($courseId, $openTime)
     {
         $sql = "SELECT a FROM Edux:TeachCourse a WHERE a.id=:id";
-        $courseModel =  $this->fetchOne($sql, ['id' => $courseId], 1);
+        $courseModel =  $this->db()->fetchOne($sql, ['id' => $courseId], 1);
         if ($courseModel) {
             $currentOpenTime = (int) $courseModel->getOpenTime();
             if ($currentOpenTime > $openTime) {
                 $courseModel->setOpenTime($openTime);
-                $this->save($courseModel);
+                $this->db()->save($courseModel);
             }
         }
     }
@@ -200,7 +200,7 @@ class ChapterService extends AdminBaseService
     public function edit($id, $name, $teachers, $parentId, $openTime, $studyWay, $isFree, $sort)
     {
         $sql = "SELECT a FROM Edux:TeachCourseChapter a WHERE a.id=:id";
-        $model = $this->fetchOne($sql, ['id' => $id], 1);
+        $model = $this->db()->fetchOne($sql, ['id' => $id], 1);
         $courseId = $model->getCourseId();
 
         $path = $this->findPath($parentId);
@@ -212,17 +212,17 @@ class ChapterService extends AdminBaseService
         $model->setStudyWay($studyWay);
         $model->setIsFree($isFree);
         $model->setSort($sort);
-        $this->save($model);
+        $this->db()->save($model);
         if ($teachers) {
             $sql2 = "SELECT a FROM Edux:TeachCourseTeachers a WHERE a.chapterId=:chapterId";
-            $tmodels = $this->fetchAll($sql2, ["chapterId" => $id], 1);
+            $tmodels = $this->db()->fetchAll($sql2, ["chapterId" => $id], 1);
             $this->delete($tmodels);
             foreach ($teachers as $teacherId) {
                 $tmodel = new TeachCourseTeachers();
                 $tmodel->setCourseId($courseId);
                 $tmodel->setChapterId($id);
                 $tmodel->setTeacherId($teacherId);
-                $this->save($tmodel);
+                $this->db()->save($tmodel);
             }
         }
 
@@ -235,44 +235,44 @@ class ChapterService extends AdminBaseService
     public function getById($id)
     {
         $sql = "SELECT a FROM Edux:TeachCourseChapter a WHERE a.id=:id";
-        return $this->fetchOne($sql, ['id' => $id]);
+        return $this->db()->fetchOne($sql, ['id' => $id]);
     }
 
     public function getTeacherIds($chapterId)
     {
         $sql = "SELECT a FROM Edux:TeachCourseTeachers a WHERE a.chapterId=:chapterId";
-        return $this->fetchFields('teacherId', $sql, ['chapterId' => $chapterId]);
+        return $this->db()->fetchFields('teacherId', $sql, ['chapterId' => $chapterId]);
     }
 
     public function del($id)
     {
         $sql = "SELECT a FROM Edux:TeachCourseChapter a WHERE a.id=:id";
-        $model = $this->fetchOne($sql, ['id' => $id], 1);
-        return $this->delete($model);
+        $model = $this->db()->fetchOne($sql, ['id' => $id], 1);
+        return $this->db()->delete($model);
     }
 
     public function hasChild($id)
     {
         $sql = "SELECT a FROM Edux:TeachCourseChapter a WHERE a.parentId=:parentId";
-        return $this->fetchOne($sql, ['parentId' => $id]);
+        return $this->db()->fetchOne($sql, ['parentId' => $id]);
     }
 
     public function getVideoById($id)
     {
         $sql = "SELECT a FROM Edux:TeachCourseVideos a WHERE a.chapterId=:chapterId";
-        return $this->fetchOne($sql, ['chapterId' => $id]);
+        return $this->db()->fetchOne($sql, ['chapterId' => $id]);
     }
 
     public function getVideoByVideoId($videoId)
     {
         $sql = "SELECT a FROM Edux:TeachCourseVideos a WHERE a.videoId=:videoId";
-        return $this->fetchOne($sql, ['videoId' => $videoId]);
+        return $this->db()->fetchOne($sql, ['videoId' => $videoId]);
     }
 
     public function getMaterialsById($id)
     {
         $sql = "SELECT a FROM Edux:TeachCourseMaterials a WHERE a.chapterId=:chapterId";
-        return $this->fetchOne($sql, ['chapterId' => $id]);
+        return $this->db()->fetchOne($sql, ['chapterId' => $id]);
     }
 
     public function getVideoName($chapterId)
@@ -283,7 +283,7 @@ class ChapterService extends AdminBaseService
         $pathIds = $path ? "-" . str_replace(",", "-", $path) : "";
         $courseId = $chapterInfo['courseId'];
         $sql = "SELECT a FROM Edux:TeachCourse a WHERE a.id=:id";
-        $courseInfo = $this->fetchOne($sql, ["id" => $courseId]);
+        $courseInfo = $this->db()->fetchOne($sql, ["id" => $courseId]);
         $courseName = $courseInfo['name'];
         $nameStr = $courseName . "@{$courseId}" . $pathIds . "-" . $chapterName . "@{$chapterId}";
         return $nameStr;
@@ -296,11 +296,11 @@ class ChapterService extends AdminBaseService
     public function addVideos($chapterId, $type, $videoChannel, $videoId)
     {
         try {
-            $this->beginTransaction();
+            $this->db()->beginTransaction();
             $chapterInfo = $this->getById($chapterId);
             $courseId = $chapterInfo['courseId'];
             $sql = "SELECT a FROM Edux:TeachCourseVideos a WHERE a.chapterId=:chapterId";
-            $model = $this->fetchOne($sql, ["chapterId" => $chapterId], 1);
+            $model = $this->db()->fetchOne($sql, ["chapterId" => $chapterId], 1);
             if (!$model) {
                 $model = new TeachCourseVideos();
             }
@@ -310,13 +310,13 @@ class ChapterService extends AdminBaseService
             $model->setStatus(0);
             $model->setVideoId($videoId);
             $model->setVideoChannel($videoChannel);
-            $id = $this->save($model);
+            $id = $this->db()->save($model);
             // throw new \Exception("aaa");
             $this->ayncTranscode($type, $videoChannel, $videoId);
-            $this->commit();
+            $this->db()->commit();
             return $id;
         } catch (\Exception $e) {
-            $this->rollback();
+            $this->db()->rollback();
             return $this->error()->add($e->getMessage());
         }
     }
@@ -333,12 +333,12 @@ class ChapterService extends AdminBaseService
             if ($videoChannel == 2) {
                 $this->aliyunVodService->submitTranscodeJobs($videoId, function($videoId, $dataKey){
                     $sql = "SELECT a FROM Edux:TeachCourseVideos a WHERE a.videoId=:videoId";
-                    $model = $this->fetchOne($sql, ["videoId"=>$videoId], 1);
+                    $model = $this->db()->fetchOne($sql, ["videoId"=>$videoId], 1);
                     $vodData = $model->getVodData();
                     $vodData = $vodData?json_decode($vodData, true):[];
                     $vodData['aliyunVod'] = $dataKey;
                     $model->setVodData(json_encode($vodData));
-                    $this->save($model);
+                    $this->db()->save($model);
                 });
             } else if ($videoChannel == 1) {
                 $this->tengxunyunVodService->processMediaByProcedureRequest($videoId);
@@ -351,14 +351,14 @@ class ChapterService extends AdminBaseService
         $chapterInfo = $this->getById($chapterId);
         $courseId = $chapterInfo['courseId'];
         $sql = "SELECT a FROM Edux:TeachCourseMaterials a WHERE a.chapterId=:chapterId";
-        $model = $this->fetchOne($sql, ["chapterId" => $chapterId], 1);
+        $model = $this->db()->fetchOne($sql, ["chapterId" => $chapterId], 1);
         if (!$model) {
             $model = new TeachCourseMaterials();
         }
         $model->setChapterId($chapterId);
         $model->setCourseId($courseId);
         $model->setPath($path);
-        return $this->save($model);
+        return $this->db()->save($model);
     }
 
     /**
@@ -451,7 +451,7 @@ class ChapterService extends AdminBaseService
             $parseSetLiveData = $this->parseSetLiveData($pushUrl,  $playUrl, $oldLiveData, $liveAdapter);
         }
         $sql = "SELECT a FROM Edux:TeachCourseVideos a WHERE a.chapterId=:chapterId";
-        $model = $this->fetchOne($sql, ["chapterId" => $chapterId], 1);
+        $model = $this->db()->fetchOne($sql, ["chapterId" => $chapterId], 1);
         if (!$model) {
             $model = new TeachCourseVideos();
         }
@@ -462,7 +462,7 @@ class ChapterService extends AdminBaseService
         $model->setType(1);
         $model->setStatus(0);
         $model->setVideoChannel($liveAdapter);
-        $id = $this->save($model);
+        $id = $this->db()->save($model);
         return $id;
     }
 }

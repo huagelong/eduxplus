@@ -13,8 +13,9 @@ class DbService
     protected $em;
     protected static $originalEventListeners=[];
 
-    protected function setDoctrine($em){
+    public function setDoctrine($em){
         $this->em = $em;
+        return $this;
     }
 
     protected function getDoctrine(){
@@ -275,11 +276,10 @@ class DbService
      * 原生sql，第一行，单个字段值
      * @param $sql  eg "SELECT * FROM XX:XxMsg WHERE uid =?";
      * @param array $params eg ["XX:XxMsg"]
-     * @param array $types
      * @param null $name
      * @return mixed
      */
-    public function fetchColumnBySql($sql, array $params = [], $types = [],$name = null){
+    public function fetchColumnBySql($sql, array $params = [],$name = null){
         $conn = $this->conn($name);
         $result = $conn->fetchcolumn($sql, $params);
         return $result;

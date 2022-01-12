@@ -3,12 +3,12 @@
 namespace Eduxplus\EduxBundle\Command;
 
 use Eduxplus\CoreBundle\Lib\Service\Base\EsService;
-use Eduxplus\CoreBundle\Lib\Service\File\AliyunOssService;
-use Eduxplus\CoreBundle\Lib\Service\Pay\AlipayService;
-use Eduxplus\CoreBundle\Lib\Service\Pay\WxpayService;
+use Eduxplus\CoreBundle\Lib\Service\Base\File\AliyunOssService;
+use Eduxplus\CoreBundle\Lib\Service\Base\Pay\AlipayService;
+use Eduxplus\CoreBundle\Lib\Service\Base\Pay\WxpayService;
 use Eduxplus\CoreBundle\Lib\Service\Base\SmsService;
 use Eduxplus\CoreBundle\Lib\Service\Base\UploadService;
-use Eduxplus\CoreBundle\Lib\Service\Vod\TengxunyunVodService;
+use Eduxplus\CoreBundle\Lib\Service\Base\Vod\TengxunyunVodService;
 use Eduxplus\CoreBundle\Entity\BaseMenu;
 use Eduxplus\CoreBundle\Entity\BaseRoleMenu;
 use Eduxplus\CoreBundle\Lib\Service\HelperService;

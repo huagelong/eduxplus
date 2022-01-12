@@ -6,7 +6,7 @@
  * @Date: 2020/11/9 10:15
  */
 
-namespace Eduxplus\CoreBundle\Lib\Service\Pay;
+namespace Eduxplus\CoreBundle\Lib\Service\Base\Pay;
 
 
 use Eduxplus\CoreBundle\Lib\Base\BaseService;

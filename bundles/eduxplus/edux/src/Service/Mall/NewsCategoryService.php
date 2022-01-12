@@ -17,7 +17,7 @@ class NewsCategoryService extends AdminBaseService
     public function getCategoryTree($parentId)
     {
         $sql = "SELECT a FROM Edux:MallNewsCategory a WHERE a.parentId = :parentId ORDER BY a.sort ASC";
-        $items = $this->fetchAll($sql, ['parentId' => $parentId]);
+        $items = $this->db()->fetchAll($sql, ['parentId' => $parentId]);
         if (!$items) return [];
         $result = [];
         foreach ($items as &$v) {
@@ -43,7 +43,7 @@ class NewsCategoryService extends AdminBaseService
     {
         if (!$id) return "";
         $sql = "SELECT a.parentId FROM Edux:MallNewsCategory a WHERE a.id = :id";
-        $pid = $this->fetchField("parentId", $sql, ['id' => $id]);
+        $pid = $this->db()->fetchField("parentId", $sql, ['id' => $id]);
         if (!$pid) return ",{$id},";
         $str = ",{$id},";
         $str .= ltrim($this->findPath($pid), ",");
@@ -53,7 +53,7 @@ class NewsCategoryService extends AdminBaseService
     public function hasChild($id)
     {
         $sql = "SELECT a FROM Edux:MallNewsCategory a WHERE a.parentId=:parentId";
-        return $this->fetchOne($sql, ['parentId' => $id]);
+        return $this->db()->fetchOne($sql, ['parentId' => $id]);
     }
 
 
@@ -66,34 +66,34 @@ class NewsCategoryService extends AdminBaseService
         $model->setParentId($parentId);
         $model->setIsShow($isShow);
         $model->setSort($sort);
-        return $this->save($model);
+        return $this->db()->save($model);
     }
 
 
     public function getById($id)
     {
         $sql = "SELECT a FROM Edux:MallNewsCategory a WHERE a.id=:id";
-        return $this->fetchOne($sql, ['id' => $id]);
+        return $this->db()->fetchOne($sql, ['id' => $id]);
     }
 
     public function edit($id, $parentId, $name, $sort, $isShow)
     {
         $sql = "SELECT a FROM Edux:MallNewsCategory a WHERE a.id=:id";
         $findPath = $this->findPath($parentId);
-        $model = $this->fetchOne($sql, ['id' => $id], 1);
+        $model = $this->db()->fetchOne($sql, ['id' => $id], 1);
         $model->setName($name);
         $model->setFindPath($findPath);
         $model->setParentId($parentId);
         $model->setIsShow($isShow);
         $model->setSort($sort);
-        return $this->save($model);
+        return $this->db()->save($model);
     }
 
     public function del($id)
     {
         $sql = "SELECT a FROM Edux:MallNewsCategory a WHERE a.id=:id";
-        $model = $this->fetchOne($sql, ['id' => $id], 1);
-        return $this->delete($model);
+        $model = $this->db()->fetchOne($sql, ['id' => $id], 1);
+        return $this->db()->delete($model);
     }
 
     public function updateSort($data, $pid = 0)
@@ -103,10 +103,10 @@ class NewsCategoryService extends AdminBaseService
             foreach ($data as $k => $v) {
                 $id = $v['id'];
                 $sql = "SELECT a FROM Edux:MallNewsCategory a WHERE a.id=:id";
-                $model = $this->fetchOne($sql, ['id' => $id], 1);
+                $model = $this->db()->fetchOne($sql, ['id' => $id], 1);
                 $model->setSort($sort);
                 $model->setParentId($pid);
-                $this->update($model);
+                $this->db()->update($model);
                 if (isset($v['children'])) {
                     $this->updateSort($v['children'], $id);
                 }
@@ -118,7 +118,7 @@ class NewsCategoryService extends AdminBaseService
     public function getAllCategory()
     {
         $sql = "SELECT a FROM Edux:MallNewsCategory a ORDER BY a.sort ASC";
-        $list = $this->fetchAll($sql);
+        $list = $this->db()->fetchAll($sql);
         if (!$list) return [];
 
         $rs = [];

@@ -6,7 +6,7 @@
  * @Date: 2020/5/15 11:47
  */
 
-namespace Eduxplus\CoreBundle\Lib\Service\File;
+namespace Eduxplus\CoreBundle\Lib\Service\Base\File;
 
 use Eduxplus\CoreBundle\Lib\Base\BaseService;
 use OSS\Core\OssException;

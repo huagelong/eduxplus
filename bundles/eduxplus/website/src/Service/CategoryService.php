@@ -18,7 +18,7 @@ class CategoryService extends AppBaseService
     public function getHomeCategory()
     {
         $sql = "SELECT a FROM Edux:TeachCategory a WHERE a.parentId=0 AND a.isShow=1 ORDER BY a.sort ASC";
-        $homeCateGory = $this->fetchAll($sql);
+        $homeCateGory = $this->db()->fetchAll($sql);
         if($homeCateGory){
             foreach ($homeCateGory as &$v){
                 $id = $v['id'];
@@ -32,30 +32,30 @@ class CategoryService extends AppBaseService
     public function getBrands()
     {
         $sql = "SELECT a FROM Edux:TeachCategory a WHERE a.parentId=0 AND a.isShow=1 ORDER BY a.sort ASC";
-        return $this->fetchAll($sql);
+        return $this->db()->fetchAll($sql);
     }
 
     public function getCategory($id)
     {
         $sql = "SELECT a FROM Edux:TeachCategory a WHERE a.id=:id AND a.isShow=1";
-        return $this->fetchOne($sql, ["id" => $id]);
+        return $this->db()->fetchOne($sql, ["id" => $id]);
     }
 
     public function getSubsCategory($id)
     {
         if (!$id){
             $sql = "SELECT a FROM Edux:TeachCategory a WHERE a.parentId > 0 AND a.isShow=1 ORDER BY a.sort ASC";
-            return $this->fetchAll($sql);
+            return $this->db()->fetchAll($sql);
         }
         $sql = "SELECT a FROM Edux:TeachCategory a WHERE a.findPath like :findPath AND a.isShow=1 ORDER BY a.sort ASC";
-        return $this->fetchAll($sql, ["findPath" => '%,'.$id.',%']);
+        return $this->db()->fetchAll($sql, ["findPath" => '%,'.$id.',%']);
     }
 
     public function getSubCategory($id)
     {
         if (!$id) return [];
         $sql = "SELECT a FROM Edux:TeachCategory a WHERE a.parentId=:parentId AND a.isShow=1 ORDER BY a.sort ASC";
-        return $this->fetchAll($sql, ["parentId" => $id]);
+        return $this->db()->fetchAll($sql, ["parentId" => $id]);
     }
 
 }

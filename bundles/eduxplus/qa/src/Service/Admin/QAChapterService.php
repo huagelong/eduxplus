@@ -43,7 +43,7 @@ class QAChapterService extends AdminBaseService
             foreach ($items as $v) {
                 $vArr = $this->toArray($v);
                 $sql = "SELECT a FROM Edux:TeachCategory a WHERE a.id=:id";
-                $categoryInfo = $this->fetchOne($sql, ['id' => $vArr['categoryId']]);
+                $categoryInfo = $this->db()->fetchOne($sql, ['id' => $vArr['categoryId']]);
                 $vArr['category'] = $categoryInfo['name'];
                 $itemsArr[] = $vArr;
             }
@@ -60,7 +60,7 @@ class QAChapterService extends AdminBaseService
             $sql = $sql . " AND a.id !=:id ";
             $params['id'] = $id;
         }
-        return $this->fetchOne($sql, $params);
+        return $this->db()->fetchOne($sql, $params);
     }
 
 
@@ -69,23 +69,23 @@ class QAChapterService extends AdminBaseService
         $model->setName($name);
         $model->setCategoryId($categoryId);
         $model->setStatus($status);
-        return $this->save($model);
+        return $this->db()->save($model);
     }
 
     public function edit($id, $name, $categoryId, $status){
         $sql = "SELECT a FROM Qa:TeachQAChapter a WHERE a.id=:id";
-        $model = $this->fetchOne($sql, ['id' => $id], 1);
+        $model = $this->db()->fetchOne($sql, ['id' => $id], 1);
         if($model){
             $model->setName($name);
             $model->setCategoryId($categoryId);
             $model->setStatus($status);
-            return $this->save($model);
+            return $this->db()->save($model);
         }
     }
 
     public function getById($id){
         $sql = "SELECT a FROM Qa:TeachQAChapter a WHERE a.id=:id";
-        return $this->fetchOne($sql, ['id' => $id]);
+        return $this->db()->fetchOne($sql, ['id' => $id]);
     }
 
     public function searchResultByid($chapterId){
@@ -96,10 +96,10 @@ class QAChapterService extends AdminBaseService
 
     public function del($id){
         $sql = "SELECT count(a.id) as cnt FROM Qa:TeachQAChapterSub a WHERE a.chapterId = :chapterId";
-        $sub = $this->fetchField("cnt", $sql, ["chapterId"=>$id]);
+        $sub = $this->db()->fetchField("cnt", $sql, ["chapterId"=>$id]);
         if($sub>0) return $this->error()->add("请先删除章节点数据");
         $sql = "DELETE FROM Qa:TeachQAChapter a WHERE a.id=:id";
-        $this->execute($sql, ["id" => $id]);
+        $this->db()->execute($sql, ["id" => $id]);
         return true;
     }
 
@@ -112,10 +112,10 @@ class QAChapterService extends AdminBaseService
      */
     public function switchStatus($id, $state){
         $sql = "SELECT a FROM Qa:TeachQAChapter a WHERE a.id=:id";
-        $model = $this->fetchOne($sql, ['id' => $id], 1);
+        $model = $this->db()->fetchOne($sql, ['id' => $id], 1);
         $model->setStatus($state);
 
-        return $this->save($model);
+        return $this->db()->save($model);
     }
 
     public function searchChapterByName($name, $categoryId=0){
@@ -131,7 +131,7 @@ class QAChapterService extends AdminBaseService
             $params['categoryId'] = $categoryIds;
         }
 
-        $list = $this->fetchAll($sql, $params);
+        $list = $this->db()->fetchAll($sql, $params);
         if (!$list) return [];
         $rs = [];
         foreach ($list as $v) {
