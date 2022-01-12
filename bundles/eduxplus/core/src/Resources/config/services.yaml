@@ -24,10 +24,13 @@ services:
             - [ inject, [ "@doctrine","@serializer",
                           "@request_stack","@router.default",
                           "@parameter_bag","@property_accessor",
-                          "@security.token_storage","@service_container","@security.helper","@monolog.logger"] ]
+                          "@security.token_storage","@service_container","@security.helper","@monolog.logger", "@base.dbservice"] ]
 
     base.service:
         alias: Eduxplus\CoreBundle\Lib\Base\BaseService
+
+    base.dbservice:
+        alias: Eduxplus\CoreBundle\Lib\Base\DbService
 
     Eduxplus\CoreBundle\Lib\Base\AdminBaseService:
         parent: base.service
