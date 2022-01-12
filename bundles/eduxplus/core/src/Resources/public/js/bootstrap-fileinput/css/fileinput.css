@@ -467,7 +467,7 @@
 }
 
 .file-zoom-content {
-    height: 480px;
+    height: 380px;
     text-align: center;
 }
 
@@ -491,13 +491,13 @@
 
 @media (min-width: 576px) {
     .file-zoom-dialog .modal-dialog {
-        max-width: 500px;
+        max-width: 200px;
     }
 }
 
 @media (min-width: 992px) {
     .file-zoom-dialog .modal-lg {
-        max-width: 800px;
+        max-width: 600px;
     }
 }
 

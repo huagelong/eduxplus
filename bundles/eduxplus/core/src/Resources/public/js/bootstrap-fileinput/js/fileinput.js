@@ -5518,8 +5518,8 @@
             close: '<i class="glyphicon glyphicon-remove"></i>'
         },
         previewZoomButtonClasses: {
-            prev: 'btn btn-navigate',
-            next: 'btn btn-navigate',
+            prev: 'btn btn-sm  btn-navigate',
+            next: 'btn btn-sm  btn-navigate',
             toggleheader: 'btn btn-sm btn-kv btn-default btn-outline-secondary',
             fullscreen: 'btn btn-sm btn-kv btn-default btn-outline-secondary',
             borderless: 'btn btn-sm btn-kv btn-default btn-outline-secondary',
