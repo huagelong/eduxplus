@@ -18,6 +18,7 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\UsageTrackingTo
 use Psr\Container\ContainerInterface;
 use Symfony\Component\Security\Core\Security;
 use Psr\Log\LoggerInterface;
+use Eduxplus\CoreBundle\Lib\Base\DbService;
 
 class BaseService
 {
@@ -46,6 +47,8 @@ class BaseService
      */
     private $logger;
 
+    private $db;
+
     public function inject(ManagerRegistry $em,
                          SerializerInterface $serializer,
                          RequestStack $requestStack,
@@ -55,7 +58,9 @@ class BaseService
                            UsageTrackingTokenStorage $tokenStorage,
                            ContainerInterface $container,
                            Security $security,
-                           LoggerInterface $logger
+                           LoggerInterface $logger,
+                           DbService $db
+
     ){
         $this->em = $em;
         $this->serializer = $serializer;
@@ -67,6 +72,7 @@ class BaseService
         $this->container =$container;
         $this->security = $security;
         $this->logger = $logger;
+        $this->db = $db;
     }
 
     public final function isGranted(mixed $attributes, mixed $subject = null): bool
@@ -77,6 +83,12 @@ class BaseService
     public final function get(string $id): object
     {
         return $this->container->get($id);
+    }
+
+    public final function db()
+    {
+        $db = $db->setDoctrine($this->em);
+        return $db;
     }
 
     public final function error()

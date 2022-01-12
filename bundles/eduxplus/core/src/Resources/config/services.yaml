@@ -38,6 +38,10 @@ services:
     Eduxplus\CoreBundle\Lib\Base\AppBaseService:
         parent: base.service
 
+    Eduxplus\CoreBundle\Lib\Base\DbService:
+        class: Eduxplus\CoreBundle\Lib\Base\DbService
+
+
     Eduxplus\CoreBundle\Lib\Service\Base\:
         resource: '../../../src/Lib/Service/Base/*'
         parent: base.service

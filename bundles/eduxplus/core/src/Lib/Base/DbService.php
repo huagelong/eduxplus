@@ -13,6 +13,9 @@ class DbService
     protected $em;
     protected static $originalEventListeners=[];
 
+    protected function setDoctrine($em){
+        $this->em = $em;
+    }
 
     protected function getDoctrine(){
         return $this->em;
