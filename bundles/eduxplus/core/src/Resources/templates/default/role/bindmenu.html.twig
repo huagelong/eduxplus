@@ -65,10 +65,6 @@ $(function(){
 </script>
 {% endblock %}
 {% block page %}
-<div class="card">
-     <div class="card-body"> 
-    <div class="row">
-        <div class="col-md-12">
             <div class="card card-default">
                 <div class="card-header">
                     <div class="btn-group">
@@ -92,14 +88,10 @@ $(function(){
                         </div>
                     {% endif %}
                 </div>
-                <div class="card-body table-responsive no-padding">
+                <div class="card-body table-responsive">
                     <div class="dd" id="menu-tree">
                         {{ macros.bind_menu(allMenu, 0, info, menuIds) }}
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-  </div>
-    </div>
 {% endblock %}

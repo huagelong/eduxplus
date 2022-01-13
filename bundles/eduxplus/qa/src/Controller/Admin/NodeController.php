@@ -78,13 +78,7 @@ class NodeController extends BaseAdminController
             return [$this->generateUrl("admin_api_glob_searchAdminUserDo"), $users];
         });
 
-        $data = [];
-        $data['chapter'] = $chapterService->getById($chapterId);
-        $data['chapterId'] = $chapterId;
-        $data['chapterSubId'] = $chapterSubId;
-        $data['list'] = $grid->create($request, $pageSize);
-
-        return $this->render("@QaBundleAdmin/node/index.html.twig", $data);
+        return $this->content()->renderList($grid->create($request, $pageSize));
     }
 
 

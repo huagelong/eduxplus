@@ -36,53 +36,43 @@
 
 {% block page %}
 <div class="card">
-     <div class="card-body"> 
-    <div class="row">
-        <div class="col-md-12">
-            <div class="card card-default">
-                <div class="card-header">
-                    <div class="btn-group">
-                        <button class="btn btn-primary btn-sm tree-tools" data-action="expand" title="展开">
-                            <i class="mdi mdi-plus-box-outline"></i>&nbsp;展开
-                        </button>
-                        <button class="btn btn-primary btn-sm tree-tools active" data-action="collapse"
-                           title="收起">
-                            <i class="mdi mdi-minus-box-outline"></i>&nbsp;收起
-                        </button>
-                    </div>
-                    {% if is_authorized('admin_api_teach_studyplan_updateSort') %}
-                        <div class="btn-group">
-                            <button class="btn btn-info btn-sm" id="sortSave" title="保存">
-                                <i class="mdi mdi-content-save"></i><span class="hidden-xs">&nbsp;保存排序 </span>
-                            </button>
-                        </div>
-                    {% endif %}
-
-                    {% if is_authorized('admin_teach_studyplan_add') %}
-                    <div class="btn-group">
-                        <a href="{{ path("admin_teach_studyplan_add", {"id":id}) }}" data-width="1000px" class="btn btn-sm btn-success poppage" title="添加" style="margin-right: 10px;">
-                            <i class="mdi mdi-plus"></i><span class="hidden-sm">添加</span>
-                        </a>
-                    </div>
-                    {% endif %}
-
-                </div>
-                {% if planList %}
-                <div class="card-body table-responsive no-padding">
-                    <div class="dd" id="tree">
-                        {{ macros.studyplan_tree(planList) }}
-                    </div>
-                </div>
-                <div class="navigation">
-                    {{ knp_pagination_render(pagination) }}
-                </div>
-                {% endif %}
-            </div>
+<div class="card-header">
+    <div class="btn-group">
+        <button class="btn btn-primary btn-sm tree-tools" data-action="expand" title="展开">
+            <i class="mdi mdi-plus-box-outline"></i>&nbsp;展开
+        </button>
+        <button class="btn btn-primary btn-sm tree-tools active" data-action="collapse"
+           title="收起">
+            <i class="mdi mdi-minus-box-outline"></i>&nbsp;收起
+        </button>
+    </div>
+    {% if is_authorized('admin_api_teach_studyplan_updateSort') %}
+        <div class="btn-group">
+            <button class="btn btn-info btn-sm" id="sortSave" title="保存">
+                <i class="mdi mdi-content-save"></i><span class="hidden-xs">&nbsp;保存排序 </span>
+            </button>
         </div>
-    </div>
+    {% endif %}
 
-  </div>
+    {% if is_authorized('admin_teach_studyplan_add') %}
+    <div class="btn-group">
+        <a href="{{ path("admin_teach_studyplan_add", {"id":id}) }}" data-width="1000px" class="btn btn-sm btn-success poppage" title="添加" style="margin-right: 10px;">
+            <i class="mdi mdi-plus"></i><span class="hidden-sm">添加</span>
+        </a>
     </div>
+    {% endif %}
 
+</div>
+{% if planList %}
+<div class="card-body table-responsive">
+    <div class="dd" id="tree">
+        {{ macros.studyplan_tree(planList) }}
+    </div>
+</div>
+<div class="navigation">
+    {{ knp_pagination_render(pagination) }}
+</div>
+{% endif %}
+</div>
 {% endblock %}
 

@@ -42,7 +42,7 @@ class QAInstallFixtures extends Fixture
         $this->addMenu("搜索试卷商品", "搜索试卷商品", 0, "admin_qa_api_glob_searchGoodsDo", "", 3, $roleId, 1, 1, 0, 1);
 
 
-        $menuId = $this->addMenu("题库", "题库方面的管理", 0, "", "mdi-newspaper", 20, $roleId, 0, 0, 1);
+        $menuId = $this->addMenu("题库", "题库方面的管理", 0, "", "mdi mdi-newspaper", 20, $roleId, 0, 0, 1);
 
         $mgId = $this->addMenu("试题管理", "试题管理", $menuId, "qa_admin_chapter_index", "", 0, $roleId, 0, 0, 1);
         $this->addMenu("章节点集合添加", "展示章节点集合添加页面", $mgId, "qa_admin_chapter_add", "", 0, $roleId, 0, 1, 0);

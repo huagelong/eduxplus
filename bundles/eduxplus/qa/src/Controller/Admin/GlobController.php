@@ -26,8 +26,6 @@ class GlobController extends BaseAdminController
         return $data;
     }
 
-
-    
     public function searchGoodsDoAction(Request $request, GoodsService $goodsService){
         $kw = $request->get("kw");
         if(!$kw) return [];

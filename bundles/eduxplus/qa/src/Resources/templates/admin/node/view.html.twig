@@ -6,45 +6,37 @@
 {% endblock %}
 
 {% block page %}
-  <div class="card">
-     <div class="card-body"> 
-    <div class="row">
-      <div class="col-md-12">
-        <div class="card card-default">
-            <div class="card-body" style="display: block;">
-              {{ formData|raw }}
-              <div class="form-group  row " id="choose">
-                <label for="title" class="col-sm-2 require col-form-label" >选择项:</label>
-                <div class="col-sm-8">
-                  <div class="input-group">
-                    A、<input type="text" disabled="disabled" style="margin-bottom: 10px;" name="choose[]" class="form-control form-control-sm" value="{{ if_set(info['sub']['options'], 0, '') }}" />
-                  </div>
-                  <div class="input-group">
-                    B、<input type="text" disabled="disabled"  style="margin-bottom: 10px;"  name="choose[]" class="form-control form-control-sm" value="{{ if_set(info['sub']['options'], 1, '') }}" />
-                  </div>
-                  <div class="input-group">
-                    C、<input type="text" disabled="disabled"  style="margin-bottom: 10px;"  name="choose[]" class="form-control form-control-sm" value="{{ if_set(info['sub']['options'], 2, '') }}" />
-                  </div>
-                  <div class="input-group">
-                    D、<input type="text"  disabled="disabled" style="margin-bottom: 10px;"  name="choose[]" class="form-control form-control-sm" value="{{ if_set(info['sub']['options'], 3, '') }}" />
-                  </div>
-                  <div class="input-group">
-                    E、<input type="text"  disabled="disabled" style="margin-bottom: 10px;"  name="choose[]" class="form-control form-control-sm" value="{{ if_set(info['sub']['options'], 4, '') }}" />
-                  </div>
-                </div>
-              </div>
-              <div class="form-group  row">
-                <label for="title" class="col-sm-2 require col-form-label" >答案:</label>
-                <div class="col-sm-8">
-                  <div class="input-group">
-                    <input type="text"  disabled="disabled" name="answer" class="form-control form-control-sm" value="{{ info['sub']['answer'] }}" placeholder="多个答案使用'|'隔开,答案中有'|'使用'\|'替代" />
-                  </div>
-                </div>
-              </div>
-            </div>
+<div class="card card-default">
+    <div class="card-body" style="display: block;">
+      {{ formData|raw }}
+      <div class="form-group  row " id="choose">
+        <label for="title" class="col-sm-2 require col-form-label" >选择项:</label>
+        <div class="col-sm-8">
+          <div class="input-group">
+            A、<input type="text" disabled="disabled" style="margin-bottom: 10px;" name="choose[]" class="form-control form-control-sm" value="{{ if_set(info['sub']['options'], 0, '') }}" />
+          </div>
+          <div class="input-group">
+            B、<input type="text" disabled="disabled"  style="margin-bottom: 10px;"  name="choose[]" class="form-control form-control-sm" value="{{ if_set(info['sub']['options'], 1, '') }}" />
+          </div>
+          <div class="input-group">
+            C、<input type="text" disabled="disabled"  style="margin-bottom: 10px;"  name="choose[]" class="form-control form-control-sm" value="{{ if_set(info['sub']['options'], 2, '') }}" />
+          </div>
+          <div class="input-group">
+            D、<input type="text"  disabled="disabled" style="margin-bottom: 10px;"  name="choose[]" class="form-control form-control-sm" value="{{ if_set(info['sub']['options'], 3, '') }}" />
+          </div>
+          <div class="input-group">
+            E、<input type="text"  disabled="disabled" style="margin-bottom: 10px;"  name="choose[]" class="form-control form-control-sm" value="{{ if_set(info['sub']['options'], 4, '') }}" />
+          </div>
+        </div>
+      </div>
+      <div class="form-group  row">
+        <label for="title" class="col-sm-2 require col-form-label" >答案:</label>
+        <div class="col-sm-8">
+          <div class="input-group">
+            <input type="text"  disabled="disabled" name="answer" class="form-control form-control-sm" value="{{ info['sub']['answer'] }}" placeholder="多个答案使用'|'隔开,答案中有'|'使用'\|'替代" />
+          </div>
         </div>
       </div>
     </div>
-    </div>
-    </div>
+</div>
 {% endblock %}

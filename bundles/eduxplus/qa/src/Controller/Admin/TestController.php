@@ -95,13 +95,10 @@ class TestController extends BaseAdminController
         });
 
 
-
-        $data = [];
-        $data['list'] = $grid->create($request, $pageSize);
-        return $this->render("@QaBundleAdmin/test/index.html.twig", $data);
+        return $this->content()->renderList($grid->create($request, $pageSize));
     }
 
-    
+
     public function previewAction(Form $form, QATestService $testService){
 
     }
@@ -115,9 +112,9 @@ class TestController extends BaseAdminController
         $form->text("排序")->field("sort")->isRequire(1)->defaultValue(0);
 
         $formData = $form->create($this->generateUrl("qa_admin_test_do_add"));
-        $data = [];
-        $data["formData"] = $formData;$data["breadcrumb"] = 1;
-        return $this->render("@QaBundleAdmin/test/add.html.twig", $data);
+        return $this->content()->title("添加试卷")
+                ->breadcrumb("试卷管理", "qa_admin_test_index")
+                ->renderAdd($formData);
     }
 
     
@@ -153,9 +150,7 @@ class TestController extends BaseAdminController
         $formData = $form->create($this->generateUrl("qa_admin_test_do_edit", [
             'id' => $id
         ]));
-        $data = [];
-        $data["formData"] = $formData;$data["breadcrumb"] = 1;
-        return $this->render("@QaBundleAdmin/test/edit.html.twig", $data);
+        return $this->content()->renderEdit($formData);
     }
 
     

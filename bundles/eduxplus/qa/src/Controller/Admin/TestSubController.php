@@ -49,18 +49,11 @@ class TestSubController extends BaseAdminController
         $grid->sselect("试题类型")->field("a.type")->options(["全部" => -1,"单项选择"=>0,"多项选择"=>1,"不定项选择题"=>2,"判断题"=>3,"填空题"=>4,"问答题"=>5,"理解题"=>6]);
         $grid->stext("试题id")->field("a.qaNodeId");
         $grid->sdaterange("创建时间")->field("a.createdAt");
-
-        $testInfo = $testService->getById($id);
-        $data = [];
-        $data['testInfo'] = $testInfo;
-        $data['list'] = $grid->create($request, $pageSize);
-        return $this->render("@QaBundleAdmin/test/subindex.html.twig", $data);
+        return $this->content()->renderList($grid->create($request, $pageSize));
     }
 
     
     public function mgAction($id,$type,$isFirst, Request $request,QATestService $testService, QATestSubService $testSubService,  CategoryService $categoryService, QAChapterSubService $chapterSubService, QAChapterService $chapterService){
-
-
         $testNodeIds = $testSubService->getAllNodeIds($id);
         $testNodeIdsStr = $testNodeIds?implode(",", $testNodeIds):"";
         $testInfo = $testService->getById($id);
@@ -134,30 +127,6 @@ class TestSubController extends BaseAdminController
         }
 
         return $this->responseMsgRedirect("操作成功!", $this->generateUrl("qa_admin_test_sub_index",["id"=>$id]));
-    }
-
-
-    
-    public function editAction(Form $form){
-
-    }
-
-    
-    public function editDoAction(Request $request){
-
-    }
-
-    
-    public function deleteDoAction($id)
-    {
-
-    }
-
-
-    
-    public function bathdeleteDoAction(Request $request)
-    {
-
     }
 
 }

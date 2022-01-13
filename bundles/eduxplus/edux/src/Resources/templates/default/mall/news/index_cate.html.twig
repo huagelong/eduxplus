@@ -30,8 +30,6 @@
 {% endblock %}
 
 {% block page %}
-  <div class="card">
-     <div class="card-body"> 
     <div class="row">
       <div class="col-md-6">
         <div class="card card-default">
@@ -54,7 +52,7 @@
             {% endif %}
           </div>
           <!-- /.box-header -->
-          <div class="card-body table-responsive no-padding">
+          <div class="card-body table-responsive">
             <div class="dd" id="tree">
               {{ macros.newscategory_tree(categorys) }}
             </div>
@@ -67,7 +65,5 @@
           {{ addFormData|raw }}
         </div>
       {% endif %}
-    </div>
-    </div>
     </div>
 {% endblock %}

@@ -172,7 +172,7 @@ class GoodsController extends BaseAdminController
         $formData = $form->create($this->generateUrl("admin_api_mall_goods_add"));
         return $this->content()->title("添加单个商品")
                 ->breadcrumb("商品管理", "admin_mall_goods_index")
-                ->renderList($formData);
+                ->renderAdd($formData);
     }
     
     public function addGroupAction(
@@ -227,7 +227,7 @@ class GoodsController extends BaseAdminController
         $formData = $form->create($this->generateUrl("admin_api_mall_goods_add"));
         return $this->content()->title("添加组合商品")
             ->breadcrumb("商品管理", "admin_mall_goods_index")
-            ->renderList($formData);
+            ->renderAdd($formData);
     }
 
     

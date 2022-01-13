@@ -68,9 +68,7 @@ class ChapterSubController extends BaseAdminController
         $form->boole("展示？")->field("status")->isRequire()->defaultValue($info['status']);
 
         $formData = $form->create($this->generateUrl("qa_admin_chaptersub_edit_do", ['id' => $id]));
-        $data = [];
-        $data["formData"] = $formData;$data["breadcrumb"] = 1;
-        return $this->render("@QaBundleAdmin/chaptersub/edit.html.twig", $data);
+        return $this->content()->renderEdit($formData);
 
     }
 

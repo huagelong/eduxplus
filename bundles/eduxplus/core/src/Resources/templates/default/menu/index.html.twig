@@ -42,46 +42,37 @@
 
 {% block page %}
 <div class="card">
-     <div class="card-body"> 
-    <div class="row">
-        <div class="col-md-12">
-            <div class="card card-default">
-                <div class="card-header row">
-<div class="col-md-6">
-                        <button class="btn btn-primary btn-sm menu-tree-tools" data-action="expand" title="展开">
-                            <i class="mdi mdi-plus-box-outline"></i>&nbsp;展开
-                        </button>
-                        <button class="btn btn-primary btn-sm menu-tree-tools active" data-action="collapse"
-                           title="收起">
-                            <i class="mdi mdi-minus-box-outline"></i>&nbsp;收起
-                        </button>
+    <div class="card-header row">
+        <div class="col-md-6">
+            <button class="btn btn-primary btn-sm menu-tree-tools" data-action="expand" title="展开">
+                <i class="mdi mdi-plus-box-outline"></i>&nbsp;展开
+            </button>
+            <button class="btn btn-primary btn-sm menu-tree-tools active" data-action="collapse"
+               title="收起">
+                <i class="mdi mdi-minus-box-outline"></i>&nbsp;收起
+            </button>
 
-                        {% if is_authorized('admin_api_menu_updateSort') %}
-                            <button class="btn btn-info btn-sm" id="menuSortSave" title="保存">
-                                <i class="mdi mdi-content-save"></i><span class="hidden-xs">&nbsp;保存排序 </span>
-                            </button>
-                        {% endif %}
+            {% if is_authorized('admin_api_menu_updateSort') %}
+                <button class="btn btn-info btn-sm" id="menuSortSave" title="保存">
+                    <i class="mdi mdi-content-save"></i><span class="hidden-xs">&nbsp;保存排序 </span>
+                </button>
+            {% endif %}
 
-                        {% if is_authorized('admin_api_menu_add') %}
-                            <a class="btn btn-info btn-sm mypoppage" title="添加" href="{{ path("admin_menu_add") }}">
-                                <i class="mdi mdi-plus"></i><span class="hidden-xs">&nbsp;添加 </span>
-                            </a>
-                        {% endif %}
-</div>
-                </div>
-                <!-- /.box-header -->
-                <div class="card-body table-responsive no-padding">
-                    <div class="dd" id="menu-tree">
-                        {{ macros.menu_links(allMenu, 0) }}
-                    </div>
-                </div>
-                <!-- /.box-body -->
-            </div>
+            {% if is_authorized('admin_api_menu_add') %}
+                <a class="btn btn-info btn-sm mypoppage" title="添加" href="{{ path("admin_menu_add") }}">
+                    <i class="mdi mdi-plus"></i><span class="hidden-xs">&nbsp;添加 </span>
+                </a>
+            {% endif %}
         </div>
     </div>
-
-  </div>
+    <!-- /.box-header -->
+    <div class="card-body table-responsive">
+        <div class="dd" id="menu-tree">
+            {{ macros.menu_links(allMenu, 0) }}
+        </div>
     </div>
+    <!-- /.box-body -->
+</div>
 
 {% endblock %}
 

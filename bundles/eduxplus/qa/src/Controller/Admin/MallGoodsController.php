@@ -115,11 +115,7 @@ class MallGoodsController extends BaseAdminController
         });
         $grid->sdaterange("创建时间")->field("a.createdAt");
 
-        $data = [];
-
-        $data['list'] = $grid->create($request, $pageSize);
-
-        return $this->render("@QaBundleAdmin/mall/goods/index.html.twig", $data);
+        return $this->content()->renderList($grid->create($request, $pageSize));
     }
 
     
@@ -153,9 +149,9 @@ class MallGoodsController extends BaseAdminController
         $form->text("seo关键字")->field("seoKeyWord");
 
         $formData = $form->create($this->generateUrl("admin_qa_api_mall_goods_add"));
-        $data = [];
-        $data["formData"] = $formData;$data["breadcrumb"] = 1;
-        return $this->render("@QaBundleAdmin/mall/goods/add.html.twig", $data);
+        return $this->content()->title("添加单个试卷商品")
+                ->breadcrumb("试卷商品管理", "admin_qa_mall_goods_index")
+                ->renderAdd($formData);
     }
 
 
@@ -192,9 +188,7 @@ class MallGoodsController extends BaseAdminController
         $form->text("seo关键字")->field("seoKeyWord");
 
         $formData = $form->create($this->generateUrl("admin_qa_api_mall_goods_add"));
-        $data = [];
-        $data["formData"] = $formData;$data["breadcrumb"] = 1;
-        return $this->render("@QaBundleAdmin/mall/goods/addgroup.html.twig", $data);
+        return $this->content()->renderAdd($formData);
     }
 
     
@@ -341,9 +335,7 @@ class MallGoodsController extends BaseAdminController
         $formData = $form->create($this->generateUrl("admin_qa_api_mall_goods_edit", [
             'id' => $id
         ]));
-        $data = [];
-        $data["formData"] = $formData;$data["breadcrumb"] = 1;
-        return $this->render("@QaBundleAdmin/mall/goods/edit.html.twig", $data);
+        return $this->content()->renderEdit($formData);
     }
 
     
@@ -392,9 +384,7 @@ class MallGoodsController extends BaseAdminController
         $formData = $form->create($this->generateUrl("admin_qa_api_mall_goods_edit", [
             'id' => $id
         ]));
-        $data = [];
-        $data["formData"] = $formData;$data["breadcrumb"] = 1;
-        return $this->render("@QaBundleAdmin/mall/goods/editgroup.html.twig", $data);
+        return $this->content()->renderEdit($formData);
     }
 
     
@@ -442,9 +432,7 @@ class MallGoodsController extends BaseAdminController
         $view->text("seo关键字")->field("seoKeyWord")->defaultValue($info['seoKeyWord']);
 
         $formData = $view->create();
-        $data = [];
-        $data["formData"] = $formData;$data["breadcrumb"] = 1;
-        return $this->render("@QaBundleAdmin/mall/goods/view.html.twig", $data);
+        return $this->content()->renderView($formData);
     }
 
     
@@ -491,9 +479,7 @@ class MallGoodsController extends BaseAdminController
         $view->text("seo关键字")->field("seoKeyWord")->defaultValue($info['seoKeyWord']);
 
         $formData = $view->create();
-        $data = [];
-        $data["formData"] = $formData;$data["breadcrumb"] = 1;
-        return $this->render("@QaBundleAdmin/mall/goods/viewgroup.html.twig", $data);
+        return $this->content()->renderView($formData);
     }
 
     

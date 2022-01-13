@@ -83,10 +83,7 @@ class ChapterController extends BaseAdminController
 
         //批量删除
         $grid->setBathDelete("qa_admin_chapter_bathdelete");
-
-        $data = [];
-        $data['list'] = $grid->create($request, $pageSize);
-        return $this->render("@QaBundleAdmin/chapter/index.html.twig", $data);
+        return $this->content()->renderList($grid->create($request, $pageSize));
     }
 
 
@@ -97,9 +94,9 @@ class ChapterController extends BaseAdminController
         $form->boole("上架？")->field("status")->isRequire(1);
 
         $formData = $form->create($this->generateUrl("qa_admin_chapter_do_add"));
-        $data = [];
-        $data["formData"] = $formData;$data["breadcrumb"] = 1;
-        return $this->render("@QaBundleAdmin/chapter/add.html.twig", $data);
+        return $this->content()->title("添加章节点集合")
+                ->breadcrumb("试题管理", "qa_admin_chapter_index")
+                ->renderAdd($formData);
     }
 
     
@@ -132,9 +129,7 @@ class ChapterController extends BaseAdminController
         $formData = $form->create($this->generateUrl("qa_admin_chapter_do_edit", [
             'id' => $id
         ]));
-        $data = [];
-        $data["formData"] = $formData;$data["breadcrumb"] = 1;
-        return $this->render("@QaBundleAdmin/chapter/edit.html.twig", $data);
+        return $this->content()->renderEdit($formData);
     }
 
     

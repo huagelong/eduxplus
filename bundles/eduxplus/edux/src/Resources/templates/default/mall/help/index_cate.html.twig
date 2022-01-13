@@ -31,10 +31,8 @@
 {% endblock %}
 
 {% block page %}
-  <div class="card">
-     <div class="card-body"> 
-    <div class="row">
-      <div class="col-md-6">
+  <div class="row">
+      <div class="col-md-12">
         <div class="card card-default">
           <div class="card-header">
             <div class="btn-group">
@@ -55,7 +53,7 @@
             {% endif %}
           </div>
           <!-- /.box-header -->
-          <div class="card-body table-responsive no-padding">
+          <div class="card-body table-responsive">
             <div class="dd" id="tree">
               {{ macros.helpcategory_tree(categorys) }}
             </div>
@@ -68,7 +66,5 @@
           {{ addFormData|raw }}
         </div>
       {% endif %}
-    </div>
-    </div>
     </div>
 {% endblock %}
