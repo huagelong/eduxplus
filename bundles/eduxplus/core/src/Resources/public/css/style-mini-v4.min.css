@@ -3636,7 +3636,8 @@ button.list-group-item:hover {
 }
 .sidebar-header a img {
     max-width: 240px;
-    margin: 16px 0px;
+    margin: 0px 50px 0px 0px;
+    height: 38px;
 }
 /* 左侧导航菜单 */
 .lyear-layout-mini-sidebar {

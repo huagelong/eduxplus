@@ -94,8 +94,7 @@ class AdminBaseService extends BaseService
         $path = \GuzzleHttp\json_decode($path, 1);
         foreach ($path as $v) {
             $fileInfo = $this->getFileInfo($v);
-            //            dump($fileInfo);
-            $type = stristr($fileInfo['mime'], "image") ? "image" : "other";
+            $type = stristr($fileInfo['mime'][1], "image") ? "image" : "other";
             $tmp = [];
             $tmp['type'] = $type;
             $tmp['caption'] = $fileInfo['filename'];
