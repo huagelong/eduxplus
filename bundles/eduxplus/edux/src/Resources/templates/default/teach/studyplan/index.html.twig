@@ -6,15 +6,6 @@
     <li class="breadcrumb-item"><a href="{{ path("admin_teach_product_index", {id:id}) }}">产品管理</a></li>
 {% endblock %}
 
-{% block head_custom_stylesheets %}
-    <link rel="stylesheet" href="{{ asset('assets/plugins/jquery-nestable2/jquery.nestable.min.css') }}">
-{% endblock %}
-
-{% block body_javascript %}
-    {{ parent() }}
-    <script src="{{ asset('assets/plugins/jquery-nestable2/jquery.nestable.min.js') }}"></script>
-{% endblock %}
-
 {% block body_custom_javascript %}
     <script>
         $(function(){

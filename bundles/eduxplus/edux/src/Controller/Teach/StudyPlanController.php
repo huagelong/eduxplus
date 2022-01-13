@@ -35,7 +35,6 @@ class StudyPlanController extends BaseAdminController
         $data['planList'] = $all;
         $data['id'] = $id;
         $data['pagination'] = $pagination;
-        //        print_r($all);exit;
         return $this->render("@EduxBundle/teach/studyplan/index.html.twig", $data);
     }
 
@@ -55,10 +54,10 @@ class StudyPlanController extends BaseAdminController
         $formData = $form->create($this->generateUrl("admin_api_teach_studyplan_add", [
             'id' => $id
         ]));
-        $data = [];
-        $data["formData"] = $formData;$data["breadcrumb"] = 1;
-        $data['id'] = $id;
-        return $this->render("@EduxBundle/teach/studyplan/add.html.twig", $data);
+        return $this->content()->title("添加章节")
+               ->breadcrumb("课程管理", "admin_teach_course_index")
+               ->breadcrumb("章节管理", "admin_teach_chapter_index", ["id"=>$id])
+               ->renderAdd($formData);
     }
 
     /**
@@ -116,10 +115,7 @@ class StudyPlanController extends BaseAdminController
         $formData = $form->create($this->generateUrl("admin_api_teach_studyplan_edit", [
             'id' => $id
         ]));
-        $data = [];
-        $data["formData"] = $formData;$data["breadcrumb"] = 1;
-        $data['id'] = $id;
-        return $this->render("@EduxBundle/teach/studyplan/edit.html.twig", $data);
+        return $this->content()->renderEdit($formData);
     }
 
     /**

@@ -76,10 +76,10 @@ class ChapterController extends BaseAdminController
         $formData = $form->create($this->generateUrl("admin_api_teach_chapter_add", [
             'id' => $id
         ]));
-        $data = [];
-        $data["formData"] = $formData;$data["breadcrumb"] = 1;
-        $data['id'] = $id;
-        return $this->render("@EduxBundle/teach/chapter/add.html.twig", $data);
+        return $this->content()->title("添加章节")
+            ->breadcrumb("课程管理", "admin_teach_course_index")
+            ->breadcrumb("章节管理", "admin_teach_chapter_index", ["id"=>$id])
+            ->renderAdd($formData);
     }
 
     /**
@@ -171,10 +171,7 @@ class ChapterController extends BaseAdminController
         $formData = $form->create($this->generateUrl("admin_api_teach_chapter_edit", [
             'id' => $id
         ]));
-        $data = [];
-        $data["formData"] = $formData;$data["breadcrumb"] = 1;
-        $data['id'] = $id;
-        return $this->render("@EduxBundle/teach/chapter/edit.html.twig", $data);
+        return $this->content()->title("编辑章节")->renderView($formData);
     }
 
     /**
@@ -271,12 +268,6 @@ class ChapterController extends BaseAdminController
             if($liveData){
                 $data["pushUrl"] = $liveData['pushUrl'];
                 $data["playUrl"] = json_encode($liveData['playUrl']);
-//                if($info['videoChannel'] == 1){
-//                    $data["playUrl"] = json_encode($liveData['playUrl']);
-//                }else{
-//                    $data["playUrl"] = $liveData['playUrl'];
-//                }
-
             }
         }
         $data['info'] = $info;

@@ -97,10 +97,7 @@ class CourseController extends BaseAdminController
 
         $grid->sselect("类别")->field("a.categoryId")->options($select);
         $grid->sdaterange("创建时间")->field("a.createdAt");
-
-        $data = [];
-        $data['list'] = $grid->create($request, $pageSize);
-        return $this->render("@EduxBundle/teach/course/index.html.twig", $data);
+        return $this->content()->renderList($grid->create($request, $pageSize));
     }
 
     /**
@@ -126,9 +123,9 @@ class CourseController extends BaseAdminController
         $form->textarea("简介")->field("descr");
 
         $formData = $form->create($this->generateUrl("admin_api_teach_course_add"));
-        $data = [];
-        $data["formData"] = $formData;$data["breadcrumb"] = 1;
-        return $this->render("@EduxBundle/teach/course/add.html.twig", $data);
+        return $this->content()->title("添加课程")
+               ->breadcrumb("课程管理", "admin_teach_course_index")
+                ->renderAdd($formData);
     }
 
     /**
@@ -185,9 +182,7 @@ class CourseController extends BaseAdminController
         $form->textarea("简介")->field("descr")->defaultValue($info['descr']);
 
         $formData = $form->create($this->generateUrl("admin_api_teach_course_edit", ['id' => $id]));
-        $data = [];
-        $data["formData"] = $formData;$data["breadcrumb"] = 1;
-        return $this->render("@EduxBundle/teach/course/edit.html.twig", $data);
+        return $this->content()->renderEdit($formData);
     }
 
     /**

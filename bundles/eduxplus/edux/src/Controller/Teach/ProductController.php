@@ -90,10 +90,7 @@ class ProductController extends BaseAdminController
             return [$this->generateUrl("admin_api_glob_searchAdminUserDo"), $users];
         });
         $grid->sdaterange("创建时间")->field("a.createdAt");
-
-        $data = [];
-        $data['list'] = $grid->create($request, $pageSize);
-        return $this->render("@EduxBundle/teach/product/index.html.twig", $data);
+        return $this->content()->renderList($grid->create($request, $pageSize));
     }
 
     /**
@@ -110,9 +107,9 @@ class ProductController extends BaseAdminController
         $form->textarea("简介")->field("descr");
 
         $formData = $form->create($this->generateUrl("admin_api_teach_product_add"));
-        $data = [];
-        $data["formData"] = $formData;$data["breadcrumb"] = 1;
-        return $this->render("@EduxBundle/teach/product/add.html.twig", $data);
+        return $this->content()->title("添加产品")
+               ->breadcrumb("产品管理", "admin_teach_product_index")
+               ->renderAdd($formData);
     }
 
     /**
@@ -153,9 +150,7 @@ class ProductController extends BaseAdminController
         $form->textarea("简介")->field("descr")->defaultValue($info['descr']);
 
         $formData = $form->create($this->generateUrl("admin_api_teach_product_edit", ['id' => $id]));
-        $data = [];
-        $data["formData"] = $formData;$data["breadcrumb"] = 1;
-        return $this->render("@EduxBundle/teach/product/edit.html.twig", $data);
+        return $this->content()->renderEdit($formData);
     }
 
     /**
