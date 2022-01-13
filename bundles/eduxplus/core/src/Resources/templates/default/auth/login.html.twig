@@ -29,6 +29,10 @@
     <script src="{{ asset('bundles/eduxpluscore/js/lyear-loading.js') }}"></script>
     <script type="text/javascript">
         $(function(){
+
+    if((self != top) && (self.frameElement.getAttribute("name")) && (self.frameElement.getAttribute("name").indexOf("layui-layer") > -1)){
+        parent.location.assign(location.href);
+    }
             $(".recaptcha").captcha();
 
             $("input[name='mobile']").keyup(function(){
