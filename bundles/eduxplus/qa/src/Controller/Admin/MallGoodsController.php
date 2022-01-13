@@ -25,10 +25,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class MallGoodsController extends BaseAdminController
 {
 
-    /**
-     *
-     * @Route("/mall/goods/index", name="admin_qa_mall_goods_index")
-     */
+    
     public function indexAction(
         Request $request,
         Grid $grid,
@@ -125,10 +122,7 @@ class MallGoodsController extends BaseAdminController
         return $this->render("@QaBundleAdmin/mall/goods/index.html.twig", $data);
     }
 
-    /**
-     *
-     * @Route("/mall/goods/add", name="admin_qa_mall_goods_add")
-     */
+    
     public function addAction(
         Form $form,
         ProductService $productService,
@@ -165,10 +159,7 @@ class MallGoodsController extends BaseAdminController
     }
 
 
-    /**
-     *
-     * @Route("/mall/groupGoods/add", name="admin_qa_mall_group_goods_add")
-     */
+    
     public function addGroupAction(
         Form $form,
         ProductService $productService,
@@ -206,10 +197,7 @@ class MallGoodsController extends BaseAdminController
         return $this->render("@QaBundleAdmin/mall/goods/addgroup.html.twig", $data);
     }
 
-    /**
-     *
-     * @Route("/mall/goods/add/do", name="admin_qa_api_mall_goods_add")
-     */
+    
     public function addDoAction(Request $request, QAGoodsService $goodsService, CategoryService $categoryService)
     {
         $name = $request->get("name");
@@ -307,10 +295,7 @@ class MallGoodsController extends BaseAdminController
         return $this->responseMsgRedirect("操作成功!", $this->generateUrl('admin_qa_mall_goods_index'));
     }
 
-    /**
-     *
-     * @Route("/mall/goods/edit/{id}", name="admin_qa_mall_goods_edit")
-     */
+    
     public function editAction(
         $id,
         Form $form,
@@ -361,10 +346,7 @@ class MallGoodsController extends BaseAdminController
         return $this->render("@QaBundleAdmin/mall/goods/edit.html.twig", $data);
     }
 
-    /**
-     *
-     * @Route("/mall/goods/editgroup/{id}", name="admin_qa_mall_goods_editgroup")
-     */
+    
     public function editgroupAction(
         $id,
         Form $form,
@@ -415,10 +397,7 @@ class MallGoodsController extends BaseAdminController
         return $this->render("@QaBundleAdmin/mall/goods/editgroup.html.twig", $data);
     }
 
-    /**
-     *
-     * @Route("/mall/goods/view/{id}", name="admin_qa_mall_goods_view")
-     */
+    
     public function viewAction(
         $id,
         View $view,
@@ -468,10 +447,7 @@ class MallGoodsController extends BaseAdminController
         return $this->render("@QaBundleAdmin/mall/goods/view.html.twig", $data);
     }
 
-    /**
-     *
-     * @Route("/mall/goods/viewgroup/{id}", name="admin_qa_mall_goods_viewgroup")
-     */
+    
     public function viewgroupAction(
         $id,
         View $view,
@@ -520,10 +496,7 @@ class MallGoodsController extends BaseAdminController
         return $this->render("@QaBundleAdmin/mall/goods/viewgroup.html.twig", $data);
     }
 
-    /**
-     *
-     * @Route("/mall/goods/edit/do/{id}", name="admin_qa_api_mall_goods_edit")
-     */
+    
     public function editDoAction($id, Request $request, QAGoodsService $goodsService)
     {
         $name = $request->get("name");
@@ -622,20 +595,14 @@ class MallGoodsController extends BaseAdminController
         return $this->responseMsgRedirect("操作成功!", $this->generateUrl('admin_qa_mall_goods_index'));
     }
 
-    /**
-     *
-     * @Route("/mall/goods/delete/do/{id}", name="admin_qa_api_mall_goods_delete")
-     */
+    
     public function deleteDoAction($id, QAGoodsService $goodsService)
     {
         $goodsService->del($id);
         return $this->responseMsgRedirect("删除成功!", $this->generateUrl("admin_qa_mall_goods_index"));
     }
 
-    /**
-     *
-     * @Route("/mall/goods/bathdelete/do", name="admin_qa_api_mall_goods_bathdelete")
-     */
+    
     public function bathdeleteDoAction(Request $request, QAGoodsService $goodsService)
     {
         $ids = $request->get("ids");
@@ -652,9 +619,7 @@ class MallGoodsController extends BaseAdminController
         return $this->responseMsgRedirect("删除成功!", $this->generateUrl("admin_qa_mall_goods_index"));
     }
 
-    /**
-     * @Route("/mall/goods/switchStatus/do/{id}", name="admin_qa_api_mall_goods_switchStatus")
-     */
+    
     public function switchStatusAction($id, QAGoodsService $goodsService, Request $request)
     {
         $state = (int) $request->get("state");

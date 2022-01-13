@@ -20,10 +20,7 @@ use Eduxplus\CoreBundle\Lib\Grid\Grid;
 class NewsController extends BaseAdminController
 {
 
-    /**
-     *
-     * @Route("/mall/news/index", name="admin_mall_news_index")
-     */
+    
     public function indexAction(Request $request, Grid $grid, NewsService $newsService){
         $pageSize = 40;
         $grid->setListService($newsService, "getList");
@@ -59,18 +56,10 @@ class NewsController extends BaseAdminController
 
         //批量删除
         $grid->setBathDelete("admin_api_mall_news_bathdelete");
-
-        $data = [];
-
-        $data['list'] = $grid->create($request, $pageSize);
-
-        return $this->render("@EduxBundle/mall/news/index.html.twig", $data);
+        return $this->content()->renderList($grid->create($request, $pageSize));
     }
 
-    /**
-     *
-     * @Route("/mall/news/view/{id}", name="admin_mall_news_view")
-     */
+    
     public function viewAction($id, View $view, NewsService $newsService, NewsCategoryService $helpCategoryService){
         $info = $newsService->getById($id);
         $select = $helpCategoryService->categorySelect();
@@ -93,15 +82,11 @@ class NewsController extends BaseAdminController
         $view->boole("上架？")->field("status")->defaultValue($info['status']);
 
         $formData = $view->create();
-        $data = [];
-        $data["formData"] = $formData;$data["breadcrumb"] = 1;
-        return $this->render("@EduxBundle/mall/news/view.html.twig", $data);
+        return $this->content()->renderView($formData);
     }
 
 
-    /**
-     * @Route("/mall/news/add", name="admin_mall_news_add")
-     */
+    
     public function addAction(Form $form, NewsCategoryService $helpCategoryService)
     {
         $select = $helpCategoryService->categorySelect();
@@ -123,14 +108,12 @@ class NewsController extends BaseAdminController
         $form->boole("上架？")->field("status")->isRequire(1);
 
         $formData = $form->create($this->generateUrl("admin_api_mall_news_add"));
-        $data = [];
-        $data["formData"] = $formData;$data["breadcrumb"] = 1;
-        return $this->render("@EduxBundle/mall/news/add.html.twig", $data);
+        return $this->content()->title("添加资讯")
+                ->breadcrumb("资讯管理", "admin_mall_news_index")
+                ->renderAdd($formData);
     }
 
-    /**
-     * @Route("/mall/news/add/do", name="admin_api_mall_news_add")
-     */
+    
     public function addDoAction(Request $request, NewsService $newsService)
     {
         $title = $request->get("title");
@@ -158,9 +141,7 @@ class NewsController extends BaseAdminController
         return $this->responseMsgRedirect("操作成功!", $this->generateUrl('admin_mall_news_index'));
     }
 
-    /**
-     * @Route("/mall/news/edit/{id}", name="admin_mall_news_edit")
-     */
+    
     public function editAction($id, Form $form, NewsService $newsService, NewsCategoryService $newsCategoryService)
     {
         $info = $newsService->getById($id);
@@ -183,14 +164,10 @@ class NewsController extends BaseAdminController
         $form->boole("上架？")->field("status")->isRequire(1)->defaultValue($info['status']);
 
         $formData = $form->create($this->generateUrl("admin_api_mall_news_edit", ["id"=>$id]));
-        $data = [];
-        $data["formData"] = $formData;$data["breadcrumb"] = 1;
-        return $this->render("@EduxBundle/mall/news/edit.html.twig", $data);
+        return $this->content()->renderEdit($formData);
     }
 
-    /**
-     * @Route("/mall/news/edit/do/{id}", name="admin_api_mall_news_edit")
-     */
+    
     public function editDoAction($id, Request $request, NewsService $newsService)
     {
         $title = $request->get("title");
@@ -217,19 +194,14 @@ class NewsController extends BaseAdminController
         return $this->responseMsgRedirect("操作成功!", $this->generateUrl('admin_mall_news_index'));
     }
 
-    /**
-     * @Route("/mall/news/delete/do/{id}", name="admin_api_mall_news_delete")
-     */
+    
     public function deleteDoAction($id, NewsService $newsService)
     {
         $newsService->del($id);
         return $this->responseMsgRedirect("删除成功!", $this->generateUrl("admin_mall_news_index"));
     }
 
-    /**
-     *
-     * @Route("/mall/news/bathdelete/do", name="admin_api_mall_news_bathdelete")
-     */
+    
     public function bathdeleteDoAction(Request $request, NewsService $newsService)
     {
         $ids = $request->get("ids");
@@ -245,11 +217,6 @@ class NewsController extends BaseAdminController
         return $this->responseMsgRedirect("删除成功!", $this->generateUrl("admin_mall_news_index"));
     }
 
-
-
-    /**
-     * @Route("/mall/news/switchStatus/do/{id}", name="admin_api_mall_news_switchStatus")
-     */
     public function switchStatusAction($id, NewsService $newsService, Request $request)
     {
         $state = (int) $request->get("state");

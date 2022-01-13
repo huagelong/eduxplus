@@ -3,15 +3,6 @@
 
 {% block page_title %}菜单管理{% endblock %}
 
-{% block head_custom_stylesheets %}
-    <link rel="stylesheet" href="{{ asset('bundles/eduxpluscore/js/jquery-nestable2/jquery.nestable.min.css') }}">
-{% endblock %}
-
-{% block body_javascript %}
-    {{ parent() }}
-    <script src="{{ asset('bundles/eduxpluscore/js/jquery-nestable2/jquery.nestable.min.js') }}"></script>
-{% endblock %}
-
 {% block body_custom_javascript %}
     <script>
         $(function(){
@@ -22,8 +13,6 @@
             })
 
             $('.select2').select2({"allowClear":true,"placeholder":{"id":"","text":"\u7236\u7ea7\u83dc\u5355"}});
-
-            {# $('.icon').iconpicker({placement:'bottomLeft'}); #}
 
             $('#menu-tree').nestable({maxDepth:3, scroll:true});
 

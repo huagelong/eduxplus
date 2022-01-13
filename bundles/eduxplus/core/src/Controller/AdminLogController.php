@@ -20,9 +20,7 @@ class AdminLogController extends BaseAdminController
 {
 
 
-    /**
-     * @Route("/adminlog/index", name="admin_adminlog_index")
-     */
+    
     public function indexAction(Request $request, AdminlogService $adminLogService, Grid $grid, UserService $userService){
         $pageSize = 40;
         $grid->setListService($adminLogService, "getList");

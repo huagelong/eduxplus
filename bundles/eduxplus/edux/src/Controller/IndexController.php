@@ -26,9 +26,7 @@ class IndexController extends BaseAdminController
 {
 
 
-    /**
-     * @Route("/dashboard", name="admin_dashboard")
-     */
+    
     public function dashboardAction(DashboardService $dashboardService){
         list($todayIncome, $todayRegUserCount, $todayOrderCount, $totalRegUserCount) = $dashboardService->dashboardStat();
 

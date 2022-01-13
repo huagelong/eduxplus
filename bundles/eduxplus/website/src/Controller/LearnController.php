@@ -21,11 +21,6 @@ use Symfony\Component\HttpFoundation\Request;
 class LearnController extends BaseHtmlController
 {
 
-
-    /**
-     * 产品列表
-     * @Route("/my/learn/index/{page}", name="app_learn_index")
-     */
     public function indexAction($page=1, LearnService $learnService)
     {
         $page = $page?$page:1;
@@ -41,11 +36,6 @@ class LearnController extends BaseHtmlController
         return $this->render('@WebsiteBundle/learn/index.html.twig', $data);
     }
 
-    /**
-     * 课程列表
-     *
-     * @Route("/my/courseList/{courseId}", name="app_learn_courseList")
-     */
     public function courseListAction($courseId, LearnService $learnService)
     {
         list($rs, $pathCount) = $learnService->getChapterTree($courseId, 0);
@@ -57,11 +47,6 @@ class LearnController extends BaseHtmlController
         return $this->render('@WebsiteBundle/learn/courseList.html.twig', $data);
     }
 
-    /**
-     * 章节详情
-     *
-     * @Route("/learn/{chapterId}", name="app_learn_detail")
-     */
     public function detailAction($chapterId,
                                  LearnService $learnService,
                                  AliyunVodService $aliyunVodService,

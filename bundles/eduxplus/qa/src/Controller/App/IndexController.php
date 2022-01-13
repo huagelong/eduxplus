@@ -19,9 +19,7 @@ use Psr\Log\LoggerInterface;
 class IndexController extends BaseHtmlController
 {
 
-    /**
-     * @Route("/exam/{categoryId<\d+>?0}/{isFree<\d+>?0}", name="qa_exam_index")
-     */
+    
     public function indexAction($categoryId=0,$isFree=0,Request $request, CategoryService $categoryService, QATestService $qaTestService){
         $data = [];
 
@@ -82,9 +80,7 @@ class IndexController extends BaseHtmlController
         return $this->render("@QaBundle/exam/index.html.twig", $data);
     }
 
-    /**
-     * @Route("/mall/buy/{uuid}", name="qa_mall_buy")
-     */
+    
     public function buyAction($uuid, GoodsService $goodsService){
         $detail = $goodsService->getByUuId($uuid);
         $id = $detail['id'];
@@ -98,11 +94,7 @@ class IndexController extends BaseHtmlController
         return $this->render("@QaBundle/exam/buy.html.twig", $data);
     }
 
-    /**
-     * 我的试卷
-     *
-     * @Route("/my/test", name="qa_mytest")
-     */
+    
     public function mytestAction(Request $request, QATestService $qaTestService){
         $route = $request->get("_route");
         $page = $request->get("page");
@@ -120,11 +112,7 @@ class IndexController extends BaseHtmlController
     }
 
 
-     /**
-     * 试卷详情
-     *
-     * @Route("/test/detail-{id}", name="qa_test_detail")
-     */
+     
     public function testDetailAction($id, QATestService $qaTestService){
         $data = [];
         $data["testInfo"] = $qaTestService->getTestById($id);
@@ -134,11 +122,7 @@ class IndexController extends BaseHtmlController
     }
 
 
-    /**
-     * 做试卷入口页面
-     *
-     * @Route("/test/my/testinit-{id}", name="qa_test_init")
-     */
+    
     public function testInitAction($id, QATestService $qaTestService){
         $data = [];
         $data["testInfo"] = $qaTestService->getTestById($id);
@@ -147,11 +131,7 @@ class IndexController extends BaseHtmlController
     }
 
 
-    /**
-     * 做试卷页面
-     *
-     * @Route("/test/my/todo-{id}", name="qa_test_todo")
-     */
+    
     public function testToDoAction($id, QATestService $qaTestService){
         $data = [];
         $data["testInfo"] = $qaTestService->getTestById($id);
@@ -161,11 +141,7 @@ class IndexController extends BaseHtmlController
         return $this->render("@QaBundle/exam/testTodo.html.twig", $data);
     }
 
-    /**
-     * 保存答案日志
-     *
-     * @Route("/test/my/dosubmitAnswerLog", name="qa_test_submit_answer_log")
-     */
+    
     public function submitAnswerLogAction(QATestService $qaTestService){
         $testId = $this->request()->request->get("testId");
         $nodeId = $this->request()->request->get("nodeId");
@@ -180,11 +156,7 @@ class IndexController extends BaseHtmlController
         return $this->responseSuccess($answerInfo);
     }
 
-    /**
-     *  提交答案
-     * 
-     * @Route("/test/my/dosubmit-{id}", name="qa_test_submit_answer")
-     */
+    
     public function submitAnswerAction($id, QATestService $qaTestService){
         $request = $this->request()->request->all();
         $uid = $this->getUid();
@@ -195,11 +167,7 @@ class IndexController extends BaseHtmlController
         return $this->responseMsgRedirect("提交成功!", $this->generateUrl("qa_test_answer_view", ["id"=>$answerId]));
     }
 
-    /**
-     *  答案展示
-     *
-     * @Route("/test/my/answerView-{id}", name="qa_test_answer_view")
-     */
+    
     public function answerViewAction($id, QATestService $qaTestService){
         $data = [];
         $data['info'] = $qaTestService->getAnswerById($id);

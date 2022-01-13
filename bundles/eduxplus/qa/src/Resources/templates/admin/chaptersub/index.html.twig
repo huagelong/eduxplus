@@ -7,17 +7,6 @@
   <li class="breadcrumb-item">{{ chapter['name'] }}</li>
 {% endblock %}
 
-{% block head_custom_stylesheets %}
-  <link rel="stylesheet" href="{{ asset('assets/plugins/jquery-nestable2/jquery.nestable.min.css') }}">
-  <link rel="stylesheet" href="{{ asset('assets/plugins/fontawesome-iconpicker/css/fontawesome-iconpicker.min.css') }}">
-{% endblock %}
-
-{% block body_javascript %}
-  {{ parent() }}
-  <script src="{{ asset('assets/plugins/jquery-nestable2/jquery.nestable.min.js') }}"></script>
-  <script src="{{ asset('assets/plugins/fontawesome-iconpicker/js/fontawesome-iconpicker.min.js') }}"></script>
-{% endblock %}
-
 {% block body_custom_javascript %}
   <script>
     $(function(){

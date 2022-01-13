@@ -19,10 +19,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 class PageController extends BaseAdminController
 {
-    /**
-     *
-     * @Route("/mall/page/index", name="admin_mall_page_index")
-     */
+    
      public function indexAction( Request $request,Grid $grid, PageService $pageService){
          $pageSize = 40;
          $grid->setListService($pageService, "getList");
@@ -52,33 +49,23 @@ class PageController extends BaseAdminController
          //批量删除
          $grid->setBathDelete("admin_api_mall_page_bathdelete");
 
-         $data = [];
-
-         $data['list'] = $grid->create($request, $pageSize);
-
-         return $this->render("@EduxBundle/mall/page/index.html.twig", $data);
+         return $this->content()->renderList($grid->create($request, $pageSize));
      }
 
-    /**
-     *
-     * @Route("/mall/page/add", name="admin_mall_page_add")
-     */
+    
     public function addAction(Form $form) {
         $form->text("单页名称")->field("name")->isRequire(1);
         $form->richEditor("内容")->field("content")->isRequire(1);
         $form->boole("上架？")->field("status")->isRequire(1);
 
         $formData = $form->create($this->generateUrl("admin_api_mall_page_add"));
-        $data = [];
-        $data["formData"] = $formData;$data["breadcrumb"] = 1;
-        return $this->render("@EduxBundle/mall/page/add.html.twig", $data);
+        return $this->content()->title("添加单页")
+                ->breadcrumb("单页管理", "admin_mall_page_index")
+                ->renderAdd($formData);
     }
 
 
-    /**
-     *
-     * @Route("/mall/page/add/do", name="admin_api_mall_page_add")
-     */
+    
     public function addDoAction(Request $request, PageService $pageService)
     {
         $name = $request->get("name");
@@ -100,10 +87,7 @@ class PageController extends BaseAdminController
     }
 
 
-    /**
-     *
-     * @Route("/mall/page/view/{id}", name="admin_mall_page_view")
-     */
+    
     public function viewAction($id, View $view, PageService $pageService) {
         $info = $pageService->getById($id);
 
@@ -112,15 +96,10 @@ class PageController extends BaseAdminController
         $view->boole("上架？")->field("status")->defaultValue($info['status']);
 
         $formData = $view->create();
-        $data = [];
-        $data["formData"] = $formData;$data["breadcrumb"] = 1;
-        return $this->render("@EduxBundle/mall/page/view.html.twig", $data);
+        return $this->content()->renderView($formData);
     }
 
-    /**
-     *
-     * @Route("/mall/page/edit/{id}", name="admin_mall_page_edit")
-     */
+    
     public function editAction($id, Form $form, PageService $pageService) {
         $info = $pageService->getById($id);
 
@@ -129,15 +108,10 @@ class PageController extends BaseAdminController
         $form->boole("上架？")->field("status")->isRequire(1)->defaultValue($info['status']);
 
         $formData = $form->create($this->generateUrl("admin_api_mall_page_edit", ["id"=>$id]));
-        $data = [];
-        $data["formData"] = $formData;$data["breadcrumb"] = 1;
-        return $this->render("@EduxBundle/mall/page/edit.html.twig", $data);
+        return $this->content()->renderEdit($formData);
     }
 
-    /**
-     *
-     * @Route("/mall/page/edit/do/{id}", name="admin_api_mall_page_edit")
-     */
+    
     public function editDoAction($id, Request $request, PageService $pageService)
     {
         $name = $request->get("name");
@@ -159,21 +133,13 @@ class PageController extends BaseAdminController
     }
 
 
-    /**
-     *
-     * @Route("/mall/page/delete/do/{id}", name="admin_api_mall_page_delete")
-     */
+    
     public function deleteDoAction($id, PageService $pageService)
     {
         $pageService->del($id);
         return $this->responseMsgRedirect("删除成功!", $this->generateUrl("admin_mall_page_index"));
     }
-
-
-    /**
-     *
-     * @Route("/mall/page/bathdelete/do", name="admin_api_mall_page_bathdelete")
-     */
+    
     public function bathDeleteDoAction(Request $request, PageService $pageService)
     {
         $ids = $request->get("ids");
@@ -188,11 +154,7 @@ class PageController extends BaseAdminController
 
         return $this->responseMsgRedirect("删除成功!", $this->generateUrl("admin_mall_page_index"));
     }
-
-
-    /**
-     * @Route("/mall/page/switchStatus/do/{id}", name="admin_api_mall_page_switchStatus")
-     */
+    
     public function switchStatusAction($id, PageService $pageService, Request $request)
     {
         $state = (int) $request->get("state");

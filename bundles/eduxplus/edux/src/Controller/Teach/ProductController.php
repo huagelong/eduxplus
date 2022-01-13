@@ -21,9 +21,7 @@ use Eduxplus\CoreBundle\Lib\Grid\Grid;
 class ProductController extends BaseAdminController
 {
 
-    /**
-     * @Route("/teach/product/index", name="admin_teach_product_index")
-     */
+    
     public function indexAction(Request $request, Grid $grid, ProductService $productService, CategoryService $categoryService, UserService $userService)
     {
 
@@ -93,9 +91,7 @@ class ProductController extends BaseAdminController
         return $this->content()->renderList($grid->create($request, $pageSize));
     }
 
-    /**
-     * @Route("/teach/product/add", name="admin_teach_product_add")
-     */
+    
     public function addAction(Form $form, ProductService $productService, CategoryService $categoryService)
     {
 
@@ -112,9 +108,7 @@ class ProductController extends BaseAdminController
                ->renderAdd($formData);
     }
 
-    /**
-     * @Route("/teach/product/add/do", name="admin_api_teach_product_add")
-     */
+    
     public function addDoAction(Request $request, ProductService $productService)
     {
         $name = $request->get("name");
@@ -134,9 +128,7 @@ class ProductController extends BaseAdminController
         return $this->responseMsgRedirect("添加成功!", $this->generateUrl("admin_teach_product_index"));
     }
 
-    /**
-     * @Route("/teach/product/edit/{id}", name="admin_teach_product_edit")
-     */
+    
     public function editAction($id, Form $form, ProductService $productService,  CategoryService $categoryService)
     {
         $info = $productService->getById($id);
@@ -153,9 +145,7 @@ class ProductController extends BaseAdminController
         return $this->content()->renderEdit($formData);
     }
 
-    /**
-     * @Route("/teach/product/edit/do/{id}", name="admin_api_teach_product_edit")
-     */
+    
     public function editDoAction($id, Request $request, ProductService $productService)
     {
         $name = $request->get("name");
@@ -175,18 +165,14 @@ class ProductController extends BaseAdminController
         return $this->responseMsgRedirect("编辑成功!", $this->generateUrl("admin_teach_product_index"));
     }
 
-    /**
-     * @Route("/teach/product/delete/do/{id}", name="admin_api_teach_product_delete")
-     */
+    
     public function deleteDoAction($id, ProductService $productService)
     {
         $productService->del($id);
         return $this->responseMsgRedirect("删除成功!", $this->generateUrl("admin_teach_product_index"));
     }
 
-    /**
-     * @Route("/teach/product/bathdelete/do", name="admin_api_teach_product_bathdelete")
-     */
+    
     public function bathdeleteDoAction(Request $request, ProductService $productService)
     {
         $ids = $request->get("ids");
@@ -203,9 +189,7 @@ class ProductController extends BaseAdminController
         return $this->responseMsgRedirect("删除成功!", $this->generateUrl("admin_teach_product_index"));
     }
 
-    /**
-     * @Route("/teach/product/switchStatus/do/{id}", name="admin_api_teach_product_switchStatus")
-     */
+    
     public function switchStatusAction($id, ProductService $productService, Request $request)
     {
         $state = (int) $request->get("state");

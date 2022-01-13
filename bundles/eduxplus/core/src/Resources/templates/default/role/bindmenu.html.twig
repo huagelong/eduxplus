@@ -1,15 +1,6 @@
 {% extends "@CoreBundle/layout/pop.html.twig" %}
 {% import "@CoreBundle/macros/bind_menu.html.twig" as macros %}
 
-{% block head_custom_stylesheets %}
-    <link rel="stylesheet" href="{{ asset('assets/plugins/jquery-nestable2/jquery.nestable.min.css') }}">
-{% endblock %}
-
-{% block body_javascript %}
-    {{ parent() }}
-    <script src="{{ asset('assets/plugins/jquery-nestable2/jquery.nestable.min.js') }}"></script>
-{% endblock %}
-
 {% block body_custom_javascript %}
 <script>
 $(function(){

@@ -18,9 +18,7 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class HomeController extends BaseApiController
 {
-    /**
-     * @Route("/homePage",name="api_home_homePage")
-     */
+    
     public function homePageAction(GoodService $goodService)
     {
         $data = $goodService->getHomeData();

@@ -20,9 +20,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class UserController extends BaseApiController
 {
-    /**
-     * @Route("/my/meinfo", name="api_user_meinfo")
-     */
+    
     public function meinfoAction()
     {
         $userInfo = $this->getUserInfo();
@@ -38,9 +36,7 @@ class UserController extends BaseApiController
         return $data;
     }
 
-    /**
-     * @Route("/my/mecourse", name="api_user_mecourse")
-     */
+    
     public function mecourseAction(Request $request, GoodService $goodService){
         $page = (int) $request->get("p", 1);
         $page = $page<1?1:$page;
@@ -50,11 +46,7 @@ class UserController extends BaseApiController
         return ["totalCount"=>$totalCount, "totalPage"=>$totalPage, "list"=>$list];
     }
 
-    /**
-     * 课程列表
-     *
-     * @Route("/my/courseList", name="api_user_courseList")
-     */
+    
     public function courseListAction(Request $request, LearnService $learnService){
         $courseId = $request->get("courseId");
         if(!$courseId) return $this->responseError("参数输入错误!");

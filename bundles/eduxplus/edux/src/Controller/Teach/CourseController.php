@@ -21,9 +21,7 @@ use Eduxplus\CoreBundle\Lib\Grid\Grid;
 class CourseController extends BaseAdminController
 {
 
-    /**
-     * @Route("/teach/course/index", name="admin_teach_course_index")
-     */
+    
     public function indexAction(Request $request, Grid $grid, CourseService $courseService, UserService  $userService, CategoryService $categoryService)
     {
 
@@ -100,9 +98,7 @@ class CourseController extends BaseAdminController
         return $this->content()->renderList($grid->create($request, $pageSize));
     }
 
-    /**
-     * @Route("/teach/course/add", name="admin_teach_course_add")
-     */
+    
     public function addAction(Form $form, CourseService $courseService, CategoryService $categoryService)
     {
         $form->text("课程名称")->field("name")->isRequire(1);
@@ -128,9 +124,7 @@ class CourseController extends BaseAdminController
                 ->renderAdd($formData);
     }
 
-    /**
-     * @Route("/teach/course/add/do", name="admin_api_teach_course_add")
-     */
+    
     public function addDoAction(Request $request, CourseService $courseService)
     {
         $name = $request->get("name");
@@ -155,9 +149,7 @@ class CourseController extends BaseAdminController
         return $this->responseMsgRedirect("添加成功!", $this->generateUrl("admin_teach_course_index"));
     }
 
-    /**
-     * @Route("/teach/course/edit/{id}", name="admin_teach_course_edit")
-     */
+    
     public function editAction($id, Form $form, CourseService $courseService,  CategoryService $categoryService)
     {
         $info = $courseService->getById($id);
@@ -185,9 +177,7 @@ class CourseController extends BaseAdminController
         return $this->content()->renderEdit($formData);
     }
 
-    /**
-     * @Route("/teach/course/edit/do/{id}", name="admin_api_teach_course_edit")
-     */
+    
     public function editDoAction($id, Request $request, CourseService $courseService)
     {
         $name = $request->get("name");
@@ -207,9 +197,7 @@ class CourseController extends BaseAdminController
         return $this->responseMsgRedirect("编辑成功!", $this->generateUrl("admin_teach_course_index"));
     }
 
-    /**
-     * @Route("/teach/course/delete/do/{id}", name="admin_api_teach_course_delete")
-     */
+    
     public function deleteDoAction($id, CourseService $courseService)
     {
         if ($courseService->hasChapter($id)) return $this->responseError("删除失败，请先删除子章节!");
@@ -217,9 +205,7 @@ class CourseController extends BaseAdminController
         return $this->responseMsgRedirect("删除成功!", $this->generateUrl("admin_teach_course_index"));
     }
 
-    /**
-     * @Route("/teach/course/bathdelete/do", name="admin_api_teach_course_bathdelete")
-     */
+    
     public function bathDeleteDoAction(Request $request, CourseService $courseService)
     {
         $ids = $request->get("ids");
@@ -233,9 +219,7 @@ class CourseController extends BaseAdminController
         return $this->responseMsgRedirect("删除成功!", $this->generateUrl("admin_teach_course_index"));
     }
 
-    /**
-     * @Route("/teach/course/switchStatus/do/{id}", name="admin_api_teach_course_switchStatus")
-     */
+    
     public function switchStatusAction($id, CourseService $courseService, Request $request)
     {
         $state = $request->get("state");

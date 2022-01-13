@@ -19,10 +19,7 @@ use Eduxplus\CoreBundle\Lib\Grid\Grid;
 class HelpCategoryController extends BaseAdminController
 {
 
-    /**
-     *
-     * @Route("/mall/help/category/index", name="admin_mall_help_category_index")
-     */
+    
     public function indexAction(Form $form, HelpCategoryService $helpCategoryService){
         $select = $helpCategoryService->categorySelect();
 
@@ -41,9 +38,7 @@ class HelpCategoryController extends BaseAdminController
     }
 
 
-    /**
-     * @Route("/mall/help/category/add/do", name="admin_api_mall_help_category_add")
-     */
+    
     public function addDoAction(Request $request, HelpCategoryService $helpCategoryService)
     {
         $name = $request->get("name");
@@ -61,9 +56,7 @@ class HelpCategoryController extends BaseAdminController
         return $this->responseMsgRedirect("添加成功!", $this->generateUrl("admin_mall_help_category_index"));
     }
 
-    /**
-     * @Route("/mall/help/category/edit/{id}", name="admin_mall_help_category_edit")
-     */
+    
     public function editAction($id, Form $form, HelpCategoryService $helpCategoryService)
     {
         $info = $helpCategoryService->getById($id);
@@ -77,14 +70,10 @@ class HelpCategoryController extends BaseAdminController
 
 
         $formData = $form->create($this->generateUrl("admin_api_mall_help_category_edit", ['id' => $id]));
-        $data = [];
-        $data["formData"] = $formData;$data["breadcrumb"] = 1;
-        return $this->render("@EduxBundle/mall/help/edit_cate.html.twig", $data);
+        return $this->content()->renderEdit($formData);
     }
 
-    /**
-     * @Route("/mall/help/category/edit/do/{id}", name="admin_api_mall_help_category_edit")
-     */
+    
     public function editDoAction($id, Request $request, HelpCategoryService $helpCategoryService)
     {
         $name = $request->get("name");
@@ -102,9 +91,7 @@ class HelpCategoryController extends BaseAdminController
         return $this->responseMsgRedirect("编辑成功!", $this->generateUrl("admin_mall_help_category_index"));
     }
 
-    /**
-     * @Route("/mall/help/category/delete/do/{id}", name="admin_api_mall_help_category_delete")
-     */
+    
     public function deleteDoAction($id, HelpCategoryService $helpCategoryService)
     {
         if ($helpCategoryService->hasChild($id)) return $this->responseError("删除失败，请先删除子分类!");
@@ -112,9 +99,7 @@ class HelpCategoryController extends BaseAdminController
         return $this->responseMsgRedirect("删除成功!", $this->generateUrl("admin_mall_help_category_index"));
     }
 
-    /**
-     * @Route("/mall/help/category/updateSort/do", name="admin_api_mall_help_category_updateSort")
-     */
+    
     public function updateSortAction(Request $request, HelpCategoryService $helpCategoryService)
     {
         $data = $request->request->all();

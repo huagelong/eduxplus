@@ -21,11 +21,7 @@ use Symfony\Component\HttpFoundation\Request;
 class ImController extends BaseApiController
 {
 
-    /**
-     *  im设置/取消禁言
-     * 
-     * @Route("/im/forbidSendMsg",name="api_im_forbidSendMsg")
-     */
+    
     public function forbidSendMsgAction(Request $request, ImService $imService)
     {
         $groupId = $request->get("groupId");

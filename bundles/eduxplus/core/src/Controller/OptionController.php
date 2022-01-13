@@ -19,9 +19,7 @@ use Eduxplus\CoreBundle\Lib\Grid\Grid;
 class OptionController extends BaseAdminController
 {
 
-    /**
-     * @Route("/option/index", name="admin_option_index")
-     */
+    
     public function indexAction(Request $request, Grid $grid, OptionService $optionService){
         $pageSize = 40;
         $grid->setListService($optionService, "optionList");
@@ -58,9 +56,7 @@ class OptionController extends BaseAdminController
         return $this->content()->renderList($grid->create($request, $pageSize));
     }
 
-    /**
-     * @Route("/option/add/{type}", name="admin_option_add", defaults={"type":"1"})
-     */
+    
     public function addAction($type, Form $form, OptionService $optionService){
         $form->textarea("配置说明")->field("descr")->isRequire(1);
 
@@ -89,9 +85,7 @@ class OptionController extends BaseAdminController
         return $this->content()->title($type==2?"添加上传文件配置":"添加文本配置")->breadcrumb("系统配置管理", "admin_option_index")->renderAdd($formData);
     }
 
-    /**
-     * @Route("/option/add/do/{type}", name="admin_api_option_add", defaults={"type":"1"})
-     */
+    
     public function addDoAction($type, Request $request, OptionService $optionService){
         $optionKey = $request->get("optionKey");
         $optionValue = $request->get("optionValue");
@@ -109,9 +103,7 @@ class OptionController extends BaseAdminController
         return $this->responseMsgRedirect("添加成功!", $this->generateUrl("admin_option_index"));
     }
 
-    /**
-     * @Route("/option/edit/{id}", name="admin_option_edit")
-     */
+    
     public function editAction($id, Form $form, OptionService $optionService){
         $info = $optionService->getById($id);
         $type = $info['type'];
@@ -151,9 +143,7 @@ class OptionController extends BaseAdminController
         return $this->content()->renderEdit($formData);
     }
 
-    /**
-     * @Route("/option/edit/do/{id}", name="admin_api_option_edit")
-     */
+    
     public function editDoAction($id, Request $request, OptionService $optionService){
         $info = $optionService->getById($id);
         $optionKey = $request->get("optionKey");
@@ -171,17 +161,13 @@ class OptionController extends BaseAdminController
         return $this->responseMsgRedirect("编辑成功!", $this->generateUrl("admin_option_index"));
     }
 
-    /**
-     * @Route("/option/delete/do/{id}", name="admin_api_option_delete")
-     */
+    
     public function deleteDoAction($id, OptionService $optionService){
         $optionService->deleteOption($id);
         return $this->responseMsgRedirect("删除成功!", $this->generateUrl("admin_option_index"));
     }
 
-    /**
-     * @Route("/option/bathdelete/do", name="admin_api_option_bathdelete")
-     */
+    
     public function bathdeleteDoAction(Request $request, OptionService $optionService){
         $ids = $request->get("ids");
         if($ids){

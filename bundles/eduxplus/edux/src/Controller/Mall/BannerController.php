@@ -19,10 +19,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 class BannerController extends BaseAdminController
 {
-    /**
-     *
-     * @Route("/mall/banner/index", name="admin_mall_banner_index")
-     */
+    
      public function indexAction( Request $request,Grid $grid, BannerService $bannerService){
          $pageSize = 40;
          $grid->setListService($bannerService, "getList");
@@ -60,33 +57,22 @@ class BannerController extends BaseAdminController
 
          //批量删除
          $grid->setBathDelete("admin_api_mall_banner_bathdelete");
-
-         $data = [];
-
-         $data['list'] = $grid->create($request, $pageSize);
-
-         return $this->render("@EduxBundle/mall/banner/index.html.twig", $data);
+         return $this->content()->renderList($grid->create($request, $pageSize));
      }
 
-    /**
-     *
-     * @Route("/mall/banner/add", name="admin_mall_banner_add")
-     */
+    
     public function addAction(Form $form) {
         $form->text("名称")->field("name")->isRequire(1);
         $form->text("位置")->field("position")->isRequire(1)->defaultValue(0);
 
         $formData = $form->create($this->generateUrl("admin_api_mall_banner_add"));
-        $data = [];
-        $data["formData"] = $formData;$data["breadcrumb"] = 1;
-        return $this->render("@EduxBundle/mall/banner/add.html.twig", $data);
+        return $this->content()->title("添加广告banner")
+                ->breadcrumb("banner管理", "admin_mall_banner_index")
+                ->renderAdd($formData);
     }
 
 
-    /**
-     *
-     * @Route("/mall/banner/add/do", name="admin_api_mall_banner_add")
-     */
+    
     public function addDoAction(Request $request, BannerService $bannerService)
     {
         $name = $request->get("name");
@@ -107,10 +93,7 @@ class BannerController extends BaseAdminController
     }
 
 
-    /**
-     *
-     * @Route("/mall/banner/edit/{id}", name="admin_mall_banner_edit")
-     */
+    
     public function editAction($id, Form $form, BannerService $bannerService) {
         $info = $bannerService->getById($id);
 
@@ -118,15 +101,10 @@ class BannerController extends BaseAdminController
         $form->text("位置")->field("position")->isRequire(1)->defaultValue($info['position']);
 
         $formData = $form->create($this->generateUrl("admin_api_mall_banner_edit", ["id"=>$id]));
-        $data = [];
-        $data["formData"] = $formData;$data["breadcrumb"] = 1;
-        return $this->render("@EduxBundle/mall/banner/edit.html.twig", $data);
+        return $this->content()->renderEdit($formData);
     }
 
-    /**
-     *
-     * @Route("/mall/banner/edit/do/{id}", name="admin_api_mall_banner_edit")
-     */
+    
     public function editDoAction($id, Request $request, BannerService $bannerService)
     {
         $name = $request->get("name");
@@ -147,10 +125,7 @@ class BannerController extends BaseAdminController
     }
 
 
-    /**
-     *
-     * @Route("/mall/banner/delete/do/{id}", name="admin_api_mall_banner_delete")
-     */
+    
     public function deleteDoAction($id, BannerService $bannerService)
     {
         $bannerService->del($id);
@@ -158,10 +133,7 @@ class BannerController extends BaseAdminController
     }
 
 
-    /**
-     *
-     * @Route("/mall/banner/bathdelete/do", name="admin_api_mall_banner_bathdelete")
-     */
+    
     public function bathDeleteDoAction(Request $request, BannerService $bannerService)
     {
         $ids = $request->get("ids");
@@ -177,10 +149,7 @@ class BannerController extends BaseAdminController
         return $this->responseMsgRedirect("删除成功!", $this->generateUrl("admin_mall_banner_index"));
     }
 
-    /**
-     *
-     * @Route("/mall/bannermain/index/{pid}", name="admin_mall_bannermain_index")
-     */
+    
     public function indexMainAction( $pid, Request $request,Grid $grid, BannerService $bannerService){
         $pageSize = 40;
         $grid->setListService($bannerService, "getMainList", $pid);
@@ -219,18 +188,10 @@ class BannerController extends BaseAdminController
 
         //批量删除
         $grid->setBathDelete("admin_api_mall_bannermain_bathdelete");
-
-        $data = [];
-
-        $data['list'] = $grid->create($request, $pageSize);
-
-        return $this->render("@EduxBundle/mall/bannermain/index.html.twig", $data);
+        return $this->content()->renderList($grid->create($request, $pageSize));
     }
 
-    /**
-     *
-     * @Route("/mall/bannermain/add/{pid}", name="admin_mall_bannermain_add")
-     */
+    
     public function addMainAction($pid, Form $form) {
         $options = [];
         $options["data-upload-url"] = $this->generateUrl("admin_glob_upload", ["type" => "img_banner"]);
@@ -245,17 +206,13 @@ class BannerController extends BaseAdminController
         $form->hidden("pid")->field("pid")->defaultValue($pid);
 
         $formData = $form->create($this->generateUrl("admin_api_mall_bannermain_add"));
-        $data = [];
-        $data["formData"] = $formData;$data["breadcrumb"] = 1;
-        $data["pid"] = $pid;
-        return $this->render("@EduxBundle/mall/bannermain/add.html.twig", $data);
+        return $this->content()->title("添加单个广告banner")
+            ->breadcrumb("单个banner列表", "admin_mall_bannermain_index", ["pid"=>$pid])
+            ->renderAdd($formData);
     }
 
 
-    /**
-     *
-     * @Route("/mall/bannermain/add/do", name="admin_api_mall_bannermain_add")
-     */
+    
     public function addMainDoAction(Request $request, BannerService $bannerService)
     {
         $pid = $request->get("pid");
@@ -277,10 +234,7 @@ class BannerController extends BaseAdminController
     }
 
 
-    /**
-     *
-     * @Route("/mall/bannermain/edit/{id}", name="admin_mall_bannermain_edit")
-     */
+    
     public function editMainAction($id, Form $form, BannerService $bannerService) {
         $info = $bannerService->getMainById($id);
 
@@ -299,16 +253,10 @@ class BannerController extends BaseAdminController
         $form->boole("上架？")->field("status")->isRequire(1)->defaultValue($info['status']);
 
         $formData = $form->create($this->generateUrl("admin_api_mall_bannermain_edit", ["id"=>$id]));
-        $data = [];
-        $data["formData"] = $formData;$data["breadcrumb"] = 1;
-        $data["pid"] = $info['bannerId'];
-        return $this->render("@EduxBundle/mall/bannermain/edit.html.twig", $data);
+        return $this->content()->renderEdit($formData);
     }
 
-    /**
-     *
-     * @Route("/mall/bannermain/edit/do/{id}", name="admin_api_mall_bannermain_edit")
-     */
+    
     public function editMainDoAction($id, Request $request, BannerService $bannerService)
     {
         $bannerImg  = $request->get("bannerImg");
@@ -330,10 +278,7 @@ class BannerController extends BaseAdminController
     }
 
 
-    /**
-     *
-     * @Route("/mall/bannermain/delete/do/{id}", name="admin_api_mall_bannermain_delete")
-     */
+    
     public function deleteMainDoAction($id, BannerService $bannerService)
     {
         $info = $bannerService->getMainById($id);
@@ -342,10 +287,7 @@ class BannerController extends BaseAdminController
     }
 
 
-    /**
-     *
-     * @Route("/mall/bannermain/bathdelete/do", name="admin_api_mall_bannermain_bathdelete")
-     */
+    
     public function bathDeleteMainDoAction(Request $request, BannerService $bannerService)
     {
         $ids = $request->get("ids");
@@ -364,9 +306,7 @@ class BannerController extends BaseAdminController
         return $this->responseMsgRedirect("删除成功!", $this->generateUrl("admin_mall_bannermain_index",["pid"=>$info['bannerId']]));
     }
 
-    /**
-     * @Route("/mall/bannermain/switchStatus/do/{id}", name="admin_api_mall_bannermain_switchStatus")
-     */
+    
     public function switchStatusMainAction($id, BannerService $bannerService, Request $request)
     {
         $state = (int) $request->get("state");

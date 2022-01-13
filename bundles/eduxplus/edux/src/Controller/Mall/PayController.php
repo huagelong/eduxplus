@@ -22,10 +22,7 @@ use Eduxplus\EduxBundle\Service\Mall\PayService;
 class PayController extends BaseAdminController
 {
 
-    /**
-     *
-     * @Route("/mall/pay/index", name="admin_mall_pay_index")
-     */
+    
     public function indexAction(Request $request, Grid $grid, PayService $payService, UserService $userService){
         $pageSize = 40;
         $grid->setListService($payService, "getList");
@@ -55,12 +52,7 @@ class PayController extends BaseAdminController
         });
         $grid->sdaterange("支付生成时间")->field("a.createdAt");
         $grid->sdaterange2("支付完成时间")->field("a.payTime");
-
-        $data = [];
-
-        $data['list'] = $grid->create($request, $pageSize);
-
-        return $this->render("@EduxBundle/mall/order/index.html.twig", $data);
+        return $this->content()->renderList($grid->create($request, $pageSize));
 
     }
 }

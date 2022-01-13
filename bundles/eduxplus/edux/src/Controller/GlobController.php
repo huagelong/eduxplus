@@ -20,9 +20,7 @@ use Symfony\Component\HttpFoundation\Request;
 class GlobController extends BaseAdminController
 {
   
-    /**
-     * @Route("/glob/searchProduct/do", name="admin_api_glob_searchProductDo")
-     */
+    
     public function searchProductDoAction(Request $request, ProductService $productService){
         $kw = $request->get("kw");
         if(!$kw) return [];
@@ -30,9 +28,7 @@ class GlobController extends BaseAdminController
         return $data;
     }
 
-    /**
-     * @Route("/glob/searchGoods/do", name="admin_api_glob_searchGoodsDo")
-     */
+    
     public function searchGoodsDoAction(Request $request, GoodsService $goodsService){
         $kw = $request->get("kw");
         if(!$kw) return [];
@@ -40,9 +36,7 @@ class GlobController extends BaseAdminController
         return $data;
     }
 
-    /**
-     * @Route("/glob/searchCourse/do", name="admin_api_glob_searchCourseDo")
-     */
+    
     public function searchCourseDoAction(Request $request, StudyPlanService $studyPlanService){
         $kw = $request->get("kw");
         if(!$kw) return [];

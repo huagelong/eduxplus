@@ -19,9 +19,7 @@ use Eduxplus\CoreBundle\Lib\Grid\Grid;
 
 class SchoolController extends BaseAdminController
 {
-    /**
-     * @Route("/jw/school/index", name="admin_jw_school_index")
-     */
+    
     public function indexAction(Request $request, Grid $grid, SchoolService $schoolService){
         $pageSize = 40;
         $grid->setListService($schoolService, "getList");
@@ -45,9 +43,7 @@ class SchoolController extends BaseAdminController
         return $this->content()->renderList($grid->create($request, $pageSize));
     }
 
-    /**
-     * @Route("/jw/school/view/{id}", name="admin_jw_school_view")
-     */
+    
     public function viewAction($id, View $view, SchoolService $schoolService){
         $info = $schoolService->getById($id);
 
@@ -63,9 +59,7 @@ class SchoolController extends BaseAdminController
         return $this->render("@EduxBundle/jw/school/view.html.twig", $data);
     }
 
-    /**
-     * @Route("/jw/school/add", name="admin_jw_school_add")
-     */
+    
     public function addAction(Form $form, SchoolService $schoolService){
         $form->text("名称")->field("name")->isRequire(1);
         $form->richEditor("描述")->field("descr")->attr(['data-width'=>800, 'data-height'=>200]);
@@ -78,9 +72,7 @@ class SchoolController extends BaseAdminController
         return $this->render("@EduxBundle/jw/school/add.html.twig", $data);
     }
 
-    /**
-     * @Route("/jw/school/add/do", name="admin_api_jw_school_add")
-     */
+    
     public function addDoAction(Request $request, SchoolService $schoolService){
         $name = $request->get("name");
         $descr = $request->get("descr");
@@ -104,9 +96,7 @@ class SchoolController extends BaseAdminController
         return $this->responseMsgRedirect("添加成功!", $this->generateUrl("admin_jw_school_index"));
     }
 
-    /**
-     * @Route("/jw/school/edit/{id}", name="admin_jw_school_edit")
-     */
+    
     public function editAction($id, Form $form, SchoolService $schoolService){
         $info = $schoolService->getById($id);
 
@@ -123,9 +113,7 @@ class SchoolController extends BaseAdminController
         return $this->render("@EduxBundle/jw/school/edit.html.twig", $data);
     }
 
-    /**
-     * @Route("/jw/school/edit/do/{id}", name="admin_api_jw_school_edit")
-     */
+    
     public function editDoAction($id, Request $request, SchoolService $schoolService){
         $name = $request->get("name");
         $descr = $request->get("descr");
@@ -148,17 +136,13 @@ class SchoolController extends BaseAdminController
         return $this->responseMsgRedirect("编辑成功!", $this->generateUrl("admin_jw_school_index"));
     }
 
-    /**
-     * @Route("/jw/school/delete/do/{id}", name="admin_api_jw_school_delete")
-     */
+    
     public function deleteAction($id, SchoolService $schoolService){
         $schoolService->del($id);
         return $this->responseMsgRedirect("删除成功!", $this->generateUrl("admin_jw_school_index"));
     }
 
-    /**
-     * @Route("/jw/school/bathdelete/do", name="admin_api_jw_school_bathdelete")
-     */
+    
     public function bathdeleteAction(Request $request, SchoolService $schoolService){
 
         $ids = $request->get("ids");

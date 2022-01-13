@@ -25,9 +25,7 @@ class IndexController extends BaseAdminController
 {
 
 
-    /**
-     * @Route("/", name="admin_index")
-     */
+    
     public function indexAction(Request $request,MenuService $menuService){
         $route = $request->getSession()->get("_route");
         $uid = $this->getUid();

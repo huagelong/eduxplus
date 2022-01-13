@@ -24,10 +24,6 @@ use Eduxplus\CoreBundle\Lib\Grid\Grid;
 class GoodsController extends BaseAdminController
 {
 
-    /**
-     *
-     * @Route("/mall/goods/index", name="admin_mall_goods_index")
-     */
     public function indexAction(
         Request $request,
         Grid $grid,
@@ -121,17 +117,10 @@ class GoodsController extends BaseAdminController
         });
         $grid->sdaterange("创建时间")->field("a.createdAt");
 
-        $data = [];
-
-        $data['list'] = $grid->create($request, $pageSize);
-
-        return $this->render("@EduxBundle/mall/goods/index.html.twig", $data);
+        return $this->content()->renderList($grid->create($request, $pageSize));
     }
 
-    /**
-     *
-     * @Route("/mall/goods/add", name="admin_mall_goods_add")
-     */
+
     public function addAction(
         Form $form,
         ProductService $productService,
@@ -181,16 +170,11 @@ class GoodsController extends BaseAdminController
         $form->text("seo关键字")->field("seoKeyWord");
 
         $formData = $form->create($this->generateUrl("admin_api_mall_goods_add"));
-        $data = [];
-        $data["formData"] = $formData;$data["breadcrumb"] = 1;
-        return $this->render("@EduxBundle/mall/goods/add.html.twig", $data);
+        return $this->content()->title("添加单个商品")
+                ->breadcrumb("商品管理", "admin_mall_goods_index")
+                ->renderList($formData);
     }
-
-
-    /**
-     *
-     * @Route("/mall/groupGoods/add", name="admin_mall_group_goods_add")
-     */
+    
     public function addGroupAction(
         Form $form,
         ProductService $productService,
@@ -241,15 +225,12 @@ class GoodsController extends BaseAdminController
         $form->text("seo关键字")->field("seoKeyWord");
 
         $formData = $form->create($this->generateUrl("admin_api_mall_goods_add"));
-        $data = [];
-        $data["formData"] = $formData;$data["breadcrumb"] = 1;
-        return $this->render("@EduxBundle/mall/goods/addgroup.html.twig", $data);
+        return $this->content()->title("添加组合商品")
+            ->breadcrumb("商品管理", "admin_mall_goods_index")
+            ->renderList($formData);
     }
 
-    /**
-     *
-     * @Route("/mall/goods/add/do", name="admin_api_mall_goods_add")
-     */
+    
     public function addDoAction(Request $request, GoodsService $goodsService, CategoryService $categoryService)
     {
         $name = $request->get("name");
@@ -357,10 +338,7 @@ class GoodsController extends BaseAdminController
         return $this->responseMsgRedirect("操作成功!", $this->generateUrl('admin_mall_goods_index'));
     }
 
-    /**
-     *
-     * @Route("/mall/goods/edit/{id}", name="admin_mall_goods_edit")
-     */
+    
     public function editAction(
         $id,
         Form $form,
@@ -432,15 +410,10 @@ class GoodsController extends BaseAdminController
         $formData = $form->create($this->generateUrl("admin_api_mall_goods_edit", [
             'id' => $id
         ]));
-        $data = [];
-        $data["formData"] = $formData;$data["breadcrumb"] = 1;
-        return $this->render("@EduxBundle/mall/goods/edit.html.twig", $data);
+        return $this->content()->renderEdit($formData);
     }
 
-    /**
-     *
-     * @Route("/mall/goods/editgroup/{id}", name="admin_mall_goods_editgroup")
-     */
+    
     public function editgroupAction(
         $id,
         Form $form,
@@ -512,15 +485,10 @@ class GoodsController extends BaseAdminController
         $formData = $form->create($this->generateUrl("admin_api_mall_goods_edit", [
             'id' => $id
         ]));
-        $data = [];
-        $data["formData"] = $formData;$data["breadcrumb"] = 1;
-        return $this->render("@EduxBundle/mall/goods/editgroup.html.twig", $data);
+        return $this->content()->renderEdit($formData);
     }
 
-    /**
-     *
-     * @Route("/mall/goods/view/{id}", name="admin_mall_goods_view")
-     */
+    
     public function viewAction(
         $id,
         View $view,
@@ -592,15 +560,10 @@ class GoodsController extends BaseAdminController
         $view->text("seo关键字")->field("seoKeyWord")->defaultValue($info['seoKeyWord']);
 
         $formData = $view->create();
-        $data = [];
-        $data["formData"] = $formData;$data["breadcrumb"] = 1;
-        return $this->render("@EduxBundle/mall/goods/view.html.twig", $data);
+        return $this->content()->renderView($formData);
     }
 
-    /**
-     *
-     * @Route("/mall/goods/viewgroup/{id}", name="admin_mall_goods_viewgroup")
-     */
+    
     public function viewgroupAction(
         $id,
         View $view,
@@ -671,15 +634,10 @@ class GoodsController extends BaseAdminController
         $view->text("seo关键字")->field("seoKeyWord")->defaultValue($info['seoKeyWord']);
 
         $formData = $view->create();
-        $data = [];
-        $data["formData"] = $formData;$data["breadcrumb"] = 1;
-        return $this->render("@EduxBundle/mall/goods/viewgroup.html.twig", $data);
+        return $this->content()->renderView($formData);
     }
 
-    /**
-     *
-     * @Route("/mall/goods/edit/do/{id}", name="admin_api_mall_goods_edit")
-     */
+    
     public function editDoAction($id, Request $request, GoodsService $goodsService)
     {
         $name = $request->get("name");
@@ -786,20 +744,14 @@ class GoodsController extends BaseAdminController
         return $this->responseMsgRedirect("操作成功!", $this->generateUrl('admin_mall_goods_index'));
     }
 
-    /**
-     *
-     * @Route("/mall/goods/delete/do/{id}", name="admin_api_mall_goods_delete")
-     */
+    
     public function deleteDoAction($id, GoodsService $goodsService)
     {
         $goodsService->del($id);
         return $this->responseMsgRedirect("删除成功!", $this->generateUrl("admin_mall_goods_index"));
     }
 
-    /**
-     *
-     * @Route("/mall/goods/bathdelete/do", name="admin_api_mall_goods_bathdelete")
-     */
+    
     public function bathdeleteDoAction(Request $request, GoodsService $goodsService)
     {
         $ids = $request->get("ids");
@@ -816,9 +768,7 @@ class GoodsController extends BaseAdminController
         return $this->responseMsgRedirect("删除成功!", $this->generateUrl("admin_mall_goods_index"));
     }
 
-    /**
-     * @Route("/mall/goods/switchStatus/do/{id}", name="admin_api_mall_goods_switchStatus")
-     */
+    
     public function switchStatusAction($id, GoodsService $goodsService, Request $request)
     {
         $state = (int) $request->get("state");

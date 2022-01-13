@@ -23,10 +23,7 @@ use Eduxplus\EduxBundle\Service\Mall\OrderService;
 class OrderController extends BaseAdminController
 {
 
-    /**
-     *
-     * @Route("/mall/order/index", name="admin_mall_order_index")
-     */
+    
     public function indexAction(Request $request, Grid $grid, OrderService $orderService, UserService $userService){
         $pageSize = 40;
         $grid->setListService($orderService, "getList");
@@ -62,12 +59,6 @@ class OrderController extends BaseAdminController
         });
         $grid->sdaterange("下单时间")->field("a.createdAt");
 
-
-        $data = [];
-
-        $data['list'] = $grid->create($request, $pageSize);
-
-        return $this->render("@EduxBundle/mall/order/index.html.twig", $data);
-
+        return $this->content()->renderList($grid->create($request, $pageSize));
     }
 }

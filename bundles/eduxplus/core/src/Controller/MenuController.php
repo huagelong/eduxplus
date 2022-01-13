@@ -19,9 +19,7 @@ use Symfony\Component\HttpFoundation\Request;
 class MenuController extends BaseAdminController
 {
 
-    /**
-     * @Route("/menu/index", name="admin_menu_index")
-     */
+    
     public function indexAction(MenuService $menuService)
     {
 
@@ -32,9 +30,7 @@ class MenuController extends BaseAdminController
         return $this->render("@CoreBundle/menu/index.html.twig", $data);
     }
 
-    /**
-     * @Route("/menu/add", name="admin_menu_add")
-     */
+    
     public function addAction(MenuService $menuService)
     {
         $data = [];
@@ -43,9 +39,7 @@ class MenuController extends BaseAdminController
         return $this->render("@CoreBundle/menu/add.html.twig", $data);
     }
 
-    /**
-     * @Route("/menu/edit/{id}", name="admin_menu_edit")
-     */
+    
     public function editAction($id, MenuService $menuService)
     {
         $detail = $menuService->getMenuById($id);
@@ -56,9 +50,7 @@ class MenuController extends BaseAdminController
         return $this->render("@CoreBundle/menu/edit.html.twig", $data);
     }
 
-    /**
-     * @Route("/menu/view/{id}", name="admin_menu_view")
-     */
+    
     public function viewAction($id, MenuService $menuService, View $view)
     {
         $detail = $menuService->getMenuById($id);
@@ -84,9 +76,7 @@ class MenuController extends BaseAdminController
         return $this->content()->renderView($viewData);
     }
 
-    /**
-     * @Route("/menu/edit/do/{id}", name="admin_api_menu_edit")
-     */
+    
     public function editDoAction($id, Request $request, MenuService $menuService)
     {
         $pid = (int) $request->get("parentId");
@@ -127,9 +117,7 @@ class MenuController extends BaseAdminController
         return $this->responseMsgRedirect("操作成功!");
     }
 
-    /**
-     * @Route("/menu/delete/do/{id}", name="admin_api_menu_delete")
-     */
+    
     public function deleteAction($id, MenuService $menuService)
     {
         $child = $menuService->getChild($id);
@@ -138,9 +126,7 @@ class MenuController extends BaseAdminController
         return $this->responseMsgRedirect("删除成功!", $this->generateUrl("admin_menu_index"));
     }
 
-    /**
-     * @Route("/menu/add/do", name="admin_api_menu_add")
-     */
+    
     public function addDoAction(Request $request, MenuService $menuService)
     {
         $pid = (int) $request->get("parentId");
@@ -181,9 +167,7 @@ class MenuController extends BaseAdminController
         return $this->responseMsgRedirect("添加成功!", $this->generateUrl("admin_menu_index"));
     }
 
-    /**
-     * @Route("/menu/updateSort/do", name="admin_api_menu_updateSort")
-     */
+    
     public function updateSort(Request $request, MenuService $menuService)
     {
         $data = $request->request->all();

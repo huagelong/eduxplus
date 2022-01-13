@@ -17,9 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
 class DetailController extends BaseHtmlController
 {
 
-    /**
-     * @Route("/detail/{uuid}", name="app_detail_index")
-     */
+    
     public function indexAction($uuid, GoodsService $goodsService){
         $detail = $goodsService->getByUuId($uuid);
         $id = $detail['id'];
@@ -36,9 +34,7 @@ class DetailController extends BaseHtmlController
         return $this->render("@WebsiteBundle/detail/index.html.twig", $data);
     }
 
-    /**
-     * @Route("/center/{categoryId<\d+>?0}/{isFree<\d+>?0}", name="app_detail_center", defaults={"categoryId":"0", "isFree":"0"})
-     */
+    
     public function centerAction($categoryId,$isFree,Request $request, CategoryService $categoryService, GoodsService $goodsService){
         $page = $request->get("page");
         $page = $page?$page:1;
@@ -96,9 +92,7 @@ class DetailController extends BaseHtmlController
         return $this->render("@WebsiteBundle/detail/center.html.twig", $data);
     }
 
-    /**
-     * @Route("/detail/my/do/doFav/{uuid}", name="app_detail_doFav")
-     */
+    
     public function doFavAction($uuid, GoodsService $goodsService){
         $uid = $this->getUid();
         $goodInfo = $goodsService->getSimpleByUuid($uuid);

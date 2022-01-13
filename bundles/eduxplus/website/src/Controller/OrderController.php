@@ -41,11 +41,7 @@ class OrderController extends BaseHtmlController
         return $this->render('@WebsiteBundle/order/index.html.twig', $data);
     }
 
-    /**
-     * 订单详情
-     *
-     * @Route("/my/order/detail/{orderNo}", name="app_order_detail")
-     */
+    
     public function detailAction($orderNo,OrderService $orderService)
     {
         $detail = $orderService->getByOrderNo($orderNo);
@@ -55,11 +51,7 @@ class OrderController extends BaseHtmlController
         return $this->render('@WebsiteBundle/order/detail.html.twig', $data);
     }
 
-    /**
-     * 去购买
-     *
-     * @Route("/my/tobuy/{uuid}", name="app_order_tobuy")
-     */
+    
     public function tobuyAction($uuid,Request $request, GoodsService $goodsService, OrderService $orderService){
         $detail = $goodsService->getSimpleByUuid($uuid);
         $goodsIdstr = $request->get("goodsIdstr");
@@ -92,11 +84,7 @@ class OrderController extends BaseHtmlController
         return $this->render('@WebsiteBundle/order/tobuy.html.twig', $data);
     }
 
-    /**
-     * 去购买
-     *
-     * @Route("/my/addbuy/{uuid}", name="app_order_addbuy")
-     */
+    
     public function dobuyAction($uuid,Request $request, GoodsService $goodsService, OrderService $orderService,CsrfTokenManagerInterface $csrfTokenManager){
         $userNotes = $request->get("userNotes");
         $couponSn = $request->get("couponSn");
@@ -172,10 +160,7 @@ class OrderController extends BaseHtmlController
     }
 
 
-    /**
-     * 微信支付成功检查
-     * @Route("/my/do/wxpaycheck/{orderNo}", name="app_order_wxpayCheck")
-     */
+    
     public function wxpayCheck($orderNo, WxpayService $wxpayService, OrderService $orderService){
         $result = $wxpayService->query($orderNo);
         //NOTPAY
@@ -188,19 +173,13 @@ class OrderController extends BaseHtmlController
     }
 
 
-    /**
-     * 支付成功返回模式
-     * @Route("/my/paysuccess/{orderNo}", name="app_order_paysuccess")
-     */
+    
     public function paysuccessAction($orderNo){
         $data = [];
         return $this->render('@WebsiteBundle/order/paysuccess.html.twig', $data);
     }
 
-    /**
-     * 支付宝购买回调 成功返回模式
-     * @Route("/my/buyreturn/{orderNo}", name="app_order_buyreturn")
-     */
+    
     public function buyreturnAction($orderNo, Request $request, OrderService $orderService){
         if(!$orderNo){
             return $this->showMsg("参数错误");

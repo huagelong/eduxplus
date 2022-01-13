@@ -19,11 +19,7 @@ use Symfony\Component\HttpFoundation\Request;
 class LearnController extends BaseApiController
 {
 
-    /**
-     * 课程详情
-     *
-     * @Route("/my/learn", name="api_learn_index")
-     */
+    
     public function indexAction(Request $request, LearnService $learnService,
                                  TengxunyunVodService $tengxunyunVodService,
                                 AliyunVodService $aliyunVodService,

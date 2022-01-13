@@ -21,9 +21,7 @@ use Symfony\Component\HttpFoundation\Request;
 class ChapterController extends BaseAdminController
 {
 
-    /**
-     * @Route("/chapter/index", name="qa_admin_chapter_index")
-     */
+    
     public function indexAction(Request $request, Grid $grid,QAChapterService $chapterService, CategoryService $categoryService){
 
         $pageSize = 40;
@@ -92,9 +90,7 @@ class ChapterController extends BaseAdminController
     }
 
 
-    /**
-     * @Route("/chapter/add", name="qa_admin_chapter_add")
-     */
+    
     public function addAction(Form $form, CategoryService $categoryService){
         $form->text("集合名称")->field("name")->isRequire();
         $form->select("类目")->field("categoryId")->isRequire()->options($categoryService->categorySelect());
@@ -106,10 +102,7 @@ class ChapterController extends BaseAdminController
         return $this->render("@QaBundleAdmin/chapter/add.html.twig", $data);
     }
 
-    /**
-     *
-     * @Route("/chapter/add/do", name="qa_admin_chapter_do_add")
-     */
+    
     public function addDoAction(Request $request, QAChapterService $chapterService)
     {
         $name = $request->get("name");
@@ -130,9 +123,7 @@ class ChapterController extends BaseAdminController
     }
 
 
-    /**
-     * @Route("/chapter/edit/{id}", name="qa_admin_chapter_edit")
-     */
+    
     public function editAction($id, Form $form,CategoryService $categoryService, QAChapterService $chapterService){
         $info = $chapterService->getById($id);
         $form->text("集合名称")->field("name")->isRequire()->defaultValue($info['name']);
@@ -146,10 +137,7 @@ class ChapterController extends BaseAdminController
         return $this->render("@QaBundleAdmin/chapter/edit.html.twig", $data);
     }
 
-    /**
-     *
-     * @Route("/chapter/edit/do/{id}", name="qa_admin_chapter_do_edit")
-     */
+    
     public function editDoAction($id, Request $request, CategoryService $categoryService, QAChapterService $chapterService)
     {
         $name = $request->get("name");
@@ -169,10 +157,7 @@ class ChapterController extends BaseAdminController
         return $this->responseMsgRedirect("操作成功!", $this->generateUrl('qa_admin_chapter_index'));
     }
 
-    /**
-     *
-     * @Route("/chapter/delete/do/{id}", name="qa_admin_chapter_delete")
-     */
+    
     public function deleteDoAction($id, QAChapterService $chapterService)
     {
         $chapterService->del($id);
@@ -182,10 +167,7 @@ class ChapterController extends BaseAdminController
         return $this->responseMsgRedirect("删除成功!", $this->generateUrl("qa_admin_chapter_index"));
     }
 
-    /**
-     *
-     * @Route("/chapter/bathdelete/do", name="qa_admin_chapter_bathdelete")
-     */
+    
     public function bathdeleteDoAction(Request $request, QAChapterService $chapterService)
     {
         $ids = $request->get("ids");
@@ -202,9 +184,7 @@ class ChapterController extends BaseAdminController
         return $this->responseMsgRedirect("删除成功!", $this->generateUrl("qa_admin_chapter_index"));
     }
 
-    /**
-     * @Route("/chapter/switchStatus/do/{id}", name="qa_admin_chapter_switchStatus")
-     */
+    
     public function switchStatusAction($id, QAChapterService $chapterService, Request $request)
     {
         $state = (int) $request->get("state");
@@ -212,9 +192,7 @@ class ChapterController extends BaseAdminController
         return $this->responseMsgRedirect("操作成功!");
     }
 
-    /**
-     * @Route("/chapter/searchChapter/do", name="qa_admin_chapter_searchChapter")
-     */
+    
     public function searchChapterAction(Request $request, QAChapterService $chapterService){
         $kw = $request->get("kw");
         $categoryId = $request->get("categoryId");

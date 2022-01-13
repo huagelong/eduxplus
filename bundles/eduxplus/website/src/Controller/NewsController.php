@@ -18,9 +18,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class NewsController extends BaseHtmlController
 {
 
-    /**
-     * @Route("/news/{category}/{page}", name="app_news")
-     */
+    
     public function indexAction($category=0, $page=1,BannerService $bannerService, NewsService $newsService){
         $page = $page?$page:1;
         $pageSize = 40;
@@ -43,10 +41,7 @@ class NewsController extends BaseHtmlController
         return $this->render("@WebsiteBundle/news/index.html.twig", $data);
     }
 
-    /**
-     * 新闻详情
-     * @Route("/news_detail/{id}", name="app_news_detail")
-     */
+    
     public function detailAction($id, NewsService $newsService){
         $newsService->viewNumIncre($id);
         $detail = $newsService->getById($id);

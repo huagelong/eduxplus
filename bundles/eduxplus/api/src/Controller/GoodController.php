@@ -20,9 +20,7 @@ use Symfony\Component\HttpFoundation\Request;
 class GoodController extends BaseApiController
 {
 
-    /**
-     * @Route("/cateGoods",name="api_good_cateGoods")
-     */
+    
     public function cateGoodsAction(Request $request, GoodService $goodService)
     {
         $id = $request->get("id");
@@ -40,9 +38,7 @@ class GoodController extends BaseApiController
         return $data;
     }
 
-    /**
-     * @Route("/getSubCate",name="api_good_getSubCate")
-     */
+    
     public function getSubCateAction(Request $request, GoodService $goodService)
     {
         $id = $request->get("id");

@@ -21,9 +21,7 @@ class RoleController extends BaseAdminController
 {
 
 
-    /**
-     * @Route("/role/index", name="admin_role_index")
-     */
+    
     public function indexAction(Request $request, RoleService $roleService, Grid $grid){
         $pageSize = 40;
         $grid->setListService($roleService, "roleMenu");
@@ -66,9 +64,7 @@ class RoleController extends BaseAdminController
         return $this->content()->renderList($grid->create($request, $pageSize));
     }
 
-    /**
-     * @Route("/role/add", name="admin_role_add")
-     */
+    
     public function addAction(Form $form){
 
         $form->text("角色名称")->field("name")->isRequire();
@@ -79,9 +75,7 @@ class RoleController extends BaseAdminController
     }
 
 
-    /**
-     * @Route("/role/add/do", name="admin_api_role_add")
-     */
+    
     public function addDoAction(Request $request, RoleService $roleService){
         $name = $request->get("name");
         $isLock = $request->get("isLock");
@@ -98,9 +92,7 @@ class RoleController extends BaseAdminController
         return $this->responseMsgRedirect("添加成功!", $this->generateUrl("admin_role_index"));
     }
 
-    /**
-     * @Route("/role/edit/{id}", name="admin_role_edit")
-     */
+    
     public function editAction($id, RoleService $roleService, Form $form){
         $info = $roleService->getById($id);
         $form->text("角色名称")->field("name")->isRequire()->defaultValue($info['name']);
@@ -110,9 +102,7 @@ class RoleController extends BaseAdminController
         return $this->content()->renderEdit($formData);
     }
 
-    /**
-     * @Route("/role/edit/do/{id}", name="admin_api_role_edit")
-     */
+    
     public function editDoAction($id, Request $request, RoleService $roleService){
         $name = $request->get("name");
         $isLock = $request->get("isLock");
@@ -129,17 +119,13 @@ class RoleController extends BaseAdminController
         return $this->responseMsgRedirect("编辑成功!", $this->generateUrl("admin_role_index"));
     }
 
-    /**
-     * @Route("/role/delete/do/{id}", name="admin_api_role_delete")
-     */
+    
     public function deleteAction($id, RoleService $roleService){
         $roleService->deleteRole($id);
         return $this->responseMsgRedirect("删除成功!", $this->generateUrl("admin_role_index"));
     }
 
-    /**
-     * @Route("/role/batchdelete/do", name="admin_api_role_batchdelete")
-     */
+    
     public function bathDeleteAction(RoleService $roleService, Request $request){
 
         $ids = $request->get("ids");
@@ -154,9 +140,7 @@ class RoleController extends BaseAdminController
         return $this->responseMsgRedirect("删除成功!", $this->generateUrl("admin_role_index"));
     }
 
-    /**
-     * @Route("/role/bindmenu/{id}", name="admin_role_bindmenu")
-     */
+    
     public function bindMenuAction($id,  MenuService $menuService, RoleService $roleService){
         $info = $roleService->getById($id);
         $menuIds = $roleService->getRoleMenu($id);
@@ -168,9 +152,7 @@ class RoleController extends BaseAdminController
     }
 
 
-    /**
-     * @Route("/role/bindmenu/do/{id}", name="admin_api_role_bindmenu")
-     */
+    
     public function bindMenuDoAction($id, Request $request, RoleService $roleService){
         $idstr = $request->request->get("data");
         $ids = $idstr?explode(",", $idstr):[];

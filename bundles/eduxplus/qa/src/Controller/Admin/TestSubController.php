@@ -23,9 +23,7 @@ use Symfony\Component\HttpFoundation\Request;
 class TestSubController extends BaseAdminController
 {
 
-    /**
-     * @Route("/test/sub/index/{id}", name="qa_admin_test_sub_index")
-     */
+    
     public function indexAction($id, Request $request, Grid $grid, QATestSubService $testSubService, QATestService $testService){
         $pageSize = 40;
         $grid->setListService($testSubService, "getList", $id);
@@ -59,9 +57,7 @@ class TestSubController extends BaseAdminController
         return $this->render("@QaBundleAdmin/test/subindex.html.twig", $data);
     }
 
-    /**
-     * @Route("/test/sub/mg/{id}/{type}/{isFirst}", name="qa_admin_test_sub_mg", defaults={"type":0, "isFirst":1})
-     */
+    
     public function mgAction($id,$type,$isFirst, Request $request,QATestService $testService, QATestSubService $testSubService,  CategoryService $categoryService, QAChapterSubService $chapterSubService, QAChapterService $chapterService){
 
 
@@ -124,10 +120,7 @@ class TestSubController extends BaseAdminController
         return $this->render("@QaBundleAdmin/test/submg.html.twig", $data);
     }
 
-    /**
-     *
-     * @Route("/test/sub/mg/do/{id}", name="qa_admin_test_sub_do_mg")
-     */
+    
     public function mgDoAction($id, Request $request, QATestSubService $testSubService){
         $nodeIds = $request->get("ids");
         $sorts = $request->get("sorts");
@@ -144,35 +137,24 @@ class TestSubController extends BaseAdminController
     }
 
 
-    /**
-     * @Route("/test/sub/edit/{id}", name="qa_admin_test_sub_edit")
-     */
+    
     public function editAction(Form $form){
 
     }
 
-    /**
-     *
-     * @Route("/test/sub/edit/do/{id}", name="qa_admin_test_sub_do_edit")
-     */
+    
     public function editDoAction(Request $request){
 
     }
 
-    /**
-     *
-     * @Route("/test/sub/delete/do/{id}", name="qa_admin_test_sub_delete")
-     */
+    
     public function deleteDoAction($id)
     {
 
     }
 
 
-    /**
-     *
-     * @Route("/test/sub/bathdelete/do", name="qa_admin_test_sub_bathdelete")
-     */
+    
     public function bathdeleteDoAction(Request $request)
     {
 

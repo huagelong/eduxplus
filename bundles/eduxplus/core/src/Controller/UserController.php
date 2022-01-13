@@ -23,9 +23,7 @@ use Eduxplus\CoreBundle\Lib\Grid\Grid;
 class UserController extends BaseAdminController
 {
 
-    /**
-     * @Route("/user/index", name="admin_user_index")
-     */
+    
     public function indexAction(Request $request, Grid $grid, UserService $userService)
     {
         $pageSize = 40;
@@ -73,9 +71,7 @@ class UserController extends BaseAdminController
     }
 
 
-    /**
-     * @Route("/user/add", name="admin_user_add")
-     */
+    
     public function addAction(Form $form, RoleService $roleService)
     {
         $form->text("手机号码")->field("mobile")->isRequire(1);
@@ -102,9 +98,7 @@ class UserController extends BaseAdminController
             ->renderAdd($formData);
     }
 
-    /**
-     * @Route("/user/add/do", name="admin_api_user_add")
-     */
+    
     public function addDoAction(
         Request $request,
         ValidateService $validateService,
@@ -140,9 +134,7 @@ class UserController extends BaseAdminController
         return $this->responseMsgRedirect("操作成功!", $this->generateUrl('admin_user_index'));
     }
 
-    /**
-     * @Route("/user/view/{id}", name="admin_user_view")
-     */
+    
     public function viewAction($id, UserService $userService, RoleService $roleService, View $view)
     {
         $info = $userService->getById($id);
@@ -171,9 +163,7 @@ class UserController extends BaseAdminController
         return $this->content()->renderView($viewData);
     }
 
-    /**
-     * @Route("/user/edit/{id}", name="admin_user_edit")
-     */
+    
     public function editAction($id, UserService $userService, RoleService $roleService, Form $form)
     {
         $info = $userService->getById($id);
@@ -198,9 +188,7 @@ class UserController extends BaseAdminController
         return $this->content()->renderEdit($formData);
     }
 
-    /**
-     * @Route("/user/edit/do/{id}", name="admin_api_user_edit")
-     */
+    
     public function editDoAction(
         $id,
         Request $request,
@@ -226,18 +214,14 @@ class UserController extends BaseAdminController
         return $this->responseMsgRedirect("操作成功!", $this->generateUrl('admin_user_index'));
     }
 
-    /**
-     * @Route("/user/delete/do/{id}", name="admin_api_user_delete")
-     */
+    
     public function deleteAction($id, UserService $userService)
     {
         $userService->delUser($id);
         return $this->responseMsgRedirect("操作成功!", $this->generateUrl('admin_user_index'));
     }
 
-    /**
-     * @Route("/user/bathdelete/do", name="admin_api_user_bathdelete")
-     */
+    
     public function bathdeleteAction(Request $request, UserService $userService)
     {
         $ids = $request->get("ids");
@@ -254,9 +238,7 @@ class UserController extends BaseAdminController
         return $this->responseMsgRedirect("操作成功!", $this->generateUrl('admin_user_index'));
     }
 
-    /**
-     * @Route("/user/switchLock/do/{id}", name="admin_api_user_switchLock")
-     */
+    
     public function switchLockAction($id, UserService $userService, Request $request)
     {
         $state = (int) $request->get("state");
@@ -264,10 +246,7 @@ class UserController extends BaseAdminController
         return $this->responseMsgRedirect("操作成功!");
     }
 
-    /**
-     * 重置密码 @todo
-     * @Route("/user/changePwd", name="admin_user_changePwd")
-     */
+    
     public function changePwdAction(Form $form){
         
     }

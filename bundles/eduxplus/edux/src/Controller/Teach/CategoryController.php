@@ -18,9 +18,7 @@ use Eduxplus\CoreBundle\Lib\Form\Form;
 class CategoryController extends BaseAdminController
 {
 
-    /**
-     * @Route("/teach/category/index", name="admin_teach_category_index")
-     */
+    
     public function indexAction(Form $form, CategoryService $categoryService)
     {
 
@@ -50,9 +48,7 @@ class CategoryController extends BaseAdminController
         return $this->render("@EduxBundle/teach/category/index.html.twig", $data);
     }
 
-    /**
-     * @Route("/teach/category/add/do", name="admin_api_teach_category_add")
-     */
+    
     public function addDoAction(Request $request, CategoryService $categoryService)
     {
         $name = $request->get("name");
@@ -71,9 +67,7 @@ class CategoryController extends BaseAdminController
         return $this->responseMsgRedirect("添加成功!", $this->generateUrl("admin_teach_category_index"));
     }
 
-    /**
-     * @Route("/teach/category/edit/{id}", name="admin_teach_category_edit")
-     */
+    
     public function editAction($id, Form $form, CategoryService $categoryService)
     {
         $info = $categoryService->getById($id);
@@ -103,9 +97,7 @@ class CategoryController extends BaseAdminController
         return $this->render("@EduxBundle/teach/category/edit.html.twig", $data);
     }
 
-    /**
-     * @Route("/teach/category/edit/do/{id}", name="admin_api_teach_category_edit")
-     */
+    
     public function editDoAction($id, Request $request, CategoryService $categoryService)
     {
         $name = $request->get("name");
@@ -124,9 +116,7 @@ class CategoryController extends BaseAdminController
         return $this->responseMsgRedirect("编辑成功!", $this->generateUrl("admin_teach_category_index"));
     }
 
-    /**
-     * @Route("/teach/category/delete/do/{id}", name="admin_api_teach_category_delete")
-     */
+    
     public function deleteDoAction($id, CategoryService $categoryService)
     {
         if ($categoryService->hasChild($id)) return $this->responseError("删除失败，请先删除子分类!");
@@ -134,9 +124,7 @@ class CategoryController extends BaseAdminController
         return $this->responseMsgRedirect("删除成功!", $this->generateUrl("admin_teach_category_index"));
     }
 
-    /**
-     * @Route("/teach/category/updateSort/do", name="admin_api_teach_category_updateSort")
-     */
+    
     public function updateSortAction(Request $request, CategoryService $categoryService)
     {
         $data = $request->request->all();

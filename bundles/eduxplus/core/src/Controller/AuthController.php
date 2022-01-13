@@ -24,9 +24,7 @@ class AuthController extends BaseAdminController
 {
 
 
-    /**
-     * @Route("/login", name="admin_login")
-     */
+    
     public function loginAction(AuthenticationUtils $authenticationUtils, UrlGeneratorInterface $urlGenerator, Request $request){
          if ($this->getUser()) {
              return $this->redirect($urlGenerator->generate('admin_index'));
@@ -43,9 +41,7 @@ class AuthController extends BaseAdminController
         ]);
     }
 
-    /**
-     * @Route("/logout", name="admin_logout")
-     */
+    
     public function logoutAction(){
         throw new \Exception('This method can be blank - it will be intercepted by the logout key on your firewall');
     }

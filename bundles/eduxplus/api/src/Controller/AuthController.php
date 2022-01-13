@@ -23,27 +23,18 @@ use Eduxplus\WebsiteBundle\Service\GlobService;
  */
 class AuthController extends BaseApiController
 {
-    /**
-     * @Route("/login", name="api_auth_login")
-     *
-     */
+    
     public function login(Request $request,  UserPasswordHasherInterface $passwordEncoder)
     {
     }
 
 
-    /**
-     * 退出
-     * @Route("/logout", name="api_auth_logout")
-     */
+    
     public function logout()
     {
     }
 
-    /**
-     * 获取微信小程序openid
-     * @Route("/wxMiniLogin", name="api_auth_wxMiniLogin")
-     */
+    
     public function wxMiniLoginAction(Request $request, WxMiniService $wxMiniService)
     {
         $code = $request->get("code");
@@ -52,10 +43,7 @@ class AuthController extends BaseApiController
         return $data;
     }
 
-    /**
-     * 获取微信小程序注册
-     * @Route("/wxMiniReg", name="api_auth_wxMiniReg")
-     */
+    
     public function wxMiniRegAction(
         Request $request,
         WxMiniService $wxMiniService,

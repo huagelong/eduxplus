@@ -16,9 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class HelpController extends BaseHtmlController
 {
 
-    /**
-     * @Route("/help/{type}/{id}", name="app_help", defaults={"type":0, "id":0})
-     */
+    
     public function indexAction($type, $id, HelpService $helpService){
         $data = [];
         $data['id'] = $id;
@@ -40,9 +38,7 @@ class HelpController extends BaseHtmlController
         return $this->render('@WebsiteBundle/help/index.html.twig', $data);
     }
 
-    /**
-     * @Route("/helpNav/{id}/{type}", name="app_help_nav", defaults={"id":0, "type":0})
-     */
+    
     public function helpNavAction($id,$type, HelpService $helpService){
         $category = $helpService->getCategoryAndHelp();
         $data = [];

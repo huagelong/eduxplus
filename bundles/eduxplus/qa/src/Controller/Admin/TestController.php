@@ -21,9 +21,7 @@ use Symfony\Component\HttpFoundation\Request;
 class TestController extends BaseAdminController
 {
 
-    /**
-     * @Route("/test/index", name="qa_admin_test_index")
-     */
+    
     public function indexAction(Request $request, Grid $grid, QATestService $testService, UserService $userService, CategoryService $categoryService){
         $pageSize = 40;
         $grid->setListService($testService, "getList");
@@ -103,17 +101,12 @@ class TestController extends BaseAdminController
         return $this->render("@QaBundleAdmin/test/index.html.twig", $data);
     }
 
-    /**
-     * 试卷预览 todo
-     * @Route("/test/preview/{id}", name="qa_admin_test_preview")
-     */
+    
     public function previewAction(Form $form, QATestService $testService){
 
     }
 
-    /**
-     * @Route("/test/add", name="qa_admin_test_add")
-     */
+    
     public function addAction(Form $form, CategoryService $categoryService){
         $form->text("试卷名称")->field("name")->isRequire();
         $form->select("类目")->field("categoryId")->isRequire()->options($categoryService->categorySelect());
@@ -127,10 +120,7 @@ class TestController extends BaseAdminController
         return $this->render("@QaBundleAdmin/test/add.html.twig", $data);
     }
 
-    /**
-     *
-     * @Route("/test/add/do", name="qa_admin_test_do_add")
-     */
+    
     public function addDoAction(Request $request, QATestService $testService){
         $name = $request->get("name");
         $categoryId = $request->get("categoryId");
@@ -151,9 +141,7 @@ class TestController extends BaseAdminController
         return $this->responseMsgRedirect("操作成功!", $this->generateUrl('qa_admin_test_index'));
     }
 
-    /**
-     * @Route("/test/edit/{id}", name="qa_admin_test_edit")
-     */
+    
     public function editAction($id, Form $form, QATestService $testService, CategoryService $categoryService){
         $info = $testService->getById($id);
 
@@ -170,10 +158,7 @@ class TestController extends BaseAdminController
         return $this->render("@QaBundleAdmin/test/edit.html.twig", $data);
     }
 
-    /**
-     *
-     * @Route("/test/edit/do/{id}", name="qa_admin_test_do_edit")
-     */
+    
     public function editDoAction($id, Request $request, QATestService $testService){
         $name = $request->get("name");
         $categoryId = $request->get("categoryId");
@@ -194,10 +179,7 @@ class TestController extends BaseAdminController
         return $this->responseMsgRedirect("操作成功!", $this->generateUrl('qa_admin_test_index'));
     }
 
-    /**
-     *
-     * @Route("/test/delete/do/{id}", name="qa_admin_test_delete")
-     */
+    
     public function deleteDoAction($id, QATestService $testService)
     {
         $testService->del($id);
@@ -207,10 +189,7 @@ class TestController extends BaseAdminController
         return $this->responseMsgRedirect("删除成功!", $this->generateUrl("qa_admin_test_index"));
     }
 
-    /**
-     *
-     * @Route("/test/bathdelete/do", name="qa_admin_test_bathdelete")
-     */
+    
     public function bathdeleteDoAction(Request $request, QATestService $testService)
     {
         $ids = $request->get("ids");
@@ -227,9 +206,7 @@ class TestController extends BaseAdminController
         return $this->responseMsgRedirect("删除成功!", $this->generateUrl("qa_admin_test_index"));
     }
 
-    /**
-     * @Route("/test/switchStatus/do/{id}", name="qa_admin_test_switchStatus")
-     */
+    
     public function switchStatusAction($id,Request $request, QATestService $testService)
     {
         $state = (int) $request->get("state");

@@ -20,10 +20,7 @@ use Eduxplus\CoreBundle\Lib\Grid\Grid;
 class StudyPlanController extends BaseAdminController
 {
 
-    /**
-     *
-     * @Route("/teach/studyplan/index/{id}", name="admin_teach_studyplan_index")
-     */
+    
     public function indexAction($id, Request $request, Grid $grid, StudyPlanService $studyPlanService)
     {
         $pageSize = 30;
@@ -38,10 +35,7 @@ class StudyPlanController extends BaseAdminController
         return $this->render("@EduxBundle/teach/studyplan/index.html.twig", $data);
     }
 
-    /**
-     *
-     * @Route("/teach/studyplan/add/{id}", name="admin_teach_studyplan_add")
-     */
+    
     public function addAction($id, Form $form, Request $request, StudyPlanService $studyPlanService)
     {
         $form->text("名称")->field("name")->isRequire(1)->placeholder("第x次开课")->defaultValue("第x次开课");
@@ -60,10 +54,7 @@ class StudyPlanController extends BaseAdminController
                ->renderAdd($formData);
     }
 
-    /**
-     *
-     * @Route("/teach/studyplan/add/do/{id}", name="admin_api_teach_studyplan_add")
-     */
+    
     public function addDoAction($id, Request $request, StudyPlanService $studyPlanService)
     {
         $name = $request->get("name");
@@ -91,10 +82,7 @@ class StudyPlanController extends BaseAdminController
         ]));
     }
 
-    /**
-     *
-     * @Route("/teach/studyplan/edit/{id}", name="admin_teach_studyplan_edit")
-     */
+    
     public function editAction($id, Form $form, StudyPlanService $studyPlanService, CourseService $courseService)
     {
         $info = $studyPlanService->getById($id);
@@ -118,10 +106,7 @@ class StudyPlanController extends BaseAdminController
         return $this->content()->renderEdit($formData);
     }
 
-    /**
-     *
-     * @Route("/teach/studyplan/edit/do/{id}", name="admin_api_teach_studyplan_edit")
-     */
+    
     public function editDoAction($id, Request $request, StudyPlanService $studyPlanService)
     {
         $name = $request->get("name");
@@ -150,10 +135,7 @@ class StudyPlanController extends BaseAdminController
         ]));
     }
 
-    /**
-     *
-     * @Route("/teach/studyplan/delete/do/{id}", name="admin_api_teach_studyplan_delete")
-     */
+    
     public function deleteDoAction($id, StudyPlanService $studyPlanService)
     {
         if ($studyPlanService->hasSub($id))
@@ -164,10 +146,7 @@ class StudyPlanController extends BaseAdminController
         return $this->responseMsgRedirect("删除成功!", $this->generateUrl("admin_teach_studyplan_index", ['id' => $info['productId']]));
     }
 
-    /**
-     *
-     * @Route("/teach/studyplansub/delete/do/{id}", name="admin_api_teach_studyplansub_delete")
-     */
+    
     public function deleteSubDoAction($id, StudyPlanService $studyPlanService)
     {
         $info = $studyPlanService->getSubById($id);
@@ -177,10 +156,7 @@ class StudyPlanController extends BaseAdminController
         ]));
     }
 
-    /**
-     *
-     * @Route("/teach/studyplan/updateSort/do/{id}", name="admin_api_teach_studyplan_updateSort")
-     */
+    
     public function updateSortDoAction($id, Request $request, StudyPlanService $studyPlanService)
     {
         $data = $request->request->all();
@@ -191,9 +167,7 @@ class StudyPlanController extends BaseAdminController
         ]));
     }
 
-    /**
-     * @Route("/teach/studyplan/switchStatus/do/{id}", name="admin_api_teach_studyplan_switchStatus")
-     */
+    
     public function switchStatusAction($id, StudyPlanService $studyPlanService, Request $request)
     {
         $info = $studyPlanService->getSimpleById($id);

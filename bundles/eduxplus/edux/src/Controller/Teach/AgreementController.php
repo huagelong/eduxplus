@@ -20,9 +20,7 @@ use Eduxplus\CoreBundle\Lib\Grid\Grid;
 class AgreementController extends BaseAdminController
 {
 
-    /**
-     * @Route("/teach/agreement/index", name="admin_teach_agreement_index")
-     */
+    
     public function indexAction(Request $request, Grid $grid, AgreementService $agreementService){
         $pageSize = 40;
         $grid->setListService($agreementService, "agreementList");
@@ -48,9 +46,7 @@ class AgreementController extends BaseAdminController
         return $this->content()->renderList($grid->create($request, $pageSize));
     }
 
-    /**
-     * @Route("/teach/agreement/view/{id}", name="admin_teach_agreement_view")
-     */
+    
     public function viewAction($id, View $view, AgreementService $agreementService){
         $info = $agreementService->getById($id);
 
@@ -62,9 +58,7 @@ class AgreementController extends BaseAdminController
         return $this->content()->renderView($formData);
     }
 
-    /**
-     * @Route("/teach/agreement/add", name="admin_teach_agreement_add")
-     */
+    
     public function addAction(Form $form, AgreementService $agreementService){
         $form->text("名称")->field("name")->isRequire();
         $form->richEditor("内容")->field("content")->isRequire()->attr(['data-width'=>800, 'data-height'=>400]);
@@ -74,9 +68,7 @@ class AgreementController extends BaseAdminController
         return $this->content()->title("添加协议")->breadcrumb("协议管理", "admin_teach_agreement_index")->renderAdd($formData);
     }
 
-    /**
-     * @Route("/teach/agreement/add/do", name="admin_api_teach_agreement_add")
-     */
+    
     public function addDoAction(Request $request, AgreementService $agreementService){
         $name = $request->get("name");
         $content = $request->get("content");
@@ -93,9 +85,7 @@ class AgreementController extends BaseAdminController
         return $this->responseMsgRedirect("添加成功!", $this->generateUrl("admin_teach_agreement_index"));
     }
 
-    /**
-     * @Route("/teach/agreement/edit/{id}", name="admin_teach_agreement_edit")
-     */
+    
     public function editAction($id, Form $form, AgreementService $agreementService){
         $info = $agreementService->getById($id);
 
@@ -107,9 +97,7 @@ class AgreementController extends BaseAdminController
         return $this->content()->renderEdit($formData);
     }
 
-    /**
-     * @Route("/teach/agreement/edit/do/{id}", name="admin_api_teach_agreement_edit")
-     */
+    
     public function editDoAction($id, Request $request, AgreementService $agreementService){
         $name = $request->get("name");
         $content = $request->get("content");
@@ -126,17 +114,13 @@ class AgreementController extends BaseAdminController
         return $this->responseMsgRedirect("编辑成功!", $this->generateUrl("admin_teach_agreement_index"));
     }
 
-    /**
-     * @Route("/teach/agreement/delete/do/{id}", name="admin_api_teach_agreement_delete")
-     */
+    
     public function deleteAction($id, AgreementService $agreementService){
         $agreementService->del($id);
         return $this->responseMsgRedirect("删除成功!", $this->generateUrl("admin_teach_agreement_index"));
     }
 
-    /**
-     * @Route("/teach/agreement/bathdelete/do", name="admin_api_teach_agreement_bathdelete")
-     */
+    
     public function bathDeleteAction(Request $request, AgreementService $agreementService){
 
         $ids = $request->get("ids");

@@ -22,9 +22,7 @@ use Eduxplus\CoreBundle\Lib\Grid\Grid;
 
 class TeacherController extends BaseAdminController
 {
-    /**
-     * @Route("/jw/teacher/index", name="admin_jw_teacher_index")
-     */
+    
     public function indexAction(Request $request, Grid $grid, TeacherService $teacherService)
     {
         $pageSize = 40;
@@ -57,9 +55,7 @@ class TeacherController extends BaseAdminController
         return $this->content()->renderList($grid->create($request, $pageSize));
     }
 
-    /**
-     * @Route("/jw/teacher/add", name="admin_jw_teacher_add")
-     */
+    
     public function addAction(Form $form, TeacherService $teacherService)
     {
         $form->text("名称")->field("name")->isRequire(1);
@@ -87,9 +83,7 @@ class TeacherController extends BaseAdminController
                 ->renderAdd($formData);
     }
 
-    /**
-     * @Route("/jw/teacher/add/do", name="admin_api_jw_teacher_add")
-     */
+    
     public function addDoAction(Request $request, TeacherService $teacherService)
     {
         $name = $request->get("name");
@@ -112,9 +106,7 @@ class TeacherController extends BaseAdminController
         return $this->responseMsgRedirect("添加成功!", $this->generateUrl("admin_jw_teacher_index"));
     }
 
-    /**
-     * @Route("/jw/teacher/view/{id}", name="admin_jw_teacher_view")
-     */
+    
     public function viewAction($id, View $view, TeacherService $teacherService)
     {
         $info = $teacherService->getById($id);
@@ -142,9 +134,7 @@ class TeacherController extends BaseAdminController
         return $this->content()->renderView($formData);
     }
 
-    /**
-     * @Route("/jw/teacher/edit/{id}", name="admin_jw_teacher_edit")
-     */
+    
     public function editAction($id, Form $form, TeacherService $teacherService)
     {
         $info = $teacherService->getById($id);
@@ -172,9 +162,7 @@ class TeacherController extends BaseAdminController
         return $this->content()->renderEdit($formData);
     }
 
-    /**
-     * @Route("/jw/teacher/edit/do/{id}", name="admin_api_jw_teacher_edit")
-     */
+    
     public function editDoAction($id, Request $request, TeacherService $teacherService)
     {
         $name = $request->get("name");
@@ -194,18 +182,14 @@ class TeacherController extends BaseAdminController
         return $this->responseMsgRedirect("编辑成功!", $this->generateUrl("admin_jw_teacher_index"));
     }
 
-    /**
-     * @Route("/jw/teacher/delete/do/{id}", name="admin_api_jw_teacher_delete")
-     */
+    
     public function deleteAction($id, TeacherService $teacherService)
     {
         $teacherService->del($id);
         return $this->responseMsgRedirect("删除成功!", $this->generateUrl("admin_jw_teacher_index"));
     }
 
-    /**
-     * @Route("/jw/teacher/bathdelete/do", name="admin_api_jw_teacher_bathdelete")
-     */
+    
     public function bathdeleteAction(Request $request, TeacherService $teacherService)
     {
 
@@ -223,9 +207,7 @@ class TeacherController extends BaseAdminController
         return $this->responseMsgRedirect("删除成功!", $this->generateUrl("admin_jw_teacher_index"));
     }
 
-    /**
-     * @Route("/jw/teacher/switchStatus/do/{id}", name="admin_api_jw_teacher_switchStatus")
-     */
+    
     public function switchStatusAction($id, Request $request, TeacherService $teacherService)
     {
         $state = (int) $request->get("state");

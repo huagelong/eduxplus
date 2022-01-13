@@ -3,17 +3,6 @@
 
 {% block page_title %}帮助分类管理{% endblock %}
 
-{% block head_custom_stylesheets %}
-  <link rel="stylesheet" href="{{ asset('assets/plugins/jquery-nestable2/jquery.nestable.min.css') }}">
-  <link rel="stylesheet" href="{{ asset('assets/plugins/fontawesome-iconpicker/css/fontawesome-iconpicker.min.css') }}">
-{% endblock %}
-
-{% block body_javascript %}
-  {{ parent() }}
-  <script src="{{ asset('assets/plugins/jquery-nestable2/jquery.nestable.min.js') }}"></script>
-  <script src="{{ asset('assets/plugins/fontawesome-iconpicker/js/fontawesome-iconpicker.min.js') }}"></script>
-{% endblock %}
-
 {% block body_custom_javascript %}
   <script>
     $(function(){
@@ -36,6 +25,7 @@
         var serialize = $('#tree').nestable('serialize');
         requestPost('{{ path('admin_api_mall_help_category_updateSort') }}', serialize);
       });
+
     });
   </script>
 {% endblock %}

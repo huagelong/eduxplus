@@ -25,10 +25,6 @@ use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 class CouponController extends BaseAdminController
 {
 
-    /**
-     *
-     * @Route("/mall/coupon/index", name="admin_mall_coupon_index")
-     */
     public function indexAction(Request $request,Grid $grid, CouponService $couponService, CategoryService $categoryService, UserService $userService){
         $pageSize = 40;
         $grid->setListService($couponService, "getList");
@@ -68,23 +64,9 @@ class CouponController extends BaseAdminController
                 return "";
             }
         });
-
-        $grid->setTableAction('admin_mall_coupon_edit', function($obj){
-            $id = $obj['id'];
-            $url = $this->generateUrl('admin_mall_coupon_edit',['id'=>$id]);
-            $str = '<a href='.$url.' data-width="1000px" data-title="编辑" title="编辑" class=" btn btn-info btn-xs poppage"><i class="mdi mdi-file-document-edit"></i></a>';
-            return  $str;
-        });
-
-        $grid->setTableAction('admin_api_mall_coupon_delete', function ($obj) {
-            $id = $obj['id'];
-            $url = $this->generateUrl('admin_api_mall_coupon_delete', ['id' => $id]);
-            return '<a href=' . $url . ' data-confirm="确认要删除吗?" title="删除" class=" btn btn-danger btn-xs ajaxDelete"><i class="mdi mdi-delete"></i></a>';
-        });
-
+        $grid->editAction("admin_mall_coupon_edit")->deleteAction("admin_api_mall_coupon_delete");
         //批量删除
         $grid->setBathDelete("admin_api_mall_coupon_bathdelete");
-
         $grid->gbAddButton("admin_mall_coupon_add");
         //搜索
         $select = $categoryService->categorySelect();
@@ -106,18 +88,9 @@ class CouponController extends BaseAdminController
         });
         $grid->sdaterange("创建时间")->field("a.createdAt");
 
-        $data = [];
-
-        $data['list'] = $grid->create($request, $pageSize);
-
-        return $this->render("@EduxBundle/mall/coupon/index.html.twig", $data);
+        return $this->content()->renderList($grid->create($request, $pageSize));
 
     }
-
-    /**
-     *
-     * @Route("/mall/coupon/add", name="admin_mall_coupon_add")
-     */
 
     public function addAction(Form $form, CouponService $couponService, CategoryService $categoryService){
         $form->text("优惠券名称")->field("name")->isRequire();
@@ -138,16 +111,12 @@ class CouponController extends BaseAdminController
         $form->textarea("描述")->field("descr")->isRequire(0);
 
         $formData = $form->create($this->generateUrl("admin_api_mall_coupon_add"));
-        $data = [];
-        $data["formData"] = $formData;$data["breadcrumb"] = 1;
-        return $this->render("@EduxBundle/mall/coupon/add.html.twig", $data);
+        return $this->content()->title("添加优惠券")
+                ->breadcrumb("优惠券管理", "admin_mall_coupon_index")
+                ->renderAdd($formData);
     }
 
 
-    /**
-     *
-     * @Route("/mall/coupon/add/do", name="admin_api_mall_coupon_add")
-     */
     public function addDoAction(Request $request, CouponService $couponService)
     {
         $name = $request->get("name");
@@ -181,10 +150,6 @@ class CouponController extends BaseAdminController
         return $this->responseMsgRedirect("操作成功!", $this->generateUrl('admin_mall_coupon_index'));
     }
 
-    /**
-     *
-     * @Route("/mall/coupon/edit/{id}", name="admin_mall_coupon_edit")
-     */
     public function editAction($id, Form $form, CouponService $couponService, CategoryService $categoryService, GoodsService $goodsService){
 
         $info = $couponService->getById($id);
@@ -219,16 +184,10 @@ class CouponController extends BaseAdminController
         $form->textarea("描述")->field("descr")->isRequire(0)->defaultValue($info["descr"]);
 
         $formData = $form->create($this->generateUrl("admin_api_mall_coupon_edit",["id"=>$id]));
-        $data = [];
-        $data["formData"] = $formData;$data["breadcrumb"] = 1;
-        return $this->render("@EduxBundle/mall/coupon/edit.html.twig", $data);
+        return $this->content()->renderEdit($formData);
     }
 
 
-    /**
-     *
-     * @Route("/mall/coupon/edit/do/{id}", name="admin_api_mall_coupon_edit")
-     */
     public function editDoAction($id, Request $request, CouponService $couponService)
     {
         $name = $request->get("name");
@@ -265,20 +224,12 @@ class CouponController extends BaseAdminController
         return $this->responseMsgRedirect("操作成功!", $this->generateUrl('admin_mall_coupon_index'));
     }
 
-    /**
-     *
-     * @Route("/mall/coupon/delete/do/{id}", name="admin_api_mall_coupon_delete")
-     */
     public function deleteDoAction($id, CouponService $couponService)
     {
         $couponService->del($id);
         return $this->responseMsgRedirect("删除成功!", $this->generateUrl('admin_mall_coupon_index'));
     }
 
-    /**
-     *
-     * @Route("/mall/coupon/bathdelete/do", name="admin_api_mall_coupon_bathdelete")
-     */
     public function bathdeleteDoAction(Request $request, CouponService $couponService)
     {
 
@@ -297,19 +248,12 @@ class CouponController extends BaseAdminController
         return $this->responseMsgRedirect("删除成功!", $this->generateUrl('admin_mall_coupon_index'));
     }
 
-    /**
-     * @Route("/mall/coupon/switchStatus/do/{id}", name="admin_api_mall_coupon_switchStatus")
-     */
     public function switchStatusAction($id, CouponService $couponService, Request $request){
         $state = (int) $request->get("state");
         $couponService->switchStatus($id, $state);
         return $this->responseMsgRedirect("操作成功!");
     }
 
-    /**
-     *
-     * @Route("/mall/couponsub/index/{id}", name="admin_mall_couponsub_index")
-     */
     public function subAction($id, Request $request,Grid $grid, CouponService $couponService){
         $couponGroupInfo = $couponService->getById($id);
         $pageSize = 40;
@@ -337,31 +281,16 @@ class CouponController extends BaseAdminController
         //搜索
         $grid->snumber("ID")->field("a.id");
         $grid->stext("优惠券编码")->field("a.couponSn");
-
-        $data = [];
-        $data['list'] = $grid->create($request, $pageSize);
-
-        return $this->render("@EduxBundle/mall/coupon/subindex.html.twig", $data);
+        return $this->content()->renderList($grid->create($request, $pageSize));
     }
 
-    /**
-     * 生成优惠券码
-     * @Route("/mall/couponsub/create/{id}", name="admin_mall_couponsub_create")
-     */
     public function subCouponCreateAction($id, CouponService $couponService){
         set_time_limit(0);
         // ignore_user_abort(true);
         $couponService->createCoupon($id);
         return $this->redirectToRoute("admin_mall_couponsub_index", ['id'=>$id]);
-        // $data = [];
-        // $data["id"] = $id;
-        // return $this->render("@EduxBundle/mall/coupon/subCreateCoupon.html.twig", $data);
     }
 
-    /**
-     *
-     * @Route("/mall/couponsub/export/{id}", name="admin_mall_couponsub_export")
-     */
     public function subexportAction($id, CouponService $couponService){
         $path =  $couponService->export($id);
         $response = new BinaryFileResponse($path);

@@ -20,9 +20,7 @@ use Symfony\Component\HttpFoundation\Request;
 class ClassController extends BaseAdminController
 {
 
-    /**
-     * @Route("/jw/class/index", name="admin_jw_class_index")
-     */
+    
     public function indexAction(Request $request, Grid $grid, ClassService $classService){
         $pageSize = 40;
         $grid->setListService($classService, "getClassList");
@@ -45,9 +43,7 @@ class ClassController extends BaseAdminController
         return $this->content()->renderList($grid->create($request, $pageSize));
     }
 
-    /**
-     * @Route("/jw/class/members/{classesId}", name="admin_jw_class_members")
-     */
+    
     public function membersAction($classesId, Request $request, Grid $grid, ClassService $classService, UserService $userService){
         $pageSize = 40;
         $grid->setListService($classService, "getMemberList", $classesId);

@@ -31,9 +31,7 @@ use EasyWeChat\Kernel\Support\XML;
 class GlobController extends BaseHtmlController
 {
 
-    /**
-     * @Route("/recaptcha/{type}", name="app_glob_recaptcha")
-     */
+    
     public function recaptchaAction($type, CaptchaService $captchaService, Request $request)
     {
         $session = $request->getSession();
@@ -49,10 +47,7 @@ class GlobController extends BaseHtmlController
         return $response;
     }
 
-    /**
-     * 短信验证码
-     * @Route("/do/sendCaptcha", name="app_glob_sendCaptcha")
-     */
+    
     public function sendCaptchaAction(Request $request, ValidateService $validateService, GlobService $globService)
     {
         $type = $request->get('type');
@@ -73,9 +68,7 @@ class GlobController extends BaseHtmlController
         return $this->responseMsgRedirect("验证码发送成功!");
     }
 
-    /**
-     * @Route("/glob/upload/do/{type}", name="app_glob_upload", defaults={"type":"img"})
-     */
+    
     public function uploadAction($type, Request $request, UploadService $uploadService)
     {
         $file = $request->files->all();
@@ -96,10 +89,7 @@ class GlobController extends BaseHtmlController
         }
     }
 
-    /**
-     * 点播播放权限检查
-     * @Route("/aliyunVodPlayCheck", name="app_glob_aliyunVodPlayCheck")
-     */
+    
     public function aliyunVodPlayCheckAction(Request $request, AliyunVodService $aliyunVodService, LearnService $learnService, LoggerInterface $logger)
     {
         // $mtsHlsUriToken = $request->get("MtsHlsUriToken");
@@ -132,10 +122,7 @@ class GlobController extends BaseHtmlController
     }
 
 
-    /**
-     * 腾讯云IM回调
-     * @Route("/tengxunyunImCallback", name="app_glob_tengxunyunImCallback")
-     */
+    
     public function tengxunyunLiveCallbackAction(Request $request, ImService $imService, LoggerInterface $logger)
     {
         //http://dev.eduxplus.com/tengxunyunImCallback?CallbackCommand=Group.CallbackAfterSendMsg&ClientIP=116.230.7.188&OptPlatform=Web&SdkAppid=1400399479&contenttype=json
@@ -160,11 +147,7 @@ class GlobController extends BaseHtmlController
         return new Response("ok");
     }
 
-    /**
-     * 点播转码完成回调网址
-     * 腾讯云 tengxunyun 阿里云 aliyun
-     * @Route("/vodCallback/do/{type}", name="app_glob_vodCallback", defaults={"type":"aliyun"})
-     */
+    
     public function vodCallbackAction(
         $type,
         Request $request,
@@ -221,11 +204,7 @@ class GlobController extends BaseHtmlController
         return $this->responseSuccess("");
     }
 
-    /**
-     * 支付宝支付回调网址
-     *
-     * @Route("/pay/alipayCallback", name="app_glob_pay_alipayCallback")
-     */
+    
     public function alipayCallbackAction(Request $request, OrderService $orderService, LoggerInterface $logger){
         /**
          *  {"gmtCreate":"2020-10-27 17:28:29","charset":"UTF-8","gmtPayment":"2020-10-27 17:28:38","notifyTime":"2020-10-27 17:28:39","subject":"\u7ec4\u5408\u5546\u54c1test","sign":"u8OCd8OG\/q0BciE5zneTid1Ee0sx3G\/pRLDANO\/WxDWphz1fRzGgjr2+rMR8fXZjE6e1ffkRcDsQB+hqlRlon+1vThWapWZvGTnOMc5apigiLmEhsBSb9yRfkGm1VXzt9YxAZgtnmdfPAKzzlHj808rld7UDH90BtE59upLeMRS4vA4PVUPPpIjSOl68xRSN6EVfVJriapeb6uIfTNY3e4yNDl1GNsNoObsLb6pHpYZ30A2riKheRopwJ1R6ZCumDA5Wiijw4xDxbsACZL8Y\/nxzpx3QP6qNPPx83wlU0\/E8uuPqjKz+W2qvEA+xk1i64z8Ta7Sod6ERBodHAg9FEQ==","buyerId":"2088622954897569","invoiceAmount":"111.00","version":"1.0","notifyId":"2020102700222172839097560508610326","fundBillList":"[{\"amount\":\"111.00\",\"fundChannel\":\"ALIPAYACCOUNT\"}]","notifyType":"trade_status_sync","outTradeNo":"20201027o1f69c042ecd620eab33abe236b89b0361","totalAmount":"111.00","tradeStatus":"TRADE_SUCCESS","tradeNo":"2020102722001497560501333300","authAppId":"2016102700768653","receiptAmount":"111.00","pointAmount":"0.00","appId":"2016102700768653","buyerPayAmount":"111.00","signType":"RSA2","sellerId":"2088102181220832"}
@@ -246,11 +225,7 @@ class GlobController extends BaseHtmlController
         return new Response("success");
     }
 
-    /**
-     * 微信支付回调网址
-     *
-     * @Route("/pay/wxpayCallback", name="app_glob_pay_wxpayCallback")
-     */
+    
     public function wxpayCallbackAction(Request $request, OrderService $orderService, LoggerInterface $logger){
 
         $xmlcontent = $request->getContent();

@@ -23,9 +23,7 @@ use Symfony\Component\HttpFoundation\Request;
 class NodeController extends BaseAdminController
 {
 
-    /**
-     * @Route("/node/index/{chapterId}/{chapterSubId}", name="qa_admin_node_index", defaults={"chapterSubId":0})
-     */
+    
     public function indexAction($chapterId, $chapterSubId, Request $request, Grid $grid, QAChapterSubService $chapterSubService,
                                 QANodeService $nodeService, QAChapterService $chapterService, UserService $userService){
 
@@ -90,9 +88,7 @@ class NodeController extends BaseAdminController
     }
 
 
-    /**
-     * @Route("/node/add/{chapterId}/{chapterSubId}", name="qa_admin_node_add", defaults={"chapterSubId":0})
-     */
+    
     public function addAction($chapterId, $chapterSubId, Form $form, QAChapterSubService $chapterSubService){
 
         $select = $chapterSubService->chapterSelect($chapterId);
@@ -128,10 +124,7 @@ class NodeController extends BaseAdminController
         return $this->render("@QaBundleAdmin/node/add.html.twig", $data);
     }
 
-    /**
-     *
-     * @Route("/node/add/do", name="qa_admin_node_do_add")
-     */
+    
     public function addDoAction(Request $request, QANodeService $nodeService, QAChapterSubService $chapterSubService)
     {
         $type = (int) $request->get("type");
@@ -174,9 +167,7 @@ class NodeController extends BaseAdminController
     }
 
 
-    /**
-     * @Route("/node/edit/{id}", name="qa_admin_node_edit")
-     */
+    
     public function editAction($id, Form $form, QANodeService $nodeService, QAChapterSubService $chapterSubService){
 
         $info = $nodeService->getById($id);
@@ -219,9 +210,7 @@ class NodeController extends BaseAdminController
         return $this->render("@QaBundleAdmin/node/edit.html.twig", $data);
     }
 
-    /**
-     * @Route("/node/view/{id}", name="qa_admin_node_view")
-     */
+    
     public function viewAction($id, View $view, QANodeService $nodeService, QAChapterSubService $chapterSubService){
 
         $info = $nodeService->getById($id);
@@ -264,10 +253,7 @@ class NodeController extends BaseAdminController
         return $this->render("@QaBundleAdmin/node/view.html.twig", $data);
     }
 
-    /**
-     *
-     * @Route("/node/edit/do/{id}", name="qa_admin_node_do_edit")
-     */
+    
     public function editDoAction($id, Request $request, QANodeService $nodeService, QAChapterSubService $chapterSubService)
     {
         $type = (int) $request->get("type");
@@ -311,10 +297,7 @@ class NodeController extends BaseAdminController
     }
 
 
-    /**
-     *
-     * @Route("/node/delete/do/{id}", name="qa_admin_node_delete")
-     */
+    
     public function deleteDoAction($id, QANodeService $nodeService)
     {
         $info = $nodeService->getById($id);
@@ -328,10 +311,7 @@ class NodeController extends BaseAdminController
     }
 
 
-    /**
-     *
-     * @Route("/node/bathdelete/do", name="qa_admin_node_bathdelete")
-     */
+    
     public function bathdeleteDoAction(Request $request, QANodeService $nodeService)
     {
         $ids = $request->get("ids");
@@ -352,9 +332,7 @@ class NodeController extends BaseAdminController
         return $this->responseMsgRedirect("删除成功!", $this->generateUrl("qa_admin_node_index",["chapterId"=>$chapterId, "chapterSubId"=>$chapterSubId]));
     }
 
-    /**
-     * @Route("/node/switchStatus/do/{id}", name="qa_admin_node_switchStatus")
-     */
+    
     public function switchStatusAction($id,Request $request, QANodeService $nodeService)
     {
         $state = (int) $request->get("state");

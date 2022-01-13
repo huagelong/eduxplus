@@ -19,9 +19,7 @@ use Eduxplus\CoreBundle\Service\UserService;
 
 class GlobController extends BaseAdminController
 {
-    /**
-     * @Route("/glob/upload/{type}", name="admin_glob_upload", defaults={"type":"img"})
-     */
+    
     public function uploadAction($type, Request $request, UploadService $uploadService){
 //        $exists = $request->get("exists");
 //        dump($exists);exit;
@@ -66,9 +64,7 @@ class GlobController extends BaseAdminController
         }
     }
 
-    /**
-     * @Route("/glob/searchAdminUser/do", name="admin_api_glob_searchAdminUserDo")
-     */
+    
     public function searchAdminUserDoAction(Request $request, UserService $userService){
         $kw = $request->get("kw");
         if(!$kw) return [];
@@ -76,9 +72,7 @@ class GlobController extends BaseAdminController
         return $data;
     }
 
-    /**
-     * @Route("/glob/searchUser/do", name="admin_api_glob_searchUserDo")
-     */
+    
     public function searchUserDoAction(Request $request, UserService $userService){
         $kw = $request->get("kw");
         if(!$kw) return [];
@@ -88,10 +82,7 @@ class GlobController extends BaseAdminController
 
 
 
-    /**
-     * 腾讯云 高级播放签名生成
-     * @Route("/glob/tengxunyunVodAndvancePlaySign/do", name="admin_api_glob_tengxunyunVodAndvancePlaySignDo")
-     */
+    
     public function tengxunyunVodAndvancePlaySignAction(Request $request, TengxunyunVodService $tengxunyunVodService){
         $videoId = $request->get("videoId");
         $rs = $tengxunyunVodService->getAndvancePlaySign($videoId);
@@ -101,10 +92,7 @@ class GlobController extends BaseAdminController
         return $this->responseSuccess($rs);
     }
 
-    /**
-     * 腾讯云 获取播放地址
-     * @Route("/glob/tengxunyunVodEncryptionPlayUrl/do", name="admin_api_glob_tengxunyunVodEncryptionPlayUrlDo")
-     */
+    
     public function tengxunyunVodEncryptionPlayUrlAction(Request $request, TengxunyunVodService $tengxunyunVodService){
         $vodeoId = $request->get("vodeoId");
         $rs = $tengxunyunVodService->getVodEncryptionPlayUrl($vodeoId);
@@ -114,10 +102,7 @@ class GlobController extends BaseAdminController
         return $this->responseSuccess($rs);
     }
 
-    /**
-     * 腾讯云 上传签名
-     * @Route("/glob/tengxunyunSignature/do", name="admin_api_glob_tengxunyunSignatureDo")
-     */
+    
     public function tengxunyunSignatureAction(Request $request, TengxunyunVodService $tengxunyunVodService){
         $rs = $tengxunyunVodService->getUploadSignature();
         if($this->error()->has()){
@@ -127,10 +112,7 @@ class GlobController extends BaseAdminController
     }
 
 
-    /**
-     * 阿里云点播信息 playAuth 播放凭证,播放列表等
-     * @Route("/glob/getAliyunVodPlayInfo/do", name="admin_api_glob_getAliyunVodPlayInfoDo")
-     */
+    
     public function getAliyunVodPlayInfoAction(Request $request, AliyunVodService $aliyunVodService){
         $videoId = $request->get("videoId");
         $data = $aliyunVodService->getVodPlayInfo($videoId);
@@ -141,10 +123,7 @@ class GlobController extends BaseAdminController
         return $this->responseSuccess($data);
     }
 
-    /**
-     * 阿里云 生成上传凭证
-     * @Route("/glob/aliyunVodCreateUploadVideo/do", name="admin_api_glob_aliyunVodCreateUploadVideoDo")
-     */
+    
     public function aliyunVodCreateUploadVideoAction(Request $request, AliyunVodService $aliyunVodService){
         $title = $request->get("title");
         $fileName = $request->get("fileName");
@@ -159,11 +138,7 @@ class GlobController extends BaseAdminController
         return $this->responseSuccess($rs);
     }
 
-    /**
-     * 阿里云 刷新上传凭证
-     *
-     * @Route("/glob/aliyunVodRefreshUploadVideo/do", name="admin_api_glob_aliyunVodRefreshUploadVideoDo")
-     */
+    
     public function aliyunVodRefreshUploadVideoAction(Request $request, AliyunVodService $aliyunVodService){
         $videoId = $request->get("videoId");
         if(!$videoId) return $this->responseError("videoId 不能为空!");

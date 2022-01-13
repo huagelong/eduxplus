@@ -17,17 +17,13 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class IndexController extends BaseApiController
 {
-    /**
-     * @Route("/")
-     */
+    
     public function index()
     {
         return ["hello app!"];
     }
 
-    /**
-     * @Route("/test",name="api_index_test")
-     */
+    
     public function test()
     {
         return ["hello world"];

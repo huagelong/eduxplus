@@ -20,9 +20,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class IndexController extends BaseHtmlController
 {
 
-    /**
-     * @Route("/", name="app_index")
-     */
+    
     public function indexAction(CategoryService $categoryService, GoodsService $goodsService, BannerService $bannerService, NewsService $newsService)
     {
         $homeCategory = $categoryService->getHomeCategory();
@@ -49,9 +47,7 @@ class IndexController extends BaseHtmlController
         return $this->render('@WebsiteBundle/index/index.html.twig', $data);
     }
 
-    /**
-     * @Route("/page/{id}", name="app_index_page")
-     */
+    
     public function pageAction($id, PageService $pageService){
         $page = $pageService->getById($id);
         $data = [];
@@ -59,9 +55,7 @@ class IndexController extends BaseHtmlController
         return $this->render('@WebsiteBundle/index/page.html.twig', $data);
     }
 
-    /**
-     * @Route("/footer", name="app_footer")
-     */
+    
     public function footerAction(PageService $pageService){
         $data = [];
         $data['copyright'] = $pageService->getOption("app.copyright");

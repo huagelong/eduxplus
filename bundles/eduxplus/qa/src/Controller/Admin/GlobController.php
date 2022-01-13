@@ -18,11 +18,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class GlobController extends BaseAdminController
 {
 
-    /**
-     * 试卷商品搜索
-     *
-     * @Route("/glob/searchProduct/do", name="admin_qa_api_glob_searchProductDo")
-     */
+    
     public function searchProductDoAction(Request $request, QATestService $testService){
         $kw = $request->get("kw");
         if(!$kw) return [];
@@ -31,9 +27,7 @@ class GlobController extends BaseAdminController
     }
 
 
-    /**
-     * @Route("/glob/searchGoods/do", name="admin_qa_api_glob_searchGoodsDo")
-     */
+    
     public function searchGoodsDoAction(Request $request, GoodsService $goodsService){
         $kw = $request->get("kw");
         if(!$kw) return [];

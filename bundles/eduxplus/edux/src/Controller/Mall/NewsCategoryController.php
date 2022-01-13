@@ -19,10 +19,7 @@ use Eduxplus\CoreBundle\Lib\Grid\Grid;
 class NewsCategoryController extends BaseAdminController
 {
 
-    /**
-     *
-     * @Route("/mall/news/category/index", name="admin_mall_news_category_index")
-     */
+    
     public function indexAction(Form $form, NewsCategoryService $newsCategoryService){
         $select = $newsCategoryService->categorySelect();
 
@@ -41,9 +38,7 @@ class NewsCategoryController extends BaseAdminController
     }
 
 
-    /**
-     * @Route("/mall/news/category/add/do", name="admin_api_mall_news_category_add")
-     */
+    
     public function addDoAction(Request $request, NewsCategoryService $newsCategoryService)
     {
         $name = $request->get("name");
@@ -61,9 +56,7 @@ class NewsCategoryController extends BaseAdminController
         return $this->responseMsgRedirect("添加成功!", $this->generateUrl("admin_mall_news_category_index"));
     }
 
-    /**
-     * @Route("/mall/news/category/edit/{id}", name="admin_mall_news_category_edit")
-     */
+    
     public function editAction($id, Form $form, NewsCategoryService $newsCategoryService)
     {
         $info = $newsCategoryService->getById($id);
@@ -77,14 +70,10 @@ class NewsCategoryController extends BaseAdminController
 
 
         $formData = $form->create($this->generateUrl("admin_api_mall_news_category_edit", ['id' => $id]));
-        $data = [];
-        $data["formData"] = $formData;$data["breadcrumb"] = 1;
-        return $this->render("@EduxBundle/mall/news/edit_cate.html.twig", $data);
+        return $this->content()->renderEdit($formData);
     }
 
-    /**
-     * @Route("/mall/news/category/edit/do/{id}", name="admin_api_mall_news_category_edit")
-     */
+    
     public function editDoAction($id, Request $request, NewsCategoryService $newsCategoryService)
     {
         $name = $request->get("name");
@@ -102,9 +91,7 @@ class NewsCategoryController extends BaseAdminController
         return $this->responseMsgRedirect("编辑成功!", $this->generateUrl("admin_mall_news_category_index"));
     }
 
-    /**
-     * @Route("/mall/news/category/delete/do/{id}", name="admin_api_mall_news_category_delete")
-     */
+    
     public function deleteDoAction($id, NewsCategoryService $newsCategoryService)
     {
         if ($newsCategoryService->hasChild($id)) return $this->responseError("删除失败，请先删除子分类!");
@@ -112,9 +99,7 @@ class NewsCategoryController extends BaseAdminController
         return $this->responseMsgRedirect("删除成功!", $this->generateUrl("admin_mall_news_category_index"));
     }
 
-    /**
-     * @Route("/mall/news/category/updateSort/do", name="admin_api_mall_news_category_updateSort")
-     */
+    
     public function updateSortAction(Request $request, NewsCategoryService $newsCategoryService)
     {
         $data = $request->request->all();

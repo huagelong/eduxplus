@@ -24,10 +24,7 @@ use Eduxplus\CoreBundle\Lib\Grid\Grid;
 class ChapterController extends BaseAdminController
 {
 
-    /**
-     *
-     * @Route("/teach/chapter/index/{id}", name="admin_teach_chapter_index")
-     */
+    
     public function indexAction($id, ChapterService $chapterService)
     {
         $data = [];
@@ -36,10 +33,7 @@ class ChapterController extends BaseAdminController
         return $this->render("@EduxBundle/teach/chapter/index.html.twig", $data);
     }
 
-    /**
-     *
-     * @Route("/teach/chapter/add/{id}", name="admin_teach_chapter_add")
-     */
+    
     public function addAction($id, Form $form, Request $request, ChapterService $chapterService, CourseService $courseService)
     {
         $select = $chapterService->chapterSelect($id);
@@ -82,10 +76,7 @@ class ChapterController extends BaseAdminController
             ->renderAdd($formData);
     }
 
-    /**
-     *
-     * @Route("/teach/chapter/add/do/{id}", name="admin_api_teach_chapter_add")
-     */
+    
     public function addDoAction($id, Request $request, ChapterService $chapterService)
     {
         $name = $request->get("name");
@@ -128,10 +119,7 @@ class ChapterController extends BaseAdminController
         ]));
     }
 
-    /**
-     *
-     * @Route("/teach/chapter/edit/{id}", name="admin_teach_chapter_edit")
-     */
+    
     public function editAction($id, Form $form, ChapterService $chapterService, CourseService $courseService)
     {
         $info = $chapterService->getById($id);
@@ -174,10 +162,7 @@ class ChapterController extends BaseAdminController
         return $this->content()->title("编辑章节")->renderView($formData);
     }
 
-    /**
-     *
-     * @Route("/teach/chapter/edit/do/{id}", name="admin_api_teach_chapter_edit")
-     */
+    
     public function editDoAction($id, Request $request, ChapterService $chapterService)
     {
         $name = $request->get("name");
@@ -223,10 +208,7 @@ class ChapterController extends BaseAdminController
         ]));
     }
 
-    /**
-     *
-     * @Route("/teach/chapter/delete/do/{id}", name="admin_api_teach_chapter_delete")
-     */
+    
     public function deleteDoAction($id, ChapterService $chapterService)
     {
         if ($chapterService->hasChild($id))
@@ -239,10 +221,7 @@ class ChapterController extends BaseAdminController
         ]);
     }
 
-    /**
-     *
-     * @Route("/teach/chapter/updateSort/do/{id}", name="admin_api_teach_chapter_updateSort")
-     */
+    
     public function updateSortDoAction($id, Request $request, ChapterService $chapterService)
     {
         $data = $request->request->all();
@@ -252,10 +231,7 @@ class ChapterController extends BaseAdminController
         ]));
     }
 
-    /**
-     * 直播
-     * @Route("/teach/chapter/live/{id}", name="admin_teach_chapter_live")
-     */
+    
     public function liveAction($id, ChapterService $chapterService)
     {
         $info = $chapterService->getVideoById($id);
@@ -276,10 +252,7 @@ class ChapterController extends BaseAdminController
     }
 
 
-    /**
-     * 直播 生成数据
-     * @Route("/teach/chapter/live/do/{id}", name="admin_api_teach_chapter_live")
-     */
+    
     public function liveDoAction($id, ChapterService $chapterService)
     {
         $info = $chapterService->getById($id);
@@ -292,10 +265,7 @@ class ChapterController extends BaseAdminController
         ]));
     }
 
-    /**
-     * 点播
-     * @Route("/teach/chapter/vod/{id}", name="admin_teach_chapter_vod")
-     */
+    
     public function vodAction($id, Form $form, ChapterService $chapterService, TengxunyunVodService $tengxunyunVodService, AliyunVodService $aliyunVodService)
     {
         $info = $chapterService->getVideoById($id);
@@ -331,10 +301,7 @@ class ChapterController extends BaseAdminController
         return $this->render("@EduxBundle/teach/chapter/video.html.twig", $data);
     }
 
-    /**
-     *
-     * @Route("/teach/chapter/video/do/{id}", name="admin_api_teach_chapter_vod")
-     */
+    
     public function vodDoAction($id, Request $request, ChapterService $chapterService)
     {
         $type = 2; //点播
@@ -358,10 +325,7 @@ class ChapterController extends BaseAdminController
         ]));
     }
 
-    /**
-     *
-     * @Route("/teach/chapter/materials/{id}", name="admin_teach_chapter_materials")
-     */
+    
     public function materialsAction($id, Form $form, ChapterService $chapterService)
     {
         $info = $chapterService->getMaterialsById($id);
@@ -385,10 +349,7 @@ class ChapterController extends BaseAdminController
         return $this->render("@EduxBundle/teach/chapter/materials.html.twig", $data);
     }
 
-    /**
-     *
-     * @Route("/teach/chapter/materials/do/{id}", name="admin_api_teach_chapter_materials")
-     */
+    
     public function materialsDoAction($id, Request $request, ChapterService $chapterService)
     {
         $path = $request->get("path");

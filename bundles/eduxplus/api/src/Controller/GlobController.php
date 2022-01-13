@@ -18,10 +18,7 @@ use Eduxplus\CoreBundle\Lib\Service\ValidateService;
 
 class GlobController extends BaseApiController
 {
-    /**
-     * 短信验证码
-     * @Route("/sendCaptcha", name="api_glob_sendCaptcha")
-     */
+    
     public function sendCaptchaAction(Request $request, ValidateService $validateService, GlobService $globService)
     {
         $type = $request->get('type');

@@ -20,10 +20,7 @@ use Eduxplus\CoreBundle\Lib\Grid\Grid;
 class HelpController extends BaseAdminController
 {
 
-    /**
-     *
-     * @Route("/mall/help/index", name="admin_mall_help_index")
-     */
+    
     public function indexAction(Request $request, Grid $grid, HelpService $helpService){
         $pageSize = 40;
         $grid->setListService($helpService, "getList");
@@ -56,18 +53,10 @@ class HelpController extends BaseAdminController
 
         //批量删除
         $grid->setBathDelete("admin_api_mall_help_bathdelete");
-
-        $data = [];
-
-        $data['list'] = $grid->create($request, $pageSize);
-
-        return $this->render("@EduxBundle/mall/help/index.html.twig", $data);
+        return $this->content()->renderList($grid->create($request, $pageSize));
     }
 
-    /**
-     *
-     * @Route("/mall/help/view/{id}", name="admin_mall_help_view")
-     */
+    
     public function viewAction($id, View $view, HelpService $helpService, HelpCategoryService $helpCategoryService){
         $info = $helpService->getById($id);
         $select = $helpCategoryService->categorySelect();
@@ -80,15 +69,11 @@ class HelpController extends BaseAdminController
         $view->boole("上架？")->field("status")->defaultValue($info['status']);
 
         $formData = $view->create();
-        $data = [];
-        $data["formData"] = $formData;$data["breadcrumb"] = 1;
-        return $this->render("@EduxBundle/mall/help/view.html.twig", $data);
+        return $this->content()->renderView($formData);
     }
 
 
-    /**
-     * @Route("/mall/help/add", name="admin_mall_help_add")
-     */
+    
     public function addAction(Form $form, HelpCategoryService $helpCategoryService)
     {
         $select = $helpCategoryService->categorySelect();
@@ -100,14 +85,12 @@ class HelpController extends BaseAdminController
         $form->boole("上架？")->field("status")->isRequire(1);
 
         $formData = $form->create($this->generateUrl("admin_api_mall_help_add"));
-        $data = [];
-        $data["formData"] = $formData;$data["breadcrumb"] = 1;
-        return $this->render("@EduxBundle/mall/help/add.html.twig", $data);
+        return $this->content()->title("添加帮助")
+                ->breadcrumb("帮助管理", "admin_mall_help_index")
+                ->renderAdd($formData);
     }
 
-    /**
-     * @Route("/mall/help/add/do", name="admin_api_mall_help_add")
-     */
+    
     public function addDoAction(Request $request, HelpService $helpService, HelpCategoryService $helpCategoryService)
     {
         $name = $request->get("name");
@@ -132,9 +115,7 @@ class HelpController extends BaseAdminController
         return $this->responseMsgRedirect("操作成功!", $this->generateUrl('admin_mall_help_index'));
     }
 
-    /**
-     * @Route("/mall/help/edit/{id}", name="admin_mall_help_edit")
-     */
+    
     public function editAction($id, Form $form, HelpService $helpService, HelpCategoryService $helpCategoryService)
     {
         $info = $helpService->getById($id);
@@ -147,14 +128,10 @@ class HelpController extends BaseAdminController
         $form->boole("上架？")->field("status")->isRequire(1)->defaultValue($info['status']);
 
         $formData = $form->create($this->generateUrl("admin_api_mall_help_edit", ["id"=>$id]));
-        $data = [];
-        $data["formData"] = $formData;$data["breadcrumb"] = 1;
-        return $this->render("@EduxBundle/mall/help/edit.html.twig", $data);
+        return $this->content()->renderEdit($formData);
     }
 
-    /**
-     * @Route("/mall/help/edit/do/{id}", name="admin_api_mall_help_edit")
-     */
+    
     public function editDoAction($id, Request $request, HelpService $helpService)
     {
         $name = $request->get("name");
@@ -179,19 +156,14 @@ class HelpController extends BaseAdminController
         return $this->responseMsgRedirect("操作成功!", $this->generateUrl('admin_mall_help_index'));
     }
 
-    /**
-     * @Route("/mall/help/delete/do/{id}", name="admin_api_mall_help_delete")
-     */
+    
     public function deleteDoAction($id, HelpService $helpService)
     {
         $helpService->del($id);
         return $this->responseMsgRedirect("删除成功!", $this->generateUrl("admin_mall_help_index"));
     }
 
-    /**
-     *
-     * @Route("/mall/help/bathdelete/do", name="admin_api_mall_help_bathdelete")
-     */
+    
     public function bathdeleteDoAction(Request $request, HelpService $helpService)
     {
         $ids = $request->get("ids");
@@ -207,11 +179,6 @@ class HelpController extends BaseAdminController
         return $this->responseMsgRedirect("删除成功!", $this->generateUrl("admin_mall_help_index"));
     }
 
-
-
-    /**
-     * @Route("/mall/help/switchStatus/do/{id}", name="admin_api_mall_help_switchStatus")
-     */
     public function switchStatusAction($id, HelpService $helpService, Request $request)
     {
         $state = (int) $request->get("state");

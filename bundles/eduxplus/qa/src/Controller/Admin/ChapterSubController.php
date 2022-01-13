@@ -18,9 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 class ChapterSubController extends BaseAdminController
 {
-    /**
-     * @Route("/chaptersub/index/{chapterId}", name="qa_admin_chaptersub_index")
-     */
+    
     public function indexAction($chapterId, Form $form, QAChapterSubService $chapterSubService, QAChapterService $chapterService){
 
         $select = $chapterSubService->chapterSelect($chapterId);
@@ -40,9 +38,7 @@ class ChapterSubController extends BaseAdminController
         return $this->render("@QaBundleAdmin/chaptersub/index.html.twig", $data);
     }
 
-    /**
-     * @Route("/chaptersub/add/do/{chapterId}", name="qa_admin_chaptersub_adddo")
-     */
+    
     public function adddoAction($chapterId, Request $request, QAChapterSubService $chapterSubService){
         $name = $request->get("name");
         $sort = (int) $request->get("sort");
@@ -60,9 +56,7 @@ class ChapterSubController extends BaseAdminController
 
     }
 
-    /**
-     * @Route("/chaptersub/edit/{id}", name="qa_admin_chaptersub_edit")
-     */
+    
     public function editAction($id, Form $form, QAChapterSubService $chapterSubService)
     {
         $info = $chapterSubService->getById($id);
@@ -80,9 +74,7 @@ class ChapterSubController extends BaseAdminController
 
     }
 
-    /**
-     * @Route("/chaptersub/edit/do/{id}", name="qa_admin_chaptersub_edit_do")
-     */
+    
     public function editDoAction($id, Request $request, QAChapterSubService $chapterSubService)
     {
         $name = $request->get("name");
@@ -102,9 +94,7 @@ class ChapterSubController extends BaseAdminController
         return $this->responseMsgRedirect("编辑成功!", $this->generateUrl("qa_admin_chaptersub_index",["chapterId"=>$info['chapterId']]));
     }
 
-    /**
-     * @Route("/chaptersub/delete/do/{id}", name="qa_admin_chaptersub_delete_do")
-     */
+    
     public function deleteDoAction($id, QAChapterSubService $chapterSubService)
     {
         $info = $chapterSubService->getById($id);
@@ -113,9 +103,7 @@ class ChapterSubController extends BaseAdminController
         return $this->responseMsgRedirect("删除成功!", $this->generateUrl("qa_admin_chaptersub_index",["chapterId"=>$info['chapterId']]));
     }
 
-    /**
-     * @Route("/chaptersub/updateSort/do/{chapterId}", name="qa_admin_chaptersub_updateSort")
-     */
+    
     public function updateSortAction($chapterId, Request $request, QAChapterSubService $chapterSubService)
     {
         $data = $request->request->all();
@@ -123,9 +111,7 @@ class ChapterSubController extends BaseAdminController
         return $this->responseMsgRedirect("更新排序成功!", $this->generateUrl("qa_admin_chaptersub_index", ["chapterId"=>$chapterId]));
     }
 
-    /**
-     * @Route("/chaptersub/getChapterSub/do", name="qa_admin_chaptersub_getChapterSub_do")
-     */
+    
     public function getChapterSubAction(Request $request, QAChapterSubService $chapterService)
     {
         $id = $request->get("id");
