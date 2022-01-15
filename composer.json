@@ -8,6 +8,7 @@
         "bundles/eduxplus-edux-bundle":"@dev",
         "bundles/eduxplus-website-bundle":"@dev",
         "bundles/eduxplus-qa-bundle":"@dev",
+        "bundles/eduxplus-cms-bundle":"@dev",
         "bundles/eduxplus-api-bundle":"@dev"
     },
     "require-dev": {

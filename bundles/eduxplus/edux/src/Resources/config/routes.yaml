@@ -14,18 +14,8 @@ edux_coupon:
   resource: "./routes/mall/coupon.yaml"
 edux_goods:
   resource: "./routes/mall/goods.yaml"
-edux_helpcategory:
-  resource: "./routes/mall/helpcategory.yaml"
-edux_help:
-  resource: "./routes/mall/help.yaml"
-edux_newscategory:
-  resource: "./routes/mall/newscategory.yaml"
-edux_news:
-  resource: "./routes/mall/news.yaml"
 edux_order:
   resource: "./routes/mall/order.yaml"
-edux_page:
-  resource: "./routes/mall/page.yaml"
 edux_pay:
   resource: "./routes/mall/pay.yaml"
 edux_agreement:

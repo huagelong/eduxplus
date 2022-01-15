@@ -1,0 +1,20 @@
+parameters:
+services:
+    _defaults:
+        autowire: true      # Automatically injects dependencies in your services.
+        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+        public: false
+
+    Eduxplus\CmsBundle\:
+        resource: '../../../src/'
+        exclude: '../../../src/**/{DependencyInjection,Migrations,Resources,Twig,Entity,Tests,Kernel.php}'
+
+    # controllers are imported separately to make sure services can be injected
+    # as action arguments even if you don't extend any base controller class
+    Eduxplus\CmsBundle\Controller\Admin\:
+        resource: '../../../src/Controller/'
+        tags: [ 'controller.service_arguments' ]
+
+    Eduxplus\CmsBundle\Service\:
+        resource: '../../../src/Service/**/*'
+        parent: base.service

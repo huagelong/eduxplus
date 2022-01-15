@@ -1,0 +1,27 @@
+admin_cms_help_index:
+  path: /admin/cms/help/index
+  controller: Eduxplus\CmsBundle\Controller\Admin\HelpController::indexAction
+admin_cms_help_view:
+  path: /admin/cms/help/view/{id}
+  controller: Eduxplus\CmsBundle\Controller\Admin\HelpController::viewAction
+admin_cms_help_add:
+  path: /admin/cms/help/add
+  controller: Eduxplus\CmsBundle\Controller\Admin\HelpController::addAction
+admin_api_cms_help_add:
+  path: /admin/cms/help/add/do
+  controller: Eduxplus\CmsBundle\Controller\Admin\HelpController::addDoAction
+admin_cms_help_edit:
+  path: /admin/cms/help/edit/{id}
+  controller: Eduxplus\CmsBundle\Controller\Admin\HelpController::editAction
+admin_api_cms_help_edit:
+  path: /admin/cms/help/edit/do/{id}
+  controller: Eduxplus\CmsBundle\Controller\Admin\HelpController::editDoAction
+admin_api_cms_help_delete:
+  path: /admin/cms/help/delete/do/{id}
+  controller: Eduxplus\CmsBundle\Controller\Admin\HelpController::deleteDoAction
+admin_api_cms_help_bathdelete:
+  path: /admin/cms/help/bathdelete/do
+  controller: Eduxplus\CmsBundle\Controller\Admin\HelpController::bathdeleteDoAction
+admin_api_cms_help_switchStatus:
+  path: /admin/cms/help/switchStatus/do/{id}
+  controller: Eduxplus\CmsBundle\Controller\Admin\HelpController::switchStatusAction

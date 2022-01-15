@@ -144,56 +144,8 @@ class MenuFixtures
         $orderId = $this->addMenu("订单管理", "订单信息管理", $mallMenuId, "admin_mall_order_index", "", 2, $roleId, 0, 0, 1);
         //支付管理
         $payId = $this->addMenu("支付管理", "支付信息管理", $mallMenuId, "admin_mall_pay_index", "", 3, $roleId, 0, 0, 1);
-        //单页管理
-        $mgId = $this->addMenu("单页管理", "单页信息管理", $mallMenuId, "admin_mall_page_index", "", 4, $roleId, 0, 0, 1);
-        $this->addMenu("查看", "查看", $mgId, "admin_mall_page_view", "", 0, $roleId, 0, 1, 0);
-        $this->addMenu("添加页面", "添加页面展示", $mgId, "admin_mall_page_add", "", 1, $roleId, 0, 1, 0);
-        $this->addMenu("添加", "添加处理", $mgId, "admin_api_mall_page_add", "", 2, $roleId, 0, 1, 0);
-        $this->addMenu("编辑页面", "编辑页面展示", $mgId, "admin_mall_page_edit", "", 3, $roleId, 0, 1, 0);
-        $this->addMenu("编辑", "编辑处理", $mgId, "admin_api_mall_page_edit", "", 4, $roleId, 0, 1, 0);
-        $this->addMenu("删除", "删除处理", $mgId, "admin_api_mall_page_delete", "", 5, $roleId, 0, 1, 0);
-        $this->addMenu("批量删除", "批量删除处理", $mgId, "admin_api_mall_page_bathdelete", "", 6, $roleId, 0, 1, 0);
-        $this->addMenu("单页上下架", "单页上下架", $mgId, "admin_api_mall_page_switchStatus", "", 7, $roleId, 0, 1, 0);
-        //帮助中心
-        $helpmgId = $this->addMenu("帮助管理", "帮助管理", $mallMenuId, "", "", 5, $roleId, 0, 0, 0);
-        $mgId = $this->addMenu("帮助列表", "帮助列表", $helpmgId, "admin_mall_help_index", "", 0, $roleId, 0, 0, 1);
-        $this->addMenu("添加", "添加展示", $mgId, "admin_mall_help_add", "", 1, $roleId, 0, 1, 0);
-        $this->addMenu("添加处理", "添加处理", $mgId, "admin_api_mall_help_add", "", 2, $roleId, 0, 1, 0);
-        $this->addMenu("查看", "查看", $mgId, "admin_mall_help_view", "", 3, $roleId, 0, 1, 0);
-        $this->addMenu("编辑页面展示", "编辑展示", $mgId, "admin_mall_help_edit", "", 4, $roleId, 0, 1, 0);
-        $this->addMenu("编辑处理", "编辑处理", $mgId, "admin_api_mall_help_edit", "", 5, $roleId, 0, 1, 0);
-        $this->addMenu("删除", "单个删除处理", $mgId, "admin_api_mall_help_delete", "", 6, $roleId, 0, 1, 0);
-        $this->addMenu("批量删除", "批量删除处理", $mgId, "admin_api_mall_help_bathdelete", "", 7, $roleId, 0, 1, 0);
-        $this->addMenu("帮助上下架", "帮助上下架处理", $mgId, "admin_api_mall_help_switchStatus", "", 8, $roleId, 0, 1, 0);
-        //admin_api_mall_help_switchStatus
-        //帮助分类
-        $mgId = $this->addMenu("帮助分类", "帮助分类", $helpmgId, "admin_mall_help_category_index", "", 8, $roleId, 0, 0, 1);
-        $this->addMenu("添加处理", "添加处理", $mgId, "admin_api_mall_help_category_add", "", 0, $roleId, 0, 1, 0);
-        $this->addMenu("编辑页面展示", "编辑页面展示", $mgId, "admin_mall_help_category_edit", "", 1, $roleId, 0, 1, 0);
-        $this->addMenu("编辑处理", "编辑处理", $mgId, "admin_api_mall_help_category_edit", "", 2, $roleId, 0, 1, 0);
-        $this->addMenu("删除", "单个删除处理", $mgId, "admin_api_mall_help_category_delete", "", 3, $roleId, 0, 1, 0);
-        $this->addMenu("更新排序", "更新排序处理", $mgId, "admin_api_mall_help_category_updateSort", "", 4, $roleId, 0, 1, 0);
-
-        //资讯管理
-        $newsmgId = $this->addMenu("资讯管理", "资讯管理", $mallMenuId, "", "", 5, $roleId, 0, 0, 1);
-        $mgId = $this->addMenu("资讯列表", "资讯列表", $newsmgId, "admin_mall_news_index", "", 0, $roleId, 0, 0, 1);
-        $this->addMenu("添加", "添加展示", $mgId, "admin_mall_news_add", "", 1, $roleId, 0, 1, 0);
-        $this->addMenu("添加处理", "添加处理", $mgId, "admin_api_mall_news_add", "", 2, $roleId, 0, 1, 0);
-        $this->addMenu("查看", "查看", $mgId, "admin_mall_news_view", "", 3, $roleId, 0, 1, 0);
-        $this->addMenu("编辑页面展示", "编辑展示", $mgId, "admin_mall_news_edit", "", 4, $roleId, 0, 1, 0);
-        $this->addMenu("编辑处理", "编辑处理", $mgId, "admin_api_mall_news_edit", "", 5, $roleId, 0, 1, 0);
-        $this->addMenu("删除", "单个删除处理", $mgId, "admin_api_mall_news_delete", "", 6, $roleId, 0, 1, 0);
-        $this->addMenu("批量删除", "批量删除处理", $mgId, "admin_api_mall_news_bathdelete", "", 7, $roleId, 0, 1, 0);
-        $this->addMenu("资讯上下架", "资讯上下架处理", $mgId, "admin_api_mall_news_switchStatus", "", 8, $roleId, 0, 1, 0);
-        //资讯分类
-        $mgId = $this->addMenu("资讯分类", "资讯分类", $newsmgId, "admin_mall_news_category_index", "", 8, $roleId, 0, 0, 1);
-        $this->addMenu("添加处理", "添加处理", $mgId, "admin_api_mall_news_category_add", "", 0, $roleId, 0, 1, 0);
-        $this->addMenu("编辑页面展示", "编辑页面展示", $mgId, "admin_mall_news_category_edit", "", 1, $roleId, 0, 1, 0);
-        $this->addMenu("编辑处理", "编辑处理", $mgId, "admin_api_mall_news_category_edit", "", 2, $roleId, 0, 1, 0);
-        $this->addMenu("删除", "单个删除处理", $mgId, "admin_api_mall_news_category_delete", "", 3, $roleId, 0, 1, 0);
-        $this->addMenu("更新排序", "更新排序处理", $mgId, "admin_api_mall_news_category_updateSort", "", 4, $roleId, 0, 1, 0);
         //banner管理
-        $mgId = $this->addMenu("banner管理", "banner管理", $mallMenuId, "admin_mall_banner_index", "", 9, $roleId, 0, 0, 1);
+        $mgId = $this->addMenu("banner管理", "banner管理", $mallMenuId, "admin_mall_banner_index", "", 4, $roleId, 0, 0, 1);
         $this->addMenu("添加", "添加展示", $mgId, "admin_mall_banner_add", "", 1, $roleId, 0, 1, 0);
         $this->addMenu("添加处理", "添加处理", $mgId, "admin_api_mall_banner_add", "", 2, $roleId, 0, 1, 0);
         $this->addMenu("编辑页面展示", "编辑展示", $mgId, "admin_mall_banner_edit", "", 3, $roleId, 0, 1, 0);

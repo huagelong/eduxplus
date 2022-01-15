@@ -1,0 +1,28 @@
+{
+    "name": "bundles/eduxplus-cms-bundle",
+    "description": "Cms bundle",
+    "type": "symfony-bundle",
+    "require": {
+    },
+    "require-dev": {
+    },
+    "autoload": {
+        "psr-4": {
+            "Eduxplus\\CmsBundle\\": "src/"
+        }
+    },
+    "license": "Apache-2.0",
+    "authors": [
+        {
+            "name": "Kaihui.wang",
+            "email": "Hpuwang@gmail.com"
+        }
+    ],
+    "extra": {
+        "branch-alias": {
+            "dev-master": "master"
+        }
+    },
+    "scripts": {
+    }
+}

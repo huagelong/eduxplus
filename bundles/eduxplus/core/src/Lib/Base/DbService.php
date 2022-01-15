@@ -336,7 +336,7 @@ class DbService
     }
 
 
-    protected function disableSoftDeleteable($em)
+    public function disableSoftDeleteable($em)
     {
         foreach ($em->getEventManager()->getListeners() as $eventName => $listeners) {
             foreach ($listeners as $listener) {
@@ -352,7 +352,7 @@ class DbService
         return $em;
     }
 
-    protected function enableSoftDeleteable($em)
+    public function enableSoftDeleteable($em)
     {
         foreach (self::$originalEventListeners as $eventName => $listener) {
             $em->getEventManager()->addEventListener($eventName, $listener);

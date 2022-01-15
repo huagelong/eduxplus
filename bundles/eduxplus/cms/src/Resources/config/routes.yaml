@@ -1,0 +1,11 @@
+edux_helpcategory:
+  resource: "./routes/admin/helpcategory.yaml"
+edux_help:
+  resource: "./routes/admin/help.yaml"
+edux_newscategory:
+  resource: "./routes/admin/newscategory.yaml"
+edux_news:
+  resource: "./routes/admin/news.yaml"
+edux_page:
+  resource: "./routes/admin/page.yaml"
+

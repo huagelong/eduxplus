@@ -1,0 +1,3 @@
+eduxplus_cms:
+  resource: "@EduxplusCmsBundle/Resources/config/routes.yaml"
+

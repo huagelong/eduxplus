@@ -69,7 +69,7 @@ class EsCommand extends Command
         $lastId= (int) $this->redisService->get($redisKey);
 //        $lastId = 0;
         while(1) {
-            $sql = "SELECT a FROM Edux:MallNews a WHERE a.status=1 AND a.id >:id";
+            $sql = "SELECT a FROM Cms:CmsNews a WHERE a.status=1 AND a.id >:id";
             $data = $this->esService->fetchAll($sql, ["id"=>$lastId]);
             if (!$data) break;
             foreach ($data as $v){

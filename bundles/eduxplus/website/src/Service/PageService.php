@@ -14,10 +14,10 @@ use Eduxplus\CoreBundle\Lib\Base\AppBaseService;
 class PageService extends AppBaseService
 {
     public function getById($id){
-        $sql = "SELECT a FROM Edux:MallPage a WHERE a.id=:id AND a.status=1 ";
+        $sql = "SELECT a FROM Cms:CmsPage a WHERE a.id=:id AND a.status=1 ";
         $result = $this->db()->fetchOne($sql, ["id"=>$id]);
         if(!$result) return $result;
-        $sqlMain = "SELECT a FROM Edux:MallPageMain a WHERE a.pageId=:pageId";
+        $sqlMain = "SELECT a FROM Cms:CmsPageMain a WHERE a.pageId=:pageId";
         $main = $this->db()->fetchOne($sqlMain, ["pageId"=>$id]);
         $result['main'] = $main;
         return $result;

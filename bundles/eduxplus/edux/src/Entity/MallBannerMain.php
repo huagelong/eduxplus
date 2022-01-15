@@ -10,7 +10,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  *
  * @ORM\Table(name="mall_banner_main")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false, hardDelete=true)
- * @ORM\Entity(repositoryClass="Eduxplus\EduxBundle\Repository\MallHelpRepository")
+ * @ORM\Entity(repositoryClass="Eduxplus\EduxBundle\Repository\CmsHelpRepository")
  */
 class MallBannerMain
 {
