@@ -38,6 +38,9 @@
     "bundles/eduxplus-api-bundle": {
         "version": "master"
     },
+    "bundles/eduxplus-cms-bundle": {
+        "version": "master"
+    },
     "bundles/eduxplus-core-bundle": {
         "version": "master"
     },

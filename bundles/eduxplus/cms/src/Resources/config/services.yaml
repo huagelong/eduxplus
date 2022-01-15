@@ -11,7 +11,7 @@ services:
 
     # controllers are imported separately to make sure services can be injected
     # as action arguments even if you don't extend any base controller class
-    Eduxplus\CmsBundle\Controller\Admin\:
+    Eduxplus\CmsBundle\Controller\:
         resource: '../../../src/Controller/'
         tags: [ 'controller.service_arguments' ]
 

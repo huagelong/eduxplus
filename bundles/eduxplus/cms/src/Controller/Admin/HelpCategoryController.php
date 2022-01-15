@@ -30,7 +30,7 @@ class HelpCategoryController extends BaseAdminController
         $form->text("排序")->field("sort")->isRequire()->defaultValue(0);
         $form->boole("展示？")->field("isShow")->isRequire();
 
-        $formData = $form->create($this->generateUrl("admin_api_mall_help_category_add"));
+        $formData = $form->create($this->generateUrl("admin_api_cms_help_category_add"));
         $data["addFormData"] = $formData;
         $data['categorys'] = $helpCategoryService->getCategoryTree(0);
 
@@ -53,7 +53,7 @@ class HelpCategoryController extends BaseAdminController
 
         $helpCategoryService->add($name, $parentId, $sort, $isShow);
 
-        return $this->responseMsgRedirect("添加成功!", $this->generateUrl("admin_mall_help_category_index"));
+        return $this->responseMsgRedirect("添加成功!", $this->generateUrl("admin_cms_help_category_index"));
     }
 
     
@@ -69,7 +69,7 @@ class HelpCategoryController extends BaseAdminController
         $form->boole("展示？")->field("isShow")->isRequire()->defaultValue($info['isShow']);
 
 
-        $formData = $form->create($this->generateUrl("admin_api_mall_help_category_edit", ['id' => $id]));
+        $formData = $form->create($this->generateUrl("admin_api_cms_help_category_edit", ['id' => $id]));
         return $this->content()->renderEdit($formData);
     }
 
@@ -88,7 +88,7 @@ class HelpCategoryController extends BaseAdminController
 
         $helpCategoryService->edit($id, $parentId, $name, $sort, $isShow);
 
-        return $this->responseMsgRedirect("编辑成功!", $this->generateUrl("admin_mall_help_category_index"));
+        return $this->responseMsgRedirect("编辑成功!", $this->generateUrl("admin_cms_help_category_index"));
     }
 
     
@@ -96,7 +96,7 @@ class HelpCategoryController extends BaseAdminController
     {
         if ($helpCategoryService->hasChild($id)) return $this->responseError("删除失败，请先删除子分类!");
         $helpCategoryService->del($id);
-        return $this->responseMsgRedirect("删除成功!", $this->generateUrl("admin_mall_help_category_index"));
+        return $this->responseMsgRedirect("删除成功!", $this->generateUrl("admin_cms_help_category_index"));
     }
 
     
@@ -104,7 +104,7 @@ class HelpCategoryController extends BaseAdminController
     {
         $data = $request->request->all();
         $helpCategoryService->updateSort($data);
-        return $this->responseMsgRedirect("更新排序成功!", $this->generateUrl("admin_mall_help_category_index"));
+        return $this->responseMsgRedirect("更新排序成功!", $this->generateUrl("admin_cms_help_category_index"));
     }
 
 }

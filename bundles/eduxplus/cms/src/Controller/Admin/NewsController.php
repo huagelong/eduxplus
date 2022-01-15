@@ -28,10 +28,10 @@ class NewsController extends BaseAdminController
         $grid->text("标题")->field("title");
         $grid->image("封面图片")->field("img");
         $grid->text("分类")->field("categoryName");
-        $grid->boole2("上架？")->field("status")->sort("a.status")->actionCall("admin_api_mall_news_switchStatus", function ($obj) use($newsService) {
+        $grid->boole2("上架？")->field("status")->sort("a.status")->actionCall("admin_api_cms_news_switchStatus", function ($obj) use($newsService) {
             $id = $newsService->getPro($obj, "id");
             $defaultValue = $newsService->getPro($obj, "status");
-            $url = $this->generateUrl('admin_api_mall_news_switchStatus', ['id' => $id]);
+            $url = $this->generateUrl('admin_api_cms_news_switchStatus', ['id' => $id]);
             $checkStr = $defaultValue ? "checked" : "";
             $confirmStr = $defaultValue ? "确认要下架吗？" : "确认要上架吗?";
             $str = "<input type=\"checkbox\" data-bootstrap-switch-ajaxput href=\"{$url}\" data-confirm=\"{$confirmStr}\" {$checkStr} >";
@@ -44,18 +44,18 @@ class NewsController extends BaseAdminController
         $grid->datetime("创建时间")->field("createdAt")->sort("a.createdAt");
 
         //添加
-        $grid->gbAddButton("admin_mall_news_add");
+        $grid->gbAddButton("admin_cms_news_add");
         //搜索
         $grid->snumber("ID")->field("a.id");
         $grid->stext("标题")->field("a.title");
 
         //编辑等
-        $grid->viewAction("admin_mall_news_view")
-            ->editAction("admin_mall_news_edit")
-            ->deleteAction("admin_api_mall_news_delete");
+        $grid->viewAction("admin_cms_news_view")
+            ->editAction("admin_cms_news_edit")
+            ->deleteAction("admin_api_cms_news_delete");
 
         //批量删除
-        $grid->setBathDelete("admin_api_mall_news_bathdelete");
+        $grid->setBathDelete("admin_api_cms_news_bathdelete");
         return $this->content()->renderList($grid->create($request, $pageSize));
     }
 
@@ -107,9 +107,9 @@ class NewsController extends BaseAdminController
         $form->richEditor("内容")->field("content")->isRequire(1);
         $form->boole("上架？")->field("status")->isRequire(1);
 
-        $formData = $form->create($this->generateUrl("admin_api_mall_news_add"));
+        $formData = $form->create($this->generateUrl("admin_api_cms_news_add"));
         return $this->content()->title("添加资讯")
-                ->breadcrumb("资讯管理", "admin_mall_news_index")
+                ->breadcrumb("资讯管理", "admin_cms_news_index")
                 ->renderAdd($formData);
     }
 
@@ -138,7 +138,7 @@ class NewsController extends BaseAdminController
         if($this->error()->has()){
             return $this->responseError($this->error()->getLast());
         }
-        return $this->responseMsgRedirect("操作成功!", $this->generateUrl('admin_mall_news_index'));
+        return $this->responseMsgRedirect("操作成功!", $this->generateUrl('admin_cms_news_index'));
     }
 
     
@@ -163,7 +163,7 @@ class NewsController extends BaseAdminController
         $form->richEditor("内容")->field("content")->isRequire(1)->defaultValue($info['main']['content']);;
         $form->boole("上架？")->field("status")->isRequire(1)->defaultValue($info['status']);
 
-        $formData = $form->create($this->generateUrl("admin_api_mall_news_edit", ["id"=>$id]));
+        $formData = $form->create($this->generateUrl("admin_api_cms_news_edit", ["id"=>$id]));
         return $this->content()->renderEdit($formData);
     }
 
@@ -191,14 +191,14 @@ class NewsController extends BaseAdminController
         if($this->error()->has()){
             return $this->responseError($this->error()->getLast());
         }
-        return $this->responseMsgRedirect("操作成功!", $this->generateUrl('admin_mall_news_index'));
+        return $this->responseMsgRedirect("操作成功!", $this->generateUrl('admin_cms_news_index'));
     }
 
     
     public function deleteDoAction($id, NewsService $newsService)
     {
         $newsService->del($id);
-        return $this->responseMsgRedirect("删除成功!", $this->generateUrl("admin_mall_news_index"));
+        return $this->responseMsgRedirect("删除成功!", $this->generateUrl("admin_cms_news_index"));
     }
 
     
@@ -214,7 +214,7 @@ class NewsController extends BaseAdminController
             return $this->responseError($this->error()->getLast());
         }
 
-        return $this->responseMsgRedirect("删除成功!", $this->generateUrl("admin_mall_news_index"));
+        return $this->responseMsgRedirect("删除成功!", $this->generateUrl("admin_cms_news_index"));
     }
 
     public function switchStatusAction($id, NewsService $newsService, Request $request)

@@ -1,27 +1,27 @@
-admin_mall_page_index:
-  path: /admin/mall/page/index
-  controller: Eduxplus\EduxBundle\Controller\Mall\PageController::indexAction
-admin_mall_page_add:
-  path: /admin/mall/page/add
-  controller: Eduxplus\EduxBundle\Controller\Mall\PageController::addAction
-admin_api_mall_page_add:
-  path: /admin/mall/page/add/do
-  controller: Eduxplus\EduxBundle\Controller\Mall\PageController::addDoAction
-admin_mall_page_view:
-  path: /admin/mall/page/view/{id}
-  controller: Eduxplus\EduxBundle\Controller\Mall\PageController::viewAction
-admin_mall_page_edit:
-  path: /admin/mall/page/edit/{id}
-  controller: Eduxplus\EduxBundle\Controller\Mall\PageController::editAction
-admin_api_mall_page_edit:
-  path: /admin/mall/page/edit/do/{id}
-  controller: Eduxplus\EduxBundle\Controller\Mall\PageController::editDoAction
-admin_api_mall_page_delete:
-  path: /admin/mall/page/delete/do/{id}
-  controller: Eduxplus\EduxBundle\Controller\Mall\PageController::deleteDoAction
-admin_api_mall_page_bathdelete:
-  path: /admin/mall/page/bathdelete/do
-  controller: Eduxplus\EduxBundle\Controller\Mall\PageController::bathDeleteDoAction
-admin_api_mall_page_switchStatus:
-  path: /admin/mall/page/switchStatus/do/{id}
-  controller: Eduxplus\EduxBundle\Controller\Mall\PageController::switchStatusAction
+admin_cms_page_index:
+  path: /admin/cms/page/index
+  controller: Eduxplus\CmsBundle\Controller\Admin\PageController::indexAction
+admin_cms_page_add:
+  path: /admin/cms/page/add
+  controller: Eduxplus\CmsBundle\Controller\Admin\PageController::addAction
+admin_api_cms_page_add:
+  path: /admin/cms/page/add/do
+  controller: Eduxplus\CmsBundle\Controller\Admin\PageController::addDoAction
+admin_cms_page_view:
+  path: /admin/cms/page/view/{id}
+  controller: Eduxplus\CmsBundle\Controller\Admin\PageController::viewAction
+admin_cms_page_edit:
+  path: /admin/cms/page/edit/{id}
+  controller: Eduxplus\CmsBundle\Controller\Admin\PageController::editAction
+admin_api_cms_page_edit:
+  path: /admin/cms/page/edit/do/{id}
+  controller: Eduxplus\CmsBundle\Controller\Admin\PageController::editDoAction
+admin_api_cms_page_delete:
+  path: /admin/cms/page/delete/do/{id}
+  controller: Eduxplus\CmsBundle\Controller\Admin\PageController::deleteDoAction
+admin_api_cms_page_bathdelete:
+  path: /admin/cms/page/bathdelete/do
+  controller: Eduxplus\CmsBundle\Controller\Admin\PageController::bathDeleteDoAction
+admin_api_cms_page_switchStatus:
+  path: /admin/cms/page/switchStatus/do/{id}
+  controller: Eduxplus\CmsBundle\Controller\Admin\PageController::switchStatusAction

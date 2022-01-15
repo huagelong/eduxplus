@@ -25,10 +25,10 @@ class PageController extends BaseAdminController
          $grid->setListService($pageService, "getList");
          $grid->text("ID")->field("id")->sort("a.id");
          $grid->text("单页名称")->field("name");
-         $grid->boole2("上架？")->field("status")->sort("a.status")->actionCall("admin_api_mall_page_switchStatus", function ($obj) use($pageService) {
+         $grid->boole2("上架？")->field("status")->sort("a.status")->actionCall("admin_api_cms_page_switchStatus", function ($obj) use($pageService) {
              $id = $pageService->getPro($obj, "id");
              $defaultValue = $pageService->getPro($obj, "status");
-             $url = $this->generateUrl('admin_api_mall_page_switchStatus', ['id' => $id]);
+             $url = $this->generateUrl('admin_api_cms_page_switchStatus', ['id' => $id]);
              $checkStr = $defaultValue ? "checked" : "";
              $confirmStr = $defaultValue ? "确认要下架吗？" : "确认要上架吗?";
              $str = "<input type=\"checkbox\" data-bootstrap-switch-ajaxput href=\"{$url}\" data-confirm=\"{$confirmStr}\" {$checkStr} >";
@@ -37,17 +37,17 @@ class PageController extends BaseAdminController
          $grid->datetime("创建时间")->field("createdAt")->sort("a.createdAt");
 
          //添加
-         $grid->gbAddButton("admin_mall_page_add");
+         $grid->gbAddButton("admin_cms_page_add");
          //搜索
          $grid->snumber("ID")->field("a.id");
          $grid->stext("单页名称")->field("a.name");
 
-         $grid->viewAction("admin_mall_page_view")
-             ->editAction("admin_mall_page_edit")
-             ->deleteAction("admin_api_mall_page_delete");
+         $grid->viewAction("admin_cms_page_view")
+             ->editAction("admin_cms_page_edit")
+             ->deleteAction("admin_api_cms_page_delete");
 
          //批量删除
-         $grid->setBathDelete("admin_api_mall_page_bathdelete");
+         $grid->setBathDelete("admin_api_cms_page_bathdelete");
 
          return $this->content()->renderList($grid->create($request, $pageSize));
      }
@@ -58,9 +58,9 @@ class PageController extends BaseAdminController
         $form->richEditor("内容")->field("content")->isRequire(1);
         $form->boole("上架？")->field("status")->isRequire(1);
 
-        $formData = $form->create($this->generateUrl("admin_api_mall_page_add"));
+        $formData = $form->create($this->generateUrl("admin_api_cms_page_add"));
         return $this->content()->title("添加单页")
-                ->breadcrumb("单页管理", "admin_mall_page_index")
+                ->breadcrumb("单页管理", "admin_cms_page_index")
                 ->renderAdd($formData);
     }
 
@@ -83,7 +83,7 @@ class PageController extends BaseAdminController
         if($this->error()->has()){
             return $this->responseError($this->error()->getLast());
         }
-        return $this->responseMsgRedirect("操作成功!", $this->generateUrl('admin_mall_page_index'));
+        return $this->responseMsgRedirect("操作成功!", $this->generateUrl('admin_cms_page_index'));
     }
 
 
@@ -107,7 +107,7 @@ class PageController extends BaseAdminController
         $form->richEditor("内容")->field("content")->isRequire(1)->defaultValue($info['main']['content']);;
         $form->boole("上架？")->field("status")->isRequire(1)->defaultValue($info['status']);
 
-        $formData = $form->create($this->generateUrl("admin_api_mall_page_edit", ["id"=>$id]));
+        $formData = $form->create($this->generateUrl("admin_api_cms_page_edit", ["id"=>$id]));
         return $this->content()->renderEdit($formData);
     }
 
@@ -129,7 +129,7 @@ class PageController extends BaseAdminController
         if($this->error()->has()){
             return $this->responseError($this->error()->getLast());
         }
-        return $this->responseMsgRedirect("操作成功!", $this->generateUrl('admin_mall_page_index'));
+        return $this->responseMsgRedirect("操作成功!", $this->generateUrl('admin_cms_page_index'));
     }
 
 
@@ -137,7 +137,7 @@ class PageController extends BaseAdminController
     public function deleteDoAction($id, PageService $pageService)
     {
         $pageService->del($id);
-        return $this->responseMsgRedirect("删除成功!", $this->generateUrl("admin_mall_page_index"));
+        return $this->responseMsgRedirect("删除成功!", $this->generateUrl("admin_cms_page_index"));
     }
     
     public function bathDeleteDoAction(Request $request, PageService $pageService)
@@ -152,7 +152,7 @@ class PageController extends BaseAdminController
             return $this->responseError($this->error()->getLast());
         }
 
-        return $this->responseMsgRedirect("删除成功!", $this->generateUrl("admin_mall_page_index"));
+        return $this->responseMsgRedirect("删除成功!", $this->generateUrl("admin_cms_page_index"));
     }
     
     public function switchStatusAction($id, PageService $pageService, Request $request)

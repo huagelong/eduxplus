@@ -1,27 +1,27 @@
-admin_mall_news_index:
-  path: /admin/mall/news/index
-  controller: Eduxplus\EduxBundle\Controller\Mall\NewsController::indexAction
-admin_mall_news_view:
-  path: /admin/mall/news/view/{id}
-  controller: Eduxplus\EduxBundle\Controller\Mall\NewsController::viewAction
-admin_mall_news_add:
-  path: /admin/mall/news/add
-  controller: Eduxplus\EduxBundle\Controller\Mall\NewsController::addAction
-admin_api_mall_news_add:
-  path: /admin/mall/news/add/do
-  controller: Eduxplus\EduxBundle\Controller\Mall\NewsController::addDoAction
-admin_mall_news_edit:
-  path: /admin/mall/news/edit/{id}
-  controller: Eduxplus\EduxBundle\Controller\Mall\NewsController::editAction
-admin_api_mall_news_edit:
-  path: /admin/mall/news/edit/do/{id}
-  controller: Eduxplus\EduxBundle\Controller\Mall\NewsController::editDoAction
-admin_api_mall_news_delete:
-  path: /admin/mall/news/delete/do/{id}
-  controller: Eduxplus\EduxBundle\Controller\Mall\NewsController::deleteDoAction
-admin_api_mall_news_bathdelete:
-  path: /admin/mall/news/bathdelete/do
-  controller: Eduxplus\EduxBundle\Controller\Mall\NewsController::bathdeleteDoAction
-admin_api_mall_news_switchStatus:
-  path: /admin/mall/news/switchStatus/do/{id}
-  controller: Eduxplus\EduxBundle\Controller\Mall\NewsController::switchStatusAction
+admin_cms_news_index:
+  path: /admin/cms/news/index
+  controller: Eduxplus\CmsBundle\Controller\Admin\NewsController::indexAction
+admin_cms_news_view:
+  path: /admin/cms/news/view/{id}
+  controller: Eduxplus\CmsBundle\Controller\Admin\NewsController::viewAction
+admin_cms_news_add:
+  path: /admin/cms/news/add
+  controller: Eduxplus\CmsBundle\Controller\Admin\NewsController::addAction
+admin_api_cms_news_add:
+  path: /admin/cms/news/add/do
+  controller: Eduxplus\CmsBundle\Controller\Admin\NewsController::addDoAction
+admin_cms_news_edit:
+  path: /admin/cms/news/edit/{id}
+  controller: Eduxplus\CmsBundle\Controller\Admin\NewsController::editAction
+admin_api_cms_news_edit:
+  path: /admin/cms/news/edit/do/{id}
+  controller: Eduxplus\CmsBundle\Controller\Admin\NewsController::editDoAction
+admin_api_cms_news_delete:
+  path: /admin/cms/news/delete/do/{id}
+  controller: Eduxplus\CmsBundle\Controller\Admin\NewsController::deleteDoAction
+admin_api_cms_news_bathdelete:
+  path: /admin/cms/news/bathdelete/do
+  controller: Eduxplus\CmsBundle\Controller\Admin\NewsController::bathdeleteDoAction
+admin_api_cms_news_switchStatus:
+  path: /admin/cms/news/switchStatus/do/{id}
+  controller: Eduxplus\CmsBundle\Controller\Admin\NewsController::switchStatusAction

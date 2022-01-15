@@ -30,7 +30,7 @@ class NewsCategoryController extends BaseAdminController
         $form->text("排序")->field("sort")->isRequire()->defaultValue(0);
         $form->boole("展示？")->field("isShow")->isRequire();
 
-        $formData = $form->create($this->generateUrl("admin_api_mall_news_category_add"));
+        $formData = $form->create($this->generateUrl("admin_api_cms_news_category_add"));
         $data["addFormData"] = $formData;
         $data['categorys'] = $newsCategoryService->getCategoryTree(0);
 
@@ -53,7 +53,7 @@ class NewsCategoryController extends BaseAdminController
 
         $newsCategoryService->add($name, $parentId, $sort, $isShow);
 
-        return $this->responseMsgRedirect("添加成功!", $this->generateUrl("admin_mall_news_category_index"));
+        return $this->responseMsgRedirect("添加成功!", $this->generateUrl("admin_cms_news_category_index"));
     }
 
     
@@ -69,7 +69,7 @@ class NewsCategoryController extends BaseAdminController
         $form->boole("展示？")->field("isShow")->isRequire()->defaultValue($info['isShow']);
 
 
-        $formData = $form->create($this->generateUrl("admin_api_mall_news_category_edit", ['id' => $id]));
+        $formData = $form->create($this->generateUrl("admin_api_cms_news_category_edit", ['id' => $id]));
         return $this->content()->renderEdit($formData);
     }
 
@@ -88,7 +88,7 @@ class NewsCategoryController extends BaseAdminController
 
         $newsCategoryService->edit($id, $parentId, $name, $sort, $isShow);
 
-        return $this->responseMsgRedirect("编辑成功!", $this->generateUrl("admin_mall_news_category_index"));
+        return $this->responseMsgRedirect("编辑成功!", $this->generateUrl("admin_cms_news_category_index"));
     }
 
     
@@ -96,7 +96,7 @@ class NewsCategoryController extends BaseAdminController
     {
         if ($newsCategoryService->hasChild($id)) return $this->responseError("删除失败，请先删除子分类!");
         $newsCategoryService->del($id);
-        return $this->responseMsgRedirect("删除成功!", $this->generateUrl("admin_mall_news_category_index"));
+        return $this->responseMsgRedirect("删除成功!", $this->generateUrl("admin_cms_news_category_index"));
     }
 
     
@@ -104,7 +104,7 @@ class NewsCategoryController extends BaseAdminController
     {
         $data = $request->request->all();
         $newsCategoryService->updateSort($data);
-        return $this->responseMsgRedirect("更新排序成功!", $this->generateUrl("admin_mall_news_category_index"));
+        return $this->responseMsgRedirect("更新排序成功!", $this->generateUrl("admin_cms_news_category_index"));
     }
 
 }

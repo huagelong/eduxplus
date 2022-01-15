@@ -1,33 +1,33 @@
 admin_mall_coupon_index:
   path: /admin/mall/coupon/index
-  controller: Eduxplus\EduxBundle\Controller\Mall\CouponController::indexAction
+  controller: Eduxplus\CmsBundle\Controller\Admin\CouponController::indexAction
 admin_mall_coupon_add:
   path: /admin/mall/coupon/add
-  controller: Eduxplus\EduxBundle\Controller\Mall\CouponController::addAction
+  controller: Eduxplus\CmsBundle\Controller\Admin\CouponController::addAction
 admin_api_mall_coupon_add:
   path: /admin/mall/coupon/add/do
-  controller: Eduxplus\EduxBundle\Controller\Mall\CouponController::addDoAction
+  controller: Eduxplus\CmsBundle\Controller\Admin\CouponController::addDoAction
 admin_mall_coupon_edit:
   path: /admin/mall/coupon/edit/{id}
-  controller: Eduxplus\EduxBundle\Controller\Mall\CouponController::editAction
+  controller: Eduxplus\CmsBundle\Controller\Admin\CouponController::editAction
 admin_api_mall_coupon_edit:
   path: /admin/mall/coupon/edit/do/{id}
-  controller: Eduxplus\EduxBundle\Controller\Mall\CouponController::editDoAction
+  controller: Eduxplus\CmsBundle\Controller\Admin\CouponController::editDoAction
 admin_api_mall_coupon_delete:
   path: /admin/mall/coupon/delete/do/{id}
-  controller: Eduxplus\EduxBundle\Controller\Mall\CouponController::deleteDoAction
+  controller: Eduxplus\CmsBundle\Controller\Admin\CouponController::deleteDoAction
 admin_api_mall_coupon_bathdelete:
   path: /admin/mall/coupon/bathdelete/do
-  controller: Eduxplus\EduxBundle\Controller\Mall\CouponController::bathdeleteDoAction
+  controller: Eduxplus\CmsBundle\Controller\Admin\CouponController::bathdeleteDoAction
 admin_api_mall_coupon_switchStatus:
   path: /admin/mall/coupon/switchStatus/do/{id}
-  controller: Eduxplus\EduxBundle\Controller\Mall\CouponController::switchStatusAction
+  controller: Eduxplus\CmsBundle\Controller\Admin\CouponController::switchStatusAction
 admin_mall_couponsub_index:
   path: /admin/mall/couponsub/index/{id}
-  controller: Eduxplus\EduxBundle\Controller\Mall\CouponController::subAction
+  controller: Eduxplus\CmsBundle\Controller\Admin\CouponController::subAction
 admin_mall_couponsub_create:
   path: /admin/mall/couponsub/create/{id}
-  controller: Eduxplus\EduxBundle\Controller\Mall\CouponController::subCouponCreateAction
+  controller: Eduxplus\CmsBundle\Controller\Admin\CouponController::subCouponCreateAction
 admin_mall_couponsub_export:
   path: /admin/mall/couponsub/export/{id}
-  controller: Eduxplus\EduxBundle\Controller\Mall\CouponController::subexportAction
+  controller: Eduxplus\CmsBundle\Controller\Admin\CouponController::subexportAction
