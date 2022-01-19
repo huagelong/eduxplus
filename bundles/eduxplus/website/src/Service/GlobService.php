@@ -55,7 +55,7 @@ class GlobService extends AppBaseService
      */
    public function sendCaptcha($mobile, $type){
        $value = mt_rand(100000,999999);
-       $key = self::SMS_KEY."_".$mobile."_".$type;
+       $key = self::SMS_KEY.":".$mobile.":".$type;
        $this->cacheService->set($key, $value, 70);
 
        if(!$this->checkTimes($mobile)) return false;
@@ -78,7 +78,7 @@ class GlobService extends AppBaseService
      */
     protected function checkTimes($mobile)
     {
-        $key = self::SMS_TIME_KEY."_".date('Y-m-d')."_".$mobile;
+        $key = self::SMS_TIME_KEY.":".date('Y-m-d').":".$mobile;
         $times = (int) $this->cacheService->get($key);
         $smsTimes = $this->getOption("app.sms.times");
         if($times > ($smsTimes-1))  return $this->error()->add("已超过当天准许该手机发送短信的最大次数!");
@@ -99,7 +99,7 @@ class GlobService extends AppBaseService
     {
         $env = $this->getEnv();
         if($env == 'dev') return true;
-        $key = self::SMS_KEY."_".$mobile."_".$type;
+        $key = self::SMS_KEY.":".$mobile.":".$type;
         $oldCode = $this->cacheService->get($key);
         if(!$oldCode) return $this->error()->add("短信验证码错误或者已过期！");
         return $oldCode == $code;

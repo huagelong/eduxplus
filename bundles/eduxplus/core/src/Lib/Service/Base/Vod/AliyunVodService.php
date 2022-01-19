@@ -11,10 +11,9 @@ namespace Eduxplus\CoreBundle\Lib\Service\Base\Vod;
 
 use Eduxplus\CoreBundle\Lib\Base\BaseService;
 use AlibabaCloud\Client\AlibabaCloud;
-use AlibabaCloud\Vod\Vod;
-use Eduxplus\CoreBundle\Lib\Service\CacheService;
 use Firebase\JWT\JWT;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Contracts\Cache\ItemInterface;
 
 /**
  * 视频点播->媒资管理配置->存储管理->管理->权限->读写权限:公共读
@@ -33,12 +32,6 @@ class AliyunVodService extends BaseService
     protected $userId;
     protected $templateGroupId;
     protected $regionId;
-    protected $cacheService;
-
-    public function __construct(CacheService $cacheService)
-    {
-        $this->cacheService = $cacheService;
-    }
 
     protected function initConfig(){
         $this->accessKeyId = $this->getOption("app.aliyun.accesskeyId");
@@ -169,37 +162,39 @@ class AliyunVodService extends BaseService
      * 生成数据密钥
      */
     public function generateDataKey(){
-        $cacheKey = "generateDataKey";
-        $data = $this->cacheService->get($cacheKey);
-        if($data) return $data;
         $this->initClient();
         $kmsKeyId = $this->getOption("app.aliyun.vod.kms.keyId");
-        try {
-            $result = AlibabaCloud::rpc()
-                ->product('Kms')
-                ->scheme('https') // https | http
-                ->version('2016-01-20')
-                ->regionId($this->regionId)
-                ->action('GenerateDataKey')
-                ->method('POST')
-                ->client(self::VOD_CLIENT_NAME)
-                ->options([
-                    'query' => [
-                        'KeyId' => $kmsKeyId,
-                        'KeySpec' => "AES_128",
-                    ],
-                ])->request();
-            $info = $result->toArray();
-            $rs = [$info['CiphertextBlob'], $info['Plaintext']];
-            if($rs) $this->cacheService->set($cacheKey, $rs, 3600*24);
-            return $rs;
-        } catch (\Exception $e){
-            $errors = [
-                "Throttling"=>"您这个时段的流量已经超限",
-            ];
-            $errInfo =  $this->formatError($e->getMessage(), $errors, $e->getMessage());
-            return $errInfo;
-        }
+        $cacheKey = "generateDataKey:{$kmsKeyId}";
+        
+        return $this->cache()->get($cacheKey, function(ItemInterface $item)use ($kmsKeyId){
+            $item->expiresAfter(3600*24);
+            try {
+                $result = AlibabaCloud::rpc()
+                    ->product('Kms')
+                    ->scheme('https') // https | http
+                    ->version('2016-01-20')
+                    ->regionId($this->regionId)
+                    ->action('GenerateDataKey')
+                    ->method('POST')
+                    ->client(self::VOD_CLIENT_NAME)
+                    ->options([
+                        'query' => [
+                            'KeyId' => $kmsKeyId,
+                            'KeySpec' => "AES_128",
+                        ],
+                    ])->request();
+                $info = $result->toArray();
+                $rs = [$info['CiphertextBlob'], $info['Plaintext']];
+                return $rs;
+            } catch (\Exception $e){
+                $errors = [
+                    "Throttling"=>"您这个时段的流量已经超限",
+                ];
+                $errInfo =  $this->formatError($e->getMessage(), $errors, $e->getMessage());
+                return $errInfo;
+            }
+        });
+       
     }
 
     /**

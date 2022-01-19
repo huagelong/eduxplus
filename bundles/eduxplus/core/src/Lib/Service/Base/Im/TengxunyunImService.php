@@ -9,33 +9,24 @@
 namespace Eduxplus\CoreBundle\Lib\Service\Base\Im;
 
 use Eduxplus\CoreBundle\Lib\Base\BaseService;
-use Eduxplus\CoreBundle\Lib\Service\CacheService;
 use Eduxplus\CoreBundle\Lib\Utils;
 use Tencent\TLSSigAPIv2;
+use Symfony\Contracts\Cache\ItemInterface;
 
 class TengxunyunImService extends BaseService{
 
-    protected $cacheService;
-    
-    public function __construct(CacheService $cacheService)
-    {
-        $this->cacheService = $cacheService;
-    }
     /**
      *  获取用户sig
      */
     public function createUserSig($identifier, $expire=86400*180){
-        $key = "TengxunyunImService_UserSig_".$identifier;
-        $rs = $this->cacheService->get($key);
-        if($rs) return $rs;
+        $key = "tengxunyunImService:UserSig:{$identifier}";
         $sdkappid = $this->getOption("app.tengxunyun.im.sdkAppid");
         $key = $this->getOption("app.tengxunyun.im.key");
-        $im = new TLSSigAPIv2($sdkappid, $key);
-        $rs = $im->genSig($identifier, $expire);
-        if($rs){
-            $this->cacheService->set($key, $rs, $expire);
-        }
-        return $rs;
+        return $this->cache()->get($key, function(ItemInterface $item) use($identifier,$expire,$sdkappid,$key){
+            $item->expiresAfter($expire);
+            $im = new TLSSigAPIv2($sdkappid, $key);
+            return $im->genUserSig($identifier, $expire);
+        });
     }
 
     /**
