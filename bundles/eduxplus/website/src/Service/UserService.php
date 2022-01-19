@@ -139,7 +139,6 @@ class UserService extends AppBaseService
         $model->setMobile($mobile);
         $mobileMask =  $this->mobileMaskService->encrypt($mobile);
         $model->setMobileMask($mobileMask);
-        $model->setUuid($uuid);
         $model->setGravatar($gravatar);
         $model->setFullName($fullName);
         $model->setDisplayName($displayName);

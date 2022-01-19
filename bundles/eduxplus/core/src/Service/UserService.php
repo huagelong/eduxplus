@@ -258,4 +258,23 @@ class UserService extends AdminBaseService
         $model->setIsLock($state);
         return $this->db()->save($model);
     }
+
+    public function resetPwd($id){
+        $sql = "SELECT a FROM Core:BaseUser a WHERE a.id=:id";
+        $model = $this->db()->fetchOne($sql, ['id' => $id], 1);
+        $initPwd = $this->getOption("app.initpwd");
+        $pwd = $this->userPasswordEncoder->hashPassword($model, $initPwd);
+        $model->setPassword($pwd);
+        $model->setNeedChangepwd(true);
+        return $this->db()->save($model);
+    }
+
+    public function changePwd($id, $pwd){
+        $sql = "SELECT a FROM Core:BaseUser a WHERE a.id=:id";
+        $model = $this->db()->fetchOne($sql, ['id' => $id], 1);
+        $pwd = $this->userPasswordEncoder->hashPassword($model, $pwd);
+        $model->setPassword($pwd);
+        $model->setNeedChangepwd(false);
+        return $this->db()->save($model);
+    }
 }

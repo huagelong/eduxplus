@@ -105,6 +105,14 @@ class BaseUser implements PasswordAuthenticatedUserInterface,UserInterface
     /**
      * @var bool|null
      *
+     * @ORM\Column(name="need_changepwd", type="boolean", nullable=true, options={"comment"="是否需要修改密码,1-是，0-否"})
+     */
+    private $needChangepwd = '0';
+
+
+    /**
+     * @var bool|null
+     *
      * @ORM\Column(name="im_imported", type="boolean", nullable=true, options={"comment"="是否已经导入腾讯云im中,1-是，0-否"})
      */
     private $imImported = '0';
@@ -188,8 +196,9 @@ class BaseUser implements PasswordAuthenticatedUserInterface,UserInterface
     /**
      * @see UserInterface
      */
-    public function getSalt()
+    public function getSalt(): string
     {
+        return "";
         // not needed when using the "bcrypt" algorithm in security.yaml
     }
 
@@ -340,6 +349,18 @@ class BaseUser implements PasswordAuthenticatedUserInterface,UserInterface
     public function setIsLock(?bool $isLock): self
     {
         $this->isLock = $isLock;
+
+        return $this;
+    }
+
+    public function getNeedChangepwd(): ?bool
+    {
+        return $this->needChangepwd;
+    }
+
+    public function setNeedChangepwd(?bool $needChangepwd): self
+    {
+        $this->needChangepwd = $needChangepwd;
 
         return $this;
     }

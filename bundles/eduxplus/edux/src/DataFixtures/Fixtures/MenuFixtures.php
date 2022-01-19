@@ -25,8 +25,8 @@ class MenuFixtures
         $this->addMenu("搜索商品", "搜索商品", 0, "admin_api_glob_searchGoodsDo", "", 5, $roleId, 1, 1, 0, 1);
         $this->addMenu("搜索课程", "搜索课程", 0, "admin_api_glob_searchCourseDo", "", 6, $roleId, 1, 1, 0, 1);
         
-        //教研
-        $teachMenuId = $this->addMenu("教研", "教学产品方面的管理", 0, "", "mdi mdi-school", 4, $roleId, 0, 0, 1);
+        //教学
+        $teachMenuId = $this->addMenu("教学", "教学方面的管理", 0, "", "mdi mdi-school", 4, $roleId, 0, 0, 1);
         //协议
         $agreementMgId = $this->addMenu("协议管理", "针对各种协议的管理", $teachMenuId, "admin_teach_agreement_index", "", 0, $roleId, 0, 0, 1);
         $this->addMenu("查看", "查看", $agreementMgId, "admin_teach_agreement_view", "", 1, $roleId, 0, 1, 0);
@@ -90,7 +90,7 @@ class MenuFixtures
         $this->addMenu("开课计划上下架处理", "开课计划上下架处理", $mgId, "admin_api_teach_studyplan_switchStatus", "", 9, $roleId, 0, 1, 0);
 
         //教务
-        $jwMenuId = $this->addMenu("教务", "教务方面的管理", 0, "", "mdi mdi-teach", 5, $roleId, 0, 0, 1);
+        $jwMenuId = $this->addMenu("教务", "教务方面的管理", $teachMenuId, "", "mdi mdi-teach", 5, $roleId, 0, 0, 1);
         //学校管理
         $mgId = $this->addMenu("校区管理", "校区信息管理", $jwMenuId, "admin_jw_school_index", "", 0, $roleId, 0, 0, 1);
         $this->addMenu("查看", "查看", $mgId, "admin_jw_school_view", "", 0, $roleId, 0, 1, 0);

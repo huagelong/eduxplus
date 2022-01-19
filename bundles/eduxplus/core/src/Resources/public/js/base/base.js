@@ -1,7 +1,7 @@
 $(function(){
     $('.ajaxform').ajaxform();
     $('.ajaxDelete').ajaxDelete();
-    $('.ajaxPut').ajaxPut();
+    $('.ajaxPost').ajaxPost();
     $('.ajaxGet').ajaxGet();
     $('.tip').tips();
     $('.msgtip').msgtips();

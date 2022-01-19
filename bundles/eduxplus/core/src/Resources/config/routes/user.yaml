@@ -28,3 +28,9 @@ admin_api_user_switchLock:
 admin_user_changePwd:
   path: /admin/user/changePwd
   controller: Eduxplus\CoreBundle\Controller\UserController::changePwdAction
+admin_user_changePwdDo:
+  path: /admin/user/changePwd/do
+  controller: Eduxplus\CoreBundle\Controller\UserController::changePwdDoAction
+admin_user_resetPwd:
+  path: /admin/user/resetPwd/do
+  controller: Eduxplus\CoreBundle\Controller\UserController::resetPwdAction

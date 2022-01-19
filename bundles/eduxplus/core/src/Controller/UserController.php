@@ -60,6 +60,16 @@ class UserController extends BaseAdminController
         $grid->sdaterange("创建时间")->field("a.createdAt");
 
         //编辑等
+        $grid->setTableAction("admin_user_resetPwd", function ($obj){
+            if(is_array($obj)){
+                $id = $obj["id"];
+            }else{
+                $id = $obj->getId();
+            }
+            $params = ['id' => $id];
+            $url = $this->service->genUrl("admin_user_resetPwd", $params);
+            return '<a href=' . $url . ' data-confirm="确认要重置吗?" title="重置密码"  class=" btn btn-danger btn-xs ajaxPost"><i class="mdi mdi-lock-reset"></i></a>';
+        });
         $grid->viewAction("admin_user_view")
             ->editAction("admin_user_edit")
             ->deleteAction("admin_api_user_delete");
@@ -248,6 +258,30 @@ class UserController extends BaseAdminController
 
     
     public function changePwdAction(Form $form){
-        
+        $form->password("新密码")->field("pwd")->isRequire(1);
+        $form->password("重复密码")->field("repwd")->isRequire(1);
+        $formData = $form->create($this->generateUrl("admin_user_changePwdDo"));
+        return $this->content()->renderEdit($formData);
+    }
+
+    public function changePwdDoAction(UserService $userService, ValidateService $validateService, Request $request){
+        $pwd = $request->get("pwd");
+        $repwd = $request->get("repwd");
+        if(!$pwd) return $this->responseError("新密码不能为空");
+        if($pwd != $repwd) return $this->responseError("两次密码不相等!");
+
+        if(!$validateService->passwordValid($pwd)){
+            return $this->responseError($this->error()->getLast());
+        }
+
+        $uid = $this->getUid();
+        $userService->changePwd($uid, $pwd);
+        return $this->responseMsgRedirect("操作成功！请重新用新密码登录", $this->genUrl("admin_logout"));
+    }
+
+    public function resetPwdAction(UserService $userService){
+        $uid = $this->getUid();
+        $userService->resetPwd($uid);
+        return $this->responseSuccess([],"操作成功!");
     }
 }
