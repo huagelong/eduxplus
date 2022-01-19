@@ -170,7 +170,7 @@ class Grid
         $params['tableActionCallback'] = $this->tableActionCallback;
         $params['gridBar'] = $this->gridBar;
         $params['bathDelete'] = $this->bathDelete;
-//        var_dump($this->gridColumn);exit;
+    //    var_dump($this->tableActionCallback);exit;
         $result = $this->twig->render("@Grid/".$tableTpl.".html.twig", $params);
 
         return $result;

@@ -32,5 +32,5 @@ admin_user_changePwdDo:
   path: /admin/user/changePwd/do
   controller: Eduxplus\CoreBundle\Controller\UserController::changePwdDoAction
 admin_user_resetPwd:
-  path: /admin/user/resetPwd/do
+  path: /admin/user/resetPwd/do/{id}
   controller: Eduxplus\CoreBundle\Controller\UserController::resetPwdAction

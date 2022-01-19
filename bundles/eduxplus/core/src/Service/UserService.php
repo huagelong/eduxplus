@@ -277,4 +277,10 @@ class UserService extends AdminBaseService
         $model->setNeedChangepwd(false);
         return $this->db()->save($model);
     }
+
+    public function checkPwd($id, $pwd){
+        $sql = "SELECT a FROM Core:BaseUser a WHERE a.id=:id";
+        $model = $this->db()->fetchOne($sql, ['id' => $id], 1);
+        return $this->userPasswordEncoder->isPasswordValid($model, $pwd);
+    }
 }
