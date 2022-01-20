@@ -45,15 +45,11 @@ class ExceptionListener
                     $hasMatch++;
                 }
             }
-            if(!$hasMatch){
-                return ;
-            }
         }
         $msg = $exception->getMessage();
         $statusCode = $exception instanceof HttpExceptionInterface ? $exception->getStatusCode() : $exception->getCode();
-        if ($hasMatch  && (($event->getRequest()->getRequestFormat() == 'json') || (in_array("application/json", $event->getRequest()->getAcceptableContentTypes())))) {
-            $responseData = JsonResponseService::genData([], $statusCode, $msg);
-            $response = new JsonResponse($responseData);
+        if ($hasMatch) {
+            $response = JsonResponseService::genData([], $statusCode, $msg);
             $response->setStatusCode(200); //强制转为200
             return $event->setResponse($response);
         }

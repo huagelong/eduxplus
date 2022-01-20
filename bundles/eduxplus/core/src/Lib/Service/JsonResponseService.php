@@ -21,11 +21,11 @@ class JsonResponseService
         $data['_message']= $msg;
         $data['_url']= $url;
         $data['_data']= $rsData;
-        $jsonResponse = new JsonResponse($data);
+        $jsonResponse = new JsonResponse(self::format($code, $data));
         return $jsonResponse;
     }
 
-    public static function format($statusCode, $content, $stopwatch){
+    public static function format($statusCode, $content){
         $message = isset($content['_message'])?$content['_message']:"";
         if(isset($content['_message'])) unset($content['_message']);
         $url = isset($content['_url'])?$content['_url']:"";
@@ -47,7 +47,6 @@ class JsonResponseService
         if(!isset($responseData['data'])) $responseData['data'] = $data;
         $responseData['message']=$message;
         if($url) $responseData['_url']=$url;
-        $responseData['stopwatch'] = $stopwatch;
         return $responseData;
     }
 }
