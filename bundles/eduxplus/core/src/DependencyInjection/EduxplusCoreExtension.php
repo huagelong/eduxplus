@@ -6,7 +6,8 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
-
+use Symfony\Component\HttpKernel\KernelEvents;
+use Eduxplus\CoreBundle\EventListener\RequestTransformerListener;
 /**
  * SecurityHeadersExtension
  */
@@ -26,6 +27,10 @@ class EduxplusCoreExtension extends Extension implements PrependExtensionInterfa
         foreach ($config as $key => $value) {
             $container->setParameter('eduxplus_core.' . $key, $value);
         }
+
+        $container->register(RequestTransformerListener::class)
+        ->addTag('kernel.event_listener', ['event' => KernelEvents::REQUEST, 'priority' => 100]);
+
     }
 
 

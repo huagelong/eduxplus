@@ -170,6 +170,7 @@ class OptionController extends BaseAdminController
     
     public function bathdeleteDoAction(Request $request, OptionService $optionService){
         $ids = $request->get("ids");
+        $optionService->log($ids);
         if($ids){
             foreach ($ids as $id){
                 $optionService->deleteOption($id);

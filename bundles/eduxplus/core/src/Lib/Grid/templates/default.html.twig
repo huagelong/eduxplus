@@ -52,8 +52,8 @@
                       {% if array_get(v, 'isLock') %}
                       {% else %}
                       <div class="custom-control custom-checkbox">
-                       <input type="checkbox" class="custom-control-input" name="ids[]" value="{{ get_prop(v, cv["field"], cv['type'], cv['options'])|raw }}">
-                       <label class="custom-control-label" ></label>
+                       <input type="checkbox" class="custom-control-input" id="chb{{ get_prop(v, cv["field"], cv['type'], cv['options'])|raw }}" name="ids[]" value="{{ get_prop(v, cv["field"], cv['type'], cv['options'])|raw }}">
+                       <label class="custom-control-label" for="chb{{ get_prop(v, cv["field"], cv['type'], cv['options'])|raw }}" ></label>
                       </div>
                       {% endif %}
                   </td>

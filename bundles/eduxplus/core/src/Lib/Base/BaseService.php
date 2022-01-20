@@ -139,6 +139,7 @@ class BaseService
     }
 
     public final function log($log){
+        $log = json_encode($log, JSON_UNESCAPED_UNICODE);
         return $this->logger()->info($log);
     }
 
