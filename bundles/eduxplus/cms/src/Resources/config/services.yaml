@@ -15,6 +15,6 @@ services:
         resource: '../../../src/Controller/'
         tags: [ 'controller.service_arguments' ]
 
-    Eduxplus\CmsBundle\Service\:
+    Eduxplus\CmsBundle\Service\Admin\:
         resource: '../../../src/Service/**/*'
         parent: base.service

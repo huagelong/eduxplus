@@ -9,8 +9,8 @@
 namespace Eduxplus\CmsBundle\Controller\Admin;
 
 use Eduxplus\CoreBundle\Lib\View\View;
-use Eduxplus\CmsBundle\Service\NewsCategoryService;
-use Eduxplus\CmsBundle\Service\NewsService;
+use Eduxplus\CmsBundle\Service\Admin\NewsCategoryService;
+use Eduxplus\CmsBundle\Service\Admin\NewsService;
 use Eduxplus\CoreBundle\Lib\Base\BaseAdminController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
