@@ -41,5 +41,4 @@ framework:
 
         routing:
             # Route your messages to the transports
-            # 'Wechance\CoreBundle\Messenger\TestMessenger': async
-            # 'App\Message\YourMessage': async
+            'Wechance\WebsiteBundle\Message\Msg': async
