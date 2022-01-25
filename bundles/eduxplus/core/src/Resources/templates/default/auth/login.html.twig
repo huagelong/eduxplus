@@ -30,7 +30,7 @@
     <script type="text/javascript">
         $(function(){
 
-    if((self != top) && (self.frameElement.getAttribute("name")) && (self.frameElement.getAttribute("name").indexOf("layui-layer") > -1)){
+    if(self != top){
         parent.location.assign(location.href);
     }
             $(".recaptcha").captcha();
