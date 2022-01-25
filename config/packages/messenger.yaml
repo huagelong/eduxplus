@@ -41,4 +41,4 @@ framework:
 
         routing:
             # Route your messages to the transports
-            'Wechance\WebsiteBundle\Message\Msg': async
+            'Eduxplus\WebsiteBundle\Message\Msg': async
