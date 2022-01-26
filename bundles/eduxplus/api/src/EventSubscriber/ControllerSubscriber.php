@@ -13,6 +13,7 @@ namespace Eduxplus\ApiBundle\EventSubscriber;
 use Eduxplus\CoreBundle\Lib\Base\ApiBaseService;
 use Eduxplus\CoreBundle\Lib\Base\BaseApiController;
 use Eduxplus\CoreBundle\Lib\Base\BaseService;
+use Eduxplus\CoreBundle\Lib\Service\RedisService;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\HttpKernel\Event\ControllerEvent;
@@ -20,12 +21,12 @@ use Symfony\Component\Security\Core\Exception\AuthenticationException;
 
 class ControllerSubscriber implements EventSubscriberInterface
 {
-    protected $baseService;
+    protected $redisService;
     protected $apiBaseService;
 
-    public function __construct(BaseService $baseService, ApiBaseService $apiBaseService)
+    public function __construct(RedisService $redisService, ApiBaseService $apiBaseService)
     {
-        $this->baseService = $baseService;
+        $this->redisService = $redisService;
         $this->apiBaseService = $apiBaseService;
     }
 
@@ -51,7 +52,7 @@ class ControllerSubscriber implements EventSubscriberInterface
 
         //api
         if ($controller instanceof BaseApiController) {
-            $sign = $request->headers->get("X-AUTH-SIGN");
+            $xsign = $this->getXsign($request);
             $debug = $request->headers->get("X-AUTH-DEBUG");
             $clientId = $request->headers->get('X-AUTH-CLIENT-ID');
             $clientId = $clientId ? strtolower($clientId) : "";
@@ -59,7 +60,7 @@ class ControllerSubscriber implements EventSubscriberInterface
             $contentType = $request->getContentType();
             $contentType = strtolower($contentType);
 
-            if (!$sign || !$clientId) {
+            if (!$xsign || !$clientId) {
                 throw new AuthenticationException("X-AUTH-* Required!");
             }
 
@@ -72,35 +73,57 @@ class ControllerSubscriber implements EventSubscriberInterface
                 return true;
             }
 
-            $realSign = base64_decode($sign);
-            list($time, $sign) = json_decode($realSign, true);
-            $now = time();
-
-            if (($now - $time) > 600) {
-                throw new AuthenticationException("Api Request Expired");
-            }
-            if (!$debug) {
-                $str = base64_decode($body);
-            } else {
-                $str = $body;
+            $timestamp = $xsign["timestamp"];
+            $nonce = $xsign["nonce"];
+            $sign = $xsign["sign"];
+    
+            if(!$timestamp||!$nonce||!$sign){
+                throw new AuthenticationException("Global parameters cannot be null!");
             }
 
-            if (strpos($contentType, 'multipart/form-data') !== false) {
-                $str = "";
-                $body = "";
+            //sign 检查
+            $redisKey = "preRequest:{$clientId}:{$nonce}";
+            //时间阀值,重新请求
+            $diffTime = 60;//秒
+            if((time()-$timestamp) > $diffTime){
+                throw new AuthenticationException("Bad request!");
             }
-
-            $checkSign = md5($str . $salt . $time);
-
-            if ($sign != $checkSign) {
-                $checkSign = md5($body . $salt . $time);
+            //重复请求,幂等性
+            if(!$this->redisService->setNxEx($redisKey, 1, $diffTime)){
+                throw new AuthenticationException("Bad request!");
             }
-
-            if ($sign != $checkSign) throw new AuthenticationException("Permission denied!");
+    
+            //sign 对比
+            $localSign = md5($salt.$timestamp.$nonce);
+            if($sign != $localSign){
+                throw new AuthenticationException("Access denied!");
+            }
 
             return true;
         }
 
         return true;
     }
+
+
+    public function getXsign($request)
+    {
+        $signHeader = $request->headers->get("X-AUTH-SIGN");
+        if(!$signHeader){
+            $timestamp = $request->get("timestamp");
+            $nonce = $request->get("nonce");
+            $sign = $request->get("sign");
+        }else{
+            $signArr = json_decode($signHeader, true);
+            $timestamp = isset($signArr["timestamp"])?$signArr["timestamp"]:"";
+            $nonce = isset($signArr["nonce"])?$signArr["nonce"]:"";
+            $sign = isset($signArr["sign"])?$signArr["sign"]:"";
+        }
+        return [
+            "timestamp"=>$timestamp,
+            "nonce"=>$nonce,
+            "sign"=>$sign
+        ];
+    }
+
 }
