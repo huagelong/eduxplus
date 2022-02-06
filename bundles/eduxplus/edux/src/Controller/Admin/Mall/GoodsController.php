@@ -7,7 +7,7 @@
  * @Date: 2020/4/19 19:53
  */
 
-namespace Eduxplus\EduxBundle\Controller\Mall;
+namespace Eduxplus\EduxBundle\Controller\Admin\Mall;
 
 use Eduxplus\CoreBundle\Lib\View\View;
 use Eduxplus\EduxBundle\Service\Teach\CategoryService;

@@ -6,7 +6,7 @@
  * @Date: 2020/4/12 15:47
  */
 
-namespace Eduxplus\EduxBundle\Controller\Teach;
+namespace Eduxplus\EduxBundle\Controller\Admin\Teach;
 
 
 use Eduxplus\CoreBundle\Lib\View\View;

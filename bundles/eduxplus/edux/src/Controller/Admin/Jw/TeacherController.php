@@ -7,7 +7,7 @@
  * @Date: 2020/4/13 21:51
  */
 
-namespace Eduxplus\EduxBundle\Controller\Jw;
+namespace Eduxplus\EduxBundle\Controller\Admin\Jw;
 
 
 use Eduxplus\CoreBundle\Lib\View\View;

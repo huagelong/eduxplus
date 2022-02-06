@@ -6,7 +6,7 @@
  * @Date: 2020/9/28 16:56
  */
 
-namespace Eduxplus\EduxBundle\Controller\Mall;
+namespace Eduxplus\EduxBundle\Controller\Admin\Mall;
 
 
 use Eduxplus\CoreBundle\Lib\Form\Form;

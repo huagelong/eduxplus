@@ -6,7 +6,7 @@
  * @Date: 2020/11/12 16:29
  */
 
-namespace Eduxplus\EduxBundle\Controller\Jw;
+namespace Eduxplus\EduxBundle\Controller\Admin\Jw;
 
 
 use Eduxplus\CoreBundle\Lib\Grid\Grid;

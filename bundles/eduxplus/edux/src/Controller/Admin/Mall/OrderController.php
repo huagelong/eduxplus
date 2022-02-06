@@ -6,7 +6,7 @@
  * @Date: 2020/5/7 11:01
  */
 
-namespace Eduxplus\EduxBundle\Controller\Mall;
+namespace Eduxplus\EduxBundle\Controller\Admin\Mall;
 
 
 use Eduxplus\EduxBundle\Service\Mall\CouponService;

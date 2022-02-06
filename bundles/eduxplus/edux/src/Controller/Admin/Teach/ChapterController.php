@@ -7,7 +7,7 @@
  * @Date: 2020/4/19 19:53
  */
 
-namespace Eduxplus\EduxBundle\Controller\Teach;
+namespace Eduxplus\EduxBundle\Controller\Admin\Teach;
 
 use Eduxplus\EduxBundle\Service\Teach\ChapterService;
 use Eduxplus\EduxBundle\Service\Teach\CourseService;

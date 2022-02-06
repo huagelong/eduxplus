@@ -1,24 +1,24 @@
 admin_jw_school_index:
   path: /admin/jw/school/index
-  controller: Eduxplus\EduxBundle\Controller\Jw\SchoolController::indexAction
+  controller: Eduxplus\EduxBundle\Controller\Admin\Jw\SchoolController::indexAction
 admin_jw_school_view:
   path: /admin/jw/school/view/{id}
-  controller: Eduxplus\EduxBundle\Controller\Jw\SchoolController::viewAction
+  controller: Eduxplus\EduxBundle\Controller\Admin\Jw\SchoolController::viewAction
 admin_jw_school_add:
   path: /admin/jw/school/add
-  controller: Eduxplus\EduxBundle\Controller\Jw\SchoolController::addAction
+  controller: Eduxplus\EduxBundle\Controller\Admin\Jw\SchoolController::addAction
 admin_api_jw_school_add:
   path: /admin/jw/school/add/do
-  controller: Eduxplus\EduxBundle\Controller\Jw\SchoolController::addDoAction
+  controller: Eduxplus\EduxBundle\Controller\Admin\Jw\SchoolController::addDoAction
 admin_jw_school_edit:
   path: /admin/jw/school/edit/{id}
-  controller: Eduxplus\EduxBundle\Controller\Jw\SchoolController::editAction
+  controller: Eduxplus\EduxBundle\Controller\Admin\Jw\SchoolController::editAction
 admin_api_jw_school_edit:
   path: /admin/jw/school/edit/do/{id}
-  controller: Eduxplus\EduxBundle\Controller\Jw\SchoolController::editDoAction
+  controller: Eduxplus\EduxBundle\Controller\Admin\Jw\SchoolController::editDoAction
 admin_api_jw_school_delete:
   path: /admin/jw/school/delete/do/{id}
-  controller: Eduxplus\EduxBundle\Controller\Jw\SchoolController::deleteAction
+  controller: Eduxplus\EduxBundle\Controller\Admin\Jw\SchoolController::deleteAction
 admin_api_jw_school_bathdelete:
   path: /admin/jw/school/bathdelete/do
-  controller: Eduxplus\EduxBundle\Controller\Jw\SchoolController::bathdeleteAction
+  controller: Eduxplus\EduxBundle\Controller\Admin\Jw\SchoolController::bathdeleteAction
