@@ -15,7 +15,7 @@
             $('.select2').select2({"allowClear":true,"placeholder":{"id":"","text":"\u7236\u7ea7\u83dc\u5355"}});
 
             $('#menu-tree').nestable({maxDepth:3, scroll:true});
-
+            $('.dd').nestable('collapseAll');
 
             $('.menu-tree-tools').on('click', function(e){
                 var action = $(this).data('action');

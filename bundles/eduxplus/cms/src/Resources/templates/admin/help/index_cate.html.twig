@@ -8,6 +8,7 @@
     $(function(){
 
       $('#tree').nestable({scroll:true});
+      $('.dd').nestable('collapseAll');
 
       $('.tree-tools').on('click', function(e){
         var action = $(this).data('action');
@@ -20,7 +21,7 @@
         $('.tree-tools').removeClass("active");
         $(this).addClass("active");
       });
-
+      
       $("#sortSave").click(function(){
         var serialize = $('#tree').nestable('serialize');
         requestPost('{{ path('admin_api_cms_help_category_updateSort') }}', serialize);

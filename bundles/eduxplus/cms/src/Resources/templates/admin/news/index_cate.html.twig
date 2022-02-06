@@ -8,6 +8,7 @@
     $(function(){
 
       $('#tree').nestable({scroll:true});
+      $('.dd').nestable('collapseAll');
 
       $('.tree-tools').on('click', function(e){
         var action = $(this).data('action');

@@ -10,7 +10,8 @@
     <script>
         $(function(){
             $('#tree').nestable({maxDepth:3, scroll:true});
-
+            $('.dd').nestable('collapseAll');
+            
             $('.tree-tools').on('click', function(e){
                 var action = $(this).data('action');
                 if (action === 'expand') {
