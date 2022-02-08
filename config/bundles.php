@@ -23,4 +23,5 @@ return [
     Symfony\Bundle\DebugBundle\DebugBundle::class => ['dev' => true],
     Zenstruck\ScheduleBundle\ZenstruckScheduleBundle::class => ['all' => true],
     Eduxplus\CmsBundle\EduxplusCmsBundle::class => ['all' => true],
+    Eduxplus\HomeBundle\EduxplusHomeBundle::class => ['all' => true],
 ];

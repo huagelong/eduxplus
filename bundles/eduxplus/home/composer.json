@@ -1,0 +1,28 @@
+{
+    "name": "bundles/eduxplus-home-bundle",
+    "description": "Homepage",
+    "type": "symfony-bundle",
+    "require": {
+    },
+    "require-dev": {
+    },
+    "autoload": {
+        "psr-4": {
+            "Eduxplus\\HomeBundle\\": "src/"
+        }
+    },
+    "license": "Apache-2.0",
+    "authors": [
+        {
+            "name": "Kaihui.wang",
+            "email": "Hpuwang@gmail.com"
+        }
+    ],
+    "extra": {
+        "branch-alias": {
+            "dev-master": "master"
+        }
+    },
+    "scripts": {
+    }
+}
