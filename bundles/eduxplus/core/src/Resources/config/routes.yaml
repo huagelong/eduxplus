@@ -1,3 +1,6 @@
+clockwork:
+    resource: '@ClockworkBundle/Resources/config/routing/clockwork.php'
+    
 core_adminlog:
   resource: "./routes/adminlog.yaml"
 core_auth:
@@ -14,3 +17,4 @@ core_role:
   resource: "./routes/role.yaml"
 core_user:
   resource: "./routes/user.yaml"
+

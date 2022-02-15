@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "012d3f62c4c66040bca2a916e3b6b06b",
+    "content-hash": "27ea8bd883726a72280844c10df1f508",
     "packages": [
         {
             "name": "adbario/php-dot-notation",
@@ -718,7 +718,7 @@
         },
         {
             "name": "bundles/eduxplus-api-bundle",
-            "version": "dev-master",
+            "version": "dev-home",
             "dist": {
                 "type": "path",
                 "url": "./bundles/eduxplus/api",
@@ -751,7 +751,7 @@
         },
         {
             "name": "bundles/eduxplus-cms-bundle",
-            "version": "dev-master",
+            "version": "dev-home",
             "dist": {
                 "type": "path",
                 "url": "./bundles/eduxplus/cms",
@@ -784,7 +784,7 @@
         },
         {
             "name": "bundles/eduxplus-core-bundle",
-            "version": "dev-master",
+            "version": "dev-home",
             "dist": {
                 "type": "path",
                 "url": "./bundles/eduxplus/core",
@@ -891,7 +891,7 @@
         },
         {
             "name": "bundles/eduxplus-edux-bundle",
-            "version": "dev-master",
+            "version": "dev-home",
             "dist": {
                 "type": "path",
                 "url": "./bundles/eduxplus/edux",
@@ -923,8 +923,41 @@
             }
         },
         {
+            "name": "bundles/eduxplus-home-bundle",
+            "version": "dev-home",
+            "dist": {
+                "type": "path",
+                "url": "./bundles/eduxplus/home",
+                "reference": "fe970a5c502e8899c7a3bbb6ad4fbac878ee30ea"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "master"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Eduxplus\\HomeBundle\\": "src/"
+                }
+            },
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Kaihui.wang",
+                    "email": "Hpuwang@gmail.com"
+                }
+            ],
+            "description": "Homepage",
+            "transport-options": {
+                "relative": true
+            }
+        },
+        {
             "name": "bundles/eduxplus-qa-bundle",
-            "version": "dev-master",
+            "version": "dev-home",
             "dist": {
                 "type": "path",
                 "url": "./bundles/eduxplus/qa",
@@ -957,7 +990,7 @@
         },
         {
             "name": "bundles/eduxplus-website-bundle",
-            "version": "dev-master",
+            "version": "dev-home",
             "dist": {
                 "type": "path",
                 "url": "./bundles/eduxplus/website",
@@ -3543,6 +3576,69 @@
                 }
             ],
             "time": "2021-10-05T13:56:00+00:00"
+        },
+        {
+            "name": "itsgoingd/clockwork",
+            "version": "v5.1.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/itsgoingd/clockwork.git",
+                "reference": "6a7b3942224fa53cf3704d9adba636e1f3dfeb9a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://mirrors.huaweicloud.com/artifactory/api/composer/remote-php-composer/itsgoingd/clockwork/v5.1.5/itsgoingd-clockwork-v5.1.5.zip",
+                "reference": "6a7b3942224fa53cf3704d9adba636e1f3dfeb9a",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "php": ">=5.6"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Clockwork\\Support\\Laravel\\ClockworkServiceProvider"
+                    ],
+                    "aliases": {
+                        "Clockwork": "Clockwork\\Support\\Laravel\\Facade"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Clockwork\\": "Clockwork/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "itsgoingd",
+                    "email": "itsgoingd@luzer.sk",
+                    "homepage": "https://twitter.com/itsgoingd"
+                }
+            ],
+            "description": "php dev tools in your browser",
+            "homepage": "https://underground.works/clockwork",
+            "keywords": [
+                "Devtools",
+                "debugging",
+                "laravel",
+                "logging",
+                "lumen",
+                "profiling",
+                "slim"
+            ],
+            "funding": [
+                {
+                    "url": "https://github.com/itsgoingd",
+                    "type": "github"
+                }
+            ],
+            "time": "2022-02-13T22:57:42+00:00"
         },
         {
             "name": "knplabs/knp-components",
@@ -13583,6 +13679,7 @@
         "bundles/eduxplus-cms-bundle": 20,
         "bundles/eduxplus-core-bundle": 20,
         "bundles/eduxplus-edux-bundle": 20,
+        "bundles/eduxplus-home-bundle": 20,
         "bundles/eduxplus-qa-bundle": 20,
         "bundles/eduxplus-website-bundle": 20
     },

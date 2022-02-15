@@ -24,4 +24,5 @@ return [
     Zenstruck\ScheduleBundle\ZenstruckScheduleBundle::class => ['all' => true],
     Eduxplus\CmsBundle\EduxplusCmsBundle::class => ['all' => true],
     Eduxplus\HomeBundle\EduxplusHomeBundle::class => ['all' => true],
+    Clockwork\Support\Symfony\ClockworkBundle::class => ['dev' => true],
 ];

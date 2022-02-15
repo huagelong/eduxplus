@@ -47,6 +47,9 @@
     "bundles/eduxplus-edux-bundle": {
         "version": "master"
     },
+    "bundles/eduxplus-home-bundle": {
+        "version": "master"
+    },
     "bundles/eduxplus-qa-bundle": {
         "version": "master"
     },
@@ -234,6 +237,9 @@
             "version": "1.0",
             "ref": "410da723a3134bd927200dd469a030ddbf6f35fd"
         }
+    },
+    "itsgoingd/clockwork": {
+        "version": "v5.1.5"
     },
     "knplabs/knp-components": {
         "version": "v3.5.0"
