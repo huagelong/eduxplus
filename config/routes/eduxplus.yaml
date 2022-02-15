@@ -1,0 +1,19 @@
+eduxplus_core:
+  resource: "@EduxplusCoreBundle/Resources/config/routes.yaml"
+
+eduxplus_edux:
+  resource: "@EduxplusEduxBundle/Resources/config/routes.yaml"
+
+eduxplus_cms:
+  resource: "@EduxplusCmsBundle/Resources/config/routes.yaml"
+
+eduxplus_qa:
+  resource: "@EduxplusQaBundle/Resources/config/routes.yaml"
+
+eduxplus_api:
+  resource: "@EduxplusApiBundle/Resources/config/routes.yaml"
+
+eduxplus_website:
+  resource: "@EduxplusWebsiteBundle/Resources/config/routes.yaml"
+
+

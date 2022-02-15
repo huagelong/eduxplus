@@ -1,3 +1,0 @@
-eduxplus_core:
-  resource: "@EduxplusQaBundle/Resources/config/routes.yaml"
-

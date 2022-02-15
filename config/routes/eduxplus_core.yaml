@@ -1,3 +1,0 @@
-eduxplus_core:
-  resource: "@EduxplusCoreBundle/Resources/config/routes.yaml"
-
