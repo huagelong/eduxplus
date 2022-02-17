@@ -140,6 +140,7 @@ class BaseService
 
     public final function log($log){
         $log = json_encode($log, JSON_UNESCAPED_UNICODE);
+        clock()->info($log);
         return $this->logger()->info($log);
     }
 

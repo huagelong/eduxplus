@@ -4,4 +4,4 @@ web_profiler:
 
 framework:
     profiler: 
-        { enabled: false, only_exceptions: false, collect: false}
+        { enabled: true, only_exceptions: false, collect: true}
