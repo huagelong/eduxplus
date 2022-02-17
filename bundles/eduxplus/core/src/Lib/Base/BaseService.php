@@ -185,6 +185,9 @@ class BaseService
 
     public final function getPro($obj, $name)
     {
+        if(is_array($obj)){
+            $name = "[".$name."]";
+        }
         return $this->propertyAccessor->getValue($obj, $name);
     }
 
