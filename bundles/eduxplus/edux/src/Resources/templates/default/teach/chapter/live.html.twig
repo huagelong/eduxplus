@@ -12,7 +12,7 @@
 
 {% block page %}
 <div class="card">
-    <form method="POST" action="{{ path("admin_api_teach_chapter_live", {id:id}) }}" class="form-horizontal ajaxform" accept-charset="UTF-8" >
+    <form method="POST" action="{{ path("admin_api_teach_chapter_live", {id:id}) }}" class="form-horizontal ajaxform needs-validation" accept-charset="UTF-8" novalidate >
         {% if pushUrl %}
         <div class="card-body" style="display: block;">
             <div class="overflow-auto" style="width:600px;margin-bottom: 20px;">推流地址: <code class="clipboard" data-clipboard-text="{{ pushUrl }}" >{{ pushUrl|raw }}</code></div>

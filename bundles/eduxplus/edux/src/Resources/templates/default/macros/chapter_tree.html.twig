@@ -22,7 +22,7 @@
 
                 {% if is_authorized('admin_teach_chapter_vod') and (chapter['childs'] is empty)%}
                     {% if (chapter['studyWay'] != 3) %}
-            <a href="{{ path("admin_teach_chapter_vod", {"id":chapter['id']}) }}" data-title="管理点播"  title="管理点播" class="poppage"  {% if chapter['video'] and chapter['video']['status']==1 %} style="color:#75C82A"  {% endif %}   ><i class="fab fa-youtube"></i></a>
+            <a href="{{ path("admin_teach_chapter_vod", {"id":chapter['id']}) }}" data-title="管理点播"  title="管理点播" class="poppage"  {% if chapter['video'] and chapter['video']['status']==1 %} style="color:#75C82A"  {% endif %}   ><i class="mdi mdi-library-video"></i></a>
                     {% endif %}
                 {% endif %}
 

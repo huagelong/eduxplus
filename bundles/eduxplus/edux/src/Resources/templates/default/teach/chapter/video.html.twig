@@ -1,11 +1,11 @@
 {% extends "@CoreBundle/layout/pop.html.twig" %}
 
 {% if vodAdapter == 1 %}
-{% import "@CoreBundle/macros/vod/tengxunyun.html.twig" as vodMacros %}
+{% import "@EduxBundle/macros/vod/tengxunyun.html.twig" as vodMacros %}
 {% endif %}
 
 {% if vodAdapter == 2 %}
-    {% import "@CoreBundle/macros/vod/aliyun.html.twig" as vodMacros %}
+    {% import "@EduxBundle/macros/vod/aliyun.html.twig" as vodMacros %}
 {% endif %}
 
 {% block head_stylesheets %}
@@ -56,12 +56,8 @@
 {% endblock %}
 
 {% block page %}
-<div class="card">
-     <div class="card-body"> 
-    <div class="row">
-        <div class="col-md-12">
-            <div class="card card-default">
-                <form method="POST" action="{{ path("admin_api_teach_chapter_vod", {id:id}) }}" class="form-horizontal ajaxform" accept-charset="UTF-8" >
+            <div class="card">
+                <form method="POST" action="{{ path("admin_api_teach_chapter_vod", {id:id}) }}" class="form-horizontal ajaxform needs-validation" accept-charset="UTF-8" novalidate >
                     <div class="card-body" style="display: block;">
                         {{ formData|raw }}
                         {% if vodAdapter == 1 %}
@@ -82,8 +78,4 @@
                     </div>
                 </form>
             </div>
-        </div>
-    </div>
-  </div>
-    </div>
 {% endblock %}

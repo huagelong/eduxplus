@@ -126,7 +126,7 @@ class ChapterController extends BaseAdminController
         $info = $chapterService->getById($id);
 
         $select = $chapterService->chapterSelect($info["courseId"]);
-
+        $form->notice("父章节最多只能选择一级");
         $form->text("名称")->field("name")->isRequire(1)->defaultValue($info['name']);
         $form->select("父章节")->field("parentId")->isRequire(1)->defaultValue($info['parentId'])->options($select);
         $form->datetime("上课时间")->field("openTime")->defaultValue($info['openTime']?date('Y-m-d H:i', $info['openTime']):"")->placeholder("直播必须输入上课时间");
