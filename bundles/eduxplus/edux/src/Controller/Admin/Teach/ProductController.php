@@ -51,7 +51,7 @@ class ProductController extends BaseAdminController
         $grid->setTableAction('admin_teach_studyplan_index', function ($obj) {
             $id = $obj['id'];
             $url = $this->generateUrl('admin_teach_studyplan_index', ['id' => $id]);
-            $str = '<a href=' . $url . ' data-width="1000px" title="开课计划管理" class=" btn btn-info btn-xs"><i class="mdi iconfont icon-zhangjiekecheng"></i></a>';
+            $str = '<a href=' . $url . ' data-width="1000px" title="开课计划管理" class=" btn btn-info btn-xs"><i class="mdi mdi-folder-clock"></i></a>';
             return  $str;
         });
 

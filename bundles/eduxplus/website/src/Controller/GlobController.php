@@ -97,7 +97,7 @@ class GlobController extends BaseHtmlController
         $logger->info($token);
 
         if (!$token) return new Response("error");
-        $key = $this->getConfig("secret");
+        $key = $learnService->getConfig("secret");
         $data = (array) JWT::decode($token, $key,  array('HS256'));
         $videoId = $data['videoId'];
 

@@ -25,7 +25,7 @@ class GlobController extends BaseAdminController
         $kw = $request->get("kw");
         if(!$kw) return [];
         $data = $productService->searchProductName($kw);
-        return $data;
+        return $this->responseSuccess($data);
     }
 
     
@@ -33,7 +33,7 @@ class GlobController extends BaseAdminController
         $kw = $request->get("kw");
         if(!$kw) return [];
         $data = $goodsService->searchGoodsName($kw);
-        return $data;
+        return $this->responseSuccess($data);
     }
 
     
@@ -41,7 +41,7 @@ class GlobController extends BaseAdminController
         $kw = $request->get("kw");
         if(!$kw) return [];
         $data = $studyPlanService->searchCourseName($kw);
-        return $data;
+        return $this->responseSuccess($data);
     }
 
 

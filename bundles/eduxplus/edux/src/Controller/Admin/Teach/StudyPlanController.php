@@ -32,6 +32,7 @@ class StudyPlanController extends BaseAdminController
         $data['planList'] = $all;
         $data['id'] = $id;
         $data['pagination'] = $pagination;
+        $data['breadcrumb'] = 1;
         return $this->render("@EduxBundle/teach/studyplan/index.html.twig", $data);
     }
 

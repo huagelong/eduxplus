@@ -69,7 +69,7 @@ class GlobController extends BaseAdminController
         $kw = $request->get("kw");
         if(!$kw) return [];
         $data = $userService->searchAdminFullName($kw);
-        return $data;
+        return $this->responseSuccess($data);
     }
 
     
@@ -77,7 +77,7 @@ class GlobController extends BaseAdminController
         $kw = $request->get("kw");
         if(!$kw) return [];
         $data = $userService->searchFullNameFormat($kw);
-        return $data;
+        return $this->responseSuccess($data);
     }
 
 
