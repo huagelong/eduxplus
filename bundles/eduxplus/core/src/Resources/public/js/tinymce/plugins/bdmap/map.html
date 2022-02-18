@@ -33,7 +33,7 @@
 		font-size:14px;
 	}
 </style>
-<script charset="utf-8" src="http://api.map.baidu.com/api?v=3.0&ak=ONwdanPtvCDLHBSm184T2ynP"></script>
+<script charset="utf-8" src="//api.map.baidu.com/api?v=3.0&ak=ONwdanPtvCDLHBSm184T2ynP"></script>
 <script>
 	var editor=parent.tinymce.activeEditor;
 	function insCnt(txt){
@@ -95,12 +95,12 @@
 
 	function searchByStationName() {
 		var localSearch = new BMap.LocalSearch(map);
-    	//localSearch.enableAutoViewport(); //允许自动调节窗体大小
+    	localSearch.enableAutoViewport(); //允许自动调节窗体大小
 		map.clearOverlays();//清空原来的标注
 		var keyword = document.getElementById("kw").value;
 		localSearch.setSearchCompleteCallback(function (searchResult) {
 			console.log(searchResult);
-			if(searchResult.Zq.length==0){
+			if(searchResult.Cr.length==0){
 				alert('搜索不到该地区');
 				return false;
 			}
