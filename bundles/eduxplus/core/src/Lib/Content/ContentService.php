@@ -3,6 +3,7 @@
 namespace Eduxplus\CoreBundle\Lib\Content;
 use Symfony\Component\HttpFoundation\Response;
 use Twig\Environment;
+use Eduxplus\CoreBundle\Lib\Base\AdminBaseService;
 
 class ContentService
 {
@@ -10,12 +11,16 @@ class ContentService
     protected $breadcrumb=[];
     protected $body;
     protected $twig;
+    protected $service;
 
     public function __construct(Environment $twig)
     {
         $this->twig = $twig;
     }
 
+    public function init (AdminBaseService $adminBaseService){
+        $this->service = $adminBaseService;
+    }
 
     /**
      * @param mixed $title
@@ -26,9 +31,10 @@ class ContentService
         return $this;
     }
 
-    public function breadcrumb($name, $path)
+    public function breadcrumb($name, $path, $params=[])
     {
-        array_push($this->breadcrumb, ["name"=>$name, "path"=>$path]);
+        $url = $this->service->genUrl($path, $params);
+        array_push($this->breadcrumb, ["name"=>$name, "path"=>$url]);
         return $this;
     }
 

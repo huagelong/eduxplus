@@ -5,8 +5,11 @@
             <div class="card-body">
     {% endif %}
             {% for k,v in formField %}
+                            {% if v['type'] == 'notice' %}
+                      <div class="alert alert-warning" role="alert"><span class="mdi mdi-information"></span> {{ v['defaultValue'] }}</div>
+                                {% endif %}
                 <div class="form-group">
-                    {% if v['type'] != 'hidden' %}
+                    {% if v['type'] != 'hidden' and v['type'] != 'notice' %}
                     <label for="title" class="{% if v['attributes']['data-required'] is defined and v['attributes']['data-required'] %} require {% endif %}">{{ k }} :</label>
                     {% endif %}
 

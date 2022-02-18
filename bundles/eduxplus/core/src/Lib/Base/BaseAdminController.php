@@ -17,6 +17,7 @@ class BaseAdminController extends BaseController
     public function __construct(AdminBaseService $adminBaseService, ContentService $contentService)
     {
         $this->adminBaseService = $adminBaseService;
+        $contentService->init($adminBaseService);
         $this->contentService = $contentService;
     }
 
