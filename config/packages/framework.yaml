@@ -16,6 +16,5 @@ framework:
 
     php_errors:
         log: true
-
     assets:
       version: 'v20200702'

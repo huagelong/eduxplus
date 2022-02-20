@@ -1,2 +1,0 @@
-eduxplus_core:
-  resource: "@EduxplusWebsiteBundle/Resources/config/routes.yaml"

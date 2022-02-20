@@ -1,5 +1,5 @@
 {% extends "@CoreBundle/layout/main.html.twig" %}
-{% import "@CoreBundle/macros/category_tree.html.twig" as macros %}
+{% import "@EduxBundle/macros/category_tree.html.twig" as macros %}
 
 {% block page_title %}分类管理{% endblock %}
 
@@ -8,7 +8,8 @@
         $(function(){
 
             $('#tree').nestable({scroll:true});
-
+            $('.dd').nestable('collapseAll');
+            
             $('.tree-tools').on('click', function(e){
                 var action = $(this).data('action');
                 if (action === 'expand') {

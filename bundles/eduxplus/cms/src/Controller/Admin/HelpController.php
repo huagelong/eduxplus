@@ -9,8 +9,8 @@
 namespace Eduxplus\CmsBundle\Controller\Admin;
 
 use Eduxplus\CoreBundle\Lib\View\View;
-use Eduxplus\CmsBundle\Service\HelpCategoryService;
-use Eduxplus\CmsBundle\Service\HelpService;
+use Eduxplus\CmsBundle\Service\Admin\HelpCategoryService;
+use Eduxplus\CmsBundle\Service\Admin\HelpService;
 use Eduxplus\CoreBundle\Lib\Base\BaseAdminController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;

@@ -4,7 +4,7 @@
 {% block breadcrumb %}
     {% if breadcrumb is defined %}
         {% for bv in breadcrumb %}
-    <li class="breadcrumb-item"><a href="{{ path(bv["path"]) }}">{{ bv["name"] }}</a></li>
+    <li class="breadcrumb-item"><a href="{{ bv["path"] }}">{{ bv["name"] }}</a></li>
         {% endfor %}
     {% endif %}
 {% endblock %}

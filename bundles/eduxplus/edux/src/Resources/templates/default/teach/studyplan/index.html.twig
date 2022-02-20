@@ -1,5 +1,5 @@
 {% extends "@CoreBundle/layout/main.html.twig" %}
-{% import "@CoreBundle/macros/studyplan_tree.html.twig" as macros %}
+{% import "@EduxBundle/macros/studyplan_tree.html.twig" as macros %}
 
 {% block page_title %}开课计划管理{% endblock %}
 {% block breadcrumb %}
@@ -10,7 +10,8 @@
     <script>
         $(function(){
             $('#tree').nestable({maxDepth:3, scroll:true});
-
+            $('.dd').nestable('collapseAll');
+            
             $('.tree-tools').on('click', function(e){
                 var action = $(this).data('action');
                 if (action === 'expand') {

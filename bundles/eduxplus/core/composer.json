@@ -31,7 +31,7 @@
         "qcloudsms/qcloudsms_php": "^0.1.4",
         "ramsey/uuid": "^4.2",
         "snc/redis-bundle": "^3.5",
-        "stof/doctrine-extensions-bundle": "^1.6",
+        "gedmo/doctrine-extensions": "^3.5",
         "symfony/apache-pack": "^1.0",
         "symfony/asset": "5.4.*",
         "symfony/console": "5.4.*",
@@ -68,7 +68,8 @@
         "twig/extra-bundle": "^3.3",
         "twig/twig": "^3.3",
         "zenstruck/schedule-bundle": "^1.2",
-        "godruoyi/php-snowflake": "^1.1"
+        "godruoyi/php-snowflake": "^1.1",
+        "itsgoingd/clockwork": "^5.1"
     },
     "require-dev": {
     },

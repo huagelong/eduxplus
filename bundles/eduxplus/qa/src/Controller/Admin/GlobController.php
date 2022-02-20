@@ -23,14 +23,14 @@ class GlobController extends BaseAdminController
         $kw = $request->get("kw");
         if(!$kw) return [];
         $data = $testService->searchProductName($kw);
-        return $data;
+        return $this->responseSuccess($data);
     }
 
     public function searchGoodsDoAction(Request $request, GoodsService $goodsService){
         $kw = $request->get("kw");
         if(!$kw) return [];
         $data = $goodsService->searchGoodsName($kw, 2);
-        return $data;
+        return $this->responseSuccess($data);
     }
 
 }

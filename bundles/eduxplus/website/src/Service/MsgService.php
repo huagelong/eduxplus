@@ -10,21 +10,23 @@ namespace Eduxplus\WebsiteBundle\Service;
 
 
 use Eduxplus\CoreBundle\Lib\Base\AppBaseService;
-use Eduxplus\CoreBundle\Lib\Service\RedisService;
-use Eduxplus\EduxBundle\Entity\MallMsg;
 use Eduxplus\EduxBundle\Entity\MallMsgStatus;
+use Eduxplus\WebsiteBundle\Message\Msg;
 use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Component\Messenger\MessageBusInterface;
 
 class MsgService extends AppBaseService
 {
-    const MSG_QUEUE_KEY = "MSG_QUEUE_KEY";
-    private $redisService;
     private $paginator;
+    private $bus;
 
-    public function __construct(RedisService $redisService, PaginatorInterface $paginator)
+    public function __construct(
+        PaginatorInterface $paginator,
+        MessageBusInterface $bus
+    )
     {
-        $this->redisService = $redisService;
         $this->paginator = $paginator;
+        $this->bus = $bus;
     }
 
     /**
@@ -126,38 +128,11 @@ class MsgService extends AppBaseService
         }
         foreach ($uids as $uid){
             $json = serialize([$uid, $tplKey, $params]);
-            $this->redisService->rpush(self::MSG_QUEUE_KEY, $json);
+            $this->bus->dispatch(new Msg($json));
         }
         return true;
     }
 
-    /**
-     * 处理队列
-     */
-    public function doQueue(){
-        while($data = $this->redisService->lpop(self::MSG_QUEUE_KEY)){
-            $data = unserialize($data);
-            list($uid, $tplKey, $params) = $data;
-            $this->send2db($uid, $tplKey, $params);
-        }
-    }
-
-    /**
-     * 发送消息
-     * @param $uid
-     * @param $tplKey
-     * @param $params
-     * @return mixed
-     */
-    public function send2db($uid, $tplKey, $params){
-        $params = serialize($params);
-        $model = new MallMsg();
-        $model->setUid($uid);
-        $model->setMsgTemplateKey($tplKey);
-        $model->setParams($params);
-        $model->setStatus(0);
-        return $this->db()->save($model);
-    }
 
     /**
      * 消息列表

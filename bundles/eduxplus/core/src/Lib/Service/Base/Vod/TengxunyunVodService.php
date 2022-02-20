@@ -94,7 +94,7 @@ class TengxunyunVodService extends BaseService
      * @return bool|mixed
      */
     public function getPlayInfo($videoId){
-        $cacheKey = "TengxunyunVodService-getPlayInfo-".$videoId;
+        $cacheKey = "TengxunyunVodService:getPlayInfo:".$videoId;
         $data = $this->cacheService->get($cacheKey);
         if($data) return $data;
 

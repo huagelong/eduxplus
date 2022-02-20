@@ -38,7 +38,7 @@ class RedisSequenceResolver implements SequenceResolver
     /**
      *  {@inheritdoc}
      */
-    public function sequence(int $currentTime)
+    public function sequence(int $currentTime) : int
     {
         $lua = "return redis.call('exists',KEYS[1])<1 and redis.call('psetex',KEYS[1],ARGV[2],ARGV[1])";
 

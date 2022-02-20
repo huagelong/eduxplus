@@ -114,7 +114,7 @@ class ImService extends AppBaseService
      * @return void
      */
     public function addGroupMember($groupId, $userUUid){
-        $key = "ImService_addGroupMember_".$groupId."_".$userUUid;
+        $key = "ImService:addGroupMember:".$groupId.":".$userUUid;
         $check = $this->cacheService->get($key);
         if($check) return true;
         $sql = "SELECT a FROM Core:BaseUser a WHERE a.id=:id ";

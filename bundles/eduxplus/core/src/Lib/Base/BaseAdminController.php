@@ -17,6 +17,7 @@ class BaseAdminController extends BaseController
     public function __construct(AdminBaseService $adminBaseService, ContentService $contentService)
     {
         $this->adminBaseService = $adminBaseService;
+        $contentService->init($adminBaseService);
         $this->contentService = $contentService;
     }
 
@@ -35,7 +36,7 @@ class BaseAdminController extends BaseController
     {
         $uid = $this->getUid();
         $sql = "SELECT a FROM Core:BaseUser a WHERE a.id = :id";
-        $model = $this->adminBaseService->fetchOne($sql, ["id"=>$uid]);
+        $model = $this->adminBaseService->db()->fetchOne($sql, ["id"=>$uid]);
         return $model;
     }
 }

@@ -1,12 +1,15 @@
 {% if formField %}
     {% if disableSubmit != 1 %}
         <div class="card">
-        <form method="POST" action="{{ url }}" class="form-horizontal ajaxform" accept-charset="UTF-8" >
+        <form method="POST" action="{{ url }}" class="form-horizontal ajaxform needs-validation" accept-charset="UTF-8" novalidate>
             <div class="card-body">
     {% endif %}
             {% for k,v in formField %}
+                            {% if v['type'] == 'notice' %}
+                      <div class="alert alert-warning" role="alert"><span class="mdi mdi-information"></span> {{ v['defaultValue'] }}</div>
+                                {% endif %}
                 <div class="form-group">
-                    {% if v['type'] != 'hidden' %}
+                    {% if v['type'] != 'hidden' and v['type'] != 'notice' %}
                     <label for="title" class="{% if v['attributes']['data-required'] is defined and v['attributes']['data-required'] %} require {% endif %}">{{ k }} :</label>
                     {% endif %}
 
@@ -21,6 +24,9 @@
                                         {{ ok }}="{{ ov }}"
                                     {% endfor %}
                                 {% endif %}
+
+                                {% if v['attributes']['data-required'] is defined and v['attributes']['data-required'] %} required {% endif %}
+
                                        value="{{ v['defaultValue'] }}"
                                        class="form-control form-control-sm"
                                 >
@@ -35,7 +41,7 @@
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                   <span class="input-group-text">
-                                    <i class="far fa-calendar-alt"></i>
+                                    <i class="mdi mdi-calendar-range"></i>
                                   </span>
                                 </div>
                                 <input type="text"
@@ -44,6 +50,7 @@
                                             {{ ok }}="{{ ov }}"
                                     {% endfor %}
                                 {% endif %}
+                                  {% if v['attributes']['data-required'] is defined and v['attributes']['data-required'] %} required {% endif %}
                                 value="{{ if_get(v['defaultValue'], '') }}"
                                 class="form-control form-control-sm daterange"
                                 placeholder="输入 ..."
@@ -54,7 +61,7 @@
                      {% if v['type'] == 'datetime' %}
                             <div class="input-group">
                                 <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="far fa-clock"></i></span>
+                                    <span class="input-group-text"><i class="mdi mdi-clock"></i></span>
                                 </div>
                                 <input type="text"
 
@@ -63,7 +70,7 @@
                                         {{ ok }}="{{ ov }}"
                                     {% endfor %}
                                 {% endif %}
-
+  {% if v['attributes']['data-required'] is defined and v['attributes']['data-required'] %} required {% endif %}
                                 value="{{ if_get(v['defaultValue'], '') }}"
                                 class="form-control form-control-sm datetime"
                                 placeholder="输入 ...">
@@ -73,7 +80,7 @@
                     {% if v['type'] == 'date' %}
                             <div class="input-group">
                                 <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="far fa-clock"></i></span>
+                                    <span class="input-group-text"><i class="mdi mdi-clock"></i></span>
                                 </div>
                                 <input type="text"
                                 {% if v['attributes'] %}
@@ -81,7 +88,7 @@
                                         {{ ok }}="{{ ov }}"
                                     {% endfor %}
                                 {% endif %}
-
+  {% if v['attributes']['data-required'] is defined and v['attributes']['data-required'] %} required {% endif %}
                                 value="{{ if_get(v['defaultValue'], '') }}"
                                 class="form-control form-control-sm date"
                                 placeholder="输入 ...">
@@ -91,7 +98,7 @@
                     {% if v['type'] == 'datetimerange' %}
                             <div class="input-group">
                                 <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="far fa-clock"></i></span>
+                                    <span class="input-group-text"><i class="mdi mdi-clock"></i></span>
                                 </div>
                                 <input type="text"
 
@@ -100,7 +107,7 @@
                                             {{ ok }}="{{ ov }}"
                                     {% endfor %}
                                 {% endif %}
-
+  {% if v['attributes']['data-required'] is defined and v['attributes']['data-required'] %} required {% endif %}
                                  value="{{ if_get(v['defaultValue'], '') }}"
                                 class="form-control form-control-sm datetimerange"
                                 placeholder="输入 ...">
@@ -118,9 +125,13 @@
                                                 {% endif %}
                                             {% endfor %}
                                         {% endif %}
+                                          {% if v['attributes']['data-required'] is defined and v['attributes']['data-required'] %} required {% endif %}
                                         multiple
                                        class="form-control form-control-sm ufile"
                                 />
+                <div class="invalid-feedback">
+                  请先上传
+                </div>
                             </div>
                     {% endif %}
 
@@ -136,7 +147,7 @@
                                                 {{ ok }}="{{ ov }}"
                                             {% endfor %}
                                         {% endif %}
-
+  {% if v['attributes']['data-required'] is defined and v['attributes']['data-required'] %} required {% endif %}
                                        class="form-control form-control-sm"
                                 />
                             </div>
@@ -151,7 +162,7 @@
                                     {% endfor %}
                                 {% endif %}
                                 class="form-control form-control-sm"
-
+  {% if v['attributes']['data-required'] is defined and v['attributes']['data-required'] %} required {% endif %}
                                 >{{ v['defaultValue'] }}</textarea>
                             </div>
                     {% endif %}
@@ -184,7 +195,7 @@
                                                 {% endif %}
                                         {% endfor %}
                                     {% endif %}
-
+  {% if v['attributes']['data-required'] is defined and v['attributes']['data-required'] %} required {% endif %}
                                     class="form-control form-control-sm select"
                                     style="width: 100%;"
 
@@ -213,7 +224,7 @@
                                         {% endif %}
                                     {% endfor %}
                                 {% endif %}
-
+  {% if v['attributes']['data-required'] is defined and v['attributes']['data-required'] %} required {% endif %}
                                         class="form-control form-control-sm select"
                                         multiple="multiple"
                                         style="width: 100%;"
@@ -239,7 +250,7 @@
                                             {{ ok }}="{{ ov }}"
                                         {% endfor %}
                                     {% endif %}
-
+  {% if v['attributes']['data-required'] is defined and v['attributes']['data-required'] %} required {% endif %}
                                     class="form-control form-control-sm search_select"
                                     data-url="{{ selectV[0] }}"
                                     style="width: 100%;"
@@ -265,7 +276,7 @@
                                         {{ ok }}="{{ ov }}"
                                     {% endfor %}
                                 {% endif %}
-
+  {% if v['attributes']['data-required'] is defined and v['attributes']['data-required'] %} required {% endif %}
                                 class="form-control form-control-sm search_select"
                                 multiple="multiple"
                                 data-url="{{ selectV[0] }}"

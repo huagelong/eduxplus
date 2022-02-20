@@ -17,6 +17,7 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\UsageTrackingTo
 use Psr\Container\ContainerInterface;
 use Symfony\Component\Security\Core\Security;
 use Psr\Log\LoggerInterface;
+use Symfony\Contracts\Cache\CacheInterface;
 
 class BaseService
 {
@@ -67,6 +68,12 @@ class BaseService
      */
     private $db;
 
+    /**
+     *
+     * @var CacheInterface
+     */
+    private $cache;
+
     public function inject(ManagerRegistry $em,
                          SerializerInterface $serializer,
                          RequestStack $requestStack,
@@ -77,7 +84,8 @@ class BaseService
                            ContainerInterface $container,
                            Security $security,
                            LoggerInterface $logger,
-                           DbService $db
+                           DbService $db,
+                           CacheInterface $cache
 
     ){
         $this->em = $em;
@@ -91,6 +99,7 @@ class BaseService
         $this->security = $security;
         $this->logger = $logger;
         $this->db = $db;
+        $this->cache = $cache;
     }
 
     public final function isGranted(mixed $attributes, mixed $subject = null): bool
@@ -117,6 +126,10 @@ class BaseService
         return new Error();
     }
 
+    public final function cache(){
+        return $this->cache;
+    }
+
     public final function getDoctrine(){
         return $this->em;
     }
@@ -126,6 +139,8 @@ class BaseService
     }
 
     public final function log($log){
+        $log = json_encode($log, JSON_UNESCAPED_UNICODE);
+        clock()->info($log);
         return $this->logger()->info($log);
     }
 
@@ -170,6 +185,9 @@ class BaseService
 
     public final function getPro($obj, $name)
     {
+        if(is_array($obj)){
+            $name = "[".$name."]";
+        }
         return $this->propertyAccessor->getValue($obj, $name);
     }
 

@@ -12,7 +12,7 @@ namespace Eduxplus\CmsBundle\Controller\Admin;
 use Eduxplus\CoreBundle\Lib\Form\Form;
 use Eduxplus\CoreBundle\Lib\Grid\Grid;
 use Eduxplus\CoreBundle\Lib\View\View;
-use Eduxplus\CmsBundle\Service\PageService;
+use Eduxplus\CmsBundle\Service\Admin\PageService;
 use Eduxplus\CoreBundle\Lib\Base\BaseAdminController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;

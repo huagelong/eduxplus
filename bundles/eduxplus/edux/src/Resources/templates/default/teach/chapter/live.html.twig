@@ -12,29 +12,21 @@
 
 {% block page %}
 <div class="card">
-     <div class="card-body"> 
-    <div class="row">
-        <div class="col-md-12">
-            <div class="card card-default">
-                <form method="POST" action="{{ path("admin_api_teach_chapter_live", {id:id}) }}" class="form-horizontal ajaxform" accept-charset="UTF-8" >
-                  {% if pushUrl %}
-                    <div class="card-body" style="display: block;">
-                       <div class="overflow-auto" style="width:600px;margin-bottom: 20px;">推流地址: <code class="clipboard" data-clipboard-text="{{ pushUrl }}" >{{ pushUrl|raw }}</code></div>
-                      <div class="overflow-auto" style="width:600px;">播放地址: <code class="clipboard" data-clipboard-text="{{ playUrl }}" >{{ playUrl|raw }}</code></div>
-                    </div>
-                  {% endif %}
-                    <div class="card-footer">
-                        <div class="col-md-2"></div>
-                        <div class="col-md-8">
-                            <div class="btn-group">
-                                <button type="submit" class="btn btn-sm btn-info " style="margin-right: 10px;">{% if pushUrl is empty %}生成直播数据{% else %}重新生成直播数据 {% endif %}</button>
-                            </div>
-                        </div>
-                    </div>
-                </form>
+    <form method="POST" action="{{ path("admin_api_teach_chapter_live", {id:id}) }}" class="form-horizontal ajaxform needs-validation" accept-charset="UTF-8" novalidate >
+        {% if pushUrl %}
+        <div class="card-body" style="display: block;">
+            <div class="overflow-auto" style="width:600px;margin-bottom: 20px;">推流地址: <code class="clipboard" data-clipboard-text="{{ pushUrl }}" >{{ pushUrl|raw }}</code></div>
+            <div class="overflow-auto" style="width:600px;">播放地址: <code class="clipboard" data-clipboard-text="{{ playUrl }}" >{{ playUrl|raw }}</code></div>
+        </div>
+        {% endif %}
+        <div class="card-footer">
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
+                <div class="btn-group">
+                    <button type="submit" class="btn btn-sm btn-info " style="margin-right: 10px;"><i class="mdi mdi-arrow-up"></i> {% if pushUrl is empty %}生成直播数据{% else %}重新生成直播数据 {% endif %}</button>
+                </div>
             </div>
         </div>
-    </div>
-  </div>
-    </div>
+    </form>
+</div>
 {% endblock %}

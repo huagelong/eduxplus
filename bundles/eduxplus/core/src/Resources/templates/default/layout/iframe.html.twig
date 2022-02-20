@@ -10,6 +10,8 @@
     <script src="{{ asset('bundles/eduxpluscore/js/index-mini-v4.min.js') }}"></script>
     <script type="text/javascript">
 jQuery( function() {
+    $('.globalModal').modal('show')
+
     $(document).on('click', '[data-nav-target]', function () {
         var $this = $(this),
             target = $this.data('nav-target');
@@ -245,7 +247,7 @@ jQuery( function() {
                 <a class="multitabs dropdown-item" data-url="lyear_pages_profile.html" href="javascript:;"><i class="mdi mdi-account"></i> 个人信息</a>
               </li>
               <li>
-                <a class="multitabs dropdown-item" data-url="lyear_pages_edit_pwd.html" href="javascript:;"><i class="mdi mdi-lock-outline"></i> 修改密码</a>
+                <a class="multitabs dropdown-item poppage"  data-title="修改密码" href="{{ path('admin_user_changePwd') }} "><i class="mdi mdi-lock-outline"></i> 修改密码</a>
               </li>
               <li>
                 <a class="dropdown-item" href="javascript:;"><i class="mdi mdi-delete"></i> 清空缓存</a>
@@ -269,5 +271,23 @@ jQuery( function() {
     </main>
     <!--End 页面主要内容-->
   </div>
+
+{% if needChangepwd %}
+<div class="modal fade globalModal" tabindex="-1" role="dialog" aria-labelledby="globalModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 class="modal-title" id="globalModalTitle">为了您的账户安全，请修改密码</h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                {{ render(path("admin_user_changePwd")) }}
+            </div>
+        </div>
+    </div>
 </div>
+</div>
+{% endif %}
 {% endblock %}

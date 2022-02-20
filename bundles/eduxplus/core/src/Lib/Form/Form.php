@@ -268,4 +268,9 @@ class Form
     {
         return $this->bind($title, "rich_editor");
     }
+
+    public  function notice($title)
+    {
+        return $this->bind("", "notice")->defaultValue($title);
+    }
 }

@@ -49,7 +49,7 @@
 
     };
 
-    $.fn.ajaxPut = function () {
+    $.fn.ajaxPost = function () {
         $(this).each(function () {
             var chref = $(this).attr("href");
             $(this).click(function () {
@@ -60,18 +60,18 @@
                         , btn: ['是', '否']
                         , yes: function (index) {
                             layer.close(index);
-                            todoPut(chref);
+                            todoPost(chref);
                         }
                     });
 
                 } else {
-                    todoPut(chref);
+                    todoPost(chref);
                 }
                 return false;
             });
         });
 
-        function todoPut(chref) {
+        function todoPost(chref) {
             $.postJSON(chref, {}, function (responseText) {
                 if (typeof responseText == 'string') var responseText = $.parseJSON(responseText);
 

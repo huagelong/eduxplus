@@ -1,24 +1,24 @@
 admin_teach_course_index:
   path: /admin/teach/course/index
-  controller: Eduxplus\EduxBundle\Controller\Teach\CourseController::indexAction
+  controller: Eduxplus\EduxBundle\Controller\Admin\Teach\CourseController::indexAction
 admin_teach_course_add:
   path: /admin/teach/course/add
-  controller: Eduxplus\EduxBundle\Controller\Teach\CourseController::addAction
+  controller: Eduxplus\EduxBundle\Controller\Admin\Teach\CourseController::addAction
 admin_api_teach_course_add:
   path: /admin/teach/course/add/do
-  controller: Eduxplus\EduxBundle\Controller\Teach\CourseController::addDoAction
+  controller: Eduxplus\EduxBundle\Controller\Admin\Teach\CourseController::addDoAction
 admin_teach_course_edit:
   path: /admin/teach/course/edit/{id}
-  controller: Eduxplus\EduxBundle\Controller\Teach\CourseController::editAction
+  controller: Eduxplus\EduxBundle\Controller\Admin\Teach\CourseController::editAction
 admin_api_teach_course_edit:
   path: /admin/teach/course/edit/do/{id}
-  controller: Eduxplus\EduxBundle\Controller\Teach\CourseController::editDoAction
+  controller: Eduxplus\EduxBundle\Controller\Admin\Teach\CourseController::editDoAction
 admin_api_teach_course_delete:
   path: /admin/teach/course/delete/do/{id}
-  controller: Eduxplus\EduxBundle\Controller\Teach\CourseController::deleteDoAction
+  controller: Eduxplus\EduxBundle\Controller\Admin\Teach\CourseController::deleteDoAction
 admin_api_teach_course_bathdelete:
   path: /admin/teach/course/bathdelete/do
-  controller: Eduxplus\EduxBundle\Controller\Teach\CourseController::bathDeleteDoAction
+  controller: Eduxplus\EduxBundle\Controller\Admin\Teach\CourseController::bathDeleteDoAction
 admin_api_teach_course_switchStatus:
   path: /admin/teach/course/switchStatus/do/{id}
-  controller: Eduxplus\EduxBundle\Controller\Teach\CourseController::switchStatusAction
+  controller: Eduxplus\EduxBundle\Controller\Admin\Teach\CourseController::switchStatusAction

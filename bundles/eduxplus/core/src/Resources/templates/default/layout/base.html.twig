@@ -4,7 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
-    <title>{% block page_title %}{% endblock %}-{{ option("app.name") }}</title>
+    <title>{% block page_title %}{% endblock %} {{ option("app.name") }}</title>
     {% block head_stylesheets %}{% endblock %}
     {% block head_custom_stylesheets %}{% endblock %}
     {% block head_favicon %} {% endblock %}
@@ -19,7 +19,7 @@
     <![endif]-->
 </head>
 {% block body %}
-<body id="{% block body_id %}{% endblock %}"  class="{% block body_class %}{% endblock %}">
+<body id="{% block body_id %}{% endblock %}"  class="{% block body_class %}{% endblock %}" data-sidebarbg="color_8">
 {% block body_main %}{% endblock %}
 {% block body_javascript %}{% endblock %}
 {% block body_custom_javascript %}{% endblock %}
