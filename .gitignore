@@ -4,6 +4,7 @@
 .env.*.local
 .settings
 .user.ini
+.DS_Store
 /config/secrets/prod/prod.decrypt.private.php
 /public/bundles/
 /public/upload/
