@@ -241,7 +241,7 @@
 
                     {% if v['type'] == "search_select" %}
                                 <div class="input-group" >
-                                   <input type="hidden" name="formHidden-{{ v['field'] }}" value="{{ v['defaultValue']|json_encode }}"  />
+                                   <input type="hidden" name="formHidden-{{ v['field'] }}" value="{{ v['defaultValue'] }}"  />
                                     {% set selectV = get_prop(v['options'],"") %}
                                     <select
 

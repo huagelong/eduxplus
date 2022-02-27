@@ -56,9 +56,9 @@ class UploadService extends BaseService
         $uploadAdapter = (int) $this->getOption("app.upload.adapter");
         $uploadAdapter = $uploadAdapter?$uploadAdapter:1;
 
-        $pathTmp = "/upload/".$type."/".date('Y')."/".date('m')."/".date('d')."/";
+        $pathTmp =  "/upload/".$type."/".date('Y')."/".date('m')."/".date('d')."/";
         if( $uploadAdapter == 1){
-            $targetDir = $pathTmp;
+            $targetDir = $this->getBasePath()."/public".$pathTmp;
         }else{
             $targetDir = $targetDirRoot.$pathTmp;
         }
@@ -83,6 +83,6 @@ class UploadService extends BaseService
             return $this->tengxunyunCosService->up($remoteFilePath, $localFile);
         }
 
-        return $path;
+        return $this->getOption("app.cdn.domain").$path;
     }
 }

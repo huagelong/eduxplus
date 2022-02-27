@@ -60,6 +60,7 @@ class GlobController extends BaseAdminController
             $data['append'] = true;
             return $this->json($data);
         }catch (\Exception $e){
+            $this->adminBaseService->errorLog($e->getTraceAsString());
             return $this->json(['error'=>$e->getMessage()]);
         }
     }

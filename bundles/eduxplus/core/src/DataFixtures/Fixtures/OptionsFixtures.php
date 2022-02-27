@@ -19,7 +19,7 @@ class OptionsFixtures
     {
         //        -----网站基础配置---
         $this->addOption("app.name", "eduxplus课堂", "网站名称", 1, 1, "网站配置");
-        $this->addOption("app.cdn.domain", '', "cdn域名", 1, 1, "网站配置");
+        $this->addOption("app.cdn.domain", 'http://dev.eduxplus.com/', "cdn域名", 1, 1, "网站配置");
         $this->addOption("app.seo.title", '【eduxplus课堂官方网站】职业教育在线_移动学习、职达未来！', "全站seo标题", 1, 1, "网站配置");
         $this->addOption("app.seo.homepage.descr", '', "全站首页seo描述", 1, 1, "网站配置");
         $this->addOption("app.seo.homepage.keyword", '网校,职业教育在线,职业教育,职业教育在线', "首页seo关键字", 1, 1, "网站配置");
@@ -32,7 +32,7 @@ class OptionsFixtures
         $this->addOption("app.domain", 'http://dev.eduxplus.com/', "网站域名网址", 1, 1, "网站配置");
         $this->addOption("app.initpwd", '111111', "账号初始化密码", 1, 1, "网站配置");
         //adapter
-        $this->addOption("app.upload.adapter", '3', "文件上传方式,1-本地，2-阿里云oss，3-腾讯云cos", 1, 1, "网站配置");
+        $this->addOption("app.upload.adapter", '1', "文件上传方式,1-本地，2-阿里云oss，3-腾讯云cos", 1, 1, "网站配置");
         $this->addOption("app.vod.adapter", '1', "点播服务商，1-腾讯云，2-阿里云", 1, 1, "网站配置");
         $this->addOption("app.live.adapter", '1', "直播服务商，1-腾讯云，2-阿里云", 1, 1, "网站配置");
         $this->addOption("app.sms.adapter", '1', "短信服务商，1-腾讯云，2-阿里云", 1, 1, "网站配置");

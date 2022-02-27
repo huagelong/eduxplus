@@ -32,6 +32,7 @@ class GenDirCommand extends Command
             $this->baseService->getBasePath()."/var",
             $this->baseService->getBasePath()."/var/cache",
             $this->baseService->getBasePath()."/var/tmp",
+            $this->baseService->getBasePath()."/public/upload",
             $this->baseService->getBasePath()."/var/cache/".$_SERVER['APP_ENV'],
             $this->baseService->getBasePath()."/var/".$_SERVER['APP_ENV']."/profiler",
             $this->baseService->getBasePath()."/var/log",

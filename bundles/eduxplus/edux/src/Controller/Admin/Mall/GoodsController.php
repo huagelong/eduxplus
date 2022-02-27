@@ -279,7 +279,7 @@ class GoodsController extends BaseAdminController
         if ($goodsId) {//组合商品
             if ($productId) return $this->responseError("组合商品不能添加产品!");
         } else {
-            if (!$shopPrice) return $this->responseError("商品售价不能为空!");
+            if (!$shopPrice && ($shopPrice!=0)) return $this->responseError("商品售价不能为空!");
         }
 
         if ($subhead) {
@@ -689,7 +689,7 @@ class GoodsController extends BaseAdminController
 
         if ($goodsId) {
             if ($productId) return $this->responseError("组合商品不能添加产品!");
-            if(($groupType == 2) && (!$shopPrice)){
+            if(($groupType == 2) && (!$shopPrice && ($shopPrice!=0))){
                 return $this->responseError("整体售卖的组合商品商品售价不能为空!");
             }
         } else {
