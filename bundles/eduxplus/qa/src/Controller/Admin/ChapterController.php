@@ -54,29 +54,29 @@ class ChapterController extends BaseAdminController
         $grid->sdaterange("创建时间")->field("a.createdAt");
 
 
-        $grid->setTableAction('qa_admin_node_index', function ($obj) {
-            $id = $obj['id'];
+        $grid->setTableAction('qa_admin_node_index', function ($obj) use($chapterService) {
+            $id = $chapterService->getPro($obj, "id");
             $url = $this->generateUrl('qa_admin_node_index', ['chapterId' => $id]);
             $str = '<a href=' . $url . ' data-width="1000px" data-title="题目管理" title="题目管理" class=" btn btn-info btn-xs"><i class="fab fa-node"></i></a>';
             return  $str;
         });
 
-        $grid->setTableAction('qa_admin_chaptersub_index', function ($obj) {
-            $id = $obj['id'];
+        $grid->setTableAction('qa_admin_chaptersub_index', function ($obj) use($chapterService) {
+            $id = $chapterService->getPro($obj, "id");
             $url = $this->generateUrl('qa_admin_chaptersub_index', ['chapterId' => $id]);
             $str = '<a href=' . $url . ' data-width="1000px" data-title="章节点管理" title="章节点管理" class=" btn btn-info btn-xs"><i class="mdi mdi-tree"></i></a>';
             return  $str;
         });
 
-        $grid->setTableAction('qa_admin_chapter_edit', function ($obj) {
-            $id = $obj['id'];
+        $grid->setTableAction('qa_admin_chapter_edit', function ($obj) use($chapterService)  {
+            $id = $chapterService->getPro($obj, "id");
             $url = $this->generateUrl('qa_admin_chapter_edit', ['id' => $id]);
             $str = '<a href=' . $url . ' data-width="1000px" data-title="编辑" title="编辑" class=" btn btn-info btn-xs poppage"><i class="mdi mdi-file-document-edit"></i></a>';
             return  $str;
         });
 
-        $grid->setTableAction('qa_admin_chapter_delete', function ($obj) {
-            $id = $obj['id'];
+        $grid->setTableAction('qa_admin_chapter_delete', function ($obj) use($chapterService) {
+            $id = $chapterService->getPro($obj, "id");
             $url = $this->generateUrl('qa_admin_chapter_delete', ['id' => $id]);
             return '<a href=' . $url . ' data-confirm="确认要删除吗?" title="删除" class=" btn btn-danger btn-xs ajaxDelete"><i class="mdi mdi-delete"></i></a>';
         });

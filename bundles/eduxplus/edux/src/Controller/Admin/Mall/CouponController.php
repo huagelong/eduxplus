@@ -53,9 +53,9 @@ class CouponController extends BaseAdminController
         $grid->textarea("商品id")->field("goodsIds");
         $grid->datetime("创建时间")->field("createdAt")->sort("a.createdAt");
 
-        $grid->setTableAction('admin_mall_couponsub_index', function($obj){
-            $id = $obj['id'];
-            $hasCode = $obj['hasCode'];
+        $grid->setTableAction('admin_mall_couponsub_index', function($obj) use ($couponService){
+            $id = $couponService->getPro($obj, "id");
+            $hasCode =$couponService->getPro($obj, "hasCode");
             if($hasCode){
                 $url = $this->generateUrl('admin_mall_couponsub_index',['id'=>$id]);
                 $str = '<a href='.$url.' data-width="1000px" data-title="优惠码管理" title="优惠码管理" class=" btn btn-info btn-xs"><i class="mdi mdi-database"></i></a>';

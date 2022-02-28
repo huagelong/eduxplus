@@ -44,29 +44,29 @@ class TestController extends BaseAdminController
         $grid->datetime("创建时间")->field("createdAt")->sort("a.createdAt");
 
         $grid->gbAddButton("qa_admin_test_add");
-        $grid->setTableAction('qa_admin_test_preview', function ($obj) {
-            $id = $obj['id'];
+        $grid->setTableAction('qa_admin_test_preview', function ($obj) use ($testService)  {
+            $id = $testService->getPro($obj, "id");
             $url = $this->generateUrl('qa_admin_test_preview', ['id' => $id]);
             $str = '<a href=' . $url . ' data-width="1000px" data-title="试卷预览" title="试卷预览" class=" btn btn-info btn-xs"><i class="mdi mdi-file-eye"></i></a>';
             return  $str;
         });
 
-        $grid->setTableAction('qa_admin_test_sub_index', function ($obj) {
-            $id = $obj['id'];
+        $grid->setTableAction('qa_admin_test_sub_index', function ($obj) use ($testService)  {
+            $id = $testService->getPro($obj, "id");
             $url = $this->generateUrl('qa_admin_test_sub_index', ['id' => $id]);
             $str = '<a href=' . $url . ' data-width="1000px" data-title="考题管理" title="考题管理" class=" btn btn-info btn-xs"><i class="mdi mdi-plus-square"></i></a>';
             return  $str;
         });
 
-        $grid->setTableAction('qa_admin_test_edit', function ($obj) {
-            $id = $obj['id'];
+        $grid->setTableAction('qa_admin_test_edit', function ($obj) use ($testService)  {
+            $id = $testService->getPro($obj, "id");
             $url = $this->generateUrl('qa_admin_test_edit', ['id' => $id]);
             $str = '<a href=' . $url . ' data-width="1000px" data-title="编辑" title="编辑" class=" btn btn-info btn-xs poppage"><i class="mdi mdi-file-document-edit"></i></a>';
             return  $str;
         });
 
-        $grid->setTableAction('qa_admin_test_delete', function ($obj) {
-            $id = $obj['id'];
+        $grid->setTableAction('qa_admin_test_delete', function ($obj) use ($testService)  {
+            $id = $testService->getPro($obj, "id");
             $url = $this->generateUrl('qa_admin_test_delete', ['id' => $id]);
             return '<a href=' . $url . ' data-confirm="确认要删除吗?" title="删除" class=" btn btn-danger btn-xs ajaxDelete"><i class="mdi mdi-delete"></i></a>';
         });

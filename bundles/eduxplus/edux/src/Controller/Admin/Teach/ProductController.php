@@ -48,22 +48,22 @@ class ProductController extends BaseAdminController
         $grid->datetime("创建时间")->field("createdAt")->sort("a.createdAt");
 
 
-        $grid->setTableAction('admin_teach_studyplan_index', function ($obj) {
-            $id = $obj['id'];
+        $grid->setTableAction('admin_teach_studyplan_index', function ($obj) use($productService){
+            $id = $productService->getPro($obj, "id");
             $url = $this->generateUrl('admin_teach_studyplan_index', ['id' => $id]);
             $str = '<a href=' . $url . ' data-width="1000px" title="开课计划管理" class=" btn btn-info btn-xs"><i class="mdi mdi-folder-clock"></i></a>';
             return  $str;
         });
 
-        $grid->setTableAction('admin_teach_product_edit', function ($obj) {
-            $id = $obj['id'];
+        $grid->setTableAction('admin_teach_product_edit', function ($obj) use($productService) {
+            $id = $productService->getPro($obj, "id");
             $url = $this->generateUrl('admin_teach_product_edit', ['id' => $id]);
             $str = '<a href=' . $url . ' data-width="1000px" data-title="编辑" title="编辑" class=" btn btn-info btn-xs poppage"><i class="mdi mdi-file-document-edit"></i></a>';
             return  $str;
         });
 
-        $grid->setTableAction('admin_api_teach_product_delete', function ($obj) {
-            $id = $obj['id'];
+        $grid->setTableAction('admin_api_teach_product_delete', function ($obj) use($productService) {
+            $id = $productService->getPro($obj, "id");
             $url = $this->generateUrl('admin_api_teach_product_delete', ['id' => $id]);
             return '<a href=' . $url . ' data-confirm="确认要删除吗?" title="删除" class=" btn btn-danger btn-xs ajaxDelete"><i class="mdi mdi-delete"></i></a>';
         });

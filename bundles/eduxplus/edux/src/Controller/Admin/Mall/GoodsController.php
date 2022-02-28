@@ -66,8 +66,8 @@ class GoodsController extends BaseAdminController
 
 
         //编辑等
-        $grid->setTableAction('admin_mall_goods_view', function ($obj) {
-            $id = $obj['id'];
+        $grid->setTableAction('admin_mall_goods_view', function ($obj) use($goodsService){
+            $id = $goodsService->getPro($obj, "id");
             if($obj['isGroup']){
                 $url = $this->generateUrl('admin_mall_goods_viewgroup', ['id' => $id]);
             }else{
@@ -77,9 +77,10 @@ class GoodsController extends BaseAdminController
             return  $str;
         });
 
-        $grid->setTableAction('admin_mall_goods_edit', function ($obj) {
-            $id = $obj['id'];
-            if($obj['isGroup']) {
+        $grid->setTableAction('admin_mall_goods_edit', function ($obj) use($goodsService) {
+            $id = $goodsService->getPro($obj, "id");
+            $isGroup = $goodsService->getPro($obj, "isGroup");
+            if($isGroup) {
                 $url = $this->generateUrl('admin_mall_goods_editgroup', ['id' => $id]);
             }else{
                 $url = $this->generateUrl('admin_mall_goods_edit', ['id' => $id]);
@@ -187,7 +188,7 @@ class GoodsController extends BaseAdminController
 
         $form->text("标签")->field("tags")->isRequire(1)->placeholder("多个标签用,隔开");
 
-        $form->searchMultipleSelect("组合商品子商品")->field("goodsId[]")->isRequire()->options([$this->generateUrl("admin_api_glob_searchGoodsDo"), []]);
+        $form->searchMultipleSelect("子商品")->field("goodsId[]")->isRequire()->options([$this->generateUrl("admin_api_glob_searchGoodsDo"), []]);
         $form->select("组合商品购买方式")->field("groupType")->isRequire()->options(["请选择" => 0, "子商品可选择" => 1, "子商品不可选择" => 2]);
         $form->select("类目")->field("categoryId")->isRequire(1)->options($categoryService->categorySelect());
         $form->select("授课方式")->field("teachingMethod")->isRequire(1)->options(["面授" => 1, "直播" => 2, "点播" => 3, "直播+面授" => 4, "直播+点播" => 5, "点播+面授" => 6, "直播+点播+面授" => 7]);
@@ -430,7 +431,7 @@ class GoodsController extends BaseAdminController
         $form->text("标签")->field("tags")->defaultValue($info['tags'])->isRequire(1)->placeholder("多个标签用,隔开");
 
         $groupGoods = $goodsService->getGroupGoods($id);
-        $form->searchMultipleSelect("组合商品子商品")->field("goodsId[]")->isRequire()->defaultValue($groupGoods)->options(function () use ($id, $goodsService) {
+        $form->searchMultipleSelect("子商品")->field("goodsId[]")->isRequire()->defaultValue($groupGoods)->options(function () use ($id, $goodsService) {
             $tmp = $goodsService->getSelectGoods($id);
             return [$this->generateUrl("admin_api_glob_searchGoodsDo"), $tmp];
         });
@@ -581,7 +582,7 @@ class GoodsController extends BaseAdminController
         $view->text("标签")->field("tags")->defaultValue($info['tags']);
 
         $groupGoods = $goodsService->getGroupGoods($id);
-        $view->searchMultipleSelect("组合商品子商品")->field("goodsId[]")->defaultValue($groupGoods)->options(function () use ($id, $goodsService) {
+        $view->searchMultipleSelect("子商品")->field("goodsId[]")->defaultValue($groupGoods)->options(function () use ($id, $goodsService) {
             $tmp = $goodsService->getSelectGoods($id);
             return [$this->generateUrl("admin_api_glob_searchGoodsDo"), $tmp];
         });
@@ -693,7 +694,7 @@ class GoodsController extends BaseAdminController
                 return $this->responseError("整体售卖的组合商品商品售价不能为空!");
             }
         } else {
-            if (!$shopPrice) return $this->responseError("非组合商品商品售价不能为空!");
+            if (!$shopPrice && ($shopPrice!=0)) return $this->responseError("非组合商品商品售价不能为空!");
         }
 
         if ($aliasName) {

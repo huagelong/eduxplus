@@ -64,9 +64,10 @@ class MallGoodsController extends BaseAdminController
 
 
         //编辑等
-        $grid->setTableAction('admin_qa_mall_goods_view', function ($obj) {
-            $id = $obj['id'];
-            if($obj['isGroup']){
+        $grid->setTableAction('admin_qa_mall_goods_view', function ($obj) use($goodsService) {
+            $id = $goodsService->getPro($obj, "id");
+            $isGroup = $goodsService->getPro($obj, "isGroup");
+            if($isGroup){
                 $url = $this->generateUrl('admin_qa_mall_goods_viewgroup', ['id' => $id]);
             }else{
                 $url = $this->generateUrl('admin_qa_mall_goods_view', ['id' => $id]);
@@ -75,9 +76,10 @@ class MallGoodsController extends BaseAdminController
             return  $str;
         });
 
-        $grid->setTableAction('admin_qa_mall_goods_edit', function ($obj) {
-            $id = $obj['id'];
-            if($obj['isGroup']) {
+        $grid->setTableAction('admin_qa_mall_goods_edit', function ($obj)  use($goodsService) {
+            $id = $goodsService->getPro($obj, "id");
+            $isGroup = $goodsService->getPro($obj, "isGroup");
+            if($isGroup){
                 $url = $this->generateUrl('admin_qa_mall_goods_editgroup', ['id' => $id]);
             }else{
                 $url = $this->generateUrl('admin_qa_mall_goods_edit', ['id' => $id]);
