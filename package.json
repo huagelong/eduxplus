@@ -8,6 +8,7 @@
     "test": "tests"
   },
   "scripts": {
+    "commit":"git-cz",
     "genlog": "conventional-changelog -p angular -i CHANGELOG.md -s"
   },
   "repository": {
@@ -17,6 +18,7 @@
   "author": "kaihui.wang",
   "license": "GPL2",
   "devDependencies": {
+    "commitizen": "^3.1.2",
     "conventional-changelog-cli": "^2.2.2",
     "cz-conventional-changelog": "^3.3.0"
   },
