@@ -1,0 +1,28 @@
+{
+  "name": "eduxplus",
+  "version": "1.0.0",
+  "description": "<div align=\"center\"><h3 align=\"center\">eduxplus 在线教育平台</h3></div> <div align=\"center\"><h3 align=\"center\">eduxplus 是一款服务于教育机构、个人、小型团队的在线教育系统,可用于个人知识付费或者在线教育培训等项目使用</h3></div>",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs",
+    "test": "tests"
+  },
+  "scripts": {
+    "genlog": "conventional-changelog -p angular -i CHANGELOG.md -s"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@gitee.com:wangkaihui/eduxplus.git"
+  },
+  "author": "kaihui.wang",
+  "license": "GPL2",
+  "devDependencies": {
+    "conventional-changelog-cli": "^2.2.2",
+    "cz-conventional-changelog": "^3.3.0"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  }
+}
