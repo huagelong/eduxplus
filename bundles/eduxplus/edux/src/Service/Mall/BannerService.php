@@ -72,7 +72,7 @@ class BannerService extends AdminBaseService
             $info = $this->db()->fetchOne($sql, ['position' => $position]);
             return $info;
         }else{
-            $sql = "SELECT a FROM Edux:MallBanner a WHERE a.position=:position AND a.id !=id";
+            $sql = "SELECT a FROM Edux:MallBanner a WHERE a.position=:position AND a.id !=:id";
             $info = $this->db()->fetchOne($sql, ['position' => $position, "id"=>$id]);
             return $info;
         }

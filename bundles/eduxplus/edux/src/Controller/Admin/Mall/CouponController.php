@@ -258,7 +258,6 @@ class CouponController extends BaseAdminController
         $couponGroupInfo = $couponService->getById($id);
         $pageSize = 40;
         $grid->setListService($couponService, "getSubList", $id);
-        $grid->text("ID")->field("id")->sort("a.id");
         $grid->code("优惠券编码")->field("couponSn");
         $grid->text("使用时间")->field("usedTime");
         $grid->text("赠送时间")->field("sendTime");
@@ -271,7 +270,7 @@ class CouponController extends BaseAdminController
             }else{
                 $str = "";
             }
-            $grid->gbButton("生成")->route("admin_mall_couponsub_create")
+            $grid->gbButton("生成")->route("admin_mall_couponsub_create", ["id"=>$id])
                 ->styleClass("btn-primary")->iconClass("mdi mdi-gavel ");
         }
 
@@ -279,7 +278,6 @@ class CouponController extends BaseAdminController
             ->styleClass("btn-success")->iconClass("mdi mdi-download")->isBlank(1);
 
         //搜索
-        $grid->snumber("ID")->field("a.id");
         $grid->stext("优惠券编码")->field("a.couponSn");
         return $this->content()->renderList($grid->create($request, $pageSize));
     }
