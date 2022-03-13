@@ -51,7 +51,7 @@ class NodeController extends BaseAdminController
         $grid->datetime("创建时间")->field("createdAt")->sort("a.createdAt");
 
         //添加
-        $grid->gbAddButton("qa_admin_node_add");
+        $grid->gbAddButton("qa_admin_node_add", ["chapterId"=>$chapterId, "chapterSubId"=>$chapterSubId]);
 
         $grid->viewAction("qa_admin_node_view")
             ->editAction("qa_admin_node_edit")
