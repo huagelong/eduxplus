@@ -111,7 +111,8 @@ class NodeController extends BaseAdminController
 
         $formData = $form->create($this->generateUrl("qa_admin_node_do_add"));
         $data = [];
-        $data["formData"] = $formData;$data["breadcrumb"] = 1;
+        $data["formData"] = $formData;
+        $data["breadcrumb"] = 1;
         $data["chapterId"] = $chapterId;
         $data["chapterSubId"] = $chapterSubId;
 

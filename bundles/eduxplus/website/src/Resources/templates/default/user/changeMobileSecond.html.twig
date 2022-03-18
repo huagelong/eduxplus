@@ -14,7 +14,7 @@
               <legend>修改手机号码-第二步</legend>
             </fieldset>
             <div class="layui-row">
-              <form class="layui-form  ajaxform layui-col-md5" method="post" action="{{ path('app_user_changeMobile_do') }}">
+              <form class="layui-form  ajaxform layui-col-md5 needs-validation" method="post" action="{{ path('app_user_changeMobile_do') }}" novalidate>
                 <div class="layui-form-item">
                   <input type="text" name="mobile" id="smsmobile" autocomplete="off" placeholder="请输入新手机号码" class="layui-input" value="" />
                 </div>

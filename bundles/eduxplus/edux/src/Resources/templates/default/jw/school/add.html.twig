@@ -17,7 +17,7 @@
 {% endblock %}
 {% block page %}
 <div class="card">
-    <form method="POST" action="{{ path("admin_api_jw_school_add") }}" class="form-horizontal ajaxform" accept-charset="UTF-8" >
+    <form method="POST" action="{{ path("admin_api_jw_school_add") }}" class="form-horizontal ajaxform needs-validation" accept-charset="UTF-8" novalidate>
         <div class="card-body" style="display: block;">
     {{ formData|raw }}
             <div class="form-group">

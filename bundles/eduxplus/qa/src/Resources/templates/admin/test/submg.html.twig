@@ -226,7 +226,7 @@
           </div>
         {% else %}
         {#已选中#}
-          <form method="post" class="ajaxform1" action="{{ path('qa_admin_test_sub_do_mg', {id:id}) }}" style="padding-top: 10px;">
+          <form method="post" class="ajaxform1 needs-validation" action="{{ path('qa_admin_test_sub_do_mg', {id:id}) }}" style="padding-top: 10px;" novalidate>
             {% if list is defined %}
               {% for k,nodeList in list %}
                 <div class="card">

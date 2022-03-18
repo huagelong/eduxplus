@@ -6,7 +6,7 @@
       <div class="layui-card" style="padding-bottom:30px;margin-top: 30px;">
             <div class="layui-card-header" style="border-bottom:none!important;font-weight: bold;font-size: 22px;">{{  testInfo['name'] }}</div>
                 <div class="layui-card-body">
-                  <form action="{{ path("qa_test_submit_answer", {"id":testInfo['id']}) }}" method="post" class="ajaxform" >
+                  <form action="{{ path("qa_test_submit_answer", {"id":testInfo['id']}) }}" method="post" class="ajaxform needs-validation" novalidate>
                       <div class="layui-row layui-col-space10" style="background-color:#f6f6f8">
                             <div class="layui-col-md8 ">
                           <div class="layui-card">

@@ -7,7 +7,7 @@
 
 {% block page %}
 <div class="card" >
-  <form method="POST" action="{{ path("qa_admin_node_do_edit", {id:id}) }}" class="form-horizontal ajaxform" accept-charset="UTF-8" >
+  <form method="POST" action="{{ path("qa_admin_node_do_edit", {id:id}) }}" class="form-horizontal ajaxform needs-validation" accept-charset="UTF-8" novalidate>
     <div class="card-body" style="display: block;">
       {{ formData|raw }}
       <div class="form-group  row " id="choose">
