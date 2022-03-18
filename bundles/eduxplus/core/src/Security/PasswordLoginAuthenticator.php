@@ -121,9 +121,10 @@ class PasswordLoginAuthenticator extends AbstractLoginFormAuthenticator
 
     protected function getLoginUrl(Request $request):string
     {
-        $goto = $request->getRequestUri();
-        $gotoStr = $goto?"?goto=".$goto:"";
-        return $this->urlGenerator->generate('admin_login').$gotoStr;
+        // $goto = $request->getRequestUri();
+        // $gotoStr = $goto?"?goto=".$goto:"";
+        // return $this->urlGenerator->generate('admin_login').$gotoStr;
+        return $this->urlGenerator->generate('admin_login');
     }
 
     public function authenticate(Request $request): Passport
