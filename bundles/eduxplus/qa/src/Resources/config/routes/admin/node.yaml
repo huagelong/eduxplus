@@ -9,7 +9,7 @@ qa_admin_node_add:
   defaults:  
      chapterSubId: 0 
 qa_admin_node_do_add:
-  path: /admin/qa/node/add/do
+  path: /admin/qa/node/do/add
   controller: Eduxplus\QaBundle\Controller\Admin\NodeController::addDoAction
 qa_admin_node_edit:
   path: /admin/qa/node/edit/{id}
