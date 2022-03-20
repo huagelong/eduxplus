@@ -340,15 +340,17 @@
           location.assign(url);
       });
 
-      for (k in nodeIdsChoose){
-          var nodeIdChoose = nodeIdsChoose[k];
-          $("input[name='ids[]']:checkbox").each(function() {
-              var nodeId = $(this).val();
-              if(nodeId == nodeIdChoose){
-                $(this).prop("checked", true);
-              }
-          })
-        $("#chooseCount").text(nodeIdsChoose.length);
+      if(nodeIdsChoose){
+        for (k in nodeIdsChoose){
+            var nodeIdChoose = nodeIdsChoose[k];
+            $("input[name='ids[]']:checkbox").each(function() {
+                var nodeId = $(this).val();
+                if(nodeId == nodeIdChoose){
+                  $(this).prop("checked", true);
+                }
+            })
+          $("#chooseCount").text(nodeIdsChoose.length);
+        }
       }
 
       $("#choose-node-all").click(function() {

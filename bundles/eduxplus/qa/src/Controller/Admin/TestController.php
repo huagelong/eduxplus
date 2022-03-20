@@ -54,7 +54,7 @@ class TestController extends BaseAdminController
         $grid->setTableAction('qa_admin_test_sub_index', function ($obj) use ($testService)  {
             $id = $testService->getPro($obj, "id");
             $url = $this->generateUrl('qa_admin_test_sub_index', ['id' => $id]);
-            $str = '<a href=' . $url . ' data-width="1000px" data-title="考题管理" title="考题管理" class=" btn btn-info btn-xs"><i class="mdi mdi-plus-square"></i></a>';
+            $str = '<a href=' . $url . ' data-width="1000px" data-title="考题管理" title="考题管理" class=" btn btn-info btn-xs"><i class="mdi mdi-plus"></i></a>';
             return  $str;
         });
 

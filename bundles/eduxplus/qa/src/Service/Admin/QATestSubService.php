@@ -193,7 +193,7 @@ class QATestSubService  extends AdminBaseService
                 $vArr['typeName'] = $types[$vArr['type']];
                 $vArr['level'] = $levels[$vArr['level']];
                 $vArr['nType'] = $nTypes[$vArr['nodeType']];
-                $vArr['createdAt'] = date('Y-m-d H:i:s', $vArr["createdAt"]["timestamp"]);
+                $vArr['createdAt'] = $vArr["createdAt"];
 
                 $sql = "SELECT a FROM Qa:TeachQANodeSub a WHERE a.qaNodeId=:qaNodeId";
                 $nodeSub = $this->db()->fetchOne($sql, ['qaNodeId' => $vArr['id']]);
