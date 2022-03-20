@@ -8,7 +8,7 @@ qa_admin_test_sub_mg:
      type: 0 
      isFirst: 1 
 qa_admin_test_sub_do_mg:
-  path: /admin/qa/test/sub/mg/do/{id}
+  path: /admin/qa/test/sub/do/mg/{id}
   controller: Eduxplus\QaBundle\Controller\Admin\TestSubController::mgDoAction
 qa_admin_test_sub_edit:
   path: /admin/qa/test/sub/edit/{id}
