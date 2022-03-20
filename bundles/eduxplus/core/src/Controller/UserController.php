@@ -34,7 +34,9 @@ class UserController extends BaseAdminController
         $grid->badgeInfo("昵称")->field("displayName");
         $grid->badgePrimary("姓名")->field("fullName");
         $grid->image("头像")->field("gravatar");
-        $grid->text("性别")->field("sex")->options([0 => "未知", 1 => "男", 2 => "女"]);
+        $grid->text("性别")->field("sex")->options(function () {
+            return [0 => "未知", 1 => "男", 2 => "女"];
+        });
         $grid->boole2("锁定用户")->field("isLock")->actionCall("admin_api_user_switchLock", function ($obj) use($userService) {
             $id = $userService->getPro($obj, "id");
             $defaultValue = $userService->getPro($obj, "isLock");
@@ -177,7 +179,7 @@ class UserController extends BaseAdminController
     public function editAction($id, UserService $userService, RoleService $roleService, Form $form)
     {
         $info = $userService->getById($id);
-
+        
         $form->string("手机号码")->field("mobile")->isRequire(1)->defaultValue($info['mobile']);
         $form->text("昵称")->field("displayName")->isRequire(1)->defaultValue($info['displayName']);
         $form->text("姓名")->field("fullName")->isRequire(1)->defaultValue($info['fullName']);

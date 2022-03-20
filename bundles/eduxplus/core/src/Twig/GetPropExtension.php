@@ -31,6 +31,13 @@ class GetPropExtension extends AbstractExtension
         }
 
         if ($name == "" && $type == null && $options == null) return $obj;
+
+        if($options){
+            if (is_callable($options)) {
+                $options =  call_user_func($options);
+            }
+       }
+
         $obj = $this->baseService->toArray($obj);
         $value = isset($obj[$name]) ? $obj[$name] : "";
         if ($type == 'datetime') {
@@ -46,8 +53,13 @@ class GetPropExtension extends AbstractExtension
                 return current($arr);
             }
         } else {
-
-            if($value) return $value;
+            if($value){
+                if($options){
+                    
+                    return isset($options[$value]) ? $options[$value] : $value;
+                }
+                return $value;
+            } 
             if($type == 'boole') return "";
             return "-";
         }
