@@ -32,7 +32,7 @@ class LearnService extends AppBaseService
         $time = time();
         $dql = "SELECT a.courseId, abs({$time}-a.openTime) as diffTime FROM Edux:MallOrderStudyPlan a WHERE a.uid=:uid AND a.orderStatus=2 ORDER BY diffTime ASC";
         $em = $this->getDoctrine()->getManager();
-        $em = $this->enableSoftDeleteable($em);
+        $em = $this->db()->enableSoftDeleteable($em);
         $query = $em->createQuery($dql);
         $query = $query->setParameters(["uid" => $uid]);
         $pagination = $this->paginator->paginate(

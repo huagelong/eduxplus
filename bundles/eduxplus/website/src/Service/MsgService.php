@@ -173,7 +173,7 @@ class MsgService extends AppBaseService
 
                 $vArr['content'] = $this->parseMsg($vArr["msgTemplateKey"], $vArr["params"]);
                 $vArr['status'] = $status;
-                $vArr['createdAtTime'] = $vArr["createdAt"]['timestamp'];
+                $vArr['createdAtTime'] = strtotime($vArr["createdAt"]);
                 $itemsArr[] = $vArr;
             }
         }

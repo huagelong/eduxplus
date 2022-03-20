@@ -136,7 +136,7 @@ class SearchService extends AppBaseService
         if ($items) {
             foreach ($items as $v) {
                 $vArr =  $this->toArray($v);
-                $vArr['createdAtTime'] = $vArr["createdAt"]['timestamp'];
+                $vArr['createdAtTime'] = strtotime($vArr["createdAt"]);
                 $itemsArr[] = $vArr;
             }
         }
