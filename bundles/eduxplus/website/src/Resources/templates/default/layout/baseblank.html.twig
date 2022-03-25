@@ -5,10 +5,10 @@
 
 {% block head_stylesheets %}
     {{ parent() }}
-    <link rel="stylesheet" href="{{ asset('assets/plugins/fontawesome-free/css/all.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/plugins/fontawesome-free/css/v4-shims.css') }}">
-     <link rel="stylesheet" href="{{ asset('assets/plugins/layui/css/layui.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/app/default/css/common/base.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/eduxpluswebsite/plugins/fontawesome-free/css/all.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/eduxpluswebsite/plugins/fontawesome-free/css/v4-shims.css') }}">
+     <link rel="stylesheet" href="{{ asset('bundles/eduxpluswebsite/plugins/layui/css/layui.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/eduxpluswebsite/default/css/common/base.css') }}">
     {% block style %}{% endblock %}
 {% endblock %}
 
@@ -21,18 +21,18 @@
             appSendCaptchaUrl: "{{ path('app_glob_sendCaptcha') }}"
         }
     </script>
-    <script src="{{ asset('assets/plugins/base/jquery.js') }}"></script>
-    <script src="{{ asset('assets/plugins/base/utils.js') }}"></script>
-    <script src="{{ asset('assets/plugins/base/plugins/jquery-form/jquery.form.js') }}"></script>
-    <script src="{{ asset('assets/plugins/base/plugins/jquery-cookie/jquerycookie.js') }}"></script>
-    <script src="{{ asset('assets/plugins/base/plugins/layer/layer.js') }}"></script>
-    <script src="{{ asset('assets/plugins/base/plugins/underscore/underscore-min.js') }}"></script>
-    <script src="{{ asset('assets/plugins/base/modules/include.js') }}"></script>
-    <script src="{{ asset('assets/plugins/base/modules/ajaxform.js') }}"></script>
-    <script src="{{ asset('assets/plugins/base/modules/ajaxaction.js') }}"></script>
-    <script src="{{ asset('assets/plugins/base/modules/captcha.js') }}"></script>
-    <script src="{{ asset('assets/plugins/base/modules/widgets.js') }}"></script>
-    <script src="{{ asset('assets/plugins/base/base.js') }}"></script>
+    <script src="{{ asset('bundles/eduxpluswebsite/plugins/base/jquery.js') }}"></script>
+    <script src="{{ asset('bundles/eduxpluswebsite/plugins/base/utils.js') }}"></script>
+    <script src="{{ asset('bundles/eduxpluswebsite/plugins/base/plugins/jquery-form/jquery.form.js') }}"></script>
+    <script src="{{ asset('bundles/eduxpluswebsite/plugins/base/plugins/jquery-cookie/jquerycookie.js') }}"></script>
+    <script src="{{ asset('bundles/eduxpluswebsite/plugins/base/plugins/layer/layer.js') }}"></script>
+    <script src="{{ asset('bundles/eduxpluswebsite/plugins/base/plugins/underscore/underscore-min.js') }}"></script>
+    <script src="{{ asset('bundles/eduxpluswebsite/plugins/base/modules/include.js') }}"></script>
+    <script src="{{ asset('bundles/eduxpluswebsite/plugins/base/modules/ajaxform.js') }}"></script>
+    <script src="{{ asset('bundles/eduxpluswebsite/plugins/base/modules/ajaxaction.js') }}"></script>
+    <script src="{{ asset('bundles/eduxpluswebsite/plugins/base/modules/captcha.js') }}"></script>
+    <script src="{{ asset('bundles/eduxpluswebsite/plugins/base/modules/widgets.js') }}"></script>
+    <script src="{{ asset('bundles/eduxpluswebsite/plugins/base/base.js') }}"></script>
 {% endblock %}
 
 {% block head_favicon %}
@@ -43,8 +43,8 @@
 
 {% block body_javascript %}
     {{ parent() }}
-    <script src="{{ asset('assets/plugins/layui/layui.all.js') }}"></script>
-    <script src="{{ asset('assets/app/default/js/common/base.js') }}"></script>
+    <script src="{{ asset('bundles/eduxpluswebsite/plugins/layui/layui.all.js') }}"></script>
+    <script src="{{ asset('bundles/eduxpluswebsite/default/js/common/base.js') }}"></script>
     <script>
         $(function(){
             $('body').uiInclude();

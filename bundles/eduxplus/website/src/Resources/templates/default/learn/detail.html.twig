@@ -30,26 +30,26 @@
       {% if info['video']['videoChannel'] == 1 %}
         <script src="//imgcache.qq.com/open/qcloud/video/tcplayer/libs/hls.min.0.13.2m.js"></script>
         <script src="//imgcache.qq.com/open/qcloud/video/tcplayer/tcplayer.v4.1.min.js"></script>
-        <script src="{{ asset('assets/plugins/tengxunyun/vod.js') }}"></script>
+        <script src="{{ asset('bundles/eduxpluswebsite/plugins/tengxunyun/vod.js') }}"></script>
       {% endif %}
 
       {% if info['video']['videoChannel'] == 2 %}
         <script type="text/javascript" charset="utf-8" src="//g.alicdn.com/de/prismplayer/2.8.2/aliplayer-h5-min.js"></script>
         {# 防调试 #}
         {# <script src="https://g.alicdn.com/de/prismplayer/2.8.2/hls/aliplayer-vod-anti-min.js"></script> #}
-        <script src="{{ asset('assets/plugins/aliyun/aliplayercomponents-1.0.5.min.js') }}"></script>
-        <script src="{{ asset('assets/plugins/aliyun/vod.js') }}"></script>
+        <script src="{{ asset('bundles/eduxpluswebsite/plugins/aliyun/aliplayercomponents-1.0.5.min.js') }}"></script>
+        <script src="{{ asset('bundles/eduxpluswebsite/plugins/aliyun/vod.js') }}"></script>
       {% endif %}
 
     {% else %}
-      <script src="{{ asset('assets/plugins/tengxunyun/tim-js.js') }}"></script>
-      <script src="{{ asset('assets/plugins/tengxunyun/cos-js-sdk-v5.min.js') }}"></script>
-      <script src="{{ asset('assets/plugins/tengxunyun/im.js') }}"></script>
-      <script src="{{ asset('assets/plugins/jquery-storage-api/jquery.storageapi.min.js') }}"></script>
-      <script src="{{ asset('assets/plugins/moment/moment.min.js') }}"></script>
-      <script src="{{ asset('assets/plugins/moment/moment-with-locales.js') }}"></script>
+      <script src="{{ asset('bundles/eduxpluswebsite/plugins/tengxunyun/tim-js.js') }}"></script>
+      <script src="{{ asset('bundles/eduxpluswebsite/plugins/tengxunyun/cos-js-sdk-v5.min.js') }}"></script>
+      <script src="{{ asset('bundles/eduxpluswebsite/plugins/tengxunyun/im.js') }}"></script>
+      <script src="{{ asset('bundles/eduxpluswebsite/plugins/jquery-storage-api/jquery.storageapi.min.js') }}"></script>
+      <script src="{{ asset('bundles/eduxpluswebsite/plugins/moment/moment.min.js') }}"></script>
+      <script src="{{ asset('bundles/eduxpluswebsite/plugins/moment/moment-with-locales.js') }}"></script>
 
-      <script src="{{ asset('assets/plugins/face.js') }}"></script>
+      <script src="{{ asset('bundles/eduxpluswebsite/plugins/face.js') }}"></script>
       {% if info['video']['videoChannel'] == 1 %}
         <!--[if lt IE 9]>
         <script src="//imgcache.qq.com/open/qcloud/video/tcplayer/ie8/videojs-ie8.js"></script>
@@ -58,15 +58,15 @@
         <script src="//imgcache.qq.com/open/qcloud/video/tcplayer/libs/hls.min.0.13.2m.js"></script>
         <!--播放器脚本文件-->
         <script src="//imgcache.qq.com/open/qcloud/video/vcplayer/TcPlayer-2.3.3.js" charset="utf-8"></script>
-        <script src="{{ asset('assets/plugins/tengxunyun/live.js') }}"></script>
+        <script src="{{ asset('bundles/eduxpluswebsite/plugins/tengxunyun/live.js') }}"></script>
       {% endif %}
 {#    阿里云直播#}
       {% if info['video']['videoChannel'] == 2 %}
-        <script src="{{ asset('assets/plugins/es6-promise/es6-promise.auto.min.js') }}"></script>
-        <script src="{{ asset('assets/plugins/vue2.6/vue.min.js') }}"></script>
+        <script src="{{ asset('bundles/eduxpluswebsite/plugins/es6-promise/es6-promise.auto.min.js') }}"></script>
+        <script src="{{ asset('bundles/eduxpluswebsite/plugins/vue2.6/vue.min.js') }}"></script>
         <script type="text/javascript" charset="utf-8" src="https://g.alicdn.com/de/prismplayer/2.8.2/aliplayer-h5-min.js"></script>
         {# <script src="https://g.alicdn.com/de/prismplayer/2.8.2/hls/aliplayer-vod-anti-min.js"></script> #}
-        <script src="{{ asset('assets/plugins/aliyun/live.js') }}"></script>
+        <script src="{{ asset('bundles/eduxpluswebsite/plugins/aliyun/live.js') }}"></script>
       {% endif %}
 
     {% endif %}
@@ -131,7 +131,7 @@
       var chatsign = '{{ sign }}';
       var chatgroupId = '{{ groupId }}';
     </script>
-    <script src="{{ asset('assets/app/default/js/common/liveChat.js') }}"></script>
+    <script src="{{ asset('bundles/eduxpluswebsite/default/js/common/liveChat.js') }}"></script>
     {% endif %}
   {% endif %}
 {% endblock %}

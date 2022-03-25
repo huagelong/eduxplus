@@ -29,7 +29,7 @@
 
 {% block body_javascript %}
   {{ parent() }}
-  <script src="{{ asset('assets/plugins/qrcode/qrcode.min.js') }}"></script>
+  <script src="{{ asset('bundles/eduxpluswebsite/plugins/qrcode/qrcode.min.js') }}"></script>
   <script>
     $(function(){
       var qrcode = new QRCode(document.getElementById("qrcode"), {
