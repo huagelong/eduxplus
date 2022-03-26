@@ -26,9 +26,9 @@ class OptionsFixtures
         $this->addOption("app.beian.number", '沪ICP备18036000号', "网站备案号", 1, 1, "网站配置");
         $this->addOption("app.copyright", '@2008-2019 上海xxxx有限公司版权所有', "网站copyright", 1, 1, "网站配置");
         $this->addOption("app.sms.times", '5', "当天准许同一手机发送短信的最大次数", 1, 1, "网站配置");
-        $this->addOption("app.logo", '["/assets/images/logo.png"]', "网站logo", 2, 1, "网站配置");
-        $this->addOption("app.user.default.gravatar", '["/assets/images/gravatar.jpeg"]', "用户默认头像", 2, 1, "网站配置");
-        $this->addOption("app.icon", '["/assets/favicon.ico"]', "网站icon", 2, 1, "网站配置");
+        $this->addOption("app.logo", '["/bundles/eduxpluscore/images/logo.png"]', "网站logo", 2, 1, "网站配置");
+        $this->addOption("app.user.default.gravatar", '["/bundles/eduxpluscore/images/gravatar.jpeg"]', "用户默认头像", 2, 1, "网站配置");
+        $this->addOption("app.icon", '["/bundles/eduxpluscore/favicon.ico"]', "网站icon", 2, 1, "网站配置");
         $this->addOption("app.domain", 'http://dev.eduxplus.com/', "网站域名网址", 1, 1, "网站配置");
         $this->addOption("app.initpwd", '111111', "账号初始化密码", 1, 1, "网站配置");
         //adapter

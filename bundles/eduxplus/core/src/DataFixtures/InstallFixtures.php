@@ -70,7 +70,7 @@ class InstallFixtures extends Fixture
          $userModel->setIsAdmin(1);
          $userModel->setPassword($pwd);
          $userModel->setRealRole(1);
-         $userModel->setGravatar("/assets/images/gravatar.jpeg");
+         $userModel->setGravatar("/bundles/eduxpluswebsite/images/gravatar.jpeg");
          $userModel->setAppToken("111111");
          $manager->persist($userModel);
          $manager->flush();
