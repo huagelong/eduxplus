@@ -22,7 +22,7 @@ class BaseUserRepository extends ServiceEntityRepository implements PasswordUpgr
 {
 
     protected $passwordEncoder;
-    public function __construct(ManagerRegistry $registry,  UserPasswordHasherInterface $passwordEncoder,)
+    public function __construct(ManagerRegistry $registry,  UserPasswordHasherInterface $passwordEncoder)
     {
         parent::__construct($registry, BaseUser::class);
         $this->passwordEncoder = $passwordEncoder;

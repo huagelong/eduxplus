@@ -37,7 +37,7 @@ class MobileAuthenticator extends AbstractLoginFormAuthenticator
     public function __construct(UserService $userService,
                                 UrlGeneratorInterface $urlGenerator,
                                 ValidateService $validateService,
-                                BaseUserRepository $userRepository,
+                                BaseUserRepository $userRepository
 )
     {
         $this->urlGenerator = $urlGenerator;

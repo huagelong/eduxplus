@@ -19,6 +19,7 @@
         "symfony/debug-bundle": "5.4.*",
         "symfony/doctrine-bridge": "5.4.*",
         "symfony/flex": "^1.17",
+        "symfony/console": "5.4.*",
         "symfony/maker-bundle": "^1.34",
         "symfony/monolog-bridge": "5.4.*",
         "symfony/phpunit-bridge": "5.4.*",
@@ -33,7 +34,11 @@
         "preferred-install": {
             "*": "dist"
         },
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "symfony/flex": true,
+            "easywechat-composer/easywechat-composer": true
+        }
     },
     "autoload": {
         "psr-4": {

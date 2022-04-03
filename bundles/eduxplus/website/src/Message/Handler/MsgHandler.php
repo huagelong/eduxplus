@@ -12,7 +12,7 @@ use Eduxplus\WebsiteBundle\Message\Msg;
 use Eduxplus\CoreBundle\Lib\Base\AppBaseService;
 use Eduxplus\EduxBundle\Entity\MallMsg;
 
-class MsgReadHandler extends AppBaseService implements MessageHandlerInterface {
+class MsgHandler extends AppBaseService implements MessageHandlerInterface {
 
     public function __invoke(Msg $message)
     {

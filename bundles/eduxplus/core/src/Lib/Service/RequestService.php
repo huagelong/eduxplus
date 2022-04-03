@@ -10,12 +10,43 @@ use Eduxplus\CoreBundle\Lib\Service\ViolationService;
 
 class RequestService
 {
+    /**
+     * SerializerInterface
+     *
+     * @var SerializerInterface
+     */
+    private  $serializer;
+    /**
+     * 
+     *
+     * @var ValidatorInterface
+     */
+    private $validator;
+    /**
+     * Undocumented variable
+     *
+     * @var ViolationService
+     */
+    private $violator;
+
+    /**
+     * Undocumented variable
+     *
+     * @var RequestStack
+     */
+    private $requestStack;
+
     public function __construct(
-       private SerializerInterface $serializer,
-       private ValidatorInterface $validator,
-       private ViolationService $violator,
-        private RequestStack $requestStack
-    ) {}
+       SerializerInterface $serializer,
+       ValidatorInterface $validator,
+       ViolationService $violator,
+        RequestStack $requestStack
+    ) {
+        $this->serializer = $serializer;
+        $this->validator = $validator;
+        $this->violator = $violator;
+        $this->requestStack = $requestStack;
+    }
 
     public function validate(string $model): object
     {
