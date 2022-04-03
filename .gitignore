@@ -4,6 +4,7 @@
 .env.*.local
 .settings
 .user.ini
+.htaccess
 .DS_Store
 /config/secrets/prod/prod.decrypt.private.php
 /public/bundles/
@@ -18,6 +19,7 @@
 /config/prod
 /config/test
 /config/demo
+composer.lock
 ###< symfony/framework-bundle ###
 
 ###> symfony/phpunit-bridge ###
