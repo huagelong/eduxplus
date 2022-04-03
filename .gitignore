@@ -19,7 +19,6 @@
 /config/prod
 /config/test
 /config/demo
-composer.lock
 ###< symfony/framework-bundle ###
 
 ###> symfony/phpunit-bridge ###

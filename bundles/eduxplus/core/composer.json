@@ -10,6 +10,7 @@
         "ext-fileinfo": "*",
         "ext-iconv": "*",
         "ext-zip": "*",
+        "ext-pdo": "*",
         "alibabacloud/client": "^1.5",
         "alibabacloud/sdk": "^1.8",
         "alipaysdk/easysdk": "^2.2",
