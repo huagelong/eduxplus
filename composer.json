@@ -1,7 +1,7 @@
 {
     "name": "trensy/eduxplus",
     "description": "Online education system",
-    "license": "Apache-2.0",
+    "license": "GPL-2.0",
     "type": "project",
     "require": {
         "bundles/eduxplus-api-bundle": "@dev",

@@ -61,7 +61,7 @@ var id = setWatermark(str1, now)
                   <ol class="breadcrumb">
                       <li class="breadcrumb-item"></li>
                       {% block breadcrumb %}{% endblock %}
-                      {% if app.session.get("_route") != "admin_dashboard" %}
+                      {% if app.session.get("_route") != "admin_about" %}
                           <li class="breadcrumb-item active">{{ block('page_title') }}</li>
                       {% endif %}
                   </ol>

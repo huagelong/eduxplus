@@ -4,6 +4,7 @@ parameters:
     secret: '%env(APP_SECRET)%'
     messenger.consumer.name: '%env(MESSENGER_CONSUMER_NAME)%'
     timezone: '%env(APP_TIMEZONE)%'
+    sys_version: '%env(SYS_VERSION)%'
 
 services:
 

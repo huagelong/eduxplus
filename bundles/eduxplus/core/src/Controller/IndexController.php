@@ -49,18 +49,22 @@ class IndexController extends BaseAdminController
     public function aboutAction(){
         $now = new DateTime();
         $envs = [
-            ['name' => 'PHP version',       'value' => 'PHP/'.PHP_VERSION],
-            ['name' => 'Symfony version',   'value' => \Symfony\Component\HttpKernel\Kernel::VERSION],
+            ['name' => 'PHP版本',       'value' => 'PHP/'.PHP_VERSION],
+            ['name' => 'Symfony版本',   'value' => \Symfony\Component\HttpKernel\Kernel::VERSION],
             ['name' => 'CGI',               'value' => php_sapi_name()],
             ['name' => 'Uname',             'value' => php_uname()],
-            ['name' => 'Server',            'value' => isset($_SERVER['SERVER_SOFTWARE'])?$_SERVER['SERVER_SOFTWARE']:"-"],
-            ['name' => 'Cache driver',      'value' => "redis"],
-            ['name' => 'Timezone',          'value' => $now->getTimezone()->getName()],
-            ['name' => 'Env',               'value' => $_SERVER['APP_ENV']],
+            ['name' => '服务器',            'value' => isset($_SERVER['SERVER_SOFTWARE'])?$_SERVER['SERVER_SOFTWARE']:"-"],
+            ['name' => '缓存',      'value' => "redis"],
+            ['name' => '时区',          'value' => $now->getTimezone()->getName()],
+            ['name' => '环境',               'value' => $_SERVER['APP_ENV']],
         ];
 
+        $sys=[
+            "version"=> $this->adminBaseService->getConfig("sys_version")
+        ];
         $data = [];
         $data["envs"] = $envs;
+        $data["sys"] = $sys;
         return $this->render("@CoreBundle/index/about.html.twig", $data);
     }
 
