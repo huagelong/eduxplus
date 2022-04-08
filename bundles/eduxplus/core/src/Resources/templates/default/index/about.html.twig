@@ -4,38 +4,44 @@
 
 {% block page %}
 <div class="row">
-    <div class="col-md-6">
-        <div class="card">
-            <header class="card-header">
-                <div class="card-title">说明</div>
-            </header>
-            <div class="card-body">
-                <p>eduxplus 是一款服务于教育机构、个人、小型团队的在线教育系统,可用于个人知识付费或者在线教育培训等项目使用,如果喜欢就点个星星支持一下。
-                    <a target="_blank" href='https://gitee.com/wangkaihui/eduxplus'>
-                    <img src='https://gitee.com/wangkaihui/eduxplus/badge/star.svg?theme=dark' alt='star'></img></a>
-                </p>
-                <p>当前版本: <span class="badge badge-purple">{{sys["version"]}}</span></p>
-                <p>
-                    <a target="_blank" class="btn btn-primary" href="www.eduxplus.com">文档地址</a>
-                </p>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-6">
-        <div class="card">
-            <header class="card-header">
-                <div class="card-title">环境变量</div>
-            </header>
-            <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table table-striped">
-                        {% for k,v in envs %}
-                        <tr>
-                            <td width="120px">{{ v["name"] }}</td>
-                            <td>{{ v["value"] }}</td>
-                        </tr>
-                        {% endfor %}
-                    </table>
+    <div class="col-md-12">
+        <div class="card-columns">
+                <div class="card">
+                    <header class="card-header">
+                        <div class="card-title">关于项目</div>
+                    </header>
+                    <div class="card-body">
+                        <p>eduxplus 是一款服务于教育机构、个人、小型团队的在线教育系统,可用于个人知识付费或者在线教育培训等项目使用。如果喜欢就点个星星支持一下。
+                            <a target="_blank" href='https://gitee.com/wangkaihui/eduxplus'>
+                            <img src='https://gitee.com/wangkaihui/eduxplus/badge/star.svg?theme=dark' alt='star'></img></a>
+                        </p>
+                        <p>当前版本:  <span class="badge badge-muted">{{sys["version"]}}</span></p>
+                        <p>文档地址:  <a target="_blank" href="https://www.eduxplus.com">https://www.eduxplus.com</a></p>
+                    </div>
+                </div>
+                <div class="card">
+                    <header class="card-header">
+                        <div class="card-title">技术交流</div>
+                    </header>
+                    <div class="card-body">
+                        <p>问题反馈: <a target="_blank" href="https://gitee.com/wangkaihui/eduxplus/issues">gitee issues</a> </p>
+                    </div>
+                </div>
+            <div class="card">
+                <header class="card-header">
+                    <div class="card-title">环境变量</div>
+                </header>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            {% for k,v in envs %}
+                                <tr>
+                                    <td width="120px">{{ v["name"] }}</td>
+                                    <td>{{ v["value"] }}</td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>

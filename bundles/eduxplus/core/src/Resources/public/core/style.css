@@ -58,3 +58,6 @@
 .breadcrumb{
     padding:0 1rem!important;
 }
+.card-columns{
+    column-count:2 !important;
+}

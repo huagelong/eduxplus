@@ -9,8 +9,6 @@
 ## 项目介绍
 eduxplus 是一款服务于教育机构、个人、小型团队的在线教育系统,可用于个人知识付费或者在线教育培训等项目使用,基于symfony.
 
->注意： 当前beta版本，不建议生产使用
-
 ## demo地址
 - 前台地址: https://dev.eduxplus.com  账号:17621487000 密码:Eduxplus@1
 - 后台地址: https://dev.eduxplus.com/admin  账号:17621487000 密码:Eduxplus@1
@@ -47,7 +45,7 @@ eduxplus 是一款服务于教育机构、个人、小型团队的在线教育�
 
 #### 必要条件
 
-- PHP >= 7.1.3;
+- PHP >= 7.2;
 - PDO PHP Extension;
 - GD PHP extension;
 - ZIP PHP extension;
@@ -79,7 +77,7 @@ composer gen
 ```$shell
 crontab -e
 
-* * * * * cd /path/to/project && php bin/console i86:jobby:execute 1>> /dev/null 2>&1
+* * * * * cd /path-to-your-project && symfony console schedule:run >> /dev/null 2>&1
 ```
 6.nginx配置
 > ./docs/nginx.conf 是配置例子，可以参考

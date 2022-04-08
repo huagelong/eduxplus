@@ -71,6 +71,9 @@
             "php bin/console doctrine:cache:clear-query-region --ansi",
             "php bin/console doctrine:cache:clear-result --ansi --no-interaction"
         ],
+        "assets": [
+            "php bin/console assets:install --symlink --relative public"
+        ],
         "deploy": [
             "php bin/console core:gen:dir",
             "php bin/console doctrine:database:create --if-not-exists",
