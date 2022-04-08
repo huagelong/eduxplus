@@ -1,3 +1,7 @@
 admin_index:
   path: /admin/
   controller: Eduxplus\CoreBundle\Controller\IndexController::indexAction
+
+admin_about:
+  path: /admin/about
+  controller: Eduxplus\CoreBundle\Controller\IndexController::aboutAction

@@ -146,16 +146,16 @@
         },
         {
             "name": "alibabacloud/sdk",
-            "version": "1.8.1306",
+            "version": "1.8.1309",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aliyun/openapi-sdk-php.git",
-                "reference": "78939dfdb8aee3719c1b6f5aaece300551920d40"
+                "reference": "caff3986a0010255c8869529902e69091116b393"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aliyun/openapi-sdk-php/zipball/78939dfdb8aee3719c1b6f5aaece300551920d40",
-                "reference": "78939dfdb8aee3719c1b6f5aaece300551920d40",
+                "url": "https://api.github.com/repos/aliyun/openapi-sdk-php/zipball/caff3986a0010255c8869529902e69091116b393",
+                "reference": "caff3986a0010255c8869529902e69091116b393",
                 "shasum": ""
             },
             "require": {
@@ -380,7 +380,7 @@
                 "issues": "https://github.com/aliyun/openapi-sdk-php/issues",
                 "source": "https://github.com/aliyun/openapi-sdk-php"
             },
-            "time": "2022-03-31T08:46:46+00:00"
+            "time": "2022-04-06T13:32:40+00:00"
         },
         {
             "name": "alibabacloud/tea",
@@ -4483,6 +4483,7 @@
                     "type": "github"
                 }
             ],
+            "abandoned": "w7corp/easywechat",
             "time": "2021-12-27T13:56:47+00:00"
         },
         {
@@ -4841,16 +4842,16 @@
         },
         {
             "name": "qcloud/cos-sdk-v5",
-            "version": "v2.5.1",
+            "version": "v2.5.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/tencentyun/cos-php-sdk-v5.git",
-                "reference": "85d5cb660574a3de6f4a83b76e8b0506e03b9e9a"
+                "reference": "3b2f32efd6c7bba7b982b118c5af18db74658fc5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tencentyun/cos-php-sdk-v5/zipball/85d5cb660574a3de6f4a83b76e8b0506e03b9e9a",
-                "reference": "85d5cb660574a3de6f4a83b76e8b0506e03b9e9a",
+                "url": "https://api.github.com/repos/tencentyun/cos-php-sdk-v5/zipball/3b2f32efd6c7bba7b982b118c5af18db74658fc5",
+                "reference": "3b2f32efd6c7bba7b982b118c5af18db74658fc5",
                 "shasum": ""
             },
             "require": {
@@ -4902,9 +4903,9 @@
             ],
             "support": {
                 "issues": "https://github.com/tencentyun/cos-php-sdk-v5/issues",
-                "source": "https://github.com/tencentyun/cos-php-sdk-v5/tree/v2.5.1"
+                "source": "https://github.com/tencentyun/cos-php-sdk-v5/tree/v2.5.2"
             },
-            "time": "2022-02-16T02:38:37+00:00"
+            "time": "2022-04-07T03:22:53+00:00"
         },
         {
             "name": "qcloudsms/qcloudsms_php",
@@ -11130,16 +11131,16 @@
         },
         {
             "name": "tencentcloud/tencentcloud-sdk-php",
-            "version": "3.0.605",
+            "version": "3.0.607",
             "source": {
                 "type": "git",
                 "url": "https://github.com/TencentCloud/tencentcloud-sdk-php.git",
-                "reference": "fbfb9e7906dde13b268bd66bc6b63091c99588b4"
+                "reference": "df2db008206e980f606f4e17e90a908cab6ca32c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/TencentCloud/tencentcloud-sdk-php/zipball/fbfb9e7906dde13b268bd66bc6b63091c99588b4",
-                "reference": "fbfb9e7906dde13b268bd66bc6b63091c99588b4",
+                "url": "https://api.github.com/repos/TencentCloud/tencentcloud-sdk-php/zipball/df2db008206e980f606f4e17e90a908cab6ca32c",
+                "reference": "df2db008206e980f606f4e17e90a908cab6ca32c",
                 "shasum": ""
             },
             "require": {
@@ -11171,9 +11172,9 @@
             "homepage": "https://github.com/TencentCloud/tencentcloud-sdk-php",
             "support": {
                 "issues": "https://github.com/TencentCloud/tencentcloud-sdk-php/issues",
-                "source": "https://github.com/TencentCloud/tencentcloud-sdk-php/tree/3.0.605"
+                "source": "https://github.com/TencentCloud/tencentcloud-sdk-php/tree/3.0.607"
             },
-            "time": "2022-03-30T23:10:41+00:00"
+            "time": "2022-04-07T00:43:50+00:00"
         },
         {
             "name": "twig/extra-bundle",
@@ -11256,16 +11257,16 @@
         },
         {
             "name": "twig/twig",
-            "version": "v3.3.9",
+            "version": "v3.3.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "6ff9b0e440fa66f97f207e181c41340ddfa5683d"
+                "reference": "8442df056c51b706793adf80a9fd363406dd3674"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/6ff9b0e440fa66f97f207e181c41340ddfa5683d",
-                "reference": "6ff9b0e440fa66f97f207e181c41340ddfa5683d",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/8442df056c51b706793adf80a9fd363406dd3674",
+                "reference": "8442df056c51b706793adf80a9fd363406dd3674",
                 "shasum": ""
             },
             "require": {
@@ -11316,7 +11317,7 @@
             ],
             "support": {
                 "issues": "https://github.com/twigphp/Twig/issues",
-                "source": "https://github.com/twigphp/Twig/tree/v3.3.9"
+                "source": "https://github.com/twigphp/Twig/tree/v3.3.10"
             },
             "funding": [
                 {
@@ -11328,7 +11329,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-03-25T09:37:52+00:00"
+            "time": "2022-04-06T06:47:41+00:00"
         },
         {
             "name": "xin/container",

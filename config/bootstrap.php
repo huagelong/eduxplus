@@ -2,7 +2,7 @@
 
 use Symfony\Component\Dotenv\Dotenv;
 
-date_default_timezone_set("Asia/Shanghai");
+//date_default_timezone_set("Asia/Shanghai");
 
 require dirname(__DIR__).'/vendor/autoload.php';
 

@@ -124,6 +124,8 @@ class TestCommand extends Command
         $mallMenuId = 108;
         $jwMenuId = 94;
         $menuId = 213;
+        $sysMenuId = 352050054346833920;
+        $this->addMenu("关于", "关于", $sysMenuId, "admin_about", "mdi  mdi-information-variant", 1, $roleId, 1, 0, 1, 1);
 //        $this->addMenu("首页", "首页(布局)", 0, "admin_index", "fas fa-home", 0, $roleId, 1, 0, 1, 1);
 //
 //        $this->addMenu("搜索试卷产品", "搜索试卷产品", 0, "admin_qa_api_glob_searchProductDo", "", 3, $roleId, 1, 1, 0, 1);

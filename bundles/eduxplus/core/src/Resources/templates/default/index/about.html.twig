@@ -1,0 +1,27 @@
+{% extends "@CoreBundle/layout/main.html.twig" %}
+
+{% block page_title %}关于{% endblock %}
+
+{% block page %}
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <header class="card-header">
+                <div class="card-title">环境变量</div>
+            </header>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        {% for k,v in envs %}
+                        <tr>
+                            <td width="120px">{{ v["name"] }}</td>
+                            <td>{{ v["value"] }}</td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

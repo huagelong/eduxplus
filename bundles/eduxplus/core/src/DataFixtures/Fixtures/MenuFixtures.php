@@ -22,6 +22,7 @@ class MenuFixtures
         //新增菜单并绑定角色
         $sysMenuId = $this->addMenu("首页", "首页", 0, "admin_index", "mdi  mdi-home", 0, $roleId, 1, 0, 1, 1);
         $this->addMenu("控制面板", "控制面板", $sysMenuId, "admin_dashboard", "mdi  mdi-home", 0, $roleId, 1, 0, 1, 1);
+        $this->addMenu("关于", "关于", $sysMenuId, "admin_about", "mdi  mdi-information-variant", 1, $roleId, 1, 0, 1, 1);
         $this->addMenu("文件上传", "文件上传处理", 0, "admin_glob_upload", "mdi  mdi-upload", 1, $roleId, 1, 1, 0, 1);
         $this->addMenu("搜索用户名", "搜索用户名", 0, "admin_api_glob_searchUserDo", "", 2, $roleId, 1, 1, 0, 1);
         $this->addMenu("搜索管理员", "搜索管理员", 0, "admin_api_glob_searchAdminUserDo", "", 3, $roleId, 1, 1, 0, 1);
