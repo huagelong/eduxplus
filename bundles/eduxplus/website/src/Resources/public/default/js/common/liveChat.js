@@ -5,7 +5,7 @@ $(function(){
   var sdkAppID = chatsdkAppID;
 
   moment.locale("zh-cn");
-  var facepath= "/bundles/eduxpluswebsite/images/common/face/";
+  var facepath= "/bundles/eduxpluswebsite/default/images/common/face/";
   var ns=$.initNamespaceStorage('memberList');
   let memberList = ns.sessionStorage;
   var msgFirstInit=1;

@@ -16,7 +16,7 @@
               <div class="layui-row layui-col-space20">
                   <div class="layui-col-md6">
                     <div class="cover">
-                      <img src="{% if info['goodsImg'] %}{{ json_get(info['goodsImg'], 0) }}{% else %} /bundles/eduxpluswebsite/images/lesson_default.png {% endif %}"   />
+                      <img src="{% if info['goodsImg'] %}{{ json_get(info['goodsImg'], 0) }}{% else %} /bundles/eduxpluswebsite/default/images/lesson_default.png {% endif %}"   />
                     </div>
                   </div>
                   <div class="layui-col-md6">
@@ -51,7 +51,7 @@
                 <div class="layui-row layui-col-space20">
                   <div class="layui-col-md6">
                     <div class="cover">
-                      <img src="{% if info['goodsImg'] %}{{ json_get(info['goodsImg'], 0) }}{% else %} /bundles/eduxpluswebsite/images/lesson_default.png {% endif %}"   />
+                      <img src="{% if info['goodsImg'] %}{{ json_get(info['goodsImg'], 0) }}{% else %} /bundles/eduxpluswebsite/default/images/lesson_default.png {% endif %}"   />
                     </div>
                   </div>
                   <div class="layui-col-md6">
@@ -113,7 +113,7 @@
                 <div class="layui-row layui-col-space20">
                   <div class="layui-col-md6">
                     <div class="cover">
-                      <img src="{% if info['goodsImg'] %}{{ json_get(info['goodsImg'], 0) }}{% else %} /bundles/eduxpluswebsite/images/lesson_default.png {% endif %}"   />
+                      <img src="{% if info['goodsImg'] %}{{ json_get(info['goodsImg'], 0) }}{% else %} /bundles/eduxpluswebsite/default/images/lesson_default.png {% endif %}"   />
                     </div>
                   </div>
                   <div class="layui-col-md6">
@@ -163,7 +163,7 @@
                           {{ info['introduce']['content']|raw }}
                         {% else %}
                           <div class="layui-center">
-                            <div><img src="/bundles/eduxpluswebsite/images/null-i2.png" /></div>
+                            <div><img src="/bundles/eduxpluswebsite/default/images/null-i2.png" /></div>
                             <div>还没有当前课程的介绍哦～</div>
                           </div>
                         {% endif %}
@@ -171,7 +171,7 @@
                   <div class="layui-tab-item">
                         {% if studyPlan is empty %}
                           <div class="layui-center">
-                            <div><img src="/bundles/eduxpluswebsite/images/null-i2.png" /></div>
+                            <div><img src="/bundles/eduxpluswebsite/default/images/null-i2.png" /></div>
                             <div>还没有当前课程的安排哦～</div>
                           </div>
                         {% else %}
