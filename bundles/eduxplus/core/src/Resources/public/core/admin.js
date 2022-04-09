@@ -273,7 +273,7 @@ $(function () {
       showUpload: showRemove,
       showCancel: false,
       showClose: showRemove,
-      previewFileIcon: "mdi mdi-file",
+      // previewFileIcon: '<li class="mdi mdi-file"></li>',
       previewFileIconSettings: {
         docx: '<i class="mdi mdi-file-word text-primary"></i>',
         xlsx: '<i class="mdi mdi-file-excel text-success"></i>',
