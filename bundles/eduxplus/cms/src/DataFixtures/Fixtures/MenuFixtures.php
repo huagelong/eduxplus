@@ -66,6 +66,8 @@ class MenuFixtures
         $this->addMenu("编辑处理", "编辑处理", $mgId, "admin_api_cms_news_category_edit", "", 2, $roleId, 0, 1, 0);
         $this->addMenu("删除", "单个删除处理", $mgId, "admin_api_cms_news_category_delete", "", 3, $roleId, 0, 1, 0);
         $this->addMenu("更新排序", "更新排序处理", $mgId, "admin_api_cms_news_category_updateSort", "", 4, $roleId, 0, 1, 0);
+        //公开课
+
     }
 
     protected function addMenu($name, $descr, $pid, $uri, $style, $sort, $roleId, $isLock, $isAccess, $isShow, $isGlobal = 0)
