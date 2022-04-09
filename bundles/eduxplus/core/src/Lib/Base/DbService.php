@@ -1,20 +1,20 @@
 <?php
 namespace Eduxplus\CoreBundle\Lib\Base;
 
-use Eduxplus\CoreBundle\Entity\BaseUser;
-use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
-use Symfony\Component\Serializer\Serializer;
-use Doctrine\Persistence\ManagerRegistry;
-use Symfony\Component\Serializer\SerializerInterface;
+use Psr\Log\LoggerInterface;
 
 class DbService
 {
-
+    /**
+     * @var LoggerInterface
+     */
+    private $logger;
     protected $em;
     protected static $originalEventListeners=[];
 
-    public function setDoctrine($em){
+    public function setDoctrine($em, $logger){
         $this->em = $em;
+        $this->logger = $logger;
         return $this;
     }
 
@@ -180,7 +180,7 @@ class DbService
         } else {
             $rs = $query->getResult();
         }
-//        $this->logger()->info($query->getSql());
+//        $this->logger->debug($query->getSql());
         return $rs ? $rs : [];
     }
 
@@ -206,7 +206,7 @@ class DbService
             $rs = $query->getResult();
         }
         //        dump($query->getSql());
-//        $this->logger()->info($query->getSql());
+//        $this->logger->debug($query->getSql());
         return $rs ? $rs : [];
     }
 
@@ -218,6 +218,7 @@ class DbService
         if ($params) $query = $query->setParameters($params);
         $resultType = !$getObject ? 2 : null;
         $rs = $query->setMaxResults(1)->getOneOrNullResult($resultType);
+//        $this->logger->debug($query->getSql());
         return $rs ? $rs : [];
     }
 
@@ -229,6 +230,7 @@ class DbService
         if ($params) $query = $query->setParameters($params);
         $resultType = !$getObject ? 2 : null;
         $rs = $query->setMaxResults(1)->getOneOrNullResult($resultType);
+//        $this->logger->debug($query->getSql());
         return $rs ? $rs : [];
     }
 
@@ -253,6 +255,7 @@ class DbService
      * @return mixed
      */
     public function fetchAllBySql($sql, array $params = [],$name = null){
+//        $this->logger->debug($sql);
         $conn = $this->conn($name);
         $result = $conn->fetchAll($sql, $params);
         return $result;
@@ -267,6 +270,7 @@ class DbService
      * @return mixed
      */
     public function fetchAssocBySql($sql, array $params = [],$name = null){
+//        $this->logger->debug($sql);
         $conn = $this->conn($name);
         $result = $conn->fetchAssoc($sql, $params);
         return $result;
@@ -280,8 +284,10 @@ class DbService
      * @return mixed
      */
     public function fetchColumnBySql($sql, array $params = [],$name = null){
+//        $this->logger->debug($sql);
         $conn = $this->conn($name);
         $result = $conn->fetchcolumn($sql, $params);
+
         return $result;
     }
 

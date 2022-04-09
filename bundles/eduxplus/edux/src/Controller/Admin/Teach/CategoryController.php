@@ -57,7 +57,7 @@ class CategoryController extends BaseAdminController
         $mobileIcon = $request->get("mobileIcon");
         $isShow = $request->get("isShow");
         $isShow = $isShow == "on" ? 1 : 0;
-
+        $parentId = intval($parentId);
         if (!$name) return $this->responseError("分类名称不能为空!");
         if (mb_strlen($name, 'utf-8') > 30) return $this->responseError("分类名称不能大于30字!");
         if ($categoryService->checkDeposit($parentId) > 3) return $this->responseError("分类树最大不能超过3层!");

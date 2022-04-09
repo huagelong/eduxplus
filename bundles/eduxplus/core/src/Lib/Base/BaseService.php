@@ -118,7 +118,7 @@ class BaseService
     public final function db()
     {
 //        $this->logger()->info("db:".get_called_class());
-        return $this->db->setDoctrine($this->em);
+        return $this->db->setDoctrine($this->em, $this->logger);
     }
 
     public final function error()

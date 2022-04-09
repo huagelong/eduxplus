@@ -34,7 +34,7 @@ class ExceptionListener
     {
         if (!$event->isMainRequest()) return true;
         $exception = $event->getThrowable();
-        $this->logger->error($exception->getTraceAsString());
+        $this->logger->error($exception->getFile()."(".$exception->getLine().") ".$exception->getMessage());
 
         $pathPatterns = $this->baseService->getConfig("eduxplus_core.json_patterns");
         $requestUri = $this->baseService->request()->getRequestUri();

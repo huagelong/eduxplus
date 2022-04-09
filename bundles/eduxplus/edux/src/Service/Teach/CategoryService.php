@@ -45,7 +45,7 @@ class CategoryService extends AdminBaseService
 
     public function findPath($id)
     {
-        if (!$id) return "";
+        $id = $id+0;
         $sql = "SELECT a.parentId FROM Edux:TeachCategory a WHERE a.id = :id";
         $pid = $this->db()->fetchField("parentId", $sql, ['id' => $id]);
         if (!$pid) return ",{$id},";
@@ -72,7 +72,6 @@ class CategoryService extends AdminBaseService
         $model->setSort($sort);
         if ($mobileIcon) {
             $model->setMobileIcon($mobileIcon);
-            // $mobileIcon = json_encode(["/assets/images/category.png"]);
         }
 
         return $this->db()->save($model);
