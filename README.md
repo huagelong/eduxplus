@@ -39,6 +39,14 @@ eduxplus 是一款服务于教育机构、个人、小型团队的在线教育�
   - 试卷管理
   - 试卷商品管理
 
+
+## 相关截图
+![图片1](docs/screens/admin-01.png)
+![图片1](docs/screens/admin-02.png)
+![图片1](docs/screens/admin-03.png)
+![图片1](docs/screens/admin-04.png)
+![图片1](docs/screens/admin-05.png)
+![图片1](docs/screens/admin-06.png)
 ## 特色
 > 整个系统主线从课程->产品->开课计划->商品，流程清晰，支持滚动开课，开班
 ## 安装
@@ -53,22 +61,31 @@ eduxplus 是一款服务于教育机构、个人、小型团队的在线教育�
 - And the [https://symfony.com/doc/current/reference/requirements.html](https://symfony.com/doc/current/reference/requirements.html).
 
 #### 安装步骤
+> 以下步骤在linux系统操作
 
-1.安装 Composer (see http://getcomposer.org/download)
+1.安装 Composer (详见 http://getcomposer.org/download)
 
-2.下载代码
+2.安装 symfony_cli (详见 https://symfony.com/download)
 
-3.进入代码根目录，配置
+3. 安装 git (详见 https://git-scm.com/downloads)
+
+4.下载代码
+```$shell
+git clone https://gitee.com/wangkaihui/eduxplus.git
+```
+
+5.进入代码根目录，修改配置
 
 ```$shell
 cp .env .env.local
-//打开.env.local 配置数据库，redis等配置
+// 打开.env.local 配置数据库DATABASE_URL，redis配置REDIS_HOST
 ```
 
 4.执行
 
 ```$php
 composer install
+//初始化数据
 composer gen
 ```
 
@@ -76,13 +93,12 @@ composer gen
 
 ```$shell
 crontab -e
-
 * * * * * cd /path-to-your-project && symfony console schedule:run >> /dev/null 2>&1
 ```
 6.nginx配置
 > ./docs/nginx.conf 是配置例子，可以参考
 
-7.or 安装 [symfony cli](https://symfony.com/download) 直接运行下面命令
+7.or 直接运行下面命令
 ```$shell
 symfony serve
 //打开 http://127.0.0.1:8000 进行预览
