@@ -77,7 +77,7 @@ class UserService extends AppBaseService
             $model->setSex(1);
             $model->setDisplayName($displayName);
             $model->setFullName($displayName);
-            $model->setGravatar(trim($this->getOption("app.domain"),"/")."/assets/images/gravatar.jpeg");
+            $model->setGravatar(trim($this->getOption("app.domain"),"/")."/bundles/eduxpluscore/images/gravatar.jpeg");
             $model->setMobileTail($mobile);
             $model->setSno($this->coreUserServie->getSno($mobile));
             $model->setBirthday(date('Y-m-d'));
