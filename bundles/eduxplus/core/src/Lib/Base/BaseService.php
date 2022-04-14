@@ -179,7 +179,7 @@ class BaseService
 
     public final function session()
     {
-        return $this->request()->getSession();
+        return $this->requestStack->getSession();
     }
 
     public final function getConfig($str)

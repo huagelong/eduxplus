@@ -21,3 +21,6 @@ services:
     App\Bundle\:
         resource: '../src/Controller'
         tags: ['controller.service_arguments']
+
+    Symfony\Component\HttpFoundation\Session\Storage\Handler\RedisSessionHandler:
+        arguments: ['@snc_redis.session']

@@ -39,7 +39,3 @@ snc_redis:
             prefix: exp_persistence_
             connection_timeout: 10
             read_write_timeout: 30
-      
-
-  session:
-      client: session

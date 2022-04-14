@@ -44,7 +44,7 @@ class PasswordLoginAuthenticator extends AbstractLoginFormAuthenticator
     private $csrfTokenManager;
     private $captchaService;
     private $mobileMaskService;
-    protected $userRepository;
+    private $userRepository;
 
     public function __construct(EntityManagerInterface $entityManager,
                                 UrlGeneratorInterface $urlGenerator,
