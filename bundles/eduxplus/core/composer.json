@@ -3,7 +3,7 @@
     "description": "eduxplus core bundle",
     "type": "symfony-bundle",
     "require": {
-        "php": ">=7.2",
+        "php": ">=7.4",
         "ext-json": "*",
         "ext-redis": ">=4.3",
         "ext-ctype": "*",
@@ -73,8 +73,6 @@
         "godruoyi/php-snowflake": "^1.1",
         "symfony/deprecation-contracts": "^2.1|^3",
         "symfony/polyfill-mbstring": "~1.0",
-        "symfony/polyfill-php73": "1.25.*",
-        "symfony/polyfill-php74": "1.25.*",
         "symfony/polyfill-php80": "1.25.*",
         "symfony/polyfill-php81": "1.25.*"
     },
