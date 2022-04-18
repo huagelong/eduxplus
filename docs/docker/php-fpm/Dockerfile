@@ -49,7 +49,7 @@ CMD ["php-fpm7", "-F"]
 
 WORKDIR /var/www/symfony
 
-COPY ./* ./
+COPY ./../../ ./
 
 RUN composer install && composer gen
 
