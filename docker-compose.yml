@@ -9,8 +9,8 @@ services:
         environment:
             MYSQL_ROOT_PASSWORD: root
             MYSQL_DATABASE: eduxplus
-            MYSQL_USER: root
-            MYSQL_PASSWORD: root
+            MYSQL_USER: eduxplus
+            MYSQL_PASSWORD: eduxplus
         networks:
             - db
     redis:
