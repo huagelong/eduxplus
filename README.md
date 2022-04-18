@@ -53,7 +53,7 @@ eduxplus 是一款服务于教育机构、个人、小型团队的在线教育�
 
 #### 必要条件
 
-- PHP >= 7.2;
+- PHP >= 7.4;
 - PDO PHP Extension;
 - GD PHP extension;
 - ZIP PHP extension;

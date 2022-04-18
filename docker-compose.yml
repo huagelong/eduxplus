@@ -26,7 +26,7 @@ services:
         ports:
             - "9001:9001"
         volumes:
-            - ./:/var/www/symfony:cached
+            - ./:/var/www/symfony
         depends_on:
             - db
             - redis
@@ -44,8 +44,8 @@ services:
         networks:
             - php
         volumes:
-            - ./logs/nginx:/var/log/nginx:cached
-            - ./:/var/www/symfony:cached
+            - ./logs/nginx:/var/log/nginx
+            - ./:/var/www/symfony
     elasticsearch:
         container_name: elasticsearch
         image: docker.elastic.co/elasticsearch/elasticsearch:7.4.2
@@ -63,9 +63,9 @@ services:
         depends_on:
             - elasticsearch
         volumes:
-            - ./docs/docker/elk/logstash/pipelines.yml:/usr/share/logstash/config/pipelines.yml:cached
-            - ./docs/docker/elk/logstash/conf.d:/etc/logstash/conf.d:cached
-            - ./logs/nginx:/var/log/nginx:cached
+            - ./docs/docker/elk/logstash/pipelines.yml:/usr/share/logstash/config/pipelines.yml
+            - ./docs/docker/elk/logstash/conf.d:/etc/logstash/conf.d
+            - ./logs/nginx:/var/log/nginx
         networks:
             - elk_stack
     kibana:
