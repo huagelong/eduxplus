@@ -37,5 +37,5 @@ snc_redis:
           logging: '%kernel.debug%'
           options:
             prefix: exp_persistence_
-            connection_timeout: 10
+            connection_timeout: 60
             read_write_timeout: 30
