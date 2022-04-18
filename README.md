@@ -107,8 +107,10 @@ symfony serve
 ## docker 相关
 
 ```$shell
-composer install
-
+docker-compose up -d
+docker-compose run php composer install
+docker-compose run php composer gen
+//添加host为: 服务器ip local.eduxplus.com， 例如 192.168.159.128 local.eduxplus.com
 ```
 
 ## 相关文档
