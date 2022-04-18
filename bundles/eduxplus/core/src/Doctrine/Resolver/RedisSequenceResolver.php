@@ -26,12 +26,12 @@ class RedisSequenceResolver implements SequenceResolver
      */
     public function __construct($redis)
     {
-//        if ($redis->ping()) {
-//            $this->redis = $redis;
-//            return;
-//        }
-        $this->redis = $redis;
-//        throw new \Exception('Redis server went away');
+        if ($redis->ping()) {
+            $this->redis = $redis;
+            return;
+        }
+
+        throw new \Exception('Redis server went away');
     }
 
     /**
