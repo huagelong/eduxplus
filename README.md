@@ -107,8 +107,8 @@ symfony serve
 ## docker 相关
 
 ```$shell
-docker build --rm -t trensy/eduxplus ./
-docker run -d --restart=always trensy/eduxplus /bin/sh
+composer install
+
 ```
 
 ## 相关文档
@@ -117,3 +117,7 @@ docker run -d --restart=always trensy/eduxplus /bin/sh
  - [https://symfony.com/doc/current/reference/requirements.html](https://symfony.com/doc/current/reference/requirements.html)
  - [https://getcomposer.org/doc/03-cli.md#create-project](https://getcomposer.org/doc/03-cli.md#create-project)
 
+## 鸣谢
+ - [https://gitee.com/yinqi/Light-Year-Admin-Using-Iframe-v4](https://gitee.com/yinqi/Light-Year-Admin-Using-Iframe-v4)
+ - [https://gitee.com/sentsin/layui/](https://gitee.com/sentsin/layui/)
+ 

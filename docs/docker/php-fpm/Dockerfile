@@ -48,4 +48,7 @@ COPY symfony.pool.conf /etc/php7/php-fpm.d/
 CMD ["php-fpm7", "-F"]
 
 WORKDIR /var/www/symfony
+
+RUN composer install && composer gen
+
 EXPOSE 9001

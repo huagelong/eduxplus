@@ -81,7 +81,7 @@
             "@clear-dbcache"
         ],
         "up-entity":[
-            "symfony console make:entity --regenerate Wechance\\CoreBundle\\Entity",
+            "php bin/console make:entity --regenerate Wechance\\CoreBundle\\Entity",
             "@deploy"
         ],
         "gen": [
