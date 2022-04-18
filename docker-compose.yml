@@ -54,12 +54,35 @@ services:
         ports:
             - "9200:9200"
         networks:
-            es:
+            elk_stack:
                 aliases:
                     - "elasticsearch"
+    logstash:
+        container_name: logstash
+        image: docker.elastic.co/logstash/logstash:7.4.2
+        depends_on:
+            - elasticsearch
+        volumes:
+            - ./docs/docker/elk/logstash/pipelines.yml:/usr/share/logstash/config/pipelines.yml:cached
+            - ./docs/docker/elk/logstash/conf.d:/etc/logstash/conf.d:cached
+            - ./logs/nginx:/var/log/nginx:cached
+        networks:
+            - elk_stack
+    kibana:
+        container_name: kibana
+        depends_on:
+            - elasticsearch
+        image: docker.elastic.co/kibana/kibana:7.4.2
+        environment:
+            SERVER_NAME: localhost
+            ELASTICSEARCH_HOSTS: http://elasticsearch:9200
+        networks:
+            - elk_stack
+        ports:
+            - "82:5601"
 networks:
     db:
     redis:
     php:
-    es:
+    elk_stack:
 
