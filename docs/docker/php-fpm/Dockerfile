@@ -34,7 +34,8 @@ RUN apk add --update --no-cache \
     php7-xmlwriter \
     make \
     curl \
-    git
+    git \
+    busybox-extras
 
 RUN echo "$(curl -sS https://composer.github.io/installer.sig) -" > composer-setup.php.sig \
         && curl -sS https://getcomposer.org/installer | tee composer-setup.php | sha384sum -c composer-setup.php.sig \
