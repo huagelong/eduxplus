@@ -12,14 +12,14 @@ services:
             MYSQL_USER: eduxplus
             MYSQL_PASSWORD: eduxplus
         networks:
-            - dbhost
+            - db
     redis:
         container_name: redis
         image: redis
         ports:
             - "6378:6379"
         networks:
-            - redishost
+            - redis
     php:
         container_name: php-fpm
         build: ./docs/docker/php-fpm
@@ -31,8 +31,8 @@ services:
             - db
             - redis
         networks:
-            - redishost
-            - dbhost
+            - redis
+            - db
             - php
     nginx:
         container_name: nginx
@@ -81,8 +81,8 @@ services:
         ports:
             - "82:5601"
 networks:
-    dbhost:
-    redishost:
+    db:
+    redis:
     php:
     elk_stack:
 
