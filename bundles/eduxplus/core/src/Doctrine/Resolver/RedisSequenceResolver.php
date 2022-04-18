@@ -30,7 +30,7 @@ class RedisSequenceResolver implements SequenceResolver
             $this->redis = $redis;
             return;
         }
-
+        $this->redis = $redis;
 //        throw new \Exception('Redis server went away');
     }
 
