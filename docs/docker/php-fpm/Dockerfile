@@ -49,6 +49,8 @@ CMD ["php-fpm7", "-F"]
 
 WORKDIR /var/www/symfony
 
+COPY ./* ./
+
 RUN composer install && composer gen
 
 EXPOSE 9001
