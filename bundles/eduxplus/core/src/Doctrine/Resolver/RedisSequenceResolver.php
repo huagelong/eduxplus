@@ -28,11 +28,10 @@ class RedisSequenceResolver implements SequenceResolver
     {
         if ($redis->ping()) {
             $this->redis = $redis;
-
             return;
         }
 
-        throw new \Exception('Redis server went away');
+//        throw new \Exception('Redis server went away');
     }
 
     /**
