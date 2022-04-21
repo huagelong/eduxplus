@@ -12,6 +12,6 @@ zenstruck_schedule:
       enabled: true
       ttl: 3600
   tasks:
-    - task: core:gen:dir
+    - task: debug:config
       frequency: '* * * * *'
-      description: gen dir
+      description: show config
