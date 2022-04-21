@@ -47,7 +47,7 @@ COPY symfony.ini /etc/php7/cli/conf.d/
 COPY xdebug.ini  /etc/php7/conf.d/
 
 COPY symfony.pool.conf /etc/php7/php-fpm.d/
-
+RUN echo "* * * * * cd /var/www/symfony && php ./bin/console schedule:run >> /dev/null 2>&1" >> /etc/crontabs/root
 CMD ["php-fpm7", "-F"]
 
 WORKDIR /var/www/symfony
