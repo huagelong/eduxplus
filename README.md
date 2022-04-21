@@ -110,7 +110,6 @@ symfony serve
 docker-compose up -d
 docker-compose run php composer install -v
 docker-compose run php composer gen
-docker-compose run php echo "* * * * * cd /var/www/symfony && php ./bin/console schedule:run >> /dev/null 2>&1" >> /etc/config/crontab
 //添加host为: 服务器ip local.eduxplus.com， 例如 192.168.159.128 local.eduxplus.com
 //浏览器打开 http://local.eduxplus.com:81 进行预览
 ```

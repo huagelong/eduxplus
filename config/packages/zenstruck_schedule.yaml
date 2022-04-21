@@ -1,6 +1,6 @@
 zenstruck_schedule:
-  without_overlapping_lock_factory: lock.scheduler
-  single_server_lock_factory: lock.scheduler
+  without_overlapping_lock_factory: lock.scheduler.factory
+  single_server_lock_factory: lock.scheduler.factory
   timezone: Asia/Shanghai
 
   messenger:
@@ -12,6 +12,6 @@ zenstruck_schedule:
       enabled: true
       ttl: 3600
   tasks:
-    - task: job:msg
-      frequency: '0 0 * * *'
-      description: msg read todo
+    - task: core:gen:dir
+      frequency: '* * * * *'
+      description: gen dir
