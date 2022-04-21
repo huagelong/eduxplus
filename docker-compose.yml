@@ -34,7 +34,7 @@ services:
             - redis
             - db
             - php
-        command: crontab file /var/www/symfony/docs/crontab
+        command: crontab /var/www/symfony/docs/crontab
     nginx:
         container_name: nginx
         build: ./docs/docker/nginx
