@@ -104,7 +104,7 @@ symfony serve
 //打开 http://127.0.0.1:8000 进行预览
 ```
 
-## docker 相关
+## docker 安装
 
 ```$shell
 docker-compose up -d
