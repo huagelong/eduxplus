@@ -22,13 +22,13 @@
 
 {% block head_javascript %}
     {{ parent() }}
-    <script src="{{ asset('assets/plugins/es6-promise/es6-promise.auto.min.js') }}"></script>
-    <script src="{{ asset('assets/plugins/vue2.6/vue.min.js') }}"></script>
-    <script src="{{ asset('assets/plugins/axios0.19.2/axios.min.js') }}"></script>
+    <script src="{{ asset('bundles/eduxplusedux/plugins/es6-promise/es6-promise.auto.min.js') }}"></script>
+    <script src="{{ asset('bundles/eduxplusedux/plugins/vue2.6/vue.min.js') }}"></script>
+    <script src="{{ asset('bundles/eduxplusedux/plugins/axios0.19.2/axios.min.js') }}"></script>
 
 {% if vodAdapter == 1 %}
-    <script src="{{ asset('assets/plugins/tengxunyun/vod-js-sdk-v6/vod-js-sdk-v6.js') }}"></script>
-    <script src="{{ asset('assets/plugins/tengxunyun/vod.js') }}"></script>
+    <script src="{{ asset('bundles/eduxplusedux/plugins/tengxunyun/vod-js-sdk-v6/vod-js-sdk-v6.js') }}"></script>
+    <script src="{{ asset('bundles/eduxplusedux/plugins/tengxunyun/vod.js') }}"></script>
     <!--[if lt IE 9]>
     <script src="//imgcache.qq.com/open/qcloud/video/tcplayer/ie8/videojs-ie8.js"></script>
     <![endif]-->
@@ -39,12 +39,12 @@
 {% endif %}
 
 {% if vodAdapter == 2 %}
-    <script src="{{ asset('assets/plugins/aliyun/aliyun-upload-sdk-1.5.0/aliyun-upload-sdk-1.5.0.min.js') }}"></script>
-    <script src="{{ asset('assets/plugins/aliyun/aliyun-upload-sdk-1.5.0/lib/aliyun-oss-sdk-5.3.1.min.js') }}"></script>
+    <script src="{{ asset('bundles/eduxplusedux/plugins/aliyun/aliyun-upload-sdk-1.5.0/aliyun-upload-sdk-1.5.0.min.js') }}"></script>
+    <script src="{{ asset('bundles/eduxplusedux/plugins/aliyun/aliyun-upload-sdk-1.5.0/lib/aliyun-oss-sdk-5.3.1.min.js') }}"></script>
     <script type="text/javascript" charset="utf-8" src="https://g.alicdn.com/de/prismplayer/2.8.8/aliplayer-min.js"></script>
     {# <script src="https://g.alicdn.com/de/prismplayer/2.8.2/hls/aliplayer-vod-anti-min.js"></script> #}
-  <script src="{{ asset('assets/plugins/aliyun/aliplayercomponents-1.0.5.min.js') }}"></script>
-  <script src="{{ asset('assets/plugins/aliyun/vod.js') }}"></script>
+  <script src="{{ asset('bundles/eduxplusedux/plugins/aliyun/aliplayercomponents-1.0.5.min.js') }}"></script>
+  <script src="{{ asset('bundles/eduxplusedux/plugins/aliyun/vod.js') }}"></script>
 {% endif %}
 
 {% endblock %}

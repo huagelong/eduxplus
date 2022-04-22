@@ -18,7 +18,7 @@
                       <a href="{{ path('app_detail_index', {uuid:l['goodsInfo']['uuid']}) }}" class="gooda">
                         <div class="goodCard layui-anim">
                           <div class="goodCover">
-                            <img src="{% if l['goodsInfo']['goodsSmallImg'] %} {{ json_get(l['goodsInfo']['goodsSmallImg']) }} {% else %} /assets/images/course.jpg {% endif %}">
+                            <img src="{% if l['goodsInfo']['goodsSmallImg'] %} {{ json_get(l['goodsInfo']['goodsSmallImg']) }} {% else %} /bundles/eduxpluswebsite/images/course.jpg {% endif %}">
                           </div>
                           <div class="goodInfo">
                             <div class="goodTitle">{{ l['goodsInfo']['name'] }}</div>

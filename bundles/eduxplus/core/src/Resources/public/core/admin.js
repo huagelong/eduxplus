@@ -84,7 +84,7 @@ $(function () {
       timePicker: true,
       timePickerIncrement: 30,
       locale: {
-        format: "YYYY-MM-DD hh:mm",
+        format: "YYYY-MM-DD HH:mm:ss",
       },
     });
   });
@@ -96,7 +96,7 @@ $(function () {
       autoUpdateInput: false,
       timePicker: true,
       locale: {
-        format: "YYYY-MM-DD hh:mm",
+        format: "YYYY-MM-DD HH:mm:ss",
       },
     });
   });
@@ -322,7 +322,7 @@ $(function () {
     tinymce.init({
       selector: "#" + id,
       convert_urls: false,
-      document_base_url: globOption.appDomain + "assets/plugins/tinymce",
+      document_base_url: globOption.appDomain + "bundles/eduxpluscore/js/tinymce",
       width: width,
       min_height: height,
       plugins:

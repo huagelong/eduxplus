@@ -67,7 +67,7 @@
                  <a href="{{ path('app_detail_index', {uuid:r['uuid']}) }}" class="gooda">
                    <div class="goodCard layui-anim">
                      <div class="goodCover">
-                       <img src="{% if r['goodsSmallImg'] %} {{ json_get(r['goodsSmallImg']) }} {% else %} /assets/images/course.jpg {% endif %}">
+                       <img src="{% if r['goodsSmallImg'] %} {{ json_get(r['goodsSmallImg']) }} {% else %} /bundles/eduxpluswebsite/images/course.jpg {% endif %}">
                      </div>
                      <div class="goodInfo">
                        <div class="goodTitle">{{ r['name'] }}</div>
@@ -102,7 +102,7 @@
                    <div class="layui-row">
                      <div class="layui-col-md6">
                        <div class="liveCover">
-                         <img src="{% if l['goodsSmallImg'] %} {{ json_get(l['goodsSmallImg']) }} {% else %} /assets/images/course.jpg {% endif %}">
+                         <img src="{% if l['goodsSmallImg'] %} {{ json_get(l['goodsSmallImg']) }} {% else %} /bundles/eduxpluswebsite/images/course.jpg {% endif %}">
                        </div>
                      </div>
                      <div class="layui-col-md6">
@@ -140,7 +140,7 @@
                  <a href="{{ path('app_detail_index', {uuid:t['uuid']}) }}" class="gooda">
                    <div class="goodCard layui-anim">
                      <div class="goodCover">
-                       <img src="{% if t['goodsSmallImg'] %} {{ json_get(t['goodsSmallImg']) }} {% else %} /assets/images/course.jpg {% endif %}">
+                       <img src="{% if t['goodsSmallImg'] %} {{ json_get(t['goodsSmallImg']) }} {% else %} /bundles/eduxpluswebsite/images/course.jpg {% endif %}">
                      </div>
                      <div class="goodInfo">
                        <div class="goodTitle">{{ t['name'] }}</div>

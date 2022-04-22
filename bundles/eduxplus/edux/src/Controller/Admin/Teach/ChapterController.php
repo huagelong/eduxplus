@@ -39,14 +39,11 @@ class ChapterController extends BaseAdminController
         $select = $chapterService->chapterSelect($id);
 
         $parentId = $request->get("pid");
+        $courseInfo = $courseService->getById($id);
+        $teachType = $courseInfo['type'];
         $form->notice("父章节最多只能选择一级");
         $form->text("名称")->field("name")->isRequire(1);
         $form->select("父章节")->field("parentId")->isRequire(1)->defaultValue($parentId)->options($select);
-        $form->datetime("上课时间")->field("openTime")->placeholder("直播必须输入上课时间");
-        $form->multiSelect("上课老师")->field("teachers[]")->isRequire(1)->options($chapterService->getTeachers());
-
-        $courseInfo = $courseService->getById($id);
-        $teachType = $courseInfo['type'];
         $form->select("学习方式")->field("studyWay")->isRequire(1)->options(function () use ($teachType) {
             if ($teachType == 1) {
                 return [
@@ -65,6 +62,11 @@ class ChapterController extends BaseAdminController
                 ];
             }
         });
+        $form->datetime("上课时间")->field("openTime")->placeholder("直播必须输入上课时间");
+        $form->multiSelect("上课老师")->field("teachers[]")->isRequire(1)->options($chapterService->getTeachers());
+
+
+
         $form->boole("免费？")->field("isFree")->isRequire(1);
         $form->text("排序")->field("sort")->isRequire(1)->defaultValue(0);
 
