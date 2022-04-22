@@ -66,7 +66,7 @@ class CourseService extends AdminBaseService
                 $schooleId = $vArr['schoolId'];
                 $createrUid = $vArr['createUid'];
                 $firstCateGory = $this->categoryService->getById($firstCateGoryId);
-                $vArr['brand'] = $firstCateGory['name'];
+                $vArr['brand'] = $firstCateGory?$firstCateGory['name']:"";
                 $bigImg = $vArr['bigImg'];
                 $bigImgArr = $bigImg ? current(json_decode($bigImg, true)) : "";
                 $vArr['bigImg'] = $bigImgArr;
@@ -122,7 +122,7 @@ class CourseService extends AdminBaseService
         $model->setDescr($descr);
         $model->setType($type);
         if (!$bigImg) {
-            $bigImg = json_encode([trim($this->getOption("app.domain"),"/")."/assets/images/course.jpg"]);
+            $bigImg = json_encode([trim($this->getOption("app.domain"),"/")."/bundles/eduxplusedux/images/course.jpg"]);
         }
         $model->setBigImg($bigImg);
         $model->setFirstCategoryId($brandId);
@@ -166,7 +166,7 @@ class CourseService extends AdminBaseService
         $model->setDescr($descr);
         $model->setType($type);
         if (!$bigImg) {
-            $bigImg = json_encode([trim($this->getOption("app.domain"),"/")."/assets/images/course.jpg"]);
+            $bigImg = json_encode([trim($this->getOption("app.domain"),"/")."/bundles/eduxplusedux/images/course.jpg"]);
         }
         $model->setBigImg($bigImg);
         $model->setFirstCategoryId($brandId);
