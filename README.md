@@ -67,7 +67,7 @@ eduxplus 是一款服务于教育机构、个人、小型团队的在线教育�
 
 2.安装 symfony_cli (详见 https://symfony.com/download)
 
-3. 安装 git (详见 https://git-scm.com/downloads)
+3.安装 git (详见 https://git-scm.com/downloads)
 
 4.下载代码
 ```$shell
