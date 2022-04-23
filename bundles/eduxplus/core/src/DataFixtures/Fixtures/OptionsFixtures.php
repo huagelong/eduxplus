@@ -40,8 +40,8 @@ class OptionsFixtures
         //        -------云服务基础配置---
         //腾讯云
         $this->addOption("app.tengxunyun.appId", '', "腾讯云 appId", 1, 1, "腾讯云基础配置");
-        $this->addOption("app.tengxunyun.secretId", '', "腾讯云 accesskeyId", 1, 1, "腾讯云基础配置");
-        $this->addOption("app.tengxunyun.secretKey", '', "腾讯云 accesskeySecret ", 1, 1, "腾讯云基础配置");
+        $this->addOption("app.tengxunyun.secretId", '', "腾讯云 secretId", 1, 1, "腾讯云基础配置");
+        $this->addOption("app.tengxunyun.secretKey", '', "腾讯云 secretKey ", 1, 1, "腾讯云基础配置");
         $this->addOption("app.tengxunyun.region", 'ap-shanghai', "腾讯云地域接入域名", 1, 1, "腾讯云基础配置");
 
         //阿里云
@@ -59,7 +59,8 @@ class OptionsFixtures
         $this->addOption("app.tengxunyun.bucket", '', "腾讯云cos桶名称", 1, 1, "腾讯云COS存储配置");
         //腾讯云点播
         $this->addOption("app.tengxunyun.vod.encryptionkey", '', "腾讯云点播Key防盗链密钥", 1, 1, "腾讯云点播配置");
-        $this->addOption("app.tengxunyun.vod.procedure", '', "腾讯云点播任务流模板名字", 1, 1, "腾讯云点播配置");
+        $this->addOption("app.tengxunyun.vod.procedure", 'SimpleAesEncryptPreset', "腾讯云点播任务流模板名字", 1, 1, "腾讯云点播配置");
+        $this->addOption("app.tengxunyun.vod.superPlayer", 'basicDrmPreset', "腾讯云点播超级播放器模板名字", 1, 1, "腾讯云点播配置");
         //腾讯云直播
         $this->addOption("app.tengxunyun.live.pushDomain", '', "腾讯云直播推流域名", 1, 1, "腾讯云直播配置");
         $this->addOption("app.tengxunyun.live.playDomain", '', "腾讯云直播播放域名", 1, 1, "腾讯云直播配置");

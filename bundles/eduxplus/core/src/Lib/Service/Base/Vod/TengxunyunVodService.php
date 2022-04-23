@@ -73,6 +73,8 @@ class TengxunyunVodService extends BaseService
     {
         $key = $this->getOption("app.tengxunyun.vod.encryptionkey");
         if (!$key) return "";
+        $superPlayer = $this->getOption("app.tengxunyun.vod.superPlayer");
+        $superPlayer = $superPlayer?$superPlayer:"basicDrmPreset";
         $appId = $this->getAppId();
         $currentTimeStamp = time();
         $expireTimeStamp = $currentTimeStamp + 3600 * 24;
@@ -81,7 +83,7 @@ class TengxunyunVodService extends BaseService
         $payLoadArr['fileId'] = $videoId;
         $payLoadArr['currentTimeStamp'] = $currentTimeStamp;
         $payLoadArr['expireTimeStamp'] = $expireTimeStamp;
-        $payLoadArr['pcfg'] = "basicDrmPreset";  //默认播放器，清晰度切换用
+        $payLoadArr['pcfg'] = $superPlayer;  //默认播放器，清晰度切换用
         $payLoadArr['urlAccessInfo']['t'] = dechex($currentTimeStamp + 3600 * 24); //24小时过期
         $payLoadArr['urlAccessInfo']['us'] = uniqid();
         $token = JWT::encode($payLoadArr, $key);
