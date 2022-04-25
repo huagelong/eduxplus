@@ -18,25 +18,25 @@ class OptionsFixtures
     public function load()
     {
         //        -----网站基础配置---
-        $this->addOption("app.name", "eduxplus课堂", "网站名称", 1, 1, "网站配置");
-        $this->addOption("app.cdn.domain", 'http://dev.eduxplus.com/', "cdn域名", 1, 1, "网站配置");
-        $this->addOption("app.seo.title", '【eduxplus课堂官方网站】职业教育在线_移动学习、职达未来！', "全站seo标题", 1, 1, "网站配置");
-        $this->addOption("app.seo.homepage.descr", '', "全站首页seo描述", 1, 1, "网站配置");
-        $this->addOption("app.seo.homepage.keyword", '网校,职业教育在线,职业教育,职业教育在线', "首页seo关键字", 1, 1, "网站配置");
-        $this->addOption("app.beian.number", '沪ICP备18036000号', "网站备案号", 1, 1, "网站配置");
-        $this->addOption("app.copyright", '@2008-2019 上海xxxx有限公司版权所有', "网站copyright", 1, 1, "网站配置");
-        $this->addOption("app.sms.times", '5', "当天准许同一手机发送短信的最大次数", 1, 1, "网站配置");
-        $this->addOption("app.logo", '["/bundles/eduxpluscore/images/logo.png"]', "网站logo", 2, 1, "网站配置");
-        $this->addOption("app.user.default.gravatar", '["/bundles/eduxpluscore/images/gravatar.jpeg"]', "用户默认头像", 2, 1, "网站配置");
-        $this->addOption("app.icon", '["/bundles/eduxpluscore/favicon.ico"]', "网站icon", 2, 1, "网站配置");
-        $this->addOption("app.domain", 'http://dev.eduxplus.com/', "网站域名网址", 1, 1, "网站配置");
-        $this->addOption("app.initpwd", '111111', "后台账号初始化密码", 1, 1, "网站配置");
+        $this->addOption("app.name", "eduxplus课堂", "网站名称", 1, 1, "网站基本配置");
+        $this->addOption("app.cdn.domain", 'http://dev.eduxplus.com/', "cdn域名", 1, 1, "网站基本配置");
+        $this->addOption("app.seo.title", '【eduxplus课堂官方网站】职业教育在线_移动学习、职达未来！', "全站seo标题", 1, 1, "网站基本配置");
+        $this->addOption("app.seo.homepage.descr", '', "全站首页seo描述", 1, 1, "网站基本配置");
+        $this->addOption("app.seo.homepage.keyword", '网校,职业教育在线,职业教育,职业教育在线', "首页seo关键字", 1, 1, "网站基本配置");
+        $this->addOption("app.beian.number", '沪ICP备18036000号', "网站备案号", 1, 1, "网站基本配置");
+        $this->addOption("app.copyright", '@2008-2019 上海xxxx有限公司版权所有', "网站copyright", 1, 1, "网站基本配置");
+        $this->addOption("app.sms.times", '5', "当天准许同一手机发送短信的最大次数", 1, 1, "网站基本配置");
+        $this->addOption("app.logo", '["/bundles/eduxpluscore/images/logo.png"]', "网站logo", 2, 1, "网站基本配置");
+        $this->addOption("app.user.default.gravatar", '["/bundles/eduxpluscore/images/gravatar.jpeg"]', "用户默认头像", 2, 1, "网站基本配置");
+        $this->addOption("app.icon", '["/bundles/eduxpluscore/favicon.ico"]', "网站icon", 2, 1, "网站基本配置");
+        $this->addOption("app.domain", 'http://dev.eduxplus.com/', "网站域名网址", 1, 1, "网站基本配置");
+        $this->addOption("app.initpwd", '111111', "后台账号初始化密码", 1, 1, "网站基本配置");
         //adapter
-        $this->addOption("app.upload.adapter", '1', "文件上传方式,1-本地，2-阿里云oss，3-腾讯云cos", 1, 1, "网站配置");
-        $this->addOption("app.vod.adapter", '1', "点播服务商，1-腾讯云，2-阿里云", 1, 1, "网站配置");
-        $this->addOption("app.live.adapter", '1', "直播服务商，1-腾讯云，2-阿里云", 1, 1, "网站配置");
-        $this->addOption("app.sms.adapter", '1', "短信服务商，1-腾讯云，2-阿里云", 1, 1, "网站配置");
-        $this->addOption("app.search.adapter", '1', "搜索方式，1-本地数据库，2-elasticsearch", 1, 1, "网站配置");
+        $this->addOption("app.upload.adapter", '1', "文件上传方式,1-本地，2-阿里云oss，3-腾讯云cos", 1, 1, "网站基本配置");
+        $this->addOption("app.vod.adapter", '1', "点播服务商，1-腾讯云，2-阿里云", 1, 1, "网站基本配置");
+        $this->addOption("app.live.adapter", '1', "直播服务商，1-腾讯云，2-阿里云", 1, 1, "网站基本配置");
+        $this->addOption("app.sms.adapter", '1', "短信服务商，1-腾讯云，2-阿里云", 1, 1, "网站基本配置");
+        $this->addOption("app.search.adapter", '1', "搜索方式，1-本地数据库，2-elasticsearch", 1, 1, "网站基本配置");
         //        -------云服务基础配置---
         //腾讯云
         $this->addOption("app.tengxunyun.appId", '', "腾讯云 appId", 1, 1, "腾讯云基础配置");

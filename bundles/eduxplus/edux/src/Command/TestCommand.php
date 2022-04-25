@@ -160,7 +160,7 @@ class TestCommand extends Command
 //       $rs =  $this->esService->esSearch("jihe", "goods", "name", 0, 10);
 //        var_dump($rs);
 //        $this->esService->esCreateIndex("news", "title", 1);
-//        $this->addOptionConfig("app.search.adapter", '2', "搜索方式，1-本地数据库，2-elasticsearch", 1, 1, "网站配置");
+//        $this->addOptionConfig("app.search.adapter", '2', "搜索方式，1-本地数据库，2-elasticsearch", 1, 1, "网站基本配置");
 
 //        $mgId = $this->addMenu("班级管理", "班级管理", $jwMenuId, "admin_jw_class_index", "", 2, $roleId, 0, 0, 1);
 //        $mgId = 208;
