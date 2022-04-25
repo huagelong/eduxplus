@@ -279,7 +279,7 @@ $(function(){
 
       var roleStr = "";
       if(role < 5){
-        roleStr = '<span class="layui-badge layui-bg-gray">'+老师+'</span>';
+        roleStr = '<span class="layui-badge layui-bg-gray">老师</span>';
       }
       var msgStr = ' <li class="list_not_teacher">' +
         '            <div class="personName expClear">' +
