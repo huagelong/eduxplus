@@ -671,9 +671,6 @@
     "symfony/polyfill-php73": {
         "version": "v1.25.0"
     },
-    "symfony/polyfill-php74": {
-        "version": "v1.25.0"
-    },
     "symfony/polyfill-php80": {
         "version": "v1.25.0"
     },
@@ -820,6 +817,9 @@
         "version": "1.2.1"
     },
     "twig/extra-bundle": {
+        "version": "v3.3.8"
+    },
+    "twig/markdown-extra": {
         "version": "v3.3.8"
     },
     "twig/twig": {

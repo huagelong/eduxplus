@@ -30,7 +30,7 @@ class OptionsFixtures
         $this->addOption("app.user.default.gravatar", '["/bundles/eduxpluscore/images/gravatar.jpeg"]', "用户默认头像", 2, 1, "网站配置");
         $this->addOption("app.icon", '["/bundles/eduxpluscore/favicon.ico"]', "网站icon", 2, 1, "网站配置");
         $this->addOption("app.domain", 'http://dev.eduxplus.com/', "网站域名网址", 1, 1, "网站配置");
-        $this->addOption("app.initpwd", '111111', "账号初始化密码", 1, 1, "网站配置");
+        $this->addOption("app.initpwd", '111111', "后台账号初始化密码", 1, 1, "网站配置");
         //adapter
         $this->addOption("app.upload.adapter", '1', "文件上传方式,1-本地，2-阿里云oss，3-腾讯云cos", 1, 1, "网站配置");
         $this->addOption("app.vod.adapter", '1', "点播服务商，1-腾讯云，2-阿里云", 1, 1, "网站配置");
