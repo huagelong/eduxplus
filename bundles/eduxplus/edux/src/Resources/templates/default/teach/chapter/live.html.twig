@@ -15,8 +15,7 @@
     <form method="POST" action="{{ path("admin_api_teach_chapter_live", {id:id}) }}" class="form-horizontal ajaxform needs-validation" accept-charset="UTF-8" novalidate >
         {% if pushUrl %}
         <div class="card-body" style="display: block;">
-            <div class="overflow-auto" style="width:600px;margin-bottom: 20px;">推流地址: <code class="clipboard" data-clipboard-text="{{ pushUrl }}" >{{ pushUrl|raw }}</code></div>
-            <div class="overflow-auto" style="width:600px;">播放地址: <code class="clipboard" data-clipboard-text="{{ playUrl }}" >{{ playUrl|raw }}</code></div>
+        推流地址: <code class="clipboard" data-clipboard-text="{{ pushUrl }}" >{{ pushUrl|raw }}</code>
         </div>
         {% endif %}
         <div class="card-footer">
