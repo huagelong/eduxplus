@@ -167,6 +167,7 @@ function onVideoUploaded(
   $("#" + videoFileId).val("");
 
   $("#videoId").val(uploaderInfo.fileId);
+  $("form:first").submit();
   //预览
   // axios
   //   .get(getAndvancePlaySignUrl + "?videoId=" + uploaderInfo.fileId)

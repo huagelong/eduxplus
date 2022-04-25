@@ -22,6 +22,9 @@ admin_api_teach_chapter_updateSort:
 admin_teach_chapter_live:
   path: /admin/teach/chapter/live/{id}
   controller: Eduxplus\EduxBundle\Controller\Admin\Teach\ChapterController::liveAction
+admin_teach_chapter_liveView:
+  path: /admin/teach/chapter/liveView/{id}
+  controller: Eduxplus\EduxBundle\Controller\Admin\Teach\ChapterController::liveViewAction
 admin_api_teach_chapter_live:
   path: /admin/teach/chapter/live/do/{id}
   controller: Eduxplus\EduxBundle\Controller\Admin\Teach\ChapterController::liveDoAction

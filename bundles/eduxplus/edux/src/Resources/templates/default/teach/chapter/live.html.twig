@@ -24,6 +24,9 @@
             <div class="col-md-8">
                 <div class="btn-group">
                     <button type="submit" class="btn btn-sm btn-info " style="margin-right: 10px;"><i class="mdi mdi-arrow-up"></i> {% if pushUrl is empty %}生成直播数据{% else %}重新生成直播数据 {% endif %}</button>
+                    {% if is_authorized('admin_teach_chapter_liveView') %}
+                        <a  class="btn btn-warning btn-sm" target="_blank" style="margin-left: 10px;"  href="{{ path('admin_teach_chapter_liveView', {id:id}) }}"><i class="fa fa-eye"></i>&nbsp;&nbsp;进入</a>
+                    {% endif %}
                 </div>
             </div>
         </div>

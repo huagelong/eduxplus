@@ -61,11 +61,12 @@ class MenuFixtures
         $this->addMenu("章节删除", "删除处理", $mgId, "admin_api_teach_chapter_delete", "", 12, $roleId, 0, 1, 0);
         $this->addMenu("章节更新排序", "章节更新排序", $mgId, "admin_api_teach_chapter_updateSort", "", 13, $roleId, 0, 1, 0);
         $this->addMenu("点播", "管理点播", $mgId, "admin_teach_chapter_vod", "", 14, $roleId, 0, 1, 0);
-        $this->addMenu("点播管理处理", "点播添加、编辑等处理", $mgId, "admin_api_teach_chapter_vod", "", 14, $roleId, 0, 1, 0);
-        $this->addMenu("附件管理", "附件添加、编辑", $mgId, "admin_teach_chapter_materials", "", 15, $roleId, 0, 1, 0);
-        $this->addMenu("附件管理处理", "附件添加、编辑等处理", $mgId, "admin_api_teach_chapter_materials", "", 16, $roleId, 0, 1, 0);
-        $this->addMenu("直播", "管理直播", $mgId, "admin_teach_chapter_live", "", 17, $roleId, 0, 1, 0);
-        $this->addMenu("直播管理处理", "直播添加、编辑等处理", $mgId, "admin_api_teach_chapter_live", "", 18, $roleId, 0, 1, 0);
+        $this->addMenu("点播管理处理", "点播添加、编辑等处理", $mgId, "admin_api_teach_chapter_vod", "", 15, $roleId, 0, 1, 0);
+        $this->addMenu("附件管理", "附件添加、编辑", $mgId, "admin_teach_chapter_materials", "", 16, $roleId, 0, 1, 0);
+        $this->addMenu("附件管理处理", "附件添加、编辑等处理", $mgId, "admin_api_teach_chapter_materials", "", 17, $roleId, 0, 1, 0);
+        $this->addMenu("直播", "管理直播", $mgId, "admin_teach_chapter_live", "", 18, $roleId, 0, 1, 0);
+        $this->addMenu("直播预览", "直播预览", $mgId, "admin_teach_chapter_liveView", "", 19, $roleId, 0, 1, 0);
+        $this->addMenu("直播管理处理", "直播添加、编辑等处理", $mgId, "admin_api_teach_chapter_live", "", 20, $roleId, 0, 1, 0);
 
         //产品管理
         $mgId = $this->addMenu("产品管理", "产品的管理", $teachMenuId, "admin_teach_product_index", "", 0, $roleId, 0, 0, 1);

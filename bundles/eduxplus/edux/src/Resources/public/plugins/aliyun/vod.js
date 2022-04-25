@@ -190,6 +190,7 @@ function uploadVideo(region, uploadVideoDivId, userId, fileName,cateId,createUrl
                         $("#videoId").val(uploadInfo.videoId);
                         console.log("onUploadSucceed: " + uploadInfo.file.name + ", endpoint:" + uploadInfo.endpoint + ", bucket:" + uploadInfo.bucket + ", object:" + uploadInfo.object)
                         self.statusText = '文件上传成功!'
+                        $("form:first").submit();
                         //去掉预览
                        this.showPre(getPalyAuthUrl,uploadInfo.videoId);
                     },

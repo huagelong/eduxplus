@@ -74,7 +74,8 @@
         "symfony/polyfill-mbstring": "~1.0",
         "symfony/polyfill-php80": "1.25.*",
         "symfony/polyfill-php81": "1.25.*",
-        "twig/markdown-extra": "^3.3"
+        "twig/markdown-extra": "^3.3",
+       "amphp/http-client": "^4.6"
     },
     "require-dev": {
     },

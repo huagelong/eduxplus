@@ -255,6 +255,12 @@ class ChapterController extends BaseAdminController
     }
 
 
+    public function liveViewAction($id, ChapterService $chapterService){
+        $data = [];
+        return $this->render("@EduxBundle/teach/chapter/liveView.html.twig", $data);
+    }
+
+
     
     public function liveDoAction($id, ChapterService $chapterService)
     {
@@ -286,7 +292,8 @@ class ChapterController extends BaseAdminController
             'id' => $id
         ]));
         $data = [];
-        $data["formData"] = $formData;$data["breadcrumb"] = 1;
+        $data["formData"] = $formData;
+        $data["breadcrumb"] = 1;
         $data['id'] = $id;
         $data['vodAdapter'] = $vodAdapter;
         $data['userId'] = $aliyunVodService->getConfigUserId();
@@ -294,7 +301,6 @@ class ChapterController extends BaseAdminController
         $data['fileName'] = $chapterService->getVideoName($id);
         $data['region'] = $chapterService->getRegion();
         $data['videoInfo'] = $info;
-
         if($vodAdapter == 2){
             $play = $aliyunVodService->getVodPlayInfo($info["videoId"]);
             $data['palyAuth'] = $play['playAuth'];

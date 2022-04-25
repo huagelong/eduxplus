@@ -19,7 +19,6 @@ class OptionsFixtures
     {
         //        -----网站基础配置---
         $this->addOption("app.name", "eduxplus课堂", "网站名称", 1, 1, "网站基本配置");
-        $this->addOption("app.cdn.domain", 'http://dev.eduxplus.com/', "cdn域名", 1, 1, "网站基本配置");
         $this->addOption("app.seo.title", '【eduxplus课堂官方网站】职业教育在线_移动学习、职达未来！', "全站seo标题", 1, 1, "网站基本配置");
         $this->addOption("app.seo.homepage.descr", '', "全站首页seo描述", 1, 1, "网站基本配置");
         $this->addOption("app.seo.homepage.keyword", '网校,职业教育在线,职业教育,职业教育在线', "首页seo关键字", 1, 1, "网站基本配置");
@@ -57,6 +56,7 @@ class OptionsFixtures
         $this->addOption("app.tengxunyun.sms.recaptcha.templateId", '516278', "腾讯云 验证码短信模板id ", 1, 1, "腾讯云短信配置");
         //腾讯云cos
         $this->addOption("app.tengxunyun.bucket", '', "腾讯云cos桶名称", 1, 1, "腾讯云COS存储配置");
+        $this->addOption("app.tengxunyun.cdn.domain", 'http://cdn.eduxplus.com/', "cdn域名", 1, 1, "腾讯云COS存储配置");
         //腾讯云点播
         $this->addOption("app.tengxunyun.vod.encryptionkey", '', "腾讯云点播Key防盗链密钥", 1, 1, "腾讯云点播配置");
         $this->addOption("app.tengxunyun.vod.procedure", 'SimpleAesEncryptPreset', "腾讯云点播任务流模板名字", 1, 1, "腾讯云点播配置");
@@ -88,6 +88,7 @@ class OptionsFixtures
         //阿里云oss
         $this->addOption("app.aliyun.oss.bucket", '', "阿里云oss Bucket ", 1, 1,"阿里云OSS存储配置");
         $this->addOption("app.aliyun.oss.endpoint", '', "阿里云oss endpoint ", 1, 1,"阿里云OSS存储配置");
+        $this->addOption("app.aliyun.cdn.domain", 'http://cdn.eduxplus.com/', "cdn域名", 1, 1, "阿里云OSS存储配置");
 
         //微信小程序
         $this->addOption("app.wxmini.appid", '', "微信小程序app id", 1, 1, "微信小程序配置");
