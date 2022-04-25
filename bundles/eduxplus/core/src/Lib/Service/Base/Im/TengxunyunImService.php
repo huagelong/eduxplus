@@ -19,10 +19,10 @@ class TengxunyunImService extends BaseService{
      *  获取用户sig
      */
     public function createUserSig($identifier, $expire=86400*180){
-        $key = "tengxunyunImService:UserSig:{$identifier}";
+        $cachekey = "tengxunyunImService_UserSig_{$identifier}";
         $sdkappid = $this->getOption("app.tengxunyun.im.sdkAppid");
         $key = $this->getOption("app.tengxunyun.im.key");
-        return $this->cache()->get($key, function(ItemInterface $item) use($identifier,$expire,$sdkappid,$key){
+        return $this->cache()->get($cachekey, function(ItemInterface $item) use($identifier,$expire,$sdkappid,$key){
             $item->expiresAfter($expire);
             $im = new TLSSigAPIv2($sdkappid, $key);
             return $im->genUserSig($identifier, $expire);
@@ -122,10 +122,10 @@ class TengxunyunImService extends BaseService{
      * @return void
      */
     public function createLiveChatRoom($userUuid, $groupId, $number=6000){
-        $name = "liveChatRoom_".$groupId;
+        $name = "lcr_".$groupId;
         $api="v4/group_open_http_svc/create_group";
         $data = [];
-        $data["Owner_Account"] = $userUuid;
+        if($userUuid) $data["Owner_Account"] = $userUuid;
         $data["Type"]= 'ChatRoom';
         $data["Name"] = $name;
         $data['GroupId'] = $groupId;
@@ -161,7 +161,7 @@ class TengxunyunImService extends BaseService{
     public function portraitSet($userUuid, $displayName, $gravatar, $sex, $role=5){
         $api="v4/profile/portrait_set";
         $data = [];
-        $data["From_Account"] = $userUuid;
+        $data["From_Account"] = $userUuid."";
         $data["ProfileItem"][] = ['Tag'=>'Tag_Profile_IM_Nick', "Value"=>$displayName];
         $sexStr = "Gender_Type_Unknown";
         if($sex == 1){
@@ -222,7 +222,7 @@ class TengxunyunImService extends BaseService{
      */
     public function multiaccountImport($userUuIds){
         $api="v4/im_open_login_svc/multiaccount_import";
-        $userUuIds = is_array($userUuIds)?$userUuIds:[$userUuIds];
+        $userUuIds = is_array($userUuIds)?$userUuIds:[$userUuIds.""];
         $data = [];
         $data['Accounts'] = $userUuIds;
         $errors = [];
@@ -268,7 +268,6 @@ class TengxunyunImService extends BaseService{
      * @return void
      */
     public function reqApi($apiPath, $params, $errors=[]){
-        try{
             $sdkappid =  $this->getOption("app.tengxunyun.im.sdkAppid");
             $identifier = $this->getOption("app.tengxunyun.im.identifier");
             $usersig = $this->createUserSig($identifier, 600);
@@ -277,12 +276,9 @@ class TengxunyunImService extends BaseService{
             $content = Utils::baseCurlGet($url, "POST", $body);
             $result = json_decode($content, true);
             if($result['ActionStatus'] == "FAIL"){
-                return $this->formatError($result['ErrorCode'], $errors);
+                return $this->formatError($result['ErrorCode'], $errors, $result['ErrorInfo']);
             }
             return $result;
-        }catch(\Exception $e){
-            return $this->error()->add($e->getMessage());
-        }
     }
 
     /**
@@ -318,7 +314,8 @@ class TengxunyunImService extends BaseService{
         ];
         $errors = array_merge($cerrors, $errors);
         $msg = isset($errors[$code])?$errors[$code]:$defaultErrorMsg;
-        return $this->error()->add($msg);
+        throw new \Exception($msg);
+//        return $this->error()->add($msg);
     }
 
 }

@@ -238,6 +238,28 @@ class ChapterService extends AdminBaseService
         return $this->db()->fetchOne($sql, ['id' => $id]);
     }
 
+    public function getCourseInfo($courseId)
+    {
+        $sql = "SELECT a FROM Edux:TeachCourse a WHERE a.id=:id";
+        return $this->db()->fetchOne($sql, ['id' => $courseId]);
+    }
+
+    public function getChapter($chapterId)
+    {
+        $sql = "SELECT a FROM Edux:TeachCourseChapter a WHERE a.id=:id";
+        $info = $this->db()->fetchOne($sql, ["id" => $chapterId]);
+        if (!$info) return [];
+        $info['isOpen'] = 0;
+        if($info['openTime']<time()){
+            $info['isOpen'] = 1;
+        }
+        $info['teachers'] = $this->getTeacherIds($chapterId);
+        $info['video'] = $this->getVideoById($chapterId);
+        $info['materials'] = $this->getMaterialsById($chapterId);
+        return $info;
+    }
+
+
     public function getTeacherIds($chapterId)
     {
         $sql = "SELECT a FROM Edux:TeachCourseTeachers a WHERE a.chapterId=:chapterId";

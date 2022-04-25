@@ -120,6 +120,7 @@ class TestCommand extends Command
 //        $this->manager->flush();
 //        $this->addOptionConfig("app.tengxunyun.cdn.domain", 'http://cdn.eduxplus.com/', "cdn域名", 1, 1, "腾讯云COS存储配置");
 //        $this->addOptionConfig("app.aliyun.cdn.domain", 'http://cdn.eduxplus.com/', "cdn域名", 1, 1, "阿里云OSS存储配置");
+        $this->addOptionConfig("app.tengxunyun.im.OwnerAccount", '', "腾讯云IM群主ID", 1, 1, "腾讯云IM配置");
         //帮助中心
         $roleId = 1;
         $mallMenuId = 108;
@@ -127,8 +128,8 @@ class TestCommand extends Command
         $menuId = 213;
         $sysMenuId = 352050054346833920;
 
-        $this->addMenu("点播预览", "点播预览", "352050055026311168", "admin_teach_chapter_vodView", "", 14, $roleId, 0, 1, 0);
-        $this->addMenu("直播预览", "直播预览", "352050055026311168", "admin_teach_chapter_liveView", "", 19, $roleId, 0, 1, 0);
+//        $this->addMenu("点播预览", "点播预览", "352050055026311168", "admin_teach_chapter_vodView", "", 14, $roleId, 0, 1, 0);
+//        $this->addMenu("直播预览", "直播预览", "352050055026311168", "admin_teach_chapter_liveView", "", 19, $roleId, 0, 1, 0);
 //        $this->addMenu("关于", "关于", $sysMenuId, "admin_about", "mdi  mdi-information-variant", 1, $roleId, 1, 0, 1, 1);
 //        $this->addMenu("首页", "首页(布局)", 0, "admin_index", "fas fa-home", 0, $roleId, 1, 0, 1, 1);
 //

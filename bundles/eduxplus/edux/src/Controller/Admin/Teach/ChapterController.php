@@ -16,6 +16,8 @@ use Eduxplus\CoreBundle\Lib\Service\Base\Live\AliyunLiveService;
 use Eduxplus\CoreBundle\Lib\Service\Base\Live\TengxunyunLiveService;
 use Eduxplus\CoreBundle\Lib\Service\Base\Vod\AliyunVodService;
 use Eduxplus\CoreBundle\Lib\Service\Base\Vod\TengxunyunVodService;
+use Eduxplus\WebsiteBundle\Service\ImService;
+use mysql_xdevapi\Exception;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Eduxplus\CoreBundle\Lib\Form\Form;
@@ -255,9 +257,57 @@ class ChapterController extends BaseAdminController
     }
 
 
-    public function liveViewAction($id, ChapterService $chapterService){
+    public function liveViewAction($id, ChapterService $chapterService,
+                                   AliyunVodService $aliyunVodService,
+                                   TengxunyunVodService $tengxunyunVodService,
+                                   ImService $imService){
         $data = [];
-        return $this->render("@EduxBundle/teach/chapter/liveView.html.twig", $data);
+        $info = $chapterService->getChapter($id);
+        $videoInfo = $chapterService->getVideoById($id);
+        $data['info'] = $info;
+        $data['courseInfo'] = $chapterService->getCourseInfo($info['courseId']);
+        $data['openTimeY'] = $info['openTime']?date('Y', $info['openTime']):0;
+        $data['openTimeM'] = $info['openTime']?date('m', $info['openTime']):0;
+        $data['openTimeD'] = $info['openTime']?date('d', $info['openTime']):0;
+        $data['openTimeH'] = $info['openTime']?date('H', $info['openTime']):0;
+        $data['openTimeI'] = $info['openTime']?date('i', $info['openTime']):0;
+        $data['openTimeS'] = $info['openTime']?date('s', $info['openTime']):0;
+
+        $data['nowTimeY'] = date('Y');
+        $data['nowTimeM'] = date('m');
+        $data['nowTimeD'] = date('d');
+        $data['nowTimeH'] = date('H');
+        $data['nowTimeI'] = date('i');
+        $data['nowTimeS'] = date('s');
+        $min20 = 20*60;
+        $data['canNotChat'] = !($info['openTime']?($info['openTime']-time()<$min20):false);
+        $data['videoInfo'] = $videoInfo;
+        $data["isLiveVod"] = 0;
+        if($videoInfo) {
+            $adapter = $videoInfo['videoChannel'];
+            $liveVodData = $chapterService->parseLiveData($videoInfo['liveData'], $adapter);
+            if(($videoInfo["type"] == 2)){
+                throw new \Exception("不能预览点播！");
+            }else{
+                $user = $this->getUserInfo();
+                $uuid = $user['id'];
+                //初始化用户
+                $imService->initUser($user['id']);
+                //初始化群组
+                $groupId = $imService->initGroup($id);
+                $imService->addGroupMember($groupId, $uuid);
+                $sign = $imService->createUserSig($uuid);
+                $data['sign'] = $sign;
+                $data['sdkAppID'] = $imService->getSDKAppID();
+                $data['uuid'] = $uuid;
+                $data['groupId'] = $groupId;
+
+                $playUrl = isset($liveVodData["playUrl"])?$liveVodData["playUrl"]:"";
+                $playUrl = $playUrl?json_encode($playUrl):(object) null;
+                $data['playUrl'] = $playUrl;
+            }
+        }
+        return $this->render('@WebsiteBundle/learn/detail.html.twig', $data);
     }
 
 

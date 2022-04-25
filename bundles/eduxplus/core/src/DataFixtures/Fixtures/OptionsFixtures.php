@@ -71,7 +71,7 @@ class OptionsFixtures
         $this->addOption("app.tengxunyun.im.sdkAppid", '', "腾讯云IM SdkAppid", 1, 1, "腾讯云IM配置");
         $this->addOption("app.tengxunyun.im.key", '', "腾讯云IM密钥", 1, 1, "腾讯云IM配置");
         $this->addOption("app.tengxunyun.im.identifier", '', "腾讯云IM账号管理员，默认’administrator‘", 1, 1, "腾讯云IM配置");
-
+        $this->addOption("app.tengxunyun.im.ownerAccount", '', "腾讯云IM群主ID", 1, 1, "腾讯云IM配置");
         //阿里云点播
         $this->addOption("app.aliyun.vod.kms.keyId", '', "阿里云kms vod 加密主密钥，可以用别名", 1, 1, "阿里云点播配置");
         $this->addOption("app.aliyun.vod.templateGroupId", '', "阿里云点播转码模板组ID", 1, 1, "阿里云点播配置");

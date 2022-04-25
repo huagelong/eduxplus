@@ -113,7 +113,7 @@ class LearnController extends BaseHtmlController
             }else{ //直播
                 //统一用腾讯云im
                 $user = $this->getUserInfo();
-                $uuid = $user['uuid'];
+                $uuid = $user['id'];
                 //初始化用户
                 $imService->initUser($user['id']);
                 //初始化群组

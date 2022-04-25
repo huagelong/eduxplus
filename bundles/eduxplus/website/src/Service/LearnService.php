@@ -47,7 +47,7 @@ class LearnService extends AppBaseService
                 $vArr =  $this->toArray($v);
                 $courseId = $vArr['courseId'];
                 $sql = "SELECT a FROM Edux:TeachCourse a WHERE a.id=:id";
-                $itemsArr[] =  $this->fetchOne($sql, ['id' => $courseId]);
+                $itemsArr[] =  $this->db()->fetchOne($sql, ['id' => $courseId]);
             }
         }
         return [$pagination, $itemsArr];
@@ -63,21 +63,21 @@ class LearnService extends AppBaseService
     public function getCourseInfo($courseId)
     {
         $sql = "SELECT a FROM Edux:TeachCourse a WHERE a.id=:id";
-        return $this->fetchOne($sql, ['id' => $courseId]);
+        return $this->db()->fetchOne($sql, ['id' => $courseId]);
     }
 
     public function checkChapterCanView($chapterId, $uid){
         $sql = "SELECT a FROM Edux:TeachCourseChapter a WHERE a.id=:id";
-        $info = $this->fetchOne($sql, ["id" => $chapterId]);
+        $info = $this->db()->fetchOne($sql, ["id" => $chapterId]);
         if($info['isFree']) return true;
         if(!$uid) return false;
         $orderPlanSql = "SELECT a FROM Edux:MallOrderStudyPlan a WHERE a.courseId = :courseId AND a.uid=:uid";
-        $orderPlans = $this->fetchAll($orderPlanSql, ["courseId" => $info['courseId'], "uid"=>$uid]);
+        $orderPlans = $this->db()->fetchAll($orderPlanSql, ["courseId" => $info['courseId'], "uid"=>$uid]);
         if(!$orderPlans) return false;
         foreach ($orderPlans as $v){
             $orderId = $v["orderId"];
             $orderSql = "SELECT a FROM Edux:MallOrder a WHERE a.id=:id AND a.orderStatus=2";
-            $orderInfo = $this->fetchOne($orderSql, ["id"=>$orderId]);
+            $orderInfo = $this->db()->fetchOne($orderSql, ["id"=>$orderId]);
             if($orderInfo) return true;
         }
         return false;
@@ -90,7 +90,7 @@ class LearnService extends AppBaseService
      */
     public function addStudyLog($chapterId, $uid){
         $logsql = "SELECT a.id FROM Edux:MallStudyLog a WHERE a.uid=:uid AND a.chapterId=:chapterId";
-        $studyLog = $this->fetchOne($logsql, ["uid"=>$uid, "chapterId"=>$chapterId]);
+        $studyLog = $this->db()->fetchOne($logsql, ["uid"=>$uid, "chapterId"=>$chapterId]);
         if(!$studyLog){
             $model = new MallStudyLog();
             $model->setUid($uid);
@@ -108,35 +108,35 @@ class LearnService extends AppBaseService
      */
     public function checkBlock($chapterId, $uid){
         $sql = "SELECT a FROM Edux:TeachCourseChapter a WHERE a.id=:id";
-        $info = $this->fetchOne($sql, ["id" => $chapterId]);
+        $info = $this->db()->fetchOne($sql, ["id" => $chapterId]);
         $courseId = $info['courseId'];
         $orderPlanSql = "SELECT a FROM Edux:MallOrderStudyPlan a WHERE a.courseId = :courseId AND a.uid=:uid";
-        $orderPlans = $this->fetchAll($orderPlanSql, ["courseId" => $courseId, "uid"=>$uid]);
+        $orderPlans = $this->db()->fetchAll($orderPlanSql, ["courseId" => $courseId, "uid"=>$uid]);
         if(!$orderPlans) return false;
         foreach ($orderPlans as $v){
             $studyPlanId = $v["studyPlanId"];
             $studyPlanSql = "SELECT a FROM Edux:TeachStudyPlan a WHERE a.id=:id";
-            $studyPlan = $this->fetchOne($studyPlanSql, ["id"=>$studyPlanId]);
+            $studyPlan = $this->db()->fetchOne($studyPlanSql, ["id"=>$studyPlanId]);
             //挡板处理
             if($studyPlan['isBlock']){
                 //如果已经存在则表示以前有权限
                 $logsql = "SELECT a.id FROM Edux:MallStudyLog a WHERE a.uid=:uid AND a.chapterId=:chapterId";
-                $studyLog = $this->fetchOne($logsql, ["uid"=>$uid, "chapterId"=>$chapterId]);
+                $studyLog = $this->db()->fetchOne($logsql, ["uid"=>$uid, "chapterId"=>$chapterId]);
                 if($studyLog) return true;
 
                 $studyPlanSubSql = "SELECT a FROM Edux:TeachStudyPlanSub a WHERE a.studyPlanId =:studyPlanId ORDER BY a.sort ASC";
-                $studyPlanSubCourseIds = $this->fetchFields("courseId", $studyPlanSubSql, ["studyPlanId"=>$studyPlanId]);
+                $studyPlanSubCourseIds = $this->db()->fetchFields("courseId", $studyPlanSubSql, ["studyPlanId"=>$studyPlanId]);
                 $preCounseIds = [];
                 foreach ($studyPlanSubCourseIds as $k=>$subCourseId){
                     $sql = "SELECT a FROM Edux:TeachCourseChapter a WHERE a.courseId = :courseId ORDER BY a.sort ASC";
-                    $ids = $this->fetchFields("id", $sql, ["courseId"=>$courseId]);
+                    $ids = $this->db()->fetchFields("id", $sql, ["courseId"=>$courseId]);
                     $firstId = isset($ids[0])?$ids[0]:0;
                     $endId = $ids[count($ids)-1];
                     if($k > 0){
                         //检查上一个课程最后章节是否看过
                         $preCounseEndId = $preCounseIds[count($preCounseIds)-1];
                         $logsql = "SELECT a.id FROM Edux:MallStudyLog a WHERE a.uid=:uid AND a.chapterId=:chapterId";
-                        $studyLog = $this->fetchOne($logsql, ["uid"=>$uid, "chapterId"=>$preCounseEndId]);
+                        $studyLog = $this->db()->fetchOne($logsql, ["uid"=>$uid, "chapterId"=>$preCounseEndId]);
                         if(!$studyLog) return false;
                     }
                     //课程第一个章节
@@ -145,7 +145,7 @@ class LearnService extends AppBaseService
                     foreach ($ids as $chapterIdDiff){
                         if($chapterIdDiff == $chapterId){//找到自己的位置,判断上一章节是否看过
                             $logsql = "SELECT a.id FROM Edux:MallStudyLog a WHERE a.uid=:uid AND a.chapterId=:chapterId";
-                            $studyLog = $this->fetchOne($logsql, ["uid"=>$uid, "chapterId"=>$preChapterId]);
+                            $studyLog = $this->db()->fetchOne($logsql, ["uid"=>$uid, "chapterId"=>$preChapterId]);
                             if($studyLog) return true;
                         }
                         $preChapterId = $chapterIdDiff;
@@ -161,7 +161,7 @@ class LearnService extends AppBaseService
     public function getChapter($chapterId)
     {
         $sql = "SELECT a FROM Edux:TeachCourseChapter a WHERE a.id=:id";
-        $info = $this->fetchOne($sql, ["id" => $chapterId]);
+        $info = $this->db()->fetchOne($sql, ["id" => $chapterId]);
         if (!$info) return [];
         $info['isOpen'] = 0;
         if($info['openTime']<time()){
@@ -176,7 +176,7 @@ class LearnService extends AppBaseService
     public function getChapterTree($courseId, $getActiveVideo = 0)
     {
         $sql = "SELECT a FROM Edux:TeachCourseChapter a WHERE a.courseId=:courseId ORDER BY a.sort ASC";
-        $list = $this->fetchAll($sql, ["courseId" => $courseId]);
+        $list = $this->db()->fetchAll($sql, ["courseId" => $courseId]);
         if (!$list) return [];
 
         $rs = [];
@@ -212,35 +212,35 @@ class LearnService extends AppBaseService
     public function getTeacherIds($chapterId)
     {
         $sql = "SELECT a FROM Edux:TeachCourseTeachers a WHERE a.chapterId=:chapterId";
-        $teacherIds = $this->fetchFields('teacherId', $sql, ['chapterId' => $chapterId]);
+        $teacherIds = $this->db()->fetchFields('teacherId', $sql, ['chapterId' => $chapterId]);
         if (!$teacherIds) return [];
         $sql = "SELECT a FROM Edux:JwTeacher a WHERE a.id IN(:id)";
-        return $this->fetchAll($sql, ['id' => $teacherIds]);
+        return $this->db()->fetchAll($sql, ['id' => $teacherIds]);
     }
 
 
     public function getVideoByRealId($id)
     {
         $sql = "SELECT a FROM Edux:TeachCourseVideos a WHERE a.id=:id";
-        return $this->fetchOne($sql, ['id' => $id]);
+        return $this->db()->fetchOne($sql, ['id' => $id]);
     }
 
     public function getVideoById($id)
     {
         $sql = "SELECT a FROM Edux:TeachCourseVideos a WHERE a.chapterId=:chapterId ";
-        return $this->fetchOne($sql, ['chapterId' => $id]);
+        return $this->db()->fetchOne($sql, ['chapterId' => $id]);
     }
 
     public function getActiveVideoById($id)
     {
         $sql = "SELECT a FROM Edux:TeachCourseVideos a WHERE a.chapterId=:chapterId AND a.status=:status ";
-        return $this->fetchOne($sql, ['chapterId' => $id, "status" => 1]);
+        return $this->db()->fetchOne($sql, ['chapterId' => $id, "status" => 1]);
     }
 
     public function getMaterialsById($id)
     {
         $sql = "SELECT a FROM Edux:TeachCourseMaterials a WHERE a.chapterId=:chapterId";
-        return $this->fetchOne($sql, ['chapterId' => $id]);
+        return $this->db()->fetchOne($sql, ['chapterId' => $id]);
     }
 
     /**
@@ -251,7 +251,7 @@ class LearnService extends AppBaseService
     public function updateVideoStatus($videoChannel, $videoId, $status = 1)
     {
         $sql = "SELECT a FROM Edux:TeachCourseVideos a WHERE a.videoId=:videoId AND a.videoChannel=:videoChannel";
-        $model = $this->fetchOne($sql, ['videoId' => $videoId, "videoChannel" => $videoChannel], 1);
+        $model = $this->db()->fetchOne($sql, ['videoId' => $videoId, "videoChannel" => $videoChannel], 1);
         if ($model) {
             $model->setStatus($status);
             $this->db()->save($model);
@@ -261,7 +261,7 @@ class LearnService extends AppBaseService
     public function getVideoByVideoId($videoId)
     {
         $sql = "SELECT a FROM Edux:TeachCourseVideos a WHERE a.videoId=:videoId";
-        return $this->fetchOne($sql, ['videoId' => $videoId]);
+        return $this->db()->fetchOne($sql, ['videoId' => $videoId]);
     }
 
     /**

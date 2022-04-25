@@ -53,7 +53,7 @@ class ImService extends AppBaseService
         $rs = $this->tengxunyunImService->multiaccountImport($uid);
         if(!$rs) return $rs;
         //更新资料
-        $upRs = $this->tengxunyunImService->portraitSet($uuid, $displayName, $gravatar, $sex, $role);
+        $upRs = $this->tengxunyunImService->portraitSet($uid, $displayName, $gravatar, $sex, $role);
         if($upRs){
             //更新状态
             $userInfo->setImImported(1);
@@ -98,8 +98,9 @@ class ImService extends AppBaseService
         $groupId = $chapterInfo->getImGroupId();
         if($groupId) return $groupId;
          //群主信息
-         $userUuid = $this->userService->getUserById(self::GROUPOWNERID);
-        $rs = $this->tengxunyunImService->createLiveChatRoom($userUuid, $chapterId, $number);
+        $adminUid = $this->getOption("app.tengxunyun.im.ownerAccount");
+        if($adminUid) $this->initUser($adminUid);
+        $rs = $this->tengxunyunImService->createLiveChatRoom($adminUid, $chapterId, $number);
         if(!$rs) return $rs;
         $chapterInfo->setImGroupId($rs);
         $this->db()->save($chapterInfo);
