@@ -1,6 +1,5 @@
 framework:
-    fragments:
-        hinclude_default_template: 加载中...
+    fragments: { path: /_fragment }
     cache: 
         app: cache.adapter.redis
         default_redis_provider: snc_redis.default
