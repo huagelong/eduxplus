@@ -7,7 +7,7 @@
       <div class="layui-row">
         <div class="layui-col-md9">&nbsp</div>
         <div class="layui-col-md3">
-          <div include="{{ path('app_user_userMenu') }}"></div>
+          {{ render_hinclude(path('app_user_userMenu'), {attributes: {evaljs: 'true'}}) }}
         </div>
       </div>
     </div>
