@@ -57,9 +57,11 @@
 
 {% block page %}
             <div class="card">
+                <div class="alert alert-warning" role="alert">视频经过云服务器转码成功后可以预览</div>
                 <form method="POST" action="{{ path("admin_api_teach_chapter_vod", {id:id}) }}" class="form-horizontal ajaxform needs-validation" accept-charset="UTF-8" novalidate >
                     <div class="card-body" style="display: block;">
                         {{ formData|raw }}
+
                         {% if vodAdapter == 1 %}
                             {{ vodMacros.vod(tengxunyunAppId, fileName, region, videoInfo) }}
                         {% endif %}
