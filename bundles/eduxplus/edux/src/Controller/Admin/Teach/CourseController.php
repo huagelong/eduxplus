@@ -52,7 +52,7 @@ class CourseController extends BaseAdminController
         $grid->setTableAction('admin_teach_chapter_index', function ($obj) use($courseService){
             $id = $courseService->getPro($obj, "id");
             $url = $this->generateUrl('admin_teach_chapter_index', ['id' => $id]);
-            $str = '<a href=' . $url . ' data-width="1000px" title="章节管理" class=" btn btn-info btn-xs"><i class="mdi mdi-book"></i></a>';
+            $str = '<a href="javascript:;" data-url=' . $url . ' title="章节管理"  class=" btn btn-info btn-xs newTab"><i class="mdi mdi-book"></i>章节管理</a>';
             return  $str;
         });
 

@@ -1,11 +1,6 @@
 {% extends "@CoreBundle/layout/main.html.twig" %}
 {% import "@EduxBundle/macros/studyplan_tree.html.twig" as macros %}
 
-{% block page_title %}开课计划管理{% endblock %}
-{% block breadcrumb %}
-    <li class="breadcrumb-item"><a href="{{ path("admin_teach_product_index", {id:id}) }}">产品管理</a></li>
-{% endblock %}
-
 {% block body_custom_javascript %}
     <script>
         $(function(){

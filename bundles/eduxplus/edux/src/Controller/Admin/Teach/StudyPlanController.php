@@ -32,7 +32,6 @@ class StudyPlanController extends BaseAdminController
         $data['planList'] = $all;
         $data['id'] = $id;
         $data['pagination'] = $pagination;
-        $data['breadcrumb'] = 1;
         return $this->render("@EduxBundle/teach/studyplan/index.html.twig", $data);
     }
 
@@ -50,8 +49,6 @@ class StudyPlanController extends BaseAdminController
             'id' => $id
         ]));
         return $this->content()->title("添加章节")
-               ->breadcrumb("课程管理", "admin_teach_course_index")
-               ->breadcrumb("章节管理", "admin_teach_chapter_index", ["id"=>$id])
                ->renderAdd($formData);
     }
 
