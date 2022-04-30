@@ -88,7 +88,6 @@ class OptionsFixtures
         //阿里云oss
         $this->addOption("app.aliyun.oss.bucket", '', "阿里云oss Bucket ", 1, 1,"阿里云OSS存储配置");
         $this->addOption("app.aliyun.oss.endpoint", '', "阿里云oss endpoint ", 1, 1,"阿里云OSS存储配置");
-        $this->addOption("app.aliyun.cdn.domain", 'http://cdn.eduxplus.com/', "cdn域名", 1, 1, "阿里云OSS存储配置");
 
         //微信小程序
         $this->addOption("app.wxmini.appid", '', "微信小程序app id", 1, 1, "微信小程序配置");
