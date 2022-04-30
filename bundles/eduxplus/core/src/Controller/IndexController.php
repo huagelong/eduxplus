@@ -51,7 +51,6 @@ class IndexController extends BaseAdminController
         $envs = [
             ['name' => 'PHP版本',       'value' => 'PHP/'.PHP_VERSION],
             ['name' => 'Symfony版本',   'value' => \Symfony\Component\HttpKernel\Kernel::VERSION],
-            ['name' => 'CGI',               'value' => php_sapi_name()],
             ['name' => 'Uname',             'value' => php_uname()],
             ['name' => '服务器',            'value' => isset($_SERVER['SERVER_SOFTWARE'])?$_SERVER['SERVER_SOFTWARE']:"-"],
             ['name' => '缓存',      'value' => "redis"],
