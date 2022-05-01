@@ -4,7 +4,7 @@
     {% for menu in allMenu[pid] %}
         <li class="dd-item" data-id="{{ menu.id }}">
             <div class="dd-handle">
-                <i class="{{ menu.style|default('mdi mdi-circle') }}"></i>&nbsp;<strong>{{ menu.name }}</strong>&nbsp;&nbsp;&nbsp;
+                <i class="{{ menu.style|default('') }}"></i>&nbsp;<strong>{{ menu.name }}</strong>&nbsp;&nbsp;&nbsp;
                 {% if menu.url!="" and menu.isAccess==0 %}<a href="{{ path(menu.url) }}" class="dd-nodrag">{{ path(menu.url) }}</a>{% endif %}
                 <span class="font-weight-lighter"> {{ menu.descr }}</span>
                 {% if info['isLock'] ==0 %}
