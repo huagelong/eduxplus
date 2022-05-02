@@ -6,7 +6,7 @@ snc_redis:
           dsn: "redis://%redis_host%/1"
           logging: '%kernel.debug%'
           options:
-            prefix: exp_
+            prefix: "%redis_prefix%"
             connection_timeout: 10
             read_write_timeout: 30
 
@@ -16,7 +16,7 @@ snc_redis:
           dsn: "redis://%redis_host%/2"
           logging: '%kernel.debug%'
           options:
-              prefix: exp_cache_
+              prefix: "%redis_prefix%cache_"
               connection_timeout: 10
               read_write_timeout: 30
 
@@ -26,7 +26,7 @@ snc_redis:
           dsn: "redis://%redis_host%/3"
           logging: '%kernel.debug%'
           options:
-            prefix: exp_session_
+            prefix: "%redis_prefix%session_"
             connection_timeout: 10
             read_write_timeout: 30
 
@@ -36,6 +36,6 @@ snc_redis:
           dsn: "redis://%redis_host%/4"
           logging: '%kernel.debug%'
           options:
-            prefix: exp_persistence_
+            prefix: "%redis_prefix%persistence_"
             connection_timeout: 30
             read_write_timeout: 30

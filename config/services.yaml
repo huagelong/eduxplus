@@ -1,5 +1,6 @@
 parameters:
     redis_host: '%env(REDIS_HOST)%'
+    redis_prefix: '%env(REDIS_PREFIX)%'
     upload_dir: '%env(UPLOAD_DIR)%'
     secret: '%env(APP_SECRET)%'
     messenger.consumer.name: '%env(MESSENGER_CONSUMER_NAME)%'
