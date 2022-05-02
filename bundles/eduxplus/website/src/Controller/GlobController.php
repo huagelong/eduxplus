@@ -92,8 +92,8 @@ class GlobController extends BaseHtmlController
     
     public function aliyunVodPlayCheckAction(Request $request, AliyunVodService $aliyunVodService, LearnService $learnService)
     {
-        // $mtsHlsUriToken = $request->get("MtsHlsUriToken");
-        $token = $request->get("Ciphertext");
+        $token = $request->get("MtsHlsUriToken");
+//        $cipherText = $request->get("Ciphertext");
         $aliyunVodService->debug($token);
 
         if (!$token) return new Response("error");

@@ -18,7 +18,7 @@
     </div>
 </div>
     <script>
-uploadVideo("{{ region }}","upload", "{{ userId }}","{{ fileName }}",0,"{{ path('admin_api_glob_aliyunVodCreateUploadVideoDo') }}", "{{ path('admin_api_glob_aliyunVodRefreshUploadVideoDo') }}", "{{ path('admin_api_glob_getAliyunVodPlayInfoDo') }}");
+uploadVideo("{{ region }}","upload", "{{ userId }}","{{ fileName }}",0,"{{ path('admin_api_glob_aliyunVodCreateUploadVideoDo') }}", "{{ path('admin_api_glob_aliyunVodRefreshUploadVideoDo') }}");
 {% if videoInfo and videoInfo["videoId"] != "" and videoInfo["status"] ==1 %}
     vodPlay("playerDiv", "{{ videoInfo['videoId'] }}", "{{ palyAuth }}","m3u8", "400px", "400px");
 {% endif %}
