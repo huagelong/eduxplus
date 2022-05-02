@@ -352,7 +352,7 @@ class ChapterController extends BaseAdminController
         $data['fileName'] = $chapterService->getVideoName($id);
         $data['region'] = $chapterService->getRegion();
         $data['videoInfo'] = $info;
-        if($info && ($vodAdapter == 2)){
+        if($info && ($vodAdapter == 2) && ($info["status"] == 1)){
             $play = $aliyunVodService->getVodPlayInfo($info["videoId"]);
             $data['palyAuth'] = $play['playAuth'];
         }else{

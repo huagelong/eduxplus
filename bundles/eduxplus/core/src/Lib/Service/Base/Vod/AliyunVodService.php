@@ -98,6 +98,7 @@ class AliyunVodService extends BaseService
             $url = trim($url, "/");
             $url = $url.$this->genUrl("app_glob_aliyunVodPlayCheck");
             $url = $url."?Ciphertext={$token}";
+
             $encryptConfig = [];
             $encryptConfig['CipherText'] =$cipherText;
             $encryptConfig['DecryptKeyUri'] = $url;

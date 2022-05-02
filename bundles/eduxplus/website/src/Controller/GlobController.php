@@ -90,11 +90,11 @@ class GlobController extends BaseHtmlController
     }
 
     
-    public function aliyunVodPlayCheckAction(Request $request, AliyunVodService $aliyunVodService, LearnService $learnService, LoggerInterface $logger)
+    public function aliyunVodPlayCheckAction(Request $request, AliyunVodService $aliyunVodService, LearnService $learnService)
     {
         // $mtsHlsUriToken = $request->get("MtsHlsUriToken");
         $token = $request->get("Ciphertext");
-        $logger->info($token);
+        $aliyunVodService->debug($token);
 
         if (!$token) return new Response("error");
         $key = $learnService->getConfig("secret");
@@ -118,6 +118,7 @@ class GlobController extends BaseHtmlController
         // $plaintext = $aliyunVodService->decrypt($cipherText);
         // $plaintext = $plaintext['Plaintext'];
         // $logger->info(json_encode($plaintext));
+        $aliyunVodService->debug($plaintext);
         return new Response(base64_decode($plaintext));
     }
 
