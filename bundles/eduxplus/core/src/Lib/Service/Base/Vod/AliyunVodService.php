@@ -98,8 +98,7 @@ class AliyunVodService extends BaseService
             $url = $this->getOption("app.domain");
             $url = trim($url, "/");
             $url = $url.$this->genUrl("app_glob_aliyunVodPlayCheck");
-            $url = $url."?Ciphertext=1&MtsHlsUriToken={$token}";
-
+            $url = $url."?Ciphertext={$token}";
             $encryptConfig = [];
             $encryptConfig['CipherText'] =$cipherText;
             $encryptConfig['DecryptKeyUri'] = $url;
@@ -123,6 +122,7 @@ class AliyunVodService extends BaseService
             $errors = [
                 "Throttling"=>"您这个时段的流量已经超限",
             ];
+
             $errInfo =  $this->formatError($e->getMessage(), $errors, $e->getMessage());
             return $errInfo;
         }
@@ -184,7 +184,7 @@ class AliyunVodService extends BaseService
                     ->options([
                         'query' => [
                             'KeyId' => $kmsKeyId,
-                            'KeySpec' => "AES_256",
+                            'KeySpec' => "AES_128",
                         ],
                     ])->request();
                 $info = $result->toArray();
@@ -416,6 +416,7 @@ class AliyunVodService extends BaseService
                     'query' => [
                         'RegionId' => $this->regionId,
                         'VideoId' => $videoId,
+                        "AuthInfoTimeout"=>300
                     ],
                 ])
                 ->request();
@@ -474,26 +475,17 @@ class AliyunVodService extends BaseService
      * @return array|mixed
      */
     public function getVodPlayInfo($videoId){
-        $rs = $this->getVideoPlayAuth($videoId);
-        // $playInfo = $this->getVideoPlayInfo($videoId);
-        if($this->error()->has()){
-            return $this->error()->getLast();
-        }
-        // var_dump($playInfo);exit;
-        // $playList = [];
-        // // $key = $this->getConfig("secret");
-        // // $mtsHlsUriToken = md5($key.$videoId);
-        // if(isset($playInfo['PlayInfoList']['PlayInfo']) && $playInfo['PlayInfoList']['PlayInfo']){
-        //     foreach ($playInfo['PlayInfoList']['PlayInfo'] as $v){
-        //         // $playList[$v['Definition']] = $v['PlayURL']."&MtsHlsUriToken=".$mtsHlsUriToken;
-        //         $playList[$v['Definition']] = $v['PlayURL'];
-        //     }
-        // }
-
-        $data = [];
-        $data['playAuth'] = $rs['PlayAuth'];
-        // $data['source'] = $playList?json_encode($playList, JSON_UNESCAPED_UNICODE):"";
-        return $data;
+        $cacheKey = "getVodPlayInfo_".$videoId;
+        return $this->cache()->get($cacheKey, function(ItemInterface $item)use ($videoId) {
+            $item->expiresAfter(290);
+            $rs = $this->getVideoPlayAuth($videoId);
+            if($this->error()->has()){
+                throw new \Exception($this->error()->getLast());
+            }
+            $data = [];
+            $data['playAuth'] = $rs['PlayAuth'];
+            return $data;
+        });
     }
 
     /**

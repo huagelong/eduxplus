@@ -92,20 +92,14 @@ class GlobController extends BaseHtmlController
     
     public function aliyunVodPlayCheckAction(Request $request, AliyunVodService $aliyunVodService, LearnService $learnService)
     {
-        $token = $request->get("MtsHlsUriToken");
-//        $cipherText = $request->get("Ciphertext");
-        $aliyunVodService->debug($token);
+//        $token = $request->get("MtsHlsUriToken");
+        $token = $request->get("Ciphertext");
 
         if (!$token) return new Response("error");
         $key = $learnService->getConfig("secret");
         $data = (array) JWT::decode($token, $key,  array('HS256'));
         $videoId = $data['videoId'];
 
-        //检查
-        // $key = $this->getConfig("secret");
-        // $localMtsHlsUriToken = md5($key.$videoId);
-        // if($mtsHlsUriToken != $localMtsHlsUriToken)  return new Response("error");
-        // $logger->info($videoId);
         if (!$videoId) return new Response("error");
         $info = $learnService->getVideoByVideoId($videoId);
         if (!$info)  return new Response("error");
@@ -114,11 +108,9 @@ class GlobController extends BaseHtmlController
         $vodData = json_decode($info['vodData'], true);
         if (!isset($vodData['aliyunVod']) || !$vodData['aliyunVod']) return new Response("error");
         list($cipherText, $plaintext) = $vodData['aliyunVod'];
-        // $logger->info(base64_decode($plaintext));
         // $plaintext = $aliyunVodService->decrypt($cipherText);
         // $plaintext = $plaintext['Plaintext'];
         // $logger->info(json_encode($plaintext));
-        $aliyunVodService->debug($plaintext);
         return new Response(base64_decode($plaintext));
     }
 
