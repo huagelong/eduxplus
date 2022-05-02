@@ -18,7 +18,7 @@ use Symfony\Contracts\Cache\ItemInterface;
 /**
  * 视频点播->媒资管理配置->存储管理->管理->权限->读写权限:公共读
  * HLS: 视频点播->媒资处理配置->转码模版组->添加转码模板组 (HLS不要私有加密)
- * https://help.aliyun.com/document_detail/68612.html?spm=5176.12672711.0.0.ca0b49431tLENw  HLS标准加密 KMS先开通
+ * https://help.aliyun.com/document_detail/68612.html  HLS标准加密 KMS先开通
  * 点播转码完成回调网址 app_glob_vodCallback
  *
  * Class AliyunVodService
@@ -86,8 +86,8 @@ class AliyunVodService extends BaseService
 
         if($dataKey){
             list($cipherText, $plaintext) = $dataKey;
+
             //更新keyData
-            //todo
             $callback($videoId, $dataKey);
             
             $payLoadArr = [];
@@ -102,6 +102,7 @@ class AliyunVodService extends BaseService
             $encryptConfig['CipherText'] =$cipherText;
             $encryptConfig['DecryptKeyUri'] = $url;
             $encryptConfig['KeyServiceType'] = 'KMS';
+
             $options['query']['EncryptConfig'] = json_encode($encryptConfig);
         }
 //        var_dump($options);
@@ -164,7 +165,8 @@ class AliyunVodService extends BaseService
     public function generateDataKey(){
         $this->initClient();
         $kmsKeyId = $this->getOption("app.aliyun.vod.kms.keyId");
-        $cacheKey = "generateDataKey:{$kmsKeyId}";
+        $kmsKeyIdCache = str_replace("/", "_", $kmsKeyId);
+        $cacheKey = "generateDataKey_{$kmsKeyIdCache}";
         
         return $this->cache()->get($cacheKey, function(ItemInterface $item)use ($kmsKeyId){
             $item->expiresAfter(3600*24);
@@ -180,7 +182,7 @@ class AliyunVodService extends BaseService
                     ->options([
                         'query' => [
                             'KeyId' => $kmsKeyId,
-                            'KeySpec' => "AES_128",
+                            'KeySpec' => "AES_256",
                         ],
                     ])->request();
                 $info = $result->toArray();

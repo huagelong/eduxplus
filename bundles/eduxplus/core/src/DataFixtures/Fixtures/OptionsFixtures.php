@@ -41,14 +41,14 @@ class OptionsFixtures
         $this->addOption("app.tengxunyun.appId", '', "腾讯云 appId", 1, 1, "腾讯云基础配置");
         $this->addOption("app.tengxunyun.secretId", '', "腾讯云 secretId", 1, 1, "腾讯云基础配置");
         $this->addOption("app.tengxunyun.secretKey", '', "腾讯云 secretKey ", 1, 1, "腾讯云基础配置");
-        $this->addOption("app.tengxunyun.region", 'ap-shanghai', "腾讯云地域接入域名", 1, 1, "腾讯云基础配置");
+        $this->addOption("app.tengxunyun.region", 'ap-shanghai', "腾讯云地域RegionID", 1, 1, "腾讯云基础配置");
 
         //阿里云
         $this->addOption("app.aliyun.userId", '37030', "阿里云 账号id", 1, 1, "阿里云基础配置");
         $this->addOption("app.aliyun.accesskeyId", '', "阿里云 accesskeyId", 1, 1, "阿里云基础配置");
         $this->addOption("app.aliyun.accesskeySecret", '', "阿里云 accesskeySecret", 1, 1, "阿里云基础配置");
         //https://help.aliyun.com/document_detail/98194.html?spm=a2c4g.11186623.6.612.1fb73ecbvK52qE 点播中心和访问域名, 直播，点播都要在同一个地域
-        $this->addOption("app.aliyun.region", 'cn-shenzhen', "阿里云地域接入域名", 1, 1, "阿里云基础配置");
+        $this->addOption("app.aliyun.region", 'cn-shanghai', "阿里云地域RegionID", 1, 1, "阿里云基础配置");
 //        ------短信配置---
         //腾讯云短信
         $this->addOption("app.tengxunyun.sms.appid", '', "腾讯云 短信应用id ", 1, 1, "腾讯云短信配置");

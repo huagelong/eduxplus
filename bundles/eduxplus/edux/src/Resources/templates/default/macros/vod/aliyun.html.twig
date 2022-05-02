@@ -10,7 +10,7 @@
             <button @click="pauseUpload" :disabled="pauseDisabled">暂停</button>
             <button :disabled="resumeDisabled" @click="resumeUpload">恢复上传</button>
         </div>
-        <div class="prism-player" id="playerDiv"></div>
+        <div class="prism-player" id="playerDiv" style="margin-top: 20px;"></div>
     </div>
     <div class="col-sm-4">
         <div class="status">上传状态: <span>${ statusText }</span></div>
@@ -20,7 +20,7 @@
     <script>
 uploadVideo("{{ region }}","upload", "{{ userId }}","{{ fileName }}",0,"{{ path('admin_api_glob_aliyunVodCreateUploadVideoDo') }}", "{{ path('admin_api_glob_aliyunVodRefreshUploadVideoDo') }}", "{{ path('admin_api_glob_getAliyunVodPlayInfoDo') }}");
 {% if videoInfo and videoInfo["videoId"] != "" and videoInfo["status"] ==1 %}
-    vodPlay("playerDiv", "{{ videoInfo['videoId'] }}", "{{ palyAuth }}","mp4", "400px", "400px");
+    vodPlay("playerDiv", "{{ videoInfo['videoId'] }}", "{{ palyAuth }}","m3u8", "400px", "400px");
 {% endif %}
     </script>
 {% endmacro %}

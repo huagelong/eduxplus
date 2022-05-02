@@ -216,14 +216,15 @@ class ChapterController extends BaseAdminController
     
     public function deleteDoAction($id, ChapterService $chapterService)
     {
-        if ($chapterService->hasChild($id))
+        if ($chapterService->hasChild($id)){
             return $this->responseError("删除失败，请先删除子章节!");
-        $chapterService->del($id);
+        }
         $info = $chapterService->getById($id);
+        $chapterService->del($id);
 
-        return $this->responseMsgRedirect("删除成功!", $this->generateUrl("admin_teach_chapter_index"), [
+        return $this->responseMsgRedirect("删除成功!", $this->generateUrl("admin_teach_chapter_index", [
             'id' => $info['courseId']
-        ]);
+        ]));
     }
 
     
@@ -351,9 +352,11 @@ class ChapterController extends BaseAdminController
         $data['fileName'] = $chapterService->getVideoName($id);
         $data['region'] = $chapterService->getRegion();
         $data['videoInfo'] = $info;
-        if($vodAdapter == 2){
+        if($info && ($vodAdapter == 2)){
             $play = $aliyunVodService->getVodPlayInfo($info["videoId"]);
             $data['palyAuth'] = $play['playAuth'];
+        }else{
+            $data['palyAuth'] = "";
         }
 
 
