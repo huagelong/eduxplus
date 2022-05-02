@@ -34,6 +34,7 @@ function vodPlay(id, videoId, appid, token) {
  * @param videoFileId 视频文件id, 此字段作用是解决vue无法再次上传相同文件的问题, 将此id值清空即可再次上传
  * @param maxSize 上传最大容量，单位M
  * @param getUploadSignUrl 获取上传令牌url
+ * @param getAndvancePlaySignUrl 获取超级播放器加密令牌
  */
 function uploadVideo(
   appId,
@@ -41,7 +42,8 @@ function uploadVideo(
   uploadVideoDivId,
   videoFileId,
   maxSize,
-  getUploadSignUrl
+  getUploadSignUrl,
+  getAndvancePlaySignUrl
 ) {
   // 获取签名, 腾讯云要求直接上传视频的客户端必须获取签名
   function getSignature() {
@@ -127,6 +129,7 @@ function uploadVideo(
             uploaderInfo.videoUrl = videoUrl;
             onVideoUploaded(
               appId,
+              getAndvancePlaySignUrl,
               videoFileId,
               uploaderInfo
             );
@@ -153,6 +156,7 @@ function onVideoSelected() {
  */
 function onVideoUploaded(
   appId,
+  getAndvancePlaySignUrl,
   videoFileId,
   uploaderInfo
 ) {
@@ -164,6 +168,27 @@ function onVideoUploaded(
 
   $("#videoId").val(uploaderInfo.fileId);
   $("form:first").submit();
+  //预览
+  // axios
+  //   .get(getAndvancePlaySignUrl + "?videoId=" + uploaderInfo.fileId)
+  //   .then(function (response) {
+  //     if (response.data.code != 200) {
+  //       return showMsg(400, response.data.message);
+  //     }
+  //     var token = response.data.data;
+  //     //     console.log(token);
+  //     // console.log(uploaderInfo.fileId);
+  //     // console.log(appId);
+
+  //     var videostr =
+  //       '<video id="vreview"  width="400" height="250" preload="meta" playsinline webkit-playsinline></video>';
+  //     $("#vodDiv").html(videostr);
+
+  //     vodPlay("vreview", uploaderInfo.fileId, appId, token);
+
+  //     $("#vreview").show();
+  //     $("#vodDiv").show();
+  //   });
 }
 
 /**

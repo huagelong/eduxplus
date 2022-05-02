@@ -58,7 +58,7 @@ function vodPlay(playerId, vid, playauth,format, width, height){
     );
 }
 
-function uploadVideo(region, uploadVideoDivId, userId, fileName,cateId,createUrl,refreshUrl, getPalyAuthUrl){
+function uploadVideo(region, uploadVideoDivId, userId, fileName,cateId,createUrl,refreshUrl){
     var app = new Vue({
         el: '#' + uploadVideoDivId,
         delimiters:['${','}'],
@@ -191,20 +191,6 @@ function uploadVideo(region, uploadVideoDivId, userId, fileName,cateId,createUrl
                         console.log("onUploadSucceed: " + uploadInfo.file.name + ", endpoint:" + uploadInfo.endpoint + ", bucket:" + uploadInfo.bucket + ", object:" + uploadInfo.object)
                         self.statusText = '文件上传成功!'
                         $("form:first").submit();
-                        //去掉预览
-                       this.showPre(getPalyAuthUrl,uploadInfo.videoId);
-                    },
-                    showPre:function(getPalyAuthUrl, videoId){
-                        axios.get(getPalyAuthUrl+"?videoId="+videoId).then(function (rdata){
-                            var data = rdata.data;
-                            if(data.code != 200){
-                                return showMsg(400, data.message);
-                            }
-                            var palyAuth = data.data.playAuth;
-                            var source = data.data.source;
-
-                            vodPlay("playerDiv", videoId,palyAuth,"mp4", "500px", "250px");
-                        })
                     },
                     // 文件上传失败
                     onUploadFailed: function (uploadInfo, code, message) {

@@ -92,6 +92,7 @@ class AliyunVodService extends BaseService
             
             $payLoadArr = [];
             $payLoadArr['videoId'] = $videoId;
+            $payLoadArr['time'] = time();
             $key = $this->getConfig("secret");
             $token = JWT::encode($payLoadArr, $key);
             $url = $this->getOption("app.domain");
