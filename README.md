@@ -7,7 +7,7 @@
 </p>
 
 <h4 style="color: red">
-注意本项目唯一反馈渠道: https://gitee.com/wangkaihui/eduxplus/issues
+注意本项目唯一反馈渠道: [https://gitee.com/wangkaihui/eduxplus/issues](https://gitee.com/wangkaihui/eduxplus/issues)
 </h4>
 
 ## 项目介绍
