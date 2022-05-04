@@ -3619,7 +3619,7 @@ button.list-group-item:hover {
     position: relative;
     overflow: hidden;
     z-index: 999;
-    background-color: #fff;
+    /*background-color: #fff;*/
     width: 100%;
 	-webkit-box-shadow: 0 1px 1px -1px rgba(77,82,89,0.15);
     box-shadow: 0 1px 1px -1px rgba(77,82,89,0.15);
