@@ -64,7 +64,7 @@ eduxplus 是一款服务于教育机构、个人、小型团队的在线教育�
 - And the [https://symfony.com/doc/current/reference/requirements.html](https://symfony.com/doc/current/reference/requirements.html).
 
 #### 安装步骤
-> 以下步骤在linux系统操作
+> 以下步骤在linux系统操作,windows类似
 
 1.安装 Composer (详见 http://getcomposer.org/download)
 
@@ -81,7 +81,7 @@ git clone https://gitee.com/wangkaihui/eduxplus.git
 
 ```$shell
 cp .env .env.local
-// 打开.env.local 配置数据库DATABASE_URL，redis配置REDIS_HOST
+// 打开.env.local 添加数据库DATABASE_URL，redis配置REDIS_HOST
 ```
 
 4.执行
