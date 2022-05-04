@@ -6,6 +6,10 @@
     <a href='https://gitee.com/wangkaihui/eduxplus/members'><img src='https://gitee.com/wangkaihui/eduxplus/badge/fork.svg?theme=dark' alt='fork'></img></a>
 </p>
 
+<h4 style="color: red">
+注意本项目唯一反馈渠道: https://gitee.com/wangkaihui/eduxplus/issues
+</h4>
+
 ## 项目介绍
 eduxplus 是一款服务于教育机构、个人、小型团队的在线教育系统,可用于个人知识付费或者在线教育培训等项目使用,基于symfony.
 
