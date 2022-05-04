@@ -110,6 +110,7 @@ symfony serve
 ## docker 安装
 
 ```$shell
+//系统安装好docker,docker-compose进入根目录执行下面命令
 docker-compose up -d
 docker-compose run php composer install -v
 docker-compose run php composer gen
