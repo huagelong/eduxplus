@@ -334,7 +334,9 @@ class ChapterService extends AdminBaseService
             $model->setVideoChannel($videoChannel);
             $id = $this->db()->save($model);
             // throw new \Exception("aaa");
+
             $this->ayncTranscode($type, $videoChannel, $videoId);
+
             $this->db()->commit();
             return $id;
         } catch (\Exception $e) {
@@ -351,6 +353,7 @@ class ChapterService extends AdminBaseService
      */
     public function ayncTranscode($type, $videoChannel, $videoId)
     {
+
         if ($type == 2) {
             if ($videoChannel == 2) {
                 $this->aliyunVodService->submitTranscodeJobs($videoId, function($videoId, $dataKey){

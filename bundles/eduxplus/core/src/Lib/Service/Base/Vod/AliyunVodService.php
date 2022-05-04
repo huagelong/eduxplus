@@ -432,6 +432,43 @@ class AliyunVodService extends BaseService
         }
     }
 
+
+    /**
+     * 获取单个音视频信息
+     * @param $videoId
+     */
+    public function GetVideoInfo($videoId){
+        try {
+            $this->initClient();
+
+            $result = AlibabaCloud::rpc()
+                ->product('vod')
+                ->scheme('https') // https | http
+                ->version('2017-03-21')
+                ->action('GetVideoInfo')
+                ->method('POST')
+                ->client(self::VOD_CLIENT_NAME)
+                ->options([
+                    'query' => [
+                        'RegionId' => $this->regionId,
+                        'VideoId' => $videoId,
+                    ],
+                ])
+                ->request();
+
+            return $result->toArray();
+        }catch (\Exception $e){
+            $errors = [
+                "Forbidden.IllegalStatus"=>"视频状态无效。",
+                "InvalidVideo.NotFound"=> "视频不存在。",
+                "InvalidVideo.NoneStream"=>"根据您的筛选条件找不到可以播放的转码输出流",
+                "Forbidden.AliyunVoDEncryption"=>"当前仅存在阿里云视频加密的转码输出流",
+            ];
+            $errInfo =  $this->formatError($e->getMessage(), $errors, $e->getMessage());
+            return $errInfo;
+        }
+    }
+
     /**
      * 获取播放凭证
      */
