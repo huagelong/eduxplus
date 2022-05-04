@@ -30,12 +30,12 @@ class AliyunLiveService extends BaseService
      * 生成推流网址
      * @param $streamName
      */
-    public function createPushUrl($streamName, $exp=0){
+    public function createPushUrl($appName, $streamName, $exp=0){
         $pushDomain = $this->getOption("app.aliyun.live.pushDomain");
         $key = $this->getOption("app.aliyun.live.pushDomainKey");
         $time = time();
         $exp = $exp?$exp:($time+86400*7);//7天过期
-        $url = "rtmp://{$pushDomain}/live/".$streamName;
+        $url = "rtmp://{$pushDomain}/".$appName."/".$streamName;
         $authKey = $this->createAuthKey($url, $key, $exp);
         $url = $url."?auth_key=".$authKey;
         return $url;
@@ -47,7 +47,7 @@ class AliyunLiveService extends BaseService
      * @param $streamName
      * @return array
      */
-    public function createPlayUrl($streamName, $exp=0){
+    public function createPlayUrl($appName,$streamName, $exp=0){
         $playDomain = $this->getOption("app.aliyun.live.playDomain");
         $key = $this->getOption("app.aliyun.live.playDomainKey");
         $time = time();
@@ -55,7 +55,7 @@ class AliyunLiveService extends BaseService
         $transcodeTemplateId = $this->getOption("app.aliyun.live.transcodeTemplateId");
 //        $url = "rtmp://{$playDomain}/live/".$streamName."_{$transcodeTemplateId}";
         //原画
-        $url = "http://{$playDomain}/live/".$streamName.".m3u8";
+        $url = "//{$playDomain}/".$appName."/".$streamName.".m3u8";
         $authKey = $this->createAuthKey($url, $key, $exp);
         $odUrl = $url."?auth_key=".$authKey;
         $data = [];
@@ -66,7 +66,7 @@ class AliyunLiveService extends BaseService
             }else{
                 $transcodeTemplateIdArr = json_decode($transcodeTemplateId, true);
                 foreach ($transcodeTemplateIdArr as $k=>$v){
-                    $url = "http://{$playDomain}/live/".$streamName."_".$v.".m3u8";
+                    $url = "//{$playDomain}/".$appName."/".$streamName."_".$v.".m3u8";
                     $authKey = $this->createAuthKey($url, $key, $exp);
                     $urlTmp = $url."?auth_key=".$authKey;
                     $data[$k] = $urlTmp;

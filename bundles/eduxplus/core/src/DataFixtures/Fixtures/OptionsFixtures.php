@@ -79,6 +79,7 @@ class OptionsFixtures
         //阿里云直播
         $this->addOption("app.aliyun.live.pushDomain", '', "阿里云直播推流域名", 1, 1, "阿里云直播配置");
         $this->addOption("app.aliyun.live.playDomain", '', "阿里云直播播流域名", 1, 1, "阿里云直播配置");
+        $this->addOption("app.aliyun.live.appName", '', "阿里云直播AppName", 1, 1, "阿里云直播配置");
         $this->addOption("app.aliyun.live.pushDomainKey", '', "阿里云直播推流签名KEy", 1, 1, "阿里云直播配置");
         $this->addOption("app.aliyun.live.playDomainKey", '', "阿里云直播播放签名KEy", 1, 1, "阿里云直播配置");
         $this->addOption("app.aliyun.live.transcodeTemplateId", '{"FD":"lld","LD":"lsd","SD":"lhd","HD":"lud"}', "阿里云直播转码模板id OD:原画,FD:流畅,LD:标清,SD:高清,HD:超清,2K:2K,4K:4K", 1, 1, "阿里云直播配置");

@@ -89,7 +89,7 @@ class GlobController extends BaseHtmlController
         }
     }
 
-    
+    //不一定要用
     public function aliyunVodPlayCheckAction(Request $request, AliyunVodService $aliyunVodService, LearnService $learnService)
     {
 //        $token = $request->get("MtsHlsUriToken");

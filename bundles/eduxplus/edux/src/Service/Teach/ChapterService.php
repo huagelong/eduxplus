@@ -216,7 +216,7 @@ class ChapterService extends AdminBaseService
         if ($teachers) {
             $sql2 = "SELECT a FROM Edux:TeachCourseTeachers a WHERE a.chapterId=:chapterId";
             $tmodels = $this->db()->fetchAll($sql2, ["chapterId" => $id], 1);
-            $this->delete($tmodels);
+            $this->db()->delete($tmodels);
             foreach ($teachers as $teacherId) {
                 $tmodel = new TeachCourseTeachers();
                 $tmodel->setCourseId($courseId);
@@ -468,8 +468,9 @@ class ChapterService extends AdminBaseService
             $playUrl = $this->tengxunyunLiveService->createPlayUrl($streamName, $expireTime);
             $parseSetLiveData = $this->parseSetLiveData($pushUrl,  $playUrl, $oldLiveData, $liveAdapter);
         }else if($liveAdapter == 2){
-            $pushUrl = $this->aliyunLiveService->createPushUrl($streamName, $expireTime);
-            $playUrl = $this->aliyunLiveService->createPlayUrl($streamName, $expireTime);
+            $appName = $this->getOption("app.aliyun.live.appName");
+            $pushUrl = $this->aliyunLiveService->createPushUrl($appName,$streamName, $expireTime);
+            $playUrl = $this->aliyunLiveService->createPlayUrl($appName,$streamName, $expireTime);
             $parseSetLiveData = $this->parseSetLiveData($pushUrl,  $playUrl, $oldLiveData, $liveAdapter);
         }
         $sql = "SELECT a FROM Edux:TeachCourseVideos a WHERE a.chapterId=:chapterId";
