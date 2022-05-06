@@ -17,7 +17,7 @@ class DictDataController extends BaseAdminController
 
     public function indexAction($typeId, Request $request, Grid $grid, DictDataService $dictDataService){
         $pageSize = 40;
-        $grid->setListService($dictDataService, "dictDataList",["dictTypeId"=>$typeId]);
+        $grid->setListService($dictDataService, "dictDataList",$typeId);
         $grid->text("字典标签")->field("dictLabel");
         $grid->text("字典数据值")->field("dictValue");
         $grid->boole2("字典数据状态")->field("status")->actionCall("admin_api_dict_data_switch_status", function ($obj) use($dictDataService) {
@@ -57,7 +57,7 @@ class DictDataController extends BaseAdminController
         $form->textarea("字典数据值")->field("dictValue")->isRequire(1);
         $form->boole("字典数据状态")->field("status")->isRequire(1);
         $form->text("排序")->field("fsort")->isRequire(1);
-        $form->text("描述")->field("descr")->isRequire(1);
+        $form->textarea("备注")->field("descr")->isRequire(1);
         $formData = $form->create($this->generateUrl("admin_api_dict_data_add",["typeId"=>$typeId]));
         return $this->content()->title("添加字典数据")->breadcrumb("字典管理", "admin_dict_data_index", ["typeId"=>$typeId])->renderAdd($formData);
     }
@@ -71,6 +71,7 @@ class DictDataController extends BaseAdminController
         $status = $request->get("status");
         $fsort = $request->get("fsort");
         $descr = $request->get("descr");
+        $status = $status=="on"?1:0;
         if(!$dictLabel) return $this->responseError("字典标签不能为空!");
         if(!$dictValue) return $this->responseError("字典数据值不能为空!");
         $dictDataService->add($typeId, $dictLabel, $dictValue, $fsort, $status, $descr);
@@ -86,7 +87,7 @@ class DictDataController extends BaseAdminController
         $view->textarea("字典数据值")->field("dictValue")->defaultValue($info['dictValue']);
         $view->boole("字典数据状态")->field("status")->defaultValue($info['status']);
         $view->text("排序")->field("fsort")->defaultValue($info['fsort']);
-        $view->text("描述")->field("descr")->defaultValue($info['descr']);
+        $view->textarea("备注")->field("descr")->defaultValue($info['descr']);
         $formData = $view->create();
         return $this->content()->renderView($formData);
     }
@@ -105,7 +106,6 @@ class DictDataController extends BaseAdminController
 
     public function editDoAction(  $id,
                                    Request $request,
-                                   ValidateService $validateService,
                                    DictDataService $dictDataService)
     {
         $info = $dictDataService->getById($id);
@@ -114,6 +114,7 @@ class DictDataController extends BaseAdminController
         $status = $request->get("status");
         $fsort = $request->get("fsort");
         $descr = $request->get("descr");
+        $status = $status=="on"?1:0;
         if(!$dictLabel) return $this->responseError("字典标签不能为空!");
         if(!$dictValue) return $this->responseError("字典数据值不能为空!");
         $dictDataService->edit($id, $dictLabel, $dictValue, $fsort, $status, $descr);

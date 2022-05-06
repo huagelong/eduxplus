@@ -40,6 +40,12 @@ class DictTypeController extends BaseAdminController
         });
         $grid->sdaterange("创建时间")->field("a.createdAt");
 
+        $grid->setTableAction('admin_dict_data_index', function ($obj) use($dictTypeService){
+            $id = $dictTypeService->getPro($obj, "id");
+            $url = $this->generateUrl('admin_dict_data_index', ['typeId' => $id]);
+            $str = '<a href="javascript:;" data-url=' . $url . '  data-title="字典数据"  title="字典数据" class=" btn btn-info btn-xs newTab"><i class="mdi mdi-dictionary"></i>字典数据</a>';
+            return  $str;
+        });
         //编辑等
         $grid->viewAction("admin_dict_type_view")
             ->editAction("admin_dict_type_edit")
@@ -72,6 +78,10 @@ class DictTypeController extends BaseAdminController
         $status = $status=="on"?1:0;
         if(!$dictName) return $this->responseError("字典名称不能为空!");
         if(!$dictKey) return $this->responseError("字典key不能为空!");
+
+        if(mb_strlen($dictName, 'utf-8')>90) return $this->responseError("字典名称不能超过90字!");
+        if(mb_strlen($dictKey, 'utf-8')>90) return $this->responseError("字典key不能超过90字!");
+
         $dictTypeService->add($dictName, $dictKey, $status, $descr);
 
         return $this->responseMsgRedirect("添加成功!", $this->generateUrl("admin_dict_type_index"));
@@ -112,6 +122,10 @@ class DictTypeController extends BaseAdminController
         $status = $status=="on"?1:0;
         if(!$dictName) return $this->responseError("字典名称不能为空!");
         if(!$dictKey) return $this->responseError("字典key不能为空!");
+
+        if(mb_strlen($dictName, 'utf-8')>90) return $this->responseError("字典名称不能超过90字!");
+        if(mb_strlen($dictKey, 'utf-8')>90) return $this->responseError("字典key不能超过90字!");
+
         $dictTypeService->edit($id, $dictName, $dictKey, $status, $descr);
 
         return $this->responseMsgRedirect("编辑成功!", $this->generateUrl("admin_dict_type_index"));

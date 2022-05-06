@@ -18,7 +18,7 @@ class DictDataService extends AdminBaseService
         $this->paginator = $paginator;
     }
 
-    public function dictDataList($dictTypeId, $request, $page, $pageSize)
+    public function dictDataList($request, $page, $pageSize, $dictTypeId)
     {
         $sql = $this->getFormatRequestSql($request);
         if(!$sql){

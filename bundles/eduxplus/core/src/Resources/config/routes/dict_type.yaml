@@ -2,14 +2,12 @@ admin_dict_type_index:
   path: /admin/dict/type/index
   controller: Eduxplus\CoreBundle\Controller\DictTypeController::indexAction
 admin_dict_type_view:
-  methods: GET
-  path: /admin/dict/type/view
+  path: /admin/dict/type/view/{id}
   controller: Eduxplus\CoreBundle\Controller\DictTypeController::viewAction
 admin_dict_type_add:
   path: /admin/dict/type/add
   controller: Eduxplus\CoreBundle\Controller\DictTypeController::addAction
 admin_api_dict_type_add:
-  methods: GET
   path: /admin/dict/type/add/do
   controller: Eduxplus\CoreBundle\Controller\DictTypeController::addDoAction
 admin_dict_type_edit:

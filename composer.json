@@ -92,6 +92,10 @@
             "php bin/console doctrine:schema:update --ansi --force --no-interaction",
             "php bin/console doctrine:fixtures:load --ansi --no-interaction",
             "@clear-dbcache"
+        ],
+        "migrate": [
+            "php bin/console doctrine:migrations:migrate",
+            "@clear-dbcache"
         ]
     },
     "conflict": {
