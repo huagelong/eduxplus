@@ -120,13 +120,31 @@ class TestCommand extends Command
 //        $this->manager->flush();
 //        $this->addOptionConfig("app.tengxunyun.cdn.domain", 'http://cdn.eduxplus.com/', "cdn域名", 1, 1, "腾讯云COS存储配置");
 //        $this->addOptionConfig("app.aliyun.cdn.domain", 'http://cdn.eduxplus.com/', "cdn域名", 1, 1, "阿里云OSS存储配置");
-        $this->addOptionConfig("app.tengxunyun.im.OwnerAccount", '', "腾讯云IM群主ID", 1, 1, "腾讯云IM配置");
+//        $this->addOptionConfig("app.tengxunyun.im.OwnerAccount", '', "腾讯云IM群主ID", 1, 1, "腾讯云IM配置");
         //帮助中心
         $roleId = 1;
         $mallMenuId = 108;
         $jwMenuId = 94;
         $menuId = 213;
-        $sysMenuId = 352050054346833920;
+        $sysMenuId = 352050054531383296;
+        //字典管理
+        $dictMgId = $this->addMenu("字典管理", "字典管理相关", $sysMenuId, "admin_dict_type_index", "", 0, $roleId, 1, 0, 1);
+        $this->addMenu("添加页面", "添加字典页面展示", $dictMgId, "admin_dict_type_add", "", 3, $roleId, 1, 1, 0);
+        $this->addMenu("添加", "添加字典处理", $dictMgId, "admin_api_dict_type_add", "", 4, $roleId, 1, 1, 0);
+        $this->addMenu("编辑页面", "编辑字典页面展示", $dictMgId, "admin_dict_type_edit", "", 3, $roleId, 1, 1, 0);
+        $this->addMenu("编辑", "编辑字典处理", $dictMgId, "admin_api_dict_type_edit", "", 4, $roleId, 1, 1, 0);
+        $this->addMenu("删除", "删除配置处理", $dictMgId, "admin_api_dict_type_delete", "", 5, $roleId, 1, 1, 0);
+        $this->addMenu("批量删除", "批量删除字典处理", $dictMgId, "admin_api_dict_type_bathdelete", "", 6, $roleId, 1, 1, 0);
+        $this->addMenu("开启/关闭字典", "开启/关闭字典", $dictMgId, "admin_api_dict_type_switch_status", "", 7, $roleId, 1, 1, 0);
+        //字典数据管理
+        $dictMgId = $this->addMenu("字典数据管理", "字典数据管理相关", $dictMgId, "admin_dict_data_index", "", 0, $roleId, 1, 0, 1);
+        $this->addMenu("添加页面", "添加字典数据页面展示", $dictMgId, "admin_dict_data_add", "", 3, $roleId, 1, 1, 0);
+        $this->addMenu("添加", "添加字典数据处理", $dictMgId, "admin_api_dict_data_add", "", 4, $roleId, 1, 1, 0);
+        $this->addMenu("编辑页面", "编辑字典数据页面展示", $dictMgId, "admin_dict_data_edit", "", 3, $roleId, 1, 1, 0);
+        $this->addMenu("编辑", "编辑字典数据处理", $dictMgId, "admin_api_dict_data_edit", "", 4, $roleId, 1, 1, 0);
+        $this->addMenu("删除", "删除配置数据处理", $dictMgId, "admin_api_dict_data_delete", "", 5, $roleId, 1, 1, 0);
+        $this->addMenu("批量删除", "批量删除字典数据处理", $dictMgId, "admin_api_dict_data_bathdelete", "", 6, $roleId, 1, 1, 0);
+        $this->addMenu("开启/关闭字典数据", "开启/关闭字典数据", $dictMgId, "admin_api_dict_data_switch_status", "", 7, $roleId, 1, 1, 0);
 
 //        $this->addMenu("点播预览", "点播预览", "352050055026311168", "admin_teach_chapter_vodView", "", 14, $roleId, 0, 1, 0);
 //        $this->addMenu("直播预览", "直播预览", "352050055026311168", "admin_teach_chapter_liveView", "", 19, $roleId, 0, 1, 0);

@@ -1,0 +1,29 @@
+admin_dict_type_index:
+  path: /admin/dict/type/index
+  controller: Eduxplus\CoreBundle\Controller\DictTypeController::indexAction
+admin_dict_type_view:
+  methods: GET
+  path: /admin/dict/type/view
+  controller: Eduxplus\CoreBundle\Controller\DictTypeController::viewAction
+admin_dict_type_add:
+  path: /admin/dict/type/add
+  controller: Eduxplus\CoreBundle\Controller\DictTypeController::addAction
+admin_api_dict_type_add:
+  methods: GET
+  path: /admin/dict/type/add/do
+  controller: Eduxplus\CoreBundle\Controller\DictTypeController::addDoAction
+admin_dict_type_edit:
+  path: /admin/dict/type/edit/{id}
+  controller: Eduxplus\CoreBundle\Controller\DictTypeController::editAction
+admin_api_dict_type_edit:
+  path: /admin/dict/type/edit/do/{id}
+  controller: Eduxplus\CoreBundle\Controller\DictTypeController::editDoAction
+admin_api_dict_type_delete:
+  path: /admin/dict/type/delete/do/{id}
+  controller: Eduxplus\CoreBundle\Controller\DictTypeController::deleteAction
+admin_api_dict_type_bathdelete:
+  path: /admin/dict/type/bathdelete/do
+  controller: Eduxplus\CoreBundle\Controller\DictTypeController::indexAction
+admin_api_dict_type_switch_status:
+  path: /admin/dict/type/switch_status/do/{id}
+  controller: Eduxplus\CoreBundle\Controller\DictTypeController::switchStatusAction
