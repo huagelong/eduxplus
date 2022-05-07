@@ -34,7 +34,8 @@ class OptionController extends BaseAdminController
 
         $grid->gbAddButton("admin_option_add", ["type"=>1], "文本配置");
         $grid->gbAddButton("admin_option_add", ["type"=>2], "上传文件配置");
-
+        $grid->setGridBar("admin_option_clear_cache","清理缓存",
+            $this->generateUrl('admin_option_clear_cache'),"mdi mdi-cached", "btn-warning ajaxGet");
         //搜索
         $grid->sselect("配置分组")->field("a.optionGroup")->options($optionService->getAllOptionGroup());
         $grid->stext("配置说明")->field("a.descr");
@@ -157,13 +158,19 @@ class OptionController extends BaseAdminController
         if($optionService->checkOptionKey($optionKey, $id) && !$info['isLock']) return $this->responseError("健已存在!");
 
         $optionService->edit($id, $optionKey, $optionValue, $descr, $isLock);
-
+        $cacheKey = "option_".$optionKey;
+        $optionService->cache()->delete($cacheKey);
         return $this->responseMsgRedirect("编辑成功!", $this->generateUrl("admin_option_index"));
     }
 
     
     public function deleteDoAction($id, OptionService $optionService){
+        $info = $optionService->getById($id);
         $optionService->deleteOption($id);
+
+        $cacheKey = "option_".$info["optionKey"];
+        $optionService->cache()->delete($cacheKey);
+
         return $this->responseMsgRedirect("删除成功!", $this->generateUrl("admin_option_index"));
     }
 
@@ -173,7 +180,10 @@ class OptionController extends BaseAdminController
         $optionService->log($ids);
         if($ids){
             foreach ($ids as $id){
+                $info = $optionService->getById($id);
                 $optionService->deleteOption($id);
+                $cacheKey = "option_".$info["optionKey"];
+                $optionService->cache()->delete($cacheKey);
             }
         }
         if($this->error()->has()){
@@ -181,6 +191,11 @@ class OptionController extends BaseAdminController
         }
 
         return $this->responseMsgRedirect("删除成功!", $this->generateUrl("admin_option_index"));
+    }
+
+    public function clearCacheAction(OptionService $optionService){
+        $optionService->cache()->invalidateTags(["option"]);
+        return $this->responseMsgRedirect("操作成功!");
     }
 
 }

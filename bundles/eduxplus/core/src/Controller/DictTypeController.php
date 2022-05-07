@@ -32,6 +32,9 @@ class DictTypeController extends BaseAdminController
         $grid->datetime("创建时间")->field("createdAt")->sort("a.createdAt");
 
         $grid->gbAddButton("admin_dict_type_add");
+        $grid->setGridBar("admin_dict_type_clear_cache","清理缓存",
+            $this->generateUrl('admin_dict_type_clear_cache'),"mdi mdi-cached", "btn-warning ajaxGet");
+
         $grid->snumber("ID")->field("a.id");
         $grid->stext("字典名称")->field("a.dictName");
         $grid->stext("字典key")->field("a.dictKey");
@@ -128,6 +131,9 @@ class DictTypeController extends BaseAdminController
 
         $dictTypeService->edit($id, $dictName, $dictKey, $status, $descr);
 
+        $cacheKey = "dictList_".$dictKey;
+        $dictTypeService->cache()->delete($cacheKey);
+
         return $this->responseMsgRedirect("编辑成功!", $this->generateUrl("admin_dict_type_index"));
     }
 
@@ -135,7 +141,10 @@ class DictTypeController extends BaseAdminController
         if($dictDataService->getByTypeId($id)){
             return $this->responseError("对应字典数据需要先删除!");
         }
+        $info = $dictTypeService->getById($id);
         $dictTypeService->del($id);
+        $cacheKey = "dictList_".$info['dictKey'];
+        $dictTypeService->cache()->delete($cacheKey);
         return $this->responseMsgRedirect("删除成功!", $this->generateUrl("admin_dict_type_index"));
     }
 
@@ -146,7 +155,10 @@ class DictTypeController extends BaseAdminController
                 if($dictDataService->getByTypeId($id)){
                     return $this->responseError("对应字典数据需要先删除!");
                 }
+                $info = $dictTypeService->getById($id);
                 $dictTypeService->del($id);
+                $cacheKey = "dictList_".$info['dictKey'];
+                $dictTypeService->cache()->delete($cacheKey);
             }
         }
         return $this->responseMsgRedirect("删除成功!", $this->generateUrl("admin_dict_type_index"));
@@ -155,7 +167,17 @@ class DictTypeController extends BaseAdminController
     public function switchStatusAction($id, Request $request, DictTypeService $dictTypeService){
         $state = (int) $request->get("state");
         $dictTypeService->switchStatus($id, $state);
+        $info = $dictTypeService->getById($id);
+        $cacheKey = "dictList_".$info['dictKey'];
+        $dictTypeService->cache()->delete($cacheKey);
         return $this->responseMsgRedirect("操作成功!");
     }
+
+
+    public function clearCacheAction(DictTypeService $dictTypeService){
+        $dictTypeService->cache()->invalidateTags(["dict"]);
+        return $this->responseMsgRedirect("操作成功!");
+    }
+
 
 }

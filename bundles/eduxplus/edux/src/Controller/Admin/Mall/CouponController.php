@@ -48,7 +48,7 @@ class CouponController extends BaseAdminController
         });
         $grid->text("创建人")->field("creater")->sort("a.createUid");
         $grid->text("分类")->field("category");
-        $grid->text("授课方式")->field("teachingMethod")->sort("a.teachingMethod")->options([0=>"全部", 1=>"面授",2=>"直播", 3=>"点播", 4=>"直播+面授", 5=>"直播+点播", 6=>"点播+面授", 7=>"直播+点播+面授"]);
+        $grid->text("授课方式")->field("teachingMethod")->sort("a.teachingMethod")->options([-1=>"全部", 1=>"面授",2=>"直播", 3=>"点播", 4=>"直播+面授", 5=>"直播+点播", 6=>"点播+面授", 7=>"直播+点播+面授"]);
 
         $grid->textarea("商品id")->field("goodsIds");
         $grid->datetime("创建时间")->field("createdAt")->sort("a.createdAt");
@@ -106,7 +106,7 @@ class CouponController extends BaseAdminController
             return $rs;
         });
 
-        $form->select("授课方式")->field("teachingMethod")->isRequire(1)->options(["全部"=>0,"面授"=>1, "直播"=>2, "点播"=>3, "直播+面授"=>4, "直播+点播"=>5, "点播+面授"=>6, "直播+点播+面授"=>7]);
+        $form->select("授课方式")->field("teachingMethod")->isRequire(1)->options(["全部"=>-1,"面授"=>1, "直播"=>2, "点播"=>3, "直播+面授"=>4, "直播+点播"=>5, "点播+面授"=>6, "直播+点播+面授"=>7]);
         $form->searchMultipleSelect("优惠对应商品")->field("goodsIds[]")->isRequire(0)->options([$this->generateUrl("admin_api_glob_searchGoodsDo"),[]]);
         $form->textarea("描述")->field("descr")->isRequire(0);
 

@@ -26,3 +26,6 @@ admin_api_option_delete:
 admin_api_option_bathdelete:
   path: /admin/option/bathdelete/do
   controller: Eduxplus\CoreBundle\Controller\OptionController::bathdeleteDoAction
+admin_option_clear_cache:
+  path: /admin/option/clear_cache/do
+  controller: Eduxplus\CoreBundle\Controller\OptionController::clearCacheAction

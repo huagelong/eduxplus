@@ -127,10 +127,10 @@ class TestCommand extends Command
         $jwMenuId = 94;
         $menuId = 213;
         $sysMenuId = 352050054531383296;
-        $dictMgId = "363323075023863808";
-        $this->addMenu("查看", "字典查看", $dictMgId, "admin_dict_type_view", "", 8, $roleId, 1, 1, 0);
-        $dictMgId = "363323078605799424";
-        $this->addMenu("查看", "字典数据查看", $dictMgId, "admin_dict_data_view", "", 8, $roleId, 1, 1, 0);
+        $optionMgId = "352050054804013056";
+        $this->addMenu("清空缓存", "清空缓存", $optionMgId, "admin_option_clear_cache", "", 7, $roleId, 1, 1, 0);
+//        $dictMgId = "363323075023863808";
+//        $this->addMenu("清空缓存", "清空字典缓存", $dictMgId, "admin_dict_type_clear_cache", "", 9, $roleId, 1, 1, 0);
         //字典管理
 //        $dictMgId = $this->addMenu("字典管理", "字典管理相关", $sysMenuId, "admin_dict_type_index", "", 0, $roleId, 1, 0, 1);
 //        $this->addMenu("添加页面", "添加字典页面展示", $dictMgId, "admin_dict_type_add", "", 3, $roleId, 1, 1, 0);

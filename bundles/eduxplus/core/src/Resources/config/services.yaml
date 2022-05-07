@@ -26,7 +26,7 @@ services:
                           "@parameter_bag","@property_accessor",
                           "@security.token_storage","@service_container",
                           "@security.helper","@monolog.logger",
-                           "@base.dbservice", "@cache.app"
+                           "@base.dbservice", "@cache.app.taggable"
                            ] 
              ]
 

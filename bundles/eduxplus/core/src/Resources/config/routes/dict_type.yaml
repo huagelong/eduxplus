@@ -25,3 +25,6 @@ admin_api_dict_type_bathdelete:
 admin_api_dict_type_switch_status:
   path: /admin/dict/type/switch_status/do/{id}
   controller: Eduxplus\CoreBundle\Controller\DictTypeController::switchStatusAction
+admin_dict_type_clear_cache:
+  path: /admin/dict/type/clearcache/do
+  controller: Eduxplus\CoreBundle\Controller\DictTypeController::clearCacheAction

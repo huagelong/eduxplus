@@ -10,6 +10,7 @@ use Eduxplus\CoreBundle\Lib\Grid\Grid;
 use Eduxplus\CoreBundle\Lib\Service\ValidateService;
 use Eduxplus\CoreBundle\Lib\View\View;
 use Eduxplus\CoreBundle\Service\DictDataService;
+use Eduxplus\CoreBundle\Service\DictTypeService;
 use Symfony\Component\HttpFoundation\Request;
 
 class DictDataController extends BaseAdminController
@@ -64,7 +65,8 @@ class DictDataController extends BaseAdminController
 
 
     public function addDoAction($typeId, Request $request,
-                                   DictDataService $dictDataService)
+                                   DictDataService $dictDataService,
+                                   DictTypeService $dictTypeService)
     {
         $dictLabel = $request->get("dictLabel");
         $dictValue = $request->get("dictValue");
@@ -75,6 +77,10 @@ class DictDataController extends BaseAdminController
         if(!$dictLabel) return $this->responseError("字典标签不能为空!");
         if(!$dictValue) return $this->responseError("字典数据值不能为空!");
         $dictDataService->add($typeId, $dictLabel, $dictValue, $fsort, $status, $descr);
+
+        $info = $dictTypeService->getById($typeId);
+        $cacheKey = "dictList_".$info['dictKey'];
+        $dictTypeService->cache()->delete($cacheKey);
 
         return $this->responseMsgRedirect("添加成功!", $this->generateUrl("admin_dict_data_index", ["typeId"=>$typeId]));
     }
@@ -106,7 +112,9 @@ class DictDataController extends BaseAdminController
 
     public function editDoAction(  $id,
                                    Request $request,
-                                   DictDataService $dictDataService)
+                                   DictDataService $dictDataService,
+                                    DictTypeService $dictTypeService
+    )
     {
         $info = $dictDataService->getById($id);
         $dictLabel = $request->get("dictLabel");
@@ -119,28 +127,45 @@ class DictDataController extends BaseAdminController
         if(!$dictValue) return $this->responseError("字典数据值不能为空!");
         $dictDataService->edit($id, $dictLabel, $dictValue, $fsort, $status, $descr);
 
+        $typeinfo = $dictTypeService->getById($info["dictTypeId"]);
+        $cacheKey = "dictList_".$typeinfo['dictKey'];
+        $dictTypeService->cache()->delete($cacheKey);
+
         return $this->responseMsgRedirect("编辑成功!", $this->generateUrl("admin_dict_data_index", ["typeId"=>$info["dictTypeId"]]));
     }
 
-    public function deleteAction($id, DictDataService $dictDataService){
+    public function deleteAction($id, DictDataService $dictDataService,
+                                 DictTypeService $dictTypeService
+    ){
         $info = $dictDataService->getById($id);
         $dictDataService->del($id);
+        $typeinfo = $dictTypeService->getById($info["dictTypeId"]);
+        $cacheKey = "dictList_".$typeinfo['dictKey'];
+        $dictTypeService->cache()->delete($cacheKey);
         return $this->responseMsgRedirect("删除成功!", $this->generateUrl("admin_dict_data_index", ["typeId"=>$info["dictTypeId"]]));
     }
 
-    public function bathdeleteAction(Request $request, DictDataService $dictDataService){
+    public function bathdeleteAction(Request $request, DictDataService $dictDataService,DictTypeService $dictTypeService){
         $ids = $request->get("ids");
         if($ids){
             foreach ($ids as $id){
+                $info = $dictDataService->getById($id);
                 $dictDataService->del($id);
+                $typeinfo = $dictTypeService->getById($info["dictTypeId"]);
+                $cacheKey = "dictList_".$typeinfo['dictKey'];
+                $dictTypeService->cache()->delete($cacheKey);
             }
         }
         return $this->responseMsgRedirect("删除成功!", $this->generateUrl("admin_dict_data_index", ["typeId"=>$info["dictTypeId"]]));
     }
 
-    public function switchStatusAction($id, Request $request, DictDataService $dictDataService){
+    public function switchStatusAction($id, Request $request, DictDataService $dictDataService,DictTypeService $dictTypeService){
         $state = (int) $request->get("state");
         $dictDataService->switchStatus($id, $state);
+        $info = $dictDataService->getById($id);
+        $typeinfo = $dictTypeService->getById($info["dictTypeId"]);
+        $cacheKey = "dictList_".$typeinfo['dictKey'];
+        $dictTypeService->cache()->delete($cacheKey);
         return $this->responseMsgRedirect("操作成功!");
     }
 

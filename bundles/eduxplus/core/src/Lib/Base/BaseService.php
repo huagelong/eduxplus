@@ -18,6 +18,8 @@ use Psr\Container\ContainerInterface;
 use Symfony\Component\Security\Core\Security;
 use Psr\Log\LoggerInterface;
 use Symfony\Contracts\Cache\CacheInterface;
+use Symfony\Contracts\Cache\ItemInterface;
+use Symfony\Contracts\Cache\TagAwareCacheInterface;
 
 class BaseService
 {
@@ -70,7 +72,7 @@ class BaseService
 
     /**
      *
-     * @var CacheInterface
+     * @var TagAwareCacheInterface
      */
     private $cache;
 
@@ -85,7 +87,7 @@ class BaseService
                            Security $security,
                            LoggerInterface $logger,
                            DbService $db,
-                           CacheInterface $cache
+                           TagAwareCacheInterface $cache
 
     ){
         $this->em = $em;
@@ -245,9 +247,7 @@ class BaseService
 
     public final function getOption($k, $isJson = 0, $index = null, $default = null)
     {
-        $sql = "SELECT a.optionValue FROM Core:BaseOption a WHERE a.optionKey =:optionKey";
-        $rs = $this->db()->fetchField("optionValue", $sql, ['optionKey' => $k]);
-
+        $rs = $this->_getOption($k);
         if ($rs) {
             if ($isJson) {
                 $arr =  json_decode($rs, 1);
@@ -262,5 +262,70 @@ class BaseService
         }
     }
 
+    private function _getOption($k){
+        $cacheKey = "option_".$k;
+        return $this->cache()->get($cacheKey, function(ItemInterface $item)use ($k) {
+            $item->expiresAfter(3600);
+            $item->tag("option");
+            $sql = "SELECT a.optionValue FROM Core:BaseOption a WHERE a.optionKey =:optionKey";
+            $rs = $this->db()->fetchField("optionValue", $sql, ['optionKey' => $k]);
+            return $rs;
+        });
+    }
+
+    /**
+     * 获取字典列表
+     * @param $dictKey
+     * @return array|null
+     */
+    public final function getDictList($dictKey){
+        $cacheKey = "dictList_".$dictKey;
+        return $this->cache()->get($cacheKey, function(ItemInterface $item)use ($dictKey) {
+            $item->expiresAfter(3600);
+            $item->tag("dict");
+            $sql = "SELECT a.id FROM Core:BaseDictType a WHERE a.dictKey =:dictKey AND a.status=1";
+            $dictTypeId = $this->db()->fetchField("id", $sql, ['dictKey' => $dictKey]);
+            if (!$dictTypeId) return null;
+            $sql = "SELECT a.dictLabel,a.dictValue FROM Core:BaseDictData a WHERE a.dictTypeId =:dictTypeId AND a.status=1 ORDER BY a.fsort asc";
+            return $this->db()->fetchAll($sql, ["dictTypeId" => $dictTypeId]);
+        });
+    }
+
+    /**
+     * 获取字典map
+     * @param $dictKey
+     * @return null
+     */
+    public final function getDictMap($dictKey){
+        $dictData = $this->getDictList($dictKey);
+        if(!$dictData) return null;
+        $map = [];
+        foreach ($dictData as $k=>$v){
+            $map[$v["dictLabel"]] = $v["dictValue"];
+        }
+        return $map;
+    }
+
+    public final function getDictValueByDictLabel($dictKey, $dictLabel){
+        $dictData = $this->getDictList($dictKey);
+        if(!$dictData) return null;
+        foreach ($dictData as $k=>$v){
+            if($v["dictLabel"] === $dictLabel){
+                return $v["dictValue"];
+            }
+        }
+        return null;
+    }
+
+    public final function getDictLabelByDictValue($dictKey, $dictValue){
+        $dictData = $this->getDictList($dictKey);
+        if(!$dictData) return null;
+        foreach ($dictData as $k=>$v){
+            if($v["dictValue"] === $dictValue){
+                return $v["dictLabel"];
+            }
+        }
+        return null;
+    }
 
 }

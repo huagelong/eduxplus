@@ -79,6 +79,7 @@ class MenuFixtures
         $this->addMenu("编辑", "编辑配置处理", $optionMgId, "admin_api_option_edit", "", 4, $roleId, 1, 1, 0);
         $this->addMenu("删除", "删除配置处理", $optionMgId, "admin_api_option_delete", "", 5, $roleId, 1, 1, 0);
         $this->addMenu("批量删除", "批量删除配置处理", $optionMgId, "admin_api_option_bathdelete", "", 6, $roleId, 1, 1, 0);
+        $this->addMenu("清空缓存", "清空缓存", $optionMgId, "admin_option_clear_cache", "", 7, $roleId, 1, 1, 0);
         //字典管理
         $dictMgId = $this->addMenu("字典管理", "字典管理相关", $sysMenuId, "admin_dict_type_index", "", 1, $roleId, 1, 0, 1);
         $this->addMenu("添加页面", "添加字典页面展示", $dictMgId, "admin_dict_type_add", "", 3, $roleId, 1, 1, 0);
@@ -89,6 +90,7 @@ class MenuFixtures
         $this->addMenu("批量删除", "批量删除字典处理", $dictMgId, "admin_api_dict_type_bathdelete", "", 6, $roleId, 1, 1, 0);
         $this->addMenu("开启/关闭字典", "开启/关闭字典", $dictMgId, "admin_api_dict_type_switch_status", "", 7, $roleId, 1, 1, 0);
         $this->addMenu("查看", "字典查看", $dictMgId, "admin_dict_type_view", "", 8, $roleId, 1, 1, 0);
+        $this->addMenu("清空缓存", "清空字典缓存", $dictMgId, "admin_dict_type_clear_cache", "", 9, $roleId, 1, 1, 0);
         //字典数据管理
         $dictMgId = $this->addMenu("字典数据管理", "字典数据管理相关", $dictMgId, "admin_dict_data_index", "", 0, $roleId, 1, 1, 0);
         $this->addMenu("添加页面", "添加字典数据页面展示", $dictMgId, "admin_dict_data_add", "", 3, $roleId, 1, 1, 0);
