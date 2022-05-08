@@ -113,6 +113,7 @@ class OptionController extends BaseAdminController
 
         if($info['isLock']){
             $form->string("健")->field("optionKey")->isRequire(1)->defaultValue($info['optionKey'])->placeholder("推荐用英文字母,英文逗点.");
+            $form->hidden("健")->field("optionKey")->defaultValue($info['optionKey']);
         }else{
             $form->text("健")->field("optionKey")->isRequire(1)->defaultValue($info['optionKey'])->placeholder("推荐用英文字母,英文逗点.");
         }
@@ -159,6 +160,7 @@ class OptionController extends BaseAdminController
 
         $optionService->edit($id, $optionKey, $optionValue, $descr, $isLock);
         $cacheKey = "option_".$optionKey;
+
         $optionService->cache()->delete($cacheKey);
         return $this->responseMsgRedirect("编辑成功!", $this->generateUrl("admin_option_index"));
     }
