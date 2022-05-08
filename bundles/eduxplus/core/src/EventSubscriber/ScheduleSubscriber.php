@@ -45,7 +45,7 @@ class ScheduleSubscriber implements EventSubscriberInterface
                 $timeZone = $task->getTimezone()->getName();
                 //保存task信息到数据库
                 //是否关闭
-                $task->skip("task close", true);
+//                $task->skip("task close", true);
             }
         }
     }
