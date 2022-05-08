@@ -12,6 +12,10 @@ zenstruck_schedule:
       enabled: true
       ttl: 3600
   tasks:
-    - task: debug:config
+    - task: core:test
       frequency: '* * * * *'
-      description: show config
+      description: schedule run test
+      without_overlapping: ~ #避免重复执行
+    - task: messenger:consume async failed_default --limit=1000 --time-limit=3600
+      frequency: '* * * * *'
+      description: consuming Messages

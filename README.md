@@ -61,6 +61,7 @@ eduxplus 是一款服务于教育机构、个人、小型团队的在线教育�
 - GD PHP extension;
 - ZIP PHP extension;
 - MySQL >= 5.7;
+- Redis >= 5.0.0;
 - And the [https://symfony.com/doc/current/reference/requirements.html](https://symfony.com/doc/current/reference/requirements.html).
 
 #### 安装步骤
@@ -82,6 +83,7 @@ git clone https://gitee.com/wangkaihui/eduxplus.git
 ```$shell
 cp .env .env.local
 // 打开.env.local 添加数据库DATABASE_URL，redis配置REDIS_HOST
+
 ```
 
 4.执行

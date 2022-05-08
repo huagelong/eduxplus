@@ -33,7 +33,8 @@ class ScheduleSubscriber implements EventSubscriberInterface
     }
 
     public function onBuildScheduleEvent(BuildScheduleEvent $event){
-        $allTask = $event->getSchedule()->all();
+        $schedule = $event->getSchedule();
+        $allTask = $schedule->all();
         if($allTask){
             foreach ($allTask as $task){
                 $type = $task->getType();
@@ -43,7 +44,8 @@ class ScheduleSubscriber implements EventSubscriberInterface
                 $nextRun = $task->getNextRun()->format('y-m-d H:i:s');
                 $timeZone = $task->getTimezone()->getName();
                 //保存task信息到数据库
-
+                //是否关闭
+                $task->skip("task close", true);
             }
         }
     }
@@ -55,10 +57,13 @@ class ScheduleSubscriber implements EventSubscriberInterface
     public function onAfterTaskEvent(AfterTaskEvent $event){
         $taskId = $event->runContext()->getTask()->getId();
         $startTime = $event->runContext()->getStartTime()->format("y-m-d H:i:s");
-        $duration = $event->runContext()->getFormattedDuration();
-        $memory = $event->runContext()->getFormattedMemory();
+        $duration = $event->runContext()->getFormattedDuration();//耗时
+        $memory = $event->runContext()->getFormattedMemory();//占用内存
         $result = $event->runContext()->getResult()->getOutput();
         $runType = $event->runContext()->getResult()->getType();
+        $exception = $event->runContext()->getResult()->getException();
 
+        $runInfo = "耗时: ".$duration.", 占用内存: ".$memory;
+        var_dump($runType);
     }
 }
