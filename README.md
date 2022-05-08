@@ -96,7 +96,7 @@ composer gen
 
 ```$shell
 crontab -e
-* * * * * cd /path-to-your-project && symfony console schedule:run >> /dev/null 2>&1
+* * * * * cd /path-to-your-project && php ./bin/console schedule:run >> /dev/null 2>&1
 ```
 6.nginx配置
 > ./docs/nginx.conf 是配置例子，可以参考
