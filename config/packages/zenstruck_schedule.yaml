@@ -16,6 +16,7 @@ zenstruck_schedule:
       frequency: '* * * * *'
       description: schedule run test
       without_overlapping: ~ #避免重复执行
-    - task: messenger:consume async failed_default --limit=1000 --time-limit=3600
+    - task: messenger:consume async failed_default --limit=1000 --time-limit=300
       frequency: '* * * * *'
       description: consuming Messages
+      without_overlapping: ~ #避免重复执行
