@@ -94,7 +94,7 @@ composer install
 composer gen
 ```
 
-5.配置 计划任务 
+5.配置 计划任务 (多台服务器做负载时建议只开启一台服务器执行计划任务)
 
 ```$shell
 crontab -e
