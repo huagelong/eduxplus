@@ -64,6 +64,6 @@ class ScheduleSubscriber implements EventSubscriberInterface
         $exception = $event->runContext()->getResult()->getException();
 
         $runInfo = "耗时: ".$duration.", 占用内存: ".$memory;
-        var_dump($runType);
+//        var_dump($runType);
     }
 }
