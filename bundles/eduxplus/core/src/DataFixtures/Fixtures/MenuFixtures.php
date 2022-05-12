@@ -102,6 +102,12 @@ class MenuFixtures
         $this->addMenu("开启/关闭字典数据", "开启/关闭字典数据", $dictMgId, "admin_api_dict_data_switch_status", "", 7, $roleId, 1, 1, 0);
         $this->addMenu("查看", "字典数据查看", $dictMgId, "admin_dict_data_view", "", 8, $roleId, 1, 1, 0);
 
+        $scheduleMgId = $this->addMenu("计划任务管理", "计划任务管理", $sysMenuId, "admin_schedule_index", "", 3, $roleId, 1, 0, 1);
+        $this->addMenu("开启/关闭", "开启/关闭", $scheduleMgId, "admin_api_schedule_switch_status", "", 1, $roleId, 1, 1, 0);
+        $this->addMenu("导入任务", "导入任务", $scheduleMgId, "admin_schedule_import", "", 2, $roleId, 1, 1, 0);
+        $this->addMenu("任务日志", "任务日志", $scheduleMgId, "admin_schedule_log_index", "", 3, $roleId, 1, 1, 0);
+
+
     }
 
     protected function addMenu($name, $descr, $pid, $uri, $style, $sort, $roleId, $isLock, $isAccess, $isShow, $isGlobal = 0)

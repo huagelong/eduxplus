@@ -127,8 +127,12 @@ class TestCommand extends Command
         $jwMenuId = 94;
         $menuId = 213;
         $sysMenuId = 352050054531383296;
-        $optionMgId = "352050054804013056";
-        $this->addMenu("清空缓存", "清空缓存", $optionMgId, "admin_option_clear_cache", "", 7, $roleId, 1, 1, 0);
+//        $scheduleMgId = $this->addMenu("计划任务管理", "计划任务管理", $sysMenuId, "admin_schedule_index", "", 3, $roleId, 1, 0, 1);
+//        $this->addMenu("开启/关闭", "开启/关闭", $scheduleMgId, "admin_api_schedule_switch_status", "", 1, $roleId, 1, 1, 0);
+//        $this->addMenu("导入任务", "导入任务", $scheduleMgId, "admin_schedule_import", "", 2, $roleId, 1, 1, 0);
+//        $this->addMenu("任务日志", "任务日志", $scheduleMgId, "admin_schedule_log_index", "", 3, $roleId, 1, 1, 0);
+//        $optionMgId = "352050054804013056";
+//        $this->addMenu("清空缓存", "清空缓存", $optionMgId, "admin_option_clear_cache", "", 7, $roleId, 1, 1, 0);
 //        $dictMgId = "363323075023863808";
 //        $this->addMenu("清空缓存", "清空字典缓存", $dictMgId, "admin_dict_type_clear_cache", "", 9, $roleId, 1, 1, 0);
         //字典管理

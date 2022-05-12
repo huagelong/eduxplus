@@ -4,23 +4,23 @@
 namespace Eduxplus\CoreBundle\EventSubscriber;
 
 
-use Eduxplus\CoreBundle\Service\MenuService;
+use Eduxplus\CoreBundle\Service\ScheduleLogService;
+use Eduxplus\CoreBundle\Service\ScheduleService;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\Stopwatch\Stopwatch;
 use Zenstruck\ScheduleBundle\Event\AfterTaskEvent;
-use Zenstruck\ScheduleBundle\Event\BeforeScheduleEvent;
 use Zenstruck\ScheduleBundle\Event\BeforeTaskEvent;
 use Zenstruck\ScheduleBundle\Event\BuildScheduleEvent;
-use Zenstruck\ScheduleBundle\Event\ScheduleEvent;
 
 class ScheduleSubscriber implements EventSubscriberInterface
 {
 
-    protected $stopwatch;
+    protected $scheduleService;
+    private $scheduleLogService;
 
-    public function __construct(Stopwatch $stopwatch)
+    public function __construct(ScheduleService $scheduleService, ScheduleLogService $scheduleLogService)
     {
-        $this->stopwatch = $stopwatch;
+        $this->scheduleService = $scheduleService;
+        $this->scheduleLogService = $scheduleLogService;
     }
 
     public static function getSubscribedEvents()
@@ -37,15 +37,13 @@ class ScheduleSubscriber implements EventSubscriberInterface
         $allTask = $schedule->all();
         if($allTask){
             foreach ($allTask as $task){
-                $type = $task->getType();
-                $descr = $task->getDescription();
                 $taskId = $task->getId();
-                $expression = $task->getExpression();
                 $nextRun = $task->getNextRun()->format('y-m-d H:i:s');
-                $timeZone = $task->getTimezone()->getName();
-                //保存task信息到数据库
+                $this->scheduleService->updateNextRun($taskId, $nextRun);
                 //是否关闭
-//                $task->skip("task close", true);
+                if($this->scheduleService->hasClose($taskId)){
+                    $task->skip("task close", true);
+                }
             }
         }
     }
@@ -62,8 +60,14 @@ class ScheduleSubscriber implements EventSubscriberInterface
         $result = $event->runContext()->getResult()->getOutput();
         $runType = $event->runContext()->getResult()->getType();
         $exception = $event->runContext()->getResult()->getException();
+        $isException = $event->runContext()->getResult()->isException();
+
+
 
         $runInfo = "耗时: ".$duration.", 占用内存: ".$memory;
-//        var_dump($runType);
+        if($isException){
+            $result = $exception;
+        }
+        $this->scheduleLogService->add($taskId,$startTime, $result, $runType, $runInfo);
     }
 }

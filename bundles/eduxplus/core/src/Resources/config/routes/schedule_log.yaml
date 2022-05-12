@@ -1,0 +1,3 @@
+admin_schedule_log_index:
+  path: /admin/schedule/log/index/{taskId}
+  controller: Eduxplus\CoreBundle\Controller\ScheduleLogController::indexAction

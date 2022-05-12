@@ -21,7 +21,7 @@ admin_api_dict_type_delete:
   controller: Eduxplus\CoreBundle\Controller\DictTypeController::deleteAction
 admin_api_dict_type_bathdelete:
   path: /admin/dict/type/bathdelete/do
-  controller: Eduxplus\CoreBundle\Controller\DictTypeController::indexAction
+  controller: Eduxplus\CoreBundle\Controller\DictTypeController::bathdeleteAction
 admin_api_dict_type_switch_status:
   path: /admin/dict/type/switch_status/do/{id}
   controller: Eduxplus\CoreBundle\Controller\DictTypeController::switchStatusAction

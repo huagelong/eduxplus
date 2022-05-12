@@ -18,3 +18,7 @@ core_dict_type:
   resource: "./routes/dict_type.yaml"
 core_dict_data:
   resource: "./routes/dict_data.yaml"
+core_schedule:
+  resource: "./routes/schedule.yaml"
+core_schedule_log:
+  resource: "./routes/schedule_log.yaml"

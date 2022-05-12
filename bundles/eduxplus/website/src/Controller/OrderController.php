@@ -127,8 +127,8 @@ class OrderController extends BaseHtmlController
         }
         $referer = "webpc";
         //生成订单
-        dump([$uid, $paymentType, $name, $goodsId, $goodsAll, $orderAmount,
-            $originalAmount, $discountAmount, $couponSn, $groupCouponId, $orderStatus, $referer, $userNotes]);
+//        dump([$uid, $paymentType, $name, $goodsId, $goodsAll, $orderAmount,
+//            $originalAmount, $discountAmount, $couponSn, $groupCouponId, $orderStatus, $referer, $userNotes]);
         list($orderId, $orderNo) = $orderService->add($uid, $paymentType, $name, $goodsId, $goodsAll, $orderAmount,
             $originalAmount, $discountAmount, $couponSn, $groupCouponId, $orderStatus, $referer, $userNotes);
 

@@ -1,0 +1,9 @@
+admin_schedule_index:
+  path: /admin/schedule/index
+  controller: Eduxplus\CoreBundle\Controller\ScheduleController::indexAction
+admin_api_schedule_switch_status:
+  path: /admin/schedule/switch_status/do/{id}
+  controller: Eduxplus\CoreBundle\Controller\ScheduleController::switchStatusAction
+admin_schedule_import:
+  path: /admin/schedule/import/do
+  controller: Eduxplus\CoreBundle\Controller\ScheduleController::importAction
