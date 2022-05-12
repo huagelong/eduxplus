@@ -332,10 +332,19 @@ class BaseService
     public function getCityNameFromIp($ip){
         $path = $this->getOption("app.geoip2City.path");
         if(!$path) return "未知";
-        $reader = new Reader($path);
-        $record = $reader->city($ip);
-        if(!$record) return "未知";
-        return $record->country->names['zh-CN']."-".$record->city->name['zh-CN'];
+        try {
+            $reader = new Reader($path);
+            $record = $reader->city($ip);
+            $country = isset($record->country->names['zh-CN']) ? $record->country->names['zh-CN'] : $record->country->names;
+            $city = isset($record->city->names['zh-CN']) ? $record->city->names['zh-CN'] : $record->city->names;
+            if ($city) {
+                return $country . $city;
+            } else {
+                return $country;
+            }
+        }catch (\Exception $e){
+            return "未知";
+        }
     }
 
 }

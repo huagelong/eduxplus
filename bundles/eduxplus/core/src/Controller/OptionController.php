@@ -95,8 +95,8 @@ class OptionController extends BaseAdminController
         $optionGroup = $request->get("optionGroup");
         $isLock = $isLock=="on"?1:0;
 
-        if(!$optionKey) return $this->responseError("健不能为空!");
-        if(!$optionValue) return $this->responseError("值不能为空!");
+        if($optionKey=="") return $this->responseError("健不能为空!");
+        if($optionValue=="") return $this->responseError("值不能为空!");
         if($optionService->checkOptionKey($optionKey)) return $this->responseError("健已存在!");
 
         $optionService->add($type, $optionKey, $optionValue, $descr, $isLock, $optionGroup);
@@ -154,8 +154,8 @@ class OptionController extends BaseAdminController
         $isLock = $request->get("isLock");
         $isLock = $isLock=="on"?1:0;
 
-        if(!$optionKey && !$info['isLock']) return $this->responseError("健不能为空!");
-        if(!$optionValue) return $this->responseError("值不能为空!");
+        if(($optionKey=="") && !$info['isLock']) return $this->responseError("健不能为空!");
+        if($optionValue=="") return $this->responseError("值不能为空!");
         if($optionService->checkOptionKey($optionKey, $id) && !$info['isLock']) return $this->responseError("健已存在!");
 
         $optionService->edit($id, $optionKey, $optionValue, $descr, $isLock);

@@ -95,7 +95,7 @@ class TestCommand extends Command
         $jwMenuId = 94;
         $menuId = 213;
         $sysMenuId = 352050054531383296;
-        $this->addOptionConfig("app.geoip2City.path", '1', "ip定位城市数据文件服务器本地地址", 1, 1, "网站基本配置");
+//        $this->addOptionConfig("app.geoip2City.path", '1', "ip定位城市数据文件服务器本地地址", 1, 1, "网站基本配置");
         return 0;
     }
 
