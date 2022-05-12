@@ -38,10 +38,10 @@ class ScheduleSubscriber implements EventSubscriberInterface
         if($allTask){
             foreach ($allTask as $task){
                 $taskId = $task->getId();
-                $nextRun = $task->getNextRun()->format('y-m-d H:i:s');
+                $nextRun = $task->getNextRun()->format('Y-m-d H:i:s');
                 $this->scheduleService->updateNextRun($taskId, $nextRun);
                 //是否关闭
-                if($this->scheduleService->hasClose($taskId)){
+                if(!$this->scheduleService->hasClose($taskId)){
                     $task->skip("task close", true);
                 }
             }
@@ -54,7 +54,7 @@ class ScheduleSubscriber implements EventSubscriberInterface
 
     public function onAfterTaskEvent(AfterTaskEvent $event){
         $taskId = $event->runContext()->getTask()->getId();
-        $startTime = $event->runContext()->getStartTime()->format("y-m-d H:i:s");
+        $startTime = $event->runContext()->getStartTime()->format("Y-m-d H:i:s");
         $duration = $event->runContext()->getFormattedDuration();//耗时
         $memory = $event->runContext()->getFormattedMemory();//占用内存
         $result = $event->runContext()->getResult()->getOutput();
@@ -62,7 +62,7 @@ class ScheduleSubscriber implements EventSubscriberInterface
         $exception = $event->runContext()->getResult()->getException();
         $isException = $event->runContext()->getResult()->isException();
 
-
+        if($runType == "skipped") return true;
 
         $runInfo = "耗时: ".$duration.", 占用内存: ".$memory;
         if($isException){

@@ -28,7 +28,7 @@ class ScheduleService extends AdminBaseService
     public function scheduleList($request, $page, $pageSize)
     {
         $sql = $this->getFormatRequestSql($request);
-        $dql = "SELECT a FROM Core:BaseSchedule a " . $sql  . " ORDER BY a.id ASC";
+        $dql = "SELECT a FROM Core:BaseSchedule a " . $sql  . " ORDER BY a.id DESC";
         $em = $this->getDoctrine()->getManager();
         $query = $em->createQuery($dql);
         $pagination = $this->paginator->paginate(

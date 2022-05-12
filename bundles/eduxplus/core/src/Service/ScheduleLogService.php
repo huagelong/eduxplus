@@ -26,7 +26,7 @@ class ScheduleLogService extends AdminBaseService
         }else{
             $sql .= " AND a.taskId =:taskId ";
         }
-        $dql = "SELECT a FROM Core:BaseScheduleLog a " . $sql  . " ORDER BY a.id ASC";
+        $dql = "SELECT a FROM Core:BaseScheduleLog a " . $sql  . " ORDER BY a.id DESC";
         $em = $this->getDoctrine()->getManager();
         $query = $em->createQuery($dql);
         if($taskId) $query = $query->setParameters(["taskId"=>$taskId]);
