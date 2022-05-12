@@ -4,6 +4,7 @@ namespace Eduxplus\CoreBundle\Lib\Base;
 
 use Doctrine\Persistence\ManagerRegistry;
 use Eduxplus\CoreBundle\Entity\BaseUser;
+use GeoIp2\Database\Reader;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
@@ -326,6 +327,15 @@ class BaseService
             }
         }
         return null;
+    }
+
+    public function getCityNameFromIp($ip){
+        $path = $this->getOption("app.geoip2City.path");
+        if(!$path) return "未知";
+        $reader = new Reader($path);
+        $record = $reader->city($ip);
+        if(!$record) return "未知";
+        return $record->country->names['zh-CN']."-".$record->city->name['zh-CN'];
     }
 
 }

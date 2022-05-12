@@ -72,13 +72,7 @@ class ControllerSubscriber implements EventSubscriberInterface
                         }
                     }
                     //记录日志
-                    $pathinfo = $request->getPathInfo();
-                    $queryData = $request->query->all();
-                    $postData = $request->getContent();
-                    $postData = mb_substr($postData,0, 400, "utf-8");
-                    $data = [$queryData, $postData];
-                    $ip = $request->getClientIp();
-                    $this->menuService->addActionLog($uid, $route, $pathinfo, $data, $ip);
+                    $this->menuService->addActionLog($uid, $request);
                 }
             }
         }

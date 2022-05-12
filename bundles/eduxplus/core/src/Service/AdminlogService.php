@@ -49,12 +49,11 @@ class AdminlogService extends AdminBaseService
                 $uid = $vArr['uid'];
                 $user = $this->userService->getById($uid);
                 $vArr['fullName'] = $user['fullName'];
+                $vArr['cityName'] = $this->userService->getCityNameFromIp($vArr['ip']);
                 // $vArr['inputData'] = var_export(json_decode($vArr['inputData'], true), true);
                 $itemsArr[] = $vArr;
             }
         }
         return [$pagination, $itemsArr];
-
-        return $pagination;
     }
 }

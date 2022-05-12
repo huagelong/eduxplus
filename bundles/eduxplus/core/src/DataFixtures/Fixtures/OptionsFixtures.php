@@ -36,6 +36,8 @@ class OptionsFixtures
         $this->addOption("app.live.adapter", '1', "直播服务商，1-腾讯云，2-阿里云", 1, 1, "网站基本配置");
         $this->addOption("app.sms.adapter", '1', "短信服务商，1-腾讯云，2-阿里云", 1, 1, "网站基本配置");
         $this->addOption("app.search.adapter", '1', "搜索方式，1-本地数据库，2-elasticsearch", 1, 1, "网站基本配置");
+        $this->addOption("app.geoip2City.path", '1', "ip定位城市数据文件服务器本地地址", 1, 1, "网站基本配置");
+
         //        -------云服务基础配置---
         //腾讯云
         $this->addOption("app.tengxunyun.appId", '', "腾讯云 appId", 1, 1, "腾讯云基础配置");

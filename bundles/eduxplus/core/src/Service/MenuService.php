@@ -122,7 +122,18 @@ class MenuService extends AdminBaseService
         return $this->db()->fetchOne($sql, ['url'=>$routeName]);
     }
 
-    public function addActionLog($uid, $route, $pathinfo, $inputdata, $ip){
+    public function addActionLog($uid, $request, $noData=false){
+        $pathinfo = $request->getPathInfo();
+        $inputdata = [];
+        if(!$noData) {
+            $queryData = $request->query->all();
+            $postData = $request->getContent();
+            $postData = mb_substr($postData, 0, 400, "utf-8");
+            $inputdata = [$queryData, $postData];
+        }
+        $ip = $request->getClientIp();
+        $route = $request->get("_route");
+
         //通过route获取动作消息
         $menuDql = "SELECT a FROM Core:BaseMenu a WHERE a.url =:url";
         $menuInfo = $this->db()->fetchOne($menuDql, ["url"=>$route]);

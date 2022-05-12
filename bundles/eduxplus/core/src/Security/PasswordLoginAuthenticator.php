@@ -8,11 +8,13 @@
 
 namespace Eduxplus\CoreBundle\Security;
 
+use Eduxplus\CoreBundle\Entity\BaseAdminLog;
 use Eduxplus\CoreBundle\Lib\Service\CaptchaService;
 use Eduxplus\CoreBundle\Entity\BaseUser;
 use Eduxplus\CoreBundle\Exception\NeedLoginException;
 use Doctrine\ORM\EntityManagerInterface;
 use Eduxplus\CoreBundle\Repository\BaseUserRepository;
+use Eduxplus\CoreBundle\Service\MenuService;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -45,12 +47,14 @@ class PasswordLoginAuthenticator extends AbstractLoginFormAuthenticator
     private $captchaService;
     private $mobileMaskService;
     private $userRepository;
+    private $menuService;
 
     public function __construct(EntityManagerInterface $entityManager,
                                 UrlGeneratorInterface $urlGenerator,
                                 CsrfTokenManagerInterface $csrfTokenManager,
                                 CaptchaService $captchaService,
                                 MobileMaskService $mobileMaskService,
+                                MenuService  $menuService,
                                 BaseUserRepository $userRepository
     )
     {
@@ -60,6 +64,7 @@ class PasswordLoginAuthenticator extends AbstractLoginFormAuthenticator
         $this->captchaService = $captchaService;
         $this->mobileMaskService = $mobileMaskService;
         $this->userRepository = $userRepository;
+        $this->menuService = $menuService;
     }
 
     public function start(Request $request, AuthenticationException $authException = null): Response
@@ -112,6 +117,9 @@ class PasswordLoginAuthenticator extends AbstractLoginFormAuthenticator
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $firewallName): Response
     {
+        $uid = $token->getUser()->getUserIdentifier();
+        $this->menuService->addActionLog($uid, $request, true);
+
         if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
             return new RedirectResponse($targetPath);
         }

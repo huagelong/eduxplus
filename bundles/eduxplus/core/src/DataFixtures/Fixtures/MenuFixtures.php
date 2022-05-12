@@ -28,6 +28,8 @@ class MenuFixtures
         $this->addMenu("搜索管理员", "搜索管理员", 0, "admin_api_glob_searchAdminUserDo", "", 3, $roleId, 1, 1, 0, 1);
         $this->addMenu("修改密码界面", "修改密码界面", 0, "admin_user_changePwd", "", 4, $roleId, 1, 1, 0, 1);
         $this->addMenu("修改密码处理", "修改密码处理", 0, "admin_user_changePwdDo", "", 5, $roleId, 1, 1, 0, 1);
+        $this->addMenu("登录", "登录", 0, "admin_login", "", 6, $roleId, 1, 1, 0, 1);
+        $this->addMenu("退出", "退出", 0, "admin_logout", "", 7, $roleId, 1, 1, 0, 1);
 
         $this->addMenu("获取阿里云点播视频上传地址和凭证", "获取阿里云点播视频上传地址和凭证", 0, "admin_api_glob_aliyunVodCreateUploadVideoDo", "", 6, $roleId, 1, 1, 0, 1);
         $this->addMenu("阿里云刷新视频上传凭证", "阿里云刷新视频上传凭证", 0, "admin_api_glob_aliyunVodRefreshUploadVideoDo", "", 7, $roleId, 1, 1, 0, 1);

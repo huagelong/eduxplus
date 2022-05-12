@@ -16,7 +16,7 @@ use Symfony\Component\HttpKernel\Event\RequestEvent;
 
 final class RequestTransformerListener
 {
-    private array $contentTypes=['json', 'jsonld'];
+    private $contentTypes=['json', 'jsonld'];
 
 
     public function onKernelRequest(RequestEvent $event): void
@@ -28,12 +28,12 @@ final class RequestTransformerListener
         }
 
         try {
-            $data = \json_decode((string) $request->getContent(), true, 512, \JSON_THROW_ON_ERROR);
+            $data = json_decode((string) $request->getContent(), true, 512);
 
-            if (\is_array($data)) {
+            if (is_array($data)) {
                 $request->request->replace($data);
             }
-        } catch (\JsonException $exception) {
+        } catch (\Exception $exception) {
             $event->setResponse(new JsonResponse(['message' => $exception->getMessage()], Response::HTTP_BAD_REQUEST));
         }
     }

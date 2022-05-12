@@ -24,18 +24,19 @@ class AdminLogController extends BaseAdminController
     public function indexAction(Request $request, AdminlogService $adminLogService, Grid $grid, UserService $userService){
         $pageSize = 40;
         $grid->setListService($adminLogService, "getList");
-        $grid->text("ID")->field("id")->sort("a.id");
+//        $grid->text("ID")->field("id")->sort("a.id");
         $grid->badgeInfo("动作")->field("descr");
 //        $grid->text("路由")->field("route");
         $grid->badgeMuted("操作人")->field("fullName");
-        $grid->badgePurple("Ip")->field("ip");
+        $grid->badgePurple("ip")->field("ip");
+        $grid->badgeBrown("ip地理")->field("cityName");
         $grid->tip("参数")->field("inputData");
         $grid->datetime("操作时间")->field("createdAt")->sort("a.createdAt");
 
-        $grid->snumber("ID")->field("a.id");
+//        $grid->snumber("ID")->field("a.id");
         $grid->stext("动作")->field("a.descr");
-        $grid->stext("路由")->field("a.route");
-        $grid->ssearchselect("创建人")->field("a.uid")->options(function()use($request, $userService){
+//        $grid->stext("路由")->field("a.route");
+        $grid->ssearchselect("操作人")->field("a.uid")->options(function()use($request, $userService){
             $values = $request->get("values");
             $uid = ($values&&isset($values["a.uid"]))?$values["a.uid"]:0;
             if($uid){
