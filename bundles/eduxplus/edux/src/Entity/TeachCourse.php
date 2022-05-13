@@ -8,7 +8,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 /**
  * TeachCourse
  *
- * @ORM\Table(name="teach_course")
+ * @ORM\Table(name="teach_course", indexes={@ORM\Index(name="category_id_idx", columns={"category_id"})})
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false, hardDelete=true)
  * @ORM\Entity(repositoryClass="Eduxplus\EduxBundle\Repository\TeachCourseRepository")
  */

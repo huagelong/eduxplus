@@ -8,7 +8,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 /**
  * BaseOption
  *
- * @ORM\Table(name="base_option")
+ * @ORM\Table(name="base_option", indexes={@ORM\Index(name="option_group_idx", columns={"option_group"}),@ORM\Index(name="option_key_idx", columns={"option_key"})})
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false, hardDelete=true)
  * @ORM\Entity(repositoryClass="Eduxplus\CoreBundle\Repository\BaseOptionRepository")
  */

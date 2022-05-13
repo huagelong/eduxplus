@@ -8,7 +8,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 /**
  * MallBannerMain
  *
- * @ORM\Table(name="mall_banner_main")
+ * @ORM\Table(name="mall_banner_main", indexes={@ORM\Index(name="banner_id_idx", columns={"banner_id"})})
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false, hardDelete=true)
  * @ORM\Entity(repositoryClass="Eduxplus\EduxBundle\Repository\CmsHelpRepository")
  */

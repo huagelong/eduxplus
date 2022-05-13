@@ -9,7 +9,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * MallMsgStatus
  * 消息状态
  *
- * @ORM\Table(name="mall_msg_status")
+ * @ORM\Table(name="mall_msg_status", indexes={@ORM\Index(name="msg_id_idx", columns={"msg_id"})})
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false, hardDelete=true)
  * @ORM\Entity(repositoryClass="Eduxplus\EduxBundle\Repository\MallMsgStatusRepository")
  */

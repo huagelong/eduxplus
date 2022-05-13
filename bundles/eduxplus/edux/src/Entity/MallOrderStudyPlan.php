@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
- * @ORM\Table(name="mall_order_study_plan")
+ * @ORM\Table(name="mall_order_study_plan", indexes={@ORM\Index(name="order_id_idx", columns={"order_id"}),@ORM\Index(name="uid_idx", columns={"uid"})})
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false, hardDelete=true)
  * @ORM\Entity(repositoryClass=MallOrderStudyPlanRepository::class)
  */

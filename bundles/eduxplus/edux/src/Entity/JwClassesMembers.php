@@ -8,7 +8,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 /**
  * JwClassesMembers
  *
- * @ORM\Table(name="jw_classes_members")
+ * @ORM\Table(name="jw_classes_members", indexes={@ORM\Index(name="classes_id_idx", columns={"classes_id"}),@ORM\Index(name="uid_idx", columns={"uid"})})
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false, hardDelete=true)
  * @ORM\Entity(repositoryClass="Eduxplus\EduxBundle\Repository\JwClassesMembersRepository")
  */

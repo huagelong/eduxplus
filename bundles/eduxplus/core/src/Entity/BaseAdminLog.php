@@ -6,11 +6,9 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 /**
  * BaseAdminLog
- *
- * @ORM\Table(name="base_admin_log")
+ * @ORM\Table(name="base_admin_log", indexes={@ORM\Index(name="uid_idx", columns={"uid"})} )
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false, hardDelete=true)
  * @ORM\Entity(repositoryClass="Eduxplus\CoreBundle\Repository\BaseAdminLogRepository")
- * @ORM\Cache(usage="READ_ONLY")
  */
 class BaseAdminLog
 {

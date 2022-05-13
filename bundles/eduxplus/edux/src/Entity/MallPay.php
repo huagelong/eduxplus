@@ -8,7 +8,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 /**
  * MallPay
  *
- * @ORM\Table(name="mall_pay")
+ * @ORM\Table(name="mall_pay", indexes={@ORM\Index(name="order_id_idx", columns={"order_id"}),@ORM\Index(name="uid_idx", columns={"uid"})})
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false, hardDelete=true)
  * @ORM\Entity(repositoryClass="Eduxplus\EduxBundle\Repository\MallPayRepository")
  */

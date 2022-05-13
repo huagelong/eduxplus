@@ -8,7 +8,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 /**
  * MallCoupon
  *
- * @ORM\Table(name="mall_coupon")
+ * @ORM\Table(name="mall_coupon", indexes={@ORM\Index(name="coupon_group_id_idx", columns={"coupon_group_id"})})
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false, hardDelete=true)
  * @ORM\Entity(repositoryClass="Eduxplus\EduxBundle\Repository\MallCouponRepository")
  */

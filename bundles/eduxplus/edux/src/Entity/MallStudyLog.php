@@ -9,7 +9,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * 学习记录
  * MallStudyLog
  *
- * @ORM\Table(name="mall_study_log")
+ * @ORM\Table(name="mall_study_log", indexes={@ORM\Index(name="uid_idx", columns={"uid"})})
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false, hardDelete=true)
  * @ORM\Entity(repositoryClass="Eduxplus\EduxBundle\Repository\MallStudyLogRepository")
  */

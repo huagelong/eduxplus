@@ -7,8 +7,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * BaseDictData
- *
- * @ORM\Table(name="base_dict_data")
+ * @ORM\Table(name="base_dict_data", indexes={@ORM\Index(name="dict_type_id_idx", columns={"dict_type_id"}),@ORM\Index(name="dict_label_idx", columns={"dict_label"})})
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false, hardDelete=true)
  * @ORM\Entity(repositoryClass="Eduxplus\CoreBundle\Repository\BaseDictDataRepository")
  */

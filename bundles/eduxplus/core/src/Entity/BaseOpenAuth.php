@@ -8,7 +8,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 /**
  * BaseOpenAuth
  *
- * @ORM\Table(name="base_open_auth")
+ * @ORM\Table(name="base_open_auth", indexes={@ORM\Index(name="uid_idx", columns={"uid"}),@ORM\Index(name="type_idx", columns={"type"}) })
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false, hardDelete=true)
  * @ORM\Entity(repositoryClass="Eduxplus\CoreBundle\Repository\BaseOpenAuthRepository")
  */
@@ -27,7 +27,7 @@ class BaseOpenAuth
     /**
      * @var bool|null
      *
-     * @ORM\Column(name="uid", type="bigint", length=1, nullable=true, options={"comment"="对应uid"})
+     * @ORM\Column(name="uid", type="bigint", length=20, nullable=true, options={"comment"="对应uid"})
      */
     private $uid;
 
