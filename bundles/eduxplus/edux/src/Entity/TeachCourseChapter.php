@@ -88,6 +88,13 @@ class TeachCourseChapter
     private $imGroupId;
 
     /**
+     * @var string|null
+     *
+     * @ORM\Column(name="cover_img", type="text", length=500, nullable=true, options={"comment"="封面图"})
+     */
+    private $coverImg;
+
+    /**
      * @var int|null
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(name="created_at", type="datetime", nullable=true)
@@ -133,6 +140,22 @@ class TeachCourseChapter
         $this->name = $name;
 
         return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getCoverImg(): ?string
+    {
+        return $this->coverImg;
+    }
+
+    /**
+     * @param string|null $coverImg
+     */
+    public function setCoverImg(?string $coverImg): void
+    {
+        $this->coverImg = $coverImg;
     }
 
     public function getOpenTime(): ?int

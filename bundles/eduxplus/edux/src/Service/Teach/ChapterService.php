@@ -11,6 +11,7 @@ namespace Eduxplus\EduxBundle\Service\Teach;
 
 
 use Eduxplus\CoreBundle\Lib\Base\AdminBaseService;
+use Eduxplus\CoreBundle\Lib\Utils;
 use Eduxplus\EduxBundle\Service\Jw\TeacherService;
 use Eduxplus\CoreBundle\Lib\Base\BaseService;
 use Eduxplus\CoreBundle\Lib\Service\Base\Live\AliyunLiveService;
@@ -140,7 +141,7 @@ class ChapterService extends AdminBaseService
         return $rs;
     }
 
-    public function add($name, $teachers, $parentId, $openTime, $studyWay, $isFree, $sort, $id)
+    public function add($name, $coverImg, $teachers, $parentId, $openTime, $studyWay, $isFree, $sort, $id)
     {
         $path = $this->findPath($parentId);
         $model = new TeachCourseChapter();
@@ -152,6 +153,10 @@ class ChapterService extends AdminBaseService
         $model->setSort($sort);
         $model->setCourseId($id);
         $model->setPath($path);
+        if (!$coverImg) {
+            $coverImg = json_encode([trim($this->getOption("app.domain"),"/")."/bundles/eduxplusedux/images/course.jpg"]);
+        }
+        $model->setCoverImg($coverImg);
         $chapterId = $this->db()->save($model);
 
         if ($teachers) {
@@ -197,7 +202,7 @@ class ChapterService extends AdminBaseService
         }
     }
 
-    public function edit($id, $name, $teachers, $parentId, $openTime, $studyWay, $isFree, $sort)
+    public function edit($id, $coverImg, $name, $teachers, $parentId, $openTime, $studyWay, $isFree, $sort)
     {
         $sql = "SELECT a FROM Edux:TeachCourseChapter a WHERE a.id=:id";
         $model = $this->db()->fetchOne($sql, ['id' => $id], 1);
@@ -212,6 +217,10 @@ class ChapterService extends AdminBaseService
         $model->setStudyWay($studyWay);
         $model->setIsFree($isFree);
         $model->setSort($sort);
+        if (!$coverImg) {
+            $coverImg = json_encode([trim($this->getOption("app.domain"),"/")."/bundles/eduxplusedux/images/course.jpg"]);
+        }
+        $model->setCoverImg($coverImg);
         $this->db()->save($model);
         if ($teachers) {
             $sql2 = "SELECT a FROM Edux:TeachCourseTeachers a WHERE a.chapterId=:chapterId";
@@ -229,6 +238,16 @@ class ChapterService extends AdminBaseService
         if ($openTime) {
             //对比开课时间设置最早开课时间
             $this->updateCourseOpenTime($courseId, $openTime);
+        }
+
+        if($coverImg){
+            $coverImgArr = json_decode($coverImg, true);
+            $coverImg = current($coverImgArr);
+            $sql = "SELECT a FROM Edux:TeachCourseVideos a WHERE a.chapterId=:chapterId";
+            $courseVideoInfo = $this->db()->fetchOne($sql, ["chapterId" => $id]);
+            if($courseVideoInfo["videoId"]){
+                $this->modifyCoverImg($coverImg,$courseVideoInfo["type"], $courseVideoInfo["videoChannel"], $courseVideoInfo["videoId"]);
+            }
         }
     }
 
@@ -326,6 +345,9 @@ class ChapterService extends AdminBaseService
             if (!$model) {
                 $model = new TeachCourseVideos();
             }
+            $oldVideoId = $model->getVideoId();
+            $oldStatus = $model->getStatus();
+
             $model->setChapterId($chapterId);
             $model->setCourseId($courseId);
             $model->setType($type);
@@ -333,15 +355,41 @@ class ChapterService extends AdminBaseService
             $model->setVideoId($videoId);
             $model->setVideoChannel($videoChannel);
             $id = $this->db()->save($model);
-            // throw new \Exception("aaa");
 
-            $this->ayncTranscode($type, $videoChannel, $videoId);
+            $coverImg = "";
+            if($chapterInfo["coverImg"]){
+                $coverImgArr = json_decode($chapterInfo["coverImg"], true);
+                $coverImg = current($coverImgArr);
+            }
+            $this->modifyCoverImg($coverImg,$type, $videoChannel, $videoId);
+
+            if(($oldVideoId != $videoId) || (!$oldStatus)){
+                $this->ayncTranscode($type, $videoChannel, $videoId);
+            }
 
             $this->db()->commit();
             return $id;
         } catch (\Exception $e) {
             $this->db()->rollback();
             return $this->error()->add($e->getMessage());
+        }
+    }
+
+
+    private function modifyCoverImg($coverImg, $type, $videoChannel, $videoId)
+    {
+        if(!$coverImg) return ;
+
+        if ($type == 2) {
+            if ($videoChannel == 2) { //阿里云
+
+            } else if ($videoChannel == 1) { //腾讯云
+                $img = Utils::baseCurlGet($coverImg, "get");
+                if($img){
+                    $coverImgData = base64_encode($img);
+                    $this->tengxunyunVodService->ModifyMediaInfo($videoId, $coverImgData);
+                }
+            }
         }
     }
 

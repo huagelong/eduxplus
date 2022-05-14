@@ -18,7 +18,7 @@
     </div>
 </div>
     <script>
-        uploadVideo("{{ appId }}", "{{ name }}", "uploadVideo", "videoFileId",400, "{{ path('admin_api_glob_tengxunyunSignatureDo') }}", "{{ path('admin_api_glob_tengxunyunVodAndvancePlaySignDo') }}");
+        uploadVideo("{{ appId }}", "{{ name }}", "uploadVideo", "videoFileId",60, "{{ path('admin_api_glob_tengxunyunSignatureDo') }}", "{{ path('admin_api_glob_tengxunyunVodAndvancePlaySignDo') }}");
         {% if videoInfo and videoInfo["videoId"] != "" and videoInfo["status"] ==1 %}
         //预览
         axios

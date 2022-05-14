@@ -208,7 +208,7 @@ function checkVideo(event, maxSize, videoFileId) {
 
   if (maxSize != undefined) {
     if (file.size > 1024 * 1024 * maxSize) {
-      showMsg(400, "文件不能大于" + maxSize + "M");
+      showMsg(400, "文件不能大于" + maxSize + "GB");
       $("#" + videoFileId).val("");
       return false;
     }

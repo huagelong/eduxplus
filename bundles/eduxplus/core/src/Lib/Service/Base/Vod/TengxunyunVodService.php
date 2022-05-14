@@ -21,6 +21,7 @@ use TencentCloud\Common\Profile\HttpProfile;
 use TencentCloud\Common\Exception\TencentCloudSDKException;
 use TencentCloud\Vod\V20180717\Models\DescribeMediaInfosRequest;
 use TencentCloud\Vod\V20180717\Models\ModifyClassRequest;
+use TencentCloud\Vod\V20180717\Models\ModifyMediaInfoRequest;
 use TencentCloud\Vod\V20180717\VodClient;
 use TencentCloud\Vod\V20180717\Models\CreateClassRequest;
 use TencentCloud\Vod\V20180717\Models\ProcessMediaByProcedureRequest;
@@ -251,6 +252,72 @@ class TengxunyunVodService extends BaseService
         }
     }
 
+    /**
+     * 修改视频信息
+     * @param $videoId
+     * @param $videoName
+     * @param $coverImgData
+     * @return false|mixed
+     */
+    public function ModifyMediaInfo($videoId, $coverImgData, $videoName=null){
+        $this->initConfig();
+
+        try {
+            $errors = [
+                "FailedOperation"=>"操作失败。",
+                "FailedOperation.InvalidVodUser"=>"没有开通点播业务。",
+                "InternalError.GetFileInfoError"=>"内部错误：获取媒体文件信息错误。",
+                "InternalError.UpdateMediaError"=>"内部错误：更新媒体文件信息错误。",
+                "InternalError.UploadCoverImageError"=>"内部错误：上传封面图片错误。",
+                "InvalidParameterValue.AddKeyFrameDescsAndClearKeyFrameDescsConflict"=>"参数值错误：AddKeyFrameDescs 与 ClearKeyFrameDescs 参数冲突。",
+                "InvalidParameterValue.AddKeyFrameDescsAndDeleteKeyFrameDescsConflict"=>"参数值错误：AddKeyFrameDescs 与 DeleteKeyFrameDescs 参数冲突。",
+                "InvalidParameterValue.AddTagsAndClearTagsConflict"=>"参数值错误：AddTags 与 ClearTags 参数冲突。",
+                "InvalidParameterValue.AddTagsAndDeleteTagsConflict"=>"参数值错误：AddTags 与 DeleteTags 参数冲突。",
+                "InvalidParameterValue.Description"=>"参数值错误：Description 超过长度限制。",
+                "InvalidParameterValue.ExpireTime"=>"参数值错误：ExpireTime 格式错误。",
+                "InvalidParameterValue.ImageDecodeError"=>"图片解 Base64 编码失败。",
+                "InvalidParameterValue.KeyFrameDescContentTooLong"=>"参数值错误：打点信息内容过长。",
+                "InvalidParameterValue.Name"=>"参数值错误：Name 超过长度限制。",
+                "InvalidParameterValue.TagTooLong"=>"参数值错误：标签过长。",
+                "LimitExceeded.KeyFrameDescCountReachMax"=>"超过限制值：新旧打点信息个数和超过限制值。",
+                "LimitExceeded.TagCountReachMax"=>"超过限制值：新旧标签个数和超过限制值。",
+                "ResourceNotFound.FileNotExist"=>"资源不存在：文件不存在。",
+                "UnauthorizedOperation"=>"未授权操作。"
+            ];
+
+            $cred = new Credential($this->secretId, $this->secretKey);
+            $httpProfile = new HttpProfile();
+            $httpProfile->setEndpoint("vod.tencentcloudapi.com");
+
+            $clientProfile = new ClientProfile();
+            $clientProfile->setHttpProfile($httpProfile);
+            $client = new VodClient($cred, $this->region, $clientProfile);
+
+            $req = new ModifyMediaInfoRequest();
+
+            $params = array(
+                "FileId" => $videoId
+            );
+
+            if($videoName){
+                $params["Name"] = $videoName;
+            }
+
+            if($coverImgData){
+                $params["CoverData"] = $coverImgData;
+            }
+
+            $req->fromJsonString(json_encode($params));
+
+            $resp = $client->ModifyMediaInfo($req);
+
+            $jsonStr = $resp->toJsonString();
+            $result =  json_decode($jsonStr, true);
+            return $result;
+        } catch (TencentCloudSDKException $e) {
+            return $this->formatError($e->getErrorCode(), $errors, $e->getMessage());
+        }
+    }
 
     /**
      * 修改分类

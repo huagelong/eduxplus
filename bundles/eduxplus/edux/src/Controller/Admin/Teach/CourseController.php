@@ -109,7 +109,7 @@ class CourseController extends BaseAdminController
         $options["data-upload-url"] = $this->generateUrl("admin_glob_upload", ["type" => "img_course"]);
         $options["data-min-file-count"] = 1;
         $options['data-max-total-file-count'] = 1;
-        $options["data-max-file-size"] = 1024 * 5; //2m
+        $options["data-max-file-size"] = 1024 * 5; //5m
         $options["data-required"] = 0;
         $form->file("封面图")->field("bigImg")->attr($options);
 

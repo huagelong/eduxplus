@@ -64,6 +64,15 @@ class ChapterController extends BaseAdminController
                 ];
             }
         });
+        $options = [];
+        $options["data-upload-url"] = $this->generateUrl("admin_glob_upload", ["type" => "chapter_cover"]);
+        $options["data-min-file-count"] = 1;
+        $options['data-max-total-file-count'] = 1;
+        $options["data-max-file-size"] = 1024 * 5; //5m
+        $options["data-required"] = 0;
+
+        $form->file("封面")->field("coverImg")->attr($options);
+
         $form->datetime("上课时间")->field("openTime")->placeholder("直播必须输入上课时间");
         $form->multiSelect("上课老师")->field("teachers[]")->isRequire(1)->options($chapterService->getTeachers());
 
@@ -91,6 +100,7 @@ class ChapterController extends BaseAdminController
         $isFree = $request->get("isFree");
         $sort = (int) $request->get("sort");
         $teachers = $request->get("teachers");
+        $coverImg = $request->get("coverImg");
 
         $isFree = $isFree == "on" ? 1 : 0;
 
@@ -117,7 +127,7 @@ class ChapterController extends BaseAdminController
             if(!$openTime) return $this->responseError("直播时，上课时间不能为空!");
         }
 
-        $chapterService->add($name, $teachers, $parentId, $openTime, $studyWay, $isFree, $sort, $id);
+        $chapterService->add($name, $coverImg, $teachers, $parentId, $openTime, $studyWay, $isFree, $sort, $id);
 
         return $this->responseMsgRedirect("操作成功!", $this->generateUrl('admin_teach_chapter_index', [
             'id' => $id
@@ -133,6 +143,17 @@ class ChapterController extends BaseAdminController
         $form->notice("父章节最多只能选择一级");
         $form->text("名称")->field("name")->isRequire(1)->defaultValue($info['name']);
         $form->select("父章节")->field("parentId")->isRequire(1)->defaultValue($info['parentId'])->options($select);
+
+        $options = [];
+        $options["data-upload-url"] = $this->generateUrl("admin_glob_upload", ["type" => "chapter_cover"]);
+        $options["data-min-file-count"] = 1;
+        $options['data-max-total-file-count'] = 1;
+        $options["data-max-file-size"] = 1024 * 5; //5m
+        $options["data-required"] = 0;
+        $options['data-initial-preview'] = $info["coverImg"];
+        $options['data-initial-preview-config'] = $chapterService->getInitialPreviewConfig($info['coverImg']);
+        $form->file("封面图")->field("coverImg")->attr($options)->defaultValue($info['coverImg']);
+
         $form->datetime("上课时间")->field("openTime")->defaultValue($info['openTime']?date('Y-m-d H:i', $info['openTime']):"")->placeholder("直播必须输入上课时间");
 
         $teacherIds = $chapterService->getTeacherIds($id);
@@ -178,6 +199,7 @@ class ChapterController extends BaseAdminController
         $sort = (int) $request->get("sort");
         $teachers = $request->get("teachers");
         $isFree = $isFree == "on" ? 1 : 0;
+        $coverImg = $request->get("coverImg");
 
         if (!$name)
             return $this->responseError("章节名称不能为空!");
@@ -204,7 +226,7 @@ class ChapterController extends BaseAdminController
             if(!$openTime) return $this->responseError("直播时，上课时间不能为空!");
         }
 
-        $chapterService->edit($id, $name, $teachers, $parentId, $openTime, $studyWay, $isFree, $sort);
+        $chapterService->edit($id, $coverImg, $name, $teachers, $parentId, $openTime, $studyWay, $isFree, $sort);
 
         $info = $chapterService->getById($id);
 
