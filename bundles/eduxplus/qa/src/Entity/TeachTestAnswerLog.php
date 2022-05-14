@@ -8,7 +8,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 /**
  * TeachTestAnswer 试卷回答日志
  *
- * @ORM\Table(name="teach_test_answer_log")
+ * @ORM\Table(name="teach_test_answer_log", indexes={@ORM\Index(name="qa_node_id_idx", columns={"qa_node_id"}),@ORM\Index(name="uid_idx", columns={"uid"}),@ORM\Index(name="test_id_idx", columns={"test_id"})})
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false, hardDelete=true)
  * @ORM\Entity(repositoryClass="Eduxplus\QaBundle\Repository\TeachTestAnswerRepository")
  */

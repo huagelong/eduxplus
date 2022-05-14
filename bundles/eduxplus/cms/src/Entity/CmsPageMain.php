@@ -8,7 +8,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 /**
  * CmsPageMain
  *
- * @ORM\Table(name="cms_page_main")
+ * @ORM\Table(name="cms_page_main", indexes={@ORM\Index(name="page_id_idx", columns={"page_id"})})
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false, hardDelete=true)
  * @ORM\Entity(repositoryClass="Eduxplus\CmsBundle\Repository\CmsPageMainRepository")
  */

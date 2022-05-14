@@ -8,7 +8,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 /**
  * CmsNewsMain
  *
- * @ORM\Table(name="cms_news_main")
+ * @ORM\Table(name="cms_news_main", indexes={@ORM\Index(name="news_id_idx", columns={"news_id"})})
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false, hardDelete=true)
  * @ORM\Entity(repositoryClass="Eduxplus\CmsBundle\Repository\CmsNewsMainRepository")
  */

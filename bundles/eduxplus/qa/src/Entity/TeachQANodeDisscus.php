@@ -8,7 +8,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 /**
  * TeachQANodeDisscus
  *
- * @ORM\Table(name="teach_qa_node_disscus")
+ * @ORM\Table(name="teach_qa_node_disscus", indexes={@ORM\Index(name="qa_node_id_idx", columns={"qa_node_id"}), @ORM\Index(name="uid_idx", columns={"uid"})})
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false, hardDelete=true)
  * @ORM\Entity(repositoryClass="Eduxplus\QaBundle\Repository\TeachQANodeDisscusRepository")
  */
