@@ -8,18 +8,7 @@ app_glob_upload:
   path: /glob/upload/do/{type}
   controller: Eduxplus\WebsiteBundle\Controller\GlobController::uploadAction
   defaults:  
-     type: img 
-app_glob_aliyunVodPlayCheck:
-  path: /aliyunVodPlayCheck
-  controller: Eduxplus\WebsiteBundle\Controller\GlobController::aliyunVodPlayCheckAction
-app_glob_tengxunyunImCallback:
-  path: /tengxunyunImCallback
-  controller: Eduxplus\WebsiteBundle\Controller\GlobController::tengxunyunLiveCallbackAction
-app_glob_vodCallback:
-  path: /vodCallback/do/{type}
-  controller: Eduxplus\WebsiteBundle\Controller\GlobController::vodCallbackAction
-  defaults:  
-     type: aliyun 
+     type: img
 app_glob_pay_alipayCallback:
   path: /pay/alipayCallback
   controller: Eduxplus\WebsiteBundle\Controller\GlobController::alipayCallbackAction

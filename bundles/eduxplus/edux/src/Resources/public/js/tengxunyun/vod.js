@@ -198,10 +198,9 @@ function onVideoUploaded(
  */
 function checkVideo(event, maxSize, videoFileId) {
   var flag = true;
-  var accept = event.target.accept;
   var file = event.target.files[0];
-
-  if (accept.includes("video") && !file.type.includes("video")) {
+  // console.log(event.target.files);
+  if (!file.type.includes("video")) {
     showMsg(400, "上传文件必须是视频！！！");
     return false;
   }

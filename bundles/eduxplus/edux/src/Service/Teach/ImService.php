@@ -6,30 +6,22 @@
  * @Date: 2020/6/15 12:01
  */
 
-namespace Eduxplus\WebsiteBundle\Service;
-
-
-use Eduxplus\CoreBundle\Lib\Base\AppBaseService;
+namespace Eduxplus\EduxBundle\Service\Teach;
+use Eduxplus\CoreBundle\Lib\Base\BaseService;
 use Eduxplus\CoreBundle\Lib\Service\CacheService;
 use Eduxplus\CoreBundle\Lib\Service\Base\Im\TengxunyunImService;
 use Eduxplus\EduxBundle\Entity\TeachLiveChatLog;
 
-class ImService extends AppBaseService
+class ImService extends BaseService
 {
     const GROUPOWNERID = 1;
 
     protected $tengxunyunImService;
     protected $cacheService;
-    protected $userService;
-    
-    public function __construct(TengxunyunImService $tengxunyunImService, 
-                        CacheService $cacheService,
-                        UserService $userService
-                        )
+    public function __construct(TengxunyunImService $tengxunyunImService, CacheService $cacheService)
     {
         $this->tengxunyunImService = $tengxunyunImService;
         $this->cacheService = $cacheService;
-        $this->userService = $userService;
     }
 
     /**

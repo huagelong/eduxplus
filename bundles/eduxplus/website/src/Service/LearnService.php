@@ -258,6 +258,23 @@ class LearnService extends AppBaseService
         }
     }
 
+    function modifyCoverImg($coverImg, $type, $videoChannel, $videoId)
+    {
+        if(!$coverImg) return ;
+
+        if ($type == 2) {
+            if ($videoChannel == 2) { //阿里云
+
+            } else if ($videoChannel == 1) { //腾讯云
+                $img = $this->helperService->baseCurlGet($coverImg, "get");
+                if($img){
+                    $coverImgData = base64_encode($img);
+                    $this->tengxunyunVodService->ModifyMediaInfo($videoId, $coverImgData);
+                }
+            }
+        }
+    }
+
     public function getVideoByVideoId($videoId)
     {
         $sql = "SELECT a FROM Edux:TeachCourseVideos a WHERE a.videoId=:videoId";

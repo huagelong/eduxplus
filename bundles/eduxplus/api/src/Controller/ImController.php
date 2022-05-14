@@ -11,7 +11,7 @@
 namespace Eduxplus\ApiBundle\Controller;
 
 use Eduxplus\CoreBundle\Lib\Base\BaseApiController;
-use Eduxplus\WebsiteBundle\Service\ImService;
+use Eduxplus\EduxBundle\Service\Teach\ImService;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 

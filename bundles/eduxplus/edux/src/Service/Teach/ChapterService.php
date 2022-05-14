@@ -11,6 +11,7 @@ namespace Eduxplus\EduxBundle\Service\Teach;
 
 
 use Eduxplus\CoreBundle\Lib\Base\AdminBaseService;
+use Eduxplus\CoreBundle\Lib\Service\HelperService;
 use Eduxplus\CoreBundle\Lib\Utils;
 use Eduxplus\EduxBundle\Service\Jw\TeacherService;
 use Eduxplus\CoreBundle\Lib\Base\BaseService;
@@ -31,12 +32,14 @@ class ChapterService extends AdminBaseService
     protected $tengxunyunVodService;
     protected $tengxunyunLiveService;
     protected $aliyunLiveService;
+    protected $helpService;
 
     public function __construct(TeacherService $teacherService,
                                 AliyunVodService $aliyunVodService,
                                 TengxunyunVodService $tengxunyunVodService,
                                 TengxunyunLiveService $tengxunyunLiveService,
-                                AliyunLiveService $aliyunLiveService
+                                AliyunLiveService $aliyunLiveService,
+                                HelperService $helperService
 )
     {
         $this->teacherService = $teacherService;
@@ -44,6 +47,7 @@ class ChapterService extends AdminBaseService
         $this->tengxunyunVodService = $tengxunyunVodService;
         $this->tengxunyunLiveService = $tengxunyunLiveService;
         $this->aliyunLiveService = $aliyunLiveService;
+        $this->helperService = $helperService;
     }
 
     public function getChapterTree($parentId, $courseId)
@@ -348,23 +352,26 @@ class ChapterService extends AdminBaseService
             $oldVideoId = $model->getVideoId();
             $oldStatus = $model->getStatus();
 
+            if($oldVideoId != $videoId){
+                $oldStatus = 0;
+            }
+
             $model->setChapterId($chapterId);
             $model->setCourseId($courseId);
             $model->setType($type);
-            $model->setStatus(0);
+            $model->setStatus($oldStatus);
             $model->setVideoId($videoId);
             $model->setVideoChannel($videoChannel);
             $id = $this->db()->save($model);
 
-            $coverImg = "";
-            if($chapterInfo["coverImg"]){
-                $coverImgArr = json_decode($chapterInfo["coverImg"], true);
-                $coverImg = current($coverImgArr);
-            }
-            $this->modifyCoverImg($coverImg,$type, $videoChannel, $videoId);
-
             if(($oldVideoId != $videoId) || (!$oldStatus)){
                 $this->ayncTranscode($type, $videoChannel, $videoId);
+            }else{
+                if($chapterInfo["coverImg"]){
+                    $coverImgArr = json_decode($chapterInfo["coverImg"], true);
+                    $coverImg = current($coverImgArr);
+                    $this->modifyCoverImg($coverImg,$type, $videoChannel, $videoId);
+                }
             }
 
             $this->db()->commit();
@@ -376,7 +383,7 @@ class ChapterService extends AdminBaseService
     }
 
 
-    private function modifyCoverImg($coverImg, $type, $videoChannel, $videoId)
+    public function modifyCoverImg($coverImg, $type, $videoChannel, $videoId)
     {
         if(!$coverImg) return ;
 
@@ -384,12 +391,27 @@ class ChapterService extends AdminBaseService
             if ($videoChannel == 2) { //阿里云
 
             } else if ($videoChannel == 1) { //腾讯云
-                $img = Utils::baseCurlGet($coverImg, "get");
+                $img = $this->helperService->baseCurlGet($coverImg, "get");
                 if($img){
                     $coverImgData = base64_encode($img);
                     $this->tengxunyunVodService->ModifyMediaInfo($videoId, $coverImgData);
                 }
             }
+        }
+    }
+
+    /**
+     * 更新视频状态
+     *
+     * @param $videoId
+     */
+    public function updateVideoStatus($videoChannel, $videoId, $status = 1)
+    {
+        $sql = "SELECT a FROM Edux:TeachCourseVideos a WHERE a.videoId=:videoId AND a.videoChannel=:videoChannel";
+        $model = $this->db()->fetchOne($sql, ['videoId' => $videoId, "videoChannel" => $videoChannel], 1);
+        if ($model) {
+            $model->setStatus($status);
+            $this->db()->save($model);
         }
     }
 

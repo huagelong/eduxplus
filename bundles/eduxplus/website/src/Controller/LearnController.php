@@ -13,7 +13,7 @@ namespace Eduxplus\WebsiteBundle\Controller;
 use Eduxplus\CoreBundle\Lib\Base\BaseHtmlController;
 use Eduxplus\CoreBundle\Lib\Service\Base\Vod\AliyunVodService;
 use Eduxplus\CoreBundle\Lib\Service\Base\Vod\TengxunyunVodService;
-use Eduxplus\WebsiteBundle\Service\ImService;
+use Eduxplus\EduxBundle\Service\Teach\ImService;
 use Eduxplus\WebsiteBundle\Service\LearnService;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;

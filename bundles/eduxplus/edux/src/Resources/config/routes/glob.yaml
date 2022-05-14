@@ -8,3 +8,14 @@ admin_api_glob_searchGoodsDo:
 admin_api_glob_searchCourseDo:
   path: /admin/glob/searchCourse/do
   controller: Eduxplus\EduxBundle\Controller\Admin\GlobController::searchCourseDoAction
+app_glob_aliyunVodPlayCheck:
+  path: /aliyunVodPlayCheck
+  controller: Eduxplus\EduxBundle\Controller\Admin\GlobController::aliyunVodPlayCheckAction
+app_glob_tengxunyunImCallback:
+  path: /tengxunyunImCallback
+  controller: Eduxplus\EduxBundle\Controller\Admin\GlobController::tengxunyunLiveCallbackAction
+app_glob_vodCallback:
+  path: /vodCallback/do/{type}
+  controller: Eduxplus\EduxBundle\Controller\Admin\GlobController::vodCallbackAction
+  defaults:
+    type: aliyun
