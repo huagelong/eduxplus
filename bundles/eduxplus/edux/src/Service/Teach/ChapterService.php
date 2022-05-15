@@ -389,7 +389,7 @@ class ChapterService extends AdminBaseService
 
         if ($type == 2) {
             if ($videoChannel == 2) { //阿里云
-
+                $this->aliyunVodService->updateVideoInfo($videoId, $coverImg);
             } else if ($videoChannel == 1) { //腾讯云
                 $img = $this->helperService->baseCurlGet($coverImg, "get");
                 if($img){

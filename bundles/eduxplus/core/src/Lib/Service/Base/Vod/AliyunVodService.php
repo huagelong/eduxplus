@@ -266,6 +266,50 @@ class AliyunVodService extends BaseService
     }
 
 
+    //更新视频信息
+    public function updateVideoInfo($videoId, $coverUrl=null, $title=null, $cateId=null){
+        try {
+            $this->initClient();
+
+            $query=[
+                'RegionId' => $this->regionId,
+                'VideoId' => $videoId
+            ];
+
+            if($title){
+                $query['Title']=$title;
+            }
+
+            if($coverUrl){
+                $query['CoverURL']=$coverUrl;
+            }
+
+            if($cateId){
+                $query['CateId']=$cateId;
+            }
+
+            $result = AlibabaCloud::rpc()
+                ->product('vod')
+                ->scheme('https')
+                ->version('2017-03-21')
+                ->action('UpdateVideoInfo')
+                ->method('POST')
+                ->client(self::VOD_CLIENT_NAME)
+                ->options([
+                    'query' => $query,
+                ])
+                ->request();
+            $uploadInfo  = $result->toArray();
+            return $uploadInfo;
+        }catch (\Exception $e){
+            $errors = [
+                "InvalidVideo.NotFound"=>"视频不存在。"
+            ];
+            $errInfo =  $this->formatError($e->getMessage(), $errors, $e->getMessage());
+            return $errInfo;
+        }
+
+    }
 
     public function refreshUploadVideo($videoId){
         try {

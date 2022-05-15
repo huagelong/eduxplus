@@ -104,6 +104,16 @@ class GlobController extends BaseAdminController
             //转换成功
             if ($videoId && $eventType == 'TranscodeComplete') {
                 $chapterService->updateVideoStatus($channel, $videoId);
+
+                $videoInfo = $chapterService->getVideoByVideoId($videoId);
+                if(!$videoInfo) return ;
+                $chapterInfo = $chapterService->getChapter($videoInfo["chapterId"]);
+                if($chapterInfo["coverImg"]) {
+                    $coverImgArr = json_decode($chapterInfo["coverImg"], true);
+                    $coverImg = current($coverImgArr);
+                    $chapterService->modifyCoverImg($coverImg, 2, 2, $videoId);
+                }
+
             }
         }
 
