@@ -395,6 +395,11 @@ class ChapterController extends BaseAdminController
         $videoChannel = $chapterService->getOption("app.vod.adapter");
         if (!$videoChannel)  return $this->responseError("请先设置点播服务商!");
 
+        $videoInfo = $chapterService->getVideoByVideoId($videoId);
+        if($videoInfo && ($videoInfo['chapter_id'] !=$id)){
+            return $this->responseError("视频id已经有其他章节使用，不能重复使用!");
+        }
+
         $chapterService->addVideos($id, $type, $videoChannel, $videoId);
 
         if ($this->error()->has()) {
