@@ -82,7 +82,8 @@ class GlobService extends AppBaseService
         $times = (int) $this->cacheService->get($key);
         $smsTimes = $this->getOption("app.sms.times");
         if($times > ($smsTimes-1))  return $this->error()->add("已超过当天准许该手机发送短信的最大次数!");
-        $this->cacheService->set($key,$times+1, 86400);
+        $time = strtotime(date('Y-m-d')." 23:59:59");
+        $this->cacheService->setExpireAt($key,$times+1, $time);
         return true;
     }
 

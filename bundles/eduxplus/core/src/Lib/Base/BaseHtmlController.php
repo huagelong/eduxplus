@@ -39,7 +39,7 @@ class BaseHtmlController extends BaseController
     {
         $uid = $this->getUid();
         $sql = "SELECT a FROM Core:BaseUser a WHERE a.id = :id";
-        $model = $this->appBaseService->fetchOne($sql, ["id"=>$uid]);
+        $model = $this->appBaseService->db()->fetchOne($sql, ["id"=>$uid]);
         return $model;
     }
 }

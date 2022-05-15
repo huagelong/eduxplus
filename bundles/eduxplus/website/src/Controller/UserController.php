@@ -11,6 +11,7 @@ namespace Eduxplus\WebsiteBundle\Controller;
 
 use Eduxplus\CoreBundle\Lib\Base\AppBaseService;
 use Eduxplus\CoreBundle\Lib\Base\BaseHtmlController;
+use Eduxplus\CoreBundle\Lib\Service\Base\AesService;
 use Eduxplus\CoreBundle\Lib\Service\HelperService;
 use Eduxplus\CoreBundle\Lib\Service\Base\UploadService;
 use Eduxplus\CoreBundle\Lib\Service\ValidateService;
@@ -209,10 +210,11 @@ class UserController extends BaseHtmlController
     }
 
     
-    public function changeMobileFirstAction(HelperService $helperService){
+    public function changeMobileFirstAction(HelperService $helperService, AesService $aesService){
         $data = [];
         $user = $this->getUserInfo();
-        $mobileView = $helperService->formatMobile($user->getMobile());
+        $user['mobile'] = $aesService->decrypt($user["mobileMask"]);
+        $mobileView = $helperService->formatMobile($user['mobile']);
         $data['user'] = $user;
         $data['mobileView'] = $mobileView;
         $data['route'] = "app_user_secure";

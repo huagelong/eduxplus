@@ -47,7 +47,7 @@ class CacheService
 
         $result = $this->cacheCLient->get($key);
         if (!$result) return $default;
-        $result = unserialize($result);
+//        $result = unserialize($result);
         return $result;
     }
 
@@ -63,12 +63,30 @@ class CacheService
     {
         $key = $this->parseKey($key);
 
-        $value = serialize($value);
+//        $value = serialize($value);
         if ($expire > 0) {
             $result = $this->cacheCLient->setex($key, $expire, $value);
         } else {
             $result = $this->cacheCLient->set($key, $value);
         }
+        return $result;
+    }
+
+
+    /**
+     * 设置缓存
+     * @param $key
+     * @param $value
+     * @param int $expire  过期时间 单位s
+     * @return mixed
+     */
+    public function setExpireAt($key, $value, $expireAtTimes)
+    {
+        $key = $this->parseKey($key);
+
+//        $value = serialize($value);
+        $expire = $expireAtTimes-time();
+        $result = $this->cacheCLient->setex($key, $expire, $value);
         return $result;
     }
 
