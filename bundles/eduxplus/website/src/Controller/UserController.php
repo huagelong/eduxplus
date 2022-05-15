@@ -9,22 +9,16 @@
 namespace Eduxplus\WebsiteBundle\Controller;
 
 
-use Eduxplus\CoreBundle\Lib\Base\AppBaseService;
 use Eduxplus\CoreBundle\Lib\Base\BaseHtmlController;
 use Eduxplus\CoreBundle\Lib\Service\Base\AesService;
-use Eduxplus\CoreBundle\Lib\Service\HelperService;
 use Eduxplus\CoreBundle\Lib\Service\Base\UploadService;
+use Eduxplus\CoreBundle\Lib\Service\HelperService;
 use Eduxplus\CoreBundle\Lib\Service\ValidateService;
 use Eduxplus\WebsiteBundle\Service\GlobService;
 use Eduxplus\WebsiteBundle\Service\GoodsService;
 use Eduxplus\WebsiteBundle\Service\MsgService;
 use Eduxplus\WebsiteBundle\Service\UserService;
-use Eduxplus\CoreBundle\Exception\NeedLoginException;
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-use Symfony\Component\Security\Http\Logout\LogoutHandlerInterface;
 
 class UserController extends BaseHtmlController
 {
@@ -236,7 +230,7 @@ class UserController extends BaseHtmlController
         return $this->responseRedirect($this->generateUrl('app_user_changeMobile_second'));
     }
 
-    
+
     public function changeMobileSecondAction(){
         $mobileChecked = $this->session()->get("mobileChecked");
         if(!$mobileChecked) return $this->redirectToRoute("app_user_changeMobile_first");
