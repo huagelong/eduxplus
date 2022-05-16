@@ -22,7 +22,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 class UserController extends BaseHtmlController
 {
-    
+
     public function loginAction(Request $request){
         $mobile = $request->cookies->get("site_login_mobile");
         $goto = $request->get("goto");
@@ -62,6 +62,8 @@ class UserController extends BaseHtmlController
         $data = [];
         $data['userinfo'] = $user;
         $data['route'] = $route;
+
+
 
         $uid = $this->getUid();
         $count =  $msgService->msgUnReadCount($uid);
@@ -116,7 +118,7 @@ class UserController extends BaseHtmlController
         return $this->responseMsgRedirect("操作成功！", $this->generateUrl("app_user_info"));
     }
 
-    
+
     public function uploadavatarAction($type = "img", Request $request, UploadService $uploadService)
     {
         $files = $request->files->all();
