@@ -96,6 +96,10 @@
         "migrate": [
             "php bin/console doctrine:migrations:migrate",
             "@clear-dbcache"
+        ],
+        "makeMigrate": [
+            " php bin/console make:migration",
+            "@clear-dbcache"
         ]
     },
     "conflict": {
