@@ -59,10 +59,10 @@ class FuncExtension extends AbstractExtension
     public function doArrGet($arr, $name)
     {
         if(!$arr) return $arr;
-        $method = "get" . ucfirst($name);
         if (is_array($arr)) {
             return isset($arr[$name]) ? $arr[$name] : null;
         }else{
+            $method = "get" . ucfirst($name);
             if (method_exists($arr, $method)) {
                 return call_user_func([$arr, $method]);
             }
