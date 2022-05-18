@@ -8,38 +8,41 @@
            {{ render(path('app_help_nav', {id:id,type:type})) }}
          </div>
          <div class="layui-col-md10">
-           <div class="layui-card helpHeader">
+           <div class="mainBox">
+             <div class="content">
              {% if id %}
+           <div class="layui-card helpHeader">
              <div class="layui-card-header layui-center">{{ detail['name'] }}</div>
              <div class="layui-card-body helpBody">
                {{ detail['main']['content']|raw }}
              </div>
+           </div>
              {% else %}
-               <div class="layui-card-body helpBody">
-                 <div class="layui-card helpHeader">
-                   <div class="layui-card-header layui-center">热门</div>
-                   <div class="layui-card-body helpBody">
-                     <ul>
-                       {% if topValue %}
-                         {% for dv in topValue %}
-                           <li>
-                             <a href="{{ path('app_help', {"type":0, "id":dv['id']}) }}"> {{ loop.index }}、{{ dv['name'] }}</a>
-                           </li>
-                         {% endfor %}
-                         {% else %}
-                           <div class="layui-center">
-                             <div><img src="/bundles/eduxpluswebsite/default/images/null-i3.png" /></div>
-                             <div>没有数据～</div>
-                           </div>
-                       {% endif %}
-                     </ul>
+                 {% if topValue %}
+                   <div class="layui-card helpHeader">
+                     <div class="layui-card-header layui-center">热门</div>
+                     <div class="layui-card-body helpBody">
+                       <ul>
+
+                           {% for dv in topValue %}
+                             <li>
+                               <a href="{{ path('app_help', {"type":0, "id":dv['id']}) }}"> {{ loop.index }}、{{ dv['name'] }}</a>
+                             </li>
+                           {% endfor %}
+                       </ul>
+                     </div>
                    </div>
-                 </div>
-               </div>
+                 {% else %}
+                   <div class="layui-center">
+                     <div><img src="/bundles/eduxpluswebsite/default/images/null-i3.png" class="blank-img"  /></div>
+                     <div>没有数据～</div>
+                   </div>
+                 {% endif %}
              {% endif %}
+             </div>
+           </div>
            </div>
          </div>
        </div>
      </div>
-   </div>
  {% endblock %}

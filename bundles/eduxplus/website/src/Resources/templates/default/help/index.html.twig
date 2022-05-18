@@ -7,24 +7,28 @@
       <div class="layui-col-md2">
         {{ render(path('app_help_nav', {id:id,type:type})) }}
       </div>
-      <div class="layui-col-md10">
+      <div class="layui-col-md10" >
+        <div class="mainBox">
+          <div class="content">
         <div class="layui-card helpHeader">
           <div class="layui-card-header layui-center">{{ category['name'] }}</div>
           <div class="layui-card-body helpBody">
+            {% if details %}
             <ul>
-              {% if details %}
                 {% for dv in details %}
               <li>
                 <a href="{{ path('app_help', {"type":0, "id":dv['id']}) }}"> {{ loop.index }}、{{ dv['name'] }}</a>
               </li>
                 {% endfor %}
+            </ul>
               {% else %}
                   <div class="layui-center">
-                    <div><img src="/bundles/eduxpluswebsite/default/images/null-i3.png" /></div>
+                    <div><img src="/bundles/eduxpluswebsite/default/images/null-i3.png" class="blank-img" /></div>
                     <div>没有数据～</div>
                   </div>
               {% endif %}
-            </ul>
+          </div>
+        </div>
           </div>
         </div>
       </div>

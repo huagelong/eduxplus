@@ -38,7 +38,8 @@
               <a href="{{ path('app_detail_center', {categoryId:categoryId, isFree:2}) }}" class="{% if isFree == 2 %} layui-btn layui-btn-normal layui-btn-xs {% endif %}">收费</a>
           </div>
         </div>
-        <div class="centerBody">
+          <div class="mainBox">
+              <div class="content">
           {% if list is empty %}
             <div class="layui-center">
               <img src="/bundles/eduxpluswebsite/default/images/null-i2.png"  class="blank-img" >
@@ -77,6 +78,7 @@
           {% endif %}
           {{ macros.pagination(pagination) }}
         </div>
+          </div>
        </div>
    </div>
  {% endblock %}

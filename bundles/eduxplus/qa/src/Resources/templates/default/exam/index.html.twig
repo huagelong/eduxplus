@@ -38,6 +38,7 @@
            <a href="{{ path('qa_exam_index', {categoryId:categoryId, isFree:2}) }}" class="{% if isFree == 2 %} layui-btn layui-btn-normal layui-btn-xs {% endif %}">收费</a>
          </div>
        </div>
+         <div class="mainBox">
          <div class="content">
          {% if list is empty %}
            <div class="layui-center">
@@ -74,6 +75,7 @@
          {% endif %}
          {{ macros.pagination(pagination) }}
        </div>
+         </div>
      </div>
    </div>
  {% endblock %}

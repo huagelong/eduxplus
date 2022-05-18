@@ -33,7 +33,8 @@ body {
   background-color: #fff;
   border-radius: 2px;
   box-shadow: 0 0 18px rgba(0,0,0,.06);
-  min-height: 500px;
+  min-height: calc(100vh - 300px);
+  margin-bottom: 10px;
 }
 
 .mainBox .header {
