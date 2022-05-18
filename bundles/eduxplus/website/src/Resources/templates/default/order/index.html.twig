@@ -9,11 +9,11 @@
            {{ render(path('app_user_userNav', {route:route})) }}
          </div>
          <div class="layui-col-md10">
-             <div class="wrap">
-               <div class="content">
+           <div class="mainBox">
+             <div class="content">
                  {% if list is empty %}
                    <div class="layui-center">
-                     <div><img src="/bundles/eduxpluswebsite/default/images/null-i2.png" /></div>
+                     <div><img src="/bundles/eduxpluswebsite/default/images/null-i2.png"  class="blank-img" /></div>
                      <div>没有数据～</div>
                    </div>
                  {% else %}
