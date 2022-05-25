@@ -283,6 +283,11 @@ a:hover{
 .cateList li{
   float: left;
   margin-left: 20px;
+  display: block;
+}
+
+.cateList li a{
+  display: inline-block;
 }
 
 .goodCard{
