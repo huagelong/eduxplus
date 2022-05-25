@@ -65,7 +65,7 @@
                {% for r in recommendValue %}
                <div class="layui-col-md3">
                  <a href="{{ path('app_detail_index', {uuid:r['uuid']}) }}" class="gooda">
-                   <div class="goodCard layui-anim">
+                   <div class="goodCard ">
                      <div class="goodCover">
                        <img src="{% if r['goodsSmallImg'] %} {{ json_get(r['goodsSmallImg']) }} {% else %} /bundles/eduxpluswebsite/images/course.jpg {% endif %}">
                      </div>
@@ -98,7 +98,7 @@
              {% for l in live %}
              <div class="layui-col-md6">
                <a href="" class="livea">
-                 <div class="liveCard layui-anim">
+                 <div class="liveCard ">
                    <div class="layui-row">
                      <div class="layui-col-md6">
                        <div class="liveCover">
@@ -138,7 +138,7 @@
                {% for t in topValue %}
                <div class="layui-col-md3">
                  <a href="{{ path('app_detail_index', {uuid:t['uuid']}) }}" class="gooda">
-                   <div class="goodCard layui-anim">
+                   <div class="goodCard ">
                      <div class="goodCover">
                        <img src="{% if t['goodsSmallImg'] %} {{ json_get(t['goodsSmallImg']) }} {% else %} /bundles/eduxpluswebsite/images/course.jpg {% endif %}">
                      </div>
@@ -230,7 +230,7 @@
            <ul>
              <li class="header">官方微信</li>
              <li>
-               <a href="javascript:;" class="qrcodea">
+               <a href="javascript:;" class="qrcodea layui-anim">
                  <img src="/bundles/eduxpluswebsite/images/wx.jpeg" width="64px" class="layui-anim">
                </a>
              </li>
@@ -240,7 +240,7 @@
            <ul>
              <li class="header">官方微博</li>
              <li>
-               <a href="javascript:;" class="qrcodea">
+               <a href="javascript:;" class="qrcodea layui-anim">
                <img src="/bundles/eduxpluswebsite/images/wx.jpeg"  width="64px" class="layui-anim">
                </a>
              </li>

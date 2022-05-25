@@ -50,7 +50,7 @@
                 {% for v in  list %}
                   <div class="layui-col-md3">
                     <a href="{{ path('app_detail_index', {uuid:v['uuid']}) }}" class="gooda">
-                      <div class="goodCard layui-anim">
+                      <div class="goodCard ">
                         <div class="goodCover">
                           <img src="{% if v['goodsSmallImg'] %} {{ json_get(v['goodsSmallImg']) }} {% else %} /bundles/eduxpluswebsite/images/course.jpg {% endif %}" />
                         </div>

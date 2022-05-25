@@ -2,5 +2,5 @@ app_search:
   path: /search/{type}/{page}
   controller: Eduxplus\WebsiteBundle\Controller\SearchController::indexAction
   defaults:  
-     type: 0 
+     type: 1
      page: 1 
