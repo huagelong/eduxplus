@@ -402,16 +402,17 @@ a:hover{
 /*登录页*/
 .loginBg{
   height: 600px;
-  background: url(/bundles/eduxpluswebsite/images/login_bg.jpg) no-repeat 50%;
+  /*background: url(/bundles/eduxpluswebsite/images/login_bg.jpg) no-repeat 50%;*/
 }
 .loginBox{
   width: 380px;
   background-color: #fff;
   min-height: 300px;
-  margin-top: 60px;
+  margin-top: 100px;
   border-radius: 6px;
   transition: all .8s;
   transform: perspective(600px);
+  padding: 20px;
 }
 /*我的产品*/
 .cardlist ul{
@@ -426,7 +427,9 @@ a:hover{
   font-size: 14px;
   color: #666;
 }
-
+.nonebox-shadow{
+  box-shadow:none !important;
+}
 .cardlist ul .active a{
   color: #1E9FFF !important;
 }
