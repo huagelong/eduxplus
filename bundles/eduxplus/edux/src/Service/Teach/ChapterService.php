@@ -23,6 +23,7 @@ use Eduxplus\EduxBundle\Entity\TeachCourseChapter;
 use Eduxplus\EduxBundle\Entity\TeachCourseMaterials;
 use Eduxplus\EduxBundle\Entity\TeachCourseTeachers;
 use Eduxplus\EduxBundle\Entity\TeachCourseVideos;
+use Knp\Component\Pager\PaginatorInterface;
 
 class ChapterService extends AdminBaseService
 {
@@ -33,12 +34,14 @@ class ChapterService extends AdminBaseService
     protected $tengxunyunLiveService;
     protected $aliyunLiveService;
     protected $helpService;
+    protected $paginator;
 
     public function __construct(TeacherService $teacherService,
                                 AliyunVodService $aliyunVodService,
                                 TengxunyunVodService $tengxunyunVodService,
                                 TengxunyunLiveService $tengxunyunLiveService,
                                 AliyunLiveService $aliyunLiveService,
+                                PaginatorInterface $paginator,
                                 HelperService $helperService
 )
     {
@@ -48,6 +51,30 @@ class ChapterService extends AdminBaseService
         $this->tengxunyunLiveService = $tengxunyunLiveService;
         $this->aliyunLiveService = $aliyunLiveService;
         $this->helperService = $helperService;
+        $this->paginator = $paginator;
+    }
+
+    public function getLiveTableList($request, $page, $pageSize)
+    {
+        $sql = $this->getFormatRequestSql($request);
+        $dql = "SELECT a FROM Edux:TeachCourseChapter a " . $sql . " ORDER BY a.id DESC";
+        $em = $this->getDoctrine()->getManager();
+        $query = $em->createQuery($dql);
+        $pagination = $this->paginator->paginate(
+            $query,
+            $page,
+            $pageSize
+        );
+        $items = $pagination->getItems();
+        $itemsArr = [];
+        if ($items) {
+            foreach ($items as $v) {
+                $vArr = $this->toArray($v);
+
+                $itemsArr[] = $vArr;
+            }
+        }
+        return [$pagination, $itemsArr];
     }
 
     public function getChapterTree($parentId, $courseId)

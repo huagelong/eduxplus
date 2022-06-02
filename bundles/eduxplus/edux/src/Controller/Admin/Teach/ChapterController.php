@@ -449,4 +449,11 @@ class ChapterController extends BaseAdminController
             "id" => $id
         ]));
     }
+
+
+    public function liveTabelAction(Request $request, Grid $grid,ChapterService $chapterService){
+        $pageSize = 40;
+        $grid->setListService($chapterService, "getLiveTableList");
+
+    }
 }
