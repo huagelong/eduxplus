@@ -38,12 +38,6 @@ class TeachCourseChapter
      */
     private $name;
 
-    /**
-     * @var int|null
-     *
-     * @ORM\Column(name="open_time", type="bigint", nullable=true, options={"comment"="开课时间"})
-     */
-    private $openTime;
 
     /**
      * @var int|null
@@ -81,6 +75,13 @@ class TeachCourseChapter
     private $sort = '0';
 
     /**
+     * @var bool|null
+     *
+     * @ORM\Column(name="status", type="boolean", nullable=true, options={"comment"="0-下架，1-上架"})
+     */
+    private $status = '0';
+
+    /**
      * @var string|null
      *
      * @ORM\Column(name="im_group_id", type="string", length=40, nullable=true, options={"comment"="腾讯云im"})
@@ -95,14 +96,22 @@ class TeachCourseChapter
     private $coverImg;
 
     /**
-     * @var int|null
+     * @var datetime|null
+     *
+     * @ORM\Column(name="open_time", type="datetime", nullable=true, options={"comment"="开课时间"})
+     */
+    private $openTime;
+
+
+    /**
+     * @var datetime|null
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(name="created_at", type="datetime", nullable=true)
      */
     private $createdAt;
 
     /**
-     * @var int|null
+     * @var datetime|null
      * @Gedmo\Timestampable(on="update")
      * @ORM\Column(name="updated_at", type="datetime", nullable=true)
      */
@@ -158,17 +167,7 @@ class TeachCourseChapter
         $this->coverImg = $coverImg;
     }
 
-    public function getOpenTime(): ?int
-    {
-        return $this->openTime;
-    }
 
-    public function setOpenTime(?int $openTime): self
-    {
-        $this->openTime = $openTime;
-
-        return $this;
-    }
 
     public function getParentId(): ?int
     {
@@ -230,6 +229,24 @@ class TeachCourseChapter
         return $this;
     }
 
+    /**
+     * @return bool|null
+     */
+    public function getStatus(): ?bool
+    {
+        return $this->status;
+    }
+
+    /**
+     * @param bool|null $status
+     */
+    public function setStatus(?bool $status): void
+    {
+        $this->status = $status;
+    }
+
+
+
     public function getImGroupId(): ?string
     {
         return $this->imGroupId;
@@ -238,6 +255,18 @@ class TeachCourseChapter
     public function setImGroupId(?string $imGroupId): self
     {
         $this->imGroupId = $imGroupId;
+
+        return $this;
+    }
+
+    public function getOpenTime(): ?\DateTimeInterface
+    {
+        return $this->openTime;
+    }
+
+    public function setOpenTime(?\DateTimeInterface $openTime): self
+    {
+        $this->openTime = $openTime;
 
         return $this;
     }

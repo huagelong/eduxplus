@@ -42,7 +42,7 @@ class ChapterController extends BaseAdminController
         $parentId = $request->get("pid");
         $courseInfo = $courseService->getById($id);
         $teachType = $courseInfo['type'];
-        $form->notice("父章节最多只能选择一级");
+//        $form->notice("父章节最多只能选择一级");
         $form->text("名称")->field("name")->isRequire(1);
         $form->select("父章节")->field("parentId")->isRequire(1)->defaultValue($parentId)->options($select);
         $form->select("学习方式")->field("studyWay")->isRequire(1)->options(function () use ($teachType) {
@@ -78,6 +78,7 @@ class ChapterController extends BaseAdminController
 
 
         $form->boole("免费？")->field("isFree")->isRequire(1);
+        $form->boole("上架？")->field("status")->isRequire(1);
         $form->text("排序")->field("sort")->isRequire(1)->defaultValue(0);
 
         $formData = $form->create($this->generateUrl("admin_api_teach_chapter_add", [
@@ -97,11 +98,13 @@ class ChapterController extends BaseAdminController
         $openTime = $request->get("openTime");
         $studyWay = (int) $request->get("studyWay");
         $isFree = $request->get("isFree");
+        $status = $request->get("status");
         $sort = (int) $request->get("sort");
         $teachers = $request->get("teachers");
         $coverImg = $request->get("coverImg");
 
         $isFree = $isFree == "on" ? 1 : 0;
+        $status = $status == "on" ? 1 : 0;
 
         if (!$name)
             return $this->responseError("章节名称不能为空!");
@@ -111,22 +114,21 @@ class ChapterController extends BaseAdminController
         if (!$teachers)
             return $this->responseError("上课老师不能为空!");
 
-        $path = $chapterService->findPath($parentId);
-        $path = trim($path, ",");
-        if($path){
-            $pathArr = explode(",", $path);
-            $currentPathCount = count($pathArr);
-        }else{
-            $currentPathCount = 0;
-        }
-        if($currentPathCount>1) return $this->responseError("章节层级不能达到3级!");
+//        $path = $chapterService->findPath($parentId);
+//        $path = trim($path, ",");
+//        if($path){
+//            $pathArr = explode(",", $path);
+//            $currentPathCount = count($pathArr);
+//        }else{
+//            $currentPathCount = 0;
+//        }
+//        if($currentPathCount>1) return $this->responseError("章节层级不能达到3级!");
 
-        $openTime = $openTime ? strtotime($openTime) : 0;
         if($studyWay == 1){
             if(!$openTime) return $this->responseError("直播时，上课时间不能为空!");
         }
 
-        $chapterService->add($name, $coverImg, $teachers, $parentId, $openTime, $studyWay, $isFree, $sort, $id);
+        $chapterService->add($name, $coverImg, $teachers, $parentId, $openTime, $studyWay, $isFree, $sort, $id, $status);
 
         return $this->responseMsgRedirect("操作成功!", $this->generateUrl('admin_teach_chapter_index', [
             'id' => $id
@@ -139,7 +141,7 @@ class ChapterController extends BaseAdminController
         $info = $chapterService->getById($id);
 
         $select = $chapterService->chapterSelect($info["courseId"]);
-        $form->notice("父章节最多只能选择一级");
+//        $form->notice("父章节最多只能选择一级");
         $form->text("名称")->field("name")->isRequire(1)->defaultValue($info['name']);
         $form->select("父章节")->field("parentId")->isRequire(1)->defaultValue($info['parentId'])->options($select);
 
@@ -153,7 +155,7 @@ class ChapterController extends BaseAdminController
         $options['data-initial-preview-config'] = $chapterService->getInitialPreviewConfig($info['coverImg']);
         $form->file("封面图")->field("coverImg")->attr($options)->defaultValue($info['coverImg']);
 
-        $form->datetime("上课时间")->field("openTime")->defaultValue($info['openTime']?date('Y-m-d H:i', $info['openTime']):"")->placeholder("直播必须输入上课时间");
+        $form->datetime("上课时间")->field("openTime")->defaultValue($info['openTime']?$info['openTime']->format('Y-m-d H:i:s'):"")->placeholder("直播必须输入上课时间");
 
         $teacherIds = $chapterService->getTeacherIds($id);
         $form->multiSelect("上课老师")->field("teachers[]")->isRequire(1)->defaultValue($teacherIds)->options($chapterService->getTeachers());
@@ -179,6 +181,7 @@ class ChapterController extends BaseAdminController
             }
         });
         $form->boole("免费？")->field("isFree")->isRequire(1)->defaultValue($info['isFree']);
+        $form->boole("上架？")->field("status")->isRequire(1)->defaultValue($info['status']);
         $form->text("排序")->field("sort")->isRequire(1)->defaultValue(0)->defaultValue($info['sort']);
 
         $formData = $form->create($this->generateUrl("admin_api_teach_chapter_edit", [
@@ -195,9 +198,11 @@ class ChapterController extends BaseAdminController
         $openTime = $request->get("openTime");
         $studyWay = (int) $request->get("studyWay");
         $isFree = $request->get("isFree");
+        $status = $request->get("status");
         $sort = (int) $request->get("sort");
         $teachers = $request->get("teachers");
         $isFree = $isFree == "on" ? 1 : 0;
+        $status = $status == "on" ? 1 : 0;
         $coverImg = $request->get("coverImg");
 
         if (!$name)
@@ -208,24 +213,22 @@ class ChapterController extends BaseAdminController
         if (!$teachers)
             return $this->responseError("上课老师不能为空!");
 
-        $path = $chapterService->findPath($parentId);
-        $path = trim($path, ",");
-        if($path){
-            $pathArr = explode(",", $path);
-            $currentPathCount = count($pathArr);
-        }else{
-            $currentPathCount =0;
-        }
-
-        if($currentPathCount>1) return $this->responseError("章节层级不能达到3级!");
-
-        $openTime = $openTime ? strtotime($openTime) : 0;
+//        $path = $chapterService->findPath($parentId);
+//        $path = trim($path, ",");
+//        if($path){
+//            $pathArr = explode(",", $path);
+//            $currentPathCount = count($pathArr);
+//        }else{
+//            $currentPathCount =0;
+//        }
+//
+//        if($currentPathCount>1) return $this->responseError("章节层级不能达到3级!");
 
         if($studyWay == 1){
             if(!$openTime) return $this->responseError("直播时，上课时间不能为空!");
         }
 
-        $chapterService->edit($id, $coverImg, $name, $teachers, $parentId, $openTime, $studyWay, $isFree, $sort);
+        $chapterService->edit($id, $coverImg, $name, $teachers, $parentId, $openTime, $studyWay, $isFree, $sort, $status);
 
         $info = $chapterService->getById($id);
 
@@ -288,12 +291,12 @@ class ChapterController extends BaseAdminController
         $videoInfo = $chapterService->getVideoById($id);
         $data['info'] = $info;
         $data['courseInfo'] = $chapterService->getCourseInfo($info['courseId']);
-        $data['openTimeY'] = $info['openTime']?date('Y', $info['openTime']):0;
-        $data['openTimeM'] = $info['openTime']?date('m', $info['openTime']):0;
-        $data['openTimeD'] = $info['openTime']?date('d', $info['openTime']):0;
-        $data['openTimeH'] = $info['openTime']?date('H', $info['openTime']):0;
-        $data['openTimeI'] = $info['openTime']?date('i', $info['openTime']):0;
-        $data['openTimeS'] = $info['openTime']?date('s', $info['openTime']):0;
+        $data['openTimeY'] = $info['openTime']?date('Y', $info['openTime']->getTimestamp()):0;
+        $data['openTimeM'] = $info['openTime']?date('m', $info['openTime']->getTimestamp()):0;
+        $data['openTimeD'] = $info['openTime']?date('d', $info['openTime']->getTimestamp()):0;
+        $data['openTimeH'] = $info['openTime']?date('H', $info['openTime']->getTimestamp()):0;
+        $data['openTimeI'] = $info['openTime']?date('i', $info['openTime']->getTimestamp()):0;
+        $data['openTimeS'] = $info['openTime']?date('s', $info['openTime']->getTimestamp()):0;
 
         $data['nowTimeY'] = date('Y');
         $data['nowTimeM'] = date('m');
@@ -302,7 +305,7 @@ class ChapterController extends BaseAdminController
         $data['nowTimeI'] = date('i');
         $data['nowTimeS'] = date('s');
         $min20 = 20*60;
-        $data['canNotChat'] = !($info['openTime']?($info['openTime']-time()<$min20):false);
+        $data['canNotChat'] = !($info['openTime']?($info['openTime']->getTimestamp()-time()<$min20):false);
         $data['videoInfo'] = $videoInfo;
         $data["isLiveVod"] = 0;
         if($videoInfo) {
@@ -451,9 +454,17 @@ class ChapterController extends BaseAdminController
     }
 
 
-    public function liveTabelAction(Request $request, Grid $grid,ChapterService $chapterService){
+    public function liveTableAction(Request $request, Grid $grid,ChapterService $chapterService){
         $pageSize = 40;
         $grid->setListService($chapterService, "getLiveTableList");
+        $grid->text("ID")->field("id")->sort("a.id");
+        $grid->text("课程名称")->field("courseName");
+        $grid->text("章节名称")->field("name");
+        $grid->image("封面")->field("coverImg");
+        $grid->text("开课时间")->field("openTimeView");
+        $grid->boole("免费？")->field("isFree");
 
+        $grid->sdatetimerange("开课时间")->field("a.openTime");
+        return $this->content()->renderList($grid->create($request, $pageSize));
     }
 }

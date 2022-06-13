@@ -88,11 +88,11 @@ class TeachCourse
     private $courseHour;
 
     /**
-     * @var int|null
+     * @var datetime|null
      *
-     * @ORM\Column(name="open_time", type="bigint", nullable=true, options={"comment"="最早开课时间"})
+     * @ORM\Column(name="open_time", type="datetime", nullable=true, options={"comment"="最早开课时间"})
      */
-    private $openTime = '0';
+    private $openTime;
 
     /**
      * @var string|null
@@ -233,12 +233,12 @@ class TeachCourse
         return $this;
     }
 
-    public function getOpenTime(): ?int
+    public function getOpenTime(): ?\DateTimeInterface
     {
         return $this->openTime;
     }
 
-    public function setOpenTime(?int $openTime): self
+    public function setOpenTime(?\DateTimeInterface $openTime): self
     {
         $this->openTime = $openTime;
 

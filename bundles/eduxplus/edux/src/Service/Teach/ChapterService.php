@@ -24,6 +24,7 @@ use Eduxplus\EduxBundle\Entity\TeachCourseMaterials;
 use Eduxplus\EduxBundle\Entity\TeachCourseTeachers;
 use Eduxplus\EduxBundle\Entity\TeachCourseVideos;
 use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 class ChapterService extends AdminBaseService
 {
@@ -54,12 +55,23 @@ class ChapterService extends AdminBaseService
         $this->paginator = $paginator;
     }
 
-    public function getLiveTableList($request, $page, $pageSize)
+    public function getLiveTableList(Request $request, $page, $pageSize)
     {
         $sql = $this->getFormatRequestSql($request);
-        $dql = "SELECT a FROM Edux:TeachCourseChapter a " . $sql . " ORDER BY a.id DESC";
+        //只显示最近2天的直播
+        $startTime = date('Y-m-d H:i:s');
+        $endTime = date('Y-m-d', time())." 23:59:59";
+        if($sql){
+            $dql = "SELECT a FROM Edux:TeachCourseChapter a " . $sql . " AND a.studyWay=1 and a.status=1  ORDER BY a.openTime asc";
+        }else{
+            $dql = "SELECT a FROM Edux:TeachCourseChapter a WHERE a.studyWay=1 and a.status=1 and a.openTime >=:startTime
+                    and a.openTime <=:endTime ORDER BY a.openTime asc";
+        }
         $em = $this->getDoctrine()->getManager();
         $query = $em->createQuery($dql);
+        if(!$sql){
+            $query = $query->setParameters(['startTime' => $startTime, "endTime"=>$endTime]);
+        }
         $pagination = $this->paginator->paginate(
             $query,
             $page,
@@ -68,11 +80,28 @@ class ChapterService extends AdminBaseService
         $items = $pagination->getItems();
         $itemsArr = [];
         if ($items) {
+            $courseIds = [];
             foreach ($items as $v) {
                 $vArr = $this->toArray($v);
+                $courseIds[] = $vArr["courseId"];
+            }
 
+            $courseDql = "SELECT a FROM Edux:TeachCourse a WHERE a.id IN(:courseIds) ";
+            $courses = $this->db()->fetchAll($courseDql, ["courseIds"=>$courseIds]);
+            foreach ($items as $v) {
+                $vArr = $this->toArray($v);
+                $vArr["courseName"] = "-";
+                foreach ($courses as $k=>$course){
+                    if($vArr['courseId'] == $course["id"]){
+//                        $vArr["course"] = $course;
+                        $vArr["courseName"] = $course['name'];
+                        break;
+                    }
+                }
+                $vArr["openTimeView"] = $vArr["openTime"];
                 $itemsArr[] = $vArr;
             }
+
         }
         return [$pagination, $itemsArr];
     }
@@ -137,10 +166,10 @@ class ChapterService extends AdminBaseService
                 $id = $vv['id'];
                 $name = "┝&nbsp;" . $vv['name'];
                 $rs[$name] = $id;
-                if (isset($all[$id])) {
-                    $pre = "&nbsp;&nbsp;&nbsp;&nbsp;";
-                    $this->_Select($all, $id, $pre, $rs);
-                }
+//                if (isset($all[$id])) {
+//                    $pre = "&nbsp;&nbsp;&nbsp;&nbsp;";
+//                    $this->_Select($all, $id, $pre, $rs);
+//                }
             }
         }
         return $rs;
@@ -172,18 +201,22 @@ class ChapterService extends AdminBaseService
         return $rs;
     }
 
-    public function add($name, $coverImg, $teachers, $parentId, $openTime, $studyWay, $isFree, $sort, $id)
+    public function add($name, $coverImg, $teachers, $parentId, $openTime, $studyWay, $isFree, $sort, $id, $status)
     {
         $path = $this->findPath($parentId);
         $model = new TeachCourseChapter();
         $model->setName($name);
         $model->setParentId($parentId);
-        if ($openTime) $model->setOpenTime($openTime);
+        if ($openTime){
+            $openTime = new \DateTime($openTime);
+            $model->setOpenTime($openTime);
+        }
         $model->setStudyWay($studyWay);
         $model->setIsFree($isFree);
         $model->setSort($sort);
         $model->setCourseId($id);
         $model->setPath($path);
+        $model->setStatus($status);
         if (!$coverImg) {
             $coverImg = json_encode([trim($this->getOption("app.domain"),"/")."/bundles/eduxplusedux/images/course.jpg"]);
         }
@@ -225,15 +258,17 @@ class ChapterService extends AdminBaseService
         $sql = "SELECT a FROM Edux:TeachCourse a WHERE a.id=:id";
         $courseModel =  $this->db()->fetchOne($sql, ['id' => $courseId], 1);
         if ($courseModel) {
-            $currentOpenTime = (int) $courseModel->getOpenTime();
-            if ($currentOpenTime > $openTime) {
+            $currentOpenTime = $courseModel->getOpenTime();
+            $currentOpenTime = $currentOpenTime? $currentOpenTime->getTimestamp():0;
+            $openTimeDiff= $openTime->getTimestamp();
+            if ($currentOpenTime < $openTimeDiff) {
                 $courseModel->setOpenTime($openTime);
                 $this->db()->save($courseModel);
             }
         }
     }
 
-    public function edit($id, $coverImg, $name, $teachers, $parentId, $openTime, $studyWay, $isFree, $sort)
+    public function edit($id, $coverImg, $name, $teachers, $parentId, $openTime, $studyWay, $isFree, $sort, $status)
     {
         $sql = "SELECT a FROM Edux:TeachCourseChapter a WHERE a.id=:id";
         $model = $this->db()->fetchOne($sql, ['id' => $id], 1);
@@ -244,7 +279,10 @@ class ChapterService extends AdminBaseService
         $model->setPath($path);
         $model->setName($name);
         $model->setParentId($parentId);
-        if ($openTime) $model->setOpenTime($openTime);
+        if ($openTime){
+            $openTime = new \DateTime($openTime);
+            $model->setOpenTime($openTime);
+        }
         $model->setStudyWay($studyWay);
         $model->setIsFree($isFree);
         $model->setSort($sort);
@@ -252,6 +290,7 @@ class ChapterService extends AdminBaseService
             $coverImg = json_encode([trim($this->getOption("app.domain"),"/")."/bundles/eduxplusedux/images/course.jpg"]);
         }
         $model->setCoverImg($coverImg);
+        $model->setStatus($status);
         $this->db()->save($model);
         if ($teachers) {
             $sql2 = "SELECT a FROM Edux:TeachCourseTeachers a WHERE a.chapterId=:chapterId";
@@ -276,7 +315,7 @@ class ChapterService extends AdminBaseService
             $coverImg = current($coverImgArr);
             $sql = "SELECT a FROM Edux:TeachCourseVideos a WHERE a.chapterId=:chapterId";
             $courseVideoInfo = $this->db()->fetchOne($sql, ["chapterId" => $id]);
-            if($courseVideoInfo["videoId"]){
+            if($courseVideoInfo && $courseVideoInfo["videoId"]){
                 $this->modifyCoverImg($coverImg,$courseVideoInfo["type"], $courseVideoInfo["videoChannel"], $courseVideoInfo["videoId"]);
             }
         }
@@ -552,6 +591,7 @@ class ChapterService extends AdminBaseService
         if(!$chapterInfo) return $this->error()->add("章节不存在!");
         $openTime = $chapterInfo["openTime"];
         if(!$openTime) return $this->error()->add("开课时间不能为空!");
+        $openTime = $openTime->getTimestamp();
         if($openTime<time()) return $this->error()->add("开课时间已过期!");
         $expireTime = $openTime+86400*3;//开课时间三天后过期
         $videoInfo = $this->getVideoById($chapterId);

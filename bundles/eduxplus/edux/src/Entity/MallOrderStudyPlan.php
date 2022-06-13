@@ -60,9 +60,9 @@ class MallOrderStudyPlan
     private $courseId='0';
 
     /**
-     * @var int|null
+     * @var datetime|null
      *
-     * @ORM\Column(name="open_time", type="bigint", nullable=true, options={"comment"="开课时间"})
+     * @ORM\Column(name="open_time", type="datetime", nullable=true, options={"comment"="最早开课时间"})
      */
     private $openTime;
 
@@ -150,12 +150,12 @@ class MallOrderStudyPlan
         return $this;
     }
 
-    public function getOpenTime(): ?int
+    public function getOpenTime(): ?\DateTimeInterface
     {
         return $this->openTime;
     }
 
-    public function setOpenTime(?int $openTime): self
+    public function setOpenTime(?\DateTimeInterface $openTime): self
     {
         $this->openTime = $openTime;
 

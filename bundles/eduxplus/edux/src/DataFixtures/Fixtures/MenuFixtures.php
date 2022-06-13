@@ -27,15 +27,7 @@ class MenuFixtures
         
         //教学
         $teachMenuId = $this->addMenu("教学", "教学方面的管理", 0, "", "mdi mdi-school", 4, $roleId, 0, 0, 1);
-        //协议
-        $agreementMgId = $this->addMenu("协议管理", "针对各种协议的管理", $teachMenuId, "admin_teach_agreement_index", "", 0, $roleId, 0, 0, 1);
-        $this->addMenu("查看", "查看", $agreementMgId, "admin_teach_agreement_view", "", 1, $roleId, 0, 1, 0);
-        $this->addMenu("添加页面", "添加页面展示", $agreementMgId, "admin_teach_agreement_add", "", 2, $roleId, 0, 1, 0);
-        $this->addMenu("添加", "添加处理", $agreementMgId, "admin_api_teach_agreement_add", "", 3, $roleId, 0, 1, 0);
-        $this->addMenu("编辑页面", "编辑页面展示", $agreementMgId, "admin_teach_agreement_edit", "", 4, $roleId, 0, 1, 0);
-        $this->addMenu("编辑", "编辑处理", $agreementMgId, "admin_api_teach_agreement_edit", "", 5, $roleId, 0, 1, 0);
-        $this->addMenu("删除", "删除处理", $agreementMgId, "admin_api_teach_agreement_delete", "", 6, $roleId, 0, 1, 0);
-        $this->addMenu("批量删除", "批量删除处理", $agreementMgId, "admin_api_teach_agreement_bathdelete", "", 7, $roleId, 0, 1, 0);
+
         //分类
         $mgId = $this->addMenu("分类管理", "分类的管理", $teachMenuId, "admin_teach_category_index", "", 0, $roleId, 0, 0, 1);
         $this->addMenu("添加", "添加处理", $mgId, "admin_api_teach_category_add", "", 4, $roleId, 0, 1, 0);
@@ -44,7 +36,7 @@ class MenuFixtures
         $this->addMenu("删除", "删除处理", $mgId, "admin_api_teach_category_delete", "", 6, $roleId, 0, 1, 0);
         $this->addMenu("更新排序", "更新排序", $mgId, "admin_api_teach_category_updateSort", "", 7, $roleId, 0, 1, 0);
         //课程管理
-        $mgId = $this->addMenu("课程管理", "课程的管理", $teachMenuId, "admin_teach_course_index", "", 0, $roleId, 0, 0, 1);
+        $mgId = $this->addMenu("课程管理", "课程的管理", $teachMenuId, "admin_teach_course_index", "", 1, $roleId, 0, 0, 1);
         $this->addMenu("添加页面", "添加页面展示", $mgId, "admin_teach_course_add", "", 0, $roleId, 0, 1, 0);
         $this->addMenu("添加", "添加处理", $mgId, "admin_api_teach_course_add", "", 1, $roleId, 0, 1, 0);
         $this->addMenu("编辑页面", "编辑页面展示", $mgId, "admin_teach_course_edit", "", 2, $roleId, 0, 1, 0);
@@ -52,6 +44,17 @@ class MenuFixtures
         $this->addMenu("删除", "删除处理", $mgId, "admin_api_teach_course_delete", "", 4, $roleId, 0, 1, 0);
         $this->addMenu("批量删除", "批量删除处理", $mgId, "admin_api_teach_course_bathdelete", "", 5, $roleId, 0, 1, 0);
         $this->addMenu("课程上下架", "课程上下架", $mgId, "admin_api_teach_course_switchStatus", "", 6, $roleId, 0, 1, 0);
+        //直播课表
+        $mgId = $this->addMenu("直播课表", "直播课表", $teachMenuId, "admin_teach_chapter_liveTable", "", 2, $roleId, 0, 0, 1);
+        //协议
+        $agreementMgId = $this->addMenu("协议管理", "针对各种协议的管理", $teachMenuId, "admin_teach_agreement_index", "", 3, $roleId, 0, 0, 1);
+        $this->addMenu("查看", "查看", $agreementMgId, "admin_teach_agreement_view", "", 1, $roleId, 0, 1, 0);
+        $this->addMenu("添加页面", "添加页面展示", $agreementMgId, "admin_teach_agreement_add", "", 2, $roleId, 0, 1, 0);
+        $this->addMenu("添加", "添加处理", $agreementMgId, "admin_api_teach_agreement_add", "", 3, $roleId, 0, 1, 0);
+        $this->addMenu("编辑页面", "编辑页面展示", $agreementMgId, "admin_teach_agreement_edit", "", 4, $roleId, 0, 1, 0);
+        $this->addMenu("编辑", "编辑处理", $agreementMgId, "admin_api_teach_agreement_edit", "", 5, $roleId, 0, 1, 0);
+        $this->addMenu("删除", "删除处理", $agreementMgId, "admin_api_teach_agreement_delete", "", 6, $roleId, 0, 1, 0);
+        $this->addMenu("批量删除", "批量删除处理", $agreementMgId, "admin_api_teach_agreement_bathdelete", "", 7, $roleId, 0, 1, 0);
         //章节管理
         $mgId = $this->addMenu("课程章节管理", "课程章节管理", $mgId, "admin_teach_chapter_index", "", 7, $roleId, 0, 1, 0);
         $this->addMenu("章节添加页面", "章节添加页面展示", $mgId, "admin_teach_chapter_add", "", 8, $roleId, 0, 1, 0);
@@ -69,7 +72,7 @@ class MenuFixtures
         $this->addMenu("直播管理处理", "直播添加、编辑等处理", $mgId, "admin_api_teach_chapter_live", "", 20, $roleId, 0, 1, 0);
 
         //产品管理
-        $mgId = $this->addMenu("产品管理", "产品的管理", $teachMenuId, "admin_teach_product_index", "", 0, $roleId, 0, 0, 1);
+        $mgId = $this->addMenu("产品管理", "产品的管理", $teachMenuId, "admin_teach_product_index", "", 4, $roleId, 0, 0, 1);
         $this->addMenu("添加页面", "添加页面展示", $mgId, "admin_teach_product_add", "", 0, $roleId, 0, 1, 0);
         $this->addMenu("添加", "添加处理", $mgId, "admin_api_teach_product_add", "", 1, $roleId, 0, 1, 0);
         $this->addMenu("编辑页面", "编辑页面展示", $mgId, "admin_teach_product_edit", "", 2, $roleId, 0, 1, 0);

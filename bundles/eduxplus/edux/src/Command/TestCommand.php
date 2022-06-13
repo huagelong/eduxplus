@@ -95,6 +95,8 @@ class TestCommand extends Command
         $jwMenuId = 94;
         $menuId = 213;
         $sysMenuId = 352050054531383296;
+        $teachMenuId = 352050054892093442;
+        $mgId = $this->addMenu("直播课表", "直播课表", $teachMenuId, "admin_teach_chapter_liveTable", "", 2, $roleId, 0, 0, 1);
 //        $this->addOptionConfig("app.geoip2City.path", '1', "ip定位城市数据文件服务器本地地址", 1, 1, "网站基本配置");
         return 0;
     }

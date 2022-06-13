@@ -43,7 +43,7 @@ class GoodsService extends AppBaseService
             if($i>($limit-1)) continue;
             $chapterId = $v['id'];
             $courseId = $v['courseId'];
-            $openTime = $v['openTime'];
+            $openTime = $v['openTime']?$v['openTime']->format('Y-m-d H:i:s'):"";
             $sqlCourse = "SELECT a FROM Edux:TeachCourse a WHERE a.id=".$courseId." AND a.status=1";
             $courseResult = $this->db()->fetchOne($sqlCourse);
             if(!$courseResult) continue;

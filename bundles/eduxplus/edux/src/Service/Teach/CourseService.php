@@ -188,7 +188,8 @@ class CourseService extends AdminBaseService
         $sql = "SELECT a FROM Edux:TeachCourse a WHERE a.id=:id";
         $model = $this->db()->fetchOne($sql, ['id' => $id], 1);
         $model->setStatus($state);
-        return $this->db()->save($model);
+        $this->db()->save($model);
+        return true;
     }
 
     public function hasChapter($id)

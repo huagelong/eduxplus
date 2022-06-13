@@ -40,3 +40,6 @@ admin_teach_chapter_materials:
 admin_api_teach_chapter_materials:
   path: /admin/teach/chapter/materials/do/{id}
   controller: Eduxplus\EduxBundle\Controller\Admin\Teach\ChapterController::materialsDoAction
+admin_teach_chapter_liveTable:
+  path: /admin/teach/chapter/liveTable
+  controller: Eduxplus\EduxBundle\Controller\Admin\Teach\ChapterController::liveTableAction
