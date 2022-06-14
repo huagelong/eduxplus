@@ -102,14 +102,23 @@
           showMsg(responseText.code, responseText.message);
         }
         setTimeout(function () {
-          // console.log(self.frameElement.getAttribute("name"));
+          console.log(self.frameElement.getAttribute("name"));
           // if (window.frames.length > 2){
           // if (self.frameElement && self.frameElement.tagName == "IFRAME") {
           // if(self != top){
-          if((self != top) && (self.frameElement.getAttribute("name")) && (self.frameElement.getAttribute("name").indexOf("layui-layer") > -1)){
-            parent.location.assign(responseText._url);
+          if((self.frameElement.getAttribute("name")) && (self.frameElement.getAttribute("name").indexOf("layui-layer") > -1)){
+            if(responseText._url == "self"){
+              parent.location.reload();
+            }else{
+              parent.location.assign(responseText._url);
+            }
           } else {
-            location.assign(responseText._url);
+            if(responseText._url == "self"){
+              location.reload();
+            }else{
+              location.assign(responseText._url);
+            }
+
           }
         }, 1000);
       } else {

@@ -130,9 +130,7 @@ class ChapterController extends BaseAdminController
 
         $chapterService->add($name, $coverImg, $teachers, $parentId, $openTime, $studyWay, $isFree, $sort, $id, $status);
 
-        return $this->responseMsgRedirect("操作成功!", $this->generateUrl('admin_teach_chapter_index', [
-            'id' => $id
-        ]));
+        return $this->responseMsgReload("操作成功!");
     }
 
     
@@ -232,9 +230,7 @@ class ChapterController extends BaseAdminController
 
         $info = $chapterService->getById($id);
 
-        return $this->responseMsgRedirect("操作成功!", $this->generateUrl('admin_teach_chapter_index', [
-            'id' => $info['courseId']
-        ]));
+        return $this->responseMsgReload("操作成功!");
     }
 
     
@@ -246,9 +242,7 @@ class ChapterController extends BaseAdminController
         $info = $chapterService->getById($id);
         $chapterService->del($id);
 
-        return $this->responseMsgRedirect("删除成功!", $this->generateUrl("admin_teach_chapter_index", [
-            'id' => $info['courseId']
-        ]));
+        return $this->responseMsgReload("删除成功!");
     }
 
     
@@ -344,9 +338,7 @@ class ChapterController extends BaseAdminController
         if($this->error()->has()){
             return $this->responseError($this->error()->getLast());
         }
-        return $this->responseMsgRedirect("操作成功!", $this->generateUrl("admin_teach_chapter_index", [
-            "id" => $info['courseId']
-        ]));
+        return $this->responseMsgReload("操作成功!");
     }
 
     
@@ -457,14 +449,29 @@ class ChapterController extends BaseAdminController
     public function liveTableAction(Request $request, Grid $grid,ChapterService $chapterService){
         $pageSize = 40;
         $grid->setListService($chapterService, "getLiveTableList");
-        $grid->text("ID")->field("id")->sort("a.id");
-        $grid->text("课程名称")->field("courseName");
-        $grid->text("章节名称")->field("name");
-        $grid->image("封面")->field("coverImg");
         $grid->text("开课时间")->field("openTimeView");
+        $grid->text("章节名称")->field("name");
+        $grid->text("课程名称")->field("courseName");
+        $grid->image("封面")->field("coverImg");
         $grid->boole("免费？")->field("isFree");
 
+        $grid->setTableAction('admin_teach_chapter_live', function ($obj) use($chapterService){
+            $id = $chapterService->getPro($obj, "id");
+            $url = $this->generateUrl('admin_teach_chapter_live', ['id' => $id]);
+            $str = '<a href=' . $url . ' data-width="1000px" title="直播管理" class=" btn btn-primary btn-xs poppage"><i class="mdi mdi-video"></i></a>';
+            return  $str;
+        });
+        $grid->setTableAction('admin_teach_chapter_liveView', function ($obj) use($chapterService){
+            $id = $chapterService->getPro($obj, "id");
+            $url = $this->generateUrl('admin_teach_chapter_liveView', ['id' => $id]);
+            $str = '<a target="_blank" href=' . $url . ' data-width="1000px" title="进入直播" class=" btn btn-secondary btn-xs"><i class="mdi mdi-eye"></i></a>';
+            return  $str;
+        });
+        $grid->editAction("admin_teach_chapter_edit")
+            ->deleteAction("admin_api_teach_chapter_delete");
+
         $grid->sdatetimerange("开课时间")->field("a.openTime");
+        $grid->stext("章节名称")->field("a.name");
         return $this->content()->renderList($grid->create($request, $pageSize));
     }
 }

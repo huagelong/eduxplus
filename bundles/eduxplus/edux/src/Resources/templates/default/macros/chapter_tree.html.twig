@@ -19,6 +19,11 @@
                     <a href="{{ path("admin_teach_chapter_live", {"id":chapter['id']}) }}" data-title="管理直播"  title="管理直播" class="poppage" {% if chapter['video'] and chapter['video']['liveData']!="" %} style="color:#75C82A"  {% endif %} ><i class="mdi mdi-video"></i></a>
                     {% endif %}
             {% endif %}
+            {% if is_authorized('admin_teach_chapter_liveView') and (chapter['childs'] is empty) %}
+                        {% if (chapter['studyWay'] == 1) and ((chapter['video'] and chapter['video']['type']==1 and chapter['video']['liveData']!="" )) %}
+                <a  target="_blank" href="{{ path('admin_teach_chapter_liveView', {"id":chapter['id']}) }}" title="进入直播"><i class="mdi mdi-eye"></i></a>
+                        {% endif %}
+            {% endif %}
 
                 {% if is_authorized('admin_teach_chapter_vod') and (chapter['childs'] is empty)%}
                     {% if (chapter['studyWay'] != 3) %}

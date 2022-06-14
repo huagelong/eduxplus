@@ -69,7 +69,7 @@ class Grid
             }
             $params = ['id' => $id];
             $url = $this->service->genUrl($path, $params);
-            $str = '<a href=' . $url . ' data-title="查看" title="查看" class=" btn btn-default btn-xs poppage"><i class="mdi mdi-eye"></i></a>';
+            $str = '<a href=' . $url . ' data-width="1000px"  data-title="查看" title="查看" class=" btn btn-default btn-xs poppage"><i class="mdi mdi-eye"></i></a>';
             return  $str;
         });
         return $this;
@@ -84,7 +84,7 @@ class Grid
             }
             $params = ['id' => $id];
             $url = $this->service->genUrl($path, $params);
-            $str = '<a href=' . $url . ' data-title="编辑" title="编辑" class=" btn btn-info btn-xs poppage"><i class="mdi mdi-file-document-edit"></i></a>';
+            $str = '<a href=' . $url . ' data-title="编辑" title="编辑" data-width="1000px"  class=" btn btn-info btn-xs poppage"><i class="mdi mdi-file-document-edit"></i></a>';
             return  $str;
         });
         return $this;

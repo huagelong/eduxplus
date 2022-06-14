@@ -29,6 +29,10 @@ abstract class BaseController extends AbstractController
         return JsonResponseService::genData([], 200, $msg, $url);
     }
 
+    public function responseMsgReload($msg=''){
+        return JsonResponseService::genData([], 200, $msg, "self");
+    }
+
     public function responseRedirect($url){
         return JsonResponseService::genData([], 200, '', $url);
     }

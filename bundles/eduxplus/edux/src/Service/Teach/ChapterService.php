@@ -34,7 +34,6 @@ class ChapterService extends AdminBaseService
     protected $tengxunyunVodService;
     protected $tengxunyunLiveService;
     protected $aliyunLiveService;
-    protected $helpService;
     protected $paginator;
 
     public function __construct(TeacherService $teacherService,
@@ -42,8 +41,7 @@ class ChapterService extends AdminBaseService
                                 TengxunyunVodService $tengxunyunVodService,
                                 TengxunyunLiveService $tengxunyunLiveService,
                                 AliyunLiveService $aliyunLiveService,
-                                PaginatorInterface $paginator,
-                                HelperService $helperService
+                                PaginatorInterface $paginator
 )
     {
         $this->teacherService = $teacherService;
@@ -51,7 +49,6 @@ class ChapterService extends AdminBaseService
         $this->tengxunyunVodService = $tengxunyunVodService;
         $this->tengxunyunLiveService = $tengxunyunLiveService;
         $this->aliyunLiveService = $aliyunLiveService;
-        $this->helperService = $helperService;
         $this->paginator = $paginator;
     }
 
@@ -339,7 +336,7 @@ class ChapterService extends AdminBaseService
         $info = $this->db()->fetchOne($sql, ["id" => $chapterId]);
         if (!$info) return [];
         $info['isOpen'] = 0;
-        if($info['openTime']<time()){
+        if($info['openTime']->getTimestamp()<time()){
             $info['isOpen'] = 1;
         }
         $info['teachers'] = $this->getTeacherIds($chapterId);
@@ -457,7 +454,7 @@ class ChapterService extends AdminBaseService
             if ($videoChannel == 2) { //阿里云
                 $this->aliyunVodService->updateVideoInfo($videoId, $coverImg);
             } else if ($videoChannel == 1) { //腾讯云
-                $img = $this->helperService->baseCurlGet($coverImg, "get");
+                $img = $this->aliyunVodService->baseCurlGet($coverImg, "get");
                 if($img){
                     $coverImgData = base64_encode($img);
                     $this->tengxunyunVodService->ModifyMediaInfo($videoId, $coverImgData);

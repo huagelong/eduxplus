@@ -266,7 +266,7 @@ class LearnService extends AppBaseService
             if ($videoChannel == 2) { //阿里云
 
             } else if ($videoChannel == 1) { //腾讯云
-                $img = $this->helperService->baseCurlGet($coverImg, "get");
+                $img = $this->goodsService->baseCurlGet($coverImg, "get");
                 if($img){
                     $coverImgData = base64_encode($img);
                     $this->tengxunyunVodService->ModifyMediaInfo($videoId, $coverImgData);

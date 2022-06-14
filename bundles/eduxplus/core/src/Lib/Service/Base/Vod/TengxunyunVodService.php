@@ -104,7 +104,7 @@ class TengxunyunVodService extends BaseService
         $appId = $this->getAppId();
         $token = $this->getAndvancePlaySign($videoId);
         $getplayinfo = "http://playvideo.qcloud.com/getplayinfo/v4/{$appId}/{$videoId}?psign=$token";
-        $result = Utils::baseCurlGet($getplayinfo, "get");
+        $result = $this->baseCurlGet($getplayinfo, "get");
         if(!$result) return $this->error()->add("获取播放信息失败!");
         $resultJson = json_decode($result, true);
         if($resultJson['code']>0) return $this->error()->add("获取播放信息失败!");

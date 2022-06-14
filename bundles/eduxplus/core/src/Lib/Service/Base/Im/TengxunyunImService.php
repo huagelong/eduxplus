@@ -273,7 +273,7 @@ class TengxunyunImService extends BaseService{
             $usersig = $this->createUserSig($identifier, 600);
             $url = "https://console.tim.qq.com/{$apiPath}?sdkappid={$sdkappid}&identifier={$identifier}&usersig={$usersig}&random=".time()."&contenttype=json";
             $body = json_encode($params);
-            $content = Utils::baseCurlGet($url, "POST", $body);
+            $content = $this->baseCurlGet($url, "POST", $body);
             $result = json_decode($content, true);
             if($result['ActionStatus'] == "FAIL"){
                 return $this->formatError($result['ErrorCode'], $errors, $result['ErrorInfo']);
