@@ -6,7 +6,7 @@
 .user.ini
 .htaccess
 .DS_Store
-.vscode/sftp.json
+/.vscode
 /config/secrets/prod/prod.decrypt.private.php
 /public/bundles/
 /public/upload/
