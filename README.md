@@ -2,12 +2,12 @@
 <div align="center"><h3 align="center">eduxplus 是一款服务于教育机构、个人、小型团队的在线教育系统,可用于个人知识付费或者在线教育培训等项目使用</h3></div>
  
 <p align="center">
-    <a href='https://gitee.com/wangkaihui/eduxplus/stargazers'><img src='https://gitee.com/wangkaihui/eduxplus/badge/star.svg?theme=dark' alt='star'></img></a>
-    <a href='https://gitee.com/wangkaihui/eduxplus/members'><img src='https://gitee.com/wangkaihui/eduxplus/badge/fork.svg?theme=dark' alt='fork'></img></a>
+    <a href='https://gitee.com/huagelong/eduxplus/stargazers'><img src='https://gitee.com/huagelong/eduxplus/badge/star.svg?theme=dark' alt='star'></img></a>
+    <a href='https://gitee.com/huagelong/eduxplus/members'><img src='https://gitee.com/huagelong/eduxplus/badge/fork.svg?theme=dark' alt='fork'></img></a>
 </p>
 
 
-> 注意本项目唯一反馈渠道: [https://gitee.com/wangkaihui/eduxplus/issues](https://gitee.com/wangkaihui/eduxplus/issues)
+> 注意本项目唯一反馈渠道: [https://gitee.com/huagelong/eduxplus/issues](https://gitee.com/huagelong/eduxplus/issues)
 
 ## 项目介绍
 eduxplus 是一款服务于教育机构、个人、小型团队的在线教育系统,可用于个人知识付费或者在线教育培训等项目使用,基于symfony.
@@ -75,7 +75,7 @@ eduxplus 是一款服务于教育机构、个人、小型团队的在线教育�
 
 4.下载代码
 ```$shell
-git clone https://gitee.com/wangkaihui/eduxplus.git
+git clone https://gitee.com/huagelong/eduxplus.git
 ```
 
 5.进入代码根目录，修改配置

@@ -12,7 +12,7 @@ echo '推送github完成'
 
 echo '开始推送gitee'
 git remote rm origin
-git remote add origin git@gitee.com:wangkaihui/eduxplus.git
+git remote add origin git@gitee.com:huagelong/eduxplus.git
 git push origin master
 
 echo '切回gitee资源'
