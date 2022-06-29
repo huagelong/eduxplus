@@ -13,8 +13,8 @@
 eduxplus 是一款服务于教育机构、个人、小型团队的在线教育系统,可用于个人知识付费或者在线教育培训等项目使用,基于symfony.
 
 ## demo地址
-- 前台地址: https://dev.eduxplus.com  账号:17621487000 密码:Eduxplus@1
-- 后台地址: https://dev.eduxplus.com/admin  账号:17621487000 密码:Eduxplus@1
+- 前台地址: https://demo.eduxplus.com  账号:10000000000 密码:123456
+- 后台地址: https://demo.eduxplus.com/admin  账号:10000000000 密码:123456
 
 
 ## 功能一览
