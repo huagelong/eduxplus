@@ -472,7 +472,13 @@ class ChapterController extends BaseAdminController
                         $data['playUrl'] = $playUrl;
                     }
                 }
-            return $this->render('@WebsiteBundle/learn/detail.html.twig', $data);
+            if($info['video']['videoChannel'] == 1){ // 腾讯云
+                return $this->render('@EduxBundle/teach/chapter/liveView/tengxunyun.html.twig', $data);
+            }else{
+                //阿里云
+                return $this->render('@EduxBundle/teach/chapter/liveView/aliyun.html.twig', $data);
+            }
+
     }
 
 }

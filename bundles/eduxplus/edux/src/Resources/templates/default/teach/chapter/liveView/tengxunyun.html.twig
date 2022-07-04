@@ -1,0 +1,65 @@
+{% extends '@WebsiteBundle/layout/layout.html.twig' %}
+{% block head_stylesheets_end %}
+  {{ parent() }}
+  <link href="//imgcache.qq.com/open/qcloud/video/tcplayer/tcplayer.css" rel="stylesheet">
+{% endblock %}
+
+{% block head_javascript %}
+  {{ parent() }}
+  {% if videoInfo %}
+    {#    点播#}
+      <script src="{{ asset('bundles/eduxplusedux/js/tengxunyun/tim-js.js') }}"></script>
+      <script src="{{ asset('bundles/eduxplusedux/js/tengxunyun/cos-js-sdk-v5.min.js') }}"></script>
+      <script src="{{ asset('bundles/eduxplusedux/js/tengxunyun/im.js') }}"></script>
+      <script src="{{ asset('bundles/eduxpluscore/js/jquery-storage-api/jquery.storageapi.min.js') }}"></script>
+      <script src="{{ asset('bundles/eduxpluscore/js/moment.js/moment.min.js') }}"></script>
+      <script src="{{ asset('bundles/eduxpluscore/js/moment.js/locale/zh-cn.min.js') }}"></script>
+
+      <script src="{{ asset('bundles/eduxplusedux/js/face.js') }}"></script>
+        <!--[if lt IE 9]>
+        <script src="//imgcache.qq.com/open/qcloud/video/tcplayer/ie8/videojs-ie8.js"></script>
+        <![endif]-->
+        <!--如果需要在 Chrome 和 Firefox 等现代浏览器中通过 H5 播放 HLS 格式的视频，需要在 tcplayer.v4.1.min.js 之前引入 hls.min.0.13.2m.js。-->
+      <script src="//imgcache.qq.com/open/qcloud/video/tcplayer/libs/hls.min.0.13.2m.js"></script>
+      <!--播放器脚本文件-->
+      <script src="//imgcache.qq.com/open/qcloud/video/vcplayer/TcPlayer-2.3.3.js" charset="utf-8"></script>
+      <script src="{{ asset('bundles/eduxplusedux/js/tengxunyun/live.js') }}"></script>
+
+  {% endif %}
+{% endblock %}
+
+
+ {% block page %}
+   {{ parent() }}
+<div id="main" class="myMain">
+  <div class="layui-main">
+                {% if videoInfo %}
+                    {% if info['isOpen'] == 1 %}
+                          {#直播#}
+                      {% include '@WebsiteBundle/learn/_live.tengxunyun.html.twig' %}
+                    {% else %}
+{#                      直播404#}
+                        {% include '@WebsiteBundle/learn/live404.html.twig' %}
+                    {% endif %}
+                {% else %}
+                  {#无视频#}
+                  {% include '@WebsiteBundle/learn/v404.html.twig' %}
+                {% endif %}
+  </div>
+</div>
+{% endblock %}
+
+{% block body_custom_javascript %}
+  {% if videoInfo %}
+  {#    直播#}
+    {% if info['video']['type'] == 1 %}
+    <script>
+      var chatsdkAppID = {{ sdkAppID }};
+      var chatuuid = '{{ uuid }}';
+      var chatsign = '{{ sign }}';
+      var chatgroupId = '{{ groupId }}';
+    </script>
+    <script src="{{ asset('bundles/eduxpluswebsite/default/js/common/liveChat.js') }}"></script>
+    {% endif %}
+  {% endif %}
+{% endblock %}

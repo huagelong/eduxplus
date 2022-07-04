@@ -113,6 +113,68 @@ class TengxunyunImService extends BaseService{
         return  $result;
     }
 
+
+    /**
+     * 取消群
+     *
+     * @param [type] $groupId
+     * @return void
+     */
+    public function destroyGroup($groupId){
+        $api="v4/group_open_http_svc/destroy_group";
+        $data = [];
+        $data['GroupId'] = $groupId;
+        $errors = [
+            10002=>"服务器内部错误，请重试",
+            10003=>"请求命令字非法",
+            10004=>"参数非法，请根据错误描述检查请求是否正确",
+            10007=>"操作权限不足，请确认该群组类型是否支持邀请加群。例如 AVChatRoom 和 BChatRoom 不允许任何人拉人入群",
+            10010=>"群组不存在，或者曾经存在过，但是目前已经被解散",
+            10015=>"群组 ID 非法，请检查群组 ID 是否填写正确"
+        ];
+        $result = $this->reqApi($api, $data, $errors);
+        return  $result;
+    }
+
+
+    /**
+     * 禁言
+     *
+     * @param [type] $userUUids
+     * @param [type] $groupmsgNospeakingTime
+     * @param [type] $c2CmsgNospeakingTime
+     * @return void
+     */
+    public function setnospeaking($userUUids, $groupmsgNospeakingTime=null, $c2CmsgNospeakingTime=null){
+        $api="v4/openconfigsvr/setnospeaking";
+        $data = [];
+        $data["Set_Account"] = $userUUids;
+        /**
+         * 单聊消息禁言时间，单位为秒，非负整数，最大值为4294967295（十六进制 0xFFFFFFFF）
+            0表示取消该帐号的单聊消息禁言
+            4294967295表示该帐号被设置永久禁言
+            其它值表示该帐号具体的禁言时间
+         */ 
+        if($c2CmsgNospeakingTime !== null) $data["C2CmsgNospeakingTime"] = $c2CmsgNospeakingTime;
+        /**
+         * 群组消息禁言时间，单位为秒，非负整数，最大值为4294967295（十六进制 0xFFFFFFFF）
+            0表示取消该帐号的群组消息禁言
+            4294967295表示该帐号被设置永久禁言
+            其它值表示该帐号的具体禁言时间
+         */ 
+        if($groupmsgNospeakingTime !==null) $data["GroupmsgNospeakingTime"] = $groupmsgNospeakingTime;
+        
+        $errors = [
+            130001=>"JSON 格式解析失败，请检查请求包是否符合 JSON 规范",
+            130004=>"JSON 格式请求包中没有 Set_Account 字段",
+            130005=>"JSON 格式请求包中的 Set_Account 字段无效",
+            130008=>"JSON 格式请求包中 GroupmsgNospeakingTime 和 C2CmsgNospeakingTime 这两个字段都没有填写",
+            130014=>"系统错误，请再次尝试或联系技术客服"
+        ];
+        $result = $this->reqApi($api, $data, $errors);
+        return  $result;
+    }
+
     /**
      * 创建直播聊天群
      *

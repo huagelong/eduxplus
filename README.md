@@ -60,6 +60,7 @@ eduxplus 是一款服务于教育机构、个人、小型团队的在线教育�
 - PDO PHP Extension;
 - GD PHP extension;
 - ZIP PHP extension;
+- putenv(),readlink(),symlink() 函数不能禁用 
 - MySQL >= 5.7;
 - Redis >= 5.0.0;
 - And the [https://symfony.com/doc/current/reference/requirements.html](https://symfony.com/doc/current/reference/requirements.html).

@@ -1,0 +1,62 @@
+{% extends '@WebsiteBundle/layout/layout.html.twig' %}
+{% block head_stylesheets_end %}
+  {{ parent() }}
+  <link rel="stylesheet" href="//g.alicdn.com/de/prismplayer/2.8.8/skins/default/aliplayer-min.css" />
+{% endblock %}
+
+{% block head_javascript %}
+  {{ parent() }}
+  {% if videoInfo %}
+    {#    点播#}
+      <script src="{{ asset('bundles/eduxplusedux/js/tengxunyun/tim-js.js') }}"></script>
+      <script src="{{ asset('bundles/eduxplusedux/js/tengxunyun/cos-js-sdk-v5.min.js') }}"></script>
+      <script src="{{ asset('bundles/eduxplusedux/js/tengxunyun/im.js') }}"></script>
+      <script src="{{ asset('bundles/eduxpluscore/js/jquery-storage-api/jquery.storageapi.min.js') }}"></script>
+      <script src="{{ asset('bundles/eduxpluscore/js/moment.js/moment.min.js') }}"></script>
+      <script src="{{ asset('bundles/eduxpluscore/js/moment.js/locale/zh-cn.min.js') }}"></script>
+      <script src="{{ asset('bundles/eduxplusedux/js/face.js') }}"></script>
+{#    阿里云直播#}
+      <script src="{{ asset('bundles/eduxplusedux/js/es6-promise/es6-promise.auto.min.js') }}"></script>
+      <script src="{{ asset('bundles/eduxplusedux/js/vue2.6/vue.min.js') }}"></script>
+      <script type="text/javascript" charset="utf-8" src="https://g.alicdn.com/de/prismplayer/2.8.2/aliplayer-h5-min.js"></script>
+      {# <script src="https://g.alicdn.com/de/prismplayer/2.8.2/hls/aliplayer-vod-anti-min.js"></script> #}
+      <script src="{{ asset('bundles/eduxplusedux/js/aliyun/live.js') }}"></script>
+  {% endif %}
+{% endblock %}
+
+
+ {% block page %}
+   {{ parent() }}
+<div id="main" class="myMain">
+  <div class="layui-main">
+                {% if videoInfo %}
+                    {% if info['isOpen'] == 1 %}
+                            {#阿里云直播#}
+                          {% if info['video']['videoChannel'] == 2 %}
+                            {% include '@WebsiteBundle/learn/_live.aliyun.html.twig' %}
+                          {% endif %}
+                    {% else %}
+                        {% include '@WebsiteBundle/learn/live404.html.twig' %}
+                    {% endif %}
+                {% else %}
+                  {#无视频#}
+                  {% include '@WebsiteBundle/learn/v404.html.twig' %}
+                {% endif %}
+  </div>
+</div>
+{% endblock %}
+
+{% block body_custom_javascript %}
+  {% if videoInfo %}
+  {#    直播#}
+    {% if info['video']['type'] == 1 %}
+    <script>
+      var chatsdkAppID = {{ sdkAppID }};
+      var chatuuid = '{{ uuid }}';
+      var chatsign = '{{ sign }}';
+      var chatgroupId = '{{ groupId }}';
+    </script>
+    <script src="{{ asset('bundles/eduxpluswebsite/default/js/common/liveChat.js') }}"></script>
+    {% endif %}
+  {% endif %}
+{% endblock %}
