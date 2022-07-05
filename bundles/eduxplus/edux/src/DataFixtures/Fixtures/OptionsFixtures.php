@@ -17,7 +17,7 @@ class OptionsFixtures
 
     public function load()
     {
-        
+        $this->addOption("app.tengxunyun.im.group.keepdays", '', "腾讯云IM群组保留时间", 1, 1, "腾讯云IM配置");
     }
 
     protected function addOption($key, $value, $descr, $type = 1, $isLock = 1, $group='')

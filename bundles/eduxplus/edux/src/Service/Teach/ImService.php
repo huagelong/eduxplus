@@ -100,6 +100,23 @@ class ImService extends BaseService
     }
 
     /**
+     * 群组销毁
+     *
+     * @param [type] $chapterId
+     * @return void
+     */
+    public function destroyGroup($chapterId){
+        $sql = "SELECT a FROM Edux:TeachCourseChapter a WHERE a.id=:id";
+        $chapterInfo = $this->db()->fetchOne($sql, ["id"=>$chapterId], 1);
+        if(!$chapterInfo) return $this->error()->add("群组不存在!");
+        $groupId = $chapterInfo->getImGroupId();
+        if(!$groupId) return true;
+        // $adminUid = $this->getOption("app.tengxunyun.im.ownerAccount");
+        $this->tengxunyunImService->destroyGroup($groupId);
+        return true;
+    }
+
+    /**
      * 加入群
      *
      * @param [type] $groupId

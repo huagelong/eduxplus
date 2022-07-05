@@ -625,4 +625,28 @@ class ChapterService extends AdminBaseService
         $id = $this->db()->save($model);
         return $id;
     }
+
+
+    /**
+     * 销毁im群组
+     *
+     * @return void
+     */
+    public function destoryImGroup(){
+        $keepDaysNum = $this->getOption("app.tengxunyun.im.group.keepdays");
+        if(!$keepDaysNum) return ;
+        $difffDate = date('Y-m-d H:i:s',strtotime("+".$keepDaysNum." days"));
+
+        $sql = "SELECT a FROM Edux:TeachCourseChapter a WHERE a.imGroupStatus=1 AND a.openTime >:openTime AND a.imGroupId IS NOT NULL";
+        $list = $this->db()->fetchAll($sql, ["openTime"=>$difffDate]);
+        if($list){
+            foreach($list as $k=>$v){
+                $groupId = $v["imGroupId"];
+                if(!$groupId) continue;
+                $this->tengxunyunImService->destroyGroup($groupId);
+            }
+        }   
+        return true;
+    }
+
 }

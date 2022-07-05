@@ -84,9 +84,16 @@ class TeachCourseChapter
     /**
      * @var string|null
      *
-     * @ORM\Column(name="im_group_id", type="string", length=40, nullable=true, options={"comment"="腾讯云im"})
+     * @ORM\Column(name="im_group_id", type="string", length=40, nullable=true, options={"comment"="腾讯云im群组id"})
      */
     private $imGroupId;
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="im_group_status", type="boolean", nullable=true, options={"comment"="腾讯云im群组状态 0-已删除，1-未删除"})
+     */
+    private $imGroupStatus = '1';
 
     /**
      * @var string|null
@@ -245,6 +252,21 @@ class TeachCourseChapter
         $this->status = $status;
     }
 
+        /**
+     * @return bool|null
+     */
+    public function getImGroupStatus(): ?bool
+    {
+        return $this->imGroupStatus;
+    }
+
+    /**
+     * @param bool|null $status
+     */
+    public function setImGroupStatus(?bool $imGroupStatus): void
+    {
+        $this->imGroupStatus = $imGroupStatus;
+    }
 
 
     public function getImGroupId(): ?string

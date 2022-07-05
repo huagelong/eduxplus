@@ -6,7 +6,7 @@
     <a href='https://gitee.com/huagelong/eduxplus/members'><img src='https://gitee.com/huagelong/eduxplus/badge/fork.svg?theme=dark' alt='fork'></img></a>
 </p>
 
-
+# 如果您觉得有帮助，请点右上角 "Star" 支持一下，谢谢！
 > 注意本项目唯一反馈渠道: [https://gitee.com/huagelong/eduxplus/issues](https://gitee.com/huagelong/eduxplus/issues)
 
 ## 项目介绍

@@ -16,3 +16,7 @@ zenstruck_schedule:
       frequency: '* * * * *'
       description: consuming Messages
       without_overlapping: ~ #避免重复执行
+    - task: edux:destroyGroup
+      frequency: '0 0 * * *'
+      description: deleting an Expired Group
+      without_overlapping: ~ #避免重复执行
