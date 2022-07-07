@@ -30,7 +30,7 @@ class TengxunyunImService extends BaseService{
     }
 
     /**
-     * 设置/取消禁言
+     * 设置/取消禁言 群组
      *
      * @param [type] $groupId
      * @param array $uuids  
@@ -138,7 +138,7 @@ class TengxunyunImService extends BaseService{
 
 
     /**
-     * 禁言
+     * 全局禁言
      *
      * @param [type] $userUUids
      * @param [type] $groupmsgNospeakingTime

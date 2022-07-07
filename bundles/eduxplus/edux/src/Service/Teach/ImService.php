@@ -145,7 +145,7 @@ class ImService extends BaseService
      *
      * @param [type] $groupId
      * @param [type] $uuids
-     * @param integer $shutUpTime
+     * @param integer $shutUpTime 0-取消禁言
      * @return void
      */
     public function forbidSendMsg($groupId, $uuids, $shutUpTime=3600){

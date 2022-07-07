@@ -84,7 +84,7 @@ class TeachCourseChapter
     /**
      * @var string|null
      *
-     * @ORM\Column(name="im_group_id", type="string", length=40, nullable=true, options={"comment"="腾讯云im群组id"})
+     * @ORM\Column(name="im_group_id", type="string", length=100, nullable=true, options={"comment"="腾讯云im群组id"})
      */
     private $imGroupId;
 
