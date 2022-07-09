@@ -98,7 +98,7 @@
             "@clear-dbcache"
         ],
         "makeMigrate": [
-            " php bin/console make:migration",
+            "php bin/console make:migration",
             "@clear-dbcache"
         ]
     },

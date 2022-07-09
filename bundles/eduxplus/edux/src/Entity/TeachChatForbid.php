@@ -41,9 +41,9 @@ class TeachChatForbid
     /**
      * @var bool|null
      *
-     * @ORM\Column(name="type", type="boolean", nullable=true, options={"default"="1-群组禁言，2-全局禁言"})
+     * @ORM\Column(name="type", type="boolean", nullable=true, options={"comment"="0-群组禁言，1-全局禁言"})
      */
-    private $type = '1';
+    private $type = '0';
 
     /**
      * @var int|null
