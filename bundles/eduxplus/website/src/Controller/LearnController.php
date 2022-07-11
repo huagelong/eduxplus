@@ -133,7 +133,7 @@ class LearnController extends BaseHtmlController
         }
         //保存观看记录  todo 怎么保证已经看完
         $learnService->addStudyLog($chapterId, $uid);
-
+        
         return $this->render('@WebsiteBundle/learn/detail.html.twig', $data);
     }
 }

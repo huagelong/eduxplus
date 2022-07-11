@@ -1,0 +1,20 @@
+<div class="courseWrap">
+  <div class="title">评论区</div>
+  <div class="courseList liveChat">
+    <div class="chatContain">
+      <div class="chatNull"> 欢迎来到直播间 </div>
+      <ul class="chatBox" id="chatBox"></ul>
+    </div>
+    <!-- 评论区发送消息 -->
+    <div class="sendBox">
+      <div class="faceBox">
+        <img class="faceBtn" src="{{ asset('bundles/eduxpluswebsite/images/i3.png') }}">
+        <div class="faceDiv"></div>
+      </div>
+      <div class="chart">
+        <textarea id="chatMsg" class="commentText" maxlength="140" placeholder="你还可以输入140字"></textarea>
+        <button class="layui-btn layui-btn-sm layui-btn-disabled" id="chatBtn" {% if canNotChat %} data-disabled="1" {% endif %} >发送</button>
+      </div>
+    </div>
+  </div>
+</div>

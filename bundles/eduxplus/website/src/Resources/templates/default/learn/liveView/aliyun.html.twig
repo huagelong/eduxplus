@@ -1,4 +1,4 @@
-{% extends '@EduxBundle/layout/layout.html.twig' %}
+{% extends '@WebsiteBundle/layout/layout.html.twig' %}
 {% block head_stylesheets_end %}
   {{ parent() }}
   <link rel="stylesheet" href="//g.alicdn.com/de/prismplayer/2.8.8/skins/default/aliplayer-min.css" />
@@ -33,14 +33,14 @@
                     {% if info['isOpen'] == 1 %}
                             {#阿里云直播#}
                           {% if info['video']['videoChannel'] == 2 %}
-                            {% include '@EduxBundle/teach/chapter/liveView/_live.aliyun.html.twig' %}
+                            {% include '@WebsiteBundle/learn/_live.aliyun.html.twig' %}
                           {% endif %}
                     {% else %}
-                        {% include '@EduxBundle/teach/chapter/liveView/live404.html.twig' %}
+                        {% include '@WebsiteBundle/learn/live404.html.twig' %}
                     {% endif %}
                 {% else %}
                   {#无视频#}
-                  {% include '@EduxBundle/teach/chapter/liveView/v404.html.twig' %}
+                  {% include '@WebsiteBundle/learn/v404.html.twig' %}
                 {% endif %}
   </div>
 </div>
@@ -56,7 +56,7 @@
       var chatsign = '{{ sign }}';
       var chatgroupId = '{{ groupId }}';
     </script>
-  <script src="{{ asset('bundles/eduxplusedux/js/tengxunyun/liveChat.js') }}"></script>
+    <script src="{{ asset('bundles/eduxpluswebsite/default/js/common/liveChat.js') }}"></script>
     {% endif %}
   {% endif %}
 {% endblock %}

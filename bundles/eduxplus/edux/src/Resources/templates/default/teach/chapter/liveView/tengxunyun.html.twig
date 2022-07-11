@@ -1,4 +1,4 @@
-{% extends '@WebsiteBundle/layout/layout.html.twig' %}
+{% extends '@EduxBundle/layout/layout.html.twig' %}
 {% block head_stylesheets_end %}
   {{ parent() }}
   <link href="//imgcache.qq.com/open/qcloud/video/tcplayer/tcplayer.css" rel="stylesheet">
@@ -36,14 +36,14 @@
                 {% if videoInfo %}
                     {% if info['isOpen'] == 1 %}
                           {#直播#}
-                      {% include '@WebsiteBundle/learn/_live.tengxunyun.html.twig' %}
+                      {% include '@EduxBundle/teach/chapter/liveView/_live.tengxunyun.html.twig' %}
                     {% else %}
 {#                      直播404#}
-                        {% include '@WebsiteBundle/learn/live404.html.twig' %}
+                        {% include '@EduxBundle/teach/chapter/liveView/live404.html.twig' %}
                     {% endif %}
                 {% else %}
                   {#无视频#}
-                  {% include '@WebsiteBundle/learn/v404.html.twig' %}
+                  {% include '@EduxBundle/teach/chapter/liveView/v404.html.twig' %}
                 {% endif %}
   </div>
 </div>
@@ -59,7 +59,7 @@
       var chatsign = '{{ sign }}';
       var chatgroupId = '{{ groupId }}';
     </script>
-    <script src="{{ asset('bundles/eduxpluswebsite/default/js/common/liveChat.js') }}"></script>
+    <script src="{{ asset('bundles/eduxplusedux/js/tengxunyun/liveChat.js') }}"></script>
     {% endif %}
   {% endif %}
 {% endblock %}
