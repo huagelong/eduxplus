@@ -49,6 +49,9 @@ class ExceptionListener
         $msg = $exception->getMessage();
         $statusCode = $exception instanceof HttpExceptionInterface ? $exception->getStatusCode() : $exception->getCode();
         if ($hasMatch) {
+            if($statusCode == 0){
+                $statusCode = 500;
+            }
             $response = JsonResponseService::genData([], $statusCode, $msg);
             $response->setStatusCode(200); //强制转为200
             return $event->setResponse($response);
