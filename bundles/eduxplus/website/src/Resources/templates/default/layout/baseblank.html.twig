@@ -7,7 +7,7 @@
     {{ parent() }}
     <link rel="stylesheet" href="{{ asset('bundles/eduxpluswebsite/plugins/fontawesome-free/css/all.css') }}">
     <link rel="stylesheet" href="{{ asset('bundles/eduxpluswebsite/plugins/fontawesome-free/css/v4-shims.css') }}">
-     <link rel="stylesheet" href="{{ asset('bundles/eduxpluswebsite/plugins/layui/css/layui.css') }}">
+     <link rel="stylesheet" href="{{ asset('bundles/eduxpluscore/plugins/layui/css/layui.css') }}">
     <link rel="stylesheet" href="{{ asset('bundles/eduxpluswebsite/default/css/common/base.css') }}">
     {% block style %}{% endblock %}
 {% endblock %}
@@ -42,7 +42,7 @@
 
 {% block body_javascript %}
     {{ parent() }}
-    <script src="{{ asset('bundles/eduxpluswebsite/plugins/layui/layui.all.js') }}"></script>
+    <script src="{{ asset('bundles/eduxpluscore/plugins/layui/layui.all.js') }}"></script>
     <script src="{{ asset('bundles/eduxpluswebsite/default/js/common/base.js') }}"></script>
 {% endblock %}
 
