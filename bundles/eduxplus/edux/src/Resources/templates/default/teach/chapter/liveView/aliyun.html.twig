@@ -27,22 +27,22 @@
 
  {% block page %}
    {{ parent() }}
-<div id="main" class="myMain">
-  <div class="layui-main">
-                {% if videoInfo %}
-                    {% if info['isOpen'] == 1 %}
-                            {#阿里云直播#}
-                          {% if info['video']['videoChannel'] == 2 %}
-                            {% include '@EduxBundle/teach/chapter/liveView/_live.aliyun.html.twig' %}
-                          {% endif %}
+<div style="margin: 0 auto; max-width: 1640px;">
+      <div class="layui-fluid">
+                    {% if videoInfo %}
+                        {% if info['isOpen'] == 1 %}
+                                {#阿里云直播#}
+                              {% if info['video']['videoChannel'] == 2 %}
+                                {% include '@EduxBundle/teach/chapter/liveView/_live.aliyun.html.twig' %}
+                              {% endif %}
+                        {% else %}
+                            {% include '@EduxBundle/teach/chapter/liveView/live404.html.twig' %}
+                        {% endif %}
                     {% else %}
-                        {% include '@EduxBundle/teach/chapter/liveView/live404.html.twig' %}
+                      {#无视频#}
+                      {% include '@EduxBundle/teach/chapter/liveView/v404.html.twig' %}
                     {% endif %}
-                {% else %}
-                  {#无视频#}
-                  {% include '@EduxBundle/teach/chapter/liveView/v404.html.twig' %}
-                {% endif %}
-  </div>
+    </div>
 </div>
 {% endblock %}
 

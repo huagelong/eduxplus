@@ -1,0 +1,317 @@
+.myMain{
+    margin: 20px 0 40px 0;
+  }
+
+.edux-height30{
+      height: 30px;
+}
+
+  .playercontainer{
+    text-align: center;
+  }
+
+  .courseWrap{
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 2px;
+    box-shadow: 0 0 18px rgba(0,0,0,0.1);
+    margin-left: 10px;
+  }
+  .courseWrap .title{
+    text-align: center;
+    font-size: 14px;
+    font-weight: 700;
+    padding-bottom: 10px;
+  }
+
+  /*直播聊天*/
+.liveChat{
+}
+
+.liveChat .chatContain{
+  height: 450px;
+  overflow-y: auto;
+  border-top: 1px solid #f4f4f4;
+}
+
+.liveChat .chatContain .chatNull{
+  padding-top: 20px;
+  text-align: center;
+  font-size: 12px !important;
+}
+
+.liveChat .chatContain .chatBox {
+  padding-top: 10px;
+}
+
+.liveChat .chatContain .chatBox > li {
+  box-shadow: 0 0 18px rgba(0,0,0,0.1);
+  padding-bottom: 10px;
+}
+
+.liveChat .chatContain .chatBox .personName {
+  font-size: 14px;
+  line-height: 20px;
+  padding-bottom: 6px;
+  padding-top: 14px;
+}
+
+.liveChat .chatContain .chatBox .personName > .li_timer {
+  float: right;
+  font-size: 12px;
+  color: #999;
+}
+
+.liveChat .chatContain .chatBox .personName > .personUsername {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  color: #2C8CFF;
+  font-size: 0;
+  height: 20px;
+}
+
+.liveChat .chatContain .chatBox .personName > .personUsername > p {
+  max-width: 130px;
+  display: inline-block;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  color: #2C8CFF;
+  font-size: 14px;
+}
+
+.liveChat .chatContain .chatBox .personName > .personUsername > span {
+  width: 54px;
+  margin-left: 4px;
+  display: inline-block;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  color: #FF662C;
+  font-size: 14px;
+}
+
+.liveChat .chatContain .chatBox .newsMsg {
+  line-height: 30px;
+  font-size: 12px;
+  word-break: break-all;
+}
+
+.liveChat .chatContain .chatBox .newsMsg img {
+  width: 24px;
+  margin: 0 2px;
+}
+
+
+/* 聊天发送框 */
+.liveChat .sendBox {
+  z-index: 12;
+  bottom: 0;
+  left: 0;
+  padding: 0 10px;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100px;
+}
+
+.liveChat .sendBox > .chart {
+  border: 1px solid #eee;
+  border-radius: 4px;
+  margin: 0 auto;
+  height: 49px;
+  overflow: hidden;
+}
+
+.liveChat .sendBox > .chart > textarea {
+  width: 70%;
+  border-radius: 4px;
+  float: left;
+  font-size: 12px;
+  line-height: 16px;
+  padding: 8px 10px 0 10px;
+  display: block;
+  resize: none;
+  outline: none;
+  overflow-y: auto;
+  border: 0 none;
+  height: 49px;
+  box-sizing: border-box;
+}
+
+.liveChat .sendBox > .faceBox {
+  height: 30px;
+  line-height: 30px;
+  font-size: 0;
+  position: relative;
+}
+
+.liveChat .sendBox > .faceBox > img {
+  width: 16px;
+  vertical-align: middle;
+  cursor: pointer;
+}
+
+.liveChat .sendBox > .faceBox > .faceDiv {
+  position: absolute;
+  left: 0px;
+  background-color: #f7f7f7;
+  padding: 5px;
+}
+
+.liveChat .sendBox > .faceBox > .faceDiv > div {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 3px;
+  line-height: 2px;
+}
+
+.liveChat .sendBox > .faceBox > .faceDiv > div img {
+  cursor: pointer;
+}
+
+/*禁言时的颜色*/
+.liveChat .sendBox > .chart > button {
+  float: right;
+  width: 29%;
+  font-size: 14px;
+  color: #FFFFFF;
+  display: block;
+  text-align: center;
+  line-height: 49px;
+  height: 49px;
+  background: #5AA0FF;
+  border: 0 none;
+  outline: none;
+  resize: none;
+  -webkit-appearance: button;
+  cursor: pointer;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  border-radius: 0 4px 4px 0;
+}
+
+/*划过*/
+.liveChat .sendBox > .chart > button:hover {
+  background: #1D7AEA;
+}
+
+.liveChat .sendBox > .chart > button.commentText {
+  background: #E2E2E2;
+  color: #fff;
+  margin-right: 1px;
+  cursor: default;
+}
+
+
+.lyear-chat-room {
+  position: relative;
+  background-color: #fff;
+  height: 100%;
+}
+.lyear-chat-side {
+  height: -moz-calc(100% - 68px);
+  height: -webkit-calc(100% - 68px);
+  height: calc(100% - 68px);
+  z-index: 3;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-transition: .3s ease;
+  transition: .3s ease;
+  -webkit-box-shadow: 0px 0px 5px rgba(0,0,0,0.08);
+  -moz-box-shadow: 0px 0px 5px rgba(0,0,0,0.08);
+  box-shadow: 0px 0px 5px rgba(0,0,0,0.08);
+}
+.lyear-chat-side.lyear-chat-user-open {
+  left: 0 !important;
+}
+.lyear-chat-search .form-control {
+  border: 0px;
+  height: 36px;
+  -webkit-box-shadow: none;
+  border-radius: 0px;
+  border-bottom: 1px solid #f6f6f7;
+  box-shadow: none;
+}
+.lyear-chat-search .has-feedback {
+  position: relative;
+}
+.lyear-chat-search .has-feedback .form-control {
+  padding-left: 38px;
+  padding-right: 12px;
+}
+.lyear-chat-search .has-feedback .mdi {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 36px;
+  height: 36px;
+  line-height: 36px;
+  text-align: center;
+  z-index: 4;
+  color: #c4c4c4;
+}
+/* 用户列表 */
+.lyear-chat-sidebar-scroll {
+  height: -moz-calc(100% - 97px);
+  height: -webkit-calc(100% - 97px);
+  height: calc(100% - 97px);
+  position: relative;
+  background-color: #fff;
+}
+.lyear-chat-users {
+  border-radius: 0;
+  border: none;
+  box-shadow: none;
+  margin: 0px;
+}
+.lyear-chat-users .list-group-item {
+  margin-bottom: 0px;
+  border-radius: 0;
+  border: none;
+  border-bottom: 1px solid #f6f6f7;
+-webkit-transition: all .2s;
+-khtml-transition: all .2s;
+-o-transition: all .2s;
+transition: all .2s
+}
+.lyear-chat-users .list-group-item .list-chat-user-name {
+  font-size: 14px;
+  margin-bottom: 0px;
+  color: #4d5259;
+}
+.lyear-chat-users .list-group-item .list-chat-user-text {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  font-size: 10px;
+  height: 18px;
+  color: #999;
+  margin-bottom: 0px;
+}
+.lyear-chat-users .list-group-item+.list-group-item.active {
+  margin-top: 0px;
+}
+.chat-user-avatar {
+  width: 20px;
+  height: 20px;
+}
+.lyear-chat-users .list-group-item.active {
+  background-color: #f9fafb;
+  border-color: #f9fafb;
+  z-index: 0;
+}
+.list-chat-user-info {
+  height: 21px;
+  overflow: hidden;
+}
+.list-chat-user-info time {
+  color: #8b95a5;
+  margin-right: 5px;
+}
+.list-chat-user-info .badge {
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  padding: .25em .5em;
+  color: #fff;
+  background-color: #33cabb;
+}
+

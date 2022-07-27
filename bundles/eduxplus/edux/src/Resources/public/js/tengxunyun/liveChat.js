@@ -179,7 +179,7 @@ $(function(){
     if (isSDKReady) {
       getMsgList(groupId,0);
       // getGroupInfo(groupId);
-      //  getGroupMember(groupId);
+       getGroupMember(groupId);
       $("#chatBtn").removeAttr("disabled");
     }else{
       $("#chatBtn").attr("disabled", "disabled");
@@ -199,7 +199,8 @@ $(function(){
   function getGroupMember(groupId, count){
     let promiseMember = tim.getGroupMemberList({ groupID: groupId, count: count, offset:0 }); // 从0开始拉取30个群成员
     promiseMember.then(function(imResponse) {
-      // var mlist = imResponse.data.memberList;
+      var mlist = imResponse.data.memberList;
+      console.log(mlist);
       // for(index in mlist){
       //   memberList.set(mlist[index].userID, mlist[index]);
       // }
