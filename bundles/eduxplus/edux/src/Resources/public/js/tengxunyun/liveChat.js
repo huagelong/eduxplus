@@ -48,6 +48,7 @@ $(function(){
   tim.on(TIM.EVENT.BLACKLIST_UPDATED, blackListUpdated);
   tim.on(TIM.EVENT.ERROR, eventError);
   tim.on(TIM.EVENT.KICKED_OUT, kickedOut);
+  tim.on(TIM.EVENT.GROUP_ATTRIBUTES_UPDATED, groupAttributesUpdate);
 
 
   $("#chatBtn").click(function(){
@@ -127,6 +128,12 @@ $(function(){
     }
   }
 
+  function groupAttributesUpdate(event){
+    const groupID = event.data.groupID // 群组ID
+    const groupAttributes = event.data.groupAttributes // 更新后的群属性
+    console.log(event.data);
+  }
+
   function groupListUpdated(event) {
     // 收到群组列表更新通知，可通过遍历 event.data 获取群组列表数据并渲染到页面
     // event.name - TIM.EVENT.GROUP_LIST_UPDATED
@@ -139,6 +146,7 @@ $(function(){
     // event.name - TIM.EVENT.BLACKLIST_UPDATED
     // event.data - 存储 userID 的数组 - [userID]
     //console.log(event.data);
+    refreMemberList();
   }
 
   function kickedOut(event) {
@@ -178,12 +186,75 @@ $(function(){
     //初始化信息
     if (isSDKReady) {
       getMsgList(groupId,0);
-      // getGroupInfo(groupId);
-       getGroupMember(groupId);
+      getGroupInfo(groupId);
+      refreMemberList();
+      //  getGroupMember(groupId);
       $("#chatBtn").removeAttr("disabled");
     }else{
       $("#chatBtn").attr("disabled", "disabled");
     }
+  }
+
+  //在线人数
+  function getGroupOnlineMemberCount(){
+    let promise = tim.getGroupOnlineMemberCount('group1');
+      promise.then(function(imResponse) {
+        console.log(imResponse.data.memberCount);
+      }).catch(function(imError) {
+        console.warn('getGroupOnlineMemberCount error:', imError); // 获取直播群在线人数失败的相关信息
+      });
+  }
+
+  //刷新人员列表
+  function refreMemberList(){
+    
+    var html = '';
+    var members = memberList.getGroupMemberList();
+    console.log("memberList");
+    console.log(members);
+      for(index in members){
+          var item = members[index];
+          var userID = item.userID;
+          var muteUntil = item.muteUntil;
+          var role = item.role;
+          var roleStr = "";
+          if(role < 5){
+            roleStr = '<span class="layui-badge layui-bg-gray">老师</span>';
+          }else{
+            var btn1="";
+            if (muteUntil * 1000  > Date.now()) {
+              btn1 = '<a href="javascript:;" onclick="setGroupMemberMuteTime('+userID+', 0)" style="margin-left:50px;color:#33CABB" >取消禁言</a>';
+            } else {
+              btn1 = '<a href="javascript:;" onclick="setGroupMemberMuteTime('+userID+', 7200)" style="margin-left:50px;color:#33CABB">禁言</a>';
+            }
+          }
+
+          html += '<div class="list-group-item">'+
+                        '<span class="float-left user-status-success">'+
+                        '<img src="'+item.avatar+'" alt="" class="img-avatar chat-user-avatar m-r-10">'+
+                        '</span>'+
+                        '<div class="list-chat-user-info clearfix">'+
+                          '<h4 class="list-chat-user-name float-left">'+item.nick+'  '+roleStr+'</h4>'+btn1+
+                        '</div>'+
+                  '</div>';
+      }
+
+      $("#chat-users-list").html(html);
+
+  }
+
+
+  function setGroupMemberMuteTime(userId, time){
+    let promise = tim.setGroupMemberMuteTime({
+      groupID: groupId,
+      userID: userId,
+      muteTime: time // 禁言10分钟；设为0，则表示取消禁言
+    });
+    promise.then(function(imResponse) {
+
+    }).catch(function(imError) {
+      console.warn('setGroupMemberMuteTime error:', imError); // 禁言失败的相关信息
+    });
   }
 
   function getGroupInfo(groupId){
@@ -201,10 +272,11 @@ $(function(){
     promiseMember.then(function(imResponse) {
       var mlist = imResponse.data.memberList;
       console.log(mlist);
-      // for(index in mlist){
-      //   memberList.set(mlist[index].userID, mlist[index]);
-      // }
-      // console.log(memberList);
+      for(index in mlist){
+        memberList.set(mlist[index].userID, mlist[index]);
+      }
+      console.log("getGroupMember");
+      console.log(memberList);
     }).catch(function(imError) {
       console.warn('getGroupMemberList error:', imError);
     });
@@ -265,7 +337,7 @@ $(function(){
         var nickname = userInfo.nick;
         var role = userInfo.role;
       }else{
-        console.log(uuid);
+        // console.log(uuid);
         let imResponse = await tim.getUserProfile({
           userIDList: [uuid] // 请注意：即使只拉取一个用户的资料，也需要用数组类型，例如：userIDList: ['user1']
         });
