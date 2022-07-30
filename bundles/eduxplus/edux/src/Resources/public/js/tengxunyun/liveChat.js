@@ -48,8 +48,7 @@ $(function(){
   tim.on(TIM.EVENT.BLACKLIST_UPDATED, blackListUpdated);
   tim.on(TIM.EVENT.ERROR, eventError);
   tim.on(TIM.EVENT.KICKED_OUT, kickedOut);
-  tim.on(TIM.EVENT.GROUP_ATTRIBUTES_UPDATED, groupAttributesUpdate);
-
+  // tim.on(TIM.EVENT.GROUP_ATTRIBUTES_UPDATED, groupAttributesUpdate);
 
   $("#chatBtn").click(function(){
     var disable = $(this).data("disabled");
@@ -146,7 +145,7 @@ $(function(){
     // event.name - TIM.EVENT.BLACKLIST_UPDATED
     // event.data - 存储 userID 的数组 - [userID]
     //console.log(event.data);
-    refreMemberList();
+    getGroupInfo(groupId);
   }
 
   function kickedOut(event) {
@@ -187,7 +186,7 @@ $(function(){
     if (isSDKReady) {
       getMsgList(groupId,0);
       getGroupInfo(groupId);
-      refreMemberList();
+
       //  getGroupMember(groupId);
       $("#chatBtn").removeAttr("disabled");
     }else{
@@ -206,14 +205,16 @@ $(function(){
   }
 
   //刷新人员列表
-  function refreMemberList(){
+  function refreMemberList(mlist){
     
     var html = '';
-    var members = memberList.getGroupMemberList();
-    console.log("memberList");
+    var members = mlist;
+    // console.log("members");
     console.log(members);
       for(index in members){
           var item = members[index];
+        console.log("item");
+        console.log(item);
           var userID = item.userID;
           var muteUntil = item.muteUntil;
           var role = item.role;
@@ -271,12 +272,10 @@ $(function(){
     let promiseMember = tim.getGroupMemberList({ groupID: groupId, count: count, offset:0 }); // 从0开始拉取30个群成员
     promiseMember.then(function(imResponse) {
       var mlist = imResponse.data.memberList;
-      console.log(mlist);
       for(index in mlist){
         memberList.set(mlist[index].userID, mlist[index]);
       }
-      console.log("getGroupMember");
-      console.log(memberList);
+      refreMemberList(mlist);
     }).catch(function(imError) {
       console.warn('getGroupMemberList error:', imError);
     });
