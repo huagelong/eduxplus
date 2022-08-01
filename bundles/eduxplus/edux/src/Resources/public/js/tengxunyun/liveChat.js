@@ -255,6 +255,23 @@ $(function(){
     setGroupMemberMuteTime(userId, 7200);
   });
 
+  if($('.lyear-need-scroll')[0]) {
+    $('.lyear-need-scroll').each(function() {
+      new PerfectScrollbar(this, {
+        swipeEasing: false,
+        suppressScrollX: true
+      });
+    });
+  }
+
+  $('#keywords').keydown(function(event) {
+    if (event.keyCode == 13) {
+      var keyword = $(this).val();
+      $('.lyear-chat-users').find('.list-group-item').hide();
+      $('.lyear-chat-users').find(".list-chat-user-name").filter(":Contains("+keyword+")").parents('.list-group-item').fadeIn(300);
+    }
+  });
+
   function setGroupMemberMuteTime(userId, time){
     let promise = tim.setGroupMemberMuteTime({
       groupID: groupId,
