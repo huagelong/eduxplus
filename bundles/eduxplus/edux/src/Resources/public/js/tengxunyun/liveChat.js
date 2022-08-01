@@ -210,11 +210,10 @@ $(function(){
     var html = '';
     var members = mlist;
     // console.log("members");
-    console.log(members);
       for(index in members){
           var item = members[index];
-        console.log("item");
-        console.log(item);
+        // console.log("item");
+        // console.log(item);
           var userID = item.userID;
           var muteUntil = item.muteUntil;
           var role = item.role;
@@ -223,10 +222,12 @@ $(function(){
             roleStr = '<span class="layui-badge layui-bg-gray">老师</span>';
           }else{
             var btn1="";
-            if (muteUntil * 1000  > Date.now()) {
-              btn1 = '<a href="javascript:;" onclick="setGroupMemberMuteTime('+userID+', 0)" style="margin-left:50px;color:#33CABB" >取消禁言</a>';
-            } else {
-              btn1 = '<a href="javascript:;" onclick="setGroupMemberMuteTime('+userID+', 7200)" style="margin-left:50px;color:#33CABB">禁言</a>';
+            if(uuid != userID) {
+              if (muteUntil * 1000 > Date.now()) {
+                btn1 = '<a href="javascript:;" class="cancelForbid" data-userid="' + userID + '" style="margin-left:50px;color:#33CABB" >取消禁言</a>';
+              } else {
+                btn1 = '<a  href="javascript:;"  class="forbid" data-userid="' + userID + '" style="margin-left:50px;color:#33CABB">禁言</a>';
+              }
             }
           }
 
@@ -244,6 +245,15 @@ $(function(){
 
   }
 
+  $("#chat-users-list").on("click",".cancelForbid",function(){
+    var userId = $(this).data("userid");
+    setGroupMemberMuteTime(userId, 0);
+  });
+
+  $("#chat-users-list").on("click", ".forbid",function(){
+    var userId = $(this).data("userid");
+    setGroupMemberMuteTime(userId, 7200);
+  });
 
   function setGroupMemberMuteTime(userId, time){
     let promise = tim.setGroupMemberMuteTime({
@@ -255,6 +265,7 @@ $(function(){
 
     }).catch(function(imError) {
       console.warn('setGroupMemberMuteTime error:', imError); // 禁言失败的相关信息
+      showMsg(5, imError.toString());
     });
   }
 
