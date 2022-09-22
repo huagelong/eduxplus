@@ -36,7 +36,6 @@ class IndexController extends BaseApiController
 
         $databaseUrl = $apiBaseService->getConfig("database_url");
         $debug = $apiBaseService->getConfig("kernel.debug");
-        $dataBaseUrlArr = [];
         $dataBaseUrlArr = parse_url($databaseUrl);
         // print_r($dataBaseUrlArr);exit;
         $config = new Config([

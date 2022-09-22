@@ -28,7 +28,7 @@ class EsCommand extends Command
 
     protected function configure()
     {
-        $this->setDescription('elasticsearch 重新索引');
+        $this->setDescription('elasticsearch reset index');
     }
 
 

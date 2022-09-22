@@ -8,7 +8,7 @@
     "test": "tests"
   },
   "scripts": {
-    "commit":"git-cz",
+    "commit": "git-cz",
     "genlog": "conventional-changelog -p angular -i CHANGELOG.md -s"
   },
   "repository": {
