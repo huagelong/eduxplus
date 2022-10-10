@@ -11,6 +11,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * @ORM\Table(name="base_schedule")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false, hardDelete=true)
  * @ORM\Entity(repositoryClass="Eduxplus\CoreBundle\Repository\BaseScheduleRepository")
+ * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
  */
 class BaseSchedule
 {

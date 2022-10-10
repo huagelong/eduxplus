@@ -8,6 +8,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 /**
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false, hardDelete=true)
  * @ORM\Entity(repositoryClass="Eduxplus\CoreBundle\Repository\BaseRoleUserRepository")
+ * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
  */
 class BaseRoleUser
 {

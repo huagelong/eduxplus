@@ -11,6 +11,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * @ORM\Table(name="base_user")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false, hardDelete=true)
  * @ORM\Entity(repositoryClass="Eduxplus\CoreBundle\Repository\BaseUserRepository")
+ * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
  */
 class BaseUser implements PasswordAuthenticatedUserInterface,UserInterface
 {
