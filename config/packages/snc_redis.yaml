@@ -39,20 +39,3 @@ snc_redis:
             prefix: "%redis_prefix%persistence_"
             connection_timeout: 30
             read_write_timeout: 30
-  doctrine:
-    metadata_cache:
-      client: cache
-      entity_manager: default
-      namespace: 'dmc:'
-    result_cache:
-      client: cache
-      entity_manager: default
-      namespace: 'drc:'
-    query_cache:
-      client: cache
-      entity_manager: default
-      namespace: 'dqc:'
-    second_level_cache:
-      client: cache
-      entity_manager: default
-      namespace: 'dslc:'
