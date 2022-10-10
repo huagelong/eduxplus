@@ -19,7 +19,7 @@ framework:
             doctrine.second_level_cache_pool: 
                 default_lifetime: 600
                 adapters:
-                    - cache.app
+                    - cache.adapter.redis
         # APCu (not recommended with heavy random-write workloads as memory fragmentation can cause perf issues)
         #app: cache.adapter.apcu
 
