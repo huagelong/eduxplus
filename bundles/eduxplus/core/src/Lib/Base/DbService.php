@@ -165,8 +165,8 @@ class DbService
         $em = $this->getDoctrine()->getManager($name);
         $em = $this->enableSoftDeleteable($em);
         $query = $em->createQuery($dql);
+        $query->setCacheable(true)->setCacheMode(\Doctrine\ORM\Cache::MODE_GET);
         if ($params) $query = $query->setParameters($params);
-
         if ($limit !== null) {
             $query = $query->setMaxResults($limit);
         }
@@ -190,6 +190,7 @@ class DbService
         $em = $this->getDoctrine()->getManager($name);
         $em = $this->disableSoftDeleteable($em);
         $query = $em->createQuery($dql);
+        $query->setCacheable(true)->setCacheMode(\Doctrine\ORM\Cache::MODE_GET);
         if ($params) $query = $query->setParameters($params);
 
         if ($limit !== null) {
@@ -215,7 +216,9 @@ class DbService
         $em = $this->getDoctrine()->getManager($name);
         $em = $this->enableSoftDeleteable($em);
         $query = $em->createQuery($dql);
+        $query->setCacheable(true)->setCacheMode(\Doctrine\ORM\Cache::MODE_GET);
         if ($params) $query = $query->setParameters($params);
+
         $resultType = !$getObject ? 2 : null;
         $rs = $query->setMaxResults(1)->getOneOrNullResult($resultType);
 //        $this->logger->debug($query->getSql());
@@ -227,6 +230,7 @@ class DbService
         $em = $this->getDoctrine()->getManager($name);
         $em = $this->disableSoftDeleteable($em);
         $query = $em->createQuery($dql);
+        $query->setCacheable(true)->setCacheMode(\Doctrine\ORM\Cache::MODE_GET);
         if ($params) $query = $query->setParameters($params);
         $resultType = !$getObject ? 2 : null;
         $rs = $query->setMaxResults(1)->getOneOrNullResult($resultType);
@@ -244,51 +248,6 @@ class DbService
     {
         $conn = $this->getDoctrine()->getManager($name)->getConnection();
         return  $conn;
-    }
-
-    /**
-     * 原生sql，多个值
-     * @param $sql  eg "SELECT * FROM xx_msg WHERE uid =?" or "SELECT * FROM xx_msg WHERE uid =:uid"
-     * @param array $params eg [1] or [":uid"=>uid]
-     * @param array $types
-     * @param null $name
-     * @return mixed
-     */
-    public function fetchAllBySql($sql, array $params = [],$name = null){
-//        $this->logger->debug($sql);
-        $conn = $this->conn($name);
-        $result = $conn->fetchAll($sql, $params);
-        return $result;
-    }
-
-    /**
-     * 原生sql，第一个值
-     * @param $sql
-     * @param array $params
-     * @param array $types
-     * @param null $name
-     * @return mixed
-     */
-    public function fetchAssocBySql($sql, array $params = [],$name = null){
-//        $this->logger->debug($sql);
-        $conn = $this->conn($name);
-        $result = $conn->fetchAssoc($sql, $params);
-        return $result;
-    }
-
-    /**
-     * 原生sql，第一行，单个字段值
-     * @param $sql  eg "SELECT * FROM XX:XxMsg WHERE uid =?";
-     * @param array $params eg ["XX:XxMsg"]
-     * @param null $name
-     * @return mixed
-     */
-    public function fetchColumnBySql($sql, array $params = [],$name = null){
-//        $this->logger->debug($sql);
-        $conn = $this->conn($name);
-        $result = $conn->fetchcolumn($sql, $params);
-
-        return $result;
     }
 
 
