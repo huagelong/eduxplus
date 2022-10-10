@@ -15,14 +15,11 @@ framework:
                 default_lifetime: 600
                 adapters:
                     - cache.adapter.array
-#                    - cache.adapter.apcu
                     - cache.adapter.redis_tag_aware
             doctrine.second_level_cache_pool: 
                 default_lifetime: 600
                 adapters:
                     - cache.adapter.array
-#                    - cache.adapter.apcu
-                    - cache.adapter.redis_tag_aware
         # APCu (not recommended with heavy random-write workloads as memory fragmentation can cause perf issues)
         #app: cache.adapter.apcu
 
