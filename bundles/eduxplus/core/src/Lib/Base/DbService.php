@@ -165,7 +165,7 @@ class DbService
         $em = $this->getDoctrine()->getManager($name);
         $em = $this->enableSoftDeleteable($em);
         $query = $em->createQuery($dql);
-        $query = $query->setCacheable(true)->setCacheMode(\Doctrine\ORM\Cache::MODE_GET);
+        $query = $query->useQueryCache(true)->useResultCache(true)->setCacheMode(\Doctrine\ORM\Cache::MODE_GET);
         if ($params) $query = $query->setParameters($params);
         if ($limit !== null) {
             $query = $query->setMaxResults($limit);
@@ -190,7 +190,7 @@ class DbService
         $em = $this->getDoctrine()->getManager($name);
         $em = $this->disableSoftDeleteable($em);
         $query = $em->createQuery($dql);
-        $query->setCacheable(true)->setCacheMode(\Doctrine\ORM\Cache::MODE_GET);
+        $query = $query->useQueryCache(true)->useResultCache(true)->setCacheMode(\Doctrine\ORM\Cache::MODE_GET);
         if ($params) $query = $query->setParameters($params);
 
         if ($limit !== null) {
@@ -216,7 +216,7 @@ class DbService
         $em = $this->getDoctrine()->getManager($name);
         $em = $this->enableSoftDeleteable($em);
         $query = $em->createQuery($dql);
-        $query->setCacheable(true)->setCacheMode(\Doctrine\ORM\Cache::MODE_GET);
+        $query = $query->useQueryCache(true)->useResultCache(true)->setCacheMode(\Doctrine\ORM\Cache::MODE_GET);
         if ($params) $query = $query->setParameters($params);
 
         $resultType = !$getObject ? 2 : null;
@@ -230,7 +230,7 @@ class DbService
         $em = $this->getDoctrine()->getManager($name);
         $em = $this->disableSoftDeleteable($em);
         $query = $em->createQuery($dql);
-        $query->setCacheable(true)->setCacheMode(\Doctrine\ORM\Cache::MODE_GET);
+        $query = $query->useQueryCache(true)->useResultCache(true)->setCacheMode(\Doctrine\ORM\Cache::MODE_GET);
         if ($params) $query = $query->setParameters($params);
         $resultType = !$getObject ? 2 : null;
         $rs = $query->setMaxResults(1)->getOneOrNullResult($resultType);
