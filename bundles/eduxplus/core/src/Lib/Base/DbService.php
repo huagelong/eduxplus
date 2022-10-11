@@ -146,26 +146,30 @@ class DbService
         return true;
     }
 
-    public function fetchField($field, $dql, $params = [])
+    public function fetchField($field, $dql, $params = [], $cache=false)
     {
-        $result = $this->fetchOne($dql, $params);
+        $result = $this->fetchOne($dql, $params, null, $cache);
         $rs = isset($result[$field]) ? $result[$field] : "";
         return $rs;
     }
 
-    public function fetchFields($field, $dql, $params = [])
+    public function fetchFields($field, $dql, $params = [], $cache=false)
     {
-        $result = $this->fetchAll($dql, $params);
+        $result = $this->fetchAll($dql, $params, 0,null,null,null, $cache);
         $rs = $result ? array_column($result, $field) : [];
         return $rs;
     }
 
-    public function fetchAll($dql, $params = [], $getObject = 0, $limit = null, $offset = null, $name = null)
+    public function fetchAll($dql, $params = [], $getObject = 0, $limit = null, $offset = null, $name = null, $cache=false)
     {
         $em = $this->getDoctrine()->getManager($name);
         $em = $this->enableSoftDeleteable($em);
         $query = $em->createQuery($dql);
-        $query = $query->useQueryCache(true)->useResultCache(true)->setCacheMode(\Doctrine\ORM\Cache::MODE_GET);
+        $query = $query->useQueryCache(true);
+        if($cache){
+            $query = $query->useResultCache(true);
+        }
+//        $query = $query->setCacheable(true);
         if ($params) $query = $query->setParameters($params);
         if ($limit !== null) {
             $query = $query->setMaxResults($limit);
@@ -185,12 +189,15 @@ class DbService
     }
 
 
-    public function fetchAllHard($dql, $params = [], $getObject = 0, $limit = null, $offset = null, $name = null)
+    public function fetchAllHard($dql, $params = [], $getObject = 0, $limit = null, $offset = null, $name = null, $cache=false)
     {
         $em = $this->getDoctrine()->getManager($name);
         $em = $this->disableSoftDeleteable($em);
         $query = $em->createQuery($dql);
-        $query = $query->useQueryCache(true)->useResultCache(true)->setCacheMode(\Doctrine\ORM\Cache::MODE_GET);
+        $query = $query->useQueryCache(true);
+        if($cache){
+            $query = $query->useResultCache(true);
+        }
         if ($params) $query = $query->setParameters($params);
 
         if ($limit !== null) {
@@ -211,12 +218,15 @@ class DbService
         return $rs ? $rs : [];
     }
 
-    public function fetchOne($dql, $params = [], $getObject = 0, $name = null)
+    public function fetchOne($dql, $params = [], $getObject = 0, $name = null,$cache=false)
     {
         $em = $this->getDoctrine()->getManager($name);
         $em = $this->enableSoftDeleteable($em);
         $query = $em->createQuery($dql);
-        $query = $query->useQueryCache(true)->useResultCache(true)->setCacheMode(\Doctrine\ORM\Cache::MODE_GET);
+        $query = $query->useQueryCache(true);
+        if($cache){
+            $query = $query->useResultCache(true);
+        }
         if ($params) $query = $query->setParameters($params);
 
         $resultType = !$getObject ? 2 : null;
@@ -225,12 +235,15 @@ class DbService
         return $rs ? $rs : [];
     }
 
-    public function fetchOneHard($dql, $params = [], $getObject = 0, $name = null)
+    public function fetchOneHard($dql, $params = [], $getObject = 0, $name = null, $cache=false)
     {
         $em = $this->getDoctrine()->getManager($name);
         $em = $this->disableSoftDeleteable($em);
         $query = $em->createQuery($dql);
-        $query = $query->useQueryCache(true)->useResultCache(true)->setCacheMode(\Doctrine\ORM\Cache::MODE_GET);
+        $query = $query->useQueryCache(true);
+        if($cache){
+            $query = $query->useResultCache(true);
+        }
         if ($params) $query = $query->setParameters($params);
         $resultType = !$getObject ? 2 : null;
         $rs = $query->setMaxResults(1)->getOneOrNullResult($resultType);

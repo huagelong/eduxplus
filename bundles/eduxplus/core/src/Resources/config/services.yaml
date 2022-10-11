@@ -85,6 +85,9 @@ services:
         lazy: true
         arguments:
             $redisCLient: '@snc_redis.persistence'
+#    redis.persistence:
+#         alias: 'snc_redis.persistence'
+#         public: true
 
     Eduxplus\CoreBundle\Twig\FuncExtension:
         tags: [ 'twig.extension' ]

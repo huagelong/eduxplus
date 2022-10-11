@@ -11,6 +11,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * @ORM\Table(name="mall_goods", indexes={@ORM\Index(name="category_id_idx", columns={"category_id"}),@ORM\Index(name="product_id_idx", columns={"product_id"})})
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false, hardDelete=true)
  * @ORM\Entity(repositoryClass="Eduxplus\EduxBundle\Repository\MallGoodsRepository")
+ * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
  */
 class MallGoods
 {

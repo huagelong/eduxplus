@@ -11,6 +11,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * @ORM\Table(name="teach_test_sub", indexes={@ORM\Index(name="test_id_idx", columns={"test_id"})})
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false, hardDelete=true)
  * @ORM\Entity(repositoryClass="Eduxplus\QaBundle\Repository\TeachTestSubRepository")
+ * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
  */
 class TeachTestSub
 {

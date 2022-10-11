@@ -11,6 +11,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * @ORM\Table(name="mall_mobile_sms_code", indexes={@ORM\Index(name="mobile_idx", columns={"mobile"})})
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false, hardDelete=true)
  * @ORM\Entity(repositoryClass="Eduxplus\EduxBundle\Repository\MallMobileSmsCodeRepository")
+ * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
  */
 class MallMobileSmsCode
 {

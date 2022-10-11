@@ -11,6 +11,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * @ORM\Table(name="teach_chat_forbid")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false, hardDelete=true)
  * @ORM\Entity(repositoryClass="Eduxplus\EduxBundle\Repository\TeachChatForbidRepository")
+ * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
  */
 class TeachChatForbid
 {

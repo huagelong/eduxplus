@@ -3,6 +3,7 @@ namespace Eduxplus\CoreBundle\Doctrine\Generator;
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Id\AbstractIdGenerator;
+use Eduxplus\CoreBundle\Lib\Base\Facade;
 use Godruoyi\Snowflake\Snowflake;
 use Eduxplus\CoreBundle\Doctrine\Resolver\RedisSequenceResolver;
 
@@ -17,6 +18,7 @@ class SnowflakeGenerator extends AbstractIdGenerator
 
     public function __construct($redisCLient){
         $this->redisCLient = $redisCLient;
+        //    $this->redisCLient = Facade::create("redis.persistence");
     }
 
     public function generate(EntityManager $em, $entity)

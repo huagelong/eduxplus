@@ -11,6 +11,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * @ORM\Table(name="jw_teacher", indexes={@ORM\Index(name="school_id_idx", columns={"school_id"})})
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false, hardDelete=true)
  * @ORM\Entity(repositoryClass="Eduxplus\EduxBundle\Repository\JwTeacherRepository")
+ * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
  */
 class JwTeacher
 {

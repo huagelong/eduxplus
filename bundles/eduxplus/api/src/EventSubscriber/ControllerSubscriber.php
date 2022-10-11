@@ -40,7 +40,6 @@ class ControllerSubscriber implements EventSubscriberInterface
 
     public function onKernelController(ControllerEvent $event)
     {
-        return true;
         if (!$event->isMainRequest()) {
             return true;
         }

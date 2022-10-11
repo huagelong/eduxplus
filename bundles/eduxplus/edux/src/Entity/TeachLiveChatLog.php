@@ -10,6 +10,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * @ORM\Table(name="teach_live_chat_log", indexes={@ORM\Index(name="chapter_id_idx", columns={"chapter_id"})})
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false, hardDelete=true)
  * @ORM\Entity(repositoryClass="Eduxplus\EduxBundle\Repository\TeachLiveChatLogRepository")
+ * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
  */
 class TeachLiveChatLog
 {

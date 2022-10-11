@@ -11,6 +11,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * @ORM\Table(name="teach_category", indexes={@ORM\Index(name="parent_id", columns={"parent_id"})})
  * @Gedmo\SoftDeleteable(fieldName="deletedAt",timeAware=false, hardDelete=true)
  * @ORM\Entity(repositoryClass="Eduxplus\EduxBundle\Repository\TeachCategoryRepository")
+ * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
  */
 class TeachCategory
 {

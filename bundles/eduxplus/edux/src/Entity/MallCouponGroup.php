@@ -11,6 +11,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * @ORM\Table(name="mall_coupon_group", indexes={@ORM\Index(name="expiration_start_end_idx", columns={"expiration_start", "expiration_end"})})
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false, hardDelete=true)
  * @ORM\Entity(repositoryClass="Eduxplus\EduxBundle\Repository\MallCouponGroupRepository")
+ * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
  */
 class MallCouponGroup
 {

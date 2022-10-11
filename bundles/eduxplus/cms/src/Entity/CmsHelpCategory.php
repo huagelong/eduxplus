@@ -11,6 +11,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * @ORM\Table(name="cms_help_category", indexes={@ORM\Index(name="parent_id", columns={"parent_id"})})
  * @Gedmo\SoftDeleteable(fieldName="deletedAt",timeAware=false, hardDelete=true)
  * @ORM\Entity(repositoryClass="Eduxplus\CmsBundle\Repository\CmsHelpCategoryRepository")
+ * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
  */
 class CmsHelpCategory
 {

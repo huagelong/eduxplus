@@ -9,6 +9,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * @ORM\Table(name="base_admin_log", indexes={@ORM\Index(name="uid_idx", columns={"uid"})} )
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false, hardDelete=true)
  * @ORM\Entity(repositoryClass="Eduxplus\CoreBundle\Repository\BaseAdminLogRepository")
+ * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
  */
 class BaseAdminLog
 {
