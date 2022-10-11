@@ -97,7 +97,7 @@ class DbService
         //execute
         $em = $this->getDoctrine()->getManager($name);
         $em = $this->enableSoftDeleteable($em);
-        $query = $em->createQuery($dql);
+        $query = $em->createQuery($dql)->setHint(\Doctrine\ORM\Query::HINT_CACHE_EVICT, true);
         if ($params) $query = $query->setParameters($params);
         $rs = $query->execute();
         $em->clear($name);
@@ -116,7 +116,7 @@ class DbService
         //execute
         $em = $this->getDoctrine()->getManager($name);
         $em = $this->disableSoftDeleteable($em);
-        $query = $em->createQuery($dql);
+        $query = $em->createQuery($dql)->setHint(\Doctrine\ORM\Query::HINT_CACHE_EVICT, true);
         if ($params) $query = $query->setParameters($params);
         $rs = $query->execute();
         $em->clear($name);
@@ -165,7 +165,7 @@ class DbService
         $em = $this->getDoctrine()->getManager($name);
         $em = $this->enableSoftDeleteable($em);
         $query = $em->createQuery($dql);
-        $query->setCacheable(true)->setCacheMode(\Doctrine\ORM\Cache::MODE_GET);
+        $query = $query->setCacheable(true)->setCacheMode(\Doctrine\ORM\Cache::MODE_GET);
         if ($params) $query = $query->setParameters($params);
         if ($limit !== null) {
             $query = $query->setMaxResults($limit);
