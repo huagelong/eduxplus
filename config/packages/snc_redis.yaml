@@ -34,8 +34,8 @@ snc_redis:
           type: phpredis
           alias: persistence
           dsn: "redis://%redis_host%/4"
-#          logging: '%kernel.debug%'
+          logging: '%kernel.debug%'
           options:
             prefix: "%redis_prefix%persistence_"
-            connection_timeout: 30
+            connection_timeout: 10
             read_write_timeout: 30
