@@ -148,7 +148,7 @@ class DbService
 
     public function fetchField($field, $dql, $params = [], $cache=false)
     {
-        $result = $this->fetchOne($dql, $params, null, $cache);
+        $result = $this->fetchOne($dql, $params, 0,null, $cache);
         $rs = isset($result[$field]) ? $result[$field] : "";
         return $rs;
     }
