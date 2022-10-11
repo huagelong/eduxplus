@@ -27,7 +27,7 @@ class RedisSequenceResolver implements SequenceResolver
     public function __construct($redisCLient)
     {
         if ($redis->ping()) {
-            $this->redis = $redis;
+            $this->redis = $redisCLient;
             return;
         }
 
