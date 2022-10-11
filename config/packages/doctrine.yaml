@@ -5,12 +5,6 @@ doctrine:
         auto_generate_proxy_classes:  "%kernel.debug%"
         naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
         auto_mapping: true
-        query_cache_driver:
-            type: pool
-            pool: doctrine.second_level_cache_pool
-        result_cache_driver:
-            type: pool
-            pool: doctrine.second_level_cache_pool
         mappings:
             App:
                 is_bundle: false
@@ -23,10 +17,3 @@ doctrine:
             softdeleteable:
                 class: Gedmo\SoftDeleteable\Filter\SoftDeleteableFilter
                 enabled: true
-        second_level_cache:
-            region_cache_driver:
-                type: pool
-                pool: doctrine.second_level_cache_pool
-            log_enabled: true
-            enabled: true
-            region_lifetime: 3600

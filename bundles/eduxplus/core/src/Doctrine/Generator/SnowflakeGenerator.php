@@ -9,7 +9,11 @@ use Eduxplus\CoreBundle\Doctrine\Resolver\RedisSequenceResolver;
 class SnowflakeGenerator extends AbstractIdGenerator
 {
 
+    /**
+     * @var \Redis
+     */
     private $redisCLient;
+
 
     public function __construct($redisCLient){
         $this->redisCLient = $redisCLient;

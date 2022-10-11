@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Eduxplus\CoreBundle\Doctrine\Resolver;
 use Godruoyi\Snowflake\SequenceResolver;
+use Symfony\Component\Cache\Adapter\RedisAdapter;
 
 class RedisSequenceResolver implements SequenceResolver
 {
@@ -26,12 +27,7 @@ class RedisSequenceResolver implements SequenceResolver
      */
     public function __construct($redisCLient)
     {
-        if ($redisCLient->ping()) {
-            $this->redis = $redisCLient;
-            return;
-        }
-
-        throw new \Exception('Redis server went away');
+        $this->redis = $redisCLient;
     }
 
     /**
