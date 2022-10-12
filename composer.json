@@ -73,6 +73,9 @@
             "php bin/console doctrine:cache:clear-query-region --ansi",
             "php bin/console doctrine:cache:clear-result --ansi --no-interaction"
         ],
+        "reset": [
+            "@auto-scripts"
+        ],
         "assets": [
             "php bin/console assets:install --symlink --relative public"
         ],
@@ -88,11 +91,11 @@
         ],
         "gen": [
             "php bin/console core:gen:dir",
+            "@auto-scripts",
             "php bin/console doctrine:database:create --if-not-exists",
             "php bin/console doctrine:schema:drop --ansi --force --full-database --no-interaction",
             "php bin/console doctrine:schema:update --ansi --force --no-interaction",
-            "php bin/console doctrine:fixtures:load --ansi --no-interaction -vvv",
-            "@clear-dbcache"
+            "php bin/console doctrine:fixtures:load --ansi --no-interaction -vvv"
         ],
         "migrate": [
             "php bin/console doctrine:migrations:migrate",
