@@ -81,13 +81,9 @@ services:
         arguments:
             $cacheCLient: '@snc_redis.cache'
 
-    Eduxplus\CoreBundle\Doctrine\Generator\SnowflakeGenerator:
-        lazy: true
-        arguments:
-            $redisCLient: '@snc_redis.persistence'
-#    redis.persistence:
-#         alias: 'snc_redis.persistence'
-#         public: true
+    redis.persistence:
+         alias: 'snc_redis.persistence'
+         public: true
 
     Eduxplus\CoreBundle\Twig\FuncExtension:
         tags: [ 'twig.extension' ]

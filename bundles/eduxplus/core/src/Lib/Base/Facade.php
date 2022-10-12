@@ -41,6 +41,10 @@ class Facade
         return self::$myContainer->get($serviceId);
     }
 
+    public static function has($serviceId){
+        return self::$myContainer->has($serviceId);
+    }
+
     /**
      * @param ContainerInterface $container
      *
