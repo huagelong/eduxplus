@@ -36,8 +36,7 @@ RUN apk add --update --no-cache \
     git \
     busybox-extras
 
-RUN curl -sS https://getcomposer.org/installer | tee composer-setup.php \
-        && php composer-setup.php && rm composer-setup.php* \
+RUN curl -s https://getcomposer.org/installer | php \
         && chmod +x composer.phar && mv composer.phar /usr/bin/composer
 
 COPY ./docs/docker/php-fpm/symfony.ini /etc/php7/conf.d/
