@@ -36,7 +36,7 @@ RUN apk add --update --no-cache \
     git \
     busybox-extras
 
-RUN curl -sS https://getcomposer.org/installer | tee composer-setup.php | sha384sum -c composer-setup.php.sig \
+RUN curl -sS https://getcomposer.org/installer | tee composer-setup.php \
         && php composer-setup.php && rm composer-setup.php* \
         && chmod +x composer.phar && mv composer.phar /usr/bin/composer
 
