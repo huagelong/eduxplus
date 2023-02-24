@@ -46,13 +46,6 @@ COPY ./docs/docker/php-fpm/xdebug.ini  /etc/php7/conf.d/
 
 COPY ./docs/docker/php-fpm/symfony.pool.conf /etc/php7/php-fpm.d/
 
-COPY . ./
-RUN composer config -g repo.packagist composer https://packagist.phpcomposer.com
-RUN composer install
-
-RUN echo "* * * * * cd /var/www/symfony && php ./bin/console schedule:run >> /dev/null 2>&1" >> /etc/crontabs/root
-CMD ["php-fpm7", "-F"]
-
 RUN apk add --update --no-cache nginx
 
 COPY ./docs/docker/nginx/nginx.conf /etc/nginx/
@@ -62,6 +55,13 @@ RUN echo "upstream php-upstream { server php:9001; }" > /etc/nginx/conf.d/upstre
 
 RUN adduser -D -g '' -G www-data www-data
 
+COPY . ./
+RUN mv ./.env.dokku ./.env.local
+RUN composer config -g repo.packagist composer https://packagist.phpcomposer.com
+RUN composer install
+
+RUN echo "* * * * * cd /var/www/symfony && php ./bin/console schedule:run >> /dev/null 2>&1" >> /etc/crontabs/root
+CMD ["php-fpm7", "-F"]
 CMD ["nginx"]
 
 EXPOSE 80
